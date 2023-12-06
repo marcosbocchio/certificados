@@ -7,11 +7,11 @@
 </head>
 
 <style>
-main{
+body{
     font-family: "Encode Sans",Arial,sans-serif;
+}
+main{
     border: 3px solid black;
-    width: 164mm;
-    margin-left: 20mm;
     margin-top:-3mm;
 }
 footer{
@@ -148,7 +148,7 @@ footer{
             <td class="logo">
                 <img src="{{ public_path('img/aesa.png')}}" alt="x">
             </td>
-            <td style="width: 60%;">
+            <td style="width: 55%;">
                 <table style="border-collapse: collapse;">
                     <tbody style="text-align: center;">
                         <tr>
@@ -175,7 +175,7 @@ footer{
                     </tbody>
                 </table>
             </td>
-            <td style="width: 20%;">
+            <td style="width: 25%;">
                 @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
                     <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:70px;max-width: 120px; margin-top: 5px;">
                 @else
@@ -234,11 +234,11 @@ footer{
             <td style="width: 86mm; height: 4mm;" id="font7">Obra / Job</td>
         </tr>
         <tr>
-            <td style=" height: 8mm;"><b>YPF/TR</b></td>
+            <td style=" height: 7.5mm;"><b>YPF/TR</b></td>
             @if(isset($informe))
-                <td><span class="datosHead" style=" height: 8mm;"><b>{{$informe->obra}}</b></span></td>
+                <td><span class="datosHead" style=" height: 7.5mm;"><b>{{$informe->obra}}</b></span></td>
             @else
-                <td><span class="datosHead" style=" height: 8mm;"></span><b>{{$ot->obra}}</b></td>
+                <td><span class="datosHead" style=" height: 7.5mm;"></span><b>{{$ot->obra}}</b></td>
             @endif
         </tr>
     </tbody>
@@ -250,8 +250,8 @@ footer{
             <td style="width: 102mm;height: 4mm;" id="font7">Componentes a Ensayar / Components to Test</td>
         </tr>
         <tr>
-            <td style="height: 8mm;"><b>{{$equipo->equipo->codigo}}</b></td>
-            <td style="height: 8mm;"><b>{{$informe->componente}}</b></td>
+            <td style="height: 7.5mm;"><b>{{$equipo->equipo->codigo}}</b></td>
+            <td style="height: 7.5mm;"><b>{{$informe->componente}}</b></td>
         </tr>
     </tbody>
 </table>
@@ -262,10 +262,10 @@ footer{
             <td style="width: 86mm;height: 4mm;" id="font7">Espesor / Thickness</td>
         </tr>
         <tr>
-            <td style="height: 8mm;">
+            <td style="height: 7mm;">
                 <b>{{$material->codigo}}</b>
             </td>
-            <td style="height: 8mm;">
+            <td style="height: 7mm;">
                                     @if ($informe->espesor_chapa)
                                         <b>{{ $informe->espesor_chapa }}</b>
                                     @elseif($informe->espesor_especifico)
@@ -286,7 +286,7 @@ footer{
             <td style="width: 55mm;" id="font7">Norma de Eval. / Evaluation Standard</td>
         </tr>
         <tr>
-            <td style="height: 8mm;"><b>{{$procedimiento_inf->titulo}}</b></td>
+            <td style="height: 7.5mm;"><b>{{$procedimiento_inf->titulo}}</b></td>
             <td><b>{{$norma_ensayo->codigo}}</b></td>
             <td><b>{{$norma_evaluacion->codigo}}</b></td>
         </tr>
@@ -296,7 +296,7 @@ footer{
             <td id="font7">Temp. Superficie/ Surface Temperature</td>
         </tr>
         <tr>
-            <td style="height: 8mm;">&nbsp;</td>
+            <td style="height: 7.5mm;">&nbsp;</td>
             <td><b>{{$informe_lp->limpieza_previa}}</b></td>
             <td>&nbsp;</td>
         </tr>
@@ -309,7 +309,7 @@ footer{
             <td style="width: 86mm;" id="font7">Termómetro / Thermometer</td>
         </tr>
         <tr>
-            <td style="height: 8mm; ">&nbsp;</td>
+            <td style="height: 7.5mm; ">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
@@ -317,7 +317,7 @@ footer{
             <td id="font7">Modo de Aplicación / Aplicated by</td>
         </tr>
         <tr>
-            <td style="height: 8mm; ">
+            <td style="height: 7.5mm; ">
                                     <b>{{$penetrante->tipo}}</b>
 
                                     @if ($penetrante->marca)
@@ -333,7 +333,7 @@ footer{
             <td id="font7">Forma de Remoción / Removed by</td>
         </tr>
         <tr>
-            <td style="height: 8mm; ">
+            <td style="height: 7.5mm; ">
                                     <b>{{$removedor->tipo}}</b>
                                     @if ($removedor->marca)
 
@@ -348,7 +348,7 @@ footer{
             <td id="font7">Modo de Aplicación / Aplicated by</td>
         </tr>
         <tr>
-            <td style="height: 8mm; ">
+            <td style="height: 7.5mm; ">
                                     <b>{{$revelador->tipo}}</b>
                                     @if ($revelador->marca)
 
@@ -364,8 +364,8 @@ footer{
     <tbody>
         <tr>
             <td style="height:7mm; width:40mm">Técnica<br>Technique</td>
-            <td style="width:36.7mm">Tipo de Penetrante<br>Penetrant Type</td>
-            <td style="width:41.3mm">Limpieza Final<br>Post Examination Cleaning</td>
+            <td style="width:37mm">Tipo de Penetrante<br>Penetrant Type</td>
+            <td style="width:41mm">Limpieza Final<br>Post Examination Cleaning</td>
             <td style="width:45mm">Equipo de Iluminación<br>Lighting Equipment;</td>
         </tr>
         <tr>
@@ -433,7 +433,7 @@ footer{
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 3mm">&nbsp;</td>
+                            <td style="width: 3mm;">&nbsp;</td>
                             <td id="bordernone">Aceptado / Accepted</td>
                         </tr>
                     </tbody>
@@ -469,7 +469,7 @@ footer{
                 <table>
                     <tbody>
                         <tr>
-                            <td style="text-align:left;width: 30mm;"   id="bordernone">Evaluador / Evaluated by </td>
+                            <td style="text-align:left;width: 30mm;padding-bottom:5mm"   id="bordernone">Evaluador / Evaluated by </td>
                         </tr>
                         <tr>
                             <td  id="bordernone" style="text-align:left">Firma:</td>
@@ -493,7 +493,7 @@ footer{
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 40mm;text-align:left"   id="bordernone">Inspector AESA / Manufacture </td>
+                            <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Inspector AESA / Manufacture </td>
                         </tr>
                         <tr>
                             <td  id="bordernone" style="text-align:left">Firma:</td>
@@ -517,7 +517,7 @@ footer{
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 40mm;text-align:left"   id="bordernone">Inspector Cliente / Coustomer </td>
+                            <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Inspector Cliente / Coustomer </td>
                         </tr>
                         <tr>
                             <td  id="bordernone" style="text-align:left">Firma:</td>
@@ -541,7 +541,7 @@ footer{
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 40mm;text-align:left"   id="bordernone">Insp. Autorizado / AI </td>
+                            <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Insp. Autorizado / AI </td>
                         </tr>
                         <tr>
                             <td  id="bordernone" style="text-align:left">Firma:</td>

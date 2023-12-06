@@ -162,7 +162,7 @@ class PdfInformesLpController extends Controller
                                                                 'firma',
                                                                 'numero_repetido',
                                                                 'informe_solicitado_por',
-                                                                ))->setPaper(210, 297,'portrait')->setWarnings(false);
+                                                                ))->setPaper(210, 305,'portrait')->setWarnings(false);
 
 
            return $pdf->stream();
