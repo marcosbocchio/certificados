@@ -176,7 +176,11 @@ footer{
                 </table>
             </td>
             <td style="width: 20%;">
-                    <img  src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fes.m.wikipedia.org%2Fwiki%2FArchivo%3ALogo_de_YPF.svg&psig=AOvVaw1a2ApdfBUuBw1r8hXJv96c&ust=1700881025628000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPim-dzR24IDFQAAAAAdAAAAABAD" alt=""  style="height: 42px;margin-top: 5px;">
+                @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
+                    <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:42px;max-width: 120px; margin-top: 5px;">
+                @else
+                    <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 42px;margin-top: 5px;">
+                @endif
             </td>
         </tr>
     </tbody>
