@@ -756,6 +756,13 @@
                                         </span>
                                     </div>
                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group" >
+                                        <span>
+                                        <button type="button"  @click="createExel()"><span class="fa fa-file-excel-o"></span></button>
+                                        </span>
+                                    </div>
+                               </div>
 
                                <div class="clearfix"></div>
 
@@ -949,7 +956,8 @@ import { toastrInfo,toastrDefault } from '../toastrConfig';
 import moment from 'moment';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
-import {sprintf} from '../../functions/sprintf.js'
+import {sprintf} from '../../functions/sprintf.js';
+import XLSX from 'xlsx'
 
 export default {
 
@@ -1870,7 +1878,37 @@ export default {
                 mediciones :                          mediciones,
             });
         },
+        agregarPestana(wb, nombre, datos) {
+            const ws = XLSX.utils.aoa_to_sheet([]);
+            let columnaActual = 'B'; // Comenzar en la columna 'B'
 
+            datos.mediciones.forEach((medicion, index) => {
+                // Convertir cada elemento de la medicion en un arreglo para que se inserte verticalmente
+                const datosVerticales = medicion.map(dato => [dato]);
+
+                // Insertar la medicion vertical en la hoja, comenzando en 'B1', 'C1', etc.
+                XLSX.utils.sheet_add_aoa(ws, datosVerticales, { origin: `${columnaActual}${1}` });
+
+                // Incrementar la letra de la columna para la próxima medicion
+                columnaActual = String.fromCharCode(columnaActual.charCodeAt(0) + 1);
+            });
+
+            XLSX.utils.book_append_sheet(wb, ws, nombre);
+        },
+        createExel() {
+            // Crear un nuevo libro Excel
+            const wb = XLSX.utils.book_new();
+
+            // Iterar sobre las pestañas
+            for (let i = 0; i < this.Tabla_me.length; i++) {
+                const pestaña = this.Tabla_me[i];
+                const sheetName = `tabla${i + 1}`;
+                this.agregarPestana(wb, sheetName, pestaña);
+            }
+
+            // Guardar el archivo Excel y descargarlo
+            XLSX.writeFile(wb, 'MiExcel.xlsx');
+        },
         selectPosTabla_us_pa :function(index){
 
 
