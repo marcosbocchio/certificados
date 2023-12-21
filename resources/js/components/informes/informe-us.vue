@@ -1885,7 +1885,7 @@ export default {
             datos.mediciones.forEach((medicion, index) => {
                 // Convertir cada elemento de la medicion en un arreglo para que se inserte verticalmente
                 const datosVerticales = medicion.map(dato => [dato]);
-
+                console.log(datosVerticales);
                 // Insertar la medicion vertical en la hoja, comenzando en 'B1', 'C1', etc.
                 XLSX.utils.sheet_add_aoa(ws, datosVerticales, { origin: `${columnaActual}${1}` });
 
@@ -1902,12 +1902,12 @@ export default {
             // Iterar sobre las pestañas
             for (let i = 0; i < this.Tabla_me.length; i++) {
                 const pestaña = this.Tabla_me[i];
-                const sheetName = `tabla${i + 1}`;
+                const sheetName = pestaña.elemento_me;
                 this.agregarPestana(wb, sheetName, pestaña);
             }
 
             // Guardar el archivo Excel y descargarlo
-            XLSX.writeFile(wb, 'MiExcel.xlsx');
+            XLSX.writeFile(wb, `${this.numero_inf_code}-MEDICIÓN DE ESPESORES.xlsx`);
         },
         selectPosTabla_us_pa :function(index){
 
