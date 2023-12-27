@@ -13,7 +13,9 @@ class InformesView extends Model
         return $this->belongsTo('App\OtTipoSoldaduras','ot_tipo_soldadura_id','id');
 
     }
-
+    public function informesRi() {
+        return $this->hasOne('App\InformesRi', 'informe_id', 'id');
+    }
     public function scopeObra($query,$obra){
 
         if($obra) {

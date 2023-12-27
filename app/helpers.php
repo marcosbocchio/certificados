@@ -192,6 +192,8 @@ function obtenerInformeEspecial($informe, $metodo_ensayo, &$informeEspecial) {
           $tipoInforme = 'Medición de Espesores';
       }
 
+  }else if($metodo_ensayo->metodo == 'LP'){
+    $tipoInforme = 'LP convencional';
   }
   
   $metodoEnsayoId = $metodo_ensayo->id;

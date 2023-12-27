@@ -16,10 +16,6 @@ main{
     border: 3px solid black;
 
 }
-footer {
-    border: 3px solid black;
-    margin-top:20px;
-}
 .logo{
     width: 30%;
 }
@@ -100,6 +96,7 @@ footer {
         position: fixed;
         bottom: 100px;
         width: 100%;
+        border: 3px solid black;
 }
 </style>
 
@@ -145,10 +142,13 @@ footer {
                 <td><p style="width: 35mm;">Ubicación de los defectos a reparar</p></td>
             </tr>
 
-            @foreach ($juntas_posiciones as $junta_posicion)
+            @php
+    $contadorFilas = 0;
+@endphp
+@foreach ($juntas_posiciones as $junta_posicion)
+    @php $contadorFilas++; @endphp
 
-
-                <tr id="alto_final">
+    <tr id="alto_final">
                     <td>
                         <p>{{ $junta_posicion ? $junta_posicion->junta : '' }}</p>
                     </td>
@@ -370,10 +370,117 @@ footer {
                             $UbicacionDefecto = [];                        
                         @endphp
                 </tr>
-                @endforeach
+                <!-- Insertar salto de página después de 21 filas y reiniciar el contador -->
+                @if ($contadorFilas == 21)
+                    </tbody>
+                    </table>
+<footer>
+    <table class="tablamain">
+        <tbody>
+            <tr class="gris">
+                <td colspan="2" id="left">Observaciones / notas: </td>
+                <td style="width: 40mm;">Código de Abreviaturas</td>
+            </tr>
+            <tr>
+                <td style="width: 97mm;">
+                    @if($informe->numero_offline)
+                        Referencia : {{ $informe->numero_offline}} /
+                    @endif
+                    {{$observaciones}}
+                </td>
+                <td style="width: 43mm;">
+                @if($planta)
+                    planta {{$planta->nombre}}
+                @endif
+                    &nbsp;
+                </td>
+                <td id="left" style="width: 41mm;">
+                    <b>A:</b>
+                    Aceptable<br>
+                    <b>Rz:</b>
+                    Reparar<br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tablamain" >
+        <tbody>
+            <tr class="gris">
+                <td style="width: 43mm;" >Evaluador AESA</td>
+                <td style="width: 40mm;" >Inspector de AESA</td>
+                <td style="width: 50mm;" >Inspector del Cliente</td>
+                <td style="width: 48mm;" >Inspector Autorizado</td>
+            </tr>
+            <tr id="firmas">
+                <td id="left"><p>Firma:</p></td>
+                <td id="left"><p>Firma:</p></td>
+                <td id="left"><p>Firma:</p></td>
+                <td id="left"><p>Firma:</p></td>
+            </tr>
+            <tr id="firmas">
+                <td>
+                    <table class="tablamain">
+                        <tbody>
+                            <tr>
+                                <td id="left" style="width: 10%;"><p>Fecha:</p></td>
+                                <td ><p>{{ $fecha }}</p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td id="left"><p>Fecha:</p></td>
+                <td id="left"><p>Fecha:</p></td>
+                <td id="left"><p>Fecha:</p></td>
+            </tr>
+            <tr>
+                <td colspan="4" >&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</footer>
+                    <div class="page-break"></div>
+                    @include('reportes.partial.header-sec1-especial')
+
+                    @if ($contratista && $contratista->reporte_especial_en_cliente == 1)
+                        @include('reportes.partial.header-proyecto-sect2')
+                    @endif   
+                    <table class="tablamain">
+                    <tbody>
+                        <tr class="gris" style="font-size: 9.3px;">
+                            <td colspan="4" style="width: 25-8mm;">Identificación de la/s Soldadura/s</td>
+                            <td colspan="4" style="width: 34mm;">Soldadores según Proceso</td>
+                            <td colspan="10" style="width: 59.2mm;">Indicaciones</td>
+                            <td colspan="2" style="width: 24.8mm;">Resultados</td>
+                        </tr>
+                        <tr id="alto">
+                            <td><p style="width: 20mm;">Nº de Soldadura</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
+                            <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
+                            <td><p style="margin: 0mm 0mm;"  class="vertical-text">Posición</p></td>
+                            <td><p style="margin: 0mm -3mm;" class="vertical-text">GMAW</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">GTAW</p></td>
+                            <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
+                            <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
+                            <td><p style="margin: 0mm -2mm;" class="vertical-text">Porosidad</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Inclusión de Escoria</p></td>
+                            <td><p style="margin: 0mm -8mm;" class="vertical-text">Inclusión de Tungsteno</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Falta de Penetración</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Falta de Fusión</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Socavación</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Concavidad</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Desalineación</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Fisuras</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Película Defectuosa</p></td>
+                            <td><p style="margin: 0mm -10mm;" class="vertical-text">Resultado</p></td>
+                            <td><p style="width: 35mm;">Ubicación de los defectos a reparar</p></td>
+                        </tr>
+                    @php $contadorFilas = 0; @endphp
+                @endif
+            @endforeach
+
                 @php
                     $total_filas = count($juntas_posiciones);
-                    $filas_restantes = 26 - $total_filas;
+                    $filas_restantes = 21 - $total_filas;
                 @endphp
                 @for ($i = 0; $i < $filas_restantes; $i++)
                     <tr id="alto_final">
@@ -466,7 +573,6 @@ footer {
         </tbody>
     </table>
 </footer>
-    
 <script type="text/php">
 
     if ( isset($pdf) ) {

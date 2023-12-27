@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\helpers;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use App\Informe;
@@ -28,6 +29,7 @@ use App\User;
 use App\OtTipoSoldaduras;
 use App\MetodoEnsayos;
 use App\DetallesLp;
+use App\DetallesLpReferencias;
 
 class PdfInformesLpController extends Controller
 {
@@ -79,7 +81,55 @@ class PdfInformesLpController extends Controller
         $detalles = DetallesLp::with('referencia')
                                 ->where('informe_lp_id',$informe_lp->id)
                                 ->get();
+                                
+        $detallesReferencia = DB::table('detalles_lp')
+            ->join('detalles_lp_referencias', 'detalles_lp.detalle_lp_referencia_id', '=', 'detalles_lp_referencias.id')
+            ->select('detalles_lp_referencias.*')
+            ->where('detalles_lp.informe_lp_id', $informe_lp->id)
+            ->get();
 
+        $informeEspecial = null;
+
+        obtenerInformeEspecial($informe, $metodo_ensayo, $informeEspecial);
+
+        if($informeEspecial !== null){
+            $pdf = PDF::loadView('reportes.informes.lp-v2-ESP',compact('ot','titulo','nro','tipo_reporte','fecha',
+                                                                'norma_ensayo',
+                                                                'planta',
+                                                                'norma_evaluacion',
+                                                                'procedimiento_inf',
+                                                                'diametro_espesor',
+                                                                'equipo',
+                                                                'metodo',
+                                                                'ejecutor_ensayo',
+                                                                'cliente',
+                                                                'contratista',
+                                                                'informe',
+                                                                'informe_lp',
+                                                                'ot_tipo_soldadura',
+                                                                'material',
+                                                                'material2',
+                                                                'metodo',
+                                                                'penetrante',
+                                                                'penetrante_aplicacion',
+                                                                'revelador',
+                                                                'revelador_aplicacion',
+                                                                'removedor',
+                                                                'removedor_aplicacion',
+                                                                'iluminacion',
+                                                                'evaluador',
+                                                                'detalles',
+                                                                'informe_modelos_3d',
+                                                                'observaciones',
+                                                                'firma',
+                                                                'numero_repetido',
+                                                                'informe_solicitado_por',
+                                                                'detallesReferencia',
+                                                                ))->setPaper('a4','portrait')->setWarnings(false);
+
+
+           return $pdf->stream();
+        }else{
 
            $pdf = PDF::loadView('reportes.informes.lp-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
@@ -112,10 +162,11 @@ class PdfInformesLpController extends Controller
                                                                 'firma',
                                                                 'numero_repetido',
                                                                 'informe_solicitado_por',
-                                                                ))->setPaper('a4','portrait')->setWarnings(false);
+                                                                ))->setPaper(210, 305,'portrait')->setWarnings(false);
 
 
            return $pdf->stream();
 
      }
+    }
 }
