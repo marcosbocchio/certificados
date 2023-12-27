@@ -47,6 +47,16 @@
                             <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>
                         </li>
                         <li class="list-group-item pointer">
+                            <div v-show="!selComponenteSeleccionado">
+                            <span class="titulo-li">Componente</span>
+                            <a @click="CambioComponente(); getComponentes();" class="pull-right">
+                                <div v-if="componenteSeleccionado">{{componenteSeleccionado.componenteSeleccionado}}</div>
+                                <div v-else><span class="seleccionar">Seleccionar</span></div>
+                            </a>
+                            </div>
+                            <v-select v-show="selComponenteSeleccionado" v-model="componenteSeleccionado" label="componente" :options="componentesSeleccionado" @input="CambioComponente()"></v-select>
+                        </li>
+                        <li class="list-group-item pointer">
                              <input type="text"  v-model="plano" class="form-control" id="plano" placeholder="Plano Isométrico" maxlength="20">
                         </li>
                         <li class="list-group-item pointer">
@@ -174,11 +184,14 @@ export default {
             elemento:'',
             plano:'',
             TablaElementos:{},
+            componentesSeleccionado: [],
+            componenteSeleccionado: '',
+            selComponenteSeleccionado: false,
         }
     },
 
    async mounted() {
-       await this.$store.dispatch('loadClientesOperador',this.user.id);
+        await this.$store.dispatch('loadClientesOperador', this.user.id);
         if(this.ot_prop){
             let index = this.clientesOperador.findIndex(e => e.id == this.ot_prop.cliente.id);
             this.cliente = this.clientesOperador[index]
@@ -203,21 +216,20 @@ export default {
 methods : {
 
     async Buscar(page = 1) {
-
-     this.$store.commit('loading', true);
-     this.TablaElementos = {};
+    this.$store.commit('loading', true);
+    this.TablaElementos = {};
 
     try {
-        let url = 'elementos/ot/' + this.ot.id  + '/plano/' + (this.plano ? this.plano.replace('/','--') : 'null') + '/elemento/' + (this.elemento ? this.elemento.replace('/','--') : 'null') + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '?page='+ page + '&api_token=' + Laravel.user.api_token;
+        let url = 'elementos/ot/' + this.ot.id + '/plano/' + (this.plano ? this.plano.replace('/','--') : 'null') + '/elemento/' + (this.elemento ? this.elemento.replace('/','--') : 'null') + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/componente/' + (this.componenteSeleccionado && this.componenteSeleccionado.componente ? this.componenteSeleccionado.componente.replace('/','--'): 'null') + '?page=' + page + '&api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
         this.TablaElementos = res.data;
-
-    }catch(error){
-
-    }finally  {this.$store.commit('loading', false);}
-
-
-    },
+        
+    } catch (error) {
+        // Manejo de errores
+    } finally {
+        this.$store.commit('loading', false);
+    }
+},
     clienteProp: async function () {
 
     },
@@ -269,13 +281,32 @@ methods : {
         this.soldadores = res.data;
     },
 
-    async seleccionarObra(){
+    async seleccionarObra() {
+    if (this.ot && !this.ot.obra) {
+        this.selObra = !this.selObra;
+    }
+    // Llama a getComponentes solo si obra está definido
+    if (this.obra && this.obra.obra) {
+        await this.getComponentes();
+    }
+},
+    async getComponentes() {
+        this.$store.commit('loading', true);
 
-        if(this.ot && !this.ot.obra){
-            this.selObra = !this.selObra;
+        var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra.replace('/','--') + '/componentes/' +'?api_token=' + Laravel.user.api_token;
+        try {
+            const res = await axios.get(urlRegistros);
+            this.componentesSeleccionado = res.data;
+            console.log(this.componentesSeleccionado);
+        } catch (error) {
+            // Manejo de errores
+        } finally {
+            this.$store.commit('loading', false);
         }
     },
-
+    CambioComponente() {
+      this.selComponenteSeleccionado = !this.selComponenteSeleccionado;
+    },
     async CambioObra (){
         this.obra = this.obra == null ? '' : this.obra;
         this.selObra = !this.selObra;

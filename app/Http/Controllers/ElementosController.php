@@ -30,17 +30,18 @@ class ElementosController extends Controller
 
     }
 
-    public function  getElementos($ot_id,$plano,$elemento,$obra){
+    public function  getElementos($ot_id,$plano,$elemento,$obra,$componente){
 
         $obra = $obra == 'null' ? '' : str_replace('--','/',$obra);
+        $componente = $componente == 'null' ? '' : str_replace('--','/',$componente);
         $plano = $plano == 'null' ? '' : str_replace('--','/',$plano);
         $elemento = $elemento == 'null' ? '' : str_replace('--','/',$elemento);
-
         $page = Input::get('page', 1);
-        Log::debug($page);
+
         $paginate = 10;
-        $data = DB::select(DB::raw('CALL ReporteElementos(?,?,?,?)'),array($ot_id,$plano,$elemento,$obra));
+        $data = DB::select(DB::raw('CALL ReporteElementos(?,?,?,?,?)'),array($ot_id,$plano,$elemento,$obra,$componente));
         $offSet = ($page * $paginate) - $paginate;
+
         $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
         $data = new \Illuminate\Pagination\LengthAwarePaginator(array_values($itemsForCurrentPage), count($data), $paginate, $page);
         return $data;
