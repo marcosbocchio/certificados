@@ -278,8 +278,9 @@ methods :{
                 5: { cellWidth: 30, fontSize: 8, halign: 'left' },
                 6: { cellWidth: 30, fontSize: 8, halign: 'left' },
             },
+            margin: { top: 45 },
             })
-            this.prepareHeaderPdf(doc);
+        this.prepareHeaderPdf(doc);
         window.open(doc.output('bloburl'));
     },
         prepareHeaderPdf(doc){
@@ -335,7 +336,6 @@ methods :{
                 doc.setLineWidth(0.8);
                 doc.setDrawColor(255,204,0);
                 doc.line(11, 42, 285, 42);
-
             }
     },
     async CambioCliente (){
