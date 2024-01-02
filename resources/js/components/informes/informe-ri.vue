@@ -799,10 +799,10 @@
                              </template>
                          </v-select>
                      </div>
-                    <div class="col-md-2">
+                     <div class="col-md-2" v-if="formato == 'PLANTA'">
                         <div class="form-group">
                             <label for="proceso">Proceso</label>
-                            <v-select v-model="proceso_soldadores" :options="['GMAW', 'GTAW','SAW','SMAW','FCAW']"></v-select>
+                            <v-select v-model="proceso_soldadores" :options="['GMAW', 'GTAW', 'SAW', 'SMAW', 'FCAW']"></v-select>
                         </div>
                     </div>
                       <div class="col-md-2">
