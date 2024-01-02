@@ -42,11 +42,8 @@ main{
         width: 75%;
 }
 .vertical-text {
-    -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg);
-    margin: 0;
-    padding: 0;
+    writing-mode: vertical-rl;
+    transform: rotate(270deg); /* Si necesitas invertir la dirección */
 }
 .fecha_firma ._1{
     width: 30%;
@@ -92,6 +89,9 @@ main{
 #firmas p{
     margin: 0px 0px 0px 4px;
 }
+#resaltar-borde {
+    border-right: 3px solid black;
+}
 footer {
         position: fixed;
         bottom: 100px;
@@ -110,24 +110,24 @@ footer {
     @endif      
    
     @include('reportes.informes.partial.header-detalle-ri-sect3')
-    @include('reportes.informes.partial.modelos3d-portrait')
-    <table class="tablamain">
+    <table class="tablamain" style="width: 100%;">
         <tbody>
             <tr class="gris" style="font-size: 9.3px;">
-                <td colspan="4" style="width: 25-8mm;">Identificación de la/s Soldadura/s</td>
-                <td colspan="4" style="width: 34mm;">Soldadores según Proceso</td>
-                <td colspan="10" style="width: 59.2mm;">Indicaciones</td>
-                <td colspan="2" style="width: 24.8mm;">Resultados</td>
+                <td colspan="4" style="width: 15%;" id="resaltar-borde">Identificación de la/s Soldadura/s</td>
+                <td colspan="5" style="width: 23%;" id="resaltar-borde">Soldadores según Proceso</td>
+                <td colspan="10" style="width: 40%;" id="resaltar-borde">Indicaciones</td>
+                <td colspan="2" style="width: 30%;">Resultados</td>
             </tr>
             <tr id="alto">
-                <td><p style="width: 20mm;">Nº de Soldadura</p></td>
+                <td><p style="width: 14mm;">Nº de Soldadura</p></td>
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
                 <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
-                <td><p style="margin: 0mm 0mm;"  class="vertical-text">Posición</p></td>
-                <td><p style="margin: 0mm -3mm;" class="vertical-text">GMAW</p></td>
-                <td><p style="margin: 0mm -5mm;" class="vertical-text">GTAW</p></td>
+                <td id="resaltar-borde" ><p style="margin: 0mm -3mm;"  class="vertical-text" >Posición</p></td>
+                <td><p style="margin: 0mm -6mm;" class="vertical-text">GMAW</p></td>
+                <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
+                <td id="resaltar-borde"><p style="margin: 0mm -6mm;" class="vertical-text" >FCAW</p></td>
                 <td><p style="margin: 0mm -2mm;" class="vertical-text">Porosidad</p></td>
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Inclusión de Escoria</p></td>
                 <td><p style="margin: 0mm -8mm;" class="vertical-text">Inclusión de Tungsteno</p></td>
@@ -137,125 +137,82 @@ footer {
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Concavidad</p></td>
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Desalineación</p></td>
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Fisuras</p></td>
-                <td><p style="margin: 0mm -5mm;" class="vertical-text">Película Defectuosa</p></td>
-                <td><p style="margin: 0mm -10mm;" class="vertical-text">Resultado</p></td>
-                <td><p style="width: 35mm;">Ubicación de los defectos a reparar</p></td>
+                <td id="resaltar-borde"><p style="margin: 0mm -5mm;" class="vertical-text" >Película Defectuosa</p></td>
+                <td style="width: 10mm;"><p style="margin: 0mm -25mm;" class="vertical-text">Resultado</p></td>
+                <td><p style="width: 20.5mm;">Ubicación de los defectos a reparar</p></td>
             </tr>
 
             @php
     $contadorFilas = 0;
+
 @endphp
+
 @foreach ($juntas_posiciones as $junta_posicion)
-    @php $contadorFilas++; @endphp
+    @php 
+        $contadorFilas++;
+        $datosAgrupados = collect($juntas_posiciones_procesos)->groupBy('codigo');
+        $procesoInfo = $datosAgrupados->get($junta_posicion->junta);
+    @endphp
 
     <tr id="alto_final">
-                    <td>
-                        <p>{{ $junta_posicion ? $junta_posicion->junta : '' }}</p>
-                    </td>
-                    <td>
-                        <p>{{ $junta_posicion ? $junta_posicion->densidad : '' }}</p>
-                    </td>
-                    <td>
-                        <p>    
-                        @if ($informe_ri->reparacion_sn == 1)
-                            x
-                        @endif
-                        </p>
-                    </td>
-                    <td>
-                        <p>{{ $junta_posicion ? $junta_posicion->posicion : '' }}</p>
-                    </td>
-                    @if ($junta_posicion->proceso_soldadores !== null)
-                        <td>
-                            @if ($junta_posicion->proceso_soldadores === 'GMAW')
-                                <p>
-                                    @if ($junta_posicion && $junta_posicion->soldadorz !== null)
-                                        {{ $junta_posicion->soldadorz }}
-                                    @endif
-                                    @if ($junta_posicion && $junta_posicion->soldadorl !== null)
-                                        {{ $junta_posicion->soldadorl }}
-                                    @endif
-                                    @if ($junta_posicion && $junta_posicion->soldadorp !== null)
-                                        {{ $junta_posicion->soldadorp }}
-                                    @endif
-                                </p>
-                            @else
-                                &nbsp;
-                            @endif
-                        </td>
-                        <td>
-                            @if ($junta_posicion->proceso_soldadores === 'GTAW')
-                                <p>
-                                    @if ($junta_posicion && $junta_posicion->soldadorz !== null)
-                                        {{ $junta_posicion->soldadorz }}
-                                    @endif
-                                    @if ($junta_posicion && $junta_posicion->soldadorl !== null)
-                                        {{ $junta_posicion->soldadorl }}
-                                    @endif
-                                    @if ($junta_posicion && $junta_posicion->soldadorp !== null)
-                                        {{ $junta_posicion->soldadorp }}
-                                    @endif
-                                </p>
-                            @else
-                                &nbsp;
-                            @endif
-                        </td>
-                        <td>
-                            @if ($junta_posicion->proceso_soldadores === 'SAW')
-                                <p>
-                                    @if ($junta_posicion && $junta_posicion->soldadorz !== null)
-                                        {{ $junta_posicion->soldadorz }}
-                                    @endif
-                                    @if ($junta_posicion && $junta_posicion->soldadorl !== null)
-                                        {{ $junta_posicion->soldadorl }}
-                                    @endif
-                                    @if ($junta_posicion && $junta_posicion->soldadorp !== null)
-                                        {{ $junta_posicion->soldadorp }}
-                                    @endif
-                                </p>
-                            @else
-                            &nbsp;
-                            @endif
-                        </td>
-                        <td>
-                            @if ($junta_posicion->proceso_soldadores === 'SMAW')
-                                <p>
-                                    @if ($junta_posicion && $junta_posicion->soldadorz !== null)
-                                        {{ $junta_posicion->soldadorz }}
-                                    @endif
-                                    @if ($junta_posicion && $junta_posicion->soldadorl !== null)
-                                        {{ $junta_posicion->soldadorl }}
-                                    @endif
-                                    @if ($junta_posicion && $junta_posicion->soldadorp !== null)
-                                        {{ $junta_posicion->soldadorp }}
-                                    @endif
-                                </p>
-                            @else
-                            &nbsp;
-                            @endif
-                        </td>
-                    @else
-                        <td>
-                            <p>
-                                &nbsp;
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                &nbsp;
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                &nbsp;
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                &nbsp;
-                            </p>
-                        </td>
-                    @endif
+        <td><p>{{ $junta_posicion->junta ?? '' }}</p></td>
+        <td><p>{{ $junta_posicion->densidad ?? '' }}</p></td>
+        <td><p>@if ($informe_ri->reparacion_sn == 1) x @endif</p></td>
+        <td id="resaltar-borde"><p>{{ $junta_posicion->posicion ?? '' }}</p></td>
+        @if ($procesoInfo)
+        <td>
+            @foreach ($procesoInfo->where('proceso_soldadores', 'GMAW') as $dato)
+                @if ($dato->soldadorz || $dato->soldadorp)
+                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                @else
+                    <p>&nbsp;</p>
+                @endif
+            @endforeach
+        </td>
+        <td>
+            @foreach ($procesoInfo->where('proceso_soldadores', 'GTAW') as $dato)
+                @if ($dato->soldadorz || $dato->soldadorp)
+                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                @else
+                    <p>&nbsp;</p>
+                @endif
+            @endforeach
+        </td>
+        <td>
+            @foreach ($procesoInfo->where('proceso_soldadores', 'SAW') as $dato)
+                @if ($dato->soldadorz || $dato->soldadorp)
+                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                @else
+                    <p>&nbsp;</p>
+                @endif
+            @endforeach
+        </td>
+        <td>
+            @foreach ($procesoInfo->where('proceso_soldadores', 'SMAW') as $dato)
+                @if ($dato->soldadorz || $dato->soldadorp)
+                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                @else
+                    <p>&nbsp;</p>
+                @endif
+            @endforeach
+        </td>
+        <td id="resaltar-borde">
+            @foreach ($procesoInfo->where('proceso_soldadores', 'FCAW') as $dato)
+                @if ($dato->soldadorz || $dato->soldadorp)
+                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                @else
+                    <p>&nbsp;</p>
+                @endif
+            @endforeach
+        </td>
+        @else
+            {{-- Si no hay información de proceso, mostrar celdas vacías --}}
+            <td><p>&nbsp;</p></td>
+            <td><p>&nbsp;</p></td>
+            <td><p>&nbsp;</p></td>
+            <td><p>&nbsp;</p></td>
+            <td id="resaltar-borde"><p>&nbsp;</p></td>
+        @endif
 
                         @php
                             $porosidad = null;
@@ -331,7 +288,7 @@ footer {
                         <td>
                             <p>{{ $fisuras }}</p>
                         </td>
-                        <td>
+                        <td id="resaltar-borde">
                             <p>{{ $peliculaDefectuosa }}</p>
                         </td>
                         <td>
@@ -374,70 +331,70 @@ footer {
                 @if ($contadorFilas == 21)
                     </tbody>
                     </table>
-<footer>
-    <table class="tablamain">
-        <tbody>
-            <tr class="gris">
-                <td colspan="2" id="left">Observaciones / notas: </td>
-                <td style="width: 40mm;">Código de Abreviaturas</td>
-            </tr>
-            <tr>
-                <td style="width: 97mm;">
-                    @if($informe->numero_offline)
-                        Referencia : {{ $informe->numero_offline}} /
-                    @endif
-                    {{$observaciones}}
-                </td>
-                <td style="width: 43mm;">
-                @if($planta)
-                    planta {{$planta->nombre}}
-                @endif
-                    &nbsp;
-                </td>
-                <td id="left" style="width: 41mm;">
-                    <b>A:</b>
-                    Aceptable<br>
-                    <b>Rz:</b>
-                    Reparar<br>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="tablamain" >
-        <tbody>
-            <tr class="gris">
-                <td style="width: 43mm;" >Evaluador AESA</td>
-                <td style="width: 40mm;" >Inspector de AESA</td>
-                <td style="width: 50mm;" >Inspector del Cliente</td>
-                <td style="width: 48mm;" >Inspector Autorizado</td>
-            </tr>
-            <tr id="firmas">
-                <td id="left"><p>Firma:</p></td>
-                <td id="left"><p>Firma:</p></td>
-                <td id="left"><p>Firma:</p></td>
-                <td id="left"><p>Firma:</p></td>
-            </tr>
-            <tr id="firmas">
-                <td>
-                    <table class="tablamain">
-                        <tbody>
-                            <tr>
-                                <td id="left" style="width: 10%;"><p>Fecha:</p></td>
-                                <td ><p>{{ $fecha }}</p></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td id="left"><p>Fecha:</p></td>
-                <td id="left"><p>Fecha:</p></td>
-                <td id="left"><p>Fecha:</p></td>
-            </tr>
-            <tr>
-                <td colspan="4" >&nbsp;</td>
-            </tr>
-        </tbody>
-    </table>
-</footer>
+                    <footer>
+                        <table class="tablamain">
+                            <tbody>
+                                <tr class="gris">
+                                    <td colspan="2" id="left">Observaciones / notas: </td>
+                                    <td style="width: 40mm;">Código de Abreviaturas</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 97mm;">
+                                        @if($informe->numero_offline)
+                                            Referencia : {{ $informe->numero_offline}} /
+                                        @endif
+                                        {{$observaciones}}
+                                    </td>
+                                    <td style="width: 43mm;">
+                                    @if($planta)
+                                        planta {{$planta->nombre}}
+                                    @endif
+                                        &nbsp;
+                                    </td>
+                                    <td id="left" style="width: 41mm;">
+                                        <b>A:</b>
+                                        Aceptable<br>
+                                        <b>Rz:</b>
+                                        Reparar<br>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="tablamain" >
+                            <tbody>
+                                <tr class="gris">
+                                    <td style="width: 43mm;" >Evaluador AESA</td>
+                                    <td style="width: 40mm;" >Inspector de AESA</td>
+                                    <td style="width: 50mm;" >Inspector del Cliente</td>
+                                    <td style="width: 48mm;" >Inspector Autorizado</td>
+                                </tr>
+                                <tr id="firmas">
+                                    <td id="left"><p>Firma:</p></td>
+                                    <td id="left"><p>Firma:</p></td>
+                                    <td id="left"><p>Firma:</p></td>
+                                    <td id="left"><p>Firma:</p></td>
+                                </tr>
+                                <tr id="firmas">
+                                    <td>
+                                        <table class="tablamain">
+                                            <tbody>
+                                                <tr>
+                                                    <td id="left" style="width: 10%;"><p>Fecha:</p></td>
+                                                    <td ><p>{{ $fecha }}</p></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td id="left"><p>Fecha:</p></td>
+                                    <td id="left"><p>Fecha:</p></td>
+                                    <td id="left"><p>Fecha:</p></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" >&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </footer>
                     <div class="page-break"></div>
                     @include('reportes.partial.header-sec1-especial')
 
@@ -445,35 +402,36 @@ footer {
                         @include('reportes.partial.header-proyecto-sect2')
                     @endif   
                     <table class="tablamain">
-                    <tbody>
-                        <tr class="gris" style="font-size: 9.3px;">
-                            <td colspan="4" style="width: 25-8mm;">Identificación de la/s Soldadura/s</td>
-                            <td colspan="4" style="width: 34mm;">Soldadores según Proceso</td>
-                            <td colspan="10" style="width: 59.2mm;">Indicaciones</td>
-                            <td colspan="2" style="width: 24.8mm;">Resultados</td>
-                        </tr>
-                        <tr id="alto">
-                            <td><p style="width: 20mm;">Nº de Soldadura</p></td>
-                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
-                            <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
-                            <td><p style="margin: 0mm 0mm;"  class="vertical-text">Posición</p></td>
-                            <td><p style="margin: 0mm -3mm;" class="vertical-text">GMAW</p></td>
-                            <td><p style="margin: 0mm -5mm;" class="vertical-text">GTAW</p></td>
-                            <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
-                            <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
-                            <td><p style="margin: 0mm -2mm;" class="vertical-text">Porosidad</p></td>
-                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Inclusión de Escoria</p></td>
-                            <td><p style="margin: 0mm -8mm;" class="vertical-text">Inclusión de Tungsteno</p></td>
-                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Falta de Penetración</p></td>
-                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Falta de Fusión</p></td>
-                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Socavación</p></td>
-                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Concavidad</p></td>
-                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Desalineación</p></td>
-                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Fisuras</p></td>
-                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Película Defectuosa</p></td>
-                            <td><p style="margin: 0mm -10mm;" class="vertical-text">Resultado</p></td>
-                            <td><p style="width: 35mm;">Ubicación de los defectos a reparar</p></td>
-                        </tr>
+                        <tbody>
+                            <tr class="gris" style="font-size: 9.3px;">
+                        <td colspan="4" style="width: 15%;" id="resaltar-borde">Identificación de la/s Soldadura/s</td>
+                        <td colspan="5" style="width: 23%;" id="resaltar-borde">Soldadores según Proceso</td>
+                        <td colspan="10" style="width: 40%;" id="resaltar-borde">Indicaciones</td>
+                        <td colspan="2" style="width: 30%;">Resultados</td>
+                    </tr>
+                    <tr id="alto">
+                        <td><p style="width: 14mm;">Nº de Soldadura</p></td>
+                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
+                        <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
+                        <td id="resaltar-borde" ><p style="margin: 0mm -3mm;"  class="vertical-text" >Posición</p></td>
+                        <td><p style="margin: 0mm -6mm;" class="vertical-text">GMAW</p></td>
+                        <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW</p></td>
+                        <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
+                        <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
+                        <td id="resaltar-borde"><p style="margin: 0mm -6mm;" class="vertical-text" >FCAW</p></td>
+                        <td><p style="margin: 0mm -2mm;" class="vertical-text">Porosidad</p></td>
+                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Inclusión de Escoria</p></td>
+                        <td><p style="margin: 0mm -8mm;" class="vertical-text">Inclusión de Tungsteno</p></td>
+                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Falta de Penetración</p></td>
+                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Falta de Fusión</p></td>
+                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Socavación</p></td>
+                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Concavidad</p></td>
+                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Desalineación</p></td>
+                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Fisuras</p></td>
+                        <td id="resaltar-borde"><p style="margin: 0mm -5mm;" class="vertical-text" >Película Defectuosa</p></td>
+                        <td style="width: 10mm;"><p style="margin: 0mm -25mm;" class="vertical-text">Resultado</p></td>
+                        <td><p style="width: 20.5mm;">Ubicación de los defectos a reparar</p></td>
+                    </tr>
                     @php $contadorFilas = 0; @endphp
                 @endif
             @endforeach
@@ -487,6 +445,12 @@ footer {
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
+                        <td id="resaltar-borde">&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td id="resaltar-borde">&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
@@ -496,12 +460,7 @@ footer {
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
+                        <td id="resaltar-borde">&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                     </tr>
