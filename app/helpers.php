@@ -161,16 +161,17 @@ function PuedeCrearInforme($ot_id){
 
 function obtenerInformeEspecial($informe, $metodo_ensayo, &$informeEspecial) {
 
+  Log::debug("este log está en obtener especial ||" . $informe . "||||" .$metodo_ensayo . "|||" .$informeEspecial);
   
   $ot = ots::where('id', $informe->ot_id)->first();
   $clienteId = $ot->cliente_id;
   $tipoInforme = '';
-
+  
   if ($metodo_ensayo->metodo == 'RI') {    
       Log::debug("||este log está en el if|| 'RI' ||");
 
       $informeRi = InformesRi::where('informe_id', $informe->id)->first();
-      
+
       if ($informeRi->gasoducto_sn == 1) {
           $tipoInforme = 'gasoducto';
       } else if ($informeRi->perfil_sn == 1) {
@@ -196,17 +197,15 @@ function obtenerInformeEspecial($informe, $metodo_ensayo, &$informeEspecial) {
   }
   
   $metodoEnsayoId = $metodo_ensayo->id;
-  
+
   $pdfEspecial = pdfEspecial::where('cliente_id', $clienteId)
       ->where('metodo_ensayo_id', $metodoEnsayoId)
       ->where('tipo_informe', $tipoInforme)
       ->first();
 
-  
   if ($pdfEspecial) {
-      
+      Log::debug("Informe especial encontrado: || " . $pdfEspecial->informe_especial . " ||");
       return $informeEspecial = $pdfEspecial->informe_especial;
-      
   } else {
       Log::debug("No se encontró un registro en pdfEspecial" . $pdfEspecial);
   }

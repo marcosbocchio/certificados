@@ -128,7 +128,7 @@
                                             <tr v-for="(item,k) in TablaCosturas.data" :key="k">
                                                 <td>{{ item.fecha_formateada }}</td>
                                                 <td>
-                                                    <a :href="'/informes/ot/' + item.ot_id " target="_blank" title="Informe"><span>{{ item.nro_informe_formateado }}</span></a>
+                                                    <a :href="'/pdf/informe/' + item.informe_id " target="_blank" title="Informe"><span>{{ item.nro_informe_formateado }}</span></a>
                                                 </td>
                                                 <td>{{ item.codigo_junta }}</td>
                                                 <td>{{ item.linea }}</td>

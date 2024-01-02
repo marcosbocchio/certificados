@@ -37,7 +37,6 @@
      :tablaModelos3d_data="{{$informe_modelos_3d}}"
      :tablatramos_data="{{$informe_tramos}}"
      :solicitado_pordata = "{{$informe_solicitado_por}}"
-     :informe_especialdata="{{ json_encode($informeEspecial) }}"
      editmode
 
   ></informe-ri>
