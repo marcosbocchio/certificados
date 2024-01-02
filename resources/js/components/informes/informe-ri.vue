@@ -802,7 +802,7 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="proceso">Proceso</label>
-                            <v-select v-model="proceso_soldadores" :options="['GMAW', 'GTAW','SAW','SMAW']"></v-select>
+                            <v-select v-model="proceso_soldadores" :options="['GMAW', 'GTAW','SAW','SMAW','FCAW']"></v-select>
                         </div>
                     </div>
                       <div class="col-md-2">
@@ -1017,6 +1017,9 @@ import { eventSetReferencia } from '../event-bus';
        type : String,
        required :true
      },
+     informe_especialdata: {
+        type : String
+        },
        otdata : {
        type : Object,
        required : true
@@ -1227,7 +1230,7 @@ import { eventSetReferencia } from '../event-bus';
              dist_fuente_pel_edit_sn: false,
              proceso_soldadores:'',
              N_Reporte_RFI:'',
-             ptt_sn: ''
+             ptt_sn: '',
 
          }},
      created : function(){
@@ -1781,46 +1784,59 @@ import { eventSetReferencia } from '../event-bus';
              }.bind(this));
              return cant;
          },
-         AddPasadas () {
-             if(this.elemento_pasada == ''){
-                toastr.error('Error :El elemento es obligatorio para ingresar la/s pasadas');
+         AddPasadas() {
+            if (this.elemento_pasada == '') {
+                toastr.error('Error: El elemento es obligatorio para ingresar la/s pasadas');
                 return;
-             }
-             let cant_pasadas =  this.contarPasadaElemento(this.elemento_pasada);
-             if(this.formato == 'PLANTA'){
-                 if(cant_pasadas >= 1) {
-                    toastr.error('Error : Formato PLANTA  acepta 1 pasada');
+            }
+            let cant_pasadas = this.contarPasadaElemento(this.elemento_pasada);
+            if (this.formato == 'PLANTA') {
+                console.log(this.informe_especialdata);
+                if (this.informe_especialdata != '' && cant_pasadas >= 5) {
+                    toastr.error('Error: Formato PLANTA con informe especial acepta hasta 4 pasadas');
                     return;
-                 }
-             }
-             if(this.formato == 'DUCTO'){
-                 if(cant_pasadas >= 12) {
-                    toastr.error('Error : Formato DUCTO acepta 12 pasadas');
+                } else if (this.informe_especialdata == null && cant_pasadas >= 1) {
+                    toastr.error('Error: Formato PLANTA acepta solo 1 pasada');
                     return;
-                 }
-             }
+                }
+            }
+            if (this.formato == 'DUCTO') {
+                if (cant_pasadas >= 12) {
+                    toastr.error('Error: Formato DUCTO acepta 12 pasadas');
+                    return;
+                }
+            }
 
-             if(this.soldador1) {
-                 this.TablaPasadas.push({
-                     elemento_pasada : this.elemento_pasada,
-                     pasada : this.pasada,
-                     soldador1: this.soldador1,
-                     soldador2: this.soldador2,
-                     soldador3: this.soldador3,
-                     proceso_soldadores: this.proceso_soldadores,
-                 });
+            // Verificar si ya existe el proceso_soldadores en el elemento actual
+                let procesoExistente = this.TablaPasadas.find(pasada => 
+                pasada.elemento_pasada === this.elemento_pasada && 
+                pasada.proceso_soldadores === this.proceso_soldadores);
 
-                 if (this.isGasoducto){
+            if (procesoExistente) {
+                toastr.error('Error: El proceso seleccionado ya existe para el elemento actual');
+                return;
+            }
+
+            if (this.soldador1) {
+                this.TablaPasadas.push({
+                    elemento_pasada: this.elemento_pasada,
+                    pasada: this.pasada,
+                    soldador1: this.soldador1,
+                    soldador2: this.soldador2,
+                    soldador3: this.soldador3,
+                    proceso_soldadores: this.proceso_soldadores,
+                });
+
+                if (this.isGasoducto) {
                     if (this.pasada < 12)
                         this.pasada++;
-                    else if(this.pasada == 12)
+                    else if (this.pasada == 12)
                         this.pasada = 1;
-                 }
-             }
-             else{
-                toastr.error('Campo Cunio Z es obligatorio');
-             }
-         },
+                }
+            } else {
+                toastr.error('Campo Cuño Z es obligatorio');
+            }
+        },
          AddTramos () {
             if(this.tramo == ''){
                toastr.error('Error :El tramo es obligatorio');

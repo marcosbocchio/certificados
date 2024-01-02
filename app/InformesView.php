@@ -16,6 +16,7 @@ class InformesView extends Model
     public function informesRi() {
         return $this->hasOne('App\InformesRi', 'informe_id', 'id');
     }
+    
     public function scopeObra($query,$obra){
 
         if($obra) {
