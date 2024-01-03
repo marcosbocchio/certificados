@@ -182,12 +182,12 @@
 <table class="tablamain">
     <tbody>
         <tr class="gris" style="font-size: 6.20pt;">
-            <td style="width: 27mm;" >Hilo/Esencial</td>
+            <td style="width: 33mm;" >Hilo/Esencial</td>
             <td style="width: 26mm;" >Cantidad de Radiografia</td>
-            <td style="width: 24.5mm;" >Películas por Funda</td>
-            <td style="width: 30mm;" >Procedimientos/Rev</td>
-            <td style="width: 29.5mm;" >Norma de Ensayo</td>
-            <td style="width: 43mm;" >Criterio de Aceptación</td>
+            <td style="width: 25.4mm;" >Películas por Funda</td>
+            <td style="width: 29.6mm;" >Procedimientos/Rev</td>
+            <td style="width: 28mm;" >Norma de Ensayo</td>
+            <td style="width: 39mm;" >Criterio de Aceptación</td>
         </tr>
         <tr style="font-size: 9px;">
             <td >
