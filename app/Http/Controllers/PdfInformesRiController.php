@@ -111,7 +111,6 @@ class PdfInformesRiController extends Controller
         /*______________ Detalle ______________*/
           
           $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicionAESA(?)',array($informe_ri->id));
-
           $juntas_posiciones_procesos = DB::select('CALL juntas_posiciones_procesos(?)', array($informe_ri->id));
           $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
           

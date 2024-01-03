@@ -110,6 +110,7 @@ footer {
     @endif      
    
     @include('reportes.informes.partial.header-detalle-ri-sect3')
+    
     <table class="tablamain" style="width: 100%;">
         <tbody>
             <tr class="gris" style="font-size: 9.3px;">
@@ -148,6 +149,7 @@ footer {
             @endphp
 
 @foreach ($juntas_posiciones as $junta_posicion)
+
     @php 
         $contadorFilas++;
         $datosAgrupados = collect($juntas_posiciones_procesos)->groupBy('codigo');
