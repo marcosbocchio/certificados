@@ -1,5 +1,111 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[0],{
 
+/***/ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+      args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+      _next(undefined);
+    });
+  };
+}
+module.exports = _asyncToGenerator, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/defineProperty.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toPropertyKey = __webpack_require__(/*! ./toPropertyKey.js */ "./node_modules/@babel/runtime/helpers/toPropertyKey.js");
+function _defineProperty(obj, key, value) {
+  key = toPropertyKey(key);
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/toPrimitive.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/toPrimitive.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/typeof.js")["default"];
+function _toPrimitive(input, hint) {
+  if (_typeof(input) !== "object" || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || "default");
+    if (_typeof(res) !== "object") return res;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return (hint === "string" ? String : Number)(input);
+}
+module.exports = _toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/toPropertyKey.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/toPropertyKey.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/typeof.js")["default"];
+var toPrimitive = __webpack_require__(/*! ./toPrimitive.js */ "./node_modules/@babel/runtime/helpers/toPrimitive.js");
+function _toPropertyKey(arg) {
+  var key = toPrimitive(arg, "string");
+  return _typeof(key) === "symbol" ? key : String(key);
+}
+module.exports = _toPropertyKey, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
 /***/ "./node_modules/canvg/lib/index.es.js":
 /*!********************************************!*\
   !*** ./node_modules/canvg/lib/index.es.js ***!
@@ -97,7 +203,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "vectorsRatio", function() { return vectorsRatio; });
 /* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/canvg/node_modules/core-js/modules/es.promise.js");
 /* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/canvg/node_modules/@babel/runtime/helpers/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.string.match.js */ "./node_modules/canvg/node_modules/core-js/modules/es.string.match.js");
 /* harmony import */ var core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_2__);
@@ -109,7 +215,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator.js */ "./node_modules/canvg/node_modules/core-js/modules/web.dom-collections.iterator.js");
 /* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/canvg/node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var core_js_modules_es_array_reduce_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.array.reduce.js */ "./node_modules/canvg/node_modules/core-js/modules/es.array.reduce.js");
 /* harmony import */ var core_js_modules_es_array_reduce_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_reduce_js__WEBPACK_IMPORTED_MODULE_8__);
@@ -6689,132 +6795,6 @@ class Canvg {
 
 /***/ }),
 
-/***/ "./node_modules/canvg/node_modules/@babel/runtime/helpers/asyncToGenerator.js":
-/*!************************************************************************************!*\
-  !*** ./node_modules/canvg/node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
-  \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-      args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-      _next(undefined);
-    });
-  };
-}
-module.exports = _asyncToGenerator, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/canvg/node_modules/@babel/runtime/helpers/defineProperty.js":
-/*!**********************************************************************************!*\
-  !*** ./node_modules/canvg/node_modules/@babel/runtime/helpers/defineProperty.js ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toPropertyKey = __webpack_require__(/*! ./toPropertyKey.js */ "./node_modules/canvg/node_modules/@babel/runtime/helpers/toPropertyKey.js");
-function _defineProperty(obj, key, value) {
-  key = toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
-module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/canvg/node_modules/@babel/runtime/helpers/toPrimitive.js":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/canvg/node_modules/@babel/runtime/helpers/toPrimitive.js ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _typeof = __webpack_require__(/*! ./typeof.js */ "./node_modules/canvg/node_modules/@babel/runtime/helpers/typeof.js")["default"];
-function toPrimitive(t, r) {
-  if ("object" != _typeof(t) || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r || "default");
-    if ("object" != _typeof(i)) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r ? String : Number)(t);
-}
-module.exports = toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/canvg/node_modules/@babel/runtime/helpers/toPropertyKey.js":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/canvg/node_modules/@babel/runtime/helpers/toPropertyKey.js ***!
-  \*********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _typeof = __webpack_require__(/*! ./typeof.js */ "./node_modules/canvg/node_modules/@babel/runtime/helpers/typeof.js")["default"];
-var toPrimitive = __webpack_require__(/*! ./toPrimitive.js */ "./node_modules/canvg/node_modules/@babel/runtime/helpers/toPrimitive.js");
-function toPropertyKey(t) {
-  var i = toPrimitive(t, "string");
-  return "symbol" == _typeof(i) ? i : String(i);
-}
-module.exports = toPropertyKey, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ "./node_modules/canvg/node_modules/@babel/runtime/helpers/typeof.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/canvg/node_modules/@babel/runtime/helpers/typeof.js ***!
-  \**************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _typeof(o) {
-  "@babel/helpers - typeof";
-
-  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
-    return typeof o;
-  } : function (o) {
-    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(o);
-}
-module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
 /***/ "./node_modules/canvg/node_modules/core-js/internals/a-callable.js":
 /*!*************************************************************************!*\
   !*** ./node_modules/canvg/node_modules/core-js/internals/a-callable.js ***!
@@ -6870,13 +6850,13 @@ module.exports = function (argument) {
 
 "use strict";
 
-var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/canvg/node_modules/core-js/internals/is-callable.js");
+var isPossiblePrototype = __webpack_require__(/*! ../internals/is-possible-prototype */ "./node_modules/canvg/node_modules/core-js/internals/is-possible-prototype.js");
 
 var $String = String;
 var $TypeError = TypeError;
 
 module.exports = function (argument) {
-  if (typeof argument == 'object' || isCallable(argument)) return argument;
+  if (isPossiblePrototype(argument)) return argument;
   throw new $TypeError("Can't set " + $String(argument) + ' as a prototype');
 };
 
@@ -7097,36 +7077,6 @@ module.exports = {
   // `Array.prototype.reduceRight` method
   // https://tc39.es/ecma262/#sec-array.prototype.reduceright
   right: createMethod(true)
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/canvg/node_modules/core-js/internals/array-slice-simple.js":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/canvg/node_modules/core-js/internals/array-slice-simple.js ***!
-  \*********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var toAbsoluteIndex = __webpack_require__(/*! ../internals/to-absolute-index */ "./node_modules/canvg/node_modules/core-js/internals/to-absolute-index.js");
-var lengthOfArrayLike = __webpack_require__(/*! ../internals/length-of-array-like */ "./node_modules/canvg/node_modules/core-js/internals/length-of-array-like.js");
-var createProperty = __webpack_require__(/*! ../internals/create-property */ "./node_modules/canvg/node_modules/core-js/internals/create-property.js");
-
-var $Array = Array;
-var max = Math.max;
-
-module.exports = function (O, start, end) {
-  var length = lengthOfArrayLike(O);
-  var k = toAbsoluteIndex(start, length);
-  var fin = toAbsoluteIndex(end === undefined ? length : end, length);
-  var result = $Array(max(fin - k, 0));
-  var n = 0;
-  for (; k < fin; k++, n++) createProperty(result, n, O[k]);
-  result.length = n;
-  return result;
 };
 
 
@@ -7404,28 +7354,6 @@ module.exports = function (bitmap, value) {
 
 /***/ }),
 
-/***/ "./node_modules/canvg/node_modules/core-js/internals/create-property.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/canvg/node_modules/core-js/internals/create-property.js ***!
-  \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var toPropertyKey = __webpack_require__(/*! ../internals/to-property-key */ "./node_modules/canvg/node_modules/core-js/internals/to-property-key.js");
-var definePropertyModule = __webpack_require__(/*! ../internals/object-define-property */ "./node_modules/canvg/node_modules/core-js/internals/object-define-property.js");
-var createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ "./node_modules/canvg/node_modules/core-js/internals/create-property-descriptor.js");
-
-module.exports = function (object, key, value) {
-  var propertyKey = toPropertyKey(key);
-  if (propertyKey in object) definePropertyModule.f(object, propertyKey, createPropertyDescriptor(0, value));
-  else object[propertyKey] = value;
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/canvg/node_modules/core-js/internals/define-built-in-accessor.js":
 /*!***************************************************************************************!*\
   !*** ./node_modules/canvg/node_modules/core-js/internals/define-built-in-accessor.js ***!
@@ -7528,29 +7456,6 @@ module.exports = !fails(function () {
   // eslint-disable-next-line es/no-object-defineproperty -- required for testing
   return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] !== 7;
 });
-
-
-/***/ }),
-
-/***/ "./node_modules/canvg/node_modules/core-js/internals/document-all.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/canvg/node_modules/core-js/internals/document-all.js ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var documentAll = typeof document == 'object' && document.all;
-
-// https://tc39.es/ecma262/#sec-IsHTMLDDA-internal-slot
-// eslint-disable-next-line unicorn/no-typeof-undefined -- required for testing
-var IS_HTMLDDA = typeof documentAll == 'undefined' && documentAll !== undefined;
-
-module.exports = {
-  all: documentAll,
-  IS_HTMLDDA: IS_HTMLDDA
-};
 
 
 /***/ }),
@@ -8659,13 +8564,13 @@ module.exports = Array.isArray || function isArray(argument) {
 
 "use strict";
 
-var $documentAll = __webpack_require__(/*! ../internals/document-all */ "./node_modules/canvg/node_modules/core-js/internals/document-all.js");
-
-var documentAll = $documentAll.all;
+// https://tc39.es/ecma262/#sec-IsHTMLDDA-internal-slot
+var documentAll = typeof document == 'object' && document.all;
 
 // `IsCallable` abstract operation
 // https://tc39.es/ecma262/#sec-iscallable
-module.exports = $documentAll.IS_HTMLDDA ? function (argument) {
+// eslint-disable-next-line unicorn/no-typeof-undefined -- required for testing
+module.exports = typeof documentAll == 'undefined' && documentAll !== undefined ? function (argument) {
   return typeof argument == 'function' || argument === documentAll;
 } : function (argument) {
   return typeof argument == 'function';
@@ -8802,14 +8707,27 @@ module.exports = function (it) {
 "use strict";
 
 var isCallable = __webpack_require__(/*! ../internals/is-callable */ "./node_modules/canvg/node_modules/core-js/internals/is-callable.js");
-var $documentAll = __webpack_require__(/*! ../internals/document-all */ "./node_modules/canvg/node_modules/core-js/internals/document-all.js");
 
-var documentAll = $documentAll.all;
-
-module.exports = $documentAll.IS_HTMLDDA ? function (it) {
-  return typeof it == 'object' ? it !== null : isCallable(it) || it === documentAll;
-} : function (it) {
+module.exports = function (it) {
   return typeof it == 'object' ? it !== null : isCallable(it);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/canvg/node_modules/core-js/internals/is-possible-prototype.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/canvg/node_modules/core-js/internals/is-possible-prototype.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var isObject = __webpack_require__(/*! ../internals/is-object */ "./node_modules/canvg/node_modules/core-js/internals/is-object.js");
+
+module.exports = function (argument) {
+  return isObject(argument) || argument === null;
 };
 
 
@@ -9334,8 +9252,8 @@ module.exports = Math.trunc || function trunc(x) {
 "use strict";
 
 var global = __webpack_require__(/*! ../internals/global */ "./node_modules/canvg/node_modules/core-js/internals/global.js");
+var safeGetBuiltIn = __webpack_require__(/*! ../internals/safe-get-built-in */ "./node_modules/canvg/node_modules/core-js/internals/safe-get-built-in.js");
 var bind = __webpack_require__(/*! ../internals/function-bind-context */ "./node_modules/canvg/node_modules/core-js/internals/function-bind-context.js");
-var getOwnPropertyDescriptor = __webpack_require__(/*! ../internals/object-get-own-property-descriptor */ "./node_modules/canvg/node_modules/core-js/internals/object-get-own-property-descriptor.js").f;
 var macrotask = __webpack_require__(/*! ../internals/task */ "./node_modules/canvg/node_modules/core-js/internals/task.js").set;
 var Queue = __webpack_require__(/*! ../internals/queue */ "./node_modules/canvg/node_modules/core-js/internals/queue.js");
 var IS_IOS = __webpack_require__(/*! ../internals/engine-is-ios */ "./node_modules/canvg/node_modules/core-js/internals/engine-is-ios.js");
@@ -9347,9 +9265,7 @@ var MutationObserver = global.MutationObserver || global.WebKitMutationObserver;
 var document = global.document;
 var process = global.process;
 var Promise = global.Promise;
-// Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
-var queueMicrotaskDescriptor = getOwnPropertyDescriptor(global, 'queueMicrotask');
-var microtask = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
+var microtask = safeGetBuiltIn('queueMicrotask');
 var notify, toggle, node, promise, then;
 
 // modern engines have queueMicrotask method
@@ -10464,6 +10380,31 @@ module.exports = function (it) {
 
 /***/ }),
 
+/***/ "./node_modules/canvg/node_modules/core-js/internals/safe-get-built-in.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/canvg/node_modules/core-js/internals/safe-get-built-in.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(/*! ../internals/global */ "./node_modules/canvg/node_modules/core-js/internals/global.js");
+var DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ "./node_modules/canvg/node_modules/core-js/internals/descriptors.js");
+
+// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+// Avoid NodeJS experimental warning
+module.exports = function (name) {
+  if (!DESCRIPTORS) return global[name];
+  var descriptor = getOwnPropertyDescriptor(global, name);
+  return descriptor && descriptor.value;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/canvg/node_modules/core-js/internals/set-species.js":
 /*!**************************************************************************!*\
   !*** ./node_modules/canvg/node_modules/core-js/internals/set-species.js ***!
@@ -10575,10 +10516,10 @@ var store = __webpack_require__(/*! ../internals/shared-store */ "./node_modules
 (module.exports = function (key, value) {
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.34.0',
+  version: '3.35.0',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2014-2023 Denis Pushkarev (zloirock.ru)',
-  license: 'https://github.com/zloirock/core-js/blob/v3.34.0/LICENSE',
+  license: 'https://github.com/zloirock/core-js/blob/v3.35.0/LICENSE',
   source: 'https://github.com/zloirock/core-js'
 });
 
@@ -11907,7 +11848,6 @@ $({ target: 'Promise', stat: true, forced: PROMISE_STATICS_INCORRECT_ITERATION }
 "use strict";
 
 var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/canvg/node_modules/core-js/internals/export.js");
-var call = __webpack_require__(/*! ../internals/function-call */ "./node_modules/canvg/node_modules/core-js/internals/function-call.js");
 var newPromiseCapabilityModule = __webpack_require__(/*! ../internals/new-promise-capability */ "./node_modules/canvg/node_modules/core-js/internals/new-promise-capability.js");
 var FORCED_PROMISE_CONSTRUCTOR = __webpack_require__(/*! ../internals/promise-constructor-detection */ "./node_modules/canvg/node_modules/core-js/internals/promise-constructor-detection.js").CONSTRUCTOR;
 
@@ -11916,7 +11856,8 @@ var FORCED_PROMISE_CONSTRUCTOR = __webpack_require__(/*! ../internals/promise-co
 $({ target: 'Promise', stat: true, forced: FORCED_PROMISE_CONSTRUCTOR }, {
   reject: function reject(r) {
     var capability = newPromiseCapabilityModule.f(this);
-    call(capability.reject, undefined, r);
+    var capabilityReject = capability.reject;
+    capabilityReject(r);
     return capability.promise;
   }
 });
@@ -12002,7 +11943,7 @@ var INCORRECT_NAME = PROPER_FUNCTION_NAME && nativeToString.name !== TO_STRING;
 // `RegExp.prototype.toString` method
 // https://tc39.es/ecma262/#sec-regexp.prototype.tostring
 if (NOT_GENERIC || INCORRECT_NAME) {
-  defineBuiltIn(RegExp.prototype, TO_STRING, function toString() {
+  defineBuiltIn(RegExpPrototype, TO_STRING, function toString() {
     var R = anObject(this);
     var pattern = $toString(R.source);
     var flags = $toString(getRegExpFlags(R));
@@ -12032,8 +11973,6 @@ var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object
 var correctIsRegExpLogic = __webpack_require__(/*! ../internals/correct-is-regexp-logic */ "./node_modules/canvg/node_modules/core-js/internals/correct-is-regexp-logic.js");
 var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/canvg/node_modules/core-js/internals/is-pure.js");
 
-// eslint-disable-next-line es/no-string-prototype-endswith -- safe
-var nativeEndsWith = uncurryThis(''.endsWith);
 var slice = uncurryThis(''.slice);
 var min = Math.min;
 
@@ -12054,9 +11993,7 @@ $({ target: 'String', proto: true, forced: !MDN_POLYFILL_BUG && !CORRECT_IS_REGE
     var len = that.length;
     var end = endPosition === undefined ? len : min(toLength(endPosition), len);
     var search = toString(searchString);
-    return nativeEndsWith
-      ? nativeEndsWith(that, search, end)
-      : slice(that, end - search.length, end) === search;
+    return slice(that, end - search.length, end) === search;
   }
 });
 
@@ -12332,7 +12269,7 @@ var advanceStringIndex = __webpack_require__(/*! ../internals/advance-string-ind
 var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/canvg/node_modules/core-js/internals/to-length.js");
 var toString = __webpack_require__(/*! ../internals/to-string */ "./node_modules/canvg/node_modules/core-js/internals/to-string.js");
 var getMethod = __webpack_require__(/*! ../internals/get-method */ "./node_modules/canvg/node_modules/core-js/internals/get-method.js");
-var arraySlice = __webpack_require__(/*! ../internals/array-slice-simple */ "./node_modules/canvg/node_modules/core-js/internals/array-slice-simple.js");
+var arraySlice = __webpack_require__(/*! ../internals/array-slice */ "./node_modules/canvg/node_modules/core-js/internals/array-slice.js");
 var callRegExpExec = __webpack_require__(/*! ../internals/regexp-exec-abstract */ "./node_modules/canvg/node_modules/core-js/internals/regexp-exec-abstract.js");
 var regexpExec = __webpack_require__(/*! ../internals/regexp-exec */ "./node_modules/canvg/node_modules/core-js/internals/regexp-exec.js");
 var stickyHelpers = __webpack_require__(/*! ../internals/regexp-sticky-helpers */ "./node_modules/canvg/node_modules/core-js/internals/regexp-sticky-helpers.js");
@@ -12498,8 +12435,6 @@ var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object
 var correctIsRegExpLogic = __webpack_require__(/*! ../internals/correct-is-regexp-logic */ "./node_modules/canvg/node_modules/core-js/internals/correct-is-regexp-logic.js");
 var IS_PURE = __webpack_require__(/*! ../internals/is-pure */ "./node_modules/canvg/node_modules/core-js/internals/is-pure.js");
 
-// eslint-disable-next-line es/no-string-prototype-startswith -- safe
-var nativeStartsWith = uncurryThis(''.startsWith);
 var stringSlice = uncurryThis(''.slice);
 var min = Math.min;
 
@@ -12518,9 +12453,7 @@ $({ target: 'String', proto: true, forced: !MDN_POLYFILL_BUG && !CORRECT_IS_REGE
     notARegExp(searchString);
     var index = toLength(min(arguments.length > 1 ? arguments[1] : undefined, that.length));
     var search = toString(searchString);
-    return nativeStartsWith
-      ? nativeStartsWith(that, search, index)
-      : stringSlice(that, index, index + search.length) === search;
+    return stringSlice(that, index, index + search.length) === search;
   }
 });
 

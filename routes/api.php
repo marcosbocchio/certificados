@@ -655,7 +655,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     );
     // REPORTE ELEMENTOS
     Route::get(
-        'elementos/ot/{ot_id}/plano/{plano}/elemento/{elemento}/obra/{obra}',
+        'elementos/ot/{ot_id}/plano/{plano}/elemento/{elemento}/obra/{obra}/componente/{componente}',
         'ElementosController@getElementos'
     );
     // Placas

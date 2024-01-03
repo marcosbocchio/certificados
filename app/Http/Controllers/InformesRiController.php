@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\helpers;
 use App\Clientes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -115,6 +115,12 @@ class InformesRiController extends Controller
         $informe_diametroEspesor = $informe->diametro_espesor_id ? DiametrosEspesor::find($informe->diametro_espesor_id) : null ;
         $informe_diametro = $informe_diametroEspesor ? DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first() : null;
         $informe_interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->with('fuente')->first();
+        $metodoEnsayoObj = new stdClass();
+        $metodoEnsayoObj->metodo = $metodo;
+        $metodoEnsayoObj->id = 1;
+        $informeEspecial = null;
+        obtenerInformeEspecial($informe, $metodoEnsayoObj, $informeEspecial);
+        Log::debug("No aaaaaaaaaaaaaas" . $informeEspecial);
 
         if ($informe_interno_fuente == null)
            $informe_interno_fuente = new InternoFuentes();
@@ -179,6 +185,7 @@ class InformesRiController extends Controller
                                                  'informe_modelos_3d',
                                                  'header_titulo',
                                                  'informe_solicitado_por',
+                                                 'informeEspecial',
                                                  'header_descripcion'));
     }
 

@@ -78,6 +78,7 @@ class PdfInformesRiController extends Controller
         $observaciones = $informe->observaciones;
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
         $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
+        
 
         $informeEspecial = null;
 
@@ -110,6 +111,7 @@ class PdfInformesRiController extends Controller
         /*______________ Detalle ______________*/
           
           $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
+          $juntas_posiciones_procesos = DB::select('CALL juntas_posiciones_procesos(?)', array($informe_ri->id));
           $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
           
           
@@ -144,6 +146,7 @@ class PdfInformesRiController extends Controller
                                                               'numero_repetido',
                                                               'informe_solicitado_por',
                                                               'nroAESA',
+                                                              'juntas_posiciones_procesos',
                                                               'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 
 
