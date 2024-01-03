@@ -75,7 +75,7 @@ main{
     font-size: 6.6pt;
 }
 #alto_final td{
-    height: 4.5mm;
+    height: 5.78mm;
     padding: 0px;
 }
 #alto_final p{
@@ -143,9 +143,9 @@ footer {
             </tr>
 
             @php
-    $contadorFilas = 0;
-
-@endphp
+            $filas_por_hoja = ($contratista && $contratista->reporte_especial_en_cliente == 1) ? 21 : 25;
+            $contadorFilas = 0;
+            @endphp
 
 @foreach ($juntas_posiciones as $junta_posicion)
     @php 
@@ -328,7 +328,7 @@ footer {
                         @endphp
                 </tr>
                 <!-- Insertar salto de página después de 21 filas y reiniciar el contador -->
-                @if ($contadorFilas == 21)
+                @if ($contadorFilas == $filas_por_hoja)
                     </tbody>
                     </table>
                     <footer>
@@ -440,7 +440,7 @@ footer {
                 @endforeach
 
                 @php
-                    $filas_vacias = 21 - $contadorFilas;
+                    $filas_vacias = $filas_por_hoja - $contadorFilas;
                 @endphp
                 @for ($i = 0; $i < $filas_vacias; $i++)
                     <tr id="alto_final">
