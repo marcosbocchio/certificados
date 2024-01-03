@@ -114,16 +114,16 @@ footer {
     <table class="tablamain" style="width: 100%;">
         <tbody>
             <tr class="gris" style="font-size: 9.3px;">
-                <td colspan="4" style="width: 14%;" id="resaltar-borde">Identificación de la/s Soldadura/s</td>
-                <td colspan="5" style="width: 24%;" id="resaltar-borde">Soldadores según Proceso</td>
-                <td colspan="10" style="width: 39%;" id="resaltar-borde">Indicaciones</td>
+                <td colspan="4" style="width: 16%;" id="resaltar-borde">Identificación de la/s Soldadura/s</td>
+                <td colspan="5" style="width: 27%;" id="resaltar-borde">Soldadores según Proceso</td>
+                <td colspan="10" style="width: 40%;" id="resaltar-borde">Indicaciones</td>
                 <td colspan="2" style="width: 30%;">Resultados</td>
             </tr>
             <tr id="alto">
-                <td><p style="width: 14mm;">Nº de Soldadura</p></td>
+                <td style="width: 18mm;"><p>Nº de Soldadura</p></td>
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
                 <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
-                <td id="resaltar-borde" ><p style="margin: 0mm -3mm;"  class="vertical-text" >Posición</p></td>
+                <td id="resaltar-borde" style="width: 8mm;"><p class="vertical-text" >Posición</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">GMAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
@@ -137,10 +137,10 @@ footer {
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Socavación</p></td>
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Concavidad</p></td>
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Desalineación</p></td>
-                <td><p style="margin: 0mm -5mm;" class="vertical-text">Fisuras</p></td>
-                <td id="resaltar-borde"><p style="margin: 0mm -5mm;" class="vertical-text" >Película Defectuosa</p></td>
-                <td style="width: 10mm;"><p style="margin: 0mm -25mm;" class="vertical-text">Resultado</p></td>
-                <td><p style="width: 20.5mm;">Ubicación de los defectos a reparar</p></td>
+                <td><p style="margin: 0mm -1mm;" class="vertical-text">Fisuras</p></td>
+                <td id="resaltar-borde"><p style="margin: 0mm -3mm;" class="vertical-text" >Película Defectuosa</p></td>
+                <td style="width: 5mm;"><p style="margin: 0mm -25mm;" class="vertical-text">Resultado</p></td>
+                <td><p style="width: 25.5mm;">Ubicación de los defectos a reparar</p></td>
             </tr>
 
             @php
@@ -408,35 +408,35 @@ footer {
                     @include('reportes.informes.partial.header-detalle-ri-sect3')   
                     <table class="tablamain">
                         <tbody>
-                            <tr class="gris" style="font-size: 9.3px;">
-                                <td colspan="4" style="width: 14%;" id="resaltar-borde">Identificación de la/s Soldadura/s</td>
-                                <td colspan="5" style="width: 24%;" id="resaltar-borde">Soldadores según Proceso</td>
-                                <td colspan="10" style="width: 39%;" id="resaltar-borde">Indicaciones</td>
-                                <td colspan="2" style="width: 30%;">Resultados</td>
-                            </tr>
-                    <tr id="alto">
-                        <td><p style="width: 14mm;">Nº de Soldadura</p></td>
-                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
-                        <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
-                        <td id="resaltar-borde" ><p style="margin: 0mm -3mm;"  class="vertical-text" >Posición</p></td>
-                        <td><p style="margin: 0mm -6mm;" class="vertical-text">GMAW</p></td>
-                        <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW</p></td>
-                        <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
-                        <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
-                        <td id="resaltar-borde"><p style="margin: 0mm -6mm;" class="vertical-text" >FCAW</p></td>
-                        <td><p style="margin: 0mm -2mm;" class="vertical-text">Porosidad</p></td>
-                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Inclusión de Escoria</p></td>
-                        <td><p style="margin: 0mm -8mm;" class="vertical-text">Inclusión de Tungsteno</p></td>
-                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Falta de Penetración</p></td>
-                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Falta de Fusión</p></td>
-                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Socavación</p></td>
-                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Concavidad</p></td>
-                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Desalineación</p></td>
-                        <td><p style="margin: 0mm -5mm;" class="vertical-text">Fisuras</p></td>
-                        <td id="resaltar-borde"><p style="margin: 0mm -5mm;" class="vertical-text" >Película Defectuosa</p></td>
-                        <td style="width: 10mm;"><p style="margin: 0mm -25mm;" class="vertical-text">Resultado</p></td>
-                        <td><p style="width: 20.5mm;">Ubicación de los defectos a reparar</p></td>
-                    </tr>
+                        <tr class="gris" style="font-size: 9.3px;">
+                            <td colspan="4" style="width: 16%;" id="resaltar-borde">Identificación de la/s Soldadura/s</td>
+                            <td colspan="5" style="width: 27%;" id="resaltar-borde">Soldadores según Proceso</td>
+                            <td colspan="10" style="width: 40%;" id="resaltar-borde">Indicaciones</td>
+                            <td colspan="2" style="width: 30%;">Resultados</td>
+                        </tr>
+                        <tr id="alto">
+                            <td style="width: 18mm;"><p>Nº de Soldadura</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
+                            <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
+                            <td id="resaltar-borde" style="width: 8mm;"><p class="vertical-text" >Posición</p></td>
+                            <td><p style="margin: 0mm -6mm;" class="vertical-text">GMAW</p></td>
+                            <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW</p></td>
+                            <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
+                            <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
+                            <td id="resaltar-borde"><p style="margin: 0mm -6mm;" class="vertical-text" >FCAW</p></td>
+                            <td><p style="margin: 0mm -2mm;" class="vertical-text">Porosidad</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Inclusión de Escoria</p></td>
+                            <td><p style="margin: 0mm -8mm;" class="vertical-text">Inclusión de Tungsteno</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Falta de Penetración</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Falta de Fusión</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Socavación</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Concavidad</p></td>
+                            <td><p style="margin: 0mm -5mm;" class="vertical-text">Desalineación</p></td>
+                            <td><p style="margin: 0mm -1mm;" class="vertical-text">Fisuras</p></td>
+                            <td id="resaltar-borde"><p style="margin: 0mm -3mm;" class="vertical-text" >Película Defectuosa</p></td>
+                            <td style="width: 5mm;"><p style="margin: 0mm -25mm;" class="vertical-text">Resultado</p></td>
+                            <td><p style="width: 25.5mm;">Ubicación de los defectos a reparar</p></td>
+                        </tr>
                     @php $contadorFilas = 0; @endphp
                 @endif
                 @endforeach
