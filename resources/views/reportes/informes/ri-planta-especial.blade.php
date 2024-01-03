@@ -114,9 +114,9 @@ footer {
     <table class="tablamain" style="width: 100%;">
         <tbody>
             <tr class="gris" style="font-size: 9.3px;">
-                <td colspan="4" style="width: 15%;" id="resaltar-borde">Identificación de la/s Soldadura/s</td>
-                <td colspan="5" style="width: 23%;" id="resaltar-borde">Soldadores según Proceso</td>
-                <td colspan="10" style="width: 40%;" id="resaltar-borde">Indicaciones</td>
+                <td colspan="4" style="width: 14%;" id="resaltar-borde">Identificación de la/s Soldadura/s</td>
+                <td colspan="5" style="width: 24%;" id="resaltar-borde">Soldadores según Proceso</td>
+                <td colspan="10" style="width: 39%;" id="resaltar-borde">Indicaciones</td>
                 <td colspan="2" style="width: 30%;">Resultados</td>
             </tr>
             <tr id="alto">
