@@ -395,12 +395,15 @@ footer {
                             </tbody>
                         </table>
                     </footer>
+                    @php $contadorFilas = 0; @endphp
                     <div class="page-break"></div>
                     @include('reportes.partial.header-sec1-especial')
 
                     @if ($contratista && $contratista->reporte_especial_en_cliente == 1)
                         @include('reportes.partial.header-proyecto-sect2')
-                    @endif   
+                    @endif      
+                
+                    @include('reportes.informes.partial.header-detalle-ri-sect3')   
                     <table class="tablamain">
                         <tbody>
                             <tr class="gris" style="font-size: 9.3px;">
@@ -434,13 +437,12 @@ footer {
                     </tr>
                     @php $contadorFilas = 0; @endphp
                 @endif
-            @endforeach
+                @endforeach
 
                 @php
-                    $total_filas = count($juntas_posiciones);
-                    $filas_restantes = 21 - $total_filas;
+                    $filas_vacias = 21 - $contadorFilas;
                 @endphp
-                @for ($i = 0; $i < $filas_restantes; $i++)
+                @for ($i = 0; $i < $filas_vacias; $i++)
                     <tr id="alto_final">
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
