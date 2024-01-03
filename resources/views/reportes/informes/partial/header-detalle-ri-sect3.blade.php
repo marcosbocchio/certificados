@@ -9,7 +9,7 @@
                     ENOD-{{$nroAESA}}
                 @endif
             </td>   
-            <td width="18mm" height="4mm">
+            <td width="20.3mm" height="4mm">
                 @if($informe_ri->ptt_sn !== null)
                     @if($informe_ri->ptt_sn == 1)
                         PTT
@@ -21,7 +21,7 @@
                     &nbsp;
                 @endif
             </td>
-            <td width= "23mm" height="4mm">FECHA:</td>
+            <td width= "20.8mm" height="4mm">FECHA:</td>
             <td width= "37mm" height="4mm" id="left">{{ $fecha }}</td>
         </tr>
     </tbody>
@@ -31,8 +31,8 @@
     <tbody>
         <tr class="gris" style="height: 6mm;">
             <td style="width: 19mm;" >Obra n°</td>
-            <td style="width: 50mm;" >Cliente</td>
-            <td style="width: 34mm;" >Equipo/Linea</td>
+            <td style="width: 50.2mm;" >Cliente</td>
+            <td style="width: 33.8mm;" >Equipo/Linea</td>
             <td style="width: 20mm;" >Material</td>
             <td style="width: 13mm;" >Diametro</td>
             <td style="width: 13mm;" >Esp. Material</td>
@@ -157,8 +157,8 @@
 <table class="tablamain">
     <tbody>
         <tr class="gris">
-            <td style="width: 37.1mm;" >Ubicacion ICI</td>
-            <td style="width: 32mm;" >Ubicacion Marcadores</td>
+            <td style="width: 36.9mm;" >Ubicacion ICI</td>
+            <td style="width: 32.2mm;" >Ubicacion Marcadores</td>
             <td style="width: 54mm;" >Minima Distancia Fuente - Objeto</td>
             <td style="width: 57mm;" >Maxima Distancia Objeto - Pelicula</td>
         </tr>
@@ -182,12 +182,12 @@
 <table class="tablamain">
     <tbody>
         <tr class="gris" style="font-size: 6.20pt;">
-            <td style="width: 27mm;" >Hilo/Esencial</td>
-            <td style="width: 26mm;" >Cantidad de Radiografia</td>
-            <td style="width: 24mm;" >Películas por Funda</td>
-            <td style="width: 30mm;" >Procedimientos/Rev</td>
-            <td style="width: 29.5mm;" >Norma de Ensayo</td>
-            <td style="width: 45mm;" >Criterio de Aceptación</td>
+            <td style="width: 30.9mm;" >Hilo/Esencial</td>
+            <td style="width: 27mm;" >Cantidad de Radiografia</td>
+            <td style="width: 26mm;" >Películas por Funda</td>
+            <td style="width: 32.3mm;" >Procedimientos/Rev</td>
+            <td style="width: 25.4mm;" >Norma de Ensayo</td>
+            <td style="width: 38mm;" >Criterio de Aceptación</td>
         </tr>
         <tr style="font-size: 9px;">
             <td >
