@@ -764,7 +764,17 @@
                                     </div>
                                </div>
 
-                               <div class="clearfix"></div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        <span>
+                                        <button type="button" @click="triggerFileUpload">
+                                            <i class="fa fa-file-excel-o"></i> Cargar Excel
+                                        </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <input type="file" ref="fileInput" style="display: none" @change="uploadExcel" accept=".xlsx, .xls" />
+                                <div class="clearfix"></div>
 
                                 <!-- tabla me -->
                                 <div class="col-md-12">
@@ -811,53 +821,23 @@
                                 <div v-if="Tabla_me[indexPosTabla_me]">
                                     <div class="col-lg-12">
                                         <div class="table-responsive">
-                                            <table class="table table-hover table-bordered" style="display: block;max-height: 500px;border-bottom: none;border-right: none;">
-                                                <tbody>
-                                                    <tr v-for="(p) in parseInt(Tabla_me[indexPosTabla_me].cantidad_posiciones_me) + 1" :key="p" @click="selectPosPos(p)" >
-
-                                                         <td style="min-width:60px;min-height:60px" v-for="(g) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2" :key="g"  :bgcolor="colorLimiteTabla(p,g)" @click="selectPosGeneratriz(g)" >
-
-                                                            <div v-if="p === 1 && g === 1">
-                                                                &nbsp;
-                                                            </div>
-                                                            <div v-else-if="p === 1 && g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
-                                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACCESORIO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            </div>
-                                                            <div v-else-if="g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
-                                                                 <div v-if="indexPosPos == p && indexPosGeneratriz == g">
-                                                                    <v-select v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" label="codigo" :options="accesorios_us"></v-select>
-                                                                 </div>
-                                                                 <div v-else-if="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]">
-                                                                    {{ Tabla_me[indexPosTabla_me].mediciones[g-1][p-1].codigo }}
-                                                                 </div>
-                                                                 <div v-else>
-                                                                     &nbsp;
-                                                                 </div>
-
-                                                            </div>
-                                                            <div v-else-if="indexPosPos == p && indexPosGeneratriz == g">
-                                                                 <div v-if="p === 1 || g === 1">
-                                                                    <input style="width:40px;" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="10" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)">
-                                                                 </div>
-                                                                 <div v-else>
-                                                                    <input style="width:40px;" type="number" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">
-                                                                 </div>
-                                                            </div>
-                                                            <div v-else>
-
-                                                                <div v-if="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1] !=''">
-                                                                    {{ Tabla_me[indexPosTabla_me].mediciones[g-1][p-1] }}
-                                                                </div>
-                                                                <div v-else>
-                                                                    <span style="font-style: oblique; color: cadetblue;"> {{ p-1 }}-{{generatrices[g-2].valor }} </span>
-                                                                </div>
-
-                                                            </div>
-
-                                                         </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                        <table class="table table-hover table-bordered" style="display: block; max-height: 500px; border-bottom: none; border-right: none;">
+                                            <tbody>
+                                            <!-- Iteramos basándonos en el número de generatrices, que será la longitud del sub-array más largo -->
+                                            <tr v-for="n in Math.max(...Tabla_me[indexPosTabla_me].mediciones.map(fila => fila.length))" :key="n">
+                                                <!-- Creamos una celda por cada posición posible, que es la longitud de mediciones -->
+                                                <td v-for="(fila, indexFila) in Tabla_me[indexPosTabla_me].mediciones" :key="indexFila" :style="{ minWidth: '60px', minHeight: '60px' }">
+                                                <!-- Mostramos el n-ésimo elemento de cada fila si existe, o un espacio en blanco si no -->
+                                                <template v-if="fila.length >= n">
+                                                    {{ fila[n-1] }}
+                                                </template>
+                                                <template v-else>
+                                                    &nbsp;
+                                                </template>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                         </div>
                                     </div>
                                 </div>
@@ -957,7 +937,7 @@ import moment from 'moment';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import {sprintf} from '../../functions/sprintf.js';
-import XLSX from 'xlsx'
+import * as XLSX from 'xlsx';
 
 export default {
 
@@ -1197,6 +1177,7 @@ export default {
         Tabla_me:[],
         generatrices:[],
         accesorios_us:[],
+        accesorios:[],
 
         // referencias
         index_referencias:'',
@@ -1798,7 +1779,69 @@ export default {
                 path4:null
             });
         },
+        triggerFileUpload() {
+      // Activar el input de tipo file
+      this.$refs.fileInput.click();
+    },
+    uploadExcel(event) {
+      // Leer el archivo seleccionado y procesar los datos
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        this.processExcelData(XLSX.utils.sheet_to_json(worksheet, {header: 1}));
+      };
+      reader.readAsArrayBuffer(file);
+    },
+    processExcelData(data) {
+  const elemento_me = String(data[0][1] || ''); // B1
+  const umbral_me = String(data[2][1] || ''); // B3
+  const espesor_minimo_me = String(data[4][1] || ''); // B5
+  const cantidad_generatrices_linea_pdf_me = data[6][1] || ''; // B7
+  const diametro_me = String(data[8][1] || ''); // B9
+  const cantidad_posiciones_me = String(data[10][1] || ''); // B11
+  const cantidad_generatrices_me = String(data[12][1] || ''); // B13
 
+  let mediciones = [];
+  this.accesorios = {};
+
+  let columnaActual = 3; // Columna D (índice 3)
+  // Asegurarse de no incluir la última columna
+  while (data[8] && data[8][columnaActual] !== undefined && columnaActual < data[8].length - 1) {
+    let columnaMediciones = [];
+    for (let i = 8; i < data.length; i++) {
+      if (data[i][columnaActual] === undefined || data[i][columnaActual] === '') {
+        break; // Si no hay más datos en esta columna, detener el bucle
+      }
+      columnaMediciones.push(data[i][columnaActual] || '-');
+
+      const accesorioNombre = data[i][13] || 'Sin Accesorio';
+      if (!this.accesorios[accesorioNombre]) {
+        this.accesorios[accesorioNombre] = [];
+      }
+      this.accesorios[accesorioNombre].push(data[i][columnaActual] || '-');
+    }
+    mediciones.push(columnaMediciones);
+    columnaActual++;
+  }
+
+  this.Tabla_me.push({
+    elemento_me,
+    umbral_me,
+    espesor_minimo_me,
+    cantidad_generatrices_linea_pdf_me,
+    diametro_me,
+    cantidad_posiciones_me,
+    cantidad_generatrices_me,
+    mediciones
+  });
+
+  console.log('Datos procesados para Tabla_me:', this.Tabla_me);
+  console.log('Datos de accesorios:', this.accesorios);
+},
         addTabla_me : function () {
 
             if (!this.elemento_me) {
@@ -1877,6 +1920,9 @@ export default {
                 cantidad_generatrices_linea_pdf_me :  this.cantidad_generatrices_linea_pdf_me,
                 mediciones :                          mediciones,
             });
+            console.log("diametro", this.diametro_me)
+            console.log("tabla",this.Tabla_me);
+
         },
         agregarPestana(wb, nombre, datos) {
             const ws = XLSX.utils.aoa_to_sheet([]);
@@ -1920,7 +1966,7 @@ export default {
 
 
             this.indexPosTabla_me = index ;
-
+            
         },
 
         getFocus(g,cant_g,p,cant_p){
