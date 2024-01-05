@@ -830,7 +830,7 @@
                                                  <th class="col-md-3">Cuño P</th>
                                                  <th class="col-md-3">Cuño L</th>
                                                  <th class="col-md-3">Cuño Z</th>
-                                                 <th class="col.md-3">Proceso</th>
+                                                 <th class="col.md-3" v-if="formato == 'PLANTA'">Proceso</th>
                                                  <th>&nbsp;</th>
                                              </tr>
                                          </thead>
@@ -877,9 +877,9 @@
                                                         {{ Pasada.soldador1.codigo }}
                                                      </div>
                                                  </td>
-                                                 <td v-if="Pasada.elemento_pasada == elemento_pasada">
+                                                 <td v-if="Pasada.elemento_pasada == elemento_pasada && formato == 'PLANTA'">
                                                     <div v-if="indexPasada == k">
-                                                        <v-select v-model="TablaPasadas[indexPasada].proceso_soldadores" :options="['GMAW','GTAW','SAW','SMAW']"></v-select>
+                                                        <v-select v-model="TablaPasadas[indexPasada].proceso_soldadores" :options="['GMAW','GTAW','SAW','SMAW']" :disabled="(!isGasoducto || pasada!='1' || !TablaDetalle.length)"></v-select>
                                                     </div>
                                                     <div v-else>
                                                         {{ Pasada.proceso_soldadores }}
@@ -1812,10 +1812,10 @@ import { eventSetReferencia } from '../event-bus';
                 pasada.elemento_pasada === this.elemento_pasada && 
                 pasada.proceso_soldadores === this.proceso_soldadores);
 
-            if (procesoExistente) {
-                toastr.error('Error: El proceso seleccionado ya existe para el elemento actual');
-                return;
-            }
+                if (this.formato == 'PLANTA' && procesoExistente && this.informe_especialdata != '') {
+                    toastr.error('Error: El proceso seleccionado ya existe para el elemento actual en el formato PLANTA');
+                    return;
+                }
 
             if (this.soldador1) {
                 this.TablaPasadas.push({
