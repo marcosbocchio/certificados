@@ -1793,7 +1793,7 @@ import { eventSetReferencia } from '../event-bus';
             if (this.formato == 'PLANTA') {
                 console.log(this.informe_especialdata);
                 if (this.informe_especialdata != '' && cant_pasadas >= 5) {
-                    toastr.error('Error: Formato PLANTA con informe especial acepta hasta 4 pasadas');
+                    toastr.error('Error: Formato PLANTA con informe especial acepta hasta 5 pasadas');
                     return;
                 } else if (this.informe_especialdata == null && cant_pasadas >= 1) {
                     toastr.error('Error: Formato PLANTA acepta solo 1 pasada');
@@ -1813,7 +1813,7 @@ import { eventSetReferencia } from '../event-bus';
                 pasada.proceso_soldadores === this.proceso_soldadores);
 
                 if (this.formato == 'PLANTA' && procesoExistente && this.informe_especialdata != '') {
-                    toastr.error('Error: El proceso seleccionado ya existe para el elemento actual en el formato PLANTA');
+                    toastr.error('Error: El proceso seleccionado ya existe para el elemento actual');
                     return;
                 }
 
