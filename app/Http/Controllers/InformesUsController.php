@@ -254,7 +254,6 @@ class InformesUsController extends Controller
         foreach ($request->tabla_me as $detalle_informe_us_me) {
             $informe_us_me  = new InformesUsMe;
             $informe_us_me->informe_us_id = $informeUs->id;
-            $informe_us_me->diametro = $detalle_informe_us_me['diametro_me'];
             $informe_us_me->umbral = $detalle_informe_us_me['umbral_me'];
             $informe_us_me->espesor_minimo = $detalle_informe_us_me['espesor_minimo_me'];
             $informe_us_me->elemento = $detalle_informe_us_me['elemento_me'];
@@ -262,17 +261,17 @@ class InformesUsController extends Controller
             $informe_us_me->cantidad_generatrices = $detalle_informe_us_me['cantidad_generatrices_me'];
             $informe_us_me->cantidad_generatrices_linea_pdf = $detalle_informe_us_me['cantidad_generatrices_linea_pdf_me'];
             $informe_us_me->save();
+            Log::info('Datos recibidos en saveInforme_us_me:', $request->tabla_me);
 
             $this->saveMediciones($informe_us_me->cantidad_generatrices,$informe_us_me->cantidad_posiciones,$detalle_informe_us_me['mediciones'],$informe_us_me);
         }
     }
 
     public function saveMediciones($cantidad_generatrices,$cantidad_posiciones,$mediciones,$informe_us_me){
-
         for ($x=1; $x <= $cantidad_generatrices + 1; $x++) {
 
             for ($y=1; $y <= $cantidad_posiciones; $y++) {
-
+                log::info($mediciones[$x][$y]);
                 $detalle_us_me = new DetalleUsMe;
                 $generatriz = $mediciones[$x][0];
                 $posicion = $mediciones[0][$y];

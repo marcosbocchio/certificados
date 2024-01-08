@@ -695,52 +695,44 @@
                                 <h3 class="box-title">REGISTRO DE MEDICIONES</h3>
                             </div>
                             <div>&nbsp;</div>
-
-                            <div class="col-lg-5">
-
-                                <div class="col-md-12">
+                            <!-- tabla me -->
+                                <div class="col-md-2">
                                     <div class="form-group" >
                                         <label for="elemento_me" title="Elemento">Elemento *</label>
                                         <input type="text" v-model="elemento_me" class="form-control" id="elemento_me" maxlength="30">
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-2">
                                     <div class="form-group" >
                                         <label for="umbral" title="Umbral">Espesor Nominal</label>
                                         <input type="number" v-model="umbral_me" class="form-control" id="umbral_me" min="0" step="0.1">
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-2">
                                     <div class="form-group" >
                                         <label for="espesor_minimo_me" title="espesor_minimo_me">Espesor Mínimo</label>
                                         <input type="number" v-model="espesor_minimo_me" class="form-control" id="espesor_minimo_me" min="0" step="0.1">
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
-                                    <div class="form-group" >
-                                        <label for="diametro_me" title="Diametro">ø</label>
-                                        <v-select v-model="diametro_me" label="diametro" :options="diametros" taggable id="diametro_me"></v-select>
-                                    </div>
-                                </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-2">
                                     <div class="form-group" >
                                         <label for="cantidad_posiciones_me" title="Cantidad Posiciones">Posición *</label>
                                         <input type="number" v-model="cantidad_posiciones_me" class="form-control" id="cantidad_posiciones_me" min="1">
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-2">
                                     <div class="form-group" >
                                         <label for="cantidad_generatrices_me" title="Cantidad Generatrices">Generatrices *</label>
                                         <input type="number" v-model="cantidad_generatrices_me" class="form-control" id="cantidad_generatrices_me" min="1">
                                     </div>
                                 </div>
 
-                               <div class="col-md-12">
+                               <div class="col-md-2">
                                     <div class="form-group" >
                                         <label for="cantidad_generatrices_linea_pdf_me" title="Cantidad Generatrices por linea en informe">Generatrices por Linea en pdf *</label>
                                         <input type="number" v-model="cantidad_generatrices_linea_pdf_me" class="form-control" id="cantidad_generatrices_linea_pdf_me" min="1" max="18">
@@ -748,75 +740,68 @@
                                 </div>
 
                                 <div class="clearfix"></div>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th  class="col-lg-2">Elemento</th>
+                                                        <th  class="col-lg-1">Nominal</th>
+                                                        <th  class="col-lg-1">Mínimo</th>
+                                                        <th  class="col-lg-1">Pos.</th>
+                                                        <th  class="col-lg-1">Gen.</th>
+                                                        <th  class="col-lg-1">G.L.P.</th>
+                                                        <th  class="col-lg-3">&nbsp;</th>
+                                                        <th  class="col-lg-1">&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(item,k) in (Tabla_me)" :key="k" @click="selectPosTabla_me(k)" class="pointer" :class="{selected: indexPosTabla_me === k}" >
+                                                        <td>{{ item.elemento_me }}</td>
+                                                        <td>{{ item.umbral_me }}</td>
+                                                        <td>{{ item.espesor_minimo_me }}</td>
+                                                        <td>{{ item.cantidad_posiciones_me}}</td>
+                                                        <td>{{ item.cantidad_generatrices_me}}</td>
+                                                        <td>
+                                                            <div v-if="indexPosTabla_me === k">
+                                                            <input type="number" v-model="item.cantidad_generatrices_linea_pdf_me" min="1" max="18">
+                                                            </div>
+                                                            <div v-else>
+                                                                {{ item.cantidad_generatrices_linea_pdf_me}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" @click="triggerFileUpload(k)">
+                                                                <i class="fa fa-file-excel-o"></i> Cargar Excel
+                                                            </button>
+                                                        </td>
+                                                        <td><span class="fa fa-minus-circle" @click="removeTabla_me(k)"></span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                <div class="col-lg-12">
+                                <div class="clearfix"></div>
 
-                                <div class="col-md-1">
+                                <div class="col-md-4">
                                     <div class="form-group" >
                                         <span>
                                         <button type="button"  @click="addTabla_me()"><span class="fa fa-plus-circle"></span></button>
                                         </span>
                                     </div>
                                </div>
-                                <div class="col-md-1">
+                                <div class="col-md-4">
                                     <div class="form-group" >
                                         <span>
                                         <button type="button"  @click="createExel()"><span class="fa fa-file-excel-o"></span></button>
                                         </span>
                                     </div>
                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <span>
-                                        <button type="button" @click="triggerFileUpload">
-                                            <i class="fa fa-file-excel-o"></i> Cargar Excel
-                                        </button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <input type="file" ref="fileInput" style="display: none" @change="uploadExcel" accept=".xlsx, .xls" />
                                 <div class="clearfix"></div>
-
-                                <!-- tabla me -->
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-striped table-bordered table-condensed">
-                                            <thead>
-                                                <tr>
-                                                    <th  class="col-lg-2">Elemento</th>
-                                                    <th  class="col-lg-1">Nominal</th>
-                                                    <th  class="col-lg-1">Mínimo</th>
-                                                    <th  class="col-lg-2">ø</th>
-                                                    <th  class="col-lg-1">Pos.</th>
-                                                    <th  class="col-lg-1">Gen.</th>
-                                                    <th  class="col-lg-1">G.L.P.</th>
-                                                    <th  class="col-lg-1">&nbsp;</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="(item,k) in (Tabla_me)" :key="k" @click="selectPosTabla_me(k)" class="pointer" :class="{selected: indexPosTabla_me === k}" >
-                                                    <td>{{ item.elemento_me }}</td>
-                                                    <td>{{ item.umbral_me }}</td>
-                                                    <td>{{ item.espesor_minimo_me }}</td>
-                                                    <td>{{ item.diametro_me }}</td>
-                                                    <td>{{ item.cantidad_posiciones_me}}</td>
-                                                    <td>{{ item.cantidad_generatrices_me}}</td>
-                                                    <td>
-                                                        <div v-if="indexPosTabla_me === k">
-                                                           <input type="number" v-model="item.cantidad_generatrices_linea_pdf_me" min="1" max="18">
-                                                        </div>
-                                                        <div v-else>
-                                                             {{ item.cantidad_generatrices_linea_pdf_me}}
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="fa fa-minus-circle" @click="removeTabla_me(k)"></span></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
                             </div>
-
-                            <div class="col-lg-7">
+                            <input type="file" ref="fileInput" style="display: none" @change="uploadExcel">
+                            <div class="col-lg-12">
                                 <!-- tabla mediciones 2-->
                                 <div v-if="Tabla_me[indexPosTabla_me]">
                                     <div class="col-lg-12">
@@ -1068,7 +1053,7 @@ export default {
             type : [ Object, Array ],
             required : false
             }
-
+            
     },
 
     data() {return {
@@ -1077,7 +1062,7 @@ export default {
         ruta_indicaciones_us:'indicaciones_us',
         max_size :5000, //KB
         tipos_archivo_soportados:['jpg','bmp','jpeg','png'],
-
+        currentPosition: null,
         errors:[],
         solicitado_por:'',
         usuarios_cliente:[],
@@ -1779,69 +1764,55 @@ export default {
                 path4:null
             });
         },
-        triggerFileUpload() {
-      // Activar el input de tipo file
-      this.$refs.fileInput.click();
-    },
-    uploadExcel(event) {
-      // Leer el archivo seleccionado y procesar los datos
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (e) => {
+        triggerFileUpload(pos) {
+            this.currentPosition = pos; // Almacena la posición actual
+            this.$refs.fileInput.click(); // Activa el input de tipo file
+        },
+        uploadExcel(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
-        this.processExcelData(XLSX.utils.sheet_to_json(worksheet, {header: 1}));
-      };
-      reader.readAsArrayBuffer(file);
-    },
-    processExcelData(data) {
-  const elemento_me = String(data[0][1] || ''); // B1
-  const umbral_me = String(data[2][1] || ''); // B3
-  const espesor_minimo_me = String(data[4][1] || ''); // B5
-  const cantidad_generatrices_linea_pdf_me = data[6][1] || ''; // B7
-  const diametro_me = String(data[8][1] || ''); // B9
-  const cantidad_posiciones_me = String(data[10][1] || ''); // B11
-  const cantidad_generatrices_me = String(data[12][1] || ''); // B13
-
-  let mediciones = [];
-  this.accesorios = {};
-
-  let columnaActual = 3; // Columna D (índice 3)
-  // Asegurarse de no incluir la última columna
-  while (data[8] && data[8][columnaActual] !== undefined && columnaActual < data[8].length - 1) {
-    let columnaMediciones = [];
-    for (let i = 8; i < data.length; i++) {
-      if (data[i][columnaActual] === undefined || data[i][columnaActual] === '') {
-        break; // Si no hay más datos en esta columna, detener el bucle
-      }
-      columnaMediciones.push(data[i][columnaActual] || '-');
-
-      const accesorioNombre = data[i][13] || 'Sin Accesorio';
-      if (!this.accesorios[accesorioNombre]) {
-        this.accesorios[accesorioNombre] = [];
-      }
-      this.accesorios[accesorioNombre].push(data[i][columnaActual] || '-');
-    }
-    mediciones.push(columnaMediciones);
-    columnaActual++;
-  }
-
-  this.Tabla_me.push({
-    elemento_me,
-    umbral_me,
-    espesor_minimo_me,
-    cantidad_generatrices_linea_pdf_me,
-    diametro_me,
-    cantidad_posiciones_me,
-    cantidad_generatrices_me,
-    mediciones
-  });
-
-  console.log('Datos procesados para Tabla_me:', this.Tabla_me);
-  console.log('Datos de accesorios:', this.accesorios);
+        const excelData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
+        this.processExcelData(excelData);
+    };
+    reader.readAsArrayBuffer(file);
 },
+processExcelData(data) {
+    if (this.currentPosition === null || this.currentPosition >= this.Tabla_me.length) {
+        console.error('Posición actual no válida o fuera de rango.');
+        return;
+    }
+
+    const cantidad_posiciones_me = parseInt(this.Tabla_me[this.currentPosition].cantidad_posiciones_me || 0);
+    const cantidad_generatrices_me = parseInt(this.Tabla_me[this.currentPosition].cantidad_generatrices_me || 0);
+
+    // Inicializa mediciones si no existe
+    if (!this.Tabla_me[this.currentPosition].mediciones) {
+        this.Tabla_me[this.currentPosition].mediciones = [];
+    }
+    for (let i = 0; i < cantidad_generatrices_me; i++) {
+        this.Tabla_me[this.currentPosition].mediciones[i] = this.Tabla_me[this.currentPosition].mediciones[i] || [];
+    }
+
+    // Comenzando desde A2, que es data[1][0] en términos de índices
+    for (let col = 0; col < cantidad_generatrices_me; col++) {
+        for (let row = 1; row < cantidad_posiciones_me + 1; row++) {
+            if (row < data.length && col < data[row].length) {
+                let valor = data[row][col] || '';
+                // Añadir el valor después de la primera posición de cada array en mediciones
+                this.Tabla_me[this.currentPosition].mediciones[col][row] = valor;
+            }
+        }
+    }
+
+    this.currentPosition = null;
+    console.log('Datos procesados para Tabla_me:', this.Tabla_me);
+}
+,
         addTabla_me : function () {
 
             if (!this.elemento_me) {
@@ -1864,10 +1835,6 @@ export default {
                 return ;
              }
 
-            if (!this.diametro_me) {
-                toastr.error('El campo diametro es obligatorio');
-                return ;
-            }
 
             if(this.diametro_me.length  > 10) {
                 toastr.error('El campo diametro no debe contener más de 10 caracteres');
@@ -1914,7 +1881,6 @@ export default {
                 elemento_me:                          this.elemento_me,
                 umbral_me:                            this.umbral_me,
                 espesor_minimo_me:                    this.espesor_minimo_me,
-                diametro_me:                          this.diametro_me.diametro,
                 cantidad_posiciones_me  :             this.cantidad_posiciones_me,
                 cantidad_generatrices_me:             this.cantidad_generatrices_me,
                 cantidad_generatrices_linea_pdf_me :  this.cantidad_generatrices_linea_pdf_me,
