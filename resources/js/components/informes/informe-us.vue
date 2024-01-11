@@ -696,63 +696,40 @@
                             </div>
                             <div>&nbsp;</div>
                             <!-- tabla me -->
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group" >
                                         <label for="elemento_me" title="Elemento">Elemento *</label>
                                         <input type="text" v-model="elemento_me" class="form-control" id="elemento_me" maxlength="30">
                                     </div>
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group" >
                                         <label for="umbral" title="Umbral">Espesor Nominal</label>
                                         <input type="number" v-model="umbral_me" class="form-control" id="umbral_me" min="0" step="0.1">
                                     </div>
                                 </div>
 
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group" >
                                         <label for="espesor_minimo_me" title="espesor_minimo_me">Espesor Mínimo</label>
                                         <input type="number" v-model="espesor_minimo_me" class="form-control" id="espesor_minimo_me" min="0" step="0.1">
                                     </div>
                                 </div>
-
-
-                                <div class="col-md-2">
-                                    <div class="form-group" >
-                                        <label for="cantidad_posiciones_me" title="Cantidad Posiciones">Posición *</label>
-                                        <input type="number" v-model="cantidad_posiciones_me" class="form-control" id="cantidad_posiciones_me" min="1">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group" >
-                                        <label for="cantidad_generatrices_me" title="Cantidad Generatrices">Generatrices *</label>
-                                        <input type="number" v-model="cantidad_generatrices_me" class="form-control" id="cantidad_generatrices_me" min="1">
-                                    </div>
-                                </div>
-
-                               <div class="col-md-2">
-                                    <div class="form-group" >
-                                        <label for="cantidad_generatrices_linea_pdf_me" title="Cantidad Generatrices por linea en informe">Generatrices por Linea en pdf *</label>
-                                        <input type="number" v-model="cantidad_generatrices_linea_pdf_me" class="form-control" id="cantidad_generatrices_linea_pdf_me" min="1" max="18">
-                                    </div>
-                                </div>
+                                <div class="clearfix"></div>
 
                                 <div class="clearfix"></div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-10">
                                         <div class="table-responsive">
                                             <table class="table table-hover table-striped table-bordered table-condensed">
                                                 <thead>
                                                     <tr>
                                                         <th  class="col-lg-2">Elemento</th>
-                                                        <th  class="col-lg-1">Nominal</th>
-                                                        <th  class="col-lg-1">Mínimo</th>
-                                                        <th  class="col-lg-1">Pos.</th>
-                                                        <th  class="col-lg-1">Gen.</th>
-                                                        <th  class="col-lg-1">G.L.P.</th>
-                                                        <th  class="col-lg-3">&nbsp;</th>
-                                                        <th  class="col-lg-1">&nbsp;</th>
+                                                        <th  class="col-lg-2">Nominal</th>
+                                                        <th  class="col-lg-2">Mínimo</th>
+
+                                                        <th  class="col-lg-2">Importar Excel</th>
+                                                        <th  class="col-lg-2">&nbsp;</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -760,16 +737,6 @@
                                                         <td>{{ item.elemento_me }}</td>
                                                         <td>{{ item.umbral_me }}</td>
                                                         <td>{{ item.espesor_minimo_me }}</td>
-                                                        <td>{{ item.cantidad_posiciones_me}}</td>
-                                                        <td>{{ item.cantidad_generatrices_me}}</td>
-                                                        <td>
-                                                            <div v-if="indexPosTabla_me === k">
-                                                            <input type="number" v-model="item.cantidad_generatrices_linea_pdf_me" min="1" max="18">
-                                                            </div>
-                                                            <div v-else>
-                                                                {{ item.cantidad_generatrices_linea_pdf_me}}
-                                                            </div>
-                                                        </td>
                                                         <td>
                                                             <button type="button" @click="triggerFileUpload(k)">
                                                                 <i class="fa fa-file-excel-o"></i> Cargar Excel
@@ -781,48 +748,77 @@
                                             </table>
                                         </div>
                                     </div>
-                                <div class="col-lg-12">
-                                <div class="clearfix"></div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group" >
-                                        <span>
-                                        <button type="button"  @click="addTabla_me()"><span class="fa fa-plus-circle"></span></button>
-                                        </span>
+                                    <div class="col-lg-2" style="display: flex; align-items: center;">
+                                    <div class="col-md-1">
+                                        <div class="form-group" >
+                                            <span>
+                                            <button type="button"  @click="addTabla_me()"><span class="fa fa-plus-circle"></span></button>
+                                            </span>
+                                        </div>
                                     </div>
-                               </div>
-                                <div class="col-md-4">
-                                    <div class="form-group" >
-                                        <span>
-                                        <button type="button"  @click="createExel()"><span class="fa fa-file-excel-o"></span></button>
-                                        </span>
+                                    <div class="col-md-1">
+                                        <div class="form-group" >
+                                            <span>
+                                            <button type="button"  @click="createExel()" style="margin:20px"><span class="fa fa-file-excel-o"></span></button>
+                                            </span>
+                                        </div>
                                     </div>
-                               </div>
+                                </div>
                                 <div class="clearfix"></div>
-                            </div>
+                                
+                            <div class="clearfix"></div>
                             <input type="file" ref="fileInput" style="display: none" @change="uploadExcel">
                             <div class="col-lg-12">
                                 <!-- tabla mediciones 2-->
                                 <div v-if="Tabla_me[indexPosTabla_me]">
                                     <div class="col-lg-12">
                                         <div class="table-responsive">
-                                        <table class="table table-hover table-bordered" style="display: block; max-height: 500px; border-bottom: none; border-right: none;">
-                                            <tbody>
-                                            <!-- Iteramos basándonos en el número de generatrices, que será la longitud del sub-array más largo -->
-                                            <tr v-for="n in Math.max(...Tabla_me[indexPosTabla_me].mediciones.map(fila => fila.length))" :key="n">
-                                                <!-- Creamos una celda por cada posición posible, que es la longitud de mediciones -->
-                                                <td v-for="(fila, indexFila) in Tabla_me[indexPosTabla_me].mediciones" :key="indexFila" :style="{ minWidth: '60px', minHeight: '60px' }">
-                                                <!-- Mostramos el n-ésimo elemento de cada fila si existe, o un espacio en blanco si no -->
-                                                <template v-if="fila.length >= n">
-                                                    {{ fila[n-1] }}
-                                                </template>
-                                                <template v-else>
-                                                    &nbsp;
-                                                </template>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                            <table class="table table-hover table-bordered" style="display: block;max-height: 500px;border-bottom: none;border-right: none;">
+                                                <tbody>
+                                                    <tr v-for="(p) in parseInt(Tabla_me[indexPosTabla_me].cantidad_posiciones_me) + 1" :key="p" @click="selectPosPos(p)" >
+
+                                                         <td style="min-width:60px;min-height:60px" v-for="(g) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2" :key="g"  :bgcolor="colorLimiteTabla(p,g)" @click="selectPosGeneratriz(g)" >
+
+                                                            <div v-if="p === 1 && g === 1">
+                                                                &nbsp;
+                                                            </div>
+                                                            <div v-else-if="p === 1 && g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
+                                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACCESORIO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </div>
+                                                            <!--accesorios -->
+                                                            <div v-else-if="g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
+                                                                <div v-if="indexPosPos == p && indexPosGeneratriz == g">
+                                                                    <!-- Input para accesorios cuando la celda está seleccionada para edición -->
+                                                                    <input type="text" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="30">
+                                                                </div>
+                                                                <div v-else>
+                                                                    <!-- Muestra el contenido cuando no está en modo de edición -->
+                                                                    <span>{{ Tabla_me[indexPosTabla_me].mediciones[g-1][p-1] }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div v-else-if="indexPosPos == p && indexPosGeneratriz == g">
+                                                                 <div v-if="p === 1 || g === 1">
+                                                                    <input style="width:40px;" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="10" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)">
+                                                                 </div>
+                                                                 <div v-else>
+                                                                    <input style="width:40px;" type="number" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">
+                                                                 </div>
+                                                            </div>
+                                                            <div v-else>
+
+                                                                <div v-if="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1] !=''">
+                                                                    {{ Tabla_me[indexPosTabla_me].mediciones[g-1][p-1] }}
+                                                                </div>
+                                                                <div v-else>
+                                                                    <span style="font-style: oblique; color: cadetblue;"> {{ p-1 }}-{{generatrices[g-2].valor }} </span>
+                                                                </div>
+
+                                                            </div>
+
+                                                         </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -1140,7 +1136,6 @@ export default {
         aceptable_sn_us_pa:'',
 
         //detalle me
-
         elemento_me:'',
         umbral_me:'',
         espesor_minimo_me:'',
@@ -1782,13 +1777,15 @@ export default {
     reader.readAsArrayBuffer(file);
 },
 processExcelData(data) {
+    const cantidad_posiciones_me = data.length;
+    const cantidad_generatrices_me = Math.max(...data.map(fila => fila.length));
+    this.Tabla_me[this.currentPosition].cantidad_posiciones_me = data.length -1;
+    this.Tabla_me[this.currentPosition].cantidad_generatrices_me = Math.max(...data.map(fila => fila.length)) -1;
     if (this.currentPosition === null || this.currentPosition >= this.Tabla_me.length) {
         console.error('Posición actual no válida o fuera de rango.');
         return;
     }
 
-    const cantidad_posiciones_me = parseInt(this.Tabla_me[this.currentPosition].cantidad_posiciones_me || 0);
-    const cantidad_generatrices_me = parseInt(this.Tabla_me[this.currentPosition].cantidad_generatrices_me || 0);
 
     // Inicializa mediciones si no existe
     if (!this.Tabla_me[this.currentPosition].mediciones) {
@@ -1815,6 +1812,10 @@ processExcelData(data) {
 ,
         addTabla_me : function () {
 
+            this.cantidad_posiciones_me = 50;
+            this.cantidad_generatrices_me = 50;
+            this.cantidad_generatrices_linea_pdf_me = 15;
+            
             if (!this.elemento_me) {
                 toastr.error('El campo elemento es obligatorio');
                 return ;
@@ -1841,10 +1842,6 @@ processExcelData(data) {
                 return ;
              }
 
-            if (!this.cantidad_posiciones_me) {
-                toastr.error('El campo posiciones es obligatorio');
-                return ;
-            }
 
             if(this.cantidad_posiciones_me  > 100) {
                 toastr.error('El campo posiciones o debe ser mayor a 100');
@@ -1853,11 +1850,6 @@ processExcelData(data) {
 
             if (!this.cantidad_generatrices_me){
                 toastr.error('El campo generatrices es obligatorio');
-                return ;
-            }
-
-            if (!this.cantidad_generatrices_linea_pdf_me){
-                toastr.error('El campo generatrices por linea en pdf es obligatorio');
                 return ;
             }
 

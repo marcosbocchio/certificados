@@ -213,4 +213,89 @@ function obtenerInformeEspecial($informe, $metodo_ensayo, &$informeEspecial) {
 }
 
 
+function recopilarMediciones($informes) {
+  $resultados = [];
 
+  foreach ($informes as $informe) {
+      // Extraer los valores relevantes del informe
+      $cantidadGeneratrices = $informe->cantidad_generatrices_me;
+      $cantidadPosiciones = $informe->cantidad_posiciones_me;
+      $elementoMe = $informe->elemento_me;  // Extraer el valor de elemento_me
+
+      // Array para almacenar los valores extraídos de las mediciones
+      $valoresExtraidos = [];
+    
+      // Ajustar las mediciones y extraer los valores
+      $numeroDeMediciones = count($informe->mediciones);
+      for ($i = 1; $i < $numeroDeMediciones; $i++) {
+          // Asumiendo que cada medicion es un array y tiene al menos 1 elemento
+          if ($i < $numeroDeMediciones - 1) { // Obviar el último dato
+              $valoresExtraidos[] = $informe->mediciones[$i][0];
+          }
+          unset($informe->mediciones[$i][0]); // Eliminar el primer elemento
+      }
+
+      // Agregar 'ø' al inicio de las columnas extraídas
+      array_unshift($valoresExtraidos, 'ø');
+
+      // Agregar la información al resultado
+      $resultados[] = [
+          'elemento_me' => $elementoMe,
+          'cantidad_generatrices' => $cantidadGeneratrices,
+          'cantidad_posiciones' => $cantidadPosiciones,
+          'columnas_extraidas' => $valoresExtraidos,
+          'mediciones_ajustadas' => $informe->mediciones
+      ];
+  }
+
+  return $resultados;
+}
+
+function agruparPorAccesorios($arreglosMediciones) {
+  $result = [];
+
+  foreach ($arreglosMediciones as $arreglo) {
+      $elemento = $arreglo['elemento_me']; // Obtiene el nombre del elemento
+      $mediciones = $arreglo['mediciones_ajustadas']; // Obtiene las mediciones
+      $columna = $arreglo['columnas_extraidas']; // Obtiene la columna
+      $fila = $arreglo['cantidad_posiciones']; // Obtiene la fila
+
+      // Inicializar el arreglo para el elemento si aún no existe
+      if (!isset($result[$elemento])) {
+          $result[$elemento] = [
+              'columnas' => $columna,
+              'filas' => $fila,
+              'accesorios' => []
+          ];
+      }
+
+      // Obtener el último array de mediciones que define los nombres de los accesorios
+      $keys = array_keys($mediciones);
+      $lastKey = end($keys);
+      $lastArray = $mediciones[$lastKey];
+      $currentKey = null;
+
+      foreach ($lastArray as $index => $value) {
+          if ($value !== null) {
+              $currentKey = $value;
+              // Asegurarse de que cada accesorio tiene su propio arreglo de mediciones
+              if (!isset($result[$elemento]['accesorios'][$currentKey])) {
+                  $result[$elemento]['accesorios'][$currentKey] = [];
+              }
+          }
+
+          if ($currentKey !== null) {
+              $pair = [];
+              foreach ($keys as $key) {
+                  if ($key !== $lastKey) {
+                      $pair[] = $mediciones[$key][$index];
+                  }
+              }
+              // Añade el par de mediciones al accesorio actual dentro del conjunto actual de mediciones
+              $result[$elemento]['accesorios'][$currentKey][] = $pair;
+          }
+      }
+  }
+
+  return $result;
+}

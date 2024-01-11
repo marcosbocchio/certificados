@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use PDF;
+use App\helpers;
 use App\Informe;
 use App\InformesUs;
 use App\Ots;
@@ -65,7 +66,6 @@ class PdfInformesUsController extends Controller
          $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
          $generatrices = Generatrices::all();
          $informes_us_me = (new \App\Http\Controllers\InformesUsController)->getTabla_me($informe_us->id);
-         dd($informes_us_me);
          $indicaciones_us_pa = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
 
          $detalles = DetalleUsPaUs::with('referencia')
@@ -78,7 +78,11 @@ class PdfInformesUsController extends Controller
         $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$tecnica->codigo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$tecnica->codigo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
-
+        
+        $todas_las_mediciones = recopilarMediciones($informes_us_me);
+        
+        $medicionesAgrupadas = agruparPorAccesorios($todas_las_mediciones);
+        
         $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'planta',
@@ -107,6 +111,7 @@ class PdfInformesUsController extends Controller
                                                                 'numero_repetido',
                                                                 'detalles',
                                                                 'informe_solicitado_por',
+                                                                'medicionesAgrupadas'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 
