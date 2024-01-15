@@ -125,7 +125,16 @@
     </tbody>
 </table>
 @endif
-
+<table width="100%" style="border-collapse: collapse;">
+        <tbody style="padding: 20px;"> 
+            <tr>
+                <td><strong style="font-size: 13px;">Observaciones</strong></td>
+            </tr>   
+            <tr>           
+                <td style="font-size: 13px; height:150px;" class="bordered-td"><span style="margin-left: 5px; ">{{$observaciones}}</span></td> 
+            </tr>
+        </tbody>
+</table>
 @if($informe_us->path3_indicacion || $informe_us->path4_indicacion)
 <div class="page_break"></div>
 <table width="100%">

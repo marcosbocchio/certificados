@@ -255,12 +255,11 @@ function agruparPorAccesorios($arreglosMediciones) {
   $result = [];
 
   foreach ($arreglosMediciones as $arreglo) {
-      $elemento = $arreglo['elemento_me']; // Obtiene el nombre del elemento
-      $mediciones = $arreglo['mediciones_ajustadas']; // Obtiene las mediciones
-      $columna = $arreglo['columnas_extraidas']; // Obtiene la columna
-      $fila = $arreglo['cantidad_posiciones']; // Obtiene la fila
+      $elemento = $arreglo['elemento_me'];
+      $mediciones = $arreglo['mediciones_ajustadas'];
+      $columna = $arreglo['columnas_extraidas'];
+      $fila = $arreglo['cantidad_posiciones'];
 
-      // Inicializar el arreglo para el elemento si aún no existe
       if (!isset($result[$elemento])) {
           $result[$elemento] = [
               'columnas' => $columna,
@@ -269,16 +268,17 @@ function agruparPorAccesorios($arreglosMediciones) {
           ];
       }
 
-      // Obtener el último array de mediciones que define los nombres de los accesorios
       $keys = array_keys($mediciones);
       $lastKey = end($keys);
       $lastArray = $mediciones[$lastKey];
+      $accesoriosEncontrados = false;
       $currentKey = null;
 
       foreach ($lastArray as $index => $value) {
           if ($value !== null) {
               $currentKey = $value;
-              // Asegurarse de que cada accesorio tiene su propio arreglo de mediciones
+              $accesoriosEncontrados = true;
+
               if (!isset($result[$elemento]['accesorios'][$currentKey])) {
                   $result[$elemento]['accesorios'][$currentKey] = [];
               }
@@ -291,9 +291,13 @@ function agruparPorAccesorios($arreglosMediciones) {
                       $pair[] = $mediciones[$key][$index];
                   }
               }
-              // Añade el par de mediciones al accesorio actual dentro del conjunto actual de mediciones
               $result[$elemento]['accesorios'][$currentKey][] = $pair;
           }
+      }
+
+      // Si no se encontraron accesorios, asigna directamente las mediciones bajo el nombre '-'
+      if (!$accesoriosEncontrados) {
+          $result[$elemento]['accesorios'][' - '] = $mediciones;
       }
   }
 

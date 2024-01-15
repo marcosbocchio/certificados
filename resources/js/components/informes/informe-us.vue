@@ -890,7 +890,7 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label>Observaciones</label>
-                            <textarea v-model="observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
+                            <textarea v-model="observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="300"></textarea>
                         </div>
                     </div>
                 </div>

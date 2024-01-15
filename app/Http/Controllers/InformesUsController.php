@@ -279,10 +279,10 @@ class InformesUsController extends Controller
                 $detalle_us_me->generatriz = $generatriz;
     
                 if ($x < $cantidad_generatrices) {
-                    $detalle_us_me->valor = $valor; // Valor para columnas regulares
+                    $detalle_us_me->valor = $valor; 
                 } else if ($valor != null) {
-                    // Cambiar aquí para guardar el texto del accesorio en lugar del ID
-                    $detalle_us_me->accesorio_texto = $valor; // Asume que $valor es un texto
+      
+                    $detalle_us_me->accesorio_texto = $valor; 
                 }
                 $detalle_us_me->save();
                 

@@ -51,18 +51,36 @@ footer {
 </header>
 
 
-@if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
+
     <footer>
+    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
         @include('reportes.partial.linea-amarilla')
         @include('reportes.informes.partial.observaciones')
         @include('reportes.partial.linea-amarilla')
         @include('reportes.informes.partial.firmas')
+    @else
+        @include('reportes.partial.linea-amarilla')
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td style="font-size: 13px;" colspan="1"  rowspan="2"><b>Firmas </b></td>
+                        <td style="font-size: 13px;text-align: center;height: 85px;" colspan="2" width="33.33%">
+                            @if($firma)
+                                <img src="{{ public_path($firma) }}" alt="" style="width: 175px;height: 85px;">
+                            @endif
+                        </td>
+                        <td style="font-size: 13px;" colspan="2"  width="33.33%">&nbsp;</td>
+                        <td style="font-size: 13px;" colspan="2" width="33.33%">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 14px; text-align: center;" colspan="2"><em>Evaluador </em></td>
+                        <td style="font-size: 14px; text-align: center;" colspan="2"><em>Cliente </em></td>
+                        <td style="font-size: 14px; text-align: center;" colspan="2"><em>Comitente </em></td>
+                    </tr>
+                </tbody>
+            </table>
+    @endif 
     </footer>
-@else
-
-@endif 
-
-
 
 <main>
 
@@ -355,36 +373,7 @@ footer {
         
     @else
       @include('reportes.informes.us-indicaciones-me-v2')
-      <table width="100%" style="border-collapse: collapse;">
-            <tbody> 
-                <tr>
-                    <td><strong style="font-size: 13px;">Observaciones</strong></td>
-                </tr>   
-                <tr>           
-                    <td style="font-size: 13px; height:47px;" class="bordered-td"><span style="margin-left: 5px;">{{$observaciones}}</span></td> 
-                </tr>
-            </tbody>
-        </table>
-        @include('reportes.partial.linea-amarilla')
-            <table width="100%">
-                <tbody>
-                    <tr>
-                        <td style="font-size: 13px;" colspan="1"  rowspan="2"><b>Firmas </b></td>
-                        <td style="font-size: 13px;text-align: center;height: 85px;" colspan="2" width="33.33%">
-                            @if($firma)
-                                <img src="{{ public_path($firma) }}" alt="" style="width: 175px;height: 85px;">
-                            @endif
-                        </td>
-                        <td style="font-size: 13px;" colspan="2"  width="33.33%">&nbsp;</td>
-                        <td style="font-size: 13px;" colspan="2" width="33.33%">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: 14px; text-align: center;" colspan="2"><em>Evaluador </em></td>
-                        <td style="font-size: 14px; text-align: center;" colspan="2"><em>Cliente </em></td>
-                        <td style="font-size: 14px; text-align: center;" colspan="2"><em>Comitente </em></td>
-                    </tr>
-                </tbody>
-            </table>
+
     @endif
 
 </main>
