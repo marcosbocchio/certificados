@@ -777,16 +777,16 @@
                                                 <tbody>
                                                     <tr v-for="(p) in parseInt(Tabla_me[indexPosTabla_me].cantidad_posiciones_me) + 1" :key="p" @click="selectPosPos(p)" >
 
-                                                         <td style="min-width:60px;min-height:60px" v-for="(g) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2" :key="g"  :bgcolor="colorLimiteTabla(p,g)" @click="selectPosGeneratriz(g)" >
+                                                         <td style="min-width:60px;min-height:60px" v-for="(g) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 1" :key="g"  :bgcolor="colorLimiteTabla(p,g)" @click="selectPosGeneratriz(g)" >
 
                                                             <div v-if="p === 1 && g === 1">
                                                                 &nbsp;
                                                             </div>
-                                                            <div v-else-if="p === 1 && g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
+                                                            <div v-else-if="p === 1 && g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 1">
                                                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACCESORIO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                             </div>
                                                             <!--accesorios -->
-                                                            <div v-else-if="g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
+                                                            <div v-else-if="g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 1">
                                                                 <div v-if="indexPosPos == p && indexPosGeneratriz == g">
                                                                     <!-- Input para accesorios cuando la celda está seleccionada para edición -->
                                                                     <input type="text" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="30">
@@ -1764,47 +1764,66 @@ export default {
             this.$refs.fileInput.click(); // Activa el input de tipo file
         },
         uploadExcel(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const excelData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
-        this.processExcelData(excelData);
+
+        // Calcula la cantidad de filas y columnas
+        const cantidad_filas = excelData.length;
+        let cantidad_columnas = 0;
+        if (cantidad_filas > 0) {
+            cantidad_columnas = excelData.reduce((max, row) => Math.max(max, row.length), 0);
+        }
+
+        // Llama a processExcelData con los datos y las dimensiones
+        this.processExcelData(excelData, cantidad_filas, cantidad_columnas);
     };
     reader.readAsArrayBuffer(file);
 },
-processExcelData(data) {
-    const cantidad_posiciones_me = data.length;
-    const cantidad_generatrices_me = Math.max(...data.map(fila => fila.length));
-    this.Tabla_me[this.currentPosition].cantidad_posiciones_me = data.length -1;
-    this.Tabla_me[this.currentPosition].cantidad_generatrices_me = Math.max(...data.map(fila => fila.length)) -1;
+processExcelData(data, filas, columnas) {
+    const cantidad_posiciones_me = filas;
+    const cantidad_generatrices_me = columnas;
+    
     if (this.currentPosition === null || this.currentPosition >= this.Tabla_me.length) {
         console.error('Posición actual no válida o fuera de rango.');
         return;
     }
 
+    // Borrar completamente mediciones y luego inicializarlo
+    this.Tabla_me[this.currentPosition].mediciones = [];
 
-    // Inicializa mediciones si no existe
-    if (!this.Tabla_me[this.currentPosition].mediciones) {
-        this.Tabla_me[this.currentPosition].mediciones = [];
-    }
     for (let i = 0; i < cantidad_generatrices_me; i++) {
-        this.Tabla_me[this.currentPosition].mediciones[i] = this.Tabla_me[this.currentPosition].mediciones[i] || [];
+        // Inicializar cada columna con un array vacío
+        this.Tabla_me[this.currentPosition].mediciones[i] = [];
     }
 
-    // Comenzando desde A2, que es data[1][0] en términos de índices
     for (let col = 0; col < cantidad_generatrices_me; col++) {
-        for (let row = 1; row < cantidad_posiciones_me + 1; row++) {
+        for (let row = 0; row < cantidad_posiciones_me; row++) {
             if (row < data.length && col < data[row].length) {
-                let valor = data[row][col] || '';
-                // Añadir el valor después de la primera posición de cada array en mediciones
+                let valor = data[row][col] ? data[row][col].toString() : '  ';
                 this.Tabla_me[this.currentPosition].mediciones[col][row] = valor;
+            } else {
+                this.Tabla_me[this.currentPosition].mediciones[col][row] = '  ';
             }
         }
     }
+    this.Tabla_me[this.currentPosition].cantidad_posiciones_me = cantidad_posiciones_me;
+    this.Tabla_me[this.currentPosition].cantidad_generatrices_me = cantidad_generatrices_me;
+
+    // Agregar un array adicional para 'ACCESORIOS' con nulls en los espacios adicionales
+    let accesorios = ['ACCESORIO'];
+    for (let i = 1; i < cantidad_generatrices_me; i++) {
+        accesorios.push(null); // Completar con null para el resto de los elementos
+
+    
+    }
+    this.Tabla_me[this.currentPosition].mediciones.push(accesorios);
+
 
     this.currentPosition = null;
     console.log('Datos procesados para Tabla_me:', this.Tabla_me);

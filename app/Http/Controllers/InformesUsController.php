@@ -268,23 +268,23 @@ class InformesUsController extends Controller
     }
 
     public function saveMediciones($cantidad_generatrices, $cantidad_posiciones, $mediciones, $informe_us_me){
-        for ($x = 1; $x <= $cantidad_generatrices + 1; $x++) {
+
+        
+
+        for ($x = 0; $x <= $cantidad_generatrices + 1; $x++) {
             for ($y = 1; $y <= $cantidad_posiciones; $y++) {
                 $detalle_us_me = new DetalleUsMe;
-                $generatriz = $mediciones[$x][0];
-                $posicion = $mediciones[0][$y];
-                $valor = $mediciones[$x][$y];
+                Log::debug('Generatriz type: ' . $mediciones[$x][0]);
+                Log::debug('Posicion type: ' . $mediciones[0][$y]);
+                Log::debug('Valor type: ' . $mediciones[$x][$y]);
                 $detalle_us_me->informe_us_me_id = $informe_us_me->id;
                 $detalle_us_me->posicion = $posicion;
                 $detalle_us_me->generatriz = $generatriz;
-    
                 if ($x < $cantidad_generatrices) {
                     $detalle_us_me->valor = $valor; 
-                } else if ($valor != null) {
-      
+                }else{
                     $detalle_us_me->accesorio_texto = $valor; 
                 }
-                $detalle_us_me->save();
                 
             }
         }
