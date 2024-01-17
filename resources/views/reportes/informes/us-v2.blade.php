@@ -60,7 +60,7 @@ footer {
         @include('reportes.informes.partial.firmas')
     @else
         @include('reportes.partial.linea-amarilla')
-            <table width="100%">
+            <table width="100%" height="60px">
                 <tbody>
                     <tr>
                         <td style="font-size: 13px;" colspan="1"  rowspan="2"><b>Firmas </b></td>

@@ -269,23 +269,25 @@ class InformesUsController extends Controller
 
     public function saveMediciones($cantidad_generatrices, $cantidad_posiciones, $mediciones, $informe_us_me){
 
-        
-
-        for ($x = 0; $x <= $cantidad_generatrices + 1; $x++) {
+        Log::debug('Cantidad de generatrices: '. $cantidad_generatrices);
+        Log::debug('Cantidad de posiciones: '. $cantidad_posiciones);
+        Log::debug('Contenido de mediciones: '. json_encode($mediciones));
+        for ($x = 0; $x < $cantidad_generatrices +1; $x++) {
             for ($y = 1; $y <= $cantidad_posiciones; $y++) {
                 $detalle_us_me = new DetalleUsMe;
-                Log::debug('Generatriz type: ' . $mediciones[$x][0]);
-                Log::debug('Posicion type: ' . $mediciones[0][$y]);
-                Log::debug('Valor type: ' . $mediciones[$x][$y]);
+                $generatriz = $mediciones[$x][0];
+                $posicion = $mediciones[0][$y];
+                $valor = $mediciones[$x][$y];
                 $detalle_us_me->informe_us_me_id = $informe_us_me->id;
                 $detalle_us_me->posicion = $posicion;
                 $detalle_us_me->generatriz = $generatriz;
                 if ($x < $cantidad_generatrices) {
                     $detalle_us_me->valor = $valor; 
-                }else{
+                } else{
                     $detalle_us_me->accesorio_texto = $valor; 
+                    log::info('accesorio_texto'. $detalle_us_me->accesorio_texto);
                 }
-                
+                $detalle_us_me->save();
             }
         }
     }
@@ -425,18 +427,18 @@ class InformesUsController extends Controller
 
 
         foreach ($tabla_me as $generatriz) {
-
+            
             $obj = new stdClass();
             $cant_g = (int) $generatriz->cantidad_generatrices_me;
             $cant_p = (int) $generatriz->cantidad_posiciones_me;
 
             $mediciones = array();
 
-            for ($g=0; $g < $cant_g + 2 ; $g++) {
+            for ($g=0; $g < $cant_g ; $g++) {
 
 
                 $posiciones = array();
-                for ($p=0; $p < $cant_p + 1; $p++){
+                for ($p=0; $p < $cant_p; $p++){
 
                   array_push($posiciones,'');
 
@@ -462,7 +464,7 @@ class InformesUsController extends Controller
             }
 
             $generatriz->mediciones[$cant_g + 1][0] = 'ACCESORIO';
-
+            
             for ($y=0; $y < $cant_p; $y++) {
                $generatriz->mediciones[0][$y +1 ] = $detalle_us_me[$y]->posicion;
             }
@@ -480,7 +482,7 @@ class InformesUsController extends Controller
                 $generatriz->mediciones[$pos_g][$pos_p] = $detalle_us_me[$y]->valor ? $detalle_us_me[$y]->valor : "";
 
             }
-
+            array_shift($generatriz->mediciones);
         }
         
 

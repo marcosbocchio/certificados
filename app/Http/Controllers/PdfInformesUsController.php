@@ -82,7 +82,6 @@ class PdfInformesUsController extends Controller
         $todas_las_mediciones = recopilarMediciones($informes_us_me);
         
         $medicionesAgrupadas = agruparPorAccesorios($todas_las_mediciones);
-        
         $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'planta',

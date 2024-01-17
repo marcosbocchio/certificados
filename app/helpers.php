@@ -235,9 +235,6 @@ function recopilarMediciones($informes) {
           unset($informe->mediciones[$i][0]); // Eliminar el primer elemento
       }
 
-      // Agregar 'ø' al inicio de las columnas extraídas
-      array_unshift($valoresExtraidos, 'ø');
-
       // Agregar la información al resultado
       $resultados[] = [
           'elemento_me' => $elementoMe,
@@ -288,14 +285,18 @@ function agruparPorAccesorios($arreglosMediciones) {
               $pair = [];
               foreach ($keys as $key) {
                   if ($key !== $lastKey) {
-                      $pair[] = $mediciones[$key][$index];
+                      $medicion = $mediciones[$key][$index];
+                      // Cambio para verificar valores en blanco a partir de la tercera posición
+                      if ($key >= 2 && $medicion === '') {
+                          $medicion = 'S/A';
+                      }
+                      $pair[] = $medicion;
                   }
               }
               $result[$elemento]['accesorios'][$currentKey][] = $pair;
           }
       }
 
-      // Si no se encontraron accesorios, asigna directamente las mediciones bajo el nombre '-'
       if (!$accesoriosEncontrados) {
           $result[$elemento]['accesorios'][' - '] = $mediciones;
       }

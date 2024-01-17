@@ -1805,22 +1805,21 @@ processExcelData(data, filas, columnas) {
     for (let col = 0; col < cantidad_generatrices_me; col++) {
         for (let row = 0; row < cantidad_posiciones_me; row++) {
             if (row < data.length && col < data[row].length) {
-                let valor = data[row][col] ? data[row][col].toString() : '  ';
+                let valor = data[row][col] ? data[row][col].toString() : '';
                 this.Tabla_me[this.currentPosition].mediciones[col][row] = valor;
             } else {
-                this.Tabla_me[this.currentPosition].mediciones[col][row] = '  ';
+                this.Tabla_me[this.currentPosition].mediciones[col][row] = '';
             }
         }
     }
-    this.Tabla_me[this.currentPosition].cantidad_posiciones_me = cantidad_posiciones_me;
-    this.Tabla_me[this.currentPosition].cantidad_generatrices_me = cantidad_generatrices_me;
 
     // Agregar un array adicional para 'ACCESORIOS' con nulls en los espacios adicionales
     let accesorios = ['ACCESORIO'];
     for (let i = 1; i < cantidad_generatrices_me; i++) {
         accesorios.push(null); // Completar con null para el resto de los elementos
 
-    
+    this.Tabla_me[this.currentPosition].cantidad_posiciones_me = cantidad_posiciones_me -1;
+    this.Tabla_me[this.currentPosition].cantidad_generatrices_me = cantidad_generatrices_me;
     }
     this.Tabla_me[this.currentPosition].mediciones.push(accesorios);
 
