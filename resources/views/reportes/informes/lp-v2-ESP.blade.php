@@ -250,7 +250,7 @@ footer{
             <td style="width: 102mm;height: 4mm;" id="font7">Componentes a Ensayar / Components to Test</td>
         </tr>
         <tr>
-            <td style="height: 7.5mm;"><b>{{$equipo->equipo->codigo}}</b></td>
+            <td style="height: 7.5mm;"><b>{{$informe->linea}}</b></td>
             <td style="height: 7.5mm;"><b>{{$informe->componente}}</b></td>
         </tr>
     </tbody>
