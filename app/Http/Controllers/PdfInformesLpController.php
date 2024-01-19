@@ -67,7 +67,7 @@ class PdfInformesLpController extends Controller
          $firma = (new \App\Http\Controllers\UserController)->getFirma($informe->firma,$metodo_ensayo->id);
          $contratista = Contratistas::find($ot->contratista_id);
          $observaciones = $informe->observaciones;
-
+         $propiedadesAMostrar = obtenerPropiedadesLiquidos($penetrante);
         /*  Encabezado */
 
         $titulo = "LÍQUIDOS PENETRANTES";
@@ -87,9 +87,9 @@ class PdfInformesLpController extends Controller
             ->select('detalles_lp_referencias.*')
             ->where('detalles_lp.informe_lp_id', $informe_lp->id)
             ->get();
-
+        
         $informeEspecial = null;
-
+        $estadoAceptacion = verificarSiTodosAceptables($detalles);
         obtenerInformeEspecial($informe, $metodo_ensayo, $informeEspecial);
         if($informeEspecial !== null){
             $pdf = PDF::loadView('reportes.informes.lp-v2-ESP',compact('ot','titulo','nro','tipo_reporte','fecha',
@@ -124,6 +124,8 @@ class PdfInformesLpController extends Controller
                                                                 'numero_repetido',
                                                                 'informe_solicitado_por',
                                                                 'detallesReferencia',
+                                                                'propiedadesAMostrar',
+                                                                'estadoAceptacion',
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 

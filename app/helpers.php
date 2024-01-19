@@ -214,3 +214,34 @@ function obtenerInformeEspecial($informe, $metodo_ensayo, &$informeEspecial) {
 
 
 
+function obtenerPropiedadesLiquidos($penetrante) {
+  $propiedadesAMostrar = [];
+  $propiedades = [
+      'penetrante_sn' => 'Penetrante',
+      'revelador_sn' => 'Revelador',
+      'removedor_sn' => 'Removedor',
+      'fluorescente_sn' => 'Fluorescente',
+      'visible_sn' => 'Visible',
+      'lavable_agua_sn' => 'Lavable Agua',
+      'emusificante_lipofilico_sn' => 'Emusificante Lipofílico',
+      'lavable_solvente_sn' => 'Lavable Solvente',
+      'emusificante_hidrofilico_sn' => 'Emusificante Hidrofílico',
+  ];
+
+  foreach ($propiedades as $clave => $etiqueta) {
+      if (isset($penetrante->$clave) && $penetrante->$clave == 1) {
+          $propiedadesAMostrar[] = $etiqueta;
+      }
+  }
+
+  return $propiedadesAMostrar;
+}
+
+function verificarSiTodosAceptables($detalles) {
+  foreach ($detalles as $detalle) {
+      if ($detalle->aceptable_sn != 1) {
+          return 'Rechazado'; // Si alguno no es aceptable, retorna 'Rechazado'
+      }
+  }
+  return 'Aceptado'; // Todos son aceptables
+}
