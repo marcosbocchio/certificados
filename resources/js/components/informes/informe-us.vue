@@ -696,26 +696,34 @@
                             </div>
                             <div>&nbsp;</div>
                             <!-- tabla me -->
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group" >
                                         <label for="elemento_me" title="Elemento">Elemento *</label>
                                         <input type="text" v-model="elemento_me" class="form-control" id="elemento_me" maxlength="30">
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group" >
                                         <label for="umbral" title="Umbral">Espesor Nominal</label>
                                         <input type="number" v-model="umbral_me" class="form-control" id="umbral_me" min="0" step="0.1">
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group" >
                                         <label for="espesor_minimo_me" title="espesor_minimo_me">Espesor Mínimo</label>
                                         <input type="number" v-model="espesor_minimo_me" class="form-control" id="espesor_minimo_me" min="0" step="0.1">
                                     </div>
                                 </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group" >
+                                        <label for="cantidad_generatrices_linea_pdf_me" title="Cantidad Generatrices por linea en informe">Generatrices por Linea en pdf *</label>
+                                        <input type="number" v-model="cantidad_generatrices_linea_pdf_me" class="form-control" id="cantidad_generatrices_linea_pdf_me" min="1" max="15">
+                                    </div>
+                                </div>
+                                
                                 <div class="clearfix"></div>
 
                                 <div class="clearfix"></div>
@@ -727,7 +735,7 @@
                                                         <th  class="col-lg-2">Elemento</th>
                                                         <th  class="col-lg-2">Nominal</th>
                                                         <th  class="col-lg-2">Mínimo</th>
-
+                                                        <th  class="col-lg-1">G.L.P.</th>
                                                         <th  class="col-lg-2">Importar Excel</th>
                                                         <th  class="col-lg-2">&nbsp;</th>
                                                     </tr>
@@ -738,8 +746,16 @@
                                                         <td>{{ item.umbral_me }}</td>
                                                         <td>{{ item.espesor_minimo_me }}</td>
                                                         <td>
+                                                            <div v-if="indexPosTabla_me === k">
+                                                                <input type="number" v-model="item.cantidad_generatrices_linea_pdf_me" min="1" max="15">
+                                                            </div>
+                                                            <div v-else>
+                                                                {{ item.cantidad_generatrices_linea_pdf_me}}
+                                                            </div>
+                                                        </td>
+                                                        <td>
                                                             <button type="button" @click="triggerFileUpload(k)">
-                                                                <i class="fa fa-file-excel-o"></i> Cargar Excel
+                                                                <i class="fa fa-file-excel-o"></i>
                                                             </button>
                                                         </td>
                                                         <td><span class="fa fa-minus-circle" @click="removeTabla_me(k)"></span></td>
@@ -1142,7 +1158,7 @@ export default {
         diametro_me:'',
         cantidad_posiciones_me:'',
         cantidad_generatrices_me:'',
-        cantidad_generatrices_linea_pdf_me: 18,
+        cantidad_generatrices_linea_pdf_me: 15,
 
         tecnicas:[],
         estados_superficies:[],
@@ -1832,7 +1848,7 @@ processExcelData(data, filas, columnas) {
 
             this.cantidad_posiciones_me = 50;
             this.cantidad_generatrices_me = 50;
-            this.cantidad_generatrices_linea_pdf_me = 15;
+            
             
             if (!this.elemento_me) {
                 toastr.error('El campo elemento es obligatorio');
@@ -1865,6 +1881,22 @@ processExcelData(data, filas, columnas) {
                 toastr.error('El campo posiciones o debe ser mayor a 100');
                 return ;
              }
+            
+             if (this.cantidad_generatrices_linea_pdf_me === null || this.cantidad_generatrices_linea_pdf_me === '') {
+                toastr.error('El campo G.L.P es obligatorio');
+                return;
+            }
+
+
+            if (this.cantidad_generatrices_linea_pdf_me < 0) {
+                toastr.error('El campo G.L.P no puede ser menor a 0');
+                return;
+            }
+
+            if(this.cantidad_generatrices_linea_pdf_me > 15){
+                toastr.error('El campo G.L.P no puede ser mayor a 15');
+                return ;
+            }
 
             if (!this.cantidad_generatrices_me){
                 toastr.error('El campo generatrices es obligatorio');

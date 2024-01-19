@@ -220,19 +220,48 @@ function recopilarMediciones($informes) {
       // Extraer los valores relevantes del informe
       $cantidadGeneratrices = $informe->cantidad_generatrices_me;
       $cantidadPosiciones = $informe->cantidad_posiciones_me;
-      $elementoMe = $informe->elemento_me;  // Extraer el valor de elemento_me
+      $cantidadGeneratricesLineaPdf = $informe->cantidad_generatrices_linea_pdf_me;
+      $elementoMe = $informe->elemento_me;
 
       // Array para almacenar los valores extraídos de las mediciones
       $valoresExtraidos = [];
-    
+
       // Ajustar las mediciones y extraer los valores
       $numeroDeMediciones = count($informe->mediciones);
       for ($i = 1; $i < $numeroDeMediciones; $i++) {
-          // Asumiendo que cada medicion es un array y tiene al menos 1 elemento
-          if ($i < $numeroDeMediciones - 1) { // Obviar el último dato
+          if ($i < $numeroDeMediciones - 1) {
               $valoresExtraidos[] = $informe->mediciones[$i][0];
           }
-          unset($informe->mediciones[$i][0]); // Eliminar el primer elemento
+          unset($informe->mediciones[$i][0]);
+      }
+
+      // Dividir las columnas extraídas en subarrays
+      $valoresExtraidosChunked = array_chunk($valoresExtraidos, $cantidadGeneratricesLineaPdf);
+
+      // Agregar "ø" al inicio de cada subarray, excepto el primero
+      foreach ($valoresExtraidosChunked as $key => &$chunk) {
+          if ($key > 0) {
+              array_unshift($chunk, 'ø');
+          }
+      }
+
+      // Ajustar las mediciones y extraer los valores en bloques
+      $agrupaciones = [];
+
+      foreach ($informe->mediciones as $medicionesPorPosicion) {
+          $posicionInicial = 0;
+
+          while ($posicionInicial < count($medicionesPorPosicion)) {
+              $bloque = array_slice($medicionesPorPosicion, $posicionInicial, $cantidadGeneratricesLineaPdf, true);
+              $posicionInicial += $cantidadGeneratricesLineaPdf;
+
+              // Agregar el bloque a la agrupación correspondiente
+              $indiceAgrupacion = intdiv(count($bloque), $cantidadGeneratricesLineaPdf);
+              if (!array_key_exists($indiceAgrupacion, $agrupaciones)) {
+                  $agrupaciones[$indiceAgrupacion] = [];
+              }
+              $agrupaciones[$indiceAgrupacion][] = $bloque;
+          }
       }
 
       // Agregar la información al resultado
@@ -240,8 +269,9 @@ function recopilarMediciones($informes) {
           'elemento_me' => $elementoMe,
           'cantidad_generatrices' => $cantidadGeneratrices,
           'cantidad_posiciones' => $cantidadPosiciones,
-          'columnas_extraidas' => $valoresExtraidos,
-          'mediciones_ajustadas' => $informe->mediciones
+          'cantidad_generatrices_linea_pdf' => $cantidadGeneratricesLineaPdf,
+          'columnas_extraidas' => $valoresExtraidosChunked,
+          'mediciones_ajustadas' => $agrupaciones
       ];
   }
 
@@ -253,52 +283,51 @@ function agruparPorAccesorios($arreglosMediciones) {
 
   foreach ($arreglosMediciones as $arreglo) {
       $elemento = $arreglo['elemento_me'];
-      $mediciones = $arreglo['mediciones_ajustadas'];
-      $columna = $arreglo['columnas_extraidas'];
+      $columnasExtraidas = $arreglo['columnas_extraidas'];
+      $medicionesAjustadas = $arreglo['mediciones_ajustadas'];
       $fila = $arreglo['cantidad_posiciones'];
+      $cantidadGeneratricesLineaPDF = $arreglo['cantidad_generatrices_linea_pdf'];
 
       if (!isset($result[$elemento])) {
           $result[$elemento] = [
-              'columnas' => $columna,
+              'columnas' => count($columnasExtraidas),
               'filas' => $fila,
+              'cantidad_generatrices_linea_pdf' => $cantidadGeneratricesLineaPDF,
+              'columnas_extraidas' => $columnasExtraidas,
               'accesorios' => []
           ];
       }
 
-      $keys = array_keys($mediciones);
-      $lastKey = end($keys);
-      $lastArray = $mediciones[$lastKey];
-      $accesoriosEncontrados = false;
-      $currentKey = null;
+      foreach ($columnasExtraidas as $i => $columna) {
+          $mediciones = $medicionesAjustadas[$i];
 
-      foreach ($lastArray as $index => $value) {
-          if ($value !== null) {
-              $currentKey = $value;
-              $accesoriosEncontrados = true;
-
-              if (!isset($result[$elemento]['accesorios'][$currentKey])) {
-                  $result[$elemento]['accesorios'][$currentKey] = [];
-              }
-          }
-
-          if ($currentKey !== null) {
-              $pair = [];
-              foreach ($keys as $key) {
-                  if ($key !== $lastKey) {
-                      $medicion = $mediciones[$key][$index];
-                      // Cambio para verificar valores en blanco a partir de la tercera posición
-                      if ($key >= 2 && $medicion === '') {
-                          $medicion = 'S/A';
-                      }
-                      $pair[] = $medicion;
+          // Último array de este conjunto de mediciones para agrupar por accesorios
+          $ultimoArrayMediciones = end($mediciones);
+          $accesorioActual = '-';
+          foreach ($ultimoArrayMediciones as $indice => $valorAccesorio) {
+              if ($valorAccesorio !== null) {
+                  $accesorioActual = (string)$valorAccesorio;
+                  if (!isset($result[$elemento]['accesorios'][$i][$accesorioActual])) {
+                      $result[$elemento]['accesorios'][$i][$accesorioActual] = [];
                   }
               }
-              $result[$elemento]['accesorios'][$currentKey][] = $pair;
-          }
-      }
 
-      if (!$accesoriosEncontrados) {
-          $result[$elemento]['accesorios'][' - '] = $mediciones;
+              foreach ($mediciones as $indiceMedicion => $datosMedicion) {
+                  if ($indiceMedicion !== key($mediciones)) {
+                      if (isset($datosMedicion[$indice])) {
+                          $result[$elemento]['accesorios'][$i][$accesorioActual][$indice][] = $datosMedicion[$indice];
+                      } else {
+                          // Opcional: manejo del caso en que el índice no existe
+                          // $result[$elemento]['accesorios'][$i][$accesorioActual][$indice][] = 'Valor por defecto o dejar vacío';
+                      }
+                  }
+              }
+          }
+
+          // Agrupación para accesorios no encontrados en este conjunto de mediciones
+          if (!isset($result[$elemento]['accesorios'][$i]['-'])) {
+              $result[$elemento]['accesorios'][$i]['-'] = [];
+          }
       }
   }
 
