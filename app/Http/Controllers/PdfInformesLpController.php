@@ -91,7 +91,6 @@ class PdfInformesLpController extends Controller
         $informeEspecial = null;
 
         obtenerInformeEspecial($informe, $metodo_ensayo, $informeEspecial);
-
         if($informeEspecial !== null){
             $pdf = PDF::loadView('reportes.informes.lp-v2-ESP',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',

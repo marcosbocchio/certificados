@@ -251,7 +251,11 @@ footer{
         </tr>
         <tr>
             <td style="height: 7.5mm;"><b>{{$informe->linea}}</b></td>
-            <td style="height: 7.5mm;"><b>{{$informe->componente}}</b></td>
+                    <td style="height: 7.5mm;">
+                        @foreach ($detalles as $detalle)
+                        <b> {{ $detalle->pieza }} </b>
+                        @endforeach
+                    </td>
         </tr>
     </tbody>
 </table>

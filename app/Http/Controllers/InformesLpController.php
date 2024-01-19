@@ -109,7 +109,11 @@ class InformesLpController extends Controller
         $informeLp->limpieza_intermedia = $request->limpieza_intermedia;
         $informeLp->limpieza_final = $request->limpieza_final;
         $informeLp->iluminacion_id = $request->iluminacion['id'];
-
+        $informeLp->condiciones_superficial = $request->condiciones_superficial;
+        $informeLp->temperatura_superficial = $request->temperatura_superficial;
+        $informeLp->temperatura_consumibles = $request->temperatura_consumibles;
+        $informeLp->termostato = $request->termostato;
+        
         $informeLp->save();
 
         return $informeLp;

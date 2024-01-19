@@ -302,6 +302,37 @@
                                 <v-select v-model="solicitado_por" label="name" :options="usuarios_cliente"></v-select>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="condiciones_superficial">Condiciones Superficial</label>
+                                <select v-model="condiciones_superficial" class="form-control">
+                                    <option value="SOLDADA">SOLDADA</option>
+                                    <option value="CEPILLADO">CEPILLADO</option>
+                                    <option value="AMOLADO">AMOLADO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="temperatura_superficial">Temperatura Superficial (ºC)</label>
+                                <input type="number" v-model="temperatura_superficial" class="form-control" min="0" max="50" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="temperatura_consumibles">Temperatura de Consumibles (ºC)</label>
+                                <input type="number" v-model="temperatura_consumibles" class="form-control" min="0" max="50" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="termostato">Termostato</label>
+                                <input type="text" v-model="termostato" class="form-control" value="FLUKE 572-2">
+                            </div>
+                        </div>
                   </div>
                </div>
 
@@ -665,7 +696,11 @@ data() {return {
         tabla:'',
         inputsData:{},
         loading : false,
-
+        //nuevoLPAESA
+        condiciones_superficial: '',
+        temperatura_superficial: null,
+        temperatura_consumibles: null,
+        termostato: 'FLUKE 572-2',
       }
     },
 
@@ -766,6 +801,12 @@ data() {return {
                this.limpieza_previa         = this.informe_lpdata.limpieza_previa;
                this.limpieza_intermedia     = this.informe_lpdata.limpieza_intermedia;
                this.limpieza_final          = this.informe_lpdata.limpieza_final;
+
+                this.condiciones_superficial = this.informe_lpdata.condiciones_superficial;
+                this.temperatura_superficial = this.informe_lpdata.temperatura_superficial;
+                this.temperatura_consumibles = this.informe_lpdata.temperatura_consumibles;
+                this.termostato = this.informedata.termostato || 'FLUKE 572-2';
+                
                this.solicitado_por = this.solicitado_pordata ;
                this.iluminacion = this.iluminacion_data;
                this.TablaLp = this.detalledata;
@@ -1046,6 +1087,10 @@ data() {return {
                 'solicitado_por'    : this.solicitado_por,
                 'detalles'                      :this.TablaLp,
                 'TablaModelos3d' :this.TablaModelos3d,
+                'condiciones_superficial': this.condiciones_superficial,
+                'temperatura_superficial': this.temperatura_superficial,
+                'temperatura_consumibles': this.temperatura_consumibles,
+                'termostato': this.termostato,
 
           }
 
@@ -1075,7 +1120,7 @@ data() {return {
 
         },
 
-        Update : function() {
+          function() {
 
             this.errors =[];
             this.$store.commit('loading', true);
@@ -1124,6 +1169,10 @@ data() {return {
                 'solicitado_por'    : this.solicitado_por,
                 'detalles'                      :this.TablaLp,
                 'TablaModelos3d' :this.TablaModelos3d,
+                'condiciones_superficial': this.condiciones_superficial,
+                'temperatura_superficial': this.temperatura_superficial,
+                'temperatura_consumibles': this.temperatura_consumibles,
+                'termostato': this.termostato,
 
           }}
 
