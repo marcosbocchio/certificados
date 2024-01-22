@@ -221,7 +221,7 @@ footer{
                 <td class="col1" id="left"><b>PAQ. DE PRUEBA:</b></td>
                 <td class="col2">&nbsp;</td>
                 <td class="col3" id="tabla6"><b>N° REPORTE / RFI:</b></td>
-                <td class="col4">--</td>
+                <td class="col4">LP{{sprintf("%04d", $informe->numero)}}</td>
             </tr>
         </tbody>
     </table>
@@ -390,7 +390,8 @@ footer{
         </tr>
     </tbody>
 </table>
-@forelse ($detallesReferencia as $detalleReferencia)
+@php $primerDetalle = $detallesReferencia->first(); @endphp
+@if ($primerDetalle)
     <table class="tablamain" style="page-break-inside: avoid;">
         <tbody>
             <tr>
@@ -398,24 +399,12 @@ footer{
             </tr>
             <tr>
                 <td style="height:32mm;">
-                    <img src="{{ asset($detalleReferencia->path1) }}" alt="Imagen"  style="max-height: 30mm; margin: 1mm;">
+                    <img src="{{ asset($primerDetalle->path1) }}" alt="Imagen"  style="max-height: 30mm; margin: 1mm;">
                 </td>
             </tr>
         </tbody>
     </table>
-@empty
-    <table class="tablamain">
-        <!-- Espacios en blanco para imagen y observación -->
-        <tbody>
-            <tr>
-                <td style="height:5mm" id="titulo"><b>Croquis / Sketch</b></td>
-            </tr>
-            <tr>
-                <td style="height:15mm;"></td>
-            </tr>
-        </tbody>
-    </table>
-@endforelse
+@endif
 <table class="tablamain">
     <tbody>
         <tr>
