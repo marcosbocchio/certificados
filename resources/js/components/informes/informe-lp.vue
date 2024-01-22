@@ -302,6 +302,38 @@
                                 <v-select v-model="solicitado_por" label="name" :options="usuarios_cliente"></v-select>
                             </div>
                         </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="condiciones_superficial">Condiciones Superficial</label>
+                                <select v-model="condiciones_superficial" class="form-control" id="condiciones_superficial">
+                                    <option value="SOLDADA">SOLDADA</option>
+                                    <option value="CEPILLADO">CEPILLADO</option>
+                                    <option value="AMOLADO">AMOLADO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="temperatura_superficial">Temperatura Superficial (ºC)</label>
+                                <input type="number" v-model="temperatura_superficial" class="form-control" id="temperatura_superficial" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="temperatura_consumibles">Temperatura de Consumibles (ºC)</label>
+                                <input type="number" v-model="temperatura_consumibles" class="form-control" id="temperatura_consumibles" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="termostato">Termostato</label>
+                                <input type="text" v-model="termostato" class="form-control" id="termostato" placeholder="FLUKE 572-2">
+                            </div>
+                        </div>
                   </div>
                </div>
 
@@ -665,7 +697,11 @@ data() {return {
         tabla:'',
         inputsData:{},
         loading : false,
-
+        //pdfESP
+        condiciones_superficial: '',
+        temperatura_superficial: null,
+        temperatura_consumibles: null,
+        termostato: 'FLUKE 572-2',
       }
     },
 
@@ -708,6 +744,7 @@ data() {return {
 
     },
 
+    
     computed :{
 
         ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno','modelos_3d']),
@@ -766,6 +803,12 @@ data() {return {
                this.limpieza_previa         = this.informe_lpdata.limpieza_previa;
                this.limpieza_intermedia     = this.informe_lpdata.limpieza_intermedia;
                this.limpieza_final          = this.informe_lpdata.limpieza_final;
+
+               this.condiciones_superficial = this.informe_lpdata.condiciones_superficial;
+                this.temperatura_superficial = this.informe_lpdata.temperatura_superficial;
+                this.temperatura_consumibles = this.informe_lpdata.temperatura_consumibles;
+                this.termostato = this.informe_lpdata.termostato || 'FLUKE 572-2';
+
                this.solicitado_por = this.solicitado_pordata ;
                this.iluminacion = this.iluminacion_data;
                this.TablaLp = this.detalledata;
@@ -1002,7 +1045,17 @@ data() {return {
           this.errors =[];
             this.$store.commit('loading', true);
             var urlRegistros = 'informes_lp' ;
-            console.log(this.metodo)
+            console.log(this.metodo);
+            if (this.temperatura_superficial > 50.0 || this.temperatura_superficial < 0.1) {
+                toastr.error('La temperatura superficial debe estar entre 0.1 y 50.0');
+                this.$store.commit('loading', false);
+                return; // Detener la ejecución si la validación falla
+            }
+            if (this.temperatura_consumibles > 50.0 || this.temperatura_consumibles < 0.1) {
+                toastr.error('La temperatura de consumibles debe estar entre 0.1 y 50.0');
+                this.$store.commit('loading', false);
+                return; // Detener la ejecución si la validación falla
+            }
             axios({
               method: 'post',
               url : urlRegistros,
@@ -1043,6 +1096,10 @@ data() {return {
                 'limpieza_previa'               :this.limpieza_previa,
                 'limpieza_intermedia'           :this.limpieza_intermedia,
                 'limpieza_final'                :this.limpieza_final,
+                'condiciones_superficial': this.condiciones_superficial,
+                'temperatura_superficial': this.temperatura_superficial,
+                'temperatura_consumibles': this.temperatura_consumibles,
+                'termostato': this.termostato,
                 'solicitado_por'    : this.solicitado_por,
                 'detalles'                      :this.TablaLp,
                 'TablaModelos3d' :this.TablaModelos3d,
@@ -1080,6 +1137,16 @@ data() {return {
             this.errors =[];
             this.$store.commit('loading', true);
             var urlRegistros = 'informes_lp/' + this.informedata.id  ;
+            if (this.temperatura_superficial > 50.0 || this.temperatura_superficial < 0.1) {
+                toastr.error('La temperatura superficial debe estar entre 0.1 y 50.0');
+                this.$store.commit('loading', false);
+                return; // Detener la ejecución si la validación falla
+            }
+            if (this.temperatura_consumibles > 50.0 || this.temperatura_consumibles < 0.1) {
+                toastr.error('La temperatura de consumibles debe estar entre 0.1 y 50.0');
+                this.$store.commit('loading', false);
+                return; // Detener la ejecución si la validación falla
+            }
             axios({
               method: 'put',
               url : urlRegistros,
@@ -1121,6 +1188,10 @@ data() {return {
                 'limpieza_previa'               :this.limpieza_previa,
                 'limpieza_intermedia'           :this.limpieza_intermedia,
                 'limpieza_final'                :this.limpieza_final,
+                'condiciones_superficial': this.condiciones_superficial,
+                'temperatura_superficial': this.temperatura_superficial,
+                'temperatura_consumibles': this.temperatura_consumibles,
+                'termostato': this.termostato,
                 'solicitado_por'    : this.solicitado_por,
                 'detalles'                      :this.TablaLp,
                 'TablaModelos3d' :this.TablaModelos3d,

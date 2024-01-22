@@ -213,94 +213,34 @@ function obtenerInformeEspecial($informe, $metodo_ensayo, &$informeEspecial) {
 }
 
 
-function recopilarMediciones($informes) {
-  $resultados = [];
 
-  foreach ($informes as $informe) {
-      // Extraer los valores relevantes del informe
-      $cantidadGeneratrices = $informe->cantidad_generatrices_me;
-      $cantidadPosiciones = $informe->cantidad_posiciones_me;
-      $elementoMe = $informe->elemento_me;  // Extraer el valor de elemento_me
+function obtenerPropiedadesLiquidos($penetrante) {
+  $propiedadesAMostrar = [];
+  $propiedades = [
+      'revelador_sn' => 'Revelador',
+      'removedor_sn' => 'Removedor',
+      'fluorescente_sn' => 'Fluorescente',
+      'visible_sn' => 'Visible',
+      'lavable_agua_sn' => 'Lavable Agua',
+      'emusificante_lipofilico_sn' => 'Emusificante Lipofílico',
+      'lavable_solvente_sn' => 'Lavable Solvente',
+      'emusificante_hidrofilico_sn' => 'Emusificante Hidrofílico',
+  ];
 
-      // Array para almacenar los valores extraídos de las mediciones
-      $valoresExtraidos = [];
-    
-      // Ajustar las mediciones y extraer los valores
-      $numeroDeMediciones = count($informe->mediciones);
-      for ($i = 1; $i < $numeroDeMediciones; $i++) {
-          // Asumiendo que cada medicion es un array y tiene al menos 1 elemento
-          if ($i < $numeroDeMediciones - 1) { // Obviar el último dato
-              $valoresExtraidos[] = $informe->mediciones[$i][0];
-          }
-          unset($informe->mediciones[$i][0]); // Eliminar el primer elemento
+  foreach ($propiedades as $clave => $etiqueta) {
+      if (isset($penetrante->$clave) && $penetrante->$clave == 1) {
+          $propiedadesAMostrar[] = $etiqueta;
       }
-
-      // Agregar la información al resultado
-      $resultados[] = [
-          'elemento_me' => $elementoMe,
-          'cantidad_generatrices' => $cantidadGeneratrices,
-          'cantidad_posiciones' => $cantidadPosiciones,
-          'columnas_extraidas' => $valoresExtraidos,
-          'mediciones_ajustadas' => $informe->mediciones
-      ];
   }
 
-  return $resultados;
+  return $propiedadesAMostrar;
 }
 
-function agruparPorAccesorios($arreglosMediciones) {
-  $result = [];
-
-  foreach ($arreglosMediciones as $arreglo) {
-      $elemento = $arreglo['elemento_me'];
-      $mediciones = $arreglo['mediciones_ajustadas'];
-      $columna = $arreglo['columnas_extraidas'];
-      $fila = $arreglo['cantidad_posiciones'];
-
-      if (!isset($result[$elemento])) {
-          $result[$elemento] = [
-              'columnas' => $columna,
-              'filas' => $fila,
-              'accesorios' => []
-          ];
-      }
-
-      $keys = array_keys($mediciones);
-      $lastKey = end($keys);
-      $lastArray = $mediciones[$lastKey];
-      $accesoriosEncontrados = false;
-      $currentKey = null;
-
-      foreach ($lastArray as $index => $value) {
-          if ($value !== null) {
-              $currentKey = $value;
-              $accesoriosEncontrados = true;
-
-              if (!isset($result[$elemento]['accesorios'][$currentKey])) {
-                  $result[$elemento]['accesorios'][$currentKey] = [];
-              }
-          }
-
-          if ($currentKey !== null) {
-              $pair = [];
-              foreach ($keys as $key) {
-                  if ($key !== $lastKey) {
-                      $medicion = $mediciones[$key][$index];
-                      // Cambio para verificar valores en blanco a partir de la tercera posición
-                      if ($key >= 2 && $medicion === '') {
-                          $medicion = 'S/A';
-                      }
-                      $pair[] = $medicion;
-                  }
-              }
-              $result[$elemento]['accesorios'][$currentKey][] = $pair;
-          }
-      }
-
-      if (!$accesoriosEncontrados) {
-          $result[$elemento]['accesorios'][' - '] = $mediciones;
+function verificarSiTodosAceptables($detalles) {
+  foreach ($detalles as $detalle) {
+      if ($detalle->aceptable_sn != 1) {
+          return 'Rechazado'; // Si alguno no es aceptable, retorna 'Rechazado'
       }
   }
-
-  return $result;
+  return 'Aceptado'; // Todos son aceptables
 }

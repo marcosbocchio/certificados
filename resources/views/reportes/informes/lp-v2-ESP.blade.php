@@ -221,7 +221,7 @@ footer{
                 <td class="col1" id="left"><b>PAQ. DE PRUEBA:</b></td>
                 <td class="col2">&nbsp;</td>
                 <td class="col3" id="tabla6"><b>N° REPORTE / RFI:</b></td>
-                <td class="col4">--</td>
+                <td class="col4">LP{{sprintf("%04d", $informe->numero)}}</td>
             </tr>
         </tbody>
     </table>
@@ -251,16 +251,11 @@ footer{
         </tr>
         <tr>
             <td style="height: 7.5mm;"><b>{{$informe->linea}}</b></td>
-            <td style="height: 7.5mm;">
-            @php
-            dd($detalles->pieza)
-            @endphp
-            @foreach ($detalles as $detalle)
-            
-                <b>{{ $detalle->nombre_pieza }}</b>
-            
-            @endforeach
-            </td>
+                    <td style="height: 7.5mm;">
+                        @foreach ($detalles as $detalle)
+                        <b> {{ $detalle->pieza }} </b>
+                        @endforeach
+                    </td>
         </tr>
     </tbody>
 </table>
@@ -305,9 +300,9 @@ footer{
             <td id="font7">Temp. Superficie/ Surface Temperature</td>
         </tr>
         <tr>
-            <td style="height: 7.5mm;">&nbsp;</td>
+            <td style="height: 7.5mm;"><b>{{$informe_lp->condiciones_superficial}}</b></td>
             <td><b>{{$informe_lp->limpieza_previa}}</b></td>
-            <td>&nbsp;</td>
+            <td><b>{{$informe_lp->temperatura_superficial}}°</b></td>
         </tr>
     </tbody>
 </table>
@@ -318,8 +313,8 @@ footer{
             <td style="width: 86mm;" id="font7">Termómetro / Thermometer</td>
         </tr>
         <tr>
-            <td style="height: 7.5mm; ">&nbsp;</td>
-            <td>&nbsp;</td>
+            <td style="height: 7.5mm; "><b>{{$informe_lp->temperatura_consumibles}}°</b></td>
+            <td><b>{{$informe_lp->termostato}}</b></td>
         </tr>
         <tr>
             <td style="height: 4mm; " id="font7">Marca y Designación del Penetrante / Penetrant Brand and Design</td>
@@ -379,13 +374,11 @@ footer{
         </tr>
         <tr>
             <td style="height:9mm">
-                                    @if($metodo->tipo =='TIPO I')
-                                        <b>Fluorescente</b>
-                                    @else
-                                        <b>Visible</b>
-                                    @endif
+                @foreach($propiedadesAMostrar as $propiedad)
+                   <b> {{ $propiedad }} </b>
+                @endforeach
             </td>
-            <td><b>{{$equipo->equipo->instrumento_medicion}}</b></td>
+            <td><b>{{$metodo->tipo}} {{$metodo->metodo}}</b></td>
             <td>
                 @if ($informe_lp->limpieza_final)
                                          <b>{{$informe_lp->limpieza_final}}</b>
@@ -397,7 +390,8 @@ footer{
         </tr>
     </tbody>
 </table>
-@forelse ($detallesReferencia as $detalleReferencia)
+@php $primerDetalle = $detallesReferencia->first(); @endphp
+@if ($primerDetalle)
     <table class="tablamain" style="page-break-inside: avoid;">
         <tbody>
             <tr>
@@ -405,36 +399,24 @@ footer{
             </tr>
             <tr>
                 <td style="height:32mm;">
-                    <img src="{{ asset($detalleReferencia->path1) }}" alt="Imagen"  style="max-height: 30mm; margin: 1mm;">
+                    <img src="{{ asset($primerDetalle->path1) }}" alt="Imagen"  style="max-height: 30mm; margin: 1mm;">
                 </td>
             </tr>
-            <tr>
+        </tbody>
+    </table>
+@endif
+
+<table class="tablamain">
+    <tbody>
+        <tr>
                 <td style="height:5mm" id="titulo"><b>Informe / Report:</b></td>
             </tr>
             <tr>
-                <td style="height:13mm">{{$detalleReferencia->descripcion}}</td>
+                <td style="height:13mm; text-align: left; padding-left:20px;">{{$informe->observaciones}}</td>
             </tr>
-        </tbody>
-    </table>
-@empty
-    <table class="tablamain">
-        <!-- Espacios en blanco para imagen y observación -->
-        <tbody>
-            <tr>
-                <td style="height:5mm" id="titulo"><b>Croquis / Sketch</b></td>
-            </tr>
-            <tr>
-                <td style="height:15mm;"></td>
-            </tr>
-            <tr>
-                <td style="height:5mm" id="titulo"><b>Informe / Report:</b></td>
-            </tr>
-            <tr>
-                <td style="height:16mm;"></td>
-            </tr>
-        </tbody>
-    </table>
-@endforelse
+    </tbody>
+</table>
+
 <table class="tablamain">
     <tbody>
         <tr>
@@ -442,7 +424,11 @@ footer{
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 3mm;">&nbsp;</td>
+                            <td style="width: 3mm">
+                                @if($estadoAceptacion == 'Aceptado')
+                                    X
+                                @endif
+                            </td>
                             <td id="bordernone">Aceptado / Accepted</td>
                         </tr>
                     </tbody>
@@ -462,8 +448,12 @@ footer{
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 3mm">&nbsp;</td>
-                            <td  id="bordernone">Rechazado / Reject</td>
+                            <td style="width: 3mm;">
+                                @if($estadoAceptacion == 'Rechazado')
+                                    X
+                                @endif
+                            </td>
+                            <td id="bordernone">Rechazado / Reject</td>
                         </tr>
                     </tbody>
                 </table>
