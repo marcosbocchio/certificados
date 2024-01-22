@@ -79,9 +79,8 @@ class PdfInformesUsController extends Controller
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
         
-        $todas_las_mediciones = recopilarMediciones($informes_us_me);
-        
-        $medicionesAgrupadas = agruparPorAccesorios($todas_las_mediciones);
+        $medicionesAgrupadas = agruparPorAccesorios($informes_us_me);
+
         $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'planta',

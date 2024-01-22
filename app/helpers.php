@@ -244,3 +244,70 @@ function verificarSiTodosAceptables($detalles) {
   }
   return 'Aceptado'; // Todos son aceptables
 }
+
+
+
+
+function agruparPorAccesorios($informes_us_me) {
+  $resultado = [];
+
+  foreach ($informes_us_me as $informe) {
+      $elemento_me = $informe->elemento_me;
+      $mediciones = $informe->mediciones;
+      $cantidad_generatrices_linea_pdf_me = $informe->cantidad_generatrices_linea_pdf_me;
+      $cantidad_posiciones = count($mediciones) - 1; // Excluyendo el último sub-array
+
+      if (!isset($resultado[$elemento_me])) {
+          $columnas = [];
+          foreach ($mediciones as $key => $medicion) {
+              if ($key > 0 && $key < $cantidad_posiciones) { // Desde el segundo hasta el penúltimo sub-array
+                  $columnas[] = reset($medicion); // Obtiene el primer valor de cada sub-array
+              }
+          }
+
+          $resultado[$elemento_me] = [
+              'filas' => $mediciones[0], // Primer sub-array de mediciones
+              'diametro' => $mediciones[1], // Segundo sub-array de mediciones
+              'columnas' => $columnas,
+              'cantidad_posiciones' => $cantidad_posiciones,
+              'cantidad_generatrices_linea_pdf_me' => $cantidad_generatrices_linea_pdf_me, // Agregando esta línea
+              'accesorios' => []
+          ];
+      }
+
+      $ultimoArray = end($mediciones);
+      $accesoriosEncontrados = false;
+      $currentKey = null;
+
+      foreach ($ultimoArray as $index => $value) {
+          if ($value !== null && $value !== "ACCESORIO") {
+              $currentKey = $value;
+              $accesoriosEncontrados = true;
+
+              if (!isset($resultado[$elemento_me]['accesorios'][$currentKey])) {
+                  $resultado[$elemento_me]['accesorios'][$currentKey] = [];
+              }
+          }
+
+          if ($currentKey !== null) {
+              $pair = [];
+              foreach ($mediciones as $key => $medicion) {
+                  if ($key !== $cantidad_posiciones) {
+                      $medicionValor = $medicion[$index];
+                      if ($key >= 2 && $medicionValor === '') {
+                          $medicionValor = 'S/A';
+                      }
+                      $pair[] = $medicionValor;
+                  }
+              }
+              $resultado[$elemento_me]['accesorios'][$currentKey][] = $pair;
+          }
+      }
+
+      if (!$accesoriosEncontrados) {
+          $resultado[$elemento_me]['accesorios'][' - '] = $mediciones;
+      }
+  }
+
+  return $resultado;
+}

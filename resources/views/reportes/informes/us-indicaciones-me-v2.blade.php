@@ -34,38 +34,37 @@
     @php
         $columnas = $datos['columnas'];
         $columnasMostradas = 0;
+        $maxColumnas = $datos['cantidad_generatrices_linea_pdf_me'] + 1;
     @endphp
 
+    {{-- Crear múltiples tablas si hay más columnas de las que pueden mostrarse de una vez --}}
     @while ($columnasMostradas < count($columnas))
         <table class="bordered">
             <thead>
                 <tr>
-                    <th colspan="{{ min(count($columnas) - $columnasMostradas, 15) + 1 }}">{{ $elemento }}</th>
+                    <th colspan="{{ min($maxColumnas, count($columnas) - $columnasMostradas) }}">{{ $elemento }}</th>
                 </tr>
                 <tr>
                     <th>Puntos</th>
-                    @foreach (array_slice($columnas, $columnasMostradas, 15) as $columna)
+                    @foreach (array_slice($columnas, $columnasMostradas, $maxColumnas) as $columna)
                         <th>{{ $columna }}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
+                {{-- Iterar sobre cada accesorio --}}
                 @foreach ($datos['accesorios'] as $nombreAccesorio => $medicionesAccesorio)
-                    <!-- Título del accesorio -->
+                    {{-- Título del accesorio --}}
                     <tr class="title-row">
-                        <td colspan="{{ min(count($columnas) - $columnasMostradas, 15) + 1 }}">
+                        <td colspan="{{ min($maxColumnas, count($columnas) - $columnasMostradas) }}">
                             {{ strtoupper($nombreAccesorio) }}
                         </td>
                     </tr>
-                    <!-- Datos del accesorio -->
+                    {{-- Datos del accesorio --}}
                     @foreach ($medicionesAccesorio as $valores)
                         <tr>
-                            @foreach (array_slice($valores, $columnasMostradas, 15) as $indice => $valor)
-                                @if ($indice == 0)
-                                    <td>{{ $valor }}</td>
-                                @else
-                                    <td>{{ $valor ?? 'S/A' }}</td>
-                                @endif
+                            @foreach (array_slice($valores, $columnasMostradas, $maxColumnas) as $indice => $valor)
+                                <td>{{ $valor ?? 'S/A' }}</td>
                             @endforeach
                         </tr>
                     @endforeach
@@ -73,10 +72,10 @@
             </tbody>
         </table>
         @php
-            $columnasMostradas += 15;
+            $columnasMostradas += $maxColumnas;
         @endphp
         @if ($columnasMostradas < count($columnas))
-            <!-- Agregar aquí cualquier marcado necesario para dividir las tablas, como un salto de página si es para imprimir -->
+            {{-- Agregar un salto de página si es necesario --}}
         @endif
     @endwhile
 @endforeach
