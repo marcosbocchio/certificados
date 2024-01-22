@@ -422,8 +422,7 @@ footer{
                 <td style="height:5mm" id="titulo"><b>Informe / Report:</b></td>
             </tr>
             <tr>
-                
-                <td style="height:13mm">{{$informe->observaciones}}</td>
+                <td style="height:13mm; text-align: left; padding-left:20px;">{{$informe->observaciones}}</td>
             </tr>
     </tbody>
 </table>

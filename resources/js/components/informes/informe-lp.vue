@@ -317,14 +317,14 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="temperatura_superficial">Temperatura Superficial (ºC)</label>
-                                <input type="number" v-model="temperatura_superficial" class="form-control" id="temperatura_superficial" min="0" max="50" step="0.1">
+                                <input type="number" v-model="temperatura_superficial" class="form-control" id="temperatura_superficial" step="0.1">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="temperatura_consumibles">Temperatura de Consumibles (ºC)</label>
-                                <input type="number" v-model="temperatura_consumibles" class="form-control" id="temperatura_consumibles" min="0" max="50" step="0.1">
+                                <input type="number" v-model="temperatura_consumibles" class="form-control" id="temperatura_consumibles" step="0.1">
                             </div>
                         </div>
 
@@ -1044,7 +1044,17 @@ data() {return {
           this.errors =[];
             this.$store.commit('loading', true);
             var urlRegistros = 'informes_lp' ;
-            console.log(this.metodo)
+            console.log(this.metodo);
+            if (this.temperatura_superficial > 50.0 || this.temperatura_superficial < 0.1) {
+                toastr.error('La temperatura superficial debe estar entre 0.1 y 50.0');
+                this.$store.commit('loading', false);
+                return; // Detener la ejecución si la validación falla
+            }
+            if (this.temperatura_consumibles > 50.0 || this.temperatura_consumibles < 0.1) {
+                toastr.error('La temperatura de consumibles debe estar entre 0.1 y 50.0');
+                this.$store.commit('loading', false);
+                return; // Detener la ejecución si la validación falla
+            }
             axios({
               method: 'post',
               url : urlRegistros,
@@ -1126,6 +1136,16 @@ data() {return {
             this.errors =[];
             this.$store.commit('loading', true);
             var urlRegistros = 'informes_lp/' + this.informedata.id  ;
+            if (this.temperatura_superficial > 50.0 || this.temperatura_superficial < 0.1) {
+                toastr.error('La temperatura superficial debe estar entre 0.1 y 50.0');
+                this.$store.commit('loading', false);
+                return; // Detener la ejecución si la validación falla
+            }
+            if (this.temperatura_consumibles > 50.0 || this.temperatura_consumibles < 0.1) {
+                toastr.error('La temperatura de consumibles debe estar entre 0.1 y 50.0');
+                this.$store.commit('loading', false);
+                return; // Detener la ejecución si la validación falla
+            }
             axios({
               method: 'put',
               url : urlRegistros,

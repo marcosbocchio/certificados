@@ -217,7 +217,6 @@ function obtenerInformeEspecial($informe, $metodo_ensayo, &$informeEspecial) {
 function obtenerPropiedadesLiquidos($penetrante) {
   $propiedadesAMostrar = [];
   $propiedades = [
-      'penetrante_sn' => 'Penetrante',
       'revelador_sn' => 'Revelador',
       'removedor_sn' => 'Removedor',
       'fluorescente_sn' => 'Fluorescente',
