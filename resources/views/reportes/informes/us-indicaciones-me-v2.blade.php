@@ -112,6 +112,20 @@
     @endif
 @endforeach
 
+@include('reportes.partial.linea-amarilla')
+<table width="100%" style="border-collapse: collapse;">
+        <tbody style="padding: 20px;"> 
+            <tr>
+                <td><strong style="font-size: 13px;">Observaciones</strong></td>
+            </tr>   
+            <tr>           
+                <td style="font-size: 13px; height:70px; text-align: right;" class="bordered-td">
+                    <span style="display: block; text-align: left; margin: 5px;">{{$observaciones}}</span>
+                </td> 
+            </tr>
+        </tbody>
+</table>
+@include('reportes.partial.linea-amarilla')
 
 @if( $informe_us->path1_indicacion || $informe_us->path2_indicacion )
 <div class="page_break"></div>
@@ -156,20 +170,7 @@
     </tbody>
 </table>
 @endif
-@include('reportes.partial.linea-amarilla')
-<table width="100%" style="border-collapse: collapse;">
-        <tbody style="padding: 20px;"> 
-            <tr>
-                <td><strong style="font-size: 13px;">Observaciones</strong></td>
-            </tr>   
-            <tr>           
-                <td style="font-size: 13px; height:70px; text-align: right;" class="bordered-td">
-                    <span style="display: block; text-align: left; margin: 5px;">{{$observaciones}}</span>
-                </td> 
-            </tr>
-        </tbody>
-</table>
-@include('reportes.partial.linea-amarilla')
+
 @if($informe_us->path3_indicacion || $informe_us->path4_indicacion)
 <div class="page_break"></div>
 <table width="100%">
