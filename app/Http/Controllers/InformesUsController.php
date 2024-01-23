@@ -269,9 +269,6 @@ class InformesUsController extends Controller
 
     public function saveMediciones($cantidad_generatrices, $cantidad_posiciones, $mediciones, $informe_us_me){
 
-        Log::debug('Cantidad de generatrices: '. $cantidad_generatrices);
-        Log::debug('Cantidad de posiciones: '. $cantidad_posiciones);
-        Log::debug('Contenido de mediciones: '. json_encode($mediciones));
         for ($x = 0; $x < $cantidad_generatrices +1; $x++) {
             for ($y = 1; $y <= $cantidad_posiciones; $y++) {
                 $detalle_us_me = new DetalleUsMe;
@@ -285,7 +282,6 @@ class InformesUsController extends Controller
                     $detalle_us_me->valor = $valor; 
                 } else{
                     $detalle_us_me->accesorio_texto = $valor; 
-                    log::info('accesorio_texto'. $detalle_us_me->accesorio_texto);
                 }
                 $detalle_us_me->save();
             }

@@ -1,7 +1,6 @@
 <style>
     .bordered {
         border-collapse: collapse;
-        width: 100%;
         margin-bottom: 20px; /* Espacio entre tablas */
     }
 
@@ -30,54 +29,87 @@
     </tbody>
 </table>
 
-@foreach ($medicionesAgrupadas as $elemento => $datos)
-    @php
-        $columnas = $datos['columnas'];
-        $columnasMostradas = 0;
-        $maxColumnas = $datos['cantidad_generatrices_linea_pdf_me'] + 1;
-    @endphp
+@foreach ($medicionesAgrupadas as $nombreObjeto => $datos)
+    <h2>{{ strtoupper($nombreObjeto) }}</h2>
 
-    {{-- Crear múltiples tablas si hay más columnas de las que pueden mostrarse de una vez --}}
-    @while ($columnasMostradas < count($columnas))
+    @if (count($datos['medicionesTranspuestas'][0]) - 2 <= $datos['cantidad_generatrices_linea_pdf_me'])
+        {{-- Formato agrupado --}}
         <table class="bordered">
             <thead>
                 <tr>
-                    <th colspan="{{ min($maxColumnas, count($columnas) - $columnasMostradas) }}">{{ $elemento }}</th>
-                </tr>
-                <tr>
                     <th>Puntos</th>
-                    @foreach (array_slice($columnas, $columnasMostradas, $maxColumnas) as $columna)
-                        <th>{{ $columna }}</th>
+                    @foreach (array_slice($datos['medicionesTranspuestas'][0], 1, -1) as $encabezado)
+                        <th>{{ $encabezado }}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
-                {{-- Iterar sobre cada accesorio --}}
-                @foreach ($datos['accesorios'] as $nombreAccesorio => $medicionesAccesorio)
-                    {{-- Título del accesorio --}}
-                    <tr class="title-row">
-                        <td colspan="{{ min($maxColumnas, count($columnas) - $columnasMostradas) }}">
-                            {{ strtoupper($nombreAccesorio) }}
-                        </td>
-                    </tr>
-                    {{-- Datos del accesorio --}}
-                    @foreach ($medicionesAccesorio as $valores)
-                        <tr>
-                            @foreach (array_slice($valores, $columnasMostradas, $maxColumnas) as $indice => $valor)
-                                <td>{{ $valor ?? 'S/A' }}</td>
-                            @endforeach
+                @php 
+                $currentSection = null;
+                $espesorMinimo = $datos['espesor_minimo_me']; // Obtener el valor de espesor_minimo_me
+                @endphp
+                @foreach (array_slice($datos['medicionesTranspuestas'], 1) as $medicion)
+                    @php $ultimoValor = end($medicion); @endphp
+
+                    {{-- Verificar si debemos iniciar una nueva sección --}}
+                    @if ($ultimoValor !== null && $ultimoValor !== $currentSection)
+                        @php $currentSection = $ultimoValor; @endphp
+                        <tr class="title-row">
+                            <td colspan="{{ count($datos['medicionesTranspuestas'][0]) - 1 }}">{{ $ultimoValor }}</td>
                         </tr>
-                    @endforeach
+                    @endif
+
+                    {{-- Mostrar los datos de la medición actual --}}
+                    <tr>
+                        @foreach (array_slice($medicion, 0, -1) as $key => $valor)
+                            <td style="color: {{ $key >= 2 && $valor < $espesorMinimo ? 'red' : 'inherit' }}">{{ $valor }}</td>
+                        @endforeach
+                    </tr>
                 @endforeach
             </tbody>
         </table>
+    @else
+        {{-- Formato no agrupado con columnas fijas y divisiones según cantidad_generatrices_linea_pdf_me --}}
         @php
-            $columnasMostradas += $maxColumnas;
+            $encabezados = $datos['medicionesTranspuestas'][0];
+            $maxColumnas = $datos['cantidad_generatrices_linea_pdf_me'];
+            $totalColumnas = count($encabezados) - 1; // Excluir el último valor
+            $inicio = 2; // Comenzar desde la 3ra posición del array
+            $espesorMinimo = $datos['espesor_minimo_me']; // Obtener el valor de espesor_minimo_me
         @endphp
-        @if ($columnasMostradas < count($columnas))
-            {{-- Agregar un salto de página si es necesario --}}
-        @endif
-    @endwhile
+
+        @while ($inicio < $totalColumnas)
+            @php
+                $fin = min($inicio + $maxColumnas, $totalColumnas);
+                $columnasMostrar = array_slice($encabezados, $inicio, $fin - $inicio);
+            @endphp
+            <table class="bordered">
+                <thead>
+                    <tr>
+                        <th>Puntos</th>
+                        <th>Ø</th>
+                        @foreach ($columnasMostrar as $encabezado)
+                            <th>{{ $encabezado }}</th>
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($datos['medicionesTranspuestas'] as $indice => $medicion)
+                        @if ($indice > 0)
+                            <tr>
+                                <td>{{ $medicion[0] }}</td>
+                                <td>{{ $medicion[1] }}</td>
+                                @foreach (array_slice($medicion, $inicio, $fin - $inicio) as $key => $valor)
+                                    <td style="color: {{ $key + $inicio >= 2 && $valor < $espesorMinimo ? 'red' : 'inherit' }}">{{ $valor }}</td>
+                                @endforeach
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+            @php $inicio = $fin; @endphp
+        @endwhile
+    @endif
 @endforeach
 
 
@@ -124,16 +156,20 @@
     </tbody>
 </table>
 @endif
+@include('reportes.partial.linea-amarilla')
 <table width="100%" style="border-collapse: collapse;">
         <tbody style="padding: 20px;"> 
             <tr>
                 <td><strong style="font-size: 13px;">Observaciones</strong></td>
             </tr>   
             <tr>           
-                <td style="font-size: 13px; height:150px;" class="bordered-td"><span style="margin-left: 5px; ">{{$observaciones}}</span></td> 
+                <td style="font-size: 13px; height:70px; text-align: right;" class="bordered-td">
+                    <span style="display: block; text-align: left; margin: 5px;">{{$observaciones}}</span>
+                </td> 
             </tr>
         </tbody>
 </table>
+@include('reportes.partial.linea-amarilla')
 @if($informe_us->path3_indicacion || $informe_us->path4_indicacion)
 <div class="page_break"></div>
 <table width="100%">

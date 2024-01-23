@@ -10,8 +10,18 @@
 
 <style>
 
-    @page { margin: 260px 40px 260px 40px !important;
-            padding: 0px 0px 0px 0px !important; }
+
+    @if($tecnica->codigo == 'US' || $tecnica->codigo == 'PA')
+        @page { 
+            margin: 260px 40px 260px 40px !important;
+            padding: 0px 0px 0px 0px !important; 
+        }
+    @else
+        @page { 
+            margin: 260px 40px 160px 40px !important;
+            padding: 0px 0px 0px 0px !important; 
+        }
+    @endif
 
 header {
     position:fixed;
@@ -60,7 +70,7 @@ footer {
         @include('reportes.informes.partial.firmas')
     @else
         @include('reportes.partial.linea-amarilla')
-            <table width="100%" height="60px">
+            <table width="100%">
                 <tbody>
                     <tr>
                         <td style="font-size: 13px;" colspan="1"  rowspan="2"><b>Firmas </b></td>

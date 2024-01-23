@@ -80,7 +80,7 @@ class PdfInformesUsController extends Controller
         $tipo_reporte = "INFORME N°";
         
         $medicionesAgrupadas = agruparPorAccesorios($informes_us_me);
-
+ 
         $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'planta',
@@ -109,7 +109,7 @@ class PdfInformesUsController extends Controller
                                                                 'numero_repetido',
                                                                 'detalles',
                                                                 'informe_solicitado_por',
-                                                                'medicionesAgrupadas'
+                                                                'medicionesAgrupadas',
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 
