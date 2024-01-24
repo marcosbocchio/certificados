@@ -30,16 +30,16 @@
 </table>
 
 @foreach ($medicionesAgrupadas as $nombreObjeto => $datos)
-    <h2>{{ strtoupper($nombreObjeto) }}</h2>
+    <h2 style="font-size: 15px;">{{ strtoupper($nombreObjeto) }}</h2>
 
     @if (count($datos['medicionesTranspuestas'][0]) - 2 <= $datos['cantidad_generatrices_linea_pdf_me'])
         {{-- Formato agrupado --}}
-        <table class="bordered">
+        <table class="bordered" style="font-size: 13px; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th>Puntos</th>
+                    <th style="min-width: 15px;height:20px;">Puntos</th>
                     @foreach (array_slice($datos['medicionesTranspuestas'][0], 1, -1) as $encabezado)
-                        <th>{{ $encabezado }}</th>
+                        <th style="min-width: 28px;height:20px;">{{ $encabezado }}</th>
                     @endforeach
                 </tr>
             </thead>
@@ -54,13 +54,13 @@
                     @if ($ultimoValor !== null && $ultimoValor !== $currentSection)
                         @php $currentSection = $ultimoValor; @endphp
                         <tr class="title-row">
-                            <td colspan="{{ count($datos['medicionesTranspuestas'][0]) - 1 }}">{{ $ultimoValor }}</td>
+                            <td colspan="{{ count($datos['medicionesTranspuestas'][0]) - 1 }}" style="font-size: 14px;height:20px;">{{ $ultimoValor }}</td>
                         </tr>
                     @endif
 
                     <tr>
                         @foreach (array_slice($medicion, 0, -1) as $key => $valor)
-                            <td style="color: {{ $key >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}">{{ $valor }}</td>
+                            <td style="color: {{ $key >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
                         @endforeach
                     </tr>
                 @endforeach
@@ -81,13 +81,13 @@
                 $fin = min($inicio + $maxColumnas, $totalColumnas);
                 $columnasMostrar = array_slice($encabezados, $inicio, $fin - $inicio);
             @endphp
-            <table class="bordered">
+            <table class="bordered" style="font-size: 14px; border-collapse: collapse;">
                 <thead>
                     <tr>
-                        <th>Puntos</th>
-                        <th>Ø</th>
+                        <th style="min-width: 28px;">Puntos</th>
+                        <th style="min-width: 28px;">Ø</th>
                         @foreach ($columnasMostrar as $encabezado)
-                            <th>{{ $encabezado }}</th>
+                            <th style="min-width: 28px;">{{ $encabezado }}</th>
                         @endforeach
                     </tr>
                 </thead>
@@ -95,10 +95,10 @@
                     @foreach ($datos['medicionesTranspuestas'] as $indice => $medicion)
                         @if ($indice > 0)
                             <tr>
-                                <td>{{ $medicion[0] }}</td>
-                                <td>{{ $medicion[1] }}</td>
+                                <td style="height:20px;">{{ $medicion[0] }}</td>
+                                <td style="height:20px;">{{ $medicion[1] }}</td>
                                 @foreach (array_slice($medicion, $inicio, $fin - $inicio) as $key => $valor)
-                                    <td style="color: {{ $key + $inicio >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}">{{ $valor }}</td>
+                                    <td style="color: {{ $key + $inicio >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
                                 @endforeach
                             </tr>
                         @endif
@@ -109,8 +109,11 @@
         @endwhile
     @endif
 @endforeach
+
+
+<div style="position: fixed; bottom: 105px; width: 100%;">
 @include('reportes.partial.linea-amarilla')
-<table width="100%" style="border-collapse: collapse;">
+    <table width="100%" style="border-collapse: collapse;">
         <tbody style="padding: 20px;"> 
             <tr>
                 <td><strong style="font-size: 13px;">Observaciones</strong></td>
@@ -121,9 +124,8 @@
                 </td> 
             </tr>
         </tbody>
-</table>
-@include('reportes.partial.linea-amarilla')
-
+    </table>
+</div>
 @if( $informe_us->path1_indicacion || $informe_us->path2_indicacion )
 <div class="page_break"></div>
 <table width="100%">

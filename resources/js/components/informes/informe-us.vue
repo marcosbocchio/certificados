@@ -1983,8 +1983,17 @@ processExcelData(data, filas, columnas) {
             this.indexPosGeneratriz = index ;
         },
 
-        selectPosPos :function(index){
-            this.indexPosPos = index ;
+        selectPosPos: function(index) {
+            try {
+               
+                this.indexPosPos = index;
+                
+            } catch (error) {
+                // Muestra un mensaje de error en caso de que ocurra un problema
+                toastr.error('Formato inválido de tabla');
+                // Opcionalmente, puedes registrar el error en la consola
+                console.error('Error en selectPosPos:', error);
+            }
         },
 
         resetTecnica(){
