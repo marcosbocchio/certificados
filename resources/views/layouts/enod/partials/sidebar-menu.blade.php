@@ -317,7 +317,7 @@
                 <li title="Formato Importación Soldadores CSV"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fa fa-download"></i>SOLDADORES CSV</a></li>
             @endcan
             @can('enod')
-                <li title="Importación Medición de espesores"><a href="{{ route('software_download','importacion_me.xlsx') }}"><i class="fa fa-download"></i>Medición de espesores</a></li>
+                <li title="Importación Medición de espesores"><a href="{{ route('software_download','importacion_me.xlsx') }}"><i class="fa fa-download"></i>MEDICION DE ESPESORES</a></li>
             @endcan
           </ul>
 
