@@ -28,7 +28,9 @@
         </tr>
     </tbody>
 </table>
-
+@php 
+    $totalFilas = 0; 
+@endphp
 @foreach ($medicionesAgrupadas as $nombreObjeto => $datos)
     <h2 style="font-size: 15px;">{{ strtoupper($nombreObjeto) }}</h2>
 
@@ -61,6 +63,9 @@
                     <tr>
                         @foreach (array_slice($medicion, 0, -1) as $key => $valor)
                             <td style="color: {{ $key >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
+                            @php 
+                                $totalFilas++; 
+                            @endphp
                         @endforeach
                     </tr>
                 @endforeach
@@ -99,6 +104,9 @@
                                 <td style="height:20px;">{{ $medicion[1] }}</td>
                                 @foreach (array_slice($medicion, $inicio, $fin - $inicio) as $key => $valor)
                                     <td style="color: {{ $key + $inicio >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
+                                    @php 
+                                        $totalFilas++; 
+                                    @endphp
                                 @endforeach
                             </tr>
                         @endif
@@ -109,8 +117,9 @@
         @endwhile
     @endif
 @endforeach
-
-
+@if ($totalFilas === 15)
+    <div style="page-break-before: always;"></div>
+@endif
 <div style="position: fixed; bottom: 105px; width: 100%;">
 @include('reportes.partial.linea-amarilla')
     <table width="100%" style="border-collapse: collapse;">
@@ -127,6 +136,7 @@
     </table>
 </div>
 @if( $informe_us->path1_indicacion || $informe_us->path2_indicacion )
+
 <div class="page_break"></div>
 <table width="100%">
     <tbody>
