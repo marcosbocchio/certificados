@@ -46,12 +46,11 @@
             <tbody>
                 @php 
                 $currentSection = null;
-                $espesorMinimo = $datos['espesor_minimo_me']; // Obtener el valor de espesor_minimo_me
+                $espesorMinimo = $datos['espesor_minimo_me']; 
                 @endphp
                 @foreach (array_slice($datos['medicionesTranspuestas'], 1) as $medicion)
                     @php $ultimoValor = end($medicion); @endphp
 
-                    {{-- Verificar si debemos iniciar una nueva sección --}}
                     @if ($ultimoValor !== null && $ultimoValor !== $currentSection)
                         @php $currentSection = $ultimoValor; @endphp
                         <tr class="title-row">
@@ -59,10 +58,9 @@
                         </tr>
                     @endif
 
-                    {{-- Mostrar los datos de la medición actual --}}
                     <tr>
                         @foreach (array_slice($medicion, 0, -1) as $key => $valor)
-                            <td style="color: {{ $key >= 2 && $valor < $espesorMinimo ? 'red' : 'inherit' }}">{{ $valor }}</td>
+                            <td style="color: {{ $key >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}">{{ $valor }}</td>
                         @endforeach
                     </tr>
                 @endforeach
@@ -73,9 +71,9 @@
         @php
             $encabezados = $datos['medicionesTranspuestas'][0];
             $maxColumnas = $datos['cantidad_generatrices_linea_pdf_me'];
-            $totalColumnas = count($encabezados) - 1; // Excluir el último valor
-            $inicio = 2; // Comenzar desde la 3ra posición del array
-            $espesorMinimo = $datos['espesor_minimo_me']; // Obtener el valor de espesor_minimo_me
+            $totalColumnas = count($encabezados) - 1; 
+            $inicio = 2; 
+            $espesorMinimo = $datos['espesor_minimo_me']; 
         @endphp
 
         @while ($inicio < $totalColumnas)
@@ -100,7 +98,7 @@
                                 <td>{{ $medicion[0] }}</td>
                                 <td>{{ $medicion[1] }}</td>
                                 @foreach (array_slice($medicion, $inicio, $fin - $inicio) as $key => $valor)
-                                    <td style="color: {{ $key + $inicio >= 2 && $valor < $espesorMinimo ? 'red' : 'inherit' }}">{{ $valor }}</td>
+                                    <td style="color: {{ $key + $inicio >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}">{{ $valor }}</td>
                                 @endforeach
                             </tr>
                         @endif
@@ -111,7 +109,6 @@
         @endwhile
     @endif
 @endforeach
-
 @include('reportes.partial.linea-amarilla')
 <table width="100%" style="border-collapse: collapse;">
         <tbody style="padding: 20px;"> 
