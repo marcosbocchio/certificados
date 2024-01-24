@@ -64,7 +64,10 @@
                         @foreach (array_slice($medicion, 0, -1) as $key => $valor)
                             <td style="color: {{ $key >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
                             @php 
-                                $totalFilas++; 
+                                $totalFilas++;
+                                    if($totalFilas === 16){
+                                        $totalFilas = 1;
+                                     }
                             @endphp
                         @endforeach
                     </tr>
@@ -105,7 +108,10 @@
                                 @foreach (array_slice($medicion, $inicio, $fin - $inicio) as $key => $valor)
                                     <td style="color: {{ $key + $inicio >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
                                     @php 
-                                        $totalFilas++; 
+                                        $totalFilas++;
+                                        if($totalFilas === 16){
+                                            $totalFilas = 1;
+                                        }
                                     @endphp
                                 @endforeach
                             </tr>
@@ -117,7 +123,7 @@
         @endwhile
     @endif
 @endforeach
-@if ($totalFilas === 15)
+@if ($totalFilas === 12)
     <div style="page-break-before: always;"></div>
 @endif
 <div style="position: fixed; bottom: 105px; width: 100%;">
