@@ -10,8 +10,18 @@
 
 <style>
 
-    @page { margin: 260px 40px 260px 40px !important;
-            padding: 0px 0px 0px 0px !important; }
+
+    @if($tecnica->codigo == 'US' || $tecnica->codigo == 'PA')
+        @page { 
+            margin: 260px 40px 260px 40px !important;
+            padding: 0px 0px 0px 0px !important; 
+        }
+    @else
+        @page { 
+            margin: 260px 40px 160px 40px !important;
+            padding: 0px 0px 0px 0px !important; 
+        }
+    @endif
 
 header {
     position:fixed;
@@ -50,15 +60,37 @@ footer {
     @include('reportes.partial.linea-amarilla')
 </header>
 
-<footer>
 
-    @include('reportes.partial.linea-amarilla')
-    @include('reportes.informes.partial.observaciones')
-    @include('reportes.partial.linea-amarilla')
-    @include('reportes.informes.partial.firmas')
 
-</footer>
-
+    <footer>
+    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
+        @include('reportes.partial.linea-amarilla')
+        @include('reportes.informes.partial.observaciones')
+        @include('reportes.partial.linea-amarilla')
+        @include('reportes.informes.partial.firmas')
+    @else
+        @include('reportes.partial.linea-amarilla')
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td style="font-size: 13px;" colspan="1"  rowspan="2"><b>Firmas </b></td>
+                        <td style="font-size: 13px;text-align: center;height: 85px;" colspan="2" width="33.33%">
+                            @if($firma)
+                                <img src="{{ public_path($firma) }}" alt="" style="width: 175px;height: 85px;">
+                            @endif
+                        </td>
+                        <td style="font-size: 13px;" colspan="2"  width="33.33%">&nbsp;</td>
+                        <td style="font-size: 13px;" colspan="2" width="33.33%">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 14px; text-align: center;" colspan="2"><em>Evaluador </em></td>
+                        <td style="font-size: 14px; text-align: center;" colspan="2"><em>Cliente </em></td>
+                        <td style="font-size: 14px; text-align: center;" colspan="2"><em>Comitente </em></td>
+                    </tr>
+                </tbody>
+            </table>
+    @endif 
+    </footer>
 
 <main>
 
@@ -348,8 +380,10 @@ footer {
 
     @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
       @include('reportes.informes.us-indicaciones-us-pa-v2')
+        
     @else
       @include('reportes.informes.us-indicaciones-me-v2')
+
     @endif
 
 </main>

@@ -244,3 +244,54 @@ function verificarSiTodosAceptables($detalles) {
   }
   return 'Aceptado'; // Todos son aceptables
 }
+
+
+function transponerMediciones($mediciones) {
+  $transpuestas = [];
+  foreach ($mediciones as $row => $data) {
+      foreach ($data as $col => $value) {
+          $transpuestas[$col][$row] = $value;
+      }
+  }
+  return $transpuestas;
+}
+
+
+
+function agruparPorAccesorios($informes_us_me) {
+  $resultado = [];
+
+  foreach ($informes_us_me as $informe) {
+      $elemento_me = $informe->elemento_me;
+      $medicionesOriginales = $informe->mediciones;
+
+      // Transponer las mediciones originales.
+      $medicionesTranspuestas = transponerMediciones($medicionesOriginales);
+
+      // Recorrer las mediciones transpuestas y reemplazar '' por 'S/A' a partir de la tercera posición.
+      foreach ($medicionesTranspuestas as &$medicion) {
+          $newMedicion = [];
+          foreach ($medicion as $key => $value) {
+              if ($key >= 2 && $value === '') {
+                  $newMedicion[] = 'S/A';
+              } else {
+                  $newMedicion[] = $value;
+              }
+          }
+          $medicion = $newMedicion;
+      }
+
+      $resultado[$elemento_me] = [
+          'cantidad_generatrices_me' => $informe->cantidad_generatrices_me,
+          'cantidad_posiciones_me' => $informe->cantidad_posiciones_me,
+          'cantidad_generatrices_linea_pdf_me' => $informe->cantidad_generatrices_linea_pdf_me,
+          'espesor_minimo_me' => $informe->espesor_minimo_me, // Agregando espesor_minimo_me
+          'medicionesTranspuestas' => $medicionesTranspuestas
+      ];
+  }
+
+  return $resultado;
+}
+
+
+

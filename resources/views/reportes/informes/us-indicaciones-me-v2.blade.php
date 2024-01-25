@@ -1,3 +1,24 @@
+<style>
+    .bordered {
+        border-collapse: collapse;
+        margin-bottom: 20px; /* Espacio entre tablas */
+    }
+
+    .bordered th, .bordered td {
+        border: 1px solid #000;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .bordered th {
+        background-color: #D8D8D8;
+    }
+
+    .title-row {
+        background-color: #9ACD32; /* Color verde para los títulos de los accesorios */
+    }
+</style>
+
 <table width="100%">
     <tbody>
         <tr>
@@ -8,94 +29,109 @@
     </tbody>
 </table>
 
-@foreach ($informes_us_me as $informe_us_me)
+@foreach ($medicionesAgrupadas as $nombreObjeto => $datos)
+    <h2 style="font-size: 15px;">{{ strtoupper($nombreObjeto) }}</h2>
 
-        @php
-            $pos_gen = 1;
-            $pos_pos = 1;
-            $max_cant_genetratices_fila = $informe_us_me->cantidad_generatrices_linea_pdf_me;
-            $genetratrices_fila = $max_cant_genetratices_fila;
-        @endphp
-
-        <table style="margin-top: 15px">
+    @if (count($datos['medicionesTranspuestas'][0]) - 2 <= $datos['cantidad_generatrices_linea_pdf_me'])
+        {{-- Formato agrupado --}}
+        <table class="bordered" style="font-size: 13px; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="min-width: 15px;height:20px;">Puntos</th>
+                    @foreach (array_slice($datos['medicionesTranspuestas'][0], 1, -1) as $encabezado)
+                        <th style="min-width: 28px;height:20px;">{{ $encabezado }}</th>
+                    @endforeach
+                </tr>
+            </thead>
             <tbody>
-                <tr>
-                    <td style="font-size: 14px;height:20px;"><span style="margin-left: 1px;"><strong>{{ strtoupper($informe_us_me->elemento_me)}}</strong> </span></td>
-                </tr>
-                <tr>
-                    <td style="font-size: 14px;height:20px;"><span style="margin-left: 1px;"><strong>Ø : {{ $informe_us_me->diametro_me}}</strong> </span></td>
-                </tr>
+                @php 
+                $currentSection = null;
+                $espesorMinimo = $datos['espesor_minimo_me']; 
+                @endphp
+                @foreach (array_slice($datos['medicionesTranspuestas'], 1) as $medicion)
+                    @php $ultimoValor = end($medicion); @endphp
+
+                    @if ($ultimoValor !== null && $ultimoValor !== $currentSection)
+                        @php $currentSection = $ultimoValor; @endphp
+                        <tr class="title-row">
+                            <td colspan="{{ count($datos['medicionesTranspuestas'][0]) - 1 }}" style="font-size: 14px;height:20px;">{{ $ultimoValor }}</td>
+                        </tr>
+                    @endif
+
+                    <tr>
+                        @foreach (array_slice($medicion, 0, -1) as $key => $valor)
+                            <td style="color: {{ $key >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
+                        @endforeach
+                    </tr>
+                @endforeach
             </tbody>
         </table>
+    @else
+        {{-- Formato no agrupado con columnas fijas y divisiones según cantidad_generatrices_linea_pdf_me --}}
+        @php
+            $encabezados = $datos['medicionesTranspuestas'][0];
+            $maxColumnas = $datos['cantidad_generatrices_linea_pdf_me'];
+            $totalColumnas = count($encabezados) - 1; 
+            $inicio = 2; 
+            $espesorMinimo = $datos['espesor_minimo_me']; 
+        @endphp
 
-        @while($pos_gen <= $informe_us_me->cantidad_generatrices_me)
-            <table class="bordered">
+        @while ($inicio < $totalColumnas)
+            @php
+                $fin = min($inicio + $maxColumnas, $totalColumnas);
+                $columnasMostrar = array_slice($encabezados, $inicio, $fin - $inicio);
+            @endphp
+            <table class="bordered" style="font-size: 14px; border-collapse: collapse;">
                 <thead>
                     <tr>
-                        <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8"  class="bordered-td">&nbsp;</th>
-                        @while( ($pos_gen <= $genetratrices_fila) && ($pos_gen <= $informe_us_me->cantidad_generatrices_me))
-                                <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-td">
-                                    {{ $informe_us_me->mediciones[$pos_gen][0] }}
-                                </th>
-                                {{ $pos_gen = $pos_gen + 1}}
-                        @endwhile
-                        @if ($pos_gen == $informe_us_me->cantidad_generatrices_me + 1)
-                            <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-td">
-                                {{ $informe_us_me->mediciones[$pos_gen][0] }}
-                            </th>
-                        @endif
-                        {{ $genetratrices_fila = $genetratrices_fila + $max_cant_genetratices_fila }}
+                        <th style="min-width: 28px;">Puntos</th>
+                        <th style="min-width: 28px;">Ø</th>
+                        @foreach ($columnasMostrar as $encabezado)
+                            <th style="min-width: 28px;">{{ $encabezado }}</th>
+                        @endforeach
                     </tr>
-                  </thead>
-                  <tbody>
-
-                      @for ($pos_pos_fila = 1 ; $pos_pos_fila <= $informe_us_me->cantidad_posiciones_me; $pos_pos_fila++)
-                        {{ $pos_gen_fila = ($genetratrices_fila - (2*$max_cant_genetratices_fila)+1) }}
-                        <tr>
-                            <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">
-                                {{ $informe_us_me->mediciones[0][$pos_pos_fila] }}
-                            </td>
-                            @while ($pos_gen_fila < $pos_gen)
-                                @if ($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila])
-                                    @if ($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila] == -1)
-                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">
-                                            S/A
-                                        </td>
-                                   @elseif(($informe_us_me->espesor_minimo_me) && (strval($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila]) < strval($informe_us_me->espesor_minimo_me)))
-                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center;color:red" class="bordered-td">
-                                            {{ $informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila] }}
-                                        </td>
-                                   @else
-                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">
-                                            {{ $informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila] }}
-                                        </td>
-                                   @endif
-                                @else
-                                <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">
-                                  -
-                                </td>
-                                @endif
-                            {{ $pos_gen_fila = $pos_gen_fila + 1 }}
-                            @endwhile
-                            @if ($pos_gen_fila == $informe_us_me->cantidad_generatrices_me + 1)
-                                <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-td">
-                                    @if ($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila])
-                                        {{$informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila]->codigo }}
-                                    @else
-                                    &nbsp;
-                                    @endif
-                                </td>
-                            @endif
-                        </tr>
-
-                    @endfor
+                </thead>
+                <tbody>
+                    @foreach ($datos['medicionesTranspuestas'] as $indice => $medicion)
+                        @if ($indice > 0)
+                            <tr>
+                                <td style="height:20px;">{{ $medicion[0] }}</td>
+                                <td style="height:20px;">{{ $medicion[1] }}</td>
+                                @foreach (array_slice($medicion, $inicio, $fin - $inicio) as $key => $valor)
+                                    <td style="color: {{ $key + $inicio >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
+                                @endforeach
+                            </tr>
+                        @endif
+                    @endforeach
                 </tbody>
             </table>
+            @php $inicio = $fin; @endphp
         @endwhile
+    @endif
 @endforeach
 
 
+
+    
+    <div style="width: 100%;page-break-inside: avoid;">
+    @include('reportes.partial.linea-amarilla')
+        <table width="100%" style="border-collapse: collapse;">
+            <tbody style="padding: 20px;"> 
+                <tr>
+                    <td><strong style="font-size: 13px;">Observaciones</strong></td>
+                </tr>   
+                <tr>           
+                    <td style="font-size: 13px; height:70px; text-align: right;" class="bordered-td">
+                        <span style="display: block; text-align: left; margin: 5px;">{{$observaciones}}</span>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    @include('reportes.partial.linea-amarilla')
+    </div>
+
 @if( $informe_us->path1_indicacion || $informe_us->path2_indicacion )
+
 <div class="page_break"></div>
 <table width="100%">
     <tbody>

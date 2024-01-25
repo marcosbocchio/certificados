@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use PDF;
+use App\helpers;
 use App\Informe;
 use App\InformesUs;
 use App\Ots;
@@ -77,7 +78,9 @@ class PdfInformesUsController extends Controller
         $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$tecnica->codigo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$tecnica->codigo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
-
+        
+        $medicionesAgrupadas = agruparPorAccesorios($informes_us_me);
+ 
         $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'planta',
@@ -106,6 +109,7 @@ class PdfInformesUsController extends Controller
                                                                 'numero_repetido',
                                                                 'detalles',
                                                                 'informe_solicitado_por',
+                                                                'medicionesAgrupadas',
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 
