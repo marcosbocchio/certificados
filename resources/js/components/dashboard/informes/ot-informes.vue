@@ -294,8 +294,10 @@ export default {
       this.ContarInformes();
     if (this.numero_informe_formateado_xc !== '') {
         this.search = this.numero_informe_formateado_xc;
+        
         this.aplicarFiltro();
-    }},
+    }
+    document.cookie = 'nroInformeFormateado=' + '' + ';path=/;';},
   
 
   computed :{
