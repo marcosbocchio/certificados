@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 
 class InformesView extends Model
@@ -12,9 +12,6 @@ class InformesView extends Model
 
         return $this->belongsTo('App\OtTipoSoldaduras','ot_tipo_soldadura_id','id');
 
-    }
-    public function informesRi() {
-        return $this->hasOne('App\InformesRi', 'informe_id', 'id');
     }
     
     public function scopeObra($query,$obra){
@@ -36,9 +33,8 @@ class InformesView extends Model
 
     }
     public function scopeFiltro($query, $filtro='') {
-
+        
         if (trim($filtro) != '') {
-
             $query->WhereRaw("numero LIKE '%" . $filtro . "%'")
                   ->orWhereRaw("obra LIKE '%" . $filtro . "%'")
                   ->orWhereRaw("metodo LIKE '%" . $filtro . "%'")

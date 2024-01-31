@@ -48,6 +48,7 @@ class CosturasController extends Controller
         $offSet = ($page * $paginate) - $paginate;
         $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
         $data = new \Illuminate\Pagination\LengthAwarePaginator(array_values($itemsForCurrentPage), count($data), $paginate, $page);
+        
         return $data;
 
     }

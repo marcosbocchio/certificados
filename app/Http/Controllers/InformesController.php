@@ -36,7 +36,7 @@ class InformesController extends Controller
 
         $ot = Ots::where('id',$id)->with('cliente')->first();
         $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
-
+       
         $ot_metodos_ensayos = DB::table('ots')
                                    ->join('ot_servicios','ot_servicios.ot_id','=','ots.id')
                                    ->join('servicios','servicios.id','=','ot_servicios.servicio_id')
@@ -47,15 +47,16 @@ class InformesController extends Controller
                                    ->get();
 
         $usuario_metodos = (new \App\Http\Controllers\UserController)->getUsuarioMetodos($user->id);
-
-
+        $numero_informe_formateado_xc = request()->cookie('nroInformeFormateado');
+        \Log::info('Número de informe formateado: ' . $numero_informe_formateado_xc);
         return view('ot-informes.index',compact('ot',
                                         'ot_metodos_ensayos',
                                         'user',
                                         'usuario_metodos',
                                         'header_titulo',
                                         'header_sub_titulo',
-                                        'header_descripcion'));
+                                        'header_descripcion',
+                                        'numero_informe_formateado_xc',));
 
     }
     public function cambiarNumero(Request $request,$id){

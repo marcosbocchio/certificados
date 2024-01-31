@@ -47,15 +47,25 @@
                            <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>
                        </li>
                        <li class="list-group-item pointer">
-                           <div v-show="!selComponenteSeleccionado">
-                           <span class="titulo-li">Componente</span>
-                           <a @click="CambioComponente(); getComponentes();" class="pull-right">
-                               <div v-if="componenteSeleccionado">{{componenteSeleccionado.componenteSeleccionado}}</div>
-                               <div v-else><span class="seleccionar">Seleccionar</span></div>
-                           </a>
-                           </div>
-                           <v-select v-show="selComponenteSeleccionado" v-model="componenteSeleccionado" label="componente" :options="componentesSeleccionado" @input="CambioComponente()"></v-select>
-                       </li>
+                        <!-- Vista Estática -->
+                        <div v-show="!selComponenteSeleccionado">
+                            <span class="titulo-li">Componente</span>
+                            <!-- Enlace que se activa solo si obra está seleccionada -->
+                            <a @click="obra && obra.obra ? (CambioComponente(), getComponentes()) : null" class="pull-right">
+                                <div v-if="componenteSeleccionado">{{ componenteSeleccionado.componente }}</div>
+                                <div v-else><span class="seleccionar">Seleccionar</span></div>
+                            </a>
+                        </div>
+                        <!-- Selector de Componente -->
+                        <!-- Se muestra solo si se ha seleccionado una obra y selComponenteSeleccionado es verdadero -->
+                        <v-select 
+                            v-show="obra && obra.obra && selComponenteSeleccionado" 
+                            v-model="componenteSeleccionado" 
+                            label="componente" 
+                            :options="componentesSeleccionado" 
+                            @input="CambioComponente()">
+                        </v-select>
+                    </li>
                        <li class="list-group-item pointer">
                             <input type="text"  v-model="plano" class="form-control" id="plano" placeholder="Plano Isométrico" maxlength="20">
                        </li>
@@ -293,9 +303,11 @@ methods : {
    async getComponentes() {
        this.$store.commit('loading', true);
 
-       var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra.replace('/','--') + '/componentes/' +'?api_token=' + Laravel.user.api_token;
+       var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra + '/componentes/' +'?api_token=' + Laravel.user.api_token;
+       
        try {
            const res = await axios.get(urlRegistros);
+           console.log('res',res.data);
            this.componentesSeleccionado = res.data;
            console.log(this.componentesSeleccionado);
        } catch (error) {

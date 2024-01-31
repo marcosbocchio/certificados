@@ -127,9 +127,9 @@
                                            </tr>
                                            <tr v-for="(item,k) in TablaCosturas.data" :key="k">
                                                <td>{{ item.fecha_formateada }}</td>
-                                               <td>
-                                                   <a :href="'/pdf/informe/' + item.informe_id " target="_blank" title="Informe"><span>{{ item.nro_informe_formateado }}</span></a>
-                                               </td>
+                                               <a :href="'/informes/ot/' + ot.id" @click="setInformeCookie(item.nro_informe_formateado)" target="_blank" title="Informe">
+                                                    <span>{{ item.nro_informe_formateado }}</span>
+                                                </a>
                                                <td>{{ item.codigo_junta }}</td>
                                                <td>{{ item.linea }}</td>
                                                <td  v-if="item.hoja"><a href="" rel="tooltip" :title="' Hoja: '+ item.hoja">{{ item.plano_isom }}</a></td>
@@ -286,6 +286,9 @@ methods : {
 
        }
    },
+   setInformeCookie(nroInformeFormateado) {
+        document.cookie = 'nroInformeFormateado=' + nroInformeFormateado + ';path=/;';
+    },
 
    CambioOt: async function(){
        this.selOt = !this.selOt;

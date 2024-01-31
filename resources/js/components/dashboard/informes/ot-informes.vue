@@ -221,7 +221,10 @@ export default {
         type : Array,
         required : true,
     },
-
+    numero_informe_formateado_xc: {
+        type: String,
+        default: ''
+    },
     ot_metodos_ensayos_data: {
         type : Array,
         required : false
@@ -244,7 +247,6 @@ export default {
       index_informe:0,
       loading_table : false,
       search:'',
-
     }
   },
 
@@ -290,7 +292,11 @@ export default {
 
       this.getResults();
       this.ContarInformes();
-  },
+    if (this.numero_informe_formateado_xc !== '') {
+        this.search = this.numero_informe_formateado_xc;
+        this.aplicarFiltro();
+    }},
+  
 
   computed :{
 
@@ -300,11 +306,12 @@ export default {
     methods : {
 
         getResults :function(page = 1){
-
+            
             this.loading_table = true,
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page='+ page + '&search=' + this.search ;
             axios.get(urlRegistros).then(response =>{
+                console.log('data', response.data);
                 this.ot_informes = response.data
             }).finally(() => this.loading_table = false)
        },
