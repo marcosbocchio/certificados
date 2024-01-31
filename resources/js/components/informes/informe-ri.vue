@@ -1756,13 +1756,12 @@ import { eventSetReferencia } from '../event-bus';
              this.addElementosPasadas(aux_junta);
              this.TablaDetalle.push({
                 junta: aux_junta,
-                densidad : (typeof(densidad) !== 'undefined') ? densidad : this.densidad,
+                densidad : (this.clonando === false ? this.densidad : (this.densidad !== '' ? this.densidad : densidad)),
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion,
                 aceptable_sn : 1 ,
                 observacion : '',
                 defectos : []
              });
-
          },
          addElementosPasadas : function(aux_junta){
             let index = this.elemento_pasadas.findIndex(elemento => elemento == aux_junta);
@@ -2007,26 +2006,22 @@ import { eventSetReferencia } from '../event-bus';
             eventModal.$emit('open_clonacion_masiva');
          },
          ClonarPosPlanta : function(){
-            this.clonando = true;
-            if(this.TablaDetalle.length > 0){
-                let TablaDetalleReverse = JSON.parse(JSON.stringify(this.TablaDetalle));
-                let x = TablaDetalleReverse.length-1;
-                let juntaAux = TablaDetalleReverse[x].junta;
-                let posicionJunta =[];
-                while ( (x >= 0) && (juntaAux == TablaDetalleReverse[x].junta)) {
-                    posicionJunta.unshift(TablaDetalleReverse[x]);
-                    x = x - 1;
-                }
-                posicionJunta.forEach(function(pos) {
-                    // Reemplazar 'densidad' solo si 'this.densidad' no es una cadena vacía
-                    if(this.densidad !== ''){
-                        pos.densidad = this.densidad;
-                    }
-                    this.AddDetalle(pos.posicion, pos.densidad);
-                }.bind(this));
-            }
-            this.clonando = false;
-        },
+             this.clonando = true;
+             if(this.TablaDetalle.length > 0){
+                 let TablaDetalleReverse =  JSON.parse(JSON.stringify(this.TablaDetalle));
+                 let x = TablaDetalleReverse.length-1;
+                 let juntaAux = TablaDetalleReverse[x].junta;
+                 let posicionJunta =[];
+                 while (  (x >= 0)  && (juntaAux == TablaDetalleReverse[x].junta)) {
+                     posicionJunta.unshift(TablaDetalleReverse[x]);
+                     x = x - 1;
+                 }
+                 posicionJunta.forEach(function(pos) {
+                 this.AddDetalle(pos.posicion,pos.densidad);
+                 }.bind(this));
+             }
+             this.clonando = false;
+         },
          SeleccionarTodosClonar: function(){
              this.elemento_pasadas_a_clonar = [];
              if(!this.sel_todos_clonar){
