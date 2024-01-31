@@ -37,11 +37,9 @@ class ElementosController extends Controller
         $plano = $plano == 'null' ? '' : str_replace('--','/',$plano);
         $elemento = $elemento == 'null' ? '' : str_replace('--','/',$elemento);
         $page = Input::get('page', 1);
-
         $paginate = 10;
-        
         $data = DB::select(DB::raw('CALL ReporteElementos(?,?,?,?,?)'), array($ot_id, $plano, $elemento, $obra, $componente));
-        log::info($componente);
+
         $offSet = ($page * $paginate) - $paginate;
 
         $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);

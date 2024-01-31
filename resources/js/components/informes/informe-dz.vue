@@ -265,6 +265,12 @@
                             </div>
                         </div>
                         <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="numeroPlanoIsom">Número Plano / Isom *</label>
+                                <input type="text" v-model="numeroPlanoIsom" class="form-control" id="numeroPlanoIsom" maxlength="30">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
                             <div class="form-group" >
                                 <label for="Diametro">Ø *</label>
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>
@@ -331,6 +337,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="col-md-2">Elemento</th>
+                                                <th class="col-md2">Número Plano / Isom</th>
                                                 <th class="col-md-1">Diámetro</th>
                                                 <th class="col-md-1">Espesor</th>
                                                 <th class="col-md-1">Cuño</th>
@@ -344,6 +351,7 @@
                                         <tbody>
                                             <tr v-for="(item,k) in (TablaDz)" :key="k" :class="{selected: indexPosDetalle === k}" >
                                                 <td>{{ item.elemento }}</td>
+                                                <td>{{ item.numeroPlanoIsom }}</td>
                                                 <td>{{ item.diametro_especifico ? item.diametro_especifico : item.diametro.diametro }}</td>
                                                 <td>{{ item.espesor_especifico ? item.espesor_especifico : (item.espesor ? item.espesor.espesor : item.diametro.espesor) }}</td>
                                                 <td>{{ item.soldador.codigo}}</td>
@@ -540,6 +548,7 @@ data() {return {
         interno_equipo:'',
         unidad_medicion_dureza:'',
         temperatura_material:'',
+        numeroPlanoIsom: '',
         //detalle
         elemento:'',
         soldador:'',
@@ -738,7 +747,10 @@ data() {return {
                  toastr.error('El campo elemento es obligatorio');
                  return ;
             }
-
+            if(!this.numeroPlanoIsom){
+                toastr.error('El campo Número Plano / Isom es obligatorio');
+                return ;
+            }
             if (!this.diametro){
 
                  toastr.error('El campo diámetro es obligatorio');
@@ -771,6 +783,7 @@ data() {return {
             }
         this.TablaDz.push({
             elemento : this.elemento,
+            numero_plano_iso: this.numeroPlanoIsom,
             diametro:this.diametro,
             espesor: this.espesor,
             soldador : this.soldador,

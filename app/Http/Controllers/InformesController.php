@@ -48,7 +48,6 @@ class InformesController extends Controller
 
         $usuario_metodos = (new \App\Http\Controllers\UserController)->getUsuarioMetodos($user->id);
         $numero_informe_formateado_xc = request()->cookie('nroInformeFormateado');
-        \Log::info('Número de informe formateado: ' . $numero_informe_formateado_xc);
         return view('ot-informes.index',compact('ot',
                                         'ot_metodos_ensayos',
                                         'user',
@@ -66,7 +65,7 @@ class InformesController extends Controller
                                     ->where('numero',$request->nuevoNumero)
                                     ->orderBy('numero_repetido','DESC')
                                     ->first();
-        Log::debug($informe_ot_view);
+        
         $informe_ot = $informe_ot_view ? Informe::where('id',$informe_ot_view->id)->first() : null;
         $informe = Informe::where('id',$id)->first();
         $informe->numero = $request->nuevoNumero;

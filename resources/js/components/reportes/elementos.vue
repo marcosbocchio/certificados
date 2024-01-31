@@ -230,7 +230,7 @@ methods : {
    this.TablaElementos = {};
 
    try {
-       let url = 'elementos/ot/' + this.ot.id + '/plano/' + (this.plano ? this.plano.replace('/','--') : 'null') + '/elemento/' + (this.elemento ? this.elemento.replace('/','--') : 'null') + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/componente/' + (this.componenteSeleccionado && this.componenteSeleccionado.componente ? this.componenteSeleccionado.componente.replace('/','--'): 'null') + '?page=' + page + '&api_token=' + Laravel.user.api_token;
+       let url = 'elementos/ot/' + this.ot.id + '/plano/' + (this.plano ? this.plano.replace('/','--') : 'null') + '/elemento/' + (this.elemento ? this.elemento.replace('/','--') : 'null') + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/componente/' + (this.componenteSeleccionado !='' ? this.componenteSeleccionado.replace('/','--'): 'null') + '?page=' + page + '&api_token=' + Laravel.user.api_token;
        let res = await axios.get(url);
        this.TablaElementos = res.data;
        
@@ -304,12 +304,11 @@ methods : {
        this.$store.commit('loading', true);
 
        var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra + '/componentes/' +'?api_token=' + Laravel.user.api_token;
-       
+
        try {
            const res = await axios.get(urlRegistros);
-           console.log('res',res.data);
+           console.log(res.data)
            this.componentesSeleccionado = res.data;
-           console.log(this.componentesSeleccionado);
        } catch (error) {
            // Manejo de errores
        } finally {

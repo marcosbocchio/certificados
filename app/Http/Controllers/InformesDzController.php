@@ -121,6 +121,7 @@ class InformesDzController extends Controller
           $detalleDz  = new DetallesDz;
           $detalleDz->informe_dz_id = $informeDz->id;
           $detalleDz->elemento = $detalle['elemento'];
+          $detalleD->numero_plano_iso = $detalle['numero_plano_iso'];
           $detalleDz->soldador_id = $soldador['soldadores_id'];
           $detalleDz->material_base_der = $detalle['material_base_der'];
           $detalleDz->soldadura = $detalle['soldadura'];
@@ -270,6 +271,7 @@ class InformesDzController extends Controller
                                ->leftjoin('detalles_dz_referencias','detalles_dz_referencias.id','=','detalles_dz.detalle_dz_referencia_id')
                                ->where('detalles_dz.informe_dz_id',$id)
                                ->selectRaw('detalles_dz.elemento as elemento,
+                               detalles_dz.numero_plano_iso as numero_plano_iso,
                                           detalles_dz.diametro_espesor_id as diametro_espesor_id,
                                           detalles_dz.espesor_especifico as espesor_especifico,
                                           detalles_dz.diametro_especifico as diametro_especifico,

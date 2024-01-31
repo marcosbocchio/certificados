@@ -287,8 +287,12 @@ methods : {
        }
    },
    setInformeCookie(nroInformeFormateado) {
-        document.cookie = 'nroInformeFormateado=' + nroInformeFormateado + ';path=/;';
-    },
+    var now = new Date();
+    now.setTime(now.getTime() + 1 * 60 * 1000); // Agrega 1 minuto
+
+    var expires = "expires=" + now.toUTCString();
+    document.cookie = 'nroInformeFormateado=' + nroInformeFormateado + ';' + expires + ';path=/;';
+},
 
    CambioOt: async function(){
        this.selOt = !this.selOt;
