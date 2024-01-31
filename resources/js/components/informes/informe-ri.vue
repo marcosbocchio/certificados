@@ -1756,13 +1756,12 @@ import { eventSetReferencia } from '../event-bus';
              this.addElementosPasadas(aux_junta);
              this.TablaDetalle.push({
                 junta: aux_junta,
-                densidad : (typeof(densidad) !== 'undefined') ? densidad : this.densidad,
+                densidad : (this.clonando === false ? this.densidad : (this.densidad !== '' ? this.densidad : densidad)),
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion,
                 aceptable_sn : 1 ,
                 observacion : '',
                 defectos : []
              });
-
          },
          addElementosPasadas : function(aux_junta){
             let index = this.elemento_pasadas.findIndex(elemento => elemento == aux_junta);

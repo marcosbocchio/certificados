@@ -177,9 +177,9 @@ footer{
             </td>
             <td style="width: 25%;">
                 @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
-                    <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:55px; margin-top: 5px;">
+                    <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:55px;max-width: 120px; margin-top: 5px;">
                 @else
-                    <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 55px;margin-top: 5px;">
+                    <img  src="{{ public_path('img/blank.png')}}" alt=""  style="max-height: 55px;margin-top: 5px;">
                 @endif
             </td>
         </tr>
@@ -234,7 +234,13 @@ footer{
             <td style="width: 86mm; height: 4mm;" id="font7">Obra / Job</td>
         </tr>
         <tr>
-            <td style=" height: 7.5mm;"><b>YPF/TR</b></td>
+            <td style=" height: 7.5mm;">
+                <b>
+                    @if($contratista)
+                        <b>{{ $contratista->nombre }}</b>
+                    @endif
+                </b>
+            </td>
             @if(isset($informe))
                 <td><span class="datosHead" style=" height: 7.5mm;"><b>{{$informe->obra}}</b></span></td>
             @else
@@ -251,11 +257,11 @@ footer{
         </tr>
         <tr>
             <td style="height: 7.5mm;"><b>{{$informe->linea}}</b></td>
-                    <td style="height: 7.5mm;">
-                        @foreach ($detalles as $detalle)
-                        <b> {{ $detalle->pieza }} </b>
-                        @endforeach
-                    </td>
+                <td style="height: 7.5mm;">
+                    @foreach ($detalles as $detalle)
+                    <b> {{ $detalle->pieza }} </b>
+                    @endforeach
+                </td>
         </tr>
     </tbody>
 </table>
