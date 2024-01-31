@@ -337,7 +337,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="col-md-2">Elemento</th>
-                                                <th class="col-md2">Número Plano / Isom</th>
+                                                <th class="col-md2">Plano / Isom</th>
                                                 <th class="col-md-1">Diámetro</th>
                                                 <th class="col-md-1">Espesor</th>
                                                 <th class="col-md-1">Cuño</th>
@@ -351,7 +351,7 @@
                                         <tbody>
                                             <tr v-for="(item,k) in (TablaDz)" :key="k" :class="{selected: indexPosDetalle === k}" >
                                                 <td>{{ item.elemento }}</td>
-                                                <td>{{ item.numeroPlanoIsom }}</td>
+                                                <td>{{ item.numero_plano_iso }}</td>
                                                 <td>{{ item.diametro_especifico ? item.diametro_especifico : item.diametro.diametro }}</td>
                                                 <td>{{ item.espesor_especifico ? item.espesor_especifico : (item.espesor ? item.espesor.espesor : item.diametro.espesor) }}</td>
                                                 <td>{{ item.soldador.codigo}}</td>
