@@ -816,7 +816,7 @@
                                                                     <input style="width:40px;" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="10" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)">
                                                                  </div>
                                                                  <div v-else>
-                                                                    <input style="width:40px;" type="number" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">
+                                                                    <input style="width:40px;" type="text" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">
                                                                  </div>
                                                             </div>
                                                             <div v-else>

@@ -60,7 +60,7 @@
 
                     <tr>
                         @foreach (array_slice($medicion, 0, -1) as $key => $valor)
-                            <td style="color: {{ $key >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
+                        <td style="color: {{ $key >= 2 && is_numeric($valor) && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
                         @endforeach
                     </tr>
                 @endforeach
@@ -98,7 +98,7 @@
                                 <td style="height:20px;">{{ $medicion[0] }}</td>
                                 <td style="height:20px;">{{ $medicion[1] }}</td>
                                 @foreach (array_slice($medicion, $inicio, $fin - $inicio) as $key => $valor)
-                                    <td style="color: {{ $key + $inicio >= 2 && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
+                                <td style="color: {{ $key + $inicio >= 2 && is_numeric($valor) && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
                                 @endforeach
                             </tr>
                         @endif
