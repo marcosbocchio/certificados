@@ -40,8 +40,8 @@ class InformesView extends Model
                   ->orWhereRaw("metodo LIKE '%" . $filtro . "%'")
                   ->orWhereRaw("informe_completo LIKE '%" . $filtro . "%'")
                   ->orWhereRaw("name LIKE '%" . $filtro . "%'")
-                  ->orWhereRaw("fecha_formateada LIKE '%" . $filtro . "%'");
-                  ->orWhereRaw("numero_formateado LIKE '%" . $filtro . "%'");
+                  ->orWhereRaw("fecha_formateada LIKE '%" . $filtro . "%'")
+                  ->orWhereRaw("numero_formateado LIKE '%" . $filtro . "%'")
                   ->orWhereRaw("name LIKE '%" . $filtro . "%'");
         }
 
