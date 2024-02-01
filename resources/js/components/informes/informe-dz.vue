@@ -309,7 +309,7 @@
                         <div class="col-md-2">
                             <div class="form-group" >
                                 <label for="soldadura">Soldadura * </label>
-                                <input type="text" v-model="soldadura" class="form-control" id="soldadura" maxlength="10">
+                                <input type="number" step="0.01" v-model="soldadura" class="form-control" id="soldadura" maxlength="10">
                             </div>
                         </div>
 
