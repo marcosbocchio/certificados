@@ -70,10 +70,6 @@ function pdfCantFilasACompletar($filasPage,$cantFilasTotal){
 
   
   $filas_completar = ($filasPage - ($cantFilasTotal % $filasPage)) ;
-  Log::Debug('filasPage: ' . $filasPage);
-  Log::Debug('cantFilasTotal: '.$cantFilasTotal);
-  Log::debug('resto:'. ($cantFilasTotal % $filasPage));
-  Log::Debug('filas_completar:'.$filas_completar);
   if($filas_completar == $filasPage){
 
       return 0 ;
@@ -167,7 +163,7 @@ function obtenerInformeEspecial($informe, $metodo_ensayo, &$informeEspecial) {
   $tipoInforme = '';
 
   if ($metodo_ensayo->metodo == 'RI') {    
-      Log::debug("||este log está en el if|| 'RI' ||");
+
 
       $informeRi = InformesRi::where('informe_id', $informe->id)->first();
       
@@ -181,7 +177,6 @@ function obtenerInformeEspecial($informe, $metodo_ensayo, &$informeEspecial) {
 
   } else if ($metodo_ensayo->metodo == 'US') {
 
-      Log::debug("||este log está en el if|| 'US'");
 
       if ($informe->tecnica_id == 9) {
           $tipoInforme = 'US convencional';

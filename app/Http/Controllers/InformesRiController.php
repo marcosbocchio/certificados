@@ -77,7 +77,7 @@ class InformesRiController extends Controller
       
         $informe  = new Informe;
         $informeRi  = new InformesRi;
-        Log::DEBUG('Contenido de $request: ' . $request);
+
         DB::beginTransaction();
         try {
 
@@ -120,7 +120,7 @@ class InformesRiController extends Controller
         $metodoEnsayoObj->id = 1;
         $informeEspecial = null;
         obtenerInformeEspecial($informe, $metodoEnsayoObj, $informeEspecial);
-        Log::debug("No aaaaaaaaaaaaaas" . $informeEspecial);
+
 
         if ($informe_interno_fuente == null)
            $informe_interno_fuente = new InternoFuentes();
@@ -232,7 +232,7 @@ class InformesRiController extends Controller
                               ->orderBy('tramo_perfil.id','asc')
                               ->get();
 
-        Log::debug($informe_tramo);
+
 
     return $informe_tramo;
 

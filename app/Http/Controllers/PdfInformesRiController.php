@@ -173,7 +173,7 @@ class PdfInformesRiController extends Controller
             $detalles = Tramos::with('referencia')
                                 ->where('informes_ri_id',$informe_ri->id)
                                 ->get();
-            Log::debug($detalles);
+
 
             $pdf = PDF::loadView('reportes.informes.ri-perfiles-v2',compact('titulo','nro','tipo_reporte','fecha',
                                                                         'ot',

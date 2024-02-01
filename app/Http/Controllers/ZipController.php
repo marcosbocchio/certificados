@@ -20,7 +20,7 @@ class ZipController extends Controller
         try {
 
             $documentos = $request->documentos;
-            Log::debug("documentos: ". json_encode($documentos));
+
 
             /* Creo el directorio raiz donde voy a poner los archivos temporales */
             $folderName =  rand(1,99999);
@@ -50,7 +50,7 @@ class ZipController extends Controller
             $zip = $zip->make(public_path($dir));
             $zip->add($files)->close();
 
-            Log::debug("file temp: ".public_path('storage/temp/'.$folderName));
+
             Storage::disk('public')->deleteDirectory('storage/temp/'.$folderName);
 
           DB::commit();
@@ -63,7 +63,7 @@ class ZipController extends Controller
             throw $e;
 
         }
-        Log::debug("url: ". $url);
+
         return $url;
 
     }
@@ -71,7 +71,7 @@ class ZipController extends Controller
     public function generarYDescargarZip()
     {
         DB::beginTransaction();
-        Log::debug("Inicio de la generación del archivo ZIP: " . date("F j, Y, g:i a"));
+
 
 
         try {
@@ -108,11 +108,11 @@ class ZipController extends Controller
 
         } catch (Exception $e) {
             DB::rollback();
-            Log::error("Error durante la generación del archivo ZIP: " . $e);
+
             throw $e;
         }
 
-        Log::debug("Termino de la generación del archivo ZIP: " . date("F j, Y, g:i a") . $zipFilePath);
+
 
         // Devolver una respuesta adecuada, como la descarga del ZIP
         // return response()->download($zipFilePath, $zipFileName);
