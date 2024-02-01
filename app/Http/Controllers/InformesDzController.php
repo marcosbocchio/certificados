@@ -121,7 +121,7 @@ class InformesDzController extends Controller
           $detalleDz  = new DetallesDz;
           $detalleDz->informe_dz_id = $informeDz->id;
           $detalleDz->elemento = $detalle['elemento'];
-          $detalleD->numero_plano_iso = $detalle['numero_plano_iso'];
+          $detalleDz->numero_plano_iso = $detalle['numero_plano_iso'];
           $detalleDz->soldador_id = $soldador['soldadores_id'];
           $detalleDz->material_base_der = $detalle['material_base_der'];
           $detalleDz->soldadura = $detalle['soldadura'];

@@ -302,7 +302,7 @@
                         <div class="col-md-2">
                             <div class="form-group" >
                                 <label for="material_base_izq">Material base *</label>
-                                <input type="text" v-model="material_base_izq" class="form-control" id="material_base_izq" maxlength="10">
+                                <input type="number" step="0.01" v-model="material_base_izq" class="form-control" id="material_base_izq" maxlength="10">
                             </div>
                         </div>
 
@@ -316,7 +316,7 @@
                         <div class="col-md-2">
                             <div class="form-group" >
                                 <label for="material_base_der">Material base *</label>
-                                <input type="text" v-model="material_base_der" class="form-control" id="material_base_der" maxlength="10">
+                                <input type="number" step="0.01" v-model="material_base_der" class="form-control" id="material_base_der" maxlength="10">
                             </div>
                         </div>
 
@@ -336,8 +336,8 @@
                                     <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-2">Elemento</th>
-                                                <th class="col-md2">Plano / Isom</th>
+                                                <th class="col-md-1">Elemento</th>
+                                                <th class="col-md-2">Plano / Isom</th>
                                                 <th class="col-md-1">Diámetro</th>
                                                 <th class="col-md-1">Espesor</th>
                                                 <th class="col-md-1">Cuño</th>

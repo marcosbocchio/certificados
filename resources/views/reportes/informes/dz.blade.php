@@ -55,6 +55,7 @@ footer {
             </tr>
             <tr>
                 <td style="font-size: 11px; width:10px;  text-align: center " class="bordered-td" rowspan="2">ELEMENTO</td>
+                <td style="font-size: 11px; width:10px;  text-align: center " class="bordered-td" rowspan="2">PLANO/ISOM</td>
                 <td style="font-size: 11px; width:10px;  text-align: center;" class="bordered-td" rowspan="2">DIÁMETRO</td>
                 <td style="font-size: 11px; width:10px;  text-align: center;" class="bordered-td" rowspan="2">ESPESOR</td>
                 <td style="font-size: 11px; width:20px; text-align: center;" class="bordered-td" rowspan="2">CUÑO</td>
@@ -70,17 +71,18 @@ footer {
         <tbody>
             @foreach ($detalles as $detalle)
                 <tr>
-                    <td style="font-size: 11px;  width:20px;" class="bordered-td">{{ $detalle->elemento }}</td>
+                    <td style="font-size: 11px;  width:20px;text-align: center" class="bordered-td">{{ $detalle->elemento }}</td>
+                    <td style="font-size: 11px;  width:20px;text-align: center" class="bordered-td">{{ $detalle->numero_plano_iso }}</td>
                     <td style="font-size: 11px;  width:20px;text-align: center" class="bordered-td">
                         {{$detalle->diametro_especifico ? $detalle->diametro_especifico : $detalle->diametro}}
                     </td>
                     <td style="font-size: 11px;  width:20px;text-align: center" class="bordered-td">
                         {{$detalle->espesor_especifico ? $detalle->espesor_especifico : $detalle->espesor}}
                     </td>
-                    <td style="font-size: 11px;  width:22px;" class="bordered-td">{{$detalle->codigo}}</td>
-                    <td style="font-size: 11px;  width:22px;" class="bordered-td">{{ $detalle->material_base_izq }}</td>
-                    <td style="font-size: 11px;  width:22px;" class="bordered-td">{{ $detalle->soldadura }}</td>
-                    <td style="font-size: 11px;  width:22px;" class="bordered-td">{{ $detalle->material_base_der }}</td>
+                    <td style="font-size: 11px;  width:22px; text-align: center" class="bordered-td">{{$detalle->codigo}}</td>
+                    <td style="font-size: 11px;  width:22px; text-align: center" class="bordered-td">{{ $detalle->material_base_izq }}</td>
+                    <td style="font-size: 11px;  width:22px; text-align: center" class="bordered-td">{{ $detalle->soldadura }}</td>
+                    <td style="font-size: 11px;  width:22px; text-align: center" class="bordered-td">{{ $detalle->material_base_der }}</td>
                 </tr>
             @endforeach
         </tbody>
