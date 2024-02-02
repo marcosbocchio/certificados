@@ -102,11 +102,11 @@
                                            <tr>
                                                <th class="col-md-1">Fecha</th>
                                                <th class="col-md-2">Informe Nº	</th>
-                                               <th class="col-md-1">Elemento</th>
+                                               <th class="col-md-2">Elemento</th>
                                                <th class="col-md-2">Línea</th>
                                                <th class="col-md-2">Detalle</th>
                                                <th class="col-md-1">CM</th>
-                                               <th class="col-md-3">Plano Isométrico</th>
+                                               <th class="col-md-2">Plano Isométrico</th>
                                                <th class="col-md-1" style="text-align:center">Acept.</th>
                                            </tr>
                                            <tr v-for="(item,k) in TablaElementos.data" :key="k">
