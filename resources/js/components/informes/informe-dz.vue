@@ -258,26 +258,26 @@
                <div class="box box-custom-enod">
                     <div class="box-body">
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="elemento">Elemento *</label>
                                 <input type="text" v-model="elemento" class="form-control" id="elemento" maxlength="30">
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label for="numeroPlanoIsom">Número Plano / Isom *</label>
+                                <label for="numeroPlanoIsom" class="no-wrap">Número Plano / Isom *</label>
                                 <input type="text" v-model="numeroPlanoIsom" class="form-control" id="numeroPlanoIsom" maxlength="30">
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="Diametro">Ø *</label>
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>
                             </div>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label>Espesor *</label>
                                 <v-select v-model="espesor" label="espesor" :options="espesores" taggable :disabled="isChapa">
@@ -288,8 +288,8 @@
                                 </v-select>
                             </div>
                         </div>
-
-                        <div class="col-md-2">
+                        <div class="clearfix"></div>
+                        <div class="col-md-3">
 
                             <label>Cuño *</label>
                             <v-select v-model="soldador" :options="soldadores" label="codigo">
@@ -299,28 +299,29 @@
                                 </template>
                             </v-select>
                         </div>
-                        <div class="col-md-2">
+                        
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="material_base_izq">Material base *</label>
                                 <input type="text" v-model="material_base_izq" class="form-control" id="material_base_izq" maxlength="10">
                             </div>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="soldadura">Soldadura * </label>
                                 <input type="text" v-model="soldadura" class="form-control" id="soldadura" maxlength="10">
                             </div>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="material_base_der">Material base *</label>
                                 <input type="text" v-model="material_base_der" class="form-control" id="material_base_der" maxlength="10">
                             </div>
                         </div>
 
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <span>
                               <button type="button" @click="addDetalle()"><span class="fa fa-plus-circle"></span></button>
                             </span>
@@ -969,6 +970,10 @@ data() {return {
 </script>
 <style scoped>
 
+.no-wrap {
+    white-space: nowrap;
+    margin: 0px 5px
+}
  .existe {
 
     color: blue ;

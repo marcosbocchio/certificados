@@ -111,15 +111,14 @@
                                            </tr>
                                            <tr v-for="(item,k) in TablaElementos.data" :key="k">
                                                <td>{{ item.fecha_formateada }}</td>
-                                               <td>
-                                                   <a :href="'/informes/ot/' + item.ot_id " target="_blank" title="Informe"><span>{{ item.nro_informe_formateado }}</span></a>
-                                               </td>
+                                               <a :href="'/informes/ot/' + ot.id" @click="setInformeCookie(item.nro_informe_formateado)" target="_blank" title="Informe">
+                                                    <span>{{ item.nro_informe_formateado }}</span>
+                                                </a>
                                                <td>{{ item.pieza }}</td>
                                                <td>{{ item.linea }}</td>
                                                <td>{{ item.detalle }}</td>
                                                <td>{{ item.cm }}</td>
-                                               <td  v-if="item.hoja"><a href="" rel="tooltip" :title="' Hoja: '+ item.hoja">{{ item.plano_isom }}</a></td>
-                                               <td v-else>{{ item.plano_isom }}</td>
+                                               <td>{{ item.plano_isom }}</td>
                                                <td style="text-align:center">
                                                    <div v-if="item.aceptable_sn">
                                                        SI
@@ -239,6 +238,13 @@ methods : {
    } finally {
        this.$store.commit('loading', false);
    }
+},
+setInformeCookie(nroInformeFormateado) {
+    var now = new Date();
+    now.setTime(now.getTime() + 1 * 60 * 1000); // Agrega 1 minuto
+
+    var expires = "expires=" + now.toUTCString();
+    document.cookie = 'nroInformeFormateado=' + nroInformeFormateado + ';' + expires + ';path=/;';
 },
    clienteProp: async function () {
 

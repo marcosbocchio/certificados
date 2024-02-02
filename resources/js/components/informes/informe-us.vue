@@ -719,7 +719,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group" >
                                         <label for="cantidad_generatrices_linea_pdf_me" title="Cantidad Generatrices por linea en informe">Generatrices por Linea en pdf *</label>
-                                        <input type="number" v-model="cantidad_generatrices_linea_pdf_me" class="form-control" id="cantidad_generatrices_linea_pdf_me" min="1" max="15">
+                                        <input type="number" v-model="cantidad_generatrices_linea_pdf_me" class="form-control" id="cantidad_generatrices_linea_pdf_me" min="1" max="18">
                                     </div>
                                 </div>
 
@@ -746,7 +746,7 @@
                                                         <td>{{ item.espesor_minimo_me }}</td>
                                                         <td>
                                                             <div v-if="indexPosTabla_me === k">
-                                                                <input type="number" v-model="item.cantidad_generatrices_linea_pdf_me" min="1" max="15">
+                                                                <input type="number" v-model="item.cantidad_generatrices_linea_pdf_me" min="1" max="18">
                                                             </div>
                                                             <div v-else>
                                                                 {{ item.cantidad_generatrices_linea_pdf_me}}
@@ -816,7 +816,7 @@
                                                                     <input style="width:40px;" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="10" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)">
                                                                  </div>
                                                                  <div v-else>
-                                                                    <input style="width:40px;" type="number" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">
+                                                                    <input style="width:40px;" type="text" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">
                                                                  </div>
                                                             </div>
                                                             <div v-else>
@@ -1775,19 +1775,23 @@ export default {
             });
         },
         triggerFileUpload(pos) {
-            this.currentPosition = pos; // Almacena la posición actual
-            this.$refs.fileInput.click(); // Activa el input de tipo file
-        },
+    this.currentPosition = pos; // Almacena la posición actual
+    this.$refs.fileInput.value = ''; // Limpia el valor actual del input para permitir la recarga del mismo archivo
+    this.$refs.fileInput.click(); // Activa el input de tipo file
+},
         uploadExcel(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
+            const file = event.target.files[0];
+    if (!file) {
+        return; // Sale temprano si no hay archivo seleccionado
+    }
+    const reader = new FileReader();
         reader.onload = (e) => {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const excelData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
-
+        reader.readAsArrayBuffer(file);
         // Calcula la cantidad de filas y columnas
         const cantidad_filas = excelData.length;
         let cantidad_columnas = 0;
