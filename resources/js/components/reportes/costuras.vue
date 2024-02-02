@@ -238,6 +238,7 @@ export default {
    ...mapState(['isLoading','clientesOperador','url']),
 
  },
+ 
 
 methods : {
 
