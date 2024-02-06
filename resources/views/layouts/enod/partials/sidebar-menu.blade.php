@@ -313,12 +313,12 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('software_download','INDUSTREX V4.2 Lite Setup.exe') }}"><i class="fa fa-download"></i>INDUSTREX V4.2 Lite</a></li>
-            @can('enod')
+            
                 <li title="Formato Importación Soldadores CSV"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fa fa-download"></i>SOLDADORES CSV</a></li>
-            @endcan
-            @can('enod')
+            
+            
                 <li title="Importación Medición de espesores"><a href="{{ route('software_download','importacion_me.xlsx') }}"><i class="fa fa-download"></i>MEDICION DE ESPESORES</a></li>
-            @endcan
+            
           </ul>
 
         </li>
