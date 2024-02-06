@@ -1852,6 +1852,22 @@ processExcelData(data, filas, columnas) {
             this.cantidad_posiciones_me = 50;
             this.cantidad_generatrices_me = 50;
             
+
+            if(!this.cantidad_generatrices_linea_pdf_me){
+            toastr.error('El campo "Generatrices por Linea en pdf" es obligatorio');
+            return;}
+    
+
+            if(this.cantidad_generatrices_linea_pdf_me > 30 ){
+                toastr.error('El campo Cantidad Generatrices por linea debe ser menor a 30');
+                return;
+            }
+            if(this.cantidad_generatrices_linea_pdf_me < 1 ){
+                toastr.error('El campo Cantidad Generatrices por linea debe ser mayor a 1');
+                return;
+            }
+            
+
             if (!this.elemento_me) {
                 toastr.error('El campo elemento es obligatorio');
                 return ;
@@ -1880,7 +1896,7 @@ processExcelData(data, filas, columnas) {
 
 
             if(this.cantidad_posiciones_me  > 100) {
-                toastr.error('El campo posiciones o debe ser mayor a 100');
+                toastr.error('El campo posiciones debe ser mayor a 100');
                 return ;
              }
 
