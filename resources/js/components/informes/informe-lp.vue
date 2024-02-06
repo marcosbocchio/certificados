@@ -409,15 +409,6 @@
                               <button type="button" @click="addDetalle()"><span class="fa fa-plus-circle"></span></button>
                             </span>
                         </div>
-                        <div class="dropdown">
-                            <button type="button" class="btn dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Clonado
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#" @click="clonar('simple')">Simple</a>
-                                <a class="dropdown-item" href="#" @click="clonar('completo')">Completo</a>
-                            </div>
-                        </div>
 
                          <div class="form-group">
                             &nbsp;
@@ -976,35 +967,35 @@ data() {return {
             });
          },
 
-    addDetalle : function (cm,detalle,aceptable_sn,observaciones,path1,path2,path3,path4) {
+         addDetalle : function () {
 
-            if (!this.pieza && this.clonando == false){
+if (!this.pieza){
 
-                 toastr.error('El campo elemento es obligatorio');
-                 return ;
-            }
+     toastr.error('El campo elemento es obligatorio');
+     return ;
+}
 
-            if (!this.cm && this.clonando == false){
+if (!this.cm){
 
-                 toastr.error('El campo cm es obligatorio');
-                 return ;
-            }
+     toastr.error('El campo cm es obligatorio');
+     return ;
+}
 
-        this.TablaLp.push({
-            pieza : this.pieza,
-            cm:(typeof(cm) !== 'undefined') ? cm : this.cm,
-            detalle : (typeof(detalle) !== 'undefined') ? detalle :'OK',
-            aceptable_sn :(typeof(aceptable_sn) !== 'undefined') ? aceptable_sn : 1 ,
-            observaciones :(typeof(observaciones) !== 'undefined') ? observaciones : '',
-            path1:(typeof(path1) !== 'undefined') ? path1 : null,
-            path2:(typeof(path2) !== 'undefined') ? path2 : null,
-            path3:(typeof(path3) !== 'undefined') ? path3 :null,
-            path4:(typeof(path4) !== 'undefined') ? path4 :null
-            });
+this.TablaLp.push({
+pieza : this.pieza,
+cm:this.cm,
+detalle : 'OK',
+aceptable_sn : 1 ,
+observaciones : '',
+path1:null,
+path2:null,
+path3:null,
+path4:null
+});
 
-        this.cm = '0';
+this.cm = '0';
 
-    },
+},
     
 
 
