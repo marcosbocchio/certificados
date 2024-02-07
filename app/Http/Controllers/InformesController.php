@@ -419,19 +419,20 @@ class InformesController extends Controller
 
     }
 
-    public function clonar($id){
-
+    public function clonar($id, $tipo){
         $user_id = null;
-
-        if (Auth::check())
-        {
-             $user_id = $userId = Auth::id();
+        if (Auth::check()) {
+            $user_id = Auth::id();
         }
-
-        $clonar = DB::select('CALL ClonarInforme(?,?)',array($id,$user_id));
-
+    
+        // Decidir qué procedimiento almacenado llamar basado en el tipo de clonación
+        if ($tipo == 'clonado') {
+            $clonar = DB::select('CALL ClonarInforme(?,?)', array($id, $user_id));
+        } else if ($tipo == 'completo') {
+            $clonar = DB::select('CALL ClonarInformeCompleto(?,?)', array($id, $user_id));
+        }
+    
         return $clonar;
-
     }
     public function anular($id){
 

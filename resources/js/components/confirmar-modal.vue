@@ -27,13 +27,15 @@ export default {
 
      mensaje :'',
      accion:'',
+     tipo:'',
     }},
 
   created : function() {
 
-        eventModal.$on('abrir_confirmar_accion',function(value1,value2) {
+        eventModal.$on('abrir_confirmar_accion',function(value1,value2,tipo) {
             this.mensaje  = value1;
-            this.accion = value2
+            this.accion = value2;
+            this.tipo = tipo;
             $('#confirm').modal('show');
 
         }.bind(this));
@@ -41,10 +43,9 @@ export default {
 
     methods : {
 
-        aplicar: function(confirmar_sn){
-
-              eventModal.$emit('confirmar_accion',this.accion);
-             $('#confirm').modal('hide');
+        aplicar: function(confirmar_sn) {
+            eventModal.$emit('confirmar_accion', this.accion, this.tipo); // Ahora pasas 'tipo' también
+            $('#confirm').modal('hide');
         }
 
 

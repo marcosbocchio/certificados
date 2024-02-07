@@ -224,7 +224,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     );
     Route::put('informes/{id}/firmar', 'InformesController@firmar');
     Route::put('informes/{id}/cambiar_numero', 'InformesController@cambiarNumero');
-    Route::put('informes/{id}/clonar', 'InformesController@clonar');
+    Route::put('informes/{id}/clonar/{tipo}', 'InformesController@clonar');
     Route::put('informes/{id}/anular', 'InformesController@anular');
     Route::put('informes/{id}/desanular', 'InformesController@desanular');
 

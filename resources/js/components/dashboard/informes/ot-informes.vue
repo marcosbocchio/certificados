@@ -143,9 +143,20 @@
                                         <button @click.prevent="EditInformeImportable(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><span class="fa fa-edit"></span></button>
                                     </td>
 
-                                    <td v-if="!ot_informe.importable_sn" width="10px">
-                                        <button @click="confirmarClanacion(k)" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><app-icon img="clone" color="black"></app-icon></button>
-                                    </td>
+                                    <td v-if="!ot_informe.importable_sn && (ot_informe.metodo == 'LP' || ot_informe.metodo == 'PM')" width="10px">
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" style="margin-top: 5px;">
+            <app-icon img="clone" color="black"></app-icon>
+        </button>
+        <ul class="dropdown-menu">
+            <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'clonado')">Clonado</button></li>
+            <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'completo')">Clonado Completo</button></li>
+        </ul>
+    </div>
+</td>
+<td v-else>
+    <button @click="confirmarClanacion(k, 'clonado')" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><app-icon img="clone" color="black"></app-icon></button>
+</td>
                                     <td v-if="ot_informe.metodo == 'RI'">
                                         <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" :disabled="ot_informe.anulado_sn === 1" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
                                     </td>
@@ -263,29 +274,27 @@ export default {
 
   created : function() {
 
-        eventModal.$on('confirmar_accion',function(accion) {
-
-            switch (accion) {
-                case 'clonar':
-                    this.ClonarInforme();
-                    break;
-                case 'revision':
-                    this.EditInforme();
-                    break;
-                case 'firmar':
-                    this.firmar();
-                    break;
-                case 'anular':
-                    this.anularInforme();
-                    break;
-                case 'desanular':
-                    this.desanularInforme();
-                    break;
-                default:
-                    break;
-            }
-
-        }.bind(this));
+    eventModal.$on('confirmar_accion', function(accion, tipo) {
+        switch (accion) {
+            case 'clonar':
+                this.ClonarInforme(tipo); // Ahora pasamos el tipo a ClonarInforme
+                break;
+            case 'revision':
+                this.EditInforme();
+                break;
+            case 'firmar':
+                this.firmar();
+                break;
+            case 'anular':
+                this.anularInforme();
+                break;
+            case 'desanular':
+                this.desanularInforme();
+                break;
+            default:
+                break;
+        }
+    }.bind(this));
   },
 
   mounted : function(){
@@ -395,10 +404,10 @@ export default {
 
         },
 
-        confirmarClanacion : function(k){
+        confirmarClanacion: function(k, tipo){
             this.index_informe = k;
-            eventModal.$emit('abrir_confirmar_accion','Está seguro que quiere clonar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' ?','clonar' );
-
+            // Modifica el evento emitido para incluir el tipo de clonación
+            eventModal.$emit('abrir_confirmar_accion', 'Está seguro que quiere clonar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' ?', 'clonar', tipo);
         },
         confirmarAnulacion : function(k){
             this.index_informe = k;
@@ -465,12 +474,12 @@ export default {
 
         },
 
-         async ClonarInforme (){
-
-          this.loading_table = true;
-          axios.defaults.baseURL = this.url ;
-          var urlRegistros = 'informes/' + this.ot_informes.data[this.index_informe].id + '/clonar';
-          await axios.put(urlRegistros).then(response => {
+        async ClonarInforme(tipo) {
+    this.loading_table = true;
+    axios.defaults.baseURL = this.url;
+    // La URL ahora depende del tipo de clonación
+    var urlRegistros = `informes/${this.ot_informes.data[this.index_informe].id}/clonar/${tipo}`;
+    await axios.put(urlRegistros).then(response => {
                 this.getResults();
                 this.ContarInformes();
                 toastr.success('El Informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' fue clonado con éxito');
