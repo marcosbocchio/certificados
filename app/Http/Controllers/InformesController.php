@@ -424,12 +424,16 @@ class InformesController extends Controller
         if (Auth::check()) {
             $user_id = Auth::id();
         }
-    
+        log::info('tipo'. $tipo);
         // Decidir qué procedimiento almacenado llamar basado en el tipo de clonación
+        log::info('El tipo es '. $tipo);
         if ($tipo == 'clonado') {
             $clonar = DB::select('CALL ClonarInforme(?,?)', array($id, $user_id));
+            log::info('Entro en normal');
         } else if ($tipo == 'completo') {
             $clonar = DB::select('CALL ClonarInformeCompleto(?,?)', array($id, $user_id));
+
+            log::info('Entro en completo');
         }
     
         return $clonar;

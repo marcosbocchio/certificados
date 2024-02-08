@@ -144,19 +144,26 @@
                                     </td>
 
                                     <td v-if="!ot_informe.importable_sn && (ot_informe.metodo == 'LP' || ot_informe.metodo == 'PM')" width="10px">
+                                        <td v-if="!ot_informe.importable_sn && (ot_informe.metodo === 'LP' || ot_informe.metodo === 'PM')" width="10px">
     <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" style="margin-top: 5px;">
-            <app-icon img="clone" color="black"></app-icon>
-        </button>
-        <ul class="dropdown-menu">
-            <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'clonado')">Clonado</button></li>
-            <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'completo')">Clonado Completo</button></li>
-        </ul>
+      <button class="btn btn-default dropdown-toggle btn-sm clone-button" type="button" id="clonarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Clonar" :disabled="!$can('T_informes_edita') || ot_informe.anulado_sn === 1">
+        <span class="glyphicon glyphicon-duplicate"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="clonarDropdown">
+        <li>
+          <button type="button" class="btn dropdown-item" @click="confirmarClanacion(k, 'clonado')">Clonado</button>
+        </li>
+        <li>
+          <button type="button" class="btn dropdown-item" @click="confirmarClanacion(k, 'completo')">Clonado Completo</button>
+        </li>
+      </ul>
     </div>
-</td>
-<td v-else>
-    <button @click="confirmarClanacion(k, 'clonado')" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><app-icon img="clone" color="black"></app-icon></button>
-</td>
+  </td>
+  <td v-else>
+    <button @click="confirmarClanacion(k, 'clonado')" class="btn btn-default btn-sm clone-button" title="Clonar" :disabled="!$can('T_informes_edita') || ot_informe.anulado_sn === 1">
+      <app-icon img="clone" color="black"></app-icon>
+    </button>
+  </td>
                                     <td v-if="ot_informe.metodo == 'RI'">
                                         <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" :disabled="ot_informe.anulado_sn === 1" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
                                     </td>
@@ -558,3 +565,46 @@ export default {
 
 }
 </script>
+<style>
+/* Estilos para el botón de clonación */
+.clone-button {
+  margin-top: 5px;
+  color: #555; /* Ajusta el color según sea necesario */
+}
+
+.clone-button .glyphicon {
+  color: #555; /* Ajusta el color según sea necesario */
+}
+
+/* Estilos para el menú desplegable del botón de clonación */
+.dropdown-menu {
+  position: absolute;
+  top: -100%; /* Ajusta este valor para que el menú aparezca sobre el botón */
+  left: 0;
+  background-color: #fff; /* Color de fondo del menú */
+  border: 1px solid #ddd; /* Borde del menú */
+  border-radius: 4px; /* Redondeo de bordes */
+  box-shadow: 0 6px 12px rgba(0,0,0,.175); /* Sombra del menú */
+  z-index: 1000;
+}
+
+.dropdown-menu .btn {
+  color: #333; /* Color del texto dentro del menú */
+  text-align: left;
+  padding: 3px 20px;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.dropdown-menu .btn:hover {
+  background-color: #f5f5f5; /* Color al pasar el mouse */
+}
+
+/* Ajustar el tamaño y la alineación del icono para que coincida con el otro botón */
+.btn .glyphicon {
+  font-size: 16px; /* Ajusta el tamaño de la fuente del icono */
+  vertical-align: middle;
+}
+</style>
