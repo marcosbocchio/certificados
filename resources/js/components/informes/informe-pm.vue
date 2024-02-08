@@ -66,7 +66,7 @@
                             <input type="text" v-model="hoja" class="form-control" id="hoja" maxlength="10">
                         </div>
                     </div>
-
+                    <div class="clearfix"></div>
                     <div class="col-md-3 size-1-5">
                         <div class="form-group" >
                             <label for="Diametro">Ø *</label>
@@ -141,7 +141,7 @@
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>
                             </div>
                         </div>
-
+                        <div class="clearfix"></div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Norma Evaluación *</label>
@@ -186,7 +186,7 @@
 
                             </div>
                         </div>
-
+                        <div class="clearfix"></div>
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="instrumento_medicion">Tipo</label>
@@ -316,7 +316,7 @@
                                 <input  type="number" class="form-control" v-model="magnetizacion.fuerza_portante" disabled id="fuerza_portante">
                             </div>
                         </div>
-
+                        <div class="clearfix"></div>
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="iluminaciones">Iluminaciones *</label>
