@@ -66,6 +66,8 @@
                                 <input type="text" v-model="hoja" class="form-control" id="hoja" maxlength="10">
                             </div>
                         </div>
+                        
+                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
@@ -146,6 +148,8 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>
+                        
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Metodo Trabajo *</label>
@@ -191,7 +195,7 @@
 
                             </div>
                         </div>
-
+                        <div class="clearfix"></div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Líquido Penetrante *</label>
@@ -266,7 +270,7 @@
                                 <input type="text" v-model="limpieza_previa" class="form-control" id="limpieza_previa">
                             </div>
                         </div>
-
+                        <div class="clearfix"></div>
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="limpieza_intermedia">Limpieza Intermedia</label>
@@ -327,7 +331,7 @@
                                 <input type="number" v-model="temperatura_consumibles" class="form-control" id="temperatura_consumibles" step="0.1">
                             </div>
                         </div>
-
+                        <div class="clearfix"></div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="termostato">Termostato</label>
