@@ -22,7 +22,7 @@
                 @endif
             </td>
             <td width= "20.8mm" height="4mm">FECHA:</td>
-            <td width= "37mm" height="4mm" id="left">{{ $fecha }}</td>
+            <td width= "36.8mm" height="4mm" id="left">{{ $fecha }}</td>
         </tr>
     </tbody>
 </table>

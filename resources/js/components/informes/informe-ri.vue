@@ -411,7 +411,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="Sistema_aesa">Sistema</label>
-                                        <input type="text" v-model="sistema_aesa" class="form-control" placeholder="Sistema" id="sistema_aesa" maxlength="30">
+                                        <input type="text" v-model="sistema_aesa" class="form-control" placeholder="Sistema" id="sistema_aesa" maxlength="20">
                                     </div>
                                 </div>
                             
@@ -419,14 +419,14 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="Elemento_aesa">Elemento</label>
-                                        <input type="text" v-model="elemento_aesa" class="form-control" placeholder="Elemento" id="elemento_aesa" maxlength="30">
+                                        <input type="text" v-model="elemento_aesa" class="form-control" placeholder="Elemento" id="elemento_aesa" maxlength="20">
                                     </div>
                                 </div>
                             
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="Paq_de_prueba_aesa">Paq. de prueba</label>
-                                        <input type="text" v-model="paq_de_prueba_aesa" class="form-control" placeholder="Paq. de prueba" id="paq_de_prueba_aesa" maxlength="30">
+                                        <input type="text" v-model="paq_de_prueba_aesa" class="form-control" placeholder="Paq. de prueba" id="paq_de_prueba_aesa" maxlength="20">
                                     </div>
                                 </div>
                             </div>
