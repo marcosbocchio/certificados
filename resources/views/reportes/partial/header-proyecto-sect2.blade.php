@@ -39,7 +39,7 @@
             <td class="col1" id="left"><b>ELEMENTO</b></td>
             <td class="col2">&nbsp;</td>
             <td class="col1" id="left"><b>TIPO DE INSPECCION:</b></td>
-            <td class="col3">&nbsp;</td>
+            <td class="col3">W/W</td>
         </tr>
         <tr class="fila-5">
             <td class="col1" id="left"><b>PAQ. DE PRUEBA:</b></td>
