@@ -31,19 +31,19 @@
         </tr>
         <tr>
             <td class="col1" id="left"><b>SISTEMA / SUBSIST.:</b></td>
-            <td class="col2">&nbsp;</td>
+            <td class="col2">{{$informe_ri->sistema_aesa}}</td>
             <td class="col1" id="left"><b>PIE / N° ACTIVIDAD:</b></td>
             <td class="col3">RLC-NCB-CA-PIE-PI-001 R0 / RT: 4.4/4.9</td>
         </tr>
         <tr class="fila-4">
             <td class="col1" id="left"><b>ELEMENTO</b></td>
-            <td class="col2">&nbsp;</td>
+            <td class="col2">{{$informe_ri->elemento_aesa}}</td>
             <td class="col1" id="left"><b>TIPO DE INSPECCION:</b></td>
             <td class="col3">W/W</td>
         </tr>
         <tr class="fila-5">
             <td class="col1" id="left"><b>PAQ. DE PRUEBA:</b></td>
-            <td class="col2">&nbsp;</td>
+            <td class="col2">{{$informe_ri->paq_de_prueba_aesa}}</td>
             <td class="col1" id="left"><b>N° REPORTE / RFI:</b></td>
             <td class="col3">{{$informe_ri->N_Reporte_RFI}}</td>
         </tr>

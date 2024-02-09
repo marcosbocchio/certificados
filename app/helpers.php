@@ -155,46 +155,15 @@ function PuedeCrearInforme($ot_id){
 
 }
 
-function obtenerInformeEspecial($informe, $metodo_ensayo, &$informeEspecial) {
+function obtenerInformeEspecial($ot, $metodo_ensayo, &$informeEspecial) {
 
-  
-  $ot = ots::where('id', $informe->ot_id)->first();
   $clienteId = $ot->cliente_id;
-  $tipoInforme = '';
 
-  if ($metodo_ensayo->metodo == 'RI') {    
-
-
-      $informeRi = InformesRi::where('informe_id', $informe->id)->first();
-      
-      if ($informeRi->gasoducto_sn == 1) {
-          $tipoInforme = 'gasoducto';
-      } else if ($informeRi->perfil_sn == 1) {
-          $tipoInforme = 'perfil';
-      } else {
-          $tipoInforme = 'planta'; 
-      }
-
-  } else if ($metodo_ensayo->metodo == 'US') {
-
-
-      if ($informe->tecnica_id == 9) {
-          $tipoInforme = 'US convencional';
-      } else if ($informe->tecnica_id == 10) {
-          $tipoInforme = 'Phased array';
-      } else if ($informe->tecnica_id == 11) {
-          $tipoInforme = 'Medición de Espesores';
-      }
-
-  }else if($metodo_ensayo->metodo == 'LP'){
-    $tipoInforme = 'LP convencional';
-  }
   
   $metodoEnsayoId = $metodo_ensayo->id;
   
   $pdfEspecial = pdfEspecial::where('cliente_id', $clienteId)
       ->where('metodo_ensayo_id', $metodoEnsayoId)
-      ->where('tipo_informe', $tipoInforme)
       ->first();
 
   

@@ -82,7 +82,7 @@ class PdfInformesRiController extends Controller
 
         $informeEspecial = null;
 
-        obtenerInformeEspecial($informe, $metodo_ensayo, $informeEspecial);
+        obtenerInformeEspecial($ot, $metodo_ensayo, $informeEspecial);
 
 /*______________________________________________________________________________________________________________________________________________________________*/
 /*______________________________________________________________________________________________________________________________________________________________*/

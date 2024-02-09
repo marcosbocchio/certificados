@@ -384,14 +384,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="N_Reporte_RFI">N Reporte /RFI</label>
-                                        <input type="text" v-model="N_Reporte_RFI" class="form-control" placeholder="N Reporte /RFI" id="N_Reporte_RFI" name="N_Reporte_RFI" maxlength="30">
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div v-if="!isLoading" class="col-md-3">
                              <div class="row">
@@ -405,6 +397,39 @@
                                     </div>
                                </div>
                            </div>
+                        </div>
+                        <div v-if="informe_especialdata === 'informeRiPlantaAESA'" class="row">
+                            <div class="col-md-12" >
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="N_Reporte_RFI">N Reporte /RFI</label>
+                                        <input type="text" v-model="N_Reporte_RFI" class="form-control" placeholder="N Reporte /RFI" id="N_Reporte_RFI" maxlength="30">
+                                    </div>
+                                </div>
+                            
+                            
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="Sistema_aesa">Sistema</label>
+                                        <input type="text" v-model="sistema_aesa" class="form-control" placeholder="Sistema" id="sistema_aesa" maxlength="30">
+                                    </div>
+                                </div>
+                            
+                            
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="Elemento_aesa">Elemento</label>
+                                        <input type="text" v-model="elemento_aesa" class="form-control" placeholder="Elemento" id="elemento_aesa" maxlength="30">
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="Paq_de_prueba_aesa">Paq. de prueba</label>
+                                        <input type="text" v-model="paq_de_prueba_aesa" class="form-control" placeholder="Paq. de prueba" id="paq_de_prueba_aesa" maxlength="30">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                    </div>
                 </div>
@@ -1230,6 +1255,9 @@ import { eventSetReferencia } from '../event-bus';
              dist_fuente_pel_edit_sn: false,
              proceso_soldadores:'',
              N_Reporte_RFI:'',
+             sistema_aesa:'',
+             elemento_aesa:'',
+             paq_de_prueba_aesa:'',
              ptt_sn: '',
 
          }},
@@ -1427,6 +1455,9 @@ import { eventSetReferencia } from '../event-bus';
 
                     if (this.editmode && this.informe_ridata) {
                     this.N_Reporte_RFI = this.informe_ridata.N_Reporte_RFI || '';
+                    this.sistema_aesa = this.informe_ridata.sistema_aesa || '';
+                    this.elemento_aesa = this.informe_ridata.elemento_aesa || '';
+                    this.paq_de_prueba_aesa = this.informe_ridata.paq_de_prueba_aesa || '';
                     this.ptt_sn = this.informe_ridata.ptt_sn || false;
                 }
 
@@ -2352,6 +2383,9 @@ import { eventSetReferencia } from '../event-bus';
                          'tramos'    : this.TablaTramos,
                          'resultado_pdf_sn' : this.resultado_pdf_sn,
                          'N_Reporte_RFI': this.N_Reporte_RFI,
+                         'sistema_aesa': this.sistema_aesa,
+                         'elemento_aesa': this.elemento_aesa,
+                         'paq_de_prueba_aesa':this.paq_de_prueba_aesa,
                          'ptt_sn':this.ptt_sn,
                          
                  }}
@@ -2449,6 +2483,9 @@ import { eventSetReferencia } from '../event-bus';
                          'tramos'    : this.TablaTramos,
                          'resultado_pdf_sn' : this.resultado_pdf_sn,
                          'N_Reporte_RFI': this.N_Reporte_RFI,
+                         'sistema_aesa': this.sistema_aesa,
+                         'elemento_aesa': this.elemento_aesa,
+                         'paq_de_prueba_aesa':this.paq_de_prueba_aesa,
                          'ptt_sn': this.ptt_sn,
 
 

@@ -18,6 +18,7 @@
    
     metodo="{{$metodo}}"
     :otdata="{{$ot}}"
+    :informe_especialdata="{{ json_encode($informeEspecial) }}"
     
   ></informe-ri>
 

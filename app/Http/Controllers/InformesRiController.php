@@ -59,12 +59,18 @@ class InformesRiController extends Controller
         $header_titulo = "Informe";
         $header_descripcion ="Crear";
         $ot = Ots::findOrFail($ot_id);
-
+        $metodoEnsayoObj = new stdClass();
+        $metodoEnsayoObj->metodo = $metodo;
+        $metodoEnsayoObj->id = 1;
+        $informeEspecial = null;
+        obtenerInformeEspecial($ot, $metodoEnsayoObj, $informeEspecial);
+        log::info('especial '. $informeEspecial);
         return view('informes.ri.index', compact('ot',
                                                  'metodo',
                                                  'user',
                                                  'header_titulo',
-                                                 'header_descripcion'));
+                                                 'header_descripcion',
+                                                  'informeEspecial'));
     }
     /**
      * Store a newly created resource in storage.
@@ -119,7 +125,7 @@ class InformesRiController extends Controller
         $metodoEnsayoObj->metodo = $metodo;
         $metodoEnsayoObj->id = 1;
         $informeEspecial = null;
-        obtenerInformeEspecial($informe, $metodoEnsayoObj, $informeEspecial);
+        obtenerInformeEspecial($ot, $metodoEnsayoObj, $informeEspecial);
 
 
         if ($informe_interno_fuente == null)
@@ -159,7 +165,7 @@ class InformesRiController extends Controller
 
         if ($informe_diametro == null)
           $informe_diametro = new DiametroView();
-
+        
         return view('informes.ri.edit', compact('ot',
                                                  'metodo',
                                                  'user',
@@ -320,6 +326,9 @@ class InformesRiController extends Controller
             DB::beginTransaction();
             try {
                 $informeRi->N_Reporte_RFI = $request->input('N_Reporte_RFI');
+                $informeRi->sistema_aesa = $request->input('sistema_aesa');
+                $informeRi->elemento_aesa = $request->input('elemento_aesa');
+                $informeRi->paq_de_prueba_aesa = $request->input('paq_de_prueba_aesa');
                 $informeRi->ptt_sn = $request->input('ptt_sn');
 
                 $informeRi->save();
@@ -373,6 +382,9 @@ class InformesRiController extends Controller
         $informeRi->exposicion = $request->exposicion;
         $informeRi->resultado_pdf_sn = $request->resultado_pdf_sn;
         $informeRi->N_Reporte_RFI = $request->N_Reporte_RFI;
+        $informeRi->sistema_aesa = $request->sistema_aesa;
+        $informeRi->elemento_aesa = $request->elemento_aesa;
+        $informeRi->paq_de_prueba_aesa = $request->paq_de_prueba_aesa;
         $informeRi->ptt_sn = $request->ptt_sn;
         $informeRi->save();
 
