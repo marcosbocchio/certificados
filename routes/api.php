@@ -756,6 +756,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('interno_equipos/{id}/documentaciones','QrController@getDocIntEquipos');
     Route::get('interno_fuentes/{id}/documentaciones','QrController@getDocIntEquiposFuente');
 
+    //stock
+    Route::get('/stock', 'StockController@index');
+    Route::post('/stock', 'StockController@store');
+    
 });
 
 Route::get('/fecha_actual', function () {

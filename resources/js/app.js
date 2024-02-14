@@ -7,7 +7,7 @@
 
 
 require('./bootstrap');
-
+import StockTable from './components/stock/stock-table.vue';
 //import "regenerator-runtime/runtime.js";
 
 toastr.options = {
@@ -327,6 +327,10 @@ Vue.component('modelo3d-viewer', require('./components/modelos3d/modelo3d-viewer
 Vue.component('alarma-receptor', require('./components/notificaciones/alarma-receptor.vue').default);
 Vue.component('alarmas', require('./components/notificaciones/alarmas.vue').default);
 Vue.component('notificaciones', require('./components/notificaciones/notificaciones.vue').default);
+
+
+/* Stock */
+Vue.component('stock-table', StockTable);
 
 /* modal confirmacion */
 

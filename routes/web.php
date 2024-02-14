@@ -190,7 +190,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('informes/prueba','InformePruebaController@index')->name('pruebaInformes');
       Route::get('/area/enod/plantas', 'PlantasController@index')->name('plantas');
 
-
+      /* Stock */
+      Route::get('/area/enod/stock', 'StockController@index')->name('stock.index');
 
     });
 
