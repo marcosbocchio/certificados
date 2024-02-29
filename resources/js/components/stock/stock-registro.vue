@@ -4,7 +4,13 @@
       <div class="col-md-1">
         <button @click="exportarPDF(id)" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-7">
+
+      </div>
+      <div class="col-md-4" style="display: flex;align-items: center; justify-content: flex-end;">
+        <div>
+          <p style="font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif; margin-right: 5px;">Mostar movimientos a partir de</p>
+        </div>
         <div class="form-group">
           <date-picker id="fechaDesde" v-model="fechaInicio" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Desde" @change="aplicarFiltro" class="flex-grow-1"></date-picker>
         </div>
@@ -17,12 +23,12 @@
         <div class="table-responsive">
           <table class="table table-hover table-striped table-condensed">
             <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Movimiento</th>
-                <th>Observaciones</th>
-                <th>Cantidad</th>
-                <th>Stock</th>
+              <tr style="width: 100%;">
+                <th style="width: 8%;">Fecha</th>
+                <th style="width: 35%;">Movimiento</th>
+                <th style="width: 37%;">Observaciones</th>
+                <th style="text-align: right; width: 10%;">Cantidad</th>
+                <th style="text-align: right; width: 10%;">Stock</th>
               </tr>
             </thead>
             <tbody>
@@ -30,8 +36,8 @@
                 <td>{{ formatearFecha(item.fecha) }}</td>
                 <td>{{ item.tipo_movimiento }}</td>
                 <td>{{ item.obs }}</td>
-                <td>{{ item.cantidad }}</td>
-                <td>{{ item.stock }}</td>
+                <td style="text-align: right;">{{ item.cantidad }}</td>
+                <td style="text-align: right;">{{ item.stock }}</td>
               </tr>
             </tbody>
           </table>

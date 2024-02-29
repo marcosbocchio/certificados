@@ -6,10 +6,10 @@
         <div class="table-responsive">
           <table class="table table-hover table-striped table-condensed">
             <thead>
-              <tr>
-                <th>Producto</th>
-                <th>Stock</th>
-                <th colspan="3">Acciones</th>
+              <tr style="width: 100%;">
+                <th style="width: 45%;">Producto</th>
+                <th style="width: 45%;">Stock</th>
+                <th colspan="2" style="width: 5%;">Acciones</th>
               </tr>
             </thead>
             <tbody>

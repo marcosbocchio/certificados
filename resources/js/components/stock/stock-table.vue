@@ -1,32 +1,54 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-md-1">
-        <button class="btn btn-enod" @click="nuevoStock">
-          <span class="fa fa-plus-circle"></span> Nuevo
-        </button>
-      </div>
-      <div class="col-md-2">
-        <div class="form-group">
-          <date-picker id="fechaDesde" v-model="fechaInicio" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Desde" @change="aplicarFiltro" class="flex-grow-1"></date-picker>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="form-group">
-          <date-picker id="fechaHasta" v-model="fechaFin" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Hasta" @change="aplicarFiltro" class="flex-grow-1"></date-picker>
-        </div>
-      </div>
-      <div class="col-md-5">
-      </div>
-      <div class="col-md-2">
-        <div class="input-group">
-          <input type="text" v-model="search" class="form-control" @keyup.enter="aplicarFiltro" placeholder="Buscar...">
-          <span class="input-group-addon btn" @click="aplicarFiltro" style="background-color: rgb(255, 204, 0); cursor: pointer;">
-            <i class="fa fa-search"></i>
-          </span>
-        </div>
-      </div>
-    </div>
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr>
+        <!-- Botón Nuevo -->
+        <td style="width: 8%;">
+          <button class="btn btn-enod" @click="nuevoStock" style="background-color: rgb(255, 204, 0); color: rgb(0, 0, 0);">
+            <span class="fa fa-plus-circle"></span>Nuevo 
+          </button>
+        </td>
+        <td style="width: 12%;">
+
+        </td>
+        <!-- Texto 'Mostrar movimientos desde' -->
+        <td style="width: 15%; text-align: right; padding-right: 10px; font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif;">
+          <p>Mostrar movimientos desde</p>
+        </td>
+
+        <!-- Selector de Fecha Desde -->
+        <td style="width: 10%;">
+          <div class="form-group">
+            <date-picker id="fechaDesde" v-model="fechaInicio" value-type="YYYY-MM-DD" format="DD-MM-YYYY" @change="aplicarFiltro" class="flex-grow-1"></date-picker>
+          </div>
+        </td>
+
+        <!-- Texto 'Hasta' -->
+        <td style="width: 4%; text-align: right; padding-right: 10px; font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif;">
+          <p>Hasta</p>
+        </td>
+
+        <!-- Selector de Fecha Hasta -->
+        <td style="width: 10%;">
+          <div class="form-group">
+            <date-picker id="fechaHasta" v-model="fechaFin" value-type="YYYY-MM-DD" format="DD-MM-YYYY"  @change="aplicarFiltro" class="flex-grow-1"></date-picker>
+          </div>
+        </td>
+        <td style="width: 20%;">
+
+        </td>
+        <!-- Búsqueda -->
+        <td style="width: 20%;">
+          <div class="input-group">
+            <input type="text" v-model="search" class="form-control" @keyup.enter="aplicarFiltro" placeholder="Buscar...">
+            <span class="input-group-addon btn" @click="aplicarFiltro" style="background-color: rgb(255, 204, 0); cursor: pointer; border: none;">
+              <i class="fa fa-search"></i>
+            </span>
+          </div>
+        </td>
+
+      </tr>
+    </table>
     <div v-if="stockItems.length">
       <div class="box box-custom-enod top-buffer">
         <div class="box-body">
@@ -122,6 +144,7 @@ export default {
     };
   },mounted() {
     this.fechaInicio = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().split('T')[0];
+    this.fechaFin = new Date().toISOString().split('T')[0];
     this.loadStockItems();
   },
   methods: {

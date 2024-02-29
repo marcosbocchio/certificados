@@ -79,7 +79,7 @@ export default {
       fecha_ajuste: new Date().toISOString().slice(0, 10),
       observaciones_ajuste: '',
       cantidad_ajuste: 0,
-      tipo_movimiento: 'Ajuste',
+      tipo_movimiento: 'Ajuste stock',
     };
   },
   computed: {
@@ -92,6 +92,12 @@ export default {
   },
   methods: {
     ajustarStock() {
+
+      if (this.stock_actual < 0) {
+      toastr.error('El stock no puede ser negativo.');
+      return; // Detiene la ejecución adicional del método
+      }
+
       const url = '/api/stock/edit';
       const ajuste = {
         fecha: this.fecha_ajuste,

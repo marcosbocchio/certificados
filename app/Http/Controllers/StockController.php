@@ -59,8 +59,8 @@ class StockController extends Controller
         $user = auth()->user();
         $header_titulo = "Compras";
         $header_descripcion = "View";
-        $stockItem = Compra::where('id', $id)->first(); // Asegúrate de que esta sea la variable correcta
-        $stockItemCompra = DetalleCompra::where('compra_id', $id)->get(); // Asegúrate de que esta sea la variable correcta
+        $stockItem = Compra::where('id', $id)->first(); 
+        $stockItemCompra = DetalleCompra::where('compra_id', $id)->get(); 
         $proveedor = Proveedor::where('id', $stockItem->proveedor_id)->get();
         return view('stock.ajuste', compact('user', 'header_titulo', 'header_descripcion', 'stockItem','stockItemCompra','proveedor'));
     }
@@ -96,7 +96,7 @@ class StockController extends Controller
         $producto = Productos::where('id', $id)->first();
         $productoName = $producto->descripcion;
         $user = auth()->user();
-        $header_titulo = "Edit " . $productoName;
+        $header_titulo = "Ajuste" . $productoName;
         $header_descripcion = ".";
         $producto = Productos::where('id', $id)->first();
         return view('stock.edit', compact('user', 'header_titulo', 'header_descripcion', 'producto',));
@@ -149,7 +149,7 @@ public function reemplazarStockProducto(StockRequest $request)
         // Registrar el ajuste en la tabla 'stock'
         $registroStock = new Stock([
             'producto_id' => $request->producto_id,
-            'fecha' => now(), // O cualquier otra fecha relevante
+            'fecha' => now(),
             'cantidad' =>  $request->cantidad,
             'obs' => $request->observaciones,
             'stock'=> $nuevoValorStock,
@@ -181,7 +181,7 @@ public function actualizarStock($detalleCompra, $request)
         $nuevoStock = new Stock([
             'producto_id' => $detalleCompra->producto_id,
             'cantidad' => $detalleCompra->cantidad,
-            'obs' => $request->obs, // Corregido, sin doble signo de dólar
+            'obs' => $request->obs,
             'stock' => $producto->stock,
             'tipo_movimiento' => $request->tipo_movimiento,
         ]);
@@ -192,7 +192,7 @@ public function actualizarStock($detalleCompra, $request)
             'producto_id' => $detalleCompra->producto_id,
             'error' => $e->getMessage()
         ]);
-        // Re-throw the exception if you want to handle it further up the call stack
+        
         throw $e;
     }
 }
@@ -307,7 +307,7 @@ public function actualizarStock($detalleCompra, $request)
         DB::beginTransaction();
         try {
             $detallesCompra = DetalleCompra::where('compra_id', $id)->get();
-            $compra = Compra::find($id); // Corrección: Solo necesitas buscar la compra una vez.
+            $compra = Compra::find($id);
 
             if (!$compra) {
                 throw new \Exception("Compra no encontrada con ID: {$id}");
@@ -329,11 +329,11 @@ public function actualizarStock($detalleCompra, $request)
                 // Crear registro de anulación en Stock
                 $stock = new Stock([
                     'fecha' => now(),
-                    'obs' => "Anulación remito N° {$compra->numero_remito}",
+                    'obs' => "",
                     'cantidad' => -$detalle->cantidad,
                     'stock' => $producto->stock,
                     'producto_id' => $detalle->producto_id,
-                    'tipo_movimiento' => 'anulacion',
+                    'tipo_movimiento' => "Anul. remito de compra N° " . $compra->numero_remito,
                 ]);
                 $stock->save();
             }
@@ -380,11 +380,11 @@ public function actualizarStock($detalleCompra, $request)
                 // Crear registro de desanulación en Stock con cantidad positiva
                 $stock = new Stock([
                     'fecha' => now(),
-                    'obs' => "Desanulación remito N° {$compra->numero_remito}",
+                    'obs' => "",
                     'cantidad' => $detalle->cantidad, // Positivo para reflejar el incremento en el stock
                     'stock' => $producto->stock,
                     'producto_id' => $detalle->producto_id,
-                    'tipo_movimiento' => 'desanulacion',
+                    'tipo_movimiento' => 'Desanul. remito de compra N° '. $compra->numero_remito,
                 ]);
                 $stock->save();
             }

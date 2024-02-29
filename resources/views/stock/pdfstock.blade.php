@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Movimientos - {{ $productos->descripcion }}</title>
     <style>
-    body {
+    main {
         font-family: 'serif', 'Arial', serif;
         font-size: 12px; /* Ajustar el tamaño de la fuente general */
         color: #333; /* Color de texto general */
@@ -62,9 +62,28 @@
     .table tbody tr:nth-child(even) {
         background-color: #F2F2F2; /* Fondo en bandas de colores alternos */
     }
-</style>
+    .table td.align-right {
+        text-align: right;
+    }
+    .table th.align-right {
+        text-align: right;
+    }
+    .table tr {
+        page-break-inside: avoid;
+    }
+    #tablaEspecifica {
+        margin: 2px;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+    #tablaEspecifica td, #tablaEspecifica tr {
+        padding: 0;
+        font-size: 15px;
+    }
+    </style>
 </head>
 <body>
+<main>
     <table class="header-table">
             <tr>
                 <td class="logo">
@@ -78,55 +97,52 @@
                 </td>
             </tr>
     </table>
-    <div style="height: 3px;background-color:rgb(255,204, 0);margin-top:10px;">
-    </div>
-    <table style="margin-top:20px;">
+    <div style="height: 3px;background-color:rgb(255,204, 0);"></div>
+    <table id="tablaEspecifica">
         <tbody>
             <tr>
                 <td><b>&nbsp;</b></td>
-                <td style="font-size:18px"><b>Desde</b></td>
+                <td><b>&nbsp;</b></td>
+                <td style="font-size:15px;"><b>Desde</b></td>
             </tr>
             <tr>
                 <td><b>&nbsp;</b></td>
-                <td><p>{{ $fechaInicioFormato }}</p></td>
+                <td><b>&nbsp;</b></td>
+                <td style="font-size:12px;">{{ $fechaInicioFormato }}</td>
             </tr>
         </tbody>
     </table>
-    <div style="height: 3px;background-color:rgb(255,204, 0);margin-top:10px;">
-    </div>
-    
+    <div style="height: 3px;background-color:rgb(255,204, 0);"></div>
     <div class="box">
         <table class="table">
             <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Producto</th>
-                    <th>Movimiento</th>   
-                    <th>Observaciones</th>  
-                    <th>Cantidad</th>
-                    <th>Stock</th>
+                <tr width='100%;'>
+                    <th width='10%;'>Fecha</th>
+                    <th width='40%;'>Movimiento</th>   
+                    <th width='40%;'>Observaciones</th>  
+                    <th width='5%;'class="align-right">Cantidad</th>
+                    <th width='5%;'class="align-right">Stock</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($stocks as $stock)
                     <tr>
                         <td>{{ \Carbon\Carbon::parse($stock->fecha)->format('Y-m-d') }}</td>
-                        <td>{{ $productos->descripcion }}</td>
                         <td>{{ $stock->tipo_movimiento }}</td>
                         <td>{{ $stock->obs }}</td>
-                        <td>{{ $stock->cantidad }}</td>
-                        <td>{{ $stock->stock }}</td>
+                        <td class="align-right">{{ $stock->cantidad }}</td>
+                        <td class="align-right">{{ $stock->stock }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-</body>
+</main>
 <script type="text/php">
 
-if ( isset($pdf) ) {
-        $x = 734;
-        $y = 48;
+    if ( isset($pdf) ) {
+        $x = 737;
+        $y = 47;
         $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
         $size = 8;
@@ -135,6 +151,9 @@ if ( isset($pdf) ) {
         $char_space = 0.0;  //  default
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+        /* $pdf->line(34,167,561,167,array(0,0,0),1.5); */
+
     }
 
 </script>

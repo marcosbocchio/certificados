@@ -159,8 +159,8 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
         $nuevoMovimientoStock->cantidad = -$detalle_remito->cantidad; // Negativo porque es una salida
         $nuevoMovimientoStock->stock = $producto->stock; // El stock después de la operación
         $nuevoMovimientoStock->fecha = $remito->fecha;
-        $nuevoMovimientoStock->obs = $remito->prefijo . '-' . $remito->numero; // Observación con prefijo y número de remito;
-        $nuevoMovimientoStock->tipo_movimiento = 'Remito: n°'. $remito->prefijo . '-' . $remito->numero . ' | Receptor: ' . $remito->receptor . ' | Destino: '. $remito->destino;
+        $nuevoMovimientoStock->obs = "";
+        $nuevoMovimientoStock->tipo_movimiento = 'Remito de entrega N°:'. $remito->prefijo . '-' . $remito->numero;
         $nuevoMovimientoStock->save();
 
         DB::commit();
@@ -320,10 +320,10 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
               $nuevoMovimientoStock = new Stock();
               $nuevoMovimientoStock->producto_id = $detalle->producto_id;
               $nuevoMovimientoStock->fecha = now();
-              $nuevoMovimientoStock->obs = "Anulacion Remito N°".str_pad($remito->prefijo, 4, "0", STR_PAD_LEFT)."-".str_pad($remito->numero, 8, "0", STR_PAD_LEFT);
+              $nuevoMovimientoStock->obs = "";
               $nuevoMovimientoStock->cantidad = $detalle->cantidad;
               $nuevoMovimientoStock->stock = $producto->stock;
-              $nuevoMovimientoStock->tipo_movimiento = 'Anulacion';
+              $nuevoMovimientoStock->tipo_movimiento = "Anul. remito entrega N°".str_pad($remito->prefijo, 4, "0", STR_PAD_LEFT)."-".str_pad($remito->numero, 8, "0", STR_PAD_LEFT);
               $nuevoMovimientoStock->save();
               
           }
@@ -370,10 +370,10 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
               $nuevoMovimientoStock = new Stock();
               $nuevoMovimientoStock->producto_id = $detalle->producto_id;
               $nuevoMovimientoStock->fecha = now();
-              $nuevoMovimientoStock->obs = "Desanulacion Remito N°".str_pad($remito->prefijo, 4, "0", STR_PAD_LEFT)."-".str_pad($remito->numero, 8, "0", STR_PAD_LEFT);
+              $nuevoMovimientoStock->obs = "";
               $nuevoMovimientoStock->cantidad = -$detalle->cantidad;
               $nuevoMovimientoStock->stock = $producto->stock;
-              $nuevoMovimientoStock->tipo_movimiento = 'Desanulacion';
+              $nuevoMovimientoStock->tipo_movimiento = "Desanul. remito entrega N° ".str_pad($remito->prefijo, 4, "0", STR_PAD_LEFT)."-".str_pad($remito->numero, 8, "0", STR_PAD_LEFT);
               $nuevoMovimientoStock->save();
               
           }

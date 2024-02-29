@@ -18,8 +18,9 @@ class PdfStockController extends Controller
     $fechaInicioFormato = Carbon::parse($fechaInicio)->format('d-m-Y');
     
     $stocks = Stock::where('producto_id', $productoId)
-                   ->whereDate('fecha', '>=', $fechaInicio)
-                   ->get();
+               ->whereDate('fecha', '>=', $fechaInicio)
+               ->orderBy('fecha', 'desc') // Ordena por la columna 'fecha' de manera descendente
+               ->get();
 
     $productos = Productos::where('id', $productoId)->first();
     $fecha = date('d-m-Y'); // Esta podría ser la fecha actual o podrías querer usar la fechaInicio para algo en el PDF
