@@ -193,6 +193,7 @@ import { eventNewRegistro} from '../event-bus';
 
 export default {
     components: {
+        DatePicker,
         NuevoProductos
     },
 

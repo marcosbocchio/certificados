@@ -27,6 +27,12 @@ Route::group(['middleware' => 'auth:api'], function () {
         'ClientesController@getClientesOperador'
     );
     Route::resource('clientes', 'ClientesController');
+
+    Route::get('proveedores/paginate', 'ProveedoresController@paginate');
+    Route::get('proveedores/get-proveedores', 'ProveedoresController@getProveedores');
+    Route::resource('proveedores', 'ProveedoresController');
+
+
     Route::get('contratistas/paginate', 'ContratistasController@paginate');
     Route::resource('contratistas', 'ContratistasController');
     Route::get('users/empresa', 'UserController@getUsersEmpresa');
@@ -460,7 +466,17 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     //Remito
     Route::get('remitos/paginate', 'RemitosController@paginate');
+    Route::get('remitos/{id}/anular', 'RemitosController@remitoAnulacion');
+    Route::get('remitos/{id}/desanular', 'RemitosController@desanularRemito');
     Route::resource('remitos', 'RemitosController');
+    //stock
+    Route::get('stock/paginate', 'StockController@paginate');
+    Route::get('stock/paginatestock', 'StockController@paginateStock');
+    Route::get('stock/paginateRegistro/{id}', 'StockController@paginateRegistro');
+    Route::get('stock/{id}/anular', 'StockController@compraAnulacion');
+    Route::get('stock/{id}/desanular', 'StockController@desanularInforme');
+    Route::post('stock/edit', 'StockController@reemplazarStockProducto');
+    Route::resource('stock', 'StockController');
 
     //procedimientos
     Route::resource(
@@ -756,9 +772,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('interno_equipos/{id}/documentaciones','QrController@getDocIntEquipos');
     Route::get('interno_fuentes/{id}/documentaciones','QrController@getDocIntEquiposFuente');
 
-    //stock
-    Route::get('/stock', 'StockController@index');
-    Route::post('/stock', 'StockController@store');
+    
     
 });
 

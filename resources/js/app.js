@@ -7,7 +7,7 @@
 
 
 require('./bootstrap');
-import StockTable from './components/stock/stock-table.vue';
+
 //import "regenerator-runtime/runtime.js";
 
 toastr.options = {
@@ -121,6 +121,10 @@ Vue.component('firmas-formN', require('./components/abm-maestro/usuarios/firmasF
 Vue.component('table-clientes', require('./components/abm-maestro/clientes/table-clientes.vue').default);
 Vue.component('nuevo-clientes', require('./components/abm-maestro/clientes/nuevo-clientes.vue').default);
 Vue.component('editar-clientes', require('./components/abm-maestro/clientes/editar-clientes.vue').default);
+
+Vue.component('table-proveedores', require('./components/abm-maestro/proveedores/table-proveedores.vue').default);
+Vue.component('nuevo-proveedores', require('./components/abm-maestro/proveedores/nuevo-proveedores.vue').default);
+Vue.component('editar-proveedores', require('./components/abm-maestro/proveedores/editar-proveedores.vue').default);
 
 //contratistas
 Vue.component('table-contratistas', require('./components/abm-maestro/contratistas/table-contratistas.vue').default);
@@ -329,8 +333,35 @@ Vue.component('alarmas', require('./components/notificaciones/alarmas.vue').defa
 Vue.component('notificaciones', require('./components/notificaciones/notificaciones.vue').default);
 
 
+/* proveedores */
+// Importar los componentes
+import TableProveedores from './components/abm-maestro/proveedores/table-proveedores.vue';
+import NuevoProveedores from './components/abm-maestro/proveedores/nuevo-proveedores.vue';
+import EditarProveedores from './components/abm-maestro/proveedores/editar-proveedores.vue';
+
+// Registrar los componentes
+Vue.component('table-proveedores', TableProveedores);
+Vue.component('nuevo-proveedores', NuevoProveedores);
+Vue.component('editar-proveedores', EditarProveedores);
+
 /* Stock */
+import stock from './components/stock/stock.vue';
+Vue.component('stock', stock);
+import StockTable from './components/stock/stock-table.vue';
 Vue.component('stock-table', StockTable);
+
+import AjustarStock from './components/stock/stock-ajuste.vue';
+Vue.component('stock-ajuste', AjustarStock);
+
+import TotalStock from './components/stock/stock-total.vue';
+Vue.component('stock-total', TotalStock);
+
+import Registro from './components/stock/stock-registro.vue';
+Vue.component('stock-registro', Registro);
+
+import EditStock from './components/stock/stock-edit.vue';
+Vue.component('stock-edit', EditStock);
+
 
 /* modal confirmacion */
 

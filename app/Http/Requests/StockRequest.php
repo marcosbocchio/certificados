@@ -9,25 +9,17 @@ class StockRequest extends FormRequest
 
     public function authorize()
     {
-
-        return true; // Todos están autorizados
+        return true;
     }
 
     public function rules()
     {
         return [
-            'fecha' => 'required|date', // 
-            'obs' => 'nullable|string|max:200', // 
-            'cantidad' => 'required|numeric', // 
-            'stock' => 'required|numeric', // 
-        ];
-    }
-    public function messages()
-    {
-        return [
-            'fecha.required' => 'La fecha es obligatoria.',
-            'fecha.date' => 'El campo fecha debe ser una fecha válida.',
-            
+            'fecha' => 'required|date', 
+            'obs' => 'nullable|string|max:200', 
+            'cantidad' => 'required|numeric', 
+            'stock' => 'required|numeric',
+            'tipo_movimiento' => 'required|string|max:100',
         ];
     }
 }

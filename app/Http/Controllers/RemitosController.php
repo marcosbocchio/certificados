@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use App\DetalleRemitos;
 use App\InternoEquipos;
 use App\RemitoInternoEquipos;
+use App\Productos;
+use App\Stock;
+use Illuminate\Support\Facades\Log;
+
 
 class RemitosController extends Controller
 {
@@ -55,7 +59,7 @@ class RemitosController extends Controller
 
     public function paginate(Request $request){
 
-      return remitos::selectRaw('id,LPAD(prefijo, 4, "0") as prefijo_formateado,LPAD(numero, 8, "0") as numero_formateado,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino,frente_origen_id,frente_destino_id')
+      return remitos::selectRaw('id,LPAD(prefijo, 4, "0") as prefijo_formateado,LPAD(numero, 8, "0") as numero_formateado,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino,frente_origen_id,frente_destino_id,aunulado_sn')
                      ->with('frente_origen')
                      ->with('frente_destino')
                      ->orderBy('id','DESC')
@@ -136,9 +140,37 @@ class RemitosController extends Controller
              $detalle_remito->cantidad             = $detalle['cantidad_productos'];
              $detalle_remito->save();
 
-           }
+             $this->actualizarStockYRegistrarMovimiento($detalle_remito, $remito);
+    }
+}
 
-     }
+private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
+{
+    DB::beginTransaction();
+    try {
+        $producto = Productos::findOrFail($detalle_remito->producto_id);
+        // Restar la cantidad del detalle al stock actual del producto
+        $producto->stock -= $detalle_remito->cantidad;
+        $producto->save();
+
+
+        $nuevoMovimientoStock = new Stock();
+        $nuevoMovimientoStock->producto_id = $detalle_remito->producto_id;
+        $nuevoMovimientoStock->cantidad = -$detalle_remito->cantidad; // Negativo porque es una salida
+        $nuevoMovimientoStock->stock = $producto->stock; // El stock después de la operación
+        $nuevoMovimientoStock->fecha = $remito->fecha;
+        $nuevoMovimientoStock->obs = $remito->prefijo . '-' . $remito->numero; // Observación con prefijo y número de remito;
+        $nuevoMovimientoStock->tipo_movimiento = 'Remito: n°'. $remito->prefijo . '-' . $remito->numero . ' | Receptor: ' . $remito->receptor . ' | Destino: '. $remito->destino;
+        $nuevoMovimientoStock->save();
+
+        DB::commit();
+    } catch (\Exception $e) {
+        DB::rollback();
+        // Manejar el error adecuadamente
+        Log::error('Error al actualizar stock y registrar movimiento: ' . $e->getMessage());
+        throw $e;
+    }
+}
 
      public function saveInternoEquipos($interno_equipos,$remito){
 
@@ -265,9 +297,109 @@ class RemitosController extends Controller
         }
 
     }
-
     public function destroy($id)
     {
         //
     }
+
+    public function remitoAnulacion($id){
+      DB::beginTransaction();
+      try {
+          
+          
+          $remito = Remitos::findOrFail($id);
+          
+  
+          $detallesRemitos = DetalleRemitos::where('remito_id', $id)->get();
+    
+          foreach ($detallesRemitos as $detalle) {
+              $producto = Productos::findOrFail($detalle->producto_id);
+              $producto->stock += $detalle->cantidad;
+              $producto->save();
+            
+              $nuevoMovimientoStock = new Stock();
+              $nuevoMovimientoStock->producto_id = $detalle->producto_id;
+              $nuevoMovimientoStock->fecha = now();
+              $nuevoMovimientoStock->obs = "Anulacion Remito N°".str_pad($remito->prefijo, 4, "0", STR_PAD_LEFT)."-".str_pad($remito->numero, 8, "0", STR_PAD_LEFT);
+              $nuevoMovimientoStock->cantidad = $detalle->cantidad;
+              $nuevoMovimientoStock->stock = $producto->stock;
+              $nuevoMovimientoStock->tipo_movimiento = 'Anulacion';
+              $nuevoMovimientoStock->save();
+              
+          }
+    
+          $remitoInternoEquipos = RemitoInternoEquipos::where('remito_id', $remito->id)->get();
+          if (!$remitoInternoEquipos->isEmpty()) {
+              foreach ($remitoInternoEquipos as $item) {
+                  $internoEquipo = InternoEquipos::findOrFail($item->interno_equipo_id);
+                  $internoEquipo->frente_id = $remito->frente_origen_id;
+                  $internoEquipo->save();
+                  Log::info("Actualizado InternoEquipo ID: {$internoEquipo->id} con nuevo frente_id: {$remito->frente_destino_id}");
+              }
+          }
+  
+          // Marcar el remito como anulado
+          $remito->aunulado_sn = 1;
+          $remito->save();
+          
+  
+          DB::commit();
+          return response()->json(['message' => 'Remito anulado con éxito y stock actualizado.'], 200);
+      } catch (\Exception $e) {
+          DB::rollback();
+          Log::error("Error al anular el remito", ['error' => $e->getMessage(), 'remito_id' => $id]);
+          return response()->json(['error' => 'Error al anular el remito: '.$e->getMessage()], 500);
+      }
+  }
+
+    public function desanularRemito($id){
+      DB::beginTransaction();
+      try {
+          
+          
+          $remito = Remitos::findOrFail($id);
+          
+  
+          $detallesRemitos = DetalleRemitos::where('remito_id', $id)->get();
+    
+          foreach ($detallesRemitos as $detalle) {
+              $producto = Productos::findOrFail($detalle->producto_id);
+              $producto->stock -= $detalle->cantidad;
+              $producto->save();
+            
+              $nuevoMovimientoStock = new Stock();
+              $nuevoMovimientoStock->producto_id = $detalle->producto_id;
+              $nuevoMovimientoStock->fecha = now();
+              $nuevoMovimientoStock->obs = "Desanulacion Remito N°".str_pad($remito->prefijo, 4, "0", STR_PAD_LEFT)."-".str_pad($remito->numero, 8, "0", STR_PAD_LEFT);
+              $nuevoMovimientoStock->cantidad = -$detalle->cantidad;
+              $nuevoMovimientoStock->stock = $producto->stock;
+              $nuevoMovimientoStock->tipo_movimiento = 'Desanulacion';
+              $nuevoMovimientoStock->save();
+              
+          }
+    
+          $remitoInternoEquipos = RemitoInternoEquipos::where('remito_id', $remito->id)->get();
+          if (!$remitoInternoEquipos->isEmpty()) {
+              foreach ($remitoInternoEquipos as $item) {
+                  $internoEquipo = InternoEquipos::findOrFail($item->interno_equipo_id);
+                  $internoEquipo->frente_id = $remito->frente_destino_id;
+                  $internoEquipo->save();
+                  Log::info("Actualizado InternoEquipo ID: {$internoEquipo->id} con nuevo frente_id: {$remito->frente_destino_id}");
+              }
+          }
+  
+          // Marcar el remito como Desanulado
+          $remito->aunulado_sn = 0;
+          $remito->save();
+          
+  
+          DB::commit();
+          return response()->json(['message' => 'Remito anulado con éxito y stock actualizado.'], 200);
+      } catch (\Exception $e) {
+          DB::rollback();
+          Log::error("Error al anular el remito", ['error' => $e->getMessage(), 'remito_id' => $id]);
+          return response()->json(['error' => 'Error al anular el remito: '.$e->getMessage()], 500);
+      }
+    }
+
 }

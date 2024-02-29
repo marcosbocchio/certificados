@@ -1,11 +1,7 @@
-@extends('layouts.app') <!-- Asegúrate de extender el layout correcto -->
+@extends('layouts.enod.master')
 
-@section('content')
+@section('contenido')
 <div id="app">
-  <stock-table></stock-table> <!-- Asegúrate de que el nombre del componente coincida -->
+   <stock></stock>
 </div>
-@endsection
-
-@section('script')
-<script src="{{ mix('js/app.js') }}"></script> <!-- Asegúrate de que app.js tenga el componente registrado -->
 @endsection
