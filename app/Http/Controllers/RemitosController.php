@@ -160,7 +160,7 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
         $nuevoMovimientoStock->stock = $producto->stock; // El stock después de la operación
         $nuevoMovimientoStock->fecha = $remito->fecha;
         $nuevoMovimientoStock->obs = "";
-        $nuevoMovimientoStock->tipo_movimiento = 'Remito de entrega N°:'. $remito->prefijo . '-' . $remito->numero;
+        $nuevoMovimientoStock->tipo_movimiento = 'Remito de entrega N° '. $remito->prefijo . '-' . $remito->numero;
         $nuevoMovimientoStock->save();
 
         DB::commit();

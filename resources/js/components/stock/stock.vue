@@ -185,7 +185,7 @@ export default {
           proveedor_id: this.proveedorSeleccionado ? this.proveedorSeleccionado.id : null,
           numero_remito: `${this.prefijo}-${this.numero}`,
           obs: this.obs,
-          tipo_movimiento: `Remito compra: N° ${this.prefijo}-${this.numero}`,
+          tipo_movimiento: ` Compra remito N° ${this.prefijo}-${this.numero}`,
           detalles: this.productosAgregados.map(producto => ({
             producto_id: producto.producto,
             cantidad: producto.cantidad,
