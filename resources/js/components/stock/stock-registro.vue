@@ -45,8 +45,8 @@
         <pagination
           :data="registro"
           @pagination-change-page="getRegistro">
-          <span slot="prev-nav">&lt; Anterior</span>
-          <span slot="next-nav">Siguiente &gt;</span>
+          <span slot="prev-nav">&lt; Previous</span>
+          <span slot="next-nav">Next &gt;</span>
         </pagination>
       </div>
     </div>
