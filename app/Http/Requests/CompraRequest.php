@@ -28,7 +28,7 @@ class CompraRequest extends FormRequest
             'fecha_remito' => 'required|date',
             'proveedor_id' => 'required|integer|exists:proveedores,id',
             'numero_remito' => 'required|string|max:45',
-            'obs' => 'required|string|max:200',
+            'obs' => 'max:200',
         ];
     }
 }

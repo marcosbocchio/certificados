@@ -46,8 +46,8 @@ class StockController extends Controller
     public function callViewTable()
     {
         $user = auth()->user(); // Obtener el usuario autenticado
-        $header_titulo = "MOVIMIENTOS COMPRAS"; // Título para la página
-        $header_descripcion = "Alta | Modificación"; // Descripción o subtítulo para la página
+        $header_titulo = "COMPRAS"; // Título para la página
+        $header_descripcion = "."; // Descripción o subtítulo para la página
         $proveedor = Proveedor::all();
     
         // Retornar la vista de stock, pasando los datos necesarios
@@ -58,7 +58,7 @@ class StockController extends Controller
     {
         $user = auth()->user();
         $header_titulo = "Compras";
-        $header_descripcion = "View";
+        $header_descripcion = "Vista";
         $stockItem = Compra::where('id', $id)->first(); 
         $stockItemCompra = DetalleCompra::where('compra_id', $id)->get(); 
         $proveedor = Proveedor::where('id', $stockItem->proveedor_id)->get();

@@ -44,13 +44,13 @@
     <div class="box box-custom-enod">
       <div class="box-body">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-9">
             <div class="form-group">
               <label for="producto">Productos</label>
               <v-select v-model="productoSeleccionado" :options="productos" label="descripcion" :disabled="true"></v-select>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <div class="form-group">
               <label>Cant.</label>
               <input v-model="cantidad" type="number" class="form-control" id="cantidad" placeholder="" disabled>
@@ -62,17 +62,17 @@
           <div class="table-responsive">
             <table class="table table-hover table-striped table-bordered table-condensed">
               <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th>Cantidad</th>
-                  <!-- Columna de acción eliminada -->
+                <tr style="width: 100%;">
+                  <th style="width: 74%;">Producto</th>
+                  <th style="width: 12.5%;">Cantidad</th>
+                  <th style="width: 12.5%;">Acción</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(productoAgregado, index) in productosAgregados" :key="index">
                   <td>{{ productoAgregado.producto }}</td>
                   <td>{{ productoAgregado.cantidad }}</td>
-                  <!-- Botón de acción eliminado -->
+                  <td></td>
                 </tr>
               </tbody>
             </table>
@@ -80,7 +80,6 @@
         </div>
       </div>
     </div>
-    <!-- Botón de guardar eliminado -->
   </div>
 </template>
   <script>
@@ -185,7 +184,7 @@
         this.productosAgregados.splice(index, 1);
       },
       guardarCompra() {
-    const url = '/api/stock'; // Asegúrate de que esta sea la URL correcta
+    const url = '/api/stock'; 
     const compra = {
       fecha: this.fecha,
       fecha_remito: this.fecha_remito,

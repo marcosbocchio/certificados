@@ -1,54 +1,53 @@
 <template>
   <div>
-    <table style="width: 100%; border-collapse: collapse;">
-      <tr>
-        <!-- Botón Nuevo -->
-        <td style="width: 8%;">
-          <button class="btn btn-enod" @click="nuevoStock" style="background-color: rgb(255, 204, 0); color: rgb(0, 0, 0);">
-            <span class="fa fa-plus-circle"></span>Nuevo 
-          </button>
-        </td>
-        <td style="width: 12%;">
+    <table style="width: 100%; border-collapse: collapse;" class="table-responsive-mobile">
+  <tr>
+    <!-- Botón Nuevo -->
+    <td class="td-mobile-stack" style="width: 8%;">
+      <button class="btn btn-enod" @click="nuevoStock" style="background-color: rgb(255, 204, 0); color: rgb(0, 0, 0);">
+        <span class="fa fa-plus-circle"></span> Nuevo 
+      </button>
+    </td>
+    <td class="td-mobile-stack" style="width: 9%;">
 
-        </td>
-        <!-- Texto 'Mostrar movimientos desde' -->
-        <td style="width: 15%; text-align: right; padding-right: 10px; font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif;">
-          <p>Mostrar movimientos desde</p>
-        </td>
+    </td>
+    <!-- Texto 'Mostrar movimientos desde' -->
+    <td class="td-mobile-stack" style="width: 15%; text-align: right; padding-right: 10px; font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif;">
+      <p>Mostrar desde</p>
+    </td>
 
-        <!-- Selector de Fecha Desde -->
-        <td style="width: 10%;">
-          <div class="form-group">
-            <date-picker id="fechaDesde" v-model="fechaInicio" value-type="YYYY-MM-DD" format="DD-MM-YYYY" @change="aplicarFiltro" class="flex-grow-1"></date-picker>
-          </div>
-        </td>
+    <!-- Selector de Fecha Desde -->
+    <td class="td-mobile-stack" style="width: 13%;">
+      <div class="form-group">
+        <date-picker id="fechaDesde" v-model="fechaInicio" value-type="YYYY-MM-DD" format="DD-MM-YYYY" @change="aplicarFiltro" class="flex-grow-1"></date-picker>
+      </div>
+    </td>
 
-        <!-- Texto 'Hasta' -->
-        <td style="width: 4%; text-align: right; padding-right: 10px; font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif;">
-          <p>Hasta</p>
-        </td>
+    <!-- Texto 'Hasta' -->
+    <td class="td-mobile-stack" style="width: 4%; text-align: right; padding-right: 10px; font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif;">
+      <p>Hasta</p>
+    </td>
 
-        <!-- Selector de Fecha Hasta -->
-        <td style="width: 10%;">
-          <div class="form-group">
-            <date-picker id="fechaHasta" v-model="fechaFin" value-type="YYYY-MM-DD" format="DD-MM-YYYY"  @change="aplicarFiltro" class="flex-grow-1"></date-picker>
-          </div>
-        </td>
-        <td style="width: 20%;">
+    <!-- Selector de Fecha Hasta -->
+    <td class="td-mobile-stack" style="width: 13%;">
+      <div class="form-group">
+        <date-picker id="fechaHasta" v-model="fechaFin" value-type="YYYY-MM-DD" format="DD-MM-YYYY" @change="aplicarFiltro" class="flex-grow-1"></date-picker>
+      </div>
+    </td>
+    <td class="td-mobile-stack" style="width: 17%;">
 
-        </td>
-        <!-- Búsqueda -->
-        <td style="width: 20%;">
-          <div class="input-group">
-            <input type="text" v-model="search" class="form-control" @keyup.enter="aplicarFiltro" placeholder="Buscar...">
-            <span class="input-group-addon btn" @click="aplicarFiltro" style="background-color: rgb(255, 204, 0); cursor: pointer; border: none;">
-              <i class="fa fa-search"></i>
-            </span>
-          </div>
-        </td>
-
-      </tr>
-    </table>
+    </td>
+    <!-- Búsqueda -->
+    <td class="td-mobile-stack" style="width: 20%;">
+      <div class="input-group">
+        <input type="text" v-model="search" class="form-control" @keyup.enter="aplicarFiltro" placeholder="Buscar...">
+        <span class="input-group-addon btn" @click="aplicarFiltro" style="background-color: rgb(255, 204, 0); cursor: pointer; border: none;">
+          <i class="fa fa-search"></i>
+        </span>
+      </div>
+    </td>
+  </tr>
+</table>
     <div v-if="stockItems.length">
       <div class="box box-custom-enod top-buffer">
         <div class="box-body">
@@ -226,3 +225,16 @@ export default {
   }
 }
 </script>
+<style scoped>
+@media (max-width: 768px) {
+  .td-mobile-stack {
+    display: block;
+    width: 100% !important; /* Asegura que esta regla tenga prioridad */
+    box-sizing: border-box;
+    padding: 5px 0 !important; /* Reduce el espacio entre celdas */
+  }
+  .table-responsive-mobile {
+    border: 0; /* Elimina los bordes de la tabla en vistas móviles si se desea */
+  }
+}
+</style>

@@ -44,13 +44,13 @@
     <div class="box box-custom-enod">
       <div class="box-body">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-9">
             <div class="form-group">
               <label for="producto">Productos</label>
               <v-select v-model="productoSeleccionado" :options="productos" label="descripcion"></v-select>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <div class="form-group">
               <label>Cant.</label>
               <input v-model="cantidad" type="number" class="form-control" id="cantidad" placeholder="" min="1">
@@ -60,24 +60,24 @@
         <div class="row">
           <div class="col-md-12">
             <!-- Botón para agregar producto con solo un icono de cruz -->
-            <button type="button" @click="addProducto()" class="btn btn-default"><span class="fa fa-plus-circle"></span></button>
+            <button type="button" @click="addProducto()"><span class="fa fa-plus-circle"></span></button>
           </div>
         </div>
-        <div v-show="productosAgregados.length">
+        <div v-show="productosAgregados.length" style="margin-top: 10px;">
           <div class="table-responsive">
             <table class="table table-hover table-striped table-bordered table-condensed">
               <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th>Cantidad</th>
-                  <th>Acción</th>
+                <tr style="width: 100%;">
+                  <th style="width: 74%;">Producto</th>
+                  <th style="width: 12.5%;">Cantidad</th>
+                  <th style="width: 12.5%;">Acción</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(productoAgregado, index) in productosAgregados" :key="index">
                   <td>{{ descripcionDelProducto(productoAgregado.producto) }}</td>
                   <td>{{ productoAgregado.cantidad }}</td>
-                  <td class="text-center"><button @click="removeProducto(index)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button></td>
+                  <td class="text-center"><i @click="removeProducto(index)" class="fa fa-minus-circle"></i></td>
                 </tr>
               </tbody>
             </table>
@@ -185,7 +185,7 @@ export default {
           proveedor_id: this.proveedorSeleccionado ? this.proveedorSeleccionado.id : null,
           numero_remito: `${this.prefijo}-${this.numero}`,
           obs: this.obs,
-          tipo_movimiento: ` Compra remito N° ${this.prefijo}-${this.numero}`,
+          tipo_movimiento: `Remito compra  N° ${this.prefijo}-${this.numero}`,
           detalles: this.productosAgregados.map(producto => ({
             producto_id: producto.producto,
             cantidad: producto.cantidad,
