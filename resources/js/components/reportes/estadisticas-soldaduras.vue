@@ -384,7 +384,6 @@
                                                         worksheet = "Defectología - Producción"
                                                         name    = "filename.xls">
                                                         <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
-
                                                     </download-excel>
                                                 </div>
                                             </div>

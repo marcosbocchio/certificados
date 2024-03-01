@@ -9,6 +9,7 @@
             <th>Descripción</th>
             <th style="text-align: center">Unidad Medida</th>
             <th style="text-align: center">Visible OT</th>
+            <th style="text-align: center">Stock</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>
@@ -25,6 +26,7 @@
                   NO   
               </div>             
             </td>
+            <td style="text-align: center">{{ registro.stock }}</td>
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_productos_edita')"><span class="fa fa-edit"></span></button>
             </td>

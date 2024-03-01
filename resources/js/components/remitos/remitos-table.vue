@@ -28,6 +28,7 @@
                                 <th>Receptor</th>
                                 <th>Destino</th>
                                 <th>Fecha</th>
+                                <th style="text-align: center;">Anulado</th>
                                 <th colspan="2">&nbsp;</th>
                             </tr>
                         </thead>
@@ -39,6 +40,9 @@
                                 <td> {{remito.receptor}} </td>
                                 <td> {{remito.destino}}</td>
                                 <td> {{remito.fecha}}</td>
+                                <td style="text-align: center;">
+                                    <app-icon v-if="remito.aunulado_sn === 1" img="check" color="black"></app-icon>
+                                </td>
                                 <!--
                                 <td width="10px">
                                     <button @click.prevent="editRemito(k)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_remitos_edita')"><span class="fa fa-edit"></span></button>
@@ -46,7 +50,16 @@
                                 -->
                                 <td v-if="remito.interno_sn" width="10px"> <a :href="'/pdf/remito/' + remito.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
                                 <td v-else width="10px"> <a :href="'/pdf/remito/' + remito.id " target="_blank"  class="btn btn-default btn-sm" title="Imprimir"><span class="fa fa-print"></span></a></td>
-
+                                <td width="10px" v-if="remito.aunulado_sn !== 1" style="text-align: center;">
+                                    <button @click="confirmarAnulacion(remito)" class="btn btn-default btn-sm" title="Anular" :disabled="!$can('T_remitos_edita')">
+                                    <app-icon img="remove" color="black"></app-icon>
+                                    </button>
+                                </td>
+                                <td v-else width="10px" style="text-align: center;">
+                                    <button @click="confirmarDesanulacion(remito)" class="btn btn-default btn-sm" title="Desanular" :disabled="!$can('T_remitos_edita')">
+                                    <app-icon img="check" color="black"></app-icon>
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -60,11 +73,13 @@
         </div>
     </div>
     <div class="clearfix"></div>
+    <confirmar-modal></confirmar-modal>
  </div>
 
 </template>
 <script>
 import {mapState} from 'vuex'
+import { eventModal } from '../event-bus';
 export default {
 
   data () { return {
@@ -77,6 +92,18 @@ export default {
   created : function() {
 
     this.getResults();
+    eventModal.$on('confirmar_accion', (accion,remito) => {
+      switch (accion) {
+        case 'anular':
+          this.anularRemito(remito);
+          break;
+        case 'desanular':
+          this.desanularRemito(remito);
+          break;
+        default:
+          break;
+      }
+    });
 
   },
 
@@ -86,7 +113,14 @@ export default {
      },
 
  methods : {
+        confirmarAnulacion(remito) {
 
+        eventModal.$emit('abrir_confirmar_accion', 'Está seguro que quiere anular el remito N° ' + remito.prefijo_formateado +'-'+ remito.numero_formateado + ' ?', 'anular',remito);
+        },
+        confirmarDesanulacion(remito) {
+
+        eventModal.$emit('abrir_confirmar_accion', 'Está seguro que quiere desanular el remito N° ' + remito.prefijo_formateado +'-'+ remito.numero_formateado + ' ?', 'desanular',remito);
+        },
      getResults :function(page = 1){
 
         axios.defaults.baseURL = this.url ;
@@ -97,6 +131,36 @@ export default {
 
         });
 
+        },
+
+        anularRemito(remito) {
+        console.log('Anulando remito:', remito);
+        const url = `/remitos/${remito.id}/anular`;
+        axios.get(url)
+        .then(response => {
+            toastr.success(`Anulando remito N°${remito.prefijo_formateado}-${remito.numero_formateado}`);
+            this.getResults();
+        })
+        .catch(error => {
+            console.error('Error al anular remito:', error.config);
+            toastr.error(message);
+        });
+    },
+        desanularRemito(remito) {
+            console.log('desanular Remito :', remito);
+            const url = `/remitos/${remito.id}/desanular`;
+            axios.get(url)
+            .then(response => {
+
+                toastr.success(`Desanulado remito N°${remito.prefijo_formateado}-${remito.numero_formateado}`);
+
+                this.getResults();
+            })
+            .catch(error => {
+
+                toastr.error("Hubo un error al desanular el informe:", error.response);
+
+            });
         },
 
     editRemito : function(index){

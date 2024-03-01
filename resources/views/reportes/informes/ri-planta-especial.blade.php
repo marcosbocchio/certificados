@@ -536,30 +536,7 @@ footer {
         </tbody>
     </table>
 </footer>
-<script type="text/php">
 
-    if ( isset($pdf) ) {
-        $x = 520;
-        $y = 805;
-        $text = "Pagina {PAGE_NUM} de {PAGE_COUNT}";
-        $font = $fontMetrics->get_font("serif");
-        $size = 7;
-        $color = array(0,0,0);
-        $word_space = 0.0;  //  default
-        $char_space = 0.0;  //  default
-        $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-
-        $x = 500;
-        $y = 10;
-        $text = "AESA - Pública";
-        $font = $fontMetrics->get_font("serif");
-        $size = 8.80;
-        $color = array(0, 0, 0);
-        $pdf->page_text($x, $y, $text, $font, $size, $color);
-    }
-
-</script>
 
 </body>
 </html>

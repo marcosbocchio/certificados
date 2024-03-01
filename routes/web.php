@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('documentaciones/ot/{id}','OtDocumentacionesController@index')->name('otDocumentaciones');
   Route::get('informes/ot/{id}','InformesController@index')->name('otInformes');
   Route::get('/area/enod/remitos','RemitosController@callView')->name('remitos');
+
   Route::get('/area/enod/remitos/listado','RemitosController@RemitosTable')->name('RemitosTable');
   Route::get('partes/ot/{id}','PartesController@index')->name('otPartes');
   Route::get('certificados/ot/{id}','CertificadosController@index')->name('otCertificados');
@@ -74,6 +75,18 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/materiales', 'MaterialesController@callView')->name('materiales');
   Route::get('/area/enod/agente_acloplamientos', 'AgenteAcoplamientosController@callView')->name('agente-acoplamiento');
   Route::get('/area/enod/clientes', 'ClientesController@callView')->name('clientes');
+
+  Route::get('/area/enod/proveedores', 'ProveedoresController@callView')->name('proveedor');
+
+  Route::get('/area/enod/stock', 'StockController@callView')->name('stock');
+  Route::get('/area/enod/stock-table', 'StockController@callViewTable')->name('stock-table');
+  Route::get('/area/enod/stock-total', 'StockController@callViewTotalStock')->name('stock-total');
+  Route::get('/area/enod/stock-ajuste/{id}', 'StockController@vistaAjusteStock')->name('stock-ajuste');
+  Route::get('/area/enod/stock-registro/{id}', 'StockController@callViewRegistro')->name('stock-registro');
+  Route::get('/area/enod/stock-edit/{id}', 'StockController@callViewEditS')->name('stock-edit');
+  Route::get('/imprimir-stock/{id}', 'PdfStockController@imprimir')->name('imprimir.stock');
+  Route::get('/imprimir-todo-stock', 'PdfStockController@imprimirTodoStock')->name('imprimir.todo.stock');
+  
   Route::get('/area/enod/contratistas', 'ContratistasController@callView')->name('contratistas');
   Route::get('/area/enod/unidades-medidas', 'UnidadesMedidasController@callView')->name('unidades-medidas');
   Route::get('/area/enod/medidas', 'MedidasController@callView')->name('medidas');

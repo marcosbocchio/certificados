@@ -33,6 +33,10 @@
                   <li><a href="{{ route('clientes') }}">Clientes</a></li>
                 @endcan
 
+                @can('M_proveedores')
+                    <li><a href="{{ route('proveedor') }}">Proveedores</a></li>
+                @endcan
+
                 @can('M_contratistas')
                   <li><a href="{{ route('contratistas') }}">Comitente</a></li>
                 @endcan
@@ -144,6 +148,23 @@
             </ul>
           </li>
         @endcan
+
+        @can('STOCK'){{-- Nueva opción de menú agregada --}}
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-cubes"></i> <span>STOCK</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @can('STOCK')
+              <li><a href="{{ route('stock-table') }}">Compras</a></li>
+              <li><a href="{{ route('stock-total') }}">Stock</a></li> 
+            @endcan
+          </ul>
+        </li>
+      @endcan
 
         @can('DOSIMETRIA')
           <li class="treeview">
