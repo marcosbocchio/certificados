@@ -60,7 +60,7 @@ class StockController extends Controller
         $header_titulo = "Compras";
         $header_descripcion = "Vista";
         $stockItem = Compra::where('id', $id)->first(); 
-        $stockItemCompra = DetalleCompra::where('compra_id', $id)->get(); 
+        $stockItemCompra = DetalleCompra::where('compra_id', $id)->get();
         $proveedor = Proveedor::where('id', $stockItem->proveedor_id)->get();
         return view('stock.ajuste', compact('user', 'header_titulo', 'header_descripcion', 'stockItem','stockItemCompra','proveedor'));
     }
@@ -263,7 +263,7 @@ public function actualizarStock($detalleCompra, $request)
         $fechaFin = $request->fechaFin ? Carbon::parse($request->fechaFin)->endOfDay() : Carbon::now();
 
         $stockItems = Compra::with('proveedor')
-                            ->whereBetween('fecha_remito', [$fechaInicio, $fechaFin])
+                            ->whereBetween('fecha', [$fechaInicio, $fechaFin])
                             ->withSearch($filtro)
                             ->orderBy('created_at', 'DESC')
                             ->paginate(10);
