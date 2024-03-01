@@ -9,7 +9,7 @@
       </div>
       <div class="col-md-4" style="display: flex;align-items: center; justify-content: flex-end;">
         <div>
-          <p style="font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif; margin-right: 5px;">Mostar movimientos a partir de</p>
+          <p style="font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif; margin-right: 5px;">Mostar a partir de</p>
         </div>
         <div class="form-group">
           <date-picker id="fechaDesde" v-model="fechaInicio" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Desde" @change="aplicarFiltro" class="flex-grow-1"></date-picker>

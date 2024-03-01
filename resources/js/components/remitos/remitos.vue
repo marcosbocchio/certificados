@@ -41,7 +41,7 @@
                                 <v-select  v-model="frente_destino" :options="frentesFilter" label="codigo" :disabled="!frente_origen" />
                             </div>
                         </div>
-
+                        <div class="clearfix"></div>
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="receptor">Receptor *</label>
@@ -56,6 +56,7 @@
                         </div>
                     </div>
                  </div>
+                 <div class="clearfix"></div>
                  <div class="box box-custom-enod">
                     <div class="box-body">
                         <div class="col-md-6">

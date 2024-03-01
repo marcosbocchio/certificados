@@ -55,7 +55,7 @@
             <table class="table table-hover table-striped table-condensed">
               <thead>
                 <tr>
-                  <th>Fecha Remito</th>
+                  <th>Fecha</th>
                   <th>Proveedor</th>
                   <th>Número Remito</th>
                   <th style="text-align: center;">anulado</th>
@@ -64,7 +64,7 @@
               </thead>
               <tbody>
                 <tr v-for="item in stockItems" :key="item.id">
-                  <td>{{ formatearFecha(item.fecha_remito) }}</td>
+                  <td>{{ formatearFecha(item.fecha) }}</td>
                   <td>{{ getProveedorRazonSocial(item.proveedor_id) }}</td>
                   <td>{{ item.numero_remito }}</td>
                   <td style="text-align: center;">

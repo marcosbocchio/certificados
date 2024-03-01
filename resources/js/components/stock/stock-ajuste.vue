@@ -70,7 +70,7 @@
               </thead>
               <tbody>
                 <tr v-for="(productoAgregado, index) in productosAgregados" :key="index">
-                  <td>{{ productoAgregado.producto }}</td>
+                  <td>{{ descripcionDelProducto(productoAgregado.producto) }}</td>
                   <td>{{ productoAgregado.cantidad }}</td>
                   <td></td>
                 </tr>
@@ -183,8 +183,12 @@
       removeProducto(index) {
         this.productosAgregados.splice(index, 1);
       },
+      descripcionDelProducto(productoId) {
+      const producto = this.productos.find(p => p.id === productoId);
+      return producto ? producto.descripcion : 'Descripción no disponible'; // Devuelve la descripción si el producto existe
+    },
       guardarCompra() {
-    const url = '/api/stock'; 
+    const url = '/api/stock'; // Asegúrate de que esta sea la URL correcta
     const compra = {
       fecha: this.fecha,
       fecha_remito: this.fecha_remito,
