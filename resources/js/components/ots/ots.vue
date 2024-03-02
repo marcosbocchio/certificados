@@ -463,6 +463,7 @@ import moment from 'moment';
 export default {
 
   components: {
+    DatePicker,
       Timeselector
   },
    props: {

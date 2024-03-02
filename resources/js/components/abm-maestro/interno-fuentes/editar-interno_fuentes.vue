@@ -75,7 +75,7 @@ import 'vue2-datepicker/locale/es';
 import { eventEditRegistro } from '../../event-bus';
 export default {
     components: {
-      
+        DatePicker
       
   },
 

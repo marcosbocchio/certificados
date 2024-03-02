@@ -173,7 +173,7 @@ export default {
 
     components: {
 
-      Datepicker,
+        Datepicker,
       Loading,
       DoughnutChart,
       BarChart,

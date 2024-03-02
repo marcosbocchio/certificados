@@ -566,7 +566,7 @@ import VuetablePagination from "vuetable-2/src/components/VuetablePagination";
 export default {
     components: {
 
-      Datepicker,
+        DatePicker,
       Loading,
       DoughnutChart,
       BarChart,

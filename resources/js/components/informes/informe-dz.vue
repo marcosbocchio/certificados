@@ -419,7 +419,8 @@ export default {
 components: {
 
       Loading
-
+      ,
+      DatePicker
     },
 
 props :{

@@ -324,6 +324,7 @@ export default {
       },
 
       components: {
+            DatePicker,
             LightBox,
         },
 

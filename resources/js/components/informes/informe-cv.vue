@@ -399,7 +399,7 @@ import {sprintf} from '../../functions/sprintf.js'
 export default {
 
 components: {
-
+     DatePicker,
       Loading
 
     },
