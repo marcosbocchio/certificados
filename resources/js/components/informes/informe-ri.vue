@@ -1030,6 +1030,7 @@ import { eventSetReferencia } from '../event-bus';
  export default {
 
      components: {
+        DatePicker,
        Loading
      },
      props : {

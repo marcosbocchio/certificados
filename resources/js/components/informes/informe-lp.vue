@@ -505,8 +505,8 @@ export default {
 
 components: {
 
-      Loading
-
+      Loading,
+      DatePicker
     },
 
 props :{
