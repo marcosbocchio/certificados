@@ -121,17 +121,19 @@ header .destino {
                 </td> 
               </tr>
             @endforeach
-            <tr>
-                <td style="width: 50px;">                         
-                    <span class="cantidad"> Obs. </span>           
-                </td>
-                <td style="width: 475px;">
-                    <span class="producto">{{ $remito->observaciones}} </span>    
-                </td>
-                <td>
-                    <span  class="medida">&nbsp;</span>  
-                </td> 
-              </tr>
+            @if(!empty($remito->observaciones))
+                <tr>
+                    <td style="width: 50px;">                         
+                        <span class="cantidad"> Obs. </span>           
+                    </td>
+                    <td style="width: 475px;">
+                        <span class="producto">{{ $remito->observaciones }}</span>    
+                    </td>
+                    <td>
+                        <span class="medida">&nbsp;</span>  
+                    </td> 
+                </tr>
+            @endif
         </tbody>
 
 
