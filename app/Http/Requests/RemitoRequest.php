@@ -38,7 +38,8 @@ class RemitoRequest extends FormRequest
             'receptor'                 => 'required | Max:45',
             'destino'                  => 'required | Max:100',
             'frente_destino'           => 'required',
-            'frente_origen'            => 'required'
+            'frente_origen'            => 'required',
+            'observaciones'            => 'Max:200',
         ];
     }
 

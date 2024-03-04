@@ -21,9 +21,18 @@ class StockController extends Controller
 
     public function __construct()
     {
-
-     $this->middleware(['role_or_permission:Sistemas|M_stock'],['only' => ['callView']]);
-
+        $this->middleware(['role_or_permission:Sistemas|M_stock'], [
+            'only' => [
+                'callView', 
+                'callViewTable', 
+                'vistaAjusteStock', 
+                'callViewTotalStock', 
+                'callViewEditStock',  
+                'callViewRegistro', 
+                'callViewEditS',
+                // Cualquier otro método que quieras proteger
+            ]
+        ]);
     }
 
     public function index()

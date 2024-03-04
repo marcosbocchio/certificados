@@ -58,13 +58,22 @@ class RemitosController extends Controller
     }
 
     public function paginate(Request $request){
-
-      return remitos::selectRaw('id,LPAD(prefijo, 4, "0") as prefijo_formateado,LPAD(numero, 8, "0") as numero_formateado,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino,frente_origen_id,frente_destino_id,aunulado_sn')
-                     ->with('frente_origen')
-                     ->with('frente_destino')
-                     ->orderBy('id','DESC')
-                     ->paginate(10);
-    }
+      $search = $request->input('search');
+  
+      $query = Remitos::selectRaw('id, LPAD(prefijo, 4, "0") as prefijo_formateado, LPAD(numero, 8, "0") as numero_formateado, DATE_FORMAT(remitos.created_at,"%d/%m/%Y") as fecha, receptor, destino, frente_origen_id, frente_destino_id, aunulado_sn')
+                       ->with(['frente_origen', 'frente_destino'])
+                       ->when($search, function($query, $search) {
+                           return $query->where(function($query) use ($search) {
+                               $query->where('destino', 'LIKE', "%{$search}%")
+                                     ->orWhereHas('frente_destino', function($q) use ($search) {
+                                         $q->where('codigo', 'LIKE', "%{$search}%");
+                                     });
+                           });
+                       })
+                       ->orderBy('id', 'DESC');
+  
+      return $query->paginate(10);
+  }
 
     public function create($ot_id)
     {
@@ -124,6 +133,7 @@ class RemitosController extends Controller
         $remito->receptor = $request->receptor;
         $remito->destino  = $request->destino;
         $remito->user_id  =  $user_id;
+        $remito->observaciones = $request->observaciones;
         $remito->save();
 
         return $remito;

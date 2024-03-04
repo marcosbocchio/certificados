@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-md-1">
-        <button @click="exportarPDF(id)" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
+        <button @click="exportarPDF(id)" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF" :disabled="!$can('M_stock_edita')">Exportar PDF</button>
       </div>
       <div class="col-md-7">
 

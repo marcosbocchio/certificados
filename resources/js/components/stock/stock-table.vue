@@ -4,7 +4,7 @@
   <tr>
     <!-- Botón Nuevo -->
     <td class="td-mobile-stack" style="width: 8%;">
-      <button class="btn btn-enod" @click="nuevoStock" style="background-color: rgb(255, 204, 0); color: rgb(0, 0, 0);">
+      <button class="btn btn-enod" @click="nuevoStock" style="background-color: rgb(255, 204, 0); color: rgb(0, 0, 0);" :disabled="!$can('M_compras')">
         <span class="fa fa-plus-circle"></span> Nuevo 
       </button>
     </td>
@@ -71,18 +71,18 @@
                     <app-icon v-if="item.anulado_sn === 1" img="check" color="black"></app-icon>
                   </td>
                   <td width="10px">
-                    <button @click="editStock(item)" class="btn btn-default btn-sm" title="Ver Compra" :disabled="!$can('T_informes_edita')">
+                    <button @click="editStock(item)" class="btn btn-default btn-sm" title="Ver Compra" :disabled="!$can('M_compras')">
                       <app-icon img="eye" color="black"></app-icon>
                     </button>
                   </td>
                   <td width="10px" v-if="item.anulado_sn !== 1" style="text-align: center;">
-                    <button @click="confirmarAnulacion(item)" class="btn btn-default btn-sm" title="Anular" :disabled="!$can('T_informes_edita')">
+                    <button @click="confirmarAnulacion(item)" class="btn btn-default btn-sm" title="Anular" :disabled="!$can('M_compras_edita')">
                       <app-icon img="remove" color="black"></app-icon>
                     </button>
                   </td>
                   <!-- Botón Desanular si está anulado -->
                   <td v-else width="10px" style="text-align: center;">
-                    <button @click="confirmarDesanulacion(item)" class="btn btn-default btn-sm" title="Desanular" :disabled="!$can('T_informes_edita')">
+                    <button @click="confirmarDesanulacion(item)" class="btn btn-default btn-sm" title="Desanular" :disabled="!$can('M_compras_edita')">
                       <app-icon img="check" color="black"></app-icon>
                     </button>
                   </td>
@@ -107,7 +107,7 @@
 <script>
 import { eventModal } from '../event-bus';
 import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css'; // Asegúrate de importar el CSS
+import 'vue2-datepicker/index.css';
 import toastr from 'toastr';
 export default {
   created() {

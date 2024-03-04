@@ -54,6 +54,12 @@
                                 <input type="text" v-model="destino" class="form-control" id="destino" maxlength="100">
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="observaciones">Observaciones</label>
+                                <input type="text" v-model="observaciones" class="form-control" id="observaciones" maxlength="200"></input>
+                            </div>
+                        </div>
                     </div>
                  </div>
                  <div class="clearfix"></div>
@@ -242,7 +248,8 @@ export default {
         inputsProductos:[],
         inputsEquipos:[],
         numero_formatedo:'',
-        prefijo_formateado:''
+        prefijo_formateado:'',
+        observaciones: '',
     }},
 
     created : function() {
@@ -424,6 +431,7 @@ export default {
                 'destino'         : this.destino,
                 'detalles'        : this.inputsProductos,
                 'interno_equipos' : this.inputsEquipos,
+                'observaciones'     : this.observaciones,
           }
 
           }).then(response => {
@@ -470,6 +478,7 @@ export default {
                 'destino'         : this.destino,
                 'detalles'        : this.inputsProductos,
                 'interno_equipos' : this.inputsEquipos,
+                'observaciones'     : this.observaciones,
           }}
 
         ).then( () => {
