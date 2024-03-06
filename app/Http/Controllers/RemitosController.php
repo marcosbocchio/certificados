@@ -117,11 +117,11 @@ class RemitosController extends Controller
         DB::commit();
     } catch (Exception $e) {
         DB::rollback();
-        // Maneja el error adecuadamente
+
         throw $e;
     }
 
-    return response()->json(['remito' => $remito], 200);
+    return $remito;
 }
 
     public function saveRemito($request,$remito){

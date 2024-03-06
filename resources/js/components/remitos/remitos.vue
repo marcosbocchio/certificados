@@ -123,6 +123,7 @@
                             </div>
                        </div>
                     </div>
+
                     <div class="box box-custom-enod">
                         <div class="box-body">
                             <div class="col-md-3">
@@ -176,55 +177,48 @@
 
                         <div class="box box-custom-enod">
                             <div class="box-body">
-                                <!-- Formulario de observaciones con botón de agregar al lado -->
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <div class="form-group">
-                                                    <label for="observacionActual">Observación *</label>
-                                                    <input type="text" v-model="observacionActual" maxlength="42" class="form-control" id="observacionActual" >
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="cantidadActual">Cantidad *</label>
-                                                    <input type="number" v-model="cantidadActual" min="1" class="form-control" id="cantidadActual" >
-                                                </div>
-                                            </div>
-                                        </div>
+                                <!-- Observaciones y Cantidad -->
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="observacionActual">Observación *</label>
+                                        <input type="text" v-model="observacionActual" maxlength="42" class="form-control" id="observacionActual">
                                     </div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-md-3" style="display: flex; align-items: flex-end;">
-                                        <button type="button" @click="agregarObservacion"><span class="fa fa-plus-circle"></span></button>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="cantidadActual">Cantidad *</label>
+                                        <input type="number" v-model="cantidadActual" min="1" class="form-control" id="cantidadActual">
                                     </div>
                                 </div>
 
-                                <!-- Tabla de observaciones agregadas -->
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover table-striped table-bordered table-condensed">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Observación</th>
-                                                        <th>Cantidad</th>
-                                                        <th>Acciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(obs, index) in listaObservaciones" :key="index">
-                                                        <td>{{ obs.observacion }}</td>
-                                                        <td>{{ obs.cantidad }}</td>
-                                                        <td style="text-align: center;"><span class="fa fa-minus-circle" @click="quitarObservacion(index)"></span></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                <!-- Botón para agregar observación -->
+                                <div class="col-md-12" style="padding-top: 10px;">
+                                    <button type="button" @click="agregarObservacion"><span class="fa fa-plus-circle"></span></button>
+                                </div>
+
+                                <!-- Tabla de Observaciones -->
+                                <div class="col-md-12" style="padding-top: 20px;">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
+                                            <thead>
+                                                <tr style="width: 100%;">
+                                                    <th style="width: 75%;">Observación</th>
+                                                    <th style="width: 13%;">Cantidad</th>
+                                                    <th style="width: 12%;">Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(obs, index) in listaObservaciones" :key="index">
+                                                    <td>{{ obs.observacion }}</td>
+                                                    <td>{{ obs.cantidad }}</td>
+                                                    <td style="text-align: center;"><span class="fa fa-minus-circle" @click="quitarObservacion(index)"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-    </div>
-</div>
+                            </div>
+                        </div>
                     <button :disabled="editmode" class="btn btn-primary" type="submit">Guardar</button>
                 </form>
                 <nuevo-productos :modelo="'productos'" @store="getProductos"></nuevo-productos>
@@ -583,8 +577,5 @@ export default {
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
      background-color: #eee;
-}
-textarea {
-    white-space: pre-wrap; /* Asegura que los saltos de línea y espacios en blanco se mantengan. */
 }
 </style>
