@@ -98,6 +98,8 @@
                         $incremento = 3;
                     } elseif ($espesorBase <= 25) {
                         $incremento = 4;
+                    } else {
+                        $incremento = 5;
                     }
 
                     $espesor = $espesorBase + $incremento;
