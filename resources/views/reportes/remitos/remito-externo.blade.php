@@ -96,11 +96,8 @@ header .destino {
                 <td style="width: 50px;">                         
                     <span class="cantidad">{{ $producto->cantidad}} </span>           
                 </td>
-                <td style="width: 510px;">
+                <td style="width: 610px;">
                     <span class="producto">{{ $producto->producto}} </span>    
-                </td>
-                <td>
-                    <span  class="medida">{{ $producto->medida}} {{ $producto->unidad_medida}}</span>  
                 </td> 
               </tr>
             @endforeach
@@ -110,7 +107,7 @@ header .destino {
                 <td style="width: 50px;">                         
                     <span class="cantidad"> 1 </span>           
                 </td>
-                <td style="width: 510px;">
+                <td style="width: 610px;">
                     <span class="producto">{{ $remito_interno_equipo->InternoEquipo->equipo->codigo }} - N° Serie : {{ $remito_interno_equipo->InternoEquipo->nro_serie}} - N° Int : {{$remito_interno_equipo->InternoEquipo->nro_interno}} 
                          @if ($remito_interno_equipo->InternoEquipo->internoFuente)
                              
@@ -118,9 +115,6 @@ header .destino {
 
                          @endif </span>    
                 </td>
-                <td>
-                    <span  class="medida"></span>  
-                </td> 
               </tr>
             @endforeach
             
