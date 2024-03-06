@@ -121,19 +121,19 @@ header .destino {
                 </td> 
               </tr>
             @endforeach
-            @if(!empty($remito->observaciones))
+            @foreach($observacionesRemito as $observacion)
                 <tr>
                     <td style="width: 50px;">                         
-                        <span class="cantidad"> Obs. </span>           
+                        <span class="cantidad">{{ $observacion->cantidad }}</span>           
                     </td>
                     <td style="width: 475px;">
-                        <span class="producto">{{ $remito->observaciones }}</span>    
+                        <span class="producto">{{ $observacion->observaciones }}</span>    
                     </td>
                     <td>
                         <span class="medida">&nbsp;</span>  
                     </td> 
                 </tr>
-            @endif
+            @endforeach
         </tbody>
 
 

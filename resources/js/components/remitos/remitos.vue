@@ -54,12 +54,6 @@
                                 <input type="text" v-model="destino" class="form-control" id="destino" maxlength="100">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="observaciones">Observaciones</label>
-                                <input type="text" v-model="observaciones" class="form-control" id="observaciones" maxlength="200"></input>
-                            </div>
-                        </div>
                     </div>
                  </div>
                  <div class="clearfix"></div>
@@ -179,6 +173,58 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="box box-custom-enod">
+                            <div class="box-body">
+                                <!-- Formulario de observaciones con botón de agregar al lado -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label for="observacionActual">Observación *</label>
+                                                    <input type="text" v-model="observacionActual" maxlength="42" class="form-control" id="observacionActual" >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="cantidadActual">Cantidad *</label>
+                                                    <input type="number" v-model="cantidadActual" min="1" class="form-control" id="cantidadActual" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-3" style="display: flex; align-items: flex-end;">
+                                        <button type="button" @click="agregarObservacion"><span class="fa fa-plus-circle"></span></button>
+                                    </div>
+                                </div>
+
+                                <!-- Tabla de observaciones agregadas -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-bordered table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Observación</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(obs, index) in listaObservaciones" :key="index">
+                                                        <td>{{ obs.observacion }}</td>
+                                                        <td>{{ obs.cantidad }}</td>
+                                                        <td style="text-align: center;"><span class="fa fa-minus-circle" @click="quitarObservacion(index)"></span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+    </div>
+</div>
                     <button :disabled="editmode" class="btn btn-primary" type="submit">Guardar</button>
                 </form>
                 <nuevo-productos :modelo="'productos'" @store="getProductos"></nuevo-productos>
@@ -250,6 +296,9 @@ export default {
         numero_formatedo:'',
         prefijo_formateado:'',
         observaciones: '',
+        observacionActual: '',
+        cantidadActual: 1,
+        listaObservaciones: [],
     }},
 
     created : function() {
@@ -321,6 +370,23 @@ export default {
             axios.get(urlRegistros).then(response =>{
                 this.frentes = response.data
             });
+        },
+
+        agregarObservacion() {
+            if(this.observacionActual.trim() !== '') {
+                this.listaObservaciones.push({
+                    observacion: this.observacionActual,
+                    cantidad: this.cantidadActual,
+                });
+                this.observacionActual = '';
+                this.cantidadActual = 1;
+            } else {
+                toastr.error('Por favor, ingresa una observación.');
+            }
+        },
+
+        quitarObservacion(index) {
+            this.listaObservaciones.splice(index, 1);
         },
 
         getProductos : function(){
@@ -431,15 +497,15 @@ export default {
                 'destino'         : this.destino,
                 'detalles'        : this.inputsProductos,
                 'interno_equipos' : this.inputsEquipos,
-                'observaciones'     : this.observaciones,
+                'observaciones'     : this.listaObservaciones,
           }
 
-          }).then(response => {
+        }).then(response => {
 
-          let remito = response.data;
-          toastr.success('Remito N° ' +  this.prefijo + '-' + this.numero + ' fue creado con éxito ');
-          window.open(  '/pdf/remito/' + remito.id,'_blank');
-          window.location.href =  '/area/enod/remitos/listado';
+        let remito = response.data;
+        toastr.success('Remito N° ' +  this.prefijo + '-' + this.numero + ' fue creado con éxito ');
+        window.open(  '/pdf/remito/' + remito.id,'_blank');
+        window.location.href =  '/area/enod/remitos/listado';
 
         }).catch(error => {
 
@@ -478,7 +544,7 @@ export default {
                 'destino'         : this.destino,
                 'detalles'        : this.inputsProductos,
                 'interno_equipos' : this.inputsEquipos,
-                'observaciones'     : this.observaciones,
+                'observaciones'     : this.listaObservaciones,
           }}
 
         ).then( () => {
@@ -517,5 +583,8 @@ export default {
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
      background-color: #eee;
+}
+textarea {
+    white-space: pre-wrap; /* Asegura que los saltos de línea y espacios en blanco se mantengan. */
 }
 </style>

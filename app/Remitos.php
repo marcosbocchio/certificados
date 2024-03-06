@@ -20,4 +20,10 @@ class Remitos extends Model
 
     }
 
+    
+    public function detalleObservaciones()
+    {
+        return $this->hasMany(DetalleObservacionRemito::class, 'remito_id');
+    }
+
 }

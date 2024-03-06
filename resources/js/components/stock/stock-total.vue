@@ -1,6 +1,6 @@
 <template>
   <div v-if="productos.length">
-    <button @click="exportarTodoPDF" class="btn btn-enod exportar-todo-pdf" :disabled="!$can('M_stock_edita')">Exportar PDF</button>
+    <button @click="exportarTodoPDF" class="btn btn-enod exportar-todo-pdf" :disabled="!$can('S_stock_edita')">Exportar PDF</button>
     <div class="box box-custom-enod">
       <div class="box-body">
         <div class="table-responsive">
@@ -17,12 +17,12 @@
                 <td>{{ producto.descripcion }}</td>
                 <td>{{ producto.stock }}</td>
                 <td width="10px">
-                  <button @click="editProducto(producto)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('M_stock_edita')">
+                  <button @click="editProducto(producto)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('S_stock_edita')">
                     <span class="fa fa-edit"></span>
                   </button>
                 </td>
                 <td width="10px">
-                  <button class="btn btn-warning btn-sm" title="Ver Detalles" @click.prevent="registroProducto(producto)">
+                  <button class="btn btn-warning btn-sm" title="Ver Detalles" @click.prevent="registroProducto(producto)" :disabled="!$can('S_stock_edita')">
                     <span class="fa fa-list"></span>
                   </button>
                 </td>

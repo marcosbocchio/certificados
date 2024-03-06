@@ -75,27 +75,42 @@
                 @endif
             </td>
             <td>
-                @php
-                    $espesor = 0;
+            @php
+                $espesorBase = 0;
+                $incremento = 0;
 
-                    if ($informe->espesor_chapa) {
-                        $espesor = $informe->espesor_chapa + 3.2;
-                    } elseif ($informe->espesor_especifico) {
-                        $espesor = $informe->espesor_especifico + 3.2;
-                    } elseif ($diametro_espesor->diametro == 'VARIOS') {
-                        $espesor = 'VARIOS';
-                    } else {
-                        $espesor = $diametro_espesor->espesor + 3.2;
+                // Determinar el valor base del espesor
+                if ($informe->espesor_chapa) {
+                    $espesorBase = $informe->espesor_chapa;
+                } elseif ($informe->espesor_especifico) {
+                    $espesorBase = $informe->espesor_especifico;
+                } elseif ($diametro_espesor->diametro == 'VARIOS') {
+                    $espesor = 'VARIOS';
+                } else {
+                    $espesorBase = $diametro_espesor->espesor;
+                }
+
+                
+                if ($espesorBase != 'VARIOS') {
+                    if ($espesorBase <= 6) {
+                        $incremento = 1.5;
+                    } elseif ($espesorBase <= 13) {
+                        $incremento = 3;
+                    } elseif ($espesorBase <= 25) {
+                        $incremento = 4;
                     }
-                @endphp
 
-                @if ($espesor == 'VARIOS')
-                    VARIOS
-                @else
-                    {{ $espesor }} mm
-                @endif
+                    $espesor = $espesorBase + $incremento;
+                }
+            @endphp
+
+            @if ($espesor == 'VARIOS')
+                VARIOS
+            @else
+                {{ $espesor }} mm
+            @endif
             </td>
-            <td>3.2 mm</td>
+            <td>{{ $incremento }} mm </td>
         </tr>
     </tbody>
 </table>

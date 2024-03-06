@@ -10,6 +10,7 @@ use App\Clientes;
 use App\DetalleRemitos;
 use App\RemitoInternoEquipos;
 use App\User;
+use App\DetalleObservacionRemito;
 use App\Contratistas;
 
 class PdfRemitosController extends Controller
@@ -19,6 +20,7 @@ class PdfRemitosController extends Controller
 
         
         $remito = Remitos::findOrFail($id);
+        $observacionesRemito = DetalleObservacionRemito::where('remito_id', $id)->get();
         $detalle = DB::select('SELECT 
                                     detalle_remitos.cantidad as cantidad,
                                     productos.descripcion as producto,
@@ -50,7 +52,7 @@ if($remito->interno_sn){
 
       }else{
 
-      return  view('reportes.remitos.remito-externo',compact('remito','detalle','remito_interno_equipos'));  
+      return  view('reportes.remitos.remito-externo',compact('remito','detalle','remito_interno_equipos','observacionesRemito'));  
     
       }
     }

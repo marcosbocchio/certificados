@@ -13,6 +13,7 @@ use App\InternoEquipos;
 use App\RemitoInternoEquipos;
 use App\Productos;
 use App\Stock;
+use App\DetalleObservacionRemito;
 use Illuminate\Support\Facades\Log;
 
 
@@ -89,32 +90,39 @@ class RemitosController extends Controller
     }
 
     public function store(RemitoRequest $request)
-    {
+{
+    $detalles = $request->detalles;
+    $interno_equipos = $request->interno_equipos;
+    $observaciones = $request->observaciones; 
 
-      $detalles = $request->detalles;
-      $interno_equipos = $request->interno_equipos;
+    $remito = new Remitos;
+    Log::info($observaciones);
+    DB::beginTransaction();
+    try {
+        $remito = $this->saveRemito($request,$remito);
+        $this->saveDetalle($detalles, $remito);
+        $this->saveInternoEquipos($interno_equipos, $remito);
+        $this->updateInternoEquipos($interno_equipos, $remito);
 
+        
 
-        $remito = new Remitos;
+        foreach ($request->observaciones as $observacion) {
+          $detalleObservacion = new DetalleObservacionRemito();
+          $detalleObservacion->remito_id = $remito->id;
+          $detalleObservacion->observaciones = $observacion['observacion']; // Asegúrate de que sea una cadena
+          $detalleObservacion->cantidad = $observacion['cantidad']; // Asegúrate de que sea un número
+          $detalleObservacion->save();
+      }
 
-      DB::beginTransaction();
-        try {
-
-          $remito = $this->saveRemito($request,$remito);
-          $this->saveDetalle($detalles,$remito);
-          $this->saveInternoEquipos($interno_equipos,$remito);
-          $this->updateInternoEquipos($interno_equipos,$remito);
-          DB::commit();
-
-        } catch (Exception $e) {
-
-          DB::rollback();
-          throw $e;
-
-        }
-
-        return $remito;
+        DB::commit();
+    } catch (Exception $e) {
+        DB::rollback();
+        // Maneja el error adecuadamente
+        throw $e;
     }
+
+    return response()->json(['remito' => $remito], 200);
+}
 
     public function saveRemito($request,$remito){
 
@@ -133,7 +141,6 @@ class RemitosController extends Controller
         $remito->receptor = $request->receptor;
         $remito->destino  = $request->destino;
         $remito->user_id  =  $user_id;
-        $remito->observaciones = $request->observaciones;
         $remito->save();
 
         return $remito;
