@@ -197,7 +197,7 @@
                                 </div>
 
                                 <!-- Tabla de Observaciones -->
-                                <div class="col-md-12" style="padding-top: 20px;">
+                                <div v-show="listaObservaciones.length" class="col-md-12" style="padding-top: 20px;">
                                     <div class="table-responsive">
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
