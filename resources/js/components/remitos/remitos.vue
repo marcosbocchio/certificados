@@ -181,7 +181,7 @@
                                 <div class="col-md-9">
                                     <div class="form-group">
                                         <label for="observacionActual">Observación *</label>
-                                        <input type="text" v-model="observacionActual" maxlength="42" class="form-control" id="observacionActual">
+                                        <input type="text" v-model="observacionActual" maxlength="200" class="form-control" id="observacionActual">
                                     </div>
                                 </div>
                                 <div class="col-md-3">

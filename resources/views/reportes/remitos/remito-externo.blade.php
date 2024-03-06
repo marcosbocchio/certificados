@@ -60,7 +60,9 @@ header .destino {
     top: 390px;
     left:70px;
 }
-
+.producto {
+    word-wrap: break-word;
+}
  </style>  
 </head>
 
@@ -94,7 +96,7 @@ header .destino {
                 <td style="width: 50px;">                         
                     <span class="cantidad">{{ $producto->cantidad}} </span>           
                 </td>
-                <td style="width: 475px;">
+                <td style="width: 510px;">
                     <span class="producto">{{ $producto->producto}} </span>    
                 </td>
                 <td>
@@ -108,7 +110,7 @@ header .destino {
                 <td style="width: 50px;">                         
                     <span class="cantidad"> 1 </span>           
                 </td>
-                <td style="width: 475px;">
+                <td style="width: 510px;">
                     <span class="producto">{{ $remito_interno_equipo->InternoEquipo->equipo->codigo }} - N° Serie : {{ $remito_interno_equipo->InternoEquipo->nro_serie}} - N° Int : {{$remito_interno_equipo->InternoEquipo->nro_interno}} 
                          @if ($remito_interno_equipo->InternoEquipo->internoFuente)
                              
@@ -121,25 +123,23 @@ header .destino {
                 </td> 
               </tr>
             @endforeach
+            
+        </tbody>
+    </table>
+    <table>
+        <tbody>
             @foreach($observacionesRemito as $observacion)
                 <tr>
-                    <td style="width: 50px;">                         
+                    <td style="width: 50px;">
                         <span class="cantidad">{{ $observacion->cantidad }}</span>           
                     </td>
-                    <td style="width: 475px;">
+                    <td style="width: 610px;">
                         <span class="producto">{{ $observacion->observaciones }}</span>    
                     </td>
-                    <td>
-                        <span class="medida">&nbsp;</span>  
-                    </td> 
                 </tr>
             @endforeach
         </tbody>
-
-
-
     </table>
-  
 
 </div>
 
