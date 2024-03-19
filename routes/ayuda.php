@@ -18,19 +18,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('asignar_procedimientos', 'AyudaController@asignarProcedimientos')->name('ayuda-asignar-procedimientos');
     Route::get('visualizar_procedimientos', 'AyudaController@visualizarProcedimientos')->name('ayuda-visualizar-procedimientos');
     Route::get('visualizar_vehiculos', 'AyudaController@VisualizarVehiculos')->name('ayuda-visualizar-vehiculos');
-    Route::get('generar_remito', 'AyudaController@creaciónDeRemito')->name('ayuda-generar-remito');
     Route::get('generar_informes', 'AyudaController@generarInformes')->name('ayuda-generar-informes');
-    Route::get('generar_certificado', 'AyudaController@creaciónCertificado')->name('ayuda-generar-certificado');
-    Route::get('visualizar_certificado', 'AyudaController@visualizarCertificado')->name('ayuda-visualizar-certificado');
-    Route::get('gestionar_usuario', 'AyudaController@gestionarUsuario')->name('ayuda-gestionar-usuario');
-    Route::get('gestionar_cliente', 'AyudaController@gestionarCliente')->name('ayuda-gestionar-cliente');
-    Route::get('gestionar_proveedores', 'AyudaController@gestionarProveedores')->name('ayuda-gestionar-proveedores');
-    Route::get('gestionar_comitente', 'AyudaController@gestionarComitente')->name('ayuda-gestionar-comitente');
-    Route::get('gestionar_materiales', 'AyudaController@gestionarMateriales')->name('ayuda-gestionar-materiales');
-    Route::get('gestionar_nomra_ensayo', 'AyudaController@gestionarNormaEnsayo')->name('ayuda-gestionar-norma-ensayo');
-
-
-
     Route::get('generar_informes_ri', 'AyudaController@generarInformesRi')->name('ayuda-generar-informes-ri');
     Route::get('generar_informes_pm', 'AyudaController@generarInformesPm')->name('ayuda-generar-informes-pm');
     Route::get('generar_informes_lp', 'AyudaController@generarInformesLp')->name('ayuda-generar-informes-lp');

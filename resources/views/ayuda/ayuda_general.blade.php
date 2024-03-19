@@ -37,7 +37,7 @@
 			<p><a href="{{ route('ayuda-visualizar-vehiculos') }}" target="_blank"> Visualizar documentación de vehículos y documentación complementaria asignados a Orden de trabajo (OT)&nbsp;</a></p>
 
           @can('enod')
-                <p><a href="{{ route('ayuda-generar-remito') }}" target="_blank">Creación de remitos&nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}" target="_blank">Creación de remitos&nbsp;</a></p>
                 <p><a href="{{ route('ayuda-generar-informes') }}"> Creación de informes&nbsp;</a></p>
            @endcan
 
@@ -50,10 +50,10 @@
 		    	<p><a href="{{ route('error-404') }}" target="_blank"> Visualización de partes diarios&nbsp;</a></p>
 
           @can('enod')
-               <p><a href="{{ route('ayuda-generar-certificado') }}" target="_blank"> Creación de certificados&nbsp;</a></p>
+               <p><a href="{{ route('error-404') }}" target="_blank"> Creación de certificados&nbsp;</a></p>
            @endcan
             <a name="-maestros" />
-			<p><a href="{{ route('ayuda-visualizar-certificado') }}" target="_blank"> Visualización de certificados&nbsp;</a></p>
+			<p><a href="{{ route('error-404') }}" target="_blank"> Visualización de certificados&nbsp;</a></p>
         </div>
 
         @can('enod')
@@ -61,12 +61,11 @@
                 <h3>Maestros&nbsp;</h3>
                 <p><a href="{{ route('error-404') }}" target="_blank">Consideraciones generales&nbsp;</a></p>
 
-                <p><a href="{{ route('ayuda-gestionar-usuario') }}" target="_blank">Gestionar usuarios&nbsp;</a></p>
-                <p><a href="{{ route('ayuda-gestionar-cliente') }}" target="_blank">Gestionar clientes&nbsp;</a></p>
-                <p><a href="{{ route('ayuda-gestionar-proveedores') }}" target="_blank">Gestionar proveedores&nbsp;</a></p>
-                <p><a href="{{ route('ayuda-gestionar-comitente') }}" target="_blank">Gestionar comitentes&nbsp;</a></p>
-                <p><a href="{{ route('ayuda-gestionar-materiales') }}" target="_blank">Gestionar materiales&nbsp;</a></p>
-                <p><a href="{{ route('ayuda-gestionar-norma-ensayo') }}" target="_blank">Gestionar normas&nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar usuarios&nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar clientes&nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar comitentes&nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar materiales&nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar normas&nbsp;</a></p>
                 <p><a href="{{ route('error-404') }}" target="_blank">Gestionar documentaciones&nbsp;</a></p>
                 <p><a href="{{ route('error-404') }}" target="_blank">Gestionar Unidades de medidas&nbsp;</a></p>
                 <p><a href="{{ route('error-404') }}" target="_blank">Gestionar medidas&nbsp;</a></p>

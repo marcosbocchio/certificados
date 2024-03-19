@@ -1254,6 +1254,11 @@ export default {
             }
 
         },
+        Tabla_me(newVal, oldVal) {
+        // Acciones a realizar cuando Tabla_me cambia
+            console.log('Tabla_me ha cambiado, actualiza tu vista aquí');
+            // Asegúrate de que la vista se actualiza correctamente
+        },
 
     },
 
@@ -1809,7 +1814,6 @@ processExcelData(data, filas, columnas) {
     const cantidad_generatrices_me = columnas;
     
     if (this.currentPosition === null || this.currentPosition >= this.Tabla_me.length) {
-        console.error('Posición actual no válida o fuera de rango.');
         return;
     }
 
@@ -1834,14 +1838,16 @@ processExcelData(data, filas, columnas) {
 
     // Agregar un array adicional para 'ACCESORIOS' con nulls en los espacios adicionales
     let accesorios = ['ACCESORIO'];
-    for (let i = 1; i < cantidad_posiciones_me ; i++) {
+    for (let i = 1; i < cantidad_posiciones_me; i++) {
         accesorios.push(null); // Completar con null para el resto de los elementos
-
-    this.Tabla_me[this.currentPosition].cantidad_posiciones_me = cantidad_posiciones_me -1;
-    this.Tabla_me[this.currentPosition].cantidad_generatrices_me = cantidad_generatrices_me;
     }
+    // Este bloque se cierra correctamente antes de actualizar cantidad_posiciones_me y cantidad_generatrices_me
+    this.Tabla_me[this.currentPosition].cantidad_posiciones_me = cantidad_posiciones_me - 1;
+    this.Tabla_me[this.currentPosition].cantidad_generatrices_me = cantidad_generatrices_me;
     this.Tabla_me[this.currentPosition].mediciones.push(accesorios);
 
+    // Notificar a Vue sobre la actualización para que la vista se actualice
+    this.Tabla_me = [...this.Tabla_me];
 
     this.currentPosition = null;
     console.log('Datos procesados para Tabla_me:', this.Tabla_me);
