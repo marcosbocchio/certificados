@@ -172,4 +172,79 @@ public function __construct()
 
   }
 
+  /*_____________________________________ */
+
+  public function creaciónDeRemito(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.generar_remito',compact('user','header_titulo','header_descripcion'));
+
+  }
+  public function creaciónCertificado(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.generar_certificados',compact('user','header_titulo','header_descripcion'));
+
+  }
+  public function visualizarCertificado(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.visualizar_certificado',compact('user','header_titulo','header_descripcion'));
+
+  }
+  public function gestionarUsuario(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.gestionar_usuario',compact('user','header_titulo','header_descripcion'));
+
+  }
+  public function gestionarCliente(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.gestionar_cliente',compact('user','header_titulo','header_descripcion'));
+
+  }
+  public function gestionarProveedores(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.gestionar_proveedores',compact('user','header_titulo','header_descripcion'));
+
+  }
+  public function gestionarComitente(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.gestionar_comitente',compact('user','header_titulo','header_descripcion'));
+
+  }
+  public function gestionarMateriales(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.gestionar_materiales',compact('user','header_titulo','header_descripcion'));
+
+  }
+  public function gestionarNormaEnsayo(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.gestionar_nomra_ensayo',compact('user','header_titulo','header_descripcion'));
+
+  }
+
 }
