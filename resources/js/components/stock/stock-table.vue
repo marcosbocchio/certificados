@@ -4,7 +4,7 @@
   <tr>
     <!-- Botón Nuevo -->
     <td class="td-mobile-stack" style="width: 8%;">
-      <button class="btn btn-enod" @click="nuevoStock" style="background-color: rgb(255, 204, 0); color: rgb(0, 0, 0);" :disabled="!$can('S_compras')">
+      <button class="btn btn-enod" @click="nuevoStock" style="background-color: rgb(255, 204, 0); color: rgb(0, 0, 0);" :disabled="!$can('S_compras_edita')">
         <span class="fa fa-plus-circle"></span> Nuevo 
       </button>
     </td>
@@ -71,7 +71,7 @@
                     <app-icon v-if="item.anulado_sn === 1" img="check" color="black"></app-icon>
                   </td>
                   <td width="10px">
-                    <button @click="editStock(item)" class="btn btn-default btn-sm" title="Ver Compra" :disabled="!$can('S_compras')">
+                    <button @click="editStock(item)" class="btn btn-default btn-sm" title="Ver Compra">
                       <app-icon img="eye" color="black"></app-icon>
                     </button>
                   </td>
