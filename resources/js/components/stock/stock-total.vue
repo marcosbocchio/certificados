@@ -17,7 +17,7 @@
                 <td>{{ producto.descripcion }}</td>
                 <td>{{ producto.stock }}</td>
                 <td width="10px">
-                  <button @click="editProducto(producto)" class="btn btn-warning btn-sm" title="Editar">
+                  <button @click="editProducto(producto)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('S_stock_edita')">
                     <span class="fa fa-edit"></span>
                   </button>
                 </td>

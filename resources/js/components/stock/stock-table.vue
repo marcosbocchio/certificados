@@ -71,18 +71,18 @@
                     <app-icon v-if="item.anulado_sn === 1" img="check" color="black"></app-icon>
                   </td>
                   <td width="10px">
-                    <button @click="editStock(item)" class="btn btn-default btn-sm" title="Ver Compra" :disabled="!$can('T_informes_edita')">
+                    <button @click="editStock(item)" class="btn btn-default btn-sm" title="Ver Compra">
                       <app-icon img="eye" color="black"></app-icon>
                     </button>
                   </td>
                   <td width="10px" v-if="item.anulado_sn !== 1" style="text-align: center;">
-                    <button @click="confirmarAnulacion(item)" class="btn btn-default btn-sm" title="Anular" :disabled="!$can('T_informes_edita')">
+                    <button @click="confirmarAnulacion(item)" class="btn btn-default btn-sm" title="Anular" :disabled="!$can('S_compras_edita')">
                       <app-icon img="remove" color="black"></app-icon>
                     </button>
                   </td>
                   <!-- Botón Desanular si está anulado -->
                   <td v-else width="10px" style="text-align: center;">
-                    <button @click="confirmarDesanulacion(item)" class="btn btn-default btn-sm" title="Desanular" :disabled="!$can('T_informes_edita')">
+                    <button @click="confirmarDesanulacion(item)" class="btn btn-default btn-sm" title="Desanular" :disabled="!$can('S_compras_edita')">
                       <app-icon img="check" color="black"></app-icon>
                     </button>
                   </td>
