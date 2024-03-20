@@ -50,6 +50,7 @@ class StockController extends Controller
         $header_titulo = "COMPRAS"; // Título para la página
         $header_descripcion = "."; // Descripción o subtítulo para la página
         $proveedor = Proveedor::all();
+    
         // Retornar la vista de stock, pasando los datos necesarios
         return view('stock.table', compact('user', 'header_titulo', 'header_descripcion','proveedor'));
     }
@@ -140,9 +141,13 @@ public function reemplazarStockProducto(StockRequest $request)
     DB::beginTransaction();
     try {
         $producto = Productos::findOrFail($request->producto_id);
-        $nuevoValorStock = $request->stock;
+        $nuevoValorStock = $request->stock; // El nuevo valor del stock a establecer
+
+        // Reemplazar el stock del producto con el nuevo valor
         $producto->stock = $nuevoValorStock;
         $producto->save();
+        log::info($request->tipo_movimiento);
+        // Registrar el ajuste en la tabla 'stock'
         $registroStock = new Stock([
             'producto_id' => $request->producto_id,
             'fecha' => now(),
@@ -168,17 +173,18 @@ public function actualizarStock($detalleCompra, $request)
         if (!$producto) {
             throw new \Exception("Producto no encontrado");
         }
-        $user = auth()->user();
+
+        // Actualizar el stock del producto
         $producto->stock += $detalleCompra->cantidad;
         $producto->save();
-log::info($user->id);
+
+        // Crear un nuevo registro en la tabla de stock
         $nuevoStock = new Stock([
             'producto_id' => $detalleCompra->producto_id,
             'cantidad' => $detalleCompra->cantidad,
             'obs' => $request->obs,
             'stock' => $producto->stock,
             'tipo_movimiento' => $request->tipo_movimiento,
-            'user_id'=> $user->id,
         ]);
         $nuevoStock->save();
 

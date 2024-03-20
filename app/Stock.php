@@ -14,7 +14,6 @@ class Stock extends Model
         'cantidad', 
         'stock',
         'tipo_movimiento',
-        'user_id',
     ];
     
     public function scopeFiltro($query, $filtro = '') {

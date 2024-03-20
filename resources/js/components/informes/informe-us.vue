@@ -154,7 +154,7 @@
                     </div>
 
                     <div class="clearfix"></div>
-                    
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Norma Evaluación *</label>
@@ -192,7 +192,9 @@
                             <input type="text" v-model="encoder" class="form-control" id="encoder" maxlength="15">
                         </div>
                     </div>
+
                     <div class="clearfix"></div>
+                    
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="agente_acoplamiento">Agente Acoplamiento *</label>
