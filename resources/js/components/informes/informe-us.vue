@@ -939,7 +939,7 @@ import * as XLSX from 'xlsx';
 export default {
 
     components: {
-
+        DatePicker,
         Loading
 
     },
