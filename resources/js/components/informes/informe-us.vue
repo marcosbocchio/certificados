@@ -939,8 +939,9 @@ import * as XLSX from 'xlsx';
 export default {
 
     components: {
-
+        DatePicker,
         Loading
+
 
     },
 
@@ -1225,6 +1226,14 @@ export default {
                 return this.tecnica.codigo +  sprintf("%04d",this.numero_inf);
             }
         },
+        isTablaMeValid() {
+        // Esta es una comprobación muy básica, deberías ajustarla según tus necesidades específicas
+        if (this.Tabla_me.some(tabla => tabla.cantidad_generatrices_me <= 0 || tabla.cantidad_posiciones_me <= 0)) {
+            toastr.error("Error en los datos de la tabla. Por favor, verifica la información e intenta de nuevo.");
+            return false;
+        }
+        return true;
+    },
      },
 
       watch : {
