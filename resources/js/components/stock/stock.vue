@@ -87,7 +87,7 @@
     </div>
     <div class="row">
       <div class="col-md-12 text-right">
-        <button @click="guardarCompra" class="btn btn-primary" :disabled="!$can('S_compras_edita')">Guardar</button>
+        <button @click="guardarCompra" class="btn btn-primary" :disabled="formularioEnviado">Guardar</button>
       </div>
     </div>
   </div>
@@ -123,6 +123,7 @@ export default {
       producto: '',
       fecha_remito: new Date().toISOString().slice(0, 10),
       obs: '',
+      formularioEnviado: false,
     };
   },
   created() {
@@ -178,6 +179,7 @@ export default {
     guardarCompra() {
       // Asegúrate de que todos los campos requeridos están presentes
       if (this.validarCompra()) {
+        this.formularioEnviado = true;
         const url = '/api/stock'; // Asegúrate de que esta sea la URL correcta
         const compra = {
           fecha: this.fecha,
@@ -205,6 +207,7 @@ export default {
                 if (errors.hasOwnProperty(key)) {
                   // Muestra el primer error de cada campo
                   toastr.error(errors[key][0]);
+                  this.formularioEnviado = false
                 }
               }
             } else {

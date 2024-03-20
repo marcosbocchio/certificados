@@ -40,7 +40,7 @@
     <!-- Botón Ajustar Stock fuera del box y alineado a la izquierda -->
     <div class="row">
       <div class="col-md-12 text-left">
-        <button @click="ajustarStock" class="btn btn-primary">Ajustar Stock</button>
+        <button @click="ajustarStock" class="btn btn-primary" :disabled="ajusteEnProceso">Ajustar Stock</button>
       </div>
     </div>
   </div>
@@ -80,6 +80,7 @@ export default {
       observaciones_ajuste: '',
       cantidad_ajuste: 0,
       tipo_movimiento: 'Ajuste stock',
+      ajusteEnProceso: false,
     };
   },
   computed: {
@@ -97,7 +98,7 @@ export default {
       toastr.error('El stock no puede ser negativo.');
       return; // Detiene la ejecución adicional del método
       }
-
+      this.ajusteEnProceso = true;
       const url = '/api/stock/edit';
       const ajuste = {
         fecha: this.fecha_ajuste,
@@ -114,7 +115,7 @@ export default {
           window.location.href = '/area/enod/stock-total';
         })
         .catch(error => {
-          // Manejo de errores
+          this.ajusteEnProceso = false;
         });
     },
   },

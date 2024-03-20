@@ -219,7 +219,7 @@
                                 </div>
                             </div>
                         </div>
-                    <button :disabled="editmode" class="btn btn-primary" type="submit">Guardar</button>
+                        <button :disabled="editmode || formularioEnviando" class="btn btn-primary" type="submit">Guardar</button>
                 </form>
                 <nuevo-productos :modelo="'productos'" @store="getProductos"></nuevo-productos>
        </div>
@@ -293,6 +293,7 @@ export default {
         observacionActual: '',
         cantidadActual: 1,
         listaObservaciones: [],
+        formularioEnviando: false,
     }},
 
     created : function() {
@@ -475,7 +476,7 @@ export default {
         },
 
         Store : function(){
-
+            this.formularioEnviando = true;
           this.errors =[];
             var urlRegistros = 'remitos' ;
             axios({
@@ -502,7 +503,7 @@ export default {
         window.location.href =  '/area/enod/remitos/listado';
 
         }).catch(error => {
-
+                this.formularioEnviando = false;
                this.errors = error.response.data.errors;
                 console.log(error.response);
                $.each( this.errors, function( key, value ) {
@@ -521,7 +522,7 @@ export default {
         },
 
         Update : function() {
-
+            this.formularioEnviando = true;
             console.log('entro para actualizar' );
             this.errors =[];
             var urlRegistros = 'remitos/' + this.remitodata.id  ;
@@ -548,7 +549,7 @@ export default {
           window.location.href =  '/remitos/ot/' + this.otdata.id;
 
         }).catch(error => {
-
+            this.formularioEnviando = false;
                this.errors = error.response.data.errors;
                 console.log(error.response);
                $.each( this.errors, function( key, value ) {
