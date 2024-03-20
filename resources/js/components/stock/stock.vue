@@ -211,6 +211,7 @@ export default {
                 }
               }
             } else {
+              this.formularioEnviado = false;
               console.error('Error al guardar la compra:', error);
               toastr.error('Error interno del servidor');
             }

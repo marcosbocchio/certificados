@@ -20,6 +20,7 @@ class StockRequest extends FormRequest
             'cantidad' => 'required|numeric', 
             'stock' => 'required|numeric',
             'tipo_movimiento' => 'required|string|max:100',
+            'user_id' => 'required|numeric|max:30',
         ];
     }
 }

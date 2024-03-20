@@ -68,6 +68,8 @@
                         </div>
                     </div>
 
+                    <div class="clearfix"></div>
+
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="Diametro">Ø *</label>
@@ -151,6 +153,8 @@
                         </div>
                     </div>
 
+                    <div class="clearfix"></div>
+                    
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Norma Evaluación *</label>
@@ -188,7 +192,7 @@
                             <input type="text" v-model="encoder" class="form-control" id="encoder" maxlength="15">
                         </div>
                     </div>
-
+                    <div class="clearfix"></div>
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="agente_acoplamiento">Agente Acoplamiento *</label>
@@ -1226,14 +1230,6 @@ export default {
                 return this.tecnica.codigo +  sprintf("%04d",this.numero_inf);
             }
         },
-        isTablaMeValid() {
-        // Esta es una comprobación muy básica, deberías ajustarla según tus necesidades específicas
-        if (this.Tabla_me.some(tabla => tabla.cantidad_generatrices_me <= 0 || tabla.cantidad_posiciones_me <= 0)) {
-            toastr.error("Error en los datos de la tabla. Por favor, verifica la información e intenta de nuevo.");
-            return false;
-        }
-        return true;
-    },
      },
 
       watch : {
@@ -1789,27 +1785,42 @@ export default {
     this.$refs.fileInput.value = ''; // Limpia el valor actual del input para permitir la recarga del mismo archivo
     this.$refs.fileInput.click(); // Activa el input de tipo file
 },
-        uploadExcel(event) {
-            const file = event.target.files[0];
+uploadExcel(event) {
+    const file = event.target.files[0];
     if (!file) {
-        return; // Sale temprano si no hay archivo seleccionado
+        return; // Si no hay archivo seleccionado, sale temprano
     }
     const reader = new FileReader();
-        reader.onload = (e) => {
+    reader.onload = (e) => {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
-        const excelData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
+        let excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-        const cantidad_filas = excelData.length;
-        let cantidad_columnas = 0;
-        if (cantidad_filas > 0) {
-            cantidad_columnas = excelData.reduce((max, row) => Math.max(max, row.length), 0);
+        // Procesa las filas para detenerse al encontrar el primer espacio en blanco en la primera columna, a partir de la segunda fila
+        let filasValidas = [];
+        for (let i = 0; i < excelData.length; i++) {
+            // Acepta todas las celdas de la primera fila
+            if (i === 0) {
+                filasValidas.push(excelData[i]);
+            } else {
+                // Detiene el ciclo si encuentra un espacio en blanco en la primera columna de las filas siguientes
+                if (excelData[i][0] === undefined || excelData[i][0].toString().trim() === '') {
+                    break;
+                }
+                filasValidas.push(excelData[i]);
+            }
         }
 
-        // Llama a processExcelData con los datos y las dimensiones
-        this.processExcelData(excelData, cantidad_filas, cantidad_columnas);
+        const cantidad_filas = filasValidas.length;
+        let cantidad_columnas = 0;
+        if (cantidad_filas > 0) {
+            cantidad_columnas = filasValidas.reduce((max, row) => Math.max(max, row.length), 0);
+        }
+
+        // Llama a processExcelData con los datos filtrados y las dimensiones ajustadas
+        this.processExcelData(filasValidas, cantidad_filas, cantidad_columnas);
     };
     reader.readAsArrayBuffer(file);
 },
