@@ -1,3 +1,4 @@
+@ -1,2269 +1,2269 @@
 <template>
     <div class="row">
        <div class="col-md-12">
@@ -938,7 +939,7 @@ import * as XLSX from 'xlsx';
 export default {
 
     components: {
-        DatePicker,
+
         Loading
 
     },
@@ -1254,6 +1255,7 @@ export default {
             }
 
         },
+
     },
 
      methods : {
@@ -1778,19 +1780,19 @@ export default {
     this.$refs.fileInput.value = ''; // Limpia el valor actual del input para permitir la recarga del mismo archivo
     this.$refs.fileInput.click(); // Activa el input de tipo file
 },
-uploadExcel(event) {
-    const file = event.target.files[0];
+        uploadExcel(event) {
+            const file = event.target.files[0];
     if (!file) {
         return; // Sale temprano si no hay archivo seleccionado
     }
     const reader = new FileReader();
-    reader.onload = (e) => {
+        reader.onload = (e) => {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const excelData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
-        // Calcula la cantidad de filas y columnas
+
         const cantidad_filas = excelData.length;
         let cantidad_columnas = 0;
         if (cantidad_filas > 0) {
@@ -1800,7 +1802,6 @@ uploadExcel(event) {
         // Llama a processExcelData con los datos y las dimensiones
         this.processExcelData(excelData, cantidad_filas, cantidad_columnas);
     };
-    // Esta es la llamada correcta y única necesaria para comenzar la lectura del archivo
     reader.readAsArrayBuffer(file);
 },
 processExcelData(data, filas, columnas) {
@@ -1808,7 +1809,7 @@ processExcelData(data, filas, columnas) {
     const cantidad_generatrices_me = columnas;
     
     if (this.currentPosition === null || this.currentPosition >= this.Tabla_me.length) {
-        console.log("blabla")
+        console.error('Posición actual no válida o fuera de rango.');
         return;
     }
 
@@ -1833,17 +1834,17 @@ processExcelData(data, filas, columnas) {
 
     // Agregar un array adicional para 'ACCESORIOS' con nulls en los espacios adicionales
     let accesorios = ['ACCESORIO'];
-    for (let i = 1; i < cantidad_posiciones_me; i++) {
+    for (let i = 1; i < cantidad_posiciones_me ; i++) {
         accesorios.push(null); // Completar con null para el resto de los elementos
-    }
-    // Este bloque se cierra correctamente antes de actualizar cantidad_posiciones_me y cantidad_generatrices_me
-    this.Tabla_me[this.currentPosition].cantidad_posiciones_me = cantidad_posiciones_me - 1;
+
+    this.Tabla_me[this.currentPosition].cantidad_posiciones_me = cantidad_posiciones_me -1;
     this.Tabla_me[this.currentPosition].cantidad_generatrices_me = cantidad_generatrices_me;
+    }
     this.Tabla_me[this.currentPosition].mediciones.push(accesorios);
-    this.Tabla_me = [...this.Tabla_me];
+
+
     this.currentPosition = null;
     console.log('Datos procesados para Tabla_me:', this.Tabla_me);
-    
 }
 ,
         addTabla_me : function () {
@@ -1851,22 +1852,6 @@ processExcelData(data, filas, columnas) {
             this.cantidad_posiciones_me = 50;
             this.cantidad_generatrices_me = 50;
             
-
-            if(!this.cantidad_generatrices_linea_pdf_me){
-            toastr.error('El campo "Generatrices por Linea en pdf" es obligatorio');
-            return;}
-    
-
-            if(this.cantidad_generatrices_linea_pdf_me > 30 ){
-                toastr.error('El campo Cantidad Generatrices por linea debe ser menor a 30');
-                return;
-            }
-            if(this.cantidad_generatrices_linea_pdf_me < 1 ){
-                toastr.error('El campo Cantidad Generatrices por linea debe ser mayor a 1');
-                return;
-            }
-            
-
             if (!this.elemento_me) {
                 toastr.error('El campo elemento es obligatorio');
                 return ;
@@ -1895,7 +1880,7 @@ processExcelData(data, filas, columnas) {
 
 
             if(this.cantidad_posiciones_me  > 100) {
-                toastr.error('El campo posiciones debe ser mayor a 100');
+                toastr.error('El campo posiciones o debe ser mayor a 100');
                 return ;
              }
 
