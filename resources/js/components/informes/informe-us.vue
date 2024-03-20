@@ -1254,12 +1254,6 @@ export default {
             }
 
         },
-        Tabla_me(newVal, oldVal) {
-        // Acciones a realizar cuando Tabla_me cambia
-            console.log('Tabla_me ha cambiado, actualiza tu vista aquí');
-            // Asegúrate de que la vista se actualiza correctamente
-        },
-
     },
 
      methods : {
@@ -1784,19 +1778,18 @@ export default {
     this.$refs.fileInput.value = ''; // Limpia el valor actual del input para permitir la recarga del mismo archivo
     this.$refs.fileInput.click(); // Activa el input de tipo file
 },
-        uploadExcel(event) {
-            const file = event.target.files[0];
+uploadExcel(event) {
+    const file = event.target.files[0];
     if (!file) {
         return; // Sale temprano si no hay archivo seleccionado
     }
     const reader = new FileReader();
-        reader.onload = (e) => {
+    reader.onload = (e) => {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: 'array' });
         const firstSheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[firstSheetName];
         const excelData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
-        reader.readAsArrayBuffer(file);
         // Calcula la cantidad de filas y columnas
         const cantidad_filas = excelData.length;
         let cantidad_columnas = 0;
@@ -1807,6 +1800,7 @@ export default {
         // Llama a processExcelData con los datos y las dimensiones
         this.processExcelData(excelData, cantidad_filas, cantidad_columnas);
     };
+    // Esta es la llamada correcta y única necesaria para comenzar la lectura del archivo
     reader.readAsArrayBuffer(file);
 },
 processExcelData(data, filas, columnas) {
@@ -1814,6 +1808,7 @@ processExcelData(data, filas, columnas) {
     const cantidad_generatrices_me = columnas;
     
     if (this.currentPosition === null || this.currentPosition >= this.Tabla_me.length) {
+        console.log("blabla")
         return;
     }
 
@@ -1845,12 +1840,10 @@ processExcelData(data, filas, columnas) {
     this.Tabla_me[this.currentPosition].cantidad_posiciones_me = cantidad_posiciones_me - 1;
     this.Tabla_me[this.currentPosition].cantidad_generatrices_me = cantidad_generatrices_me;
     this.Tabla_me[this.currentPosition].mediciones.push(accesorios);
-
-    // Notificar a Vue sobre la actualización para que la vista se actualice
     this.Tabla_me = [...this.Tabla_me];
-
     this.currentPosition = null;
     console.log('Datos procesados para Tabla_me:', this.Tabla_me);
+    
 }
 ,
         addTabla_me : function () {
