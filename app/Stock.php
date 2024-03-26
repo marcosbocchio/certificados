@@ -14,6 +14,7 @@ class Stock extends Model
         'cantidad', 
         'stock',
         'tipo_movimiento',
+        'user_id',
     ];
     
     public function scopeFiltro($query, $filtro = '') {
@@ -24,5 +25,10 @@ class Stock extends Model
                       ->orWhere('fecha', 'LIKE', "%{$filtro}%");
             }); 
         }
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
     }
 }

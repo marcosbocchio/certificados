@@ -17,9 +17,10 @@ class PdfStockController extends Controller
     $fechaInicio = $request->query('fechaInicio', Carbon::now()->subDays(30)->toDateString());
     $fechaInicioFormato = Carbon::parse($fechaInicio)->format('d-m-Y');
     
-    $stocks = Stock::where('producto_id', $productoId)
+    $stocks = Stock::with('user') // Cargar la relación con User
+               ->where('producto_id', $productoId)
                ->whereDate('fecha', '>=', $fechaInicio)
-               ->orderBy('fecha', 'desc') // Ordena por la columna 'fecha' de manera descendente
+               ->orderBy('fecha', 'desc')
                ->get();
 
     $productos = Productos::where('id', $productoId)->first();

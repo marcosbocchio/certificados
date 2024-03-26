@@ -94,7 +94,6 @@ class RemitosController extends Controller
     $detalles = $request->detalles;
     $interno_equipos = $request->interno_equipos;
     $observaciones = $request->observaciones; 
-
     $remito = new Remitos;
     Log::info($observaciones);
     DB::beginTransaction();
@@ -109,8 +108,8 @@ class RemitosController extends Controller
         foreach ($request->observaciones as $observacion) {
           $detalleObservacion = new DetalleObservacionRemito();
           $detalleObservacion->remito_id = $remito->id;
-          $detalleObservacion->observaciones = $observacion['observacion']; // Asegúrate de que sea una cadena
-          $detalleObservacion->cantidad = $observacion['cantidad']; // Asegúrate de que sea un número
+          $detalleObservacion->observaciones = $observacion['observacion']; 
+          $detalleObservacion->cantidad = $observacion['cantidad']; 
           $detalleObservacion->save();
       }
 
@@ -166,6 +165,12 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
     DB::beginTransaction();
     try {
         $producto = Productos::findOrFail($detalle_remito->producto_id);
+        $user_id = null;
+
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();
+        }
         // Restar la cantidad del detalle al stock actual del producto
         $producto->stock -= $detalle_remito->cantidad;
         $producto->save();
@@ -177,6 +182,7 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
         $nuevoMovimientoStock->stock = $producto->stock; // El stock después de la operación
         $nuevoMovimientoStock->fecha = $remito->fecha;
         $nuevoMovimientoStock->obs = "";
+        $nuevoMovimientoStock->user_id = $user_id;
         $nuevoMovimientoStock->tipo_movimiento = 'Remito de entrega N° '. $remito->prefijo . '-' . $remito->numero;
         $nuevoMovimientoStock->save();
 
@@ -322,7 +328,12 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
     public function remitoAnulacion($id){
       DB::beginTransaction();
       try {
-          
+        $user_id = null;
+
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();
+        }
           
           $remito = Remitos::findOrFail($id);
           
@@ -340,6 +351,7 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
               $nuevoMovimientoStock->obs = "";
               $nuevoMovimientoStock->cantidad = $detalle->cantidad;
               $nuevoMovimientoStock->stock = $producto->stock;
+              $nuevoMovimientoStock->user_id = $user_id;
               $nuevoMovimientoStock->tipo_movimiento = "Anul. remito entrega N°".str_pad($remito->prefijo, 4, "0", STR_PAD_LEFT)."-".str_pad($remito->numero, 8, "0", STR_PAD_LEFT);
               $nuevoMovimientoStock->save();
               
@@ -373,7 +385,12 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
       DB::beginTransaction();
       try {
           
-          
+        $user_id = null;
+
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();
+        }
           $remito = Remitos::findOrFail($id);
           
   
@@ -390,6 +407,7 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
               $nuevoMovimientoStock->obs = "";
               $nuevoMovimientoStock->cantidad = -$detalle->cantidad;
               $nuevoMovimientoStock->stock = $producto->stock;
+              $nuevoMovimientoStock->user_id = $user_id;
               $nuevoMovimientoStock->tipo_movimiento = "Desanul. remito entrega N° ".str_pad($remito->prefijo, 4, "0", STR_PAD_LEFT)."-".str_pad($remito->numero, 8, "0", STR_PAD_LEFT);
               $nuevoMovimientoStock->save();
               

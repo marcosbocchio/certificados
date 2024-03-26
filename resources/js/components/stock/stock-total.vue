@@ -1,6 +1,14 @@
 <template>
   <div v-if="productos.length">
+    <div class="export-search-container">
     <button @click="exportarTodoPDF" class="btn btn-enod exportar-todo-pdf">Exportar PDF</button>
+    <div class="input-group" style="width: 17vw;" >
+      <input type="text" v-model="searchTerm" class="form-control" @keyup.enter="applySearch" placeholder="Buscar...">
+      <span class="input-group-addon btn" @click="applySearch" style="background-color: rgb(255, 204, 0); cursor: pointer; border: none;">
+        <i class="fa fa-search"></i>
+      </span>
+    </div>
+  </div>
     <div class="box box-custom-enod">
       <div class="box-body">
         <div class="table-responsive">
@@ -47,6 +55,7 @@ export default {
     return {
       productos: [],
       pagination: {},
+      searchTerm: '',
     };
   },
   mounted() {
@@ -54,16 +63,19 @@ export default {
   },
   methods: {
     loadProductos(page = 1) {
-      axios.get(`/api/stock/paginatestock?page=${page}`)
-        .then(response => {
-          // Actualiza productos con la respuesta paginada
-          this.productos = response.data.data;
-          this.pagination = response.data;
-        })
-        .catch(error => {
-          console.error('API error:', error);
-        });
-    },
+  const params = {
+    page: page,
+    search: this.searchTerm,
+  };
+  axios.get(`/api/stock/paginatestock`, { params })
+    .then(response => {
+      this.productos = response.data.data;
+      this.pagination = response.data;
+    })
+    .catch(error => {
+      console.error('API error:', error);
+    });
+},
     registroProducto(producto) {
       window.location.href = `/area/enod/stock-registro/${producto.id}`;
     },
@@ -76,12 +88,21 @@ export default {
     getResults(page = 1) {
       this.loadProductos(page);
     },
+    applySearch() {
+  this.loadProductos();
+},
   },
 };
 </script>
 
 <style scoped>
 .exportar-todo-pdf {
+  margin-bottom: 20px;
+}
+.export-search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 </style>

@@ -140,6 +140,12 @@ public function reemplazarStockProducto(StockRequest $request)
 {
     DB::beginTransaction();
     try {
+        $user_id = null;
+
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();
+        }
         $producto = Productos::findOrFail($request->producto_id);
         $nuevoValorStock = $request->stock; // El nuevo valor del stock a establecer
 
@@ -154,6 +160,7 @@ public function reemplazarStockProducto(StockRequest $request)
             'cantidad' =>  $request->cantidad,
             'obs' => $request->observaciones,
             'stock'=> $nuevoValorStock,
+            'user_id'=>$user_id,
             'tipo_movimiento'=> $request->tipo_movimiento,
         ]);
         $registroStock->save();
@@ -173,7 +180,12 @@ public function actualizarStock($detalleCompra, $request)
         if (!$producto) {
             throw new \Exception("Producto no encontrado");
         }
+        $user_id = null;
 
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();
+        }
         // Actualizar el stock del producto
         $producto->stock += $detalleCompra->cantidad;
         $producto->save();
@@ -184,6 +196,7 @@ public function actualizarStock($detalleCompra, $request)
             'cantidad' => $detalleCompra->cantidad,
             'obs' => $request->obs,
             'stock' => $producto->stock,
+            'user_id'=> $user_id,
             'tipo_movimiento' => $request->tipo_movimiento,
         ]);
         $nuevoStock->save();
@@ -214,7 +227,13 @@ public function actualizarStock($detalleCompra, $request)
     DB::beginTransaction();
     try {
         // Actualizar la compra con nuevos campos, incluyendo observaciones a nivel de compra
-        $compra->update($request->only(['fecha', 'fecha_remito', 'proveedor_id', 'numero_remito', 'obs']));
+        $user_id = null;
+
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();
+        }
+        $compra->update($request->only(['fecha', 'fecha_remito', 'proveedor_id', 'numero_remito', 'obs','user_id']));
 
         // Eliminar detalles de compra antiguos
         DetalleCompra::where('compra_id', $compra->id)->delete();
@@ -225,6 +244,7 @@ public function actualizarStock($detalleCompra, $request)
                 'compra_id' => $compra->id,
                 'producto_id' => $detalle['producto_id'],
                 'cantidad' => $detalle['cantidad'],
+                'user_ud' => $user_id,
             ]);
             $detalleCompra->save();
         }
@@ -275,10 +295,14 @@ public function actualizarStock($detalleCompra, $request)
 
     public function paginateStock(Request $request)
     {
+        $searchTerm = $request->search;
         $perPage = 10;
-
-        $productos = Productos::where('stockeable_sn', 1)->paginate($perPage);
-
+    
+        $productos = Productos::where('stockeable_sn', 1)
+                              ->when($searchTerm, function($query, $searchTerm) {
+                                  return $query->where('descripcion', 'like', "%{$searchTerm}%");
+                              })
+                              ->paginate($perPage);
     
         return response()->json($productos);
     }
@@ -288,13 +312,15 @@ public function actualizarStock($detalleCompra, $request)
     {
         $perPage = 10;
         
-        // Inicializa la fecha de inicio desde la solicitud, o usa por defecto la fecha de hace 30 días
+        // Asumiendo que estás utilizando Carbon para manejar fechas
         $fechaInicio = $request->input('fechaInicio', Carbon::now()->subDays(30)->toDateString());
-    
+
         $registro = Stock::where('producto_id', $id)
-                         ->whereDate('created_at', '>=', $fechaInicio) // Filtra por fecha de inicio
-                         ->orderBy('created_at', 'DESC')
-                         ->paginate($perPage);
+                        ->join('users', 'stock.user_id', '=', 'users.id')
+                        ->whereDate('stock.created_at', '>=', $fechaInicio) // Especifica la tabla para 'created_at'
+                        ->orderBy('stock.created_at', 'DESC') // Especifica la tabla para 'created_at' en el orderBy también
+                        ->select('stock.*', 'users.name as user_name') // Asegúrate de seleccionar lo que necesitas explícitamente
+                        ->paginate($perPage);
         
         return response()->json($registro);
     }
@@ -313,8 +339,14 @@ public function actualizarStock($detalleCompra, $request)
             if (!$compra) {
                 throw new \Exception("Compra no encontrada con ID: {$id}");
             }
+            $user_id = null;
 
+            if (Auth::check())
+            {
+                $user_id = $userId = Auth::id();
+            }
             foreach ($detallesCompra as $detalle) {
+                
                 $producto = Productos::find($detalle->producto_id);
                 if (!$producto) {
                     throw new \Exception("Producto no encontrado con ID: {$detalle->producto_id}");
@@ -334,6 +366,7 @@ public function actualizarStock($detalleCompra, $request)
                     'cantidad' => -$detalle->cantidad,
                     'stock' => $producto->stock,
                     'producto_id' => $detalle->producto_id,
+                    'user_id' => $user_id,
                     'tipo_movimiento' => "Anul. remito de compra N° " . $compra->numero_remito,
                 ]);
                 $stock->save();
@@ -367,7 +400,12 @@ public function actualizarStock($detalleCompra, $request)
             }
 
             $detallesCompra = DetalleCompra::where('compra_id', $id)->get();
+            $user_id = null;
 
+            if (Auth::check())
+            {
+                 $user_id = $userId = Auth::id();
+            }
             foreach ($detallesCompra as $detalle) {
                 $producto = Productos::find($detalle->producto_id);
                 if (!$producto) {
@@ -385,6 +423,7 @@ public function actualizarStock($detalleCompra, $request)
                     'cantidad' => $detalle->cantidad, // Positivo para reflejar el incremento en el stock
                     'stock' => $producto->stock,
                     'producto_id' => $detalle->producto_id,
+                    'user_id' => $user_id,
                     'tipo_movimiento' => 'Desanul. remito de compra N° '. $compra->numero_remito,
                 ]);
                 $stock->save();

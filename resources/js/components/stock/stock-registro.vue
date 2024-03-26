@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-md-1">
-        <button @click="exportarPDF(id)" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF" :disabled="!$can('M_stock_edita')">Exportar PDF</button>
+        <button @click="exportarPDF(id)" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
       </div>
       <div class="col-md-7">
 
@@ -24,9 +24,10 @@
           <table class="table table-hover table-striped table-condensed">
             <thead>
               <tr style="width: 100%;">
-                <th style="width: 8%;">Fecha</th>
-                <th style="width: 35%;">Movimiento</th>
-                <th style="width: 37%;">Observaciones</th>
+                <th style="width: 10%;">Fecha</th>
+                <th style="width: 30%;">Movimiento</th>
+                <th style="width: 30%;">Observaciones</th>
+                <th style="text-align: right; width: 10%;">Usuario</th>
                 <th style="text-align: right; width: 10%;">Cantidad</th>
                 <th style="text-align: right; width: 10%;">Stock</th>
               </tr>
@@ -36,6 +37,7 @@
                 <td>{{ formatearFecha(item.fecha) }}</td>
                 <td>{{ item.tipo_movimiento }}</td>
                 <td>{{ item.obs }}</td>
+                <td style="text-align: right;">{{ item.user_name }}</td>
                 <td style="text-align: right;">{{ item.cantidad }}</td>
                 <td style="text-align: right;">{{ item.stock }}</td>
               </tr>
