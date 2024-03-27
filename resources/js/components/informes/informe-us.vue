@@ -552,14 +552,36 @@
                                     <input type="text" v-model="elemento_us_pa" class="form-control" id="elemento_us_pa" maxlength="30">
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="soldadorP" title="Soldador P">Soldador P</label>
+                                    <v-select v-model="soldadorP" :options="opcionesSoldadores" label="nombre">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nombre }}</span> <br>
+                                            <span class="downSelect">{{ option.codigo }}</span>
+                                        </template>
+                                    </v-select>
+                                </div>
+                            </div>
 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="soldadorZ" title="Soldador Z">Soldador Z</label>
+                                    <v-select v-model="soldadorZ" :options="opcionesSoldadores" label="nombre">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nombre }}</span> <br>
+                                            <span class="downSelect">{{ option.codigo }}</span>
+                                        </template>
+                                    </v-select>
+                                </div>
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="diametro_us_pa" title="Diametro">ø</label>
                                     <v-select v-model="diametro_us_pa" label="diametro" :options="diametros" taggable id="diametro_us_pa"></v-select>
                                 </div>
                             </div>
-
+                            <div class="clearfix"></div>
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="nro_indicacion_up_pa" title="Número Indicación">N° Indicación *</label>
@@ -587,7 +609,7 @@
                                     <input type="number" v-model="camino_sonico_us_pa" class="form-control" id="camino_sonico_us_pa">
                                 </div>
                             </div>
-
+                            <div class="clearfix"></div>
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="x_us_pa" title="X (cm)">X *</label>
@@ -615,7 +637,7 @@
                                     <input type="number" v-model="longitud_us_pa" class="form-control" id="longitud_us_pa">
                                 </div>
                             </div>
-
+                            <div class="clearfix"></div>
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="nivel_registro_us_pa" title="Nivel Registro">Nivel Registro *</label>
@@ -641,7 +663,9 @@
                                     <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th  class="col-lg-2">Elemento</th>
+                                                <th  class="col-lg-1">Elemento</th>
+                                                <th  class="col-lg-1">Soldador P</th>
+                                                <th  class="col-lg-1">Soldador Z</th>
                                                 <th  class="col-lg-1">ø</th>
                                                 <th  class="col-lg-1">N° Ind.</th>
                                                 <th  class="col-lg-1">P.E.</th>
@@ -660,6 +684,8 @@
                                         <tbody>
                                             <tr v-for="(item,k) in (Tabla_us_pa)" :key="k" @click="selectPosTabla_us_pa(k)" :class="{selected: indexPosTabla_us_pa === k}" >
                                                 <td>{{ item.elemento_us_pa }}</td>
+                                                <td>{{ obtenerCodigoSoldadorPorId(item.soldadorP) }}</td>
+                                                <td>{{ obtenerCodigoSoldadorPorId(item.soldadorZ) }}</td>
                                                 <td>{{ item.diametro_us_pa }}</td>
                                                 <td>{{ item.nro_indicacion_us_pa}}</td>
                                                 <td>{{ item.posicion_examen_us_pa}}</td>
@@ -1157,6 +1183,9 @@ export default {
         longitud_us_pa:'',
         nivel_registro_us_pa:'',
         aceptable_sn_us_pa:'',
+        soldadorP: null,
+        soldadorZ: null,
+        opcionesSoldadores: [],
 
         //detalle me
         elemento_me:'',
@@ -1215,6 +1244,7 @@ export default {
       this.setEdit();
       this.$store.dispatch('loadModelos3d');
       this.getAccesoriosUs();
+      this.getSoldadores()
     },
 
     computed :{
@@ -1338,7 +1368,14 @@ export default {
         setPlanta : function(value){
             this.planta = value;
         },
+        async getSoldadores(){
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+                await axios.get(urlRegistros).then(response =>{
+                this.opcionesSoldadores = response.data
+                });
 
+         },
         getCliente : function(){
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
@@ -1346,6 +1383,11 @@ export default {
             this.cliente = response.data
 
             });
+        },
+        obtenerCodigoSoldadorPorId(id) {
+        const soldador = this.opcionesSoldadores.find(s => s.id === id);
+        console.log(soldador);
+        return soldador ? soldador.codigo : 'N/A'; // Cambia 'N/A' por lo que consideres adecuado
         },
 
          getNumeroInforme:function() {
@@ -1764,6 +1806,8 @@ export default {
 
             this.Tabla_us_pa.push({
                 elemento_us_pa: this.elemento_us_pa,
+                soldadorP: this.soldadorP ? this.soldadorP.id : '',
+                soldadorZ: this.soldadorZ ? this.soldadorZ.id : '',
                 diametro_us_pa: this.diametro_us_pa ? this.diametro_us_pa.diametro : '',
                 nro_indicacion_us_pa:this.nro_indicacion_us_pa,
                 posicion_examen_us_pa:this.posicion_examen_us_pa,

@@ -208,6 +208,8 @@ class InformesUsController extends Controller
             $detalle_us_pa_us->detalle_us_pa_us_referencia_id = $referencia_id;
             $detalle_us_pa_us->diametro = $detalle_us_pa['diametro_us_pa'];
             $detalle_us_pa_us->elemento = $detalle_us_pa['elemento_us_pa'];
+            $detalle_us_pa_us->soldador_p_id = $detalle_us_pa['soldadorP'];
+            $detalle_us_pa_us->soldador_z_id = $detalle_us_pa['soldadorZ'];
             $detalle_us_pa_us->nro_indicacion = $detalle_us_pa['nro_indicacion_us_pa'];
             $detalle_us_pa_us->posicion_examen = $detalle_us_pa['posicion_examen_us_pa'];
             $detalle_us_pa_us->angulo_incidencia = $detalle_us_pa['angulo_incidencia_us_pa'];
@@ -383,6 +385,8 @@ class InformesUsController extends Controller
                             ->leftjoin('detalles_us_pa_us_referencias','detalles_us_pa_us_referencias.id','=','detalle_us_pa_us.detalle_us_pa_us_referencia_id')
                             ->where('informe_us_id',$informe_us_id)
                             ->selectRaw('detalle_us_pa_us.elemento as elemento_us_pa,
+                                        detalle_us_pa_us.soldador_p_id as soldadorP,
+                                        detalle_us_pa_us.soldador_z_id as soldadorZ,
                                         detalle_us_pa_us.diametro as diametro_us_pa,
                                         detalle_us_pa_us.nro_indicacion as nro_indicacion_us_pa,
                                         detalle_us_pa_us.posicion_examen as posicion_examen_us_pa,

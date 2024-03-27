@@ -1,6 +1,6 @@
 <template>
-  <div v-if="productos.length">
-    <div class="export-search-container">
+  <div>
+  <div class="export-search-container">
     <button @click="exportarTodoPDF" class="btn btn-enod exportar-todo-pdf">Exportar PDF</button>
     <div class="input-group" style="width: 17vw;" >
       <input type="text" v-model="searchTerm" class="form-control" @keyup.enter="applySearch" placeholder="Buscar...">
@@ -9,6 +9,8 @@
       </span>
     </div>
   </div>
+  <div v-if="productos.length">
+    
     <div class="box box-custom-enod">
       <div class="box-body">
         <div class="table-responsive">
@@ -47,6 +49,7 @@
       <span slot="next-nav">Siguiente &gt;</span>
     </pagination>
   </div>
+</div>
 </template>
 
 <script>
