@@ -1,5 +1,5 @@
 <template>
-  <div v-if="productos.length">
+  <div>
     <div class="export-search-container">
     <button @click="exportarTodoPDF" class="btn btn-enod exportar-todo-pdf">Exportar PDF</button>
     <div class="input-group" style="width: 17vw;" >
@@ -9,9 +9,11 @@
       </span>
     </div>
   </div>
+  
+  <div>
     <div class="box box-custom-enod">
       <div class="box-body">
-        <div class="table-responsive">
+        <div v-if="productos.length" class="table-responsive">
           <table class="table table-hover table-striped table-condensed">
             <thead>
               <tr style="width: 100%;">
@@ -47,6 +49,7 @@
       <span slot="next-nav">Siguiente &gt;</span>
     </pagination>
   </div>
+</div>
 </template>
 
 <script>
