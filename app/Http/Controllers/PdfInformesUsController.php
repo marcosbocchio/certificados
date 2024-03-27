@@ -22,12 +22,14 @@ use App\Tecnicas;
 use App\EstadosSuperficies;
 use App\CalibracionesUs;
 use App\User;
+use App\Soldadores;
 use App\OtTipoSoldaduras;
 use App\AgenteAcoplamientos;
 use App\MetodoEnsayos;
 use App\InformesUsMe;
 use App\Generatrices;
 use App\DetalleUsPaUs;
+
 
 class PdfInformesUsController extends Controller
 {
@@ -66,8 +68,9 @@ class PdfInformesUsController extends Controller
          $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
          $generatrices = Generatrices::all();
          $informes_us_me = (new \App\Http\Controllers\InformesUsController)->getTabla_me($informe_us->id);
-         $indicaciones_us_pa = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
-
+         $indicaciones_us_pa_actualizado = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
+         $indicaciones_us_pa = remplazarSoldadores($indicaciones_us_pa_actualizado);
+         
          $detalles = DetalleUsPaUs::with('referencia')
                     ->where('informe_us_id',$informe_us->id)
                     ->get();
