@@ -23,31 +23,29 @@
             </tr>
         </thead>    
         <tbody>
-            @foreach ($indicaciones_us_pa  as $indicacion)
+        @foreach ($indicaciones_us_pa  as $indicacion)
             <tr>
-                  <td style="font-size: 10px;height: 20px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ soldador_p_id }} / {{ soldador_z_id }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->posicion_examen) }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->angulo_incidencia) }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->camino_sonico }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->x }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->y }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->z }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->longitud }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->nivel_registro)}}</td>
-
-
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">
-                  @if($indicacion->aceptable_sn)
-                      AP
-                   @else
-                      RZ
-                  @endif
-                  </td>
+                <td style="font-size: 10px;height: 20px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->soldador_p_id }} / {{ $indicacion->soldador_z_id }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->posicion_examen) }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->angulo_incidencia) }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->camino_sonico }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->x }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->y }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->z }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->longitud }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->nivel_registro)}}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">
+                    @if($indicacion->aceptable_sn)
+                        AP
+                    @else
+                        RZ
+                    @endif
+                </td>
             </tr>
-            @endforeach
+        @endforeach
         </tbody>
     </table>
 
