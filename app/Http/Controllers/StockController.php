@@ -314,12 +314,12 @@ public function actualizarStock($detalleCompra, $request)
         
         // Asumiendo que estás utilizando Carbon para manejar fechas
         $fechaInicio = $request->input('fechaInicio', Carbon::now()->subDays(30)->toDateString());
-
+    
         $registro = Stock::where('producto_id', $id)
-                        ->join('users', 'stock.user_id', '=', 'users.id')
+                        ->leftJoin('users', 'stock.user_id', '=', 'users.id')
                         ->whereDate('stock.created_at', '>=', $fechaInicio) // Especifica la tabla para 'created_at'
                         ->orderBy('stock.created_at', 'DESC') // Especifica la tabla para 'created_at' en el orderBy también
-                        ->select('stock.*', 'users.name as user_name') // Asegúrate de seleccionar lo que necesitas explícitamente
+                        ->select('stock.*', DB::raw('IFNULL(users.name, "-") as user_name')) // Utiliza IFNULL para mostrar "Sin usuario" si no hay un usuario asociado
                         ->paginate($perPage);
         
         return response()->json($registro);
