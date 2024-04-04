@@ -101,13 +101,9 @@ class RemitosController extends Controller
         try {
             $remito = $this->saveRemito($request, $remito);
             $this->saveDetalle($detalles, $remito);
-    
+            $this->saveInternoEquipos($interno_equipos, $remito);
             if (!$esBorrador) {
-                log::info('borrador: ' . $esBorrador);
-                // Solo ejecutar estas acciones si NO es un borrador
-                $this->saveInternoEquipos($interno_equipos, $remito);
                 $this->updateInternoEquipos($interno_equipos, $remito);
-    
             }
 
             foreach ($request->observaciones as $observacion) {
@@ -312,6 +308,7 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
     $detalles = $request->detalles;
     $interno_equipos = $request->interno_equipos;
     $observaciones = $request->observaciones; // Asegúrate de que esto se envía correctamente desde el frontend
+    $esBorrador = $request->borrador_sn == 1; // Aquí capturas si es borrador o no
 
     DB::beginTransaction();
     try {
@@ -322,7 +319,9 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
         
         RemitoInternoEquipos::where('remito_id', $id)->delete();
         $this->saveInternoEquipos($interno_equipos, $remito);
-        $this->updateInternoEquipos($interno_equipos, $remito);
+        if (!$esBorrador) {
+            $this->updateInternoEquipos($interno_equipos, $remito);
+        }
 
         // Manejo de observaciones
         DetalleObservacionRemito::where('remito_id', $id)->delete();
