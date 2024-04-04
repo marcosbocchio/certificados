@@ -5,9 +5,9 @@
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post" autocomplete="off">
                  <div class="box box-custom-enod">
                     <div class="box-body">
-                        <div class="col-md-10">
+                        <div class="col-md-8">
                         </div>
-                        <div class="col-md-2" style="display: flex;justify-content: flex-end;">
+                        <div class="col-md-4" style="display: flex;justify-content: flex-end;">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="esBorrador" v-model="esBorrador">
                                 <label class="form-check-label" for="esBorrador">Guardar como Borrador</label>
