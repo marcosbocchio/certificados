@@ -1387,7 +1387,7 @@ export default {
         obtenerCodigoSoldadorPorId(id) {
         const soldador = this.opcionesSoldadores.find(s => s.id === id);
         console.log(soldador);
-        return soldador ? soldador.codigo : 'N/A'; // Cambia 'N/A' por lo que consideres adecuado
+        return soldador ? soldador.codigo : '-'; //
         },
 
          getNumeroInforme:function() {

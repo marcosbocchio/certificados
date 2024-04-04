@@ -1,10 +1,22 @@
+@ -1,583 +1,593 @@
 <template>
  <div class="row">
        <div class="col-md-12">
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post" autocomplete="off">
                  <div class="box box-custom-enod">
                     <div class="box-body">
-                        <div class="col-md-6">
+                        <div class="col-md-10">
+                        </div>
+                        <div class="col-md-2" style="display: flex;justify-content: flex-end;">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="esBorrador" v-model="esBorrador">
+                                <label class="form-check-label" for="esBorrador">Guardar como Borrador</label>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-6" >
                             <div class="form-group">
                                 <label for="fecha">Fecha *</label>
                                 <div>
@@ -209,7 +221,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(obs, index) in listaObservaciones" :key="index">
-                                                    <td>{{ obs.observacion }}</td>
+                                                    <td>{{ obs.observaciones }}</td>
                                                     <td>{{ obs.cantidad }}</td>
                                                     <td style="text-align: center;"><span class="fa fa-minus-circle" @click="quitarObservacion(index)"></span></td>
                                                 </tr>
@@ -219,7 +231,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button :disabled="editmode || formularioEnviando" class="btn btn-primary" type="submit">Guardar</button>
+                        <button :disabled="formularioEnviando || this.cargando_stop" class="btn btn-primary" type="submit">Guardar</button>
                 </form>
                 <nuevo-productos :modelo="'productos'" @store="getProductos"></nuevo-productos>
        </div>
@@ -294,6 +306,9 @@ export default {
         cantidadActual: 1,
         listaObservaciones: [],
         formularioEnviando: false,
+        esBorrador: true,
+        cargando_stop:false,
+        
     }},
 
     created : function() {
@@ -316,6 +331,9 @@ export default {
             return this.frentes.filter(e => e.id != this.frente_origen.id);
 
         },
+        valorBorradorSN() {
+        return this.esBorrador ? '1' : '0';
+        },
      },
 
     methods : {
@@ -323,7 +341,7 @@ export default {
         setEdit : function(){
 
             if(this.editmode) {
-
+                this.formularioEnviando = false;
                this.fecha   = this.remitodata.fecha;
                this.numero = this.remitodata.numero;
                this.prefijo = this.remitodata.prefijo;
@@ -335,7 +353,15 @@ export default {
                this.frente_destino = this.remitodata.frente_destino;
                this.formatearPrefijo(this.prefijo,4);
                this.formatearNumero(this.numero,8);
-               this.getInternoEquipos()
+               this.getInternoEquipos();
+               this.cargando_stop = true; // Inicia la carga
+                if (this.remitodata && this.remitodata.id) {
+                    this.getObservaciones(this.remitodata.id).finally(() => {
+                        this.cargando_stop = false; // Finaliza la carga independientemente del resultado
+                    });
+                } else {
+                    this.cargando_stop = false;
+                }
 
             }
         },
@@ -370,7 +396,7 @@ export default {
         agregarObservacion() {
             if(this.observacionActual.trim() !== '') {
                 this.listaObservaciones.push({
-                    observacion: this.observacionActual,
+                    observaciones: this.observacionActual,
                     cantidad: this.cantidadActual,
                 });
                 this.observacionActual = '';
@@ -411,7 +437,19 @@ export default {
             });
 
         },
-
+        getObservaciones: function(remitoId) {
+            return new Promise((resolve, reject) => {
+                axios.get(`/remitos/${remitoId}/observaciones`)
+                    .then(response => {
+                        this.listaObservaciones = response.data;
+                        resolve(); // Indica que la carga ha terminado correctamente
+                    })
+                    .catch(error => {
+                        console.error('Error al obtener las observaciones: ', error);
+                        reject(error); // Indica que hubo un error en la carga
+                    });
+            });
+        },
         addProducto(index) {
 
             if(!this.producto){
@@ -428,7 +466,12 @@ export default {
                  toastr.error("El campo cantidad de producto es obligatorio");
                  return;
             }
+            const productoYaAgregado = this.inputsProductos.some(productoEnLista => productoEnLista.producto.id === this.producto.id);
 
+            if (productoYaAgregado) {
+                toastr.error("Este producto ya ha sido agregado");
+                return;
+            }
                 this.inputsProductos.push({
                     producto:this.producto,
                     medida : this.medida,
@@ -477,7 +520,7 @@ export default {
 
         Store : function(){
             this.formularioEnviando = true;
-          this.errors =[];
+            this.errors =[];
             var urlRegistros = 'remitos' ;
             axios({
               method: 'post',
@@ -493,6 +536,7 @@ export default {
                 'detalles'        : this.inputsProductos,
                 'interno_equipos' : this.inputsEquipos,
                 'observaciones'     : this.listaObservaciones,
+                'borrador_sn': this.valorBorradorSN,
           }
 
         }).then(response => {
@@ -525,6 +569,7 @@ export default {
             this.formularioEnviando = true;
             console.log('entro para actualizar' );
             this.errors =[];
+            var borrador_sn = this.esBorrador ? '1' : '0';
             var urlRegistros = 'remitos/' + this.remitodata.id  ;
             axios({
               method: 'put',
@@ -540,13 +585,15 @@ export default {
                 'detalles'        : this.inputsProductos,
                 'interno_equipos' : this.inputsEquipos,
                 'observaciones'     : this.listaObservaciones,
+                'borrador_sn': this.valorBorradorSN,
+                
           }}
 
         ).then( () => {
 
           toastr.success('Remito N° ' +  this.prefijo + '-' + this.numero + ' fue actualizado con éxito ');
           window.open(  '/pdf/remito/' + this.remitodata.id,'_blank');
-          window.location.href =  '/remitos/ot/' + this.otdata.id;
+          window.location.href =  '/area/enod/remitos/listado';
 
         }).catch(error => {
             this.formularioEnviando = false;

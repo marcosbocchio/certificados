@@ -468,6 +468,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('remitos/paginate', 'RemitosController@paginate');
     Route::get('remitos/{id}/anular', 'RemitosController@remitoAnulacion');
     Route::get('remitos/{id}/desanular', 'RemitosController@desanularRemito');
+    Route::get('remitos/{id}/observaciones', 'RemitosController@getDetalleObservacionRemito');
+    Route::get('remitos/{id}/observaciones', 'RemitosController@getObservaciones');
     Route::resource('remitos', 'RemitosController');
     //stock
     Route::get('stock/paginate', 'StockController@paginate');

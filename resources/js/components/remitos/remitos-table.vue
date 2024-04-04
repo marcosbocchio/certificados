@@ -43,7 +43,8 @@
                                        <th>Destino</th>
                                        <th>Fecha</th>
                                        <th style="text-align: center;">Anulado</th>
-                                       <th colspan="2">&nbsp;</th>
+                                       <th style="text-align: center;">Borrador</th>
+                                       <th colspan="3">&nbsp;</th>
                                    </tr>
                                </thead>
                                <tbody>
@@ -57,6 +58,15 @@
                                        <td style="text-align: center;">
                                            <app-icon v-if="remito.aunulado_sn === 1" img="check" color="black"></app-icon>
                                        </td>
+                                       <td style="text-align: center;">
+                                           <app-icon v-if="remito.borrador_sn === 1" img="check" color="black"></app-icon>
+                                       </td>
+                                       <td width="10px">
+                                            <button @click="editRemito(k)" class="btn btn-warning btn-sm" title="Editar" 
+                                            :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 0">
+                                                <span class="fa fa-edit"></span>
+                                            </button>
+                                        </td>
                                        <td v-if="remito.interno_sn" width="10px"> 
                                            <a :href="'/pdf/remito/' + remito.id" target="_blank" class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a>
                                        </td>
@@ -64,15 +74,17 @@
                                            <a :href="'/pdf/remito/' + remito.id" target="_blank" class="btn btn-default btn-sm" title="Imprimir"><span class="fa fa-print"></span></a>
                                        </td>
                                        <td width="10px" v-if="remito.aunulado_sn !== 1" style="text-align: center;">
-                                           <button @click="confirmarAnulacion(remito)" class="btn btn-default btn-sm" title="Anular" :disabled="!$can('T_remitos_edita')">
-                                               <app-icon img="remove" color="black"></app-icon>
-                                           </button>
-                                       </td>
-                                       <td v-else width="10px" style="text-align: center;">
-                                           <button @click="confirmarDesanulacion(remito)" class="btn btn-default btn-sm" title="Desanular" :disabled="!$can('T_remitos_edita')">
-                                               <app-icon img="check" color="black"></app-icon>
-                                           </button>
-                                       </td>
+                                            <button @click="confirmarAnulacion(remito)" class="btn btn-default btn-sm" title="Anular" 
+                                                :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 1">
+                                                <app-icon img="remove" color="black"></app-icon>
+                                            </button>
+                                        </td>
+                                        <td v-else width="10px" style="text-align: center;">
+                                            <button @click="confirmarDesanulacion(remito)" class="btn btn-default btn-sm" title="Desanular" 
+                                                :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 1">
+                                                <app-icon img="check" color="black"></app-icon>
+                                            </button>
+                                        </td>
                                    </tr>
                                </tbody>
                            </table>

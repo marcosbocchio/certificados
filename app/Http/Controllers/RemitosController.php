@@ -61,7 +61,7 @@ class RemitosController extends Controller
     public function paginate(Request $request){
       $search = $request->input('search');
   
-      $query = Remitos::selectRaw('id, LPAD(prefijo, 4, "0") as prefijo_formateado, LPAD(numero, 8, "0") as numero_formateado, DATE_FORMAT(remitos.created_at,"%d/%m/%Y") as fecha, receptor, destino, frente_origen_id, frente_destino_id, aunulado_sn')
+      $query = Remitos::selectRaw('id, LPAD(prefijo, 4, "0") as prefijo_formateado, LPAD(numero, 8, "0") as numero_formateado, DATE_FORMAT(remitos.created_at,"%d/%m/%Y") as fecha, receptor, destino, frente_origen_id, frente_destino_id, aunulado_sn, borrador_sn')
                        ->with(['frente_origen', 'frente_destino'])
                        ->when($search, function($query, $search) {
                            return $query->where(function($query) use ($search) {
@@ -90,38 +90,42 @@ class RemitosController extends Controller
     }
 
     public function store(RemitoRequest $request)
-{
-    $detalles = $request->detalles;
-    $interno_equipos = $request->interno_equipos;
-    $observaciones = $request->observaciones; 
-    $remito = new Remitos;
-    Log::info($observaciones);
-    DB::beginTransaction();
-    try {
-        $remito = $this->saveRemito($request,$remito);
-        $this->saveDetalle($detalles, $remito);
-        $this->saveInternoEquipos($interno_equipos, $remito);
-        $this->updateInternoEquipos($interno_equipos, $remito);
+    {
+        $detalles = $request->detalles;
+        $interno_equipos = $request->interno_equipos;
+        $observaciones = $request->observaciones; 
+        $esBorrador = $request->borrador_sn == 1; // Aquí capturas si es borrador o no
+        $remito = new Remitos;
+        log::info('se guardo como '. $esBorrador);
+        DB::beginTransaction();
+        try {
+            $remito = $this->saveRemito($request, $remito);
+            $this->saveDetalle($detalles, $remito);
+    
+            if (!$esBorrador) {
+                log::info('borrador: ' . $esBorrador);
+                // Solo ejecutar estas acciones si NO es un borrador
+                $this->saveInternoEquipos($interno_equipos, $remito);
+                $this->updateInternoEquipos($interno_equipos, $remito);
+    
+            }
 
-        
-
-        foreach ($request->observaciones as $observacion) {
-          $detalleObservacion = new DetalleObservacionRemito();
-          $detalleObservacion->remito_id = $remito->id;
-          $detalleObservacion->observaciones = $observacion['observacion']; 
-          $detalleObservacion->cantidad = $observacion['cantidad']; 
-          $detalleObservacion->save();
-      }
-
-        DB::commit();
-    } catch (Exception $e) {
-        DB::rollback();
-
-        throw $e;
+            foreach ($request->observaciones as $observacion) {
+                $detalleObservacion = new DetalleObservacionRemito();
+                $detalleObservacion->remito_id = $remito->id;
+                $detalleObservacion->observaciones = $observacion['observaciones'];
+                $detalleObservacion->cantidad = $observacion['cantidad'];
+                $detalleObservacion->save();
+            }
+    
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    
+        return $remito;
     }
-
-    return $remito;
-}
 
     public function saveRemito($request,$remito){
 
@@ -140,6 +144,7 @@ class RemitosController extends Controller
         $remito->receptor = $request->receptor;
         $remito->destino  = $request->destino;
         $remito->user_id  =  $user_id;
+        $remito->borrador_sn = $request->borrador_sn;
         $remito->save();
 
         return $remito;
@@ -155,8 +160,12 @@ class RemitosController extends Controller
              $detalle_remito->medida_id            = $detalle['medida']['id'];
              $detalle_remito->cantidad             = $detalle['cantidad_productos'];
              $detalle_remito->save();
+                $esBorrador = $remito->borrador_sn == 1;
 
-             $this->actualizarStockYRegistrarMovimiento($detalle_remito, $remito);
+                if (!$esBorrador) {
+                    $this->actualizarStockYRegistrarMovimiento($detalle_remito, $remito);
+                }  
+             
     }
 }
 
@@ -219,6 +228,10 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
           }
      }
 
+     public function getObservaciones($id) {
+        $observaciones = DetalleObservacionRemito::where('remito_id', $id)->get(['observaciones', 'cantidad', 'id']);
+        return response()->json($observaciones);
+    }
     public function edit($id)
     {
 
@@ -294,32 +307,42 @@ private function actualizarStockYRegistrarMovimiento($detalle_remito, $remito)
      * @return \Illuminate\Http\Response
      */
     public function update(RemitoRequest $request, $id)
-    {
-        $remito = Remitos::where('id',$id)->first();
-        $detalles = $request->detalles;
-        $interno_equipos = $request->interno_equipos;
+{
+    $remito = Remitos::findOrFail($id);
+    $detalles = $request->detalles;
+    $interno_equipos = $request->interno_equipos;
+    $observaciones = $request->observaciones; // Asegúrate de que esto se envía correctamente desde el frontend
 
-        DB::beginTransaction();
-        try {
+    DB::beginTransaction();
+    try {
+        $remito = $this->saveRemito($request, $remito);
+        
+        DetalleRemitos::where('remito_id', $id)->delete();
+        $this->saveDetalle($detalles, $remito);
+        
+        RemitoInternoEquipos::where('remito_id', $id)->delete();
+        $this->saveInternoEquipos($interno_equipos, $remito);
+        $this->updateInternoEquipos($interno_equipos, $remito);
 
-            $remito = $this->saveRemito($request,$remito);
-            DetalleRemitos::where('remito_id',$id)->delete();
-            $this->saveDetalle($detalles,$remito);
-            RemitoInternoEquipos::where('remito_id',$id)->delete();
-            $this->saveInternoEquipos($interno_equipos,$remito);
-            $this->updateInternoEquipos($interno_equipos,$remito);
-
-
-          DB::commit();
-
-        } catch (Exception $e) {
-
-          DB::rollback();
-          throw $e;
-
+        // Manejo de observaciones
+        DetalleObservacionRemito::where('remito_id', $id)->delete();
+        foreach ($observaciones as $observacion) {
+            $detalleObservacion = new DetalleObservacionRemito();
+            $detalleObservacion->remito_id = $remito->id;
+            $detalleObservacion->observaciones = $observacion['observaciones']; // Asegúrate de que la clave aquí coincide con el frontend
+            $detalleObservacion->cantidad = $observacion['cantidad'];
+            $detalleObservacion->save();
         }
 
+        DB::commit();
+    } catch (Exception $e) {
+        DB::rollback();
+        // Considera manejar la excepción de manera más específica o registrarla
+        throw $e;
     }
+
+    return response()->json(['message' => 'Remito actualizado con éxito'], 200);
+}
     public function destroy($id)
     {
         //
