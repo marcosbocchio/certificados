@@ -63,6 +63,18 @@ header .destino {
 .producto {
     word-wrap: break-word;
 }
+.watermark {
+    position: fixed;
+    top: 30%;  /* Reducir si la marca de agua aparece muy arriba */
+    left: 3%;  /* Reducir si la marca de agua aparece muy a la izquierda */
+    transform: rotate(-45deg);
+    transform-origin: 50% 50%;
+    font-size: 7em; /* Ajustar al tamaño deseado */
+    color: rgba(200, 200, 200, 0.5); /* Este es un gris claro semi-transparente */
+    width: 100%;
+    text-align: center;
+    z-index: -1000;
+}
  </style>  
 </head>
 
@@ -87,7 +99,9 @@ header .destino {
         <span>{{$remito->destino}}</span>
     </div>
 </header>   
-
+@if($remito->borrador_sn === 1)
+        <div class="watermark">BORRADOR</div>
+    @endif
 <div class="detalle">
     <table>
         <tbody>
