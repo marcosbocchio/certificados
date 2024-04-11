@@ -262,7 +262,9 @@ Vue.component('clonacion-masiva', require('./components/dashboard/informes/clona
 Vue.component('table-placas', require('./components/dashboard/placas/table-placas').default);
 
 Vue.component('partes', require('./components/partes/partes.vue').default);
+Vue.component('partes-manuales', require('./components/partes/partes-manuales.vue').default);
 Vue.component('parte-header', require('./components/partes/parte-header.vue').default);
+
 
 Vue.component('certificados', require('./components/certificados/certificados.vue').default);
 Vue.component('certificado-header', require('./components/certificados/certificado-header.vue').default);

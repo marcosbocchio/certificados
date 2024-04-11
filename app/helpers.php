@@ -8,6 +8,9 @@ use App\ots;
 use App\InformesRi;
 use App\MetodoEnsayos;
 use App\Soldadores;
+use App\Helpers;
+use App\OtOperarios;
+use App\User;
 
 /* pdfCantFilasACompletar()  : Funcion que retorna la cantidad de filas en blanco de una tabla que nos hace falta para completar un pdf.
 
@@ -269,4 +272,18 @@ function remplazarSoldadores($indicaciones_us_pa) {
       $indicacion->soldador_z_id = $soldador_z ? $soldador_z->codigo : '-';
   }
   return $indicaciones_us_pa;
+}
+
+function obtenerNombresOperadoresPorOt($ot_id) {
+  $operadores = OtOperarios::where('ot_id', $ot_id)->get();
+
+  $nombresOperadores = [];
+  foreach ($operadores as $operador) {
+      $usuario = User::find($operador->user_id);
+      if ($usuario) {
+          $nombresOperadores[] = $usuario->name;
+      }
+  }
+
+  return array_unique($nombresOperadores); // Elimina duplicados, si los hay.
 }

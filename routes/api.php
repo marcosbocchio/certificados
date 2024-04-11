@@ -586,6 +586,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('partes/ot/{ot_id}/total', 'PartesController@PartesTotal');
     Route::put('partes/{id}/firmar', 'PartesController@firmar');
     Route::resource('partes', 'PartesController');
+    Route::resource('partes-manuales', 'PartesManualesController');
+    Route::get('/informes-sin-parte', 'PartesManualesController@getInformesSinParte');
     Route::get(
         'partes/informe_importado/{id}',
         'PartesController@getInformeImportado'

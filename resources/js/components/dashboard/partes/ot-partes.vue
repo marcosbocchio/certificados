@@ -24,6 +24,12 @@
            </div>
         </div>
 
+        <div class="col-md-12">
+           <div v-show="$can('T_partes_edita')">
+                <a :href="'/area/enod/ot/' + ot_id_data + '/parte-manual' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
+           </div>
+        </div>
+
         <div class="clearfix"></div>
         <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
