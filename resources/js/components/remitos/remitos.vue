@@ -192,7 +192,7 @@
                                 <!-- Observaciones y Cantidad -->
                                 <div class="col-md-9">
                                     <div class="form-group">
-                                        <label for="observacionActual">Otros  *</label>
+                                        <label for="observacionActual">Otros</label>
                                         <input type="text" v-model="observacionActual" maxlength="200" class="form-control" id="observacionActual">
                                     </div>
                                 </div>
@@ -214,7 +214,7 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr style="width: 100%;">
-                                                    <th style="width: 75%;">Observación</th>
+                                                    <th style="width: 75%;">Otro</th>
                                                     <th style="width: 13%;">Cantidad</th>
                                                     <th style="width: 12%;">Acciones</th>
                                                 </tr>
@@ -240,7 +240,7 @@
                                 <!-- Nueva sección de observaciones -->
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="observaciones_remito">Observaciones *</label>
+                                        <label for="observaciones_remito">Observaciones</label>
                                         <input type="text" v-model="observaciones_remito" class="form-control" id="observaciones_remito" placeholder="Ingrese observaciones aquí" maxlength="200">
                                     </div>
                                 </div>
