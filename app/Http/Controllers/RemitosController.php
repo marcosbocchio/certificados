@@ -141,6 +141,7 @@ class RemitosController extends Controller
         $remito->destino  = $request->destino;
         $remito->user_id  =  $user_id;
         $remito->borrador_sn = $request->borrador_sn;
+        $remito->observacion_remito = $request->observaciones_remito;
         $remito->save();
 
         return $remito;

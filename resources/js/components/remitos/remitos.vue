@@ -192,7 +192,7 @@
                                 <!-- Observaciones y Cantidad -->
                                 <div class="col-md-9">
                                     <div class="form-group">
-                                        <label for="observacionActual">Observación *</label>
+                                        <label for="observacionActual">Otros  *</label>
                                         <input type="text" v-model="observacionActual" maxlength="200" class="form-control" id="observacionActual">
                                     </div>
                                 </div>
@@ -227,6 +227,21 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                        <div class="box box-custom-enod">
+                            <div class="box-body">
+                                <!-- Otras secciones del formulario -->
+
+                                <!-- Nueva sección de observaciones -->
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="observaciones_remito">Observaciones *</label>
+                                        <input type="text" v-model="observaciones_remito" class="form-control" id="observaciones_remito" placeholder="Ingrese observaciones aquí" maxlength="200">
                                     </div>
                                 </div>
                             </div>
@@ -308,6 +323,7 @@ export default {
         formularioEnviando: false,
         esBorrador: true,
         cargando_stop:false,
+        observaciones_remito: '',
         
     }},
 
@@ -347,6 +363,7 @@ export default {
                this.prefijo = this.remitodata.prefijo;
                this.receptor = this.remitodata.receptor;
                this.destino = this.remitodata.destino;
+               this.observaciones_remito = this.remitodata.observacion_remito;
                this.inputsProductos = this.detalledata;
                this.inputsEquipos = this.remito_interno_equipos_data;
                this.frente_origen = this.remitodata.frente_origen;
@@ -537,6 +554,7 @@ export default {
                 'interno_equipos' : this.inputsEquipos,
                 'observaciones'     : this.listaObservaciones,
                 'borrador_sn': this.valorBorradorSN,
+                'observaciones_remito': this.observaciones_remito,
           }
 
         }).then(response => {
@@ -586,6 +604,7 @@ export default {
                 'interno_equipos' : this.inputsEquipos,
                 'observaciones'     : this.listaObservaciones,
                 'borrador_sn': this.valorBorradorSN,
+                'observaciones_remito':this.observaciones_remito,
                 
           }}
 
