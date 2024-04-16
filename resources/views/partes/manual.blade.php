@@ -19,6 +19,7 @@
   :orden-trabajo-numero="'{{ $ordenTrabajoNumero }}'"
   :plantas='@json($plantas)'
   :operadores='@json($operador_opcion)'
+  :ot="'{{ $ot }}'"
   ></partes-manuales>
 
  </div>

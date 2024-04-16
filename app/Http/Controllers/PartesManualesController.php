@@ -47,59 +47,66 @@ class PartesManualesController extends Controller
             'proyecto',
             'ordenTrabajoNumero',
             'plantas',
-            'operador_opcion'
+            'operador_opcion',
+            'ot'
         ));
     }
 
     public function store(Request $request)
     {
-        // Validación de datos recibidos (puedes ajustar o ampliar las reglas según sea necesario)
+        // Validación de datos recibidos
         $validatedData = $request->validate([
             'ordenTrabajo' => 'required|integer',
             'fecha' => 'required|date',
+            'ot_obra' => 'required|string',
             'detalles' => 'required|array',
             'selectedInformes' => 'nullable|array',
-            'selectedInformes.*' => 'integer', // Asegurarse de que cada elemento del array sea un entero
+            'selectedInformes.*' => 'integer',
         ]);
-    
+
         try {
             \DB::beginTransaction();
-    
+
             // Crear la parte manual
             $parteManual = ParteManual::create([
                 'ot_id' => $request->ordenTrabajo,
-                'obra' => '-', // Ajusta según necesidad
+                'obra' => $request->ot_obra,
                 'fecha' => $request->fecha,
             ]);
-        
-            // Crear los detalles de la parte manual
+            log::info($request->ot_obra . 'blabla');
+            log::info($request->detalles);
             foreach ($request->detalles as $detalle) {
                 ParteManualDetalle::create([
                     'parte_manual_id' => $parteManual->id,
                     'tecnica' => $detalle['tecnica'],
                     'cantidad' => $detalle['cantidad'],
-                    'planta' => $detalle['planta'],
+                    'planta' => $detalle['planta']['label'], 
                     'equipo' => $detalle['equipo_linea'],
-                    'operador1' => $detalle['operadores'][0] ?? null, // Asegúrate de manejar la posibilidad de menos operadores
+                    'operador1' => $detalle['operadores'][0] ?? null,
                     'operador2' => $detalle['operadores'][1] ?? null,
                     'horario' => $detalle['horario'],
-                    'informe_id' => $detalle['informe_id'] ?? null, // Asegúrate de manejar los campos opcionales correctamente
                     'informe_nro' => $detalle['n_informe'],
                 ]);
             }
-        
+
             // Asociar los informes seleccionados
             if (!empty($validatedData['selectedInformes'])) {
-                Informe::whereIn('id', $validatedData['selectedInformes'])->update([
-                    'parte_id' => $parteManual->id,
-                    'parte_manual_sn' => 1
-                ]);
+                foreach ($validatedData['selectedInformes'] as $informeId) {
+                    log::info('cambio:' . $informeId);
+                    $informe = Informe::find($informeId);
+                    if ($informe) {
+                        $informe->parte_id = $parteManual->id;
+                        $informe->parte_manual_sn = 1;
+                        $informe->save();
+                    }
+                }
             }
-    
+
             \DB::commit();
-            return response()->json(['message' => 'Parte manual y detalles guardados exitosamente, informes asociados.'], 200);
+            return response()->json(['message' => 'Parte manual y detalles guardados exitosamente, informes asociados.', 'id' => $parteManual->id], 200);
         } catch (\Exception $e) {
             \DB::rollBack();
+            \Log::error('Error al guardar los datos: ' . $e->getMessage());
             return response()->json(['message' => 'Error al guardar: ' . $e->getMessage()], 500);
         }
     }

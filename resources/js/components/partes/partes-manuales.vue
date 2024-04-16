@@ -97,7 +97,6 @@
                         <td>{{ detalle.operadores[0] }} / {{ detalle.operadores[1] }}</td>
                         <td>
                           <a  @click="quitarDetalle(index)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
-                          
                         </td>
                       </tr>
                     </tbody>
@@ -126,7 +125,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(informe, index) in informesSinParte" :key="informe.id">
-                        <td><input type="checkbox" v-model="informe.selected"/></td>
+                        <td><input type="checkbox" v-model="informe.selected" @click="actualizarNumeroInforme(informe)" /></td>
                         <td>{{ informe.metodo }}</td>
                         <td>{{ formatearNumero(informe.metodo, informe.numero) }}</td>
                         <td>{{ informe.obra }}</td>
@@ -153,7 +152,7 @@ import { Toast } from 'bootstrap'; // Asegúrate de tener bootstrap y sus depend
 
 export default {
   name: "ParteManualComponent",
-  props: ['ot_id','cliente', 'proyecto', 'ordenTrabajoNumero', 'plantas', 'operadores'],
+  props: ['ot_id','cliente', 'proyecto', 'ordenTrabajoNumero', 'plantas', 'operadores','ot'],
   components: {
     DatePicker,
     'v-select': vSelect
@@ -175,6 +174,7 @@ export default {
       informesSinParte: [],
       detalles: [],
       opcionesOperadores: this.operadores,
+      ot : this.ot,
       detalle: {
         tecnica: '',
         cantidad: 0,
@@ -212,6 +212,39 @@ export default {
         this.mostrarToast('Detalle agregado correctamente.', 'success');
       }
     },
+    actualizarNumeroInforme(informe) {
+  console.log('Informe seleccionado:', informe);
+
+  if (informe.selected) {
+    // Si el informe está seleccionado, buscar y eliminar su número del valor actual del input n_informe
+    const numeroFormateado = this.formatearNumero(informe.metodo, informe.numero);
+    console.log('Número formateado:', numeroFormateado);
+    this.detalle.n_informe = this.detalle.n_informe.replace(new RegExp(numeroFormateado + '\\s*/?\\s*'), '');
+    console.log('n_informe después de eliminar:', this.detalle.n_informe);
+  } else {
+    // Si el informe está deseleccionado, agregar su número al valor actual del input n_informe
+    const numeroFormateado = this.formatearNumero(informe.metodo, informe.numero);
+    console.log('Número formateado:', numeroFormateado);
+    if (!this.detalle.n_informe.includes(numeroFormateado)) {
+      // Verificar si el número de informe ya está presente en el input
+      console.log('n_informe antes de agregar:', this.detalle.n_informe);
+      if (this.detalle.n_informe.length > 0) {
+        // Si ya hay números de informe en el input, agregar '/' antes de agregar el nuevo número
+        this.detalle.n_informe += ` / ${numeroFormateado}`;
+      } else {
+        // Si es el primer número de informe, simplemente agregarlo sin '/'
+        this.detalle.n_informe = numeroFormateado;
+      }
+      console.log('n_informe después de agregar:', this.detalle.n_informe);
+    }
+  }
+
+  // Asegurarse de que el valor del input no exceda los 200 caracteres
+  if (this.detalle.n_informe.length > 200) {
+    this.detalle.n_informe = this.detalle.n_informe.substring(0, 200);
+    console.log('n_informe truncado:', this.detalle.n_informe);
+  }
+},
     validarDetalle() {
       if (!this.detalle.tecnica || this.detalle.cantidad <= 0 || !this.detalle.planta) {
         this.mostrarToast('Por favor, completa todos los campos requeridos.', 'error');
@@ -244,21 +277,22 @@ export default {
 
     // Datos a enviar
     const data = {
-        fecha: this.fecha,
-        cliente: this.cliente,
-        proyecto: this.proyecto,
-        ordenTrabajo: this.ordenTrabajo,
-        detalles: this.detalles,
-        selectedInformes: selectedInformes // Agregar los IDs seleccionados
+        fecha             : this.fecha,
+        cliente           : this.cliente,
+        proyecto          : this.proyecto,
+        ordenTrabajo      : this.ordenTrabajo,
+        detalles          : this.detalles,
+        ot_obra           : this.ot.obra ?? '-',
+        selectedInformes  : selectedInformes
     };
-
+    console.log('datos',data);
     axios.post('/api/partes-manuales', data)
     .then(response => {
         console.log('Datos guardados exitosamente', response);
-        this.mostrarToast('Datos guardados exitosamente.', 'success');
+        window.open(  '/pdf-partemanual/' + response.data.id,'_blank');
     })
     .catch(error => {
-        console.error('Error al guardar los datos.', error);
+        console.error('Error al guardar los datos:', error); // Loguear el error en la consola
         let errorMessage = 'Error desconocido';
         if (error.response && error.response.data && error.response.data.message) {
             errorMessage = error.response.data.message;

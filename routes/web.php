@@ -68,6 +68,9 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/remito/{id}/edit','RemitosController@edit')->name('RemitoEdit');
       Route::get('/area/enod/ot/{ot_id}/parte','PartesController@create')->name('ParteCreate');
       Route::get('/area/enod/ot/{ot_id}/parte-manual', 'PartesManualesController@index')->name('NuevaSeccionComponente');
+
+      Route::get('/pdf-partemanual/{id}', 'pdfManualController@imprimir')->name('pdf.partemanual');
+      
       Route::get('/area/enod/ot/{ot_id}/parte/{id}/edit','PartesController@edit')->name('ParteEdit');
       Route::get('/area/enod/ot/{ot_id}/certificado','CertificadosController@create')->name('CertificadoCreate');
       Route::get('/area/enod/ot/{ot_id}/certificado/{id}/edit','CertificadosController@edit')->name('CertificadoEdit');
