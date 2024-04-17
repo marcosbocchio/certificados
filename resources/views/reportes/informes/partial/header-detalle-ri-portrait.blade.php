@@ -31,14 +31,14 @@
                            <tr>
                                 <td colspan="4">{{$procedimiento_inf->titulo}}</td>
                            </tr>
-
+                           @if($cliente->id != 158)
                            <tr>
                                 <th colspan="4">EPS / WPS</th>
                            </tr>
                            <tr>
                                 <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
                            </tr>
-
+                            @endif
 
                            <tr>
                                 <th colspan="2">Película</th>
@@ -69,16 +69,28 @@
                                 <td colspan="2">{{$informe_ri->lado}}</td>
                                 <td colspan="2">{{$informe_ri->distancia_fuente_pelicula}}</td>
                            </tr>
-
-                          <tr>
+                           @if($cliente->id == 158)
+                           <tr>
                                 <th colspan="2">Técnica Empleada</th>
                                 <th colspan="2"> &nbsp;</th>
-                          </tr>
-                          <tr>
-                                <td class="noBorder" colspan="2">{{$tecnica->codigo}}</td>
-                                <td colspan="2" rowspan="4" style="text-align: center;"><img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 100px;margin-top: -10px;"></td>
-                          </tr>
-
+                            </tr>
+                            <tr>
+                                    <td class="noBorder" colspan="4">{{$tecnica->codigo}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="4"></td>
+                                <td colspan="2" rowspan="4" style="text-align: center;"><img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 100px"></td>
+                            </tr>
+                            @else
+                            <tr>
+                                <th colspan="2">Técnica Empleada</th>
+                                <th colspan="2"> &nbsp;</th>
+                            </tr>
+                            <tr>
+                                    <td class="noBorder" colspan="2">{{$tecnica->codigo}}</td>
+                                    <td colspan="2" rowspan="4" style="text-align: center;"><img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 100px;margin-top: -10px;"></td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </td>
@@ -143,18 +155,20 @@
                             </td>
                         </tr>        
                            
+                        @if($cliente->id != 158)
                             <tr>
                                 <th colspan="4">PQR</th>
                             </tr>
-                            <tr >
+                            <tr>
                                 <td colspan="4">
-                                    @if($ot_tipo_soldadura->pqr)
+                                    @if( !$informe_ri->reparacion_sn && $ot_tipo_soldadura->pqr)
                                         {{$ot_tipo_soldadura->pqr}}
                                     @else
                                         &nbsp;
                                     @endif
                                 </td>
                             </tr>
+                        @endif
 
                             <tr>
                                 <th colspan="2">Equipo</th>
