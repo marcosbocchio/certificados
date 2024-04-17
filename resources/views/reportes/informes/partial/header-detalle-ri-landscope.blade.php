@@ -21,7 +21,7 @@
                                      @endif
                                  </td>
                             </tr>
-
+                            @if($cliente->id != 158)
                             <tr>
                                 <th colspan="4">EPS / WPS</th>
                             </tr>
@@ -33,7 +33,7 @@
                                 @endif
 
                             </tr>
-
+                            @elseif
                             <tr>
                                 <th colspan="2">Equipo</th>
                                 <th colspan="2">Fuente</th>
