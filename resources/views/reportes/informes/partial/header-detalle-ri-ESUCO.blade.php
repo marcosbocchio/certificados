@@ -1,4 +1,4 @@
-    <table class="header-detalle-principal">
+<table class="header-detalle-principal">
         <tbody>
             <tr>
                 <td width="49%">
@@ -31,12 +31,6 @@
                            <tr>
                                 <td colspan="4">{{$procedimiento_inf->titulo}}</td>
                            </tr>
-                           <tr>
-                                <th colspan="4">EPS / WPS</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
-                           </tr>
 
                            <tr>
                                 <th colspan="2">Película</th>
@@ -67,6 +61,14 @@
                                 <td colspan="2">{{$informe_ri->lado}}</td>
                                 <td colspan="2">{{$informe_ri->distancia_fuente_pelicula}}</td>
                            </tr>
+                           <tr>
+                                <th colspan="2">Norma Evaluación</th>
+                                <th colspan="2">Norma Ensayo</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">{{$norma_evaluacion->codigo}}</td>
+                                <td colspan="2">{{$norma_ensayo->codigo}}</td>
+                            </tr>
                             <tr>
                                 <th colspan="2">Técnica Empleada</th>
                                 <th colspan="2"> &nbsp;</th>
@@ -137,21 +139,7 @@
                                     {{ $diametro_espesor->espesor }}
                                 @endif
                             </td>
-                        </tr>        
-                           
-
-                            <tr>
-                                <th colspan="4">PQR</th>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    @if( !$informe_ri->reparacion_sn && $ot_tipo_soldadura->pqr)
-                                        {{$ot_tipo_soldadura->pqr}}
-                                    @else
-                                        &nbsp;
-                                    @endif
-                                </td>
-                            </tr>
+                        </tr>
                             <tr>
                                 <th colspan="2">Equipo</th>
                                 <th colspan="2">Fuente</th>
@@ -202,14 +190,7 @@
                                 <td colspan="2">{{$informe_ri->exposicion}}</td>
                             </tr>
 
-                            <tr>
-                                <th colspan="2">Norma Evaluación</th>
-                                <th colspan="2">Norma Ensayo</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">{{$norma_evaluacion->codigo}}</td>
-                                <td colspan="2">{{$norma_ensayo->codigo}}</td>
-                            </tr>
+
                             @if($informe_ri->perfil_sn)
                                 <tr>
                                     <th colspan="2">Ejecutor Ensayo</th>
@@ -235,8 +216,8 @@
                                 <tr>
                                     <th colspan="2">Ejecutor Ensayo</th>
                                     <th colspan="2">Solicitante</th>
-                                    </tr>
-                                    <tr>
+                                </tr>
+                                <tr>
                                      <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
                                      <td colspan="2" class="borderFilabottom">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
                                 </tr>
