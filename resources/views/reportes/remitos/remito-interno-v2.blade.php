@@ -102,6 +102,18 @@ footer {
 
         </tbody>
     </table>
+    <table>
+        <tbody>
+                <tr>
+                    <td style="width: 50px;">
+                        <span class="cantidad">OBS.</span>           
+                    </td>
+                    <td style="width: 610px;">
+                        <span class="producto">{{ $remito->observacion_remito }}</span>    
+                    </td>
+                </tr>
+        </tbody>
+    </table>
 </main>   
      
     @include('reportes.partial.nro_pagina') 
