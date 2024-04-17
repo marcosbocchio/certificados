@@ -52,6 +52,48 @@ class PartesManualesController extends Controller
         ));
     }
 
+    public function edit($id)
+    {
+        try {
+            $header_titulo = "Partes";
+            $header_descripcion = "Alta | Modificación";
+            $user = auth()->user();
+            $header_sub_titulo = ' / ';
+            $parteManual = ParteManual::findOrFail($id);
+            $fecha = $parteManual->fecha;
+            $ot = Ots::findOrFail($parteManual->ot_id);
+            $cliente = Clientes::findOrFail($ot->cliente_id);
+            $clienteNombre = $cliente->nombre_fantasia;   
+            $proyecto = $ot->proyecto;
+            $ordenTrabajoNumero = $ot->numero;
+            $detalles = ParteManualDetalle::where('parte_manual_id', $id)->get();
+            $plantas = Plantas::where('cliente_id', $ot->cliente_id)->get();
+            $operador_opcion = obtenerNombresOperadoresPorOt($ot->id);
+            
+            
+            return view('partes.manual-edit', compact(
+                'parteManual',
+                'fecha',
+                'ot',
+                'cliente',
+                'clienteNombre',
+                'proyecto',
+                'ordenTrabajoNumero',
+                'detalles',
+                'plantas',
+                'operador_opcion',
+                'header_titulo',
+                'header_descripcion',
+                'user',
+                'header_sub_titulo',
+            ));
+        } catch (\Exception $e) {
+            \Log::error('Error al cargar la edición de la parte manual: ' . $e->getMessage());
+            abort(404);
+        }
+    }
+
+
     public function store(Request $request)
     {
         // Validación de datos recibidos
@@ -66,10 +108,10 @@ class PartesManualesController extends Controller
 
         try {
             \DB::beginTransaction();
-
+            log::info('hola'.$request->ot_id);
             // Crear la parte manual
             $parteManual = ParteManual::create([
-                'ot_id' => $request->ordenTrabajo,
+                'ot_id' => $request->ot_id,
                 'obra' => $request->ot_obra,
                 'fecha' => $request->fecha,
             ]);

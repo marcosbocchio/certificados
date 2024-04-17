@@ -241,7 +241,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="observaciones_remito">Observaciones</label>
-                                        <input type="text" v-model="observaciones_remito" class="form-control" id="observaciones_remito" placeholder="Ingrese observaciones aquí" maxlength="200">
+                                        <input type="text" v-model="observaciones_remito" class="form-control" id="observaciones_remito" maxlength="200">
                                     </div>
                                 </div>
                             </div>
