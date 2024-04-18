@@ -8,6 +8,7 @@ use App\ots;
 use App\InformesRi;
 use App\MetodoEnsayos;
 use App\Soldadores;
+use App\OtSoldadores;
 
 /* pdfCantFilasACompletar()  : Funcion que retorna la cantidad de filas en blanco de una tabla que nos hace falta para completar un pdf.
 
@@ -262,11 +263,21 @@ function agruparPorAccesorios($informes_us_me) {
 
 function remplazarSoldadores($indicaciones_us_pa) {
   foreach ($indicaciones_us_pa as $indicacion) {
-      $soldador_p = Soldadores::find($indicacion->soldador_p_id);
-      $indicacion->soldador_p_id = $soldador_p ? $soldador_p->codigo : '-';
+      $soldador_z = OtSoldadores::find($indicacion->soldador_z_id);
+      if ($soldador_z) {
+          $soldador_p = Soldadores::find($soldador_z->soldadores_id);
+          $indicacion->soldador_z_id = $soldador_p ? $soldador_p->codigo : '-';
+      } else {
+          $indicacion->soldador_z_id = '-';
+      }
 
-      $soldador_z = Soldadores::find($indicacion->soldador_z_id);
-      $indicacion->soldador_z_id = $soldador_z ? $soldador_z->codigo : '-';
+      $soldador_p = OtSoldadores::find($indicacion->soldador_p_id);
+      if ($soldador_p) {
+          $soldador_p = Soldadores::find($soldador_p->soldadores_id);
+          $indicacion->soldador_p_id = $soldador_p ? $soldador_p->codigo : '-';
+      } else {
+          $indicacion->soldador_p_id = '-';
+      }
   }
   return $indicaciones_us_pa;
 }
