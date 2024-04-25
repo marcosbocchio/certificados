@@ -104,18 +104,19 @@
                                 <td colspan="4">{{$procedimiento_inf->titulo}}</td>
                             </tr>
 
-                            <tr>
-                                <th colspan="4">PQR</th>
-                            </tr>
-                            <tr >
-                                <td colspan="4">
-                                @if( !$informe_ri->reparacion_sn && $ot_tipo_soldadura->pqr)
-                                      {{$ot_tipo_soldadura->pqr}}
-                                @else
-                                    &nbsp;
-                                @endif
-                                </td>
-                            </tr>
+
+                                <tr>
+                                    <th colspan="4">PQR</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        @if( !$informe_ri->reparacion_sn && $ot_tipo_soldadura->pqr)
+                                            {{$ot_tipo_soldadura->pqr}}
+                                        @else
+                                            &nbsp;
+                                        @endif
+                                    </td>
+
 
                             <tr>
                                 @if ($interno_fuente)

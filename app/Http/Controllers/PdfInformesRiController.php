@@ -91,7 +91,7 @@ class PdfInformesRiController extends Controller
         /*______________ Encabezado ______________*/
 
           $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
-          $titulo = "RADIOGRAFIA INDUSTRIAL v2";
+          $titulo = "RADIOGRAFIA INDUSTRIAL";
           $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
           $nroAESA= FormatearNumeroConCeros($informe->numero,5);
           $fecha = date('d-m-Y', strtotime($informe->fecha));
@@ -109,14 +109,18 @@ class PdfInformesRiController extends Controller
           }else{
             
         /*______________ Detalle ______________*/
-          
-          $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicionAESA(?)',array($informe_ri->id));
+          $blade = $informeEspecial;
+          if($blade == 'informeRiPlantaAESA'){
+            $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicionAESA(?)',array($informe_ri->id));
+            $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
+          }else{
+            $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
+            $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
+          }
+
           $juntas_posiciones_procesos = DB::select('CALL juntas_posiciones_procesos(?)', array($informe_ri->id));
-          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
-          
-          
-          
-          $pdf = PDF::loadView('reportes.informes.ri-planta-especial',compact('titulo','nro','tipo_reporte','fecha',
+
+          $pdf = PDF::loadView('reportes.informes.'.$blade,compact('titulo','nro','tipo_reporte','fecha',
                                                               'ot',
                                                               'norma_ensayo',
                                                               'planta',
@@ -280,7 +284,6 @@ class PdfInformesRiController extends Controller
         $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
         $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
 
-        //dd($juntas_posiciones,$defectos_posiciones);
 
         $pdf = PDF::loadView('reportes.informes.ri-planta-v2',compact('titulo','nro','tipo_reporte','fecha',
                                                               'ot',
