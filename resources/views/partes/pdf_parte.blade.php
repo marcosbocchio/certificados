@@ -210,13 +210,7 @@
                         &nbsp;
                     </td>
                     <td>
-                        @if($cliente && $ot->logo_cliente_sn && $cliente->path)
                         &nbsp;
-                            <img  src="{{ public_path($cliente->path)}}" alt="" style="height:42px;max-width: 120px;position: fixed; bottom:70px; right:270px">
-                        @else
-                        &nbsp;
-                            <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height:42px;max-width: 120px;position: fixed; bottom:70px; right:270px">
-                        @endif
                     </td>
                 </tr>
                 <tr>
@@ -254,6 +248,13 @@
                     </td>
                 </tr>
             </table>
+            <div>
+                        @if($cliente && $ot->logo_cliente_sn && $cliente->path)
+                            <img  src="{{ public_path($cliente->path)}}" alt="" style="height:42px;max-width: 120px;position: fixed; bottom:70px; right:270px">
+                        @else
+                            <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height:42px;max-width: 120px;position: fixed; bottom:70px; right:270px">
+                        @endif
+            </div>
             </footer>
             @if ($i + $filasPorTabla < count($detalles))
                 <div style="page-break-before: always;"></div>
