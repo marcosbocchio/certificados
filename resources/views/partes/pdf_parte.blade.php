@@ -128,7 +128,10 @@
                             <td>{{ $detalles[$j]->cantidad}}</td>
                             <td>{{ $detalles[$j]->planta}}</td>
                             <td>{{ $detalles[$j]->equipo}}</td>
-                            <td>{{ $detalles[$j]->operador1}} / {{ $detalles[$j]->operador2}}</td>
+                            <td>
+                                {{ $detalles[$j]->operador1 ? $detalles[$j]->operador1 : '-' }} / 
+                                {{ $detalles[$j]->operador2 ? $detalles[$j]->operador2 : '-' }}
+                            </td>
                             <td>{{ $detalles[$j]->horario}}</td>
                             <td>{{ $detalles[$j]->informe_nro}}</td>
                             <td>&nbsp;</td>

@@ -82,7 +82,7 @@
                       <th>Equipo/Linea</th>
                       <th>Horario</th>
                       <th>N° Informe</th>
-                      <th>Acciones</th>
+                      <th>Operadores</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -251,7 +251,7 @@ export default {
       return time.getTime() > Date.now();
     },
     obtenerLabelOperador(operador) {
-    return operador ? operador.label : '';
+    return operador ? operador.label : '-';
   },
     buscarNombreOperador(idOperador) {
     const operador = this.opcionesOperadores.find(operador => operador.id === idOperador);
@@ -388,8 +388,8 @@ export default {
     .put(`/api/partes-manuales/${this.parte_manual_data.id}`, data) // Modifica la URL para incluir el ID del registro a actualizar
     .then(response => {
       console.log('Datos actualizados exitosamente', response);
-      window.open('/partes/ot/' + this.ot_data.id, '_blank');
       window.open('/pdf-partemanual/' + this.parte_manual_data.id, '_blank');
+      window.location.href = '/partes/ot/' + this.ot_data.id, '_blank'
     })
     .catch(error => {
       console.error('Error al actualizar los datos:', error);

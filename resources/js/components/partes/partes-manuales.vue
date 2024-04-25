@@ -43,7 +43,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="equipo_linea">Equipo/Linea *</label>
-                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="30">
+                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="25">
               </div>
 
               <div class="clearfix"></div>
@@ -54,7 +54,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="n_informe">N° Informe *</label>
-                <input type="text" v-model="detalle.n_informe" class="form-control" maxlength="30">
+                <input type="text" v-model="detalle.n_informe" class="form-control" maxlength="25">
               </div>
               <div class="form-group col-md-3">
                 <label>Operadores *</label>
@@ -77,7 +77,7 @@
                       <th>Equipo/Linea</th>
                       <th>Horario</th>
                       <th>N° Informe</th>
-                      <th>Acciones</th>
+                      <th>Operadores</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -194,7 +194,7 @@ export default {
       return time.getTime() > Date.now();
     },
     obtenerLabelOperador(operador) {
-    return operador ? operador.label : '';
+    return operador ? operador.label : '-';
   },
     formatearNumero(metodo, numero) {
       const numeroFormateado = numero.toString().padStart(4, '0');
@@ -292,6 +292,7 @@ export default {
       axios.post('/api/partes-manuales', data)
       .then(response => {
         window.open('/pdf-partemanual/' + response.data.id, '_blank');
+        window.location.href = '/partes/ot/' + this.ot_id;
         this.mostrarToast('Datos guardados exitosamente', 'success');
       })
       .catch(error => {
