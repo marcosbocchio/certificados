@@ -35,7 +35,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="cantidad">Cantidad *</label>
-                <input type="number" v-model="detalle.cantidad" class="form-control">
+                <input type="number" v-model="detalle.cantidad" class="form-control"  min="0">
               </div>
               <div class="form-group col-md-3">
                 <label>Planta *</label>
@@ -43,7 +43,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="equipo_linea">Equipo/Linea *</label>
-                <input type="text" v-model="detalle.equipo_linea" class="form-control">
+                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="30">
               </div>
 
               <div class="clearfix"></div>
@@ -54,7 +54,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="n_informe">N° Informe *</label>
-                <input type="text" v-model="detalle.n_informe" class="form-control">
+                <input type="text" v-model="detalle.n_informe" class="form-control" maxlength="30">
               </div>
               <div class="form-group col-md-3">
                 <label>Operadores *</label>
@@ -88,7 +88,7 @@
                       <td>{{ detalle.equipo_linea }}</td>
                       <td>{{ detalle.horario }}</td>
                       <td>{{ detalle.n_informe }}</td>
-                      <td>{{ detalle.operadores[0].label }} / {{ detalle.operadores[1].label }}</td>
+                      <td>{{ obtenerLabelOperador(detalle.operadores[0]) }} / {{ obtenerLabelOperador(detalle.operadores[1]) }}</td>
                       <td>
                         <a @click="quitarDetalle(index)"><app-icon img="minus-circle" color="black"></app-icon></a>
                       </td>
@@ -193,6 +193,9 @@ export default {
     disabledDate(time) {
       return time.getTime() > Date.now();
     },
+    obtenerLabelOperador(operador) {
+    return operador ? operador.label : '';
+  },
     formatearNumero(metodo, numero) {
       const numeroFormateado = numero.toString().padStart(4, '0');
       return `${metodo}${numeroFormateado}`;
