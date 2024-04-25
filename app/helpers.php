@@ -9,6 +9,9 @@ use App\InformesRi;
 use App\MetodoEnsayos;
 use App\Soldadores;
 use App\OtSoldadores;
+use App\Helpers;
+use App\OtOperarios;
+use App\User;
 
 /* pdfCantFilasACompletar()  : Funcion que retorna la cantidad de filas en blanco de una tabla que nos hace falta para completar un pdf.
 
