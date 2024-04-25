@@ -39,7 +39,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label>Planta *</label>
-                <v-select v-model="detalle.planta" :options="opcionesPlantas"></v-select>
+                <v-select v-model="detalle.planta" :options="opcionesPlanta"></v-select>
               </div>
               <div class="form-group col-md-3">
                 <label for="equipo_linea">Equipo/Linea *</label>
@@ -88,7 +88,7 @@
                       <td>{{ detalle.equipo_linea }}</td>
                       <td>{{ detalle.horario }}</td>
                       <td>{{ detalle.n_informe }}</td>
-                      <td>{{ detalle.operadores[0] }} / {{ detalle.operadores[1] }}</td>
+                      <td>{{ detalle.operadores[0].label }} / {{ detalle.operadores[1].label }}</td>
                       <td>
                         <a @click="quitarDetalle(index)"><app-icon img="minus-circle" color="black"></app-icon></a>
                       </td>
@@ -152,14 +152,6 @@ export default {
     DatePicker,
     'v-select': vSelect
   },
-  computed: {
-    opcionesPlantas() {
-      return this.plantas.map(planta => ({ label: `${planta.nombre} (${planta.codigo})`, value: planta }));
-    },
-    opcionesOperadores() {
-      return this.operadores.map(operador => ({ label: operador.name, value: operador }));
-    }
-  },
   data() {
     return {
       editMode: false,
@@ -169,12 +161,13 @@ export default {
       ordenTrabajo: this.ordenTrabajoNumero,
       informesSinParte: [],
       detalles: [],
-      opcionesOperadores: this.operadores,
+      opcionesPlanta: this.plantas.map(planta => ({ label: planta.nombre, value: planta.codigo })),
+      opcionesOperadores: this.operadores.map(operador => ({ label: operador.nombre, value: operador.id})),
       ot: this.ot,
       detalle: {
         tecnica: '',
         cantidad: 0,
-        planta: this.plantas,
+        planta: '',
         equipo_linea: '',
         horario: '',
         n_informe: '',
@@ -211,13 +204,66 @@ export default {
         this.storeSection();
       }
     },
-    agregarDetalle() {
-      if (this.validarDetalle()) {
-        this.detalles.push({ ...this.detalle });
-        this.resetDetalle();
-        this.mostrarToast('Detalle agregado correctamente.', 'success');
+    obtenerNombreOperador(id) {
+      // Buscar el operador en this.operadores
+      const operadorEncontrado = this.operadores.find(operador => operador.id === id);
+
+      // Verificar si se encontró el operador
+      if (operadorEncontrado) {
+        // Devolver el nombre del operador
+        return operadorEncontrado.nombre;
+      } else {
+        // Devolver un mensaje indicando que el operador no se encontró
+        return 'Operador no encontrado';
       }
     },
+    agregarDetalle() {
+  // Verificar que el campo de técnica no esté vacío
+  if (!this.detalle.tecnica) {
+    toastr.error('Por favor, selecciona una técnica.');
+    return; // Detener la ejecución del método si el campo de técnica está vacío
+  }
+
+  // Verificar que la cantidad sea mayor que cero
+  if (this.detalle.cantidad <= 0) {
+    toastr.error('La cantidad debe ser mayor que cero.');
+    return; // Detener la ejecución del método si la cantidad es menor o igual a cero
+  }
+
+  // Verificar que se haya seleccionado una planta
+  if (!this.detalle.planta) {
+    toastr.error('Por favor, selecciona una planta.');
+    return; // Detener la ejecución del método si no se ha seleccionado una planta
+  }
+
+  // Verificar que el campo de equipo/linea no esté vacío
+  if (!this.detalle.equipo_linea) {
+    toastr.error('Por favor, ingresa el equipo o línea.');
+    return; // Detener la ejecución del método si el campo de equipo/linea está vacío
+  }
+
+  // Verificar que se haya seleccionado un horario
+  if (!this.detalle.horario) {
+    toastr.error('Por favor, selecciona un horario.');
+    return; // Detener la ejecución del método si no se ha seleccionado un horario
+  }
+
+  // Verificar que el campo de número de informe no esté vacío
+  if (!this.detalle.n_informe) {
+    toastr.error('Por favor, ingresa el número de informe.');
+    return; // Detener la ejecución del método si el campo de número de informe está vacío
+  }
+
+  // Verificar la cantidad de operadores seleccionados
+  if (this.detalle.operadores.length > 2) {
+    toastr.error('No puedes seleccionar más de dos operadores.');
+    return; // Detener la ejecución del método si se seleccionan más de dos operadores
+  }
+  // Si todas las validaciones pasan, agregar el detalle
+  this.detalles.push({ ...this.detalle });
+  this.resetDetalle();
+  toastr.success('Detalle agregado correctamente.');
+},
     actualizarNumeroInforme(informe) {
       if (informe.selected) {
         const numeroFormateado = this.formatearNumero(informe.metodo, informe.numero);
@@ -282,7 +328,7 @@ export default {
         .then(response => {
           console.log('Datos guardados exitosamente', response);
           window.open('/pdf-partemanual/' + response.data.id, '_blank');
-          window.open('/partes/ot/' + this.ot_id, '_blank');
+          window.location.href ='/partes/ot/' + this.ot_id, '_blank';
         })
         .catch(error => {
           console.error('Error al guardar los datos:', error);
@@ -300,19 +346,14 @@ export default {
         });
     },
     mostrarToast(mensaje, tipo) {
-      const toastEl = document.createElement('div');
-      toastEl.classList.add('toast', 'show');
-      if (tipo === 'success') {
-        toastEl.classList.add('bg-success');
-      } else if (tipo === 'error') {
-        toastEl.classList.add('bg-danger');
-      } else if (tipo === 'warning') {
-        toastEl.classList.add('bg-warning');
-      }
-      toastEl.textContent = mensaje;
-      document.body.appendChild(toastEl);
-      setTimeout(() => toastEl.remove(), 3000);
-    },
+  if (tipo === 'success') {
+    toastr.success(mensaje);
+  } else if (tipo === 'error') {
+    toastr.error(mensaje);
+  } else if (tipo === 'warning') {
+    toastr.warning(mensaje);
+  }
+},
     cargarInformesSinParte() {
       axios.get(`/api/informes-sin-parte?ot_id=${this.ot_id}&hasta=${this.fecha}`)
         .then(response => {

@@ -15,21 +15,68 @@
           >
           </cuadro-largo-enod>
        </div>
+       <div v-show="ot_data.cliente_id == 15">
 
+       
        <div class="clearfix"></div>
-
-       <div class="col-md-12">
-           <div v-show="$can('T_partes_edita')">
-                <a :href="'/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
-           </div>
-        </div>
 
         <div class="col-md-12">
            <div v-show="$can('T_partes_edita')">
                 <a :href="'/area/enod/ot/' + ot_id_data + '/parte-manual' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
            </div>
         </div>
-
+        <div class="col-md-12">
+            <div class="box box-custom-enod top-buffer">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Parte manual</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-4">Numero</th>
+                                    <th class="col-lg-4">Usuario alta</th>
+                                    <th class="col-sm-4">Fecha</th>
+                                    <th class="col-sm-2">&nbsp;</th> <!-- Columna para botón de editar -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Aquí iterarás sobre los datos para mostrar las filas -->
+                                <tr v-for="(parte, index) in partes" :key="index">
+                                    <td>{{ parte.numero_formateado }}</td>
+                                    <td>{{ parte.nombre_usuario }}</td>
+                                    <td>{{ parte.fecha_formateada }}</td>
+                                    <td width="10px">
+                                        <!-- Botón de editar -->
+                                        <button @click="editParteManual(parte.id)" class="btn btn-warning btn-sm">
+                                            <span class="fa fa-edit"></span>
+                                        </button>
+                                    </td>
+                                    <td width="10px">
+                                        <!-- Botón de PDF -->
+                                        <button @click="generatePDFManual(parte.id)" class="btn btn-default btn-sm">
+                                            <span class="fa fa-file-pdf-o"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        
+                <div class="col-md-12">
+           <div v-show="$can('T_partes_edita')">
+                <a :href="'/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
+           </div>
+        </div>
         <div class="clearfix"></div>
         <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
@@ -104,6 +151,7 @@ export default {
     props :{
 
      ot_id_data : '',
+     ot_data:{},
 
   },
 
@@ -112,13 +160,12 @@ export default {
       ot_partes :{},
       index_parte:0,
       loading_table : false,
-
+      partes: [],
     }
   },
-
   created : function() {
-
     this.getResults();
+    this.fetchPartesPaginadas();
     this.$store.dispatch('loadContarPartes',this.ot_id_data);
 
     eventModal.$on('confirmar_accion',function(accion) {
@@ -141,7 +188,22 @@ export default {
      },
 
   methods : {
-
+    fetchPartesPaginadas() {
+    axios.get('partes-manuales/paginate')
+        .then(response => {
+            this.partes = response.data;
+            console.log(this.partes);
+        })
+        .catch(error => {
+            if (error.response) {
+                console.error('Error al obtener partes manuales:', error.response.status);
+            } else if (error.request) {
+                console.error('Error al realizar la solicitud:', error.request);
+            } else {
+                console.error('Error:', error.message);
+            }
+        });
+},
       getResults :function(page = 1){
 
             axios.defaults.baseURL = this.url ;
@@ -151,7 +213,14 @@ export default {
             });
 
         },
-
+        editParteManual(id) {
+            // Método para redireccionar a la página de edición del parte con el ID proporcionado
+            window.location.href = '/partes-manuales/' + id + '/edit'; // Modifiqué la ruta para editar
+        },
+        generatePDFManual(id) {
+            console.log(id);
+            window.open('/pdf-partemanual/' + id, '_blank'); // Modifiqué la ruta para el PDF
+        },
         editParte : function(id){
 
             window.location.href =  '/area/enod/ot/' + this.ot_id_data + '/parte/' + id +'/edit'

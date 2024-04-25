@@ -8,7 +8,7 @@ class ParteManual extends Model
 {
     protected $table = 'parte_manual';
 
-    protected $fillable = ['ot_id', 'obra', 'fecha'];
+    protected $fillable = ['ot_id','usuario_alta_id', 'obra', 'fecha'];
 
     public function detalles()
     {
@@ -19,5 +19,11 @@ class ParteManual extends Model
     public function ot()
     {
         return $this->belongsTo(OT::class, 'ot_id');
+    }
+
+    // Método para encontrar un parte manual por su ID
+    public static function find($id)
+    {
+        return static::where('id', $id)->first();
     }
 }

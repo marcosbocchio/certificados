@@ -48,6 +48,7 @@ class PartesController extends Controller
 
       return view('ot-partes.index',compact('ot_id',
                                              'user',
+                                             'ot',
                                              'header_titulo',
                                              'header_sub_titulo',
                                              'header_descripcion'));

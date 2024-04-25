@@ -5,7 +5,8 @@
 <div id="app">
 
    <ot-partes
-    :ot_id_data = "{{$ot_id}}"    
+    :ot_id_data = "{{$ot_id}}"
+    :ot_data="{{$ot}}"    
    ></ot-partes>
 
 </div>

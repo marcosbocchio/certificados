@@ -263,7 +263,7 @@ Vue.component('table-placas', require('./components/dashboard/placas/table-placa
 
 Vue.component('partes', require('./components/partes/partes.vue').default);
 Vue.component('partes-manuales', require('./components/partes/partes-manuales.vue').default);
-Vue.component('editar-partes-manuales', require('./components/partes/parte-manual-edit.vue').default);
+Vue.component('partes-manuales-edit', require('./components/partes/parte-manual-edit.vue').default);
 Vue.component('parte-header', require('./components/partes/parte-header.vue').default);
 
 

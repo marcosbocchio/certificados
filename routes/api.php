@@ -582,11 +582,13 @@ Route::group(['middleware' => 'auth:api'], function () {
         'PartesController@OtPartesPendienteCertificado'
     );
     Route::get('partes/ot/{ot_id}/paginate', 'PartesController@paginate');
+    Route::get('partes-manuales/paginate', 'PartesManualesController@getPartesPaginadas');
     Route::get('partes/ot/{ot_id}/ddppi', 'PartesController@ddppi');
     Route::get('partes/ot/{ot_id}/total', 'PartesController@PartesTotal');
     Route::put('partes/{id}/firmar', 'PartesController@firmar');
     Route::resource('partes', 'PartesController');
     Route::resource('partes-manuales', 'PartesManualesController');
+    Route::put('/api/partes-manuales/{id}', 'PartesController@update');
     Route::get('/informes-sin-parte', 'PartesManualesController@getInformesSinParte');
     Route::get(
         'partes/informe_importado/{id}',

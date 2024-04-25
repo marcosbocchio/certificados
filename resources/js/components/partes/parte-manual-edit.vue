@@ -35,15 +35,15 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="cantidad">Cantidad *</label>
-                <input type="number" v-model="detalle.cantidad" class="form-control">
+                <input type="number" v-model="detalle.cantidad" class="form-control" min="0">
               </div>
               <div class="form-group col-md-3">
                 <label>Planta *</label>
-                <v-select v-model="detalle.planta" :options="opcionesPlantas"></v-select>
+                <v-select v-model="detalle.planta" :options="opcionesPlanta"></v-select>
               </div>
               <div class="form-group col-md-3">
                 <label for="equipo_linea">Equipo/Linea *</label>
-                <input type="text" v-model="detalle.equipo_linea" class="form-control">
+                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="30">
               </div>
 
               <div class="clearfix"></div>
@@ -54,12 +54,17 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="n_informe">N° Informe *</label>
-                <input type="text" v-model="detalle.n_informe" class="form-control">
+                <input type="text" v-model="detalle.n_informe" class="form-control" maxlength="30">
               </div>
               <div class="form-group col-md-3">
                 <label>Operadores *</label>
-                <v-select v-model="detalle.operadores" :options="opcionesOperadores" multiple :max="2" placeholder="Selecciona hasta 2 operadores"></v-select>
+                <v-select v-model="detalle.operadores"
+                  :options="opcionesOperadores"
+                  multiple
+                  :max="2">
+                </v-select>
               </div>
+              <div class="clearfix"></div>
               <div class="form-group col-md-3 boton-centrado">
                 <label></label>
                 <button type="button" @click="agregarDetalle"><span class="fa fa-plus-circle"></span></button>
@@ -84,11 +89,11 @@
                     <tr v-for="(detalle, index) in detalles" :key="index">
                       <td>{{ detalle.tecnica }}</td>
                       <td>{{ detalle.cantidad }}</td>
-                      <td>{{ detalle.planta.label }}</td>
+                      <td>{{ detalle.planta ? detalle.planta.label : '' }}</td>
                       <td>{{ detalle.equipo_linea }}</td>
                       <td>{{ detalle.horario }}</td>
                       <td>{{ detalle.n_informe }}</td>
-                      <td>{{ detalle.operadores[0] }} / {{ detalle.operadores[1] }}</td>
+                      <td>{{ obtenerLabelOperador(detalle.operadores[0]) }} / {{ obtenerLabelOperador(detalle.operadores[1]) }}</td>
                       <td>
                         <a @click="quitarDetalle(index)"><app-icon img="minus-circle" color="black"></app-icon></a>
                       </td>
@@ -147,34 +152,77 @@ import { Toast } from 'bootstrap';
 
 export default {
   name: "ParteManualComponent",
-  props: ['ot_id', 'cliente', 'proyecto', 'ordenTrabajoNumero', 'plantas', 'operadores', 'ot'],
+  props: {
+  // Objeto parteManual
+  parte_manual_data: {
+    type: Object,
+    required: true
+  },
+  // Fecha como string
+  fecha_data: {
+    type: String,
+    required: true
+  },
+  // Objeto ot
+  ot_data: {
+    type: Object,
+    required: true
+  },
+  // Objeto cliente
+  cliente_data: {
+    type: Object,
+    required: true
+  },
+  // Nombre del cliente como string
+  cliente_nombre_data: {
+    type: String,
+    required: true
+  },
+  // Proyecto como string
+  proyecto_data: {
+    type: String,
+    required: true
+  },
+  // Número de orden de trabajo como string
+  orden_de_trabajo_data: {
+    type: String,
+    required: true
+  },
+  // Detalles como array de objetos
+  detalles_data: {
+    type: Array,
+    required: true
+  },
+  // Plantas como array de objetos
+  plantas_data: {
+    type: Array,
+    required: true
+  },
+  operadores_data:{
+  type: Array,
+  required: true
+}
+},
   components: {
     DatePicker,
     'v-select': vSelect
-  },
-  computed: {
-    opcionesPlantas() {
-      return this.plantas.map(planta => ({ label: `${planta.nombre} (${planta.codigo})`, value: planta }));
-    },
-    opcionesOperadores() {
-      return this.operadores.map(operador => ({ label: operador.name, value: operador }));
-    }
   },
   data() {
     return {
       editMode: false,
       fecha: '',
-      cliente: this.cliente,
-      proyecto: this.proyecto,
-      ordenTrabajo: this.ordenTrabajoNumero,
+      cliente: this.cliente_nombre_data,
+      proyecto: this.proyecto_data,
+      ordenTrabajo: this.ot_data.numero,
       informesSinParte: [],
       detalles: [],
-      opcionesOperadores: this.operadores,
-      ot: this.ot,
+      opcionesPlanta: this.plantas_data.map(planta => ({ label: planta.nombre, value: planta.codigo })),
+      opcionesOperadores: this.operadores_data.map(operador => ({ label: operador.nombre, value: operador.id})),
+      ot: this.ot_data,
       detalle: {
         tecnica: '',
         cantidad: 0,
-        planta: this.plantas,
+        planta: '',
         equipo_linea: '',
         horario: '',
         n_informe: '',
@@ -188,6 +236,8 @@ export default {
     if (this.fecha) {
       this.cargarInformesSinParte();
     }
+    this.pushDetalles();
+    this.fecha = this.fecha_data;
   },
   watch: {
     fecha(newValue) {
@@ -199,6 +249,13 @@ export default {
   methods: {
     disabledDate(time) {
       return time.getTime() > Date.now();
+    },
+    obtenerLabelOperador(operador) {
+    return operador ? operador.label : '';
+  },
+    buscarNombreOperador(idOperador) {
+    const operador = this.opcionesOperadores.find(operador => operador.id === idOperador);
+    return operador ? operador.nombre : '';
     },
     formatearNumero(metodo, numero) {
       const numeroFormateado = numero.toString().padStart(4, '0');
@@ -214,10 +271,35 @@ export default {
     agregarDetalle() {
       if (this.validarDetalle()) {
         this.detalles.push({ ...this.detalle });
+        console.log('detalles:', this.detalle);
         this.resetDetalle();
         this.mostrarToast('Detalle agregado correctamente.', 'success');
       }
     },
+    pushDetalles() {
+    // Recorrer el array detalles_data
+    this.detalles_data.forEach(detalle => {
+      const operador1Id = parseInt(detalle.operador1, 10);
+    const operador2Id = parseInt(detalle.operador2, 10);
+
+    const operador1 = this.obtenerNombreOperador(operador1Id);
+    const operador2 = this.obtenerNombreOperador(operador2Id);
+
+  // Crear un nuevo objeto para el detalle con los nombres actualizados
+  const nuevoDetalle = {
+    tecnica: detalle.tecnica,
+    cantidad: detalle.cantidad,
+    planta: { label: detalle.planta },
+    equipo_linea: detalle.equipo,
+    horario: detalle.horario,
+    n_informe: detalle.informe_nro,
+    operadores: [operador1, operador2]
+  };
+
+  console.log('__',nuevoDetalle,'__');
+  this.detalles.push(nuevoDetalle);
+});
+  },
     actualizarNumeroInforme(informe) {
       if (informe.selected) {
         const numeroFormateado = this.formatearNumero(informe.metodo, informe.numero);
@@ -237,16 +319,28 @@ export default {
       }
     },
     validarDetalle() {
-      if (!this.detalle.tecnica || this.detalle.cantidad <= 0 || !this.detalle.planta) {
-        this.mostrarToast('Por favor, completa todos los campos requeridos.', 'error');
-        return false;
-      }
-      if (this.detalle.operadores.length > 2) {
-        this.mostrarToast('No puedes seleccionar más de dos operadores.', 'error');
-        return false;
-      }
-      return true;
-    },
+  if (!this.detalle.tecnica) {
+    this.mostrarToast('Por favor, completa el campo "Técnica".', 'error');
+    return false;
+  }
+  if (this.detalle.cantidad <= 0) {
+    this.mostrarToast('La cantidad debe ser mayor que cero.', 'error');
+    return false;
+  }
+  if (!this.detalle.planta) {
+    this.mostrarToast('Por favor, selecciona una planta.', 'error');
+    return false;
+  }
+  if (this.detalle.operadores.length === 0) {
+    this.mostrarToast('Por favor, selecciona al menos un operador.', 'error');
+    return false;
+  }
+  if (this.detalle.operadores.length > 2) {
+    this.mostrarToast('No puedes seleccionar más de dos operadores.', 'error');
+    return false;
+  }
+  return true;
+},
     quitarDetalle(index) {
       this.detalles.splice(index, 1);
       this.mostrarToast('Detalle eliminado.', 'warning');
@@ -262,58 +356,67 @@ export default {
         operadores: []
       };
     },
-    storeSection() {
-      // Lógica para guardar un nuevo registro
-      const data = {
-        fecha: this.fecha,
-        cliente: this.cliente,
-        proyecto: this.proyecto,
-        ordenTrabajo: this.ordenTrabajo,
-        detalles: this.detalles,
-        ot_obra: this.ot.obra ?? '-',
-        selectedInformes: this.informesSinParte
-          .filter(informe => informe.selected)
-          .map(informe => informe.id)
-      };
+    obtenerNombreOperador(id) {
+    // Buscar el operador en opcionesOperadores
+    const operadorEncontrado = this.opcionesOperadores.find(operador => operador.value === id);
+    
+    // Verificar si se encontró el operador
+    if (operadorEncontrado) {
+      // Devolver el nombre del operador
+      return operadorEncontrado;
+    } else {
+      // Devolver un mensaje indicando que el operador no se encontró
+      return 'Operador no encontrado';
+    }
+  },
+  storeSection() {
+  // Lógica para actualizar un registro existente
+  const data = {
+    fecha: this.fecha,
+    ot: this.ot_data.id,
+    cliente: this.cliente,
+    proyecto: this.proyecto,
+    ordenTrabajo: this.ordenTrabajo,
+    detalles: this.detalles,
+    ot_obra: this.ot.obra ?? '-',
+    selectedInformes: this.informesSinParte
+      .filter(informe => informe.selected)
+      .map(informe => informe.id)
+  };
 
-      axios
-        .post('/api/partes-manuales', data)
-        .then(response => {
-          console.log('Datos guardados exitosamente', response);
-          window.open('/pdf-partemanual/' + response.data.id, '_blank');
-          window.open('/partes/ot/' + this.ot_id, '_blank');
-        })
-        .catch(error => {
-          console.error('Error al guardar los datos:', error);
-          let errorMessage = 'Error desconocido';
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.message
-          ) {
-            errorMessage = error.response.data.message;
-          } else if (error.message) {
-            errorMessage = error.message;
-          }
-          this.mostrarToast('Error al guardar: ' + errorMessage, 'error');
-        });
-    },
-    mostrarToast(mensaje, tipo) {
-      const toastEl = document.createElement('div');
-      toastEl.classList.add('toast', 'show');
-      if (tipo === 'success') {
-        toastEl.classList.add('bg-success');
-      } else if (tipo === 'error') {
-        toastEl.classList.add('bg-danger');
-      } else if (tipo === 'warning') {
-        toastEl.classList.add('bg-warning');
+  axios
+    .put(`/api/partes-manuales/${this.parte_manual_data.id}`, data) // Modifica la URL para incluir el ID del registro a actualizar
+    .then(response => {
+      console.log('Datos actualizados exitosamente', response);
+      window.open('/partes/ot/' + this.ot_data.id, '_blank');
+      window.open('/pdf-partemanual/' + this.parte_manual_data.id, '_blank');
+    })
+    .catch(error => {
+      console.error('Error al actualizar los datos:', error);
+      let errorMessage = 'Error desconocido';
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        errorMessage = error.response.data.message;
+      } else if (error.message) {
+        errorMessage = error.message;
       }
-      toastEl.textContent = mensaje;
-      document.body.appendChild(toastEl);
-      setTimeout(() => toastEl.remove(), 3000);
-    },
-    cargarInformesSinParte() {
-      axios.get(`/api/informes-sin-parte?ot_id=${this.ot_id}&hasta=${this.fecha}`)
+      this.mostrarToast('Error al actualizar: ' + errorMessage, 'error');
+    });
+},
+    mostrarToast(mensaje, tipo) {
+  if (tipo === 'success') {
+    toastr.success(mensaje);
+  } else if (tipo === 'error') {
+    toastr.error(mensaje);
+  } else if (tipo === 'warning') {
+    toastr.warning(mensaje);
+  }
+},
+cargarInformesSinParte() {
+      axios.get(`/api/informes-sin-parte?ot_id=${this.ot_data.id}&hasta=${this.fecha}`)
         .then(response => {
           this.informesSinParte = response.data.map(informe => ({
             ...informe,

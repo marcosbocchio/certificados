@@ -8,16 +8,16 @@
 @section('contenido')
 <div id="app">
     <partes-manuales-edit
-        :parte-manual="{{ $parteManual }}"
-        :fecha="{{ $parteManual->fecha }}"
-        :ot="{{ $ot }}"
-        :cliente="{{ $cliente }}"
-        :cliente-nombre="{{ $clienteNombre }}"
-        :proyecto="{{ $proyecto }}"
-        :orden-de-trabajo="{{ $ordenTrabajoNumero }}"
-        :detalles="{{ $detalles }}"
-        :plantas='{{$plantas}}'
-        :operadores='{{$operador_opcion}}'
+        :parte_manual_data="{{ $parteManual }}"
+        :fecha_data="'{{ $fecha_sin_hora }}'"
+        :ot_data="{{ $ot }}"
+        :cliente_data="{{ $cliente }}"
+        :cliente_nombre_data="'{{ $clienteNombre }}'"
+        :proyecto_data="'{{ $proyecto }}'"
+        :orden_de_trabajo_data="'{{ $ordenTrabajoNumero }}'"
+        :detalles_data="{{ $detalles }}"
+        :plantas_data="{{ $plantas}}"
+        :operadores_data='@json($operador_opcion)'
     ></partes-manuales-edit>
 </div>
 @endsection
