@@ -221,52 +221,26 @@ export default {
       }
     },
     agregarDetalle() {
-  // Verificar que el campo de técnica no esté vacío
-  if (!this.detalle.tecnica) {
-    toastr.error('Por favor, selecciona una técnica.');
-    return; // Detener la ejecución del método si el campo de técnica está vacío
-  }
+    if (!this.validarDetalle()) {
+      return;
+    }
+    this.detalles.push({ ...this.detalle });
+    this.resetDetalle();
+    toastr.success('Detalle agregado correctamente.');
+  },
+  validarDetalle() {
+    const errores = [];
+    if (!this.detalle.tecnica) errores.push('Por favor, selecciona una técnica.');
+    if (this.detalle.cantidad <= 0) errores.push('La cantidad debe ser mayor que cero.');
+    if (!this.detalle.planta) errores.push('Por favor, selecciona una planta.');
+    if (!this.detalle.equipo_linea) errores.push('Por favor, ingresa el equipo o línea.');
+    if (!this.detalle.horario) errores.push('Por favor, selecciona un horario.');
+    if (!this.detalle.n_informe) errores.push('Por favor, ingresa el número de informe.');
+    if (this.detalle.operadores.length > 2) errores.push('No puedes seleccionar más de dos operadores.');
 
-  // Verificar que la cantidad sea mayor que cero
-  if (this.detalle.cantidad <= 0) {
-    toastr.error('La cantidad debe ser mayor que cero.');
-    return; // Detener la ejecución del método si la cantidad es menor o igual a cero
-  }
-
-  // Verificar que se haya seleccionado una planta
-  if (!this.detalle.planta) {
-    toastr.error('Por favor, selecciona una planta.');
-    return; // Detener la ejecución del método si no se ha seleccionado una planta
-  }
-
-  // Verificar que el campo de equipo/linea no esté vacío
-  if (!this.detalle.equipo_linea) {
-    toastr.error('Por favor, ingresa el equipo o línea.');
-    return; // Detener la ejecución del método si el campo de equipo/linea está vacío
-  }
-
-  // Verificar que se haya seleccionado un horario
-  if (!this.detalle.horario) {
-    toastr.error('Por favor, selecciona un horario.');
-    return; // Detener la ejecución del método si no se ha seleccionado un horario
-  }
-
-  // Verificar que el campo de número de informe no esté vacío
-  if (!this.detalle.n_informe) {
-    toastr.error('Por favor, ingresa el número de informe.');
-    return; // Detener la ejecución del método si el campo de número de informe está vacío
-  }
-
-  // Verificar la cantidad de operadores seleccionados
-  if (this.detalle.operadores.length > 2) {
-    toastr.error('No puedes seleccionar más de dos operadores.');
-    return; // Detener la ejecución del método si se seleccionan más de dos operadores
-  }
-  // Si todas las validaciones pasan, agregar el detalle
-  this.detalles.push({ ...this.detalle });
-  this.resetDetalle();
-  toastr.success('Detalle agregado correctamente.');
-},
+    errores.forEach(error => toastr.error(error));
+    return errores.length === 0;
+  },  
     actualizarNumeroInforme(informe) {
       if (informe.selected) {
         const numeroFormateado = this.formatearNumero(informe.metodo, informe.numero);
@@ -284,17 +258,6 @@ export default {
       if (this.detalle.n_informe.length > 200) {
         this.detalle.n_informe = this.detalle.n_informe.substring(0, 200);
       }
-    },
-    validarDetalle() {
-      if (!this.detalle.tecnica || this.detalle.cantidad <= 0 || !this.detalle.planta) {
-        this.mostrarToast('Por favor, completa todos los campos requeridos.', 'error');
-        return false;
-      }
-      if (this.detalle.operadores.length > 2) {
-        this.mostrarToast('No puedes seleccionar más de dos operadores.', 'error');
-        return false;
-      }
-      return true;
     },
     quitarDetalle(index) {
       this.detalles.splice(index, 1);
@@ -326,37 +289,37 @@ export default {
           .map(informe => informe.id)
       };
 
-      axios
-        .post('/api/partes-manuales', data)
-        .then(response => {
-          console.log('Datos guardados exitosamente', response);
-          window.open('/pdf-partemanual/' + response.data.id, '_blank');
-          window.location.href ='/partes/ot/' + this.ot_id, '_blank';
-        })
-        .catch(error => {
-          console.error('Error al guardar los datos:', error);
-          let errorMessage = 'Error desconocido';
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.message
-          ) {
-            errorMessage = error.response.data.message;
-          } else if (error.message) {
-            errorMessage = error.message;
-          }
-          this.mostrarToast('Error al guardar: ' + errorMessage, 'error');
+      axios.post('/api/partes-manuales', data)
+      .then(response => {
+        window.open('/pdf-partemanual/' + response.data.id, '_blank');
+        this.mostrarToast('Datos guardados exitosamente', 'success');
+      })
+      .catch(error => {
+    if (error.response && error.response.status === 422) {
+        const errors = error.response.data.errors; // Asegúrate de que el backend envía un objeto 'errors'
+        console.error('Errores de validación:', errors);
+        // Mostrar los errores usando Toastr
+        Object.keys(errors).forEach(key => {
+            errors[key].forEach(message => {
+                toastr.error(message, key, { timeOut: 5000 });
+            });
         });
-    },
+    } else {
+        // Manejar otros tipos de errores
+        console.error('Error inesperado:', error.message);
+        toastr.error(error.message, 'Error inesperado', { timeOut: 5000 });
+    }
+});
+  },
     mostrarToast(mensaje, tipo) {
-  if (tipo === 'success') {
-    toastr.success(mensaje);
-  } else if (tipo === 'error') {
-    toastr.error(mensaje);
-  } else if (tipo === 'warning') {
-    toastr.warning(mensaje);
-  }
-},
+    if (tipo === 'success') {
+      toastr.success(mensaje);
+    } else if (tipo === 'error') {
+      toastr.error(mensaje);
+    } else if (tipo === 'warning') {
+      toastr.warning(mensaje);
+    }
+  },
     cargarInformesSinParte() {
       axios.get(`/api/informes-sin-parte?ot_id=${this.ot_id}&hasta=${this.fecha}`)
         .then(response => {

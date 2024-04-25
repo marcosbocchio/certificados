@@ -141,14 +141,11 @@ class PartesManualesController extends Controller
             'fecha' => 'required|date',
             'ot_obra' => 'required|string',
             'detalles' => 'required|array',
-            'selectedInformes' => 'nullable|array',
-            'selectedInformes.*' => 'integer',
+            'selectedInformes' => 'array',
         ]);
 
         try {
             \DB::beginTransaction();
-            log::info('hola'.$request->ot_id);
-            // Crear la parte manual
             $parteManual = ParteManual::create([
                 'ot_id' => $request->ot_id,
                 'usuario_alta_id' => $user_id,
@@ -171,7 +168,6 @@ class PartesManualesController extends Controller
             // Asociar los informes seleccionados
             if (!empty($validatedData['selectedInformes'])) {
                 foreach ($validatedData['selectedInformes'] as $informeId) {
-                    log::info('cambio:' . $informeId);
                     $informe = Informe::find($informeId);
                     if ($informe) {
                         $informe->parte_id = $parteManual->id;
@@ -185,7 +181,9 @@ class PartesManualesController extends Controller
             return response()->json(['message' => 'Parte manual y detalles guardados exitosamente, informes asociados.', 'id' => $parteManual->id], 200);
         } catch (\Exception $e) {
             \DB::rollBack();
-            \Log::error('Error al guardar los datos: ' . $e->getMessage());
+            \Log::error('Error al guardar los datos: ' . $e->getMessage() . ' en el archivo ' . $e->getFile() . ' en la línea ' . $e->getLine());
+            \Log::debug("Stack Trace: " . $e->getTraceAsString());
+            \Log::debug("Request data: ", $request->all());
             return response()->json(['message' => 'Error al guardar: ' . $e->getMessage()], 500);
         }
     }
