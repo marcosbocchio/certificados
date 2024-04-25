@@ -281,3 +281,38 @@ function remplazarSoldadores($indicaciones_us_pa) {
   }
   return $indicaciones_us_pa;
 }
+
+function obtenerNombresOperadoresPorOt($ot_id) {
+  $operadores = OtOperarios::where('ot_id', $ot_id)->get();
+
+  $operadoresInfo = [];
+  foreach ($operadores as $operador) {
+      $usuario = User::find($operador->user_id);
+      if ($usuario) {
+          $operadorInfo = [
+              'nombre' => $usuario->name,
+              'id' => $operador->user_id
+          ];
+          $operadoresInfo[] = $operadorInfo;
+      }
+  }
+
+  // Elimina duplicados, si los hay, basado en los nombres de operadores.
+  $operadoresUnicos = [];
+  foreach ($operadoresInfo as $info) {
+      if (!isset($operadoresUnicos[$info['nombre']])) {
+          $operadoresUnicos[$info['nombre']] = $info['id'];
+      }
+  }
+
+  // Convertir el array asociativo en un array de objetos
+  $operadoresObjeto = [];
+  foreach ($operadoresUnicos as $nombre => $id) {
+      $operadoresObjeto[] = [
+          'nombre' => $nombre,
+          'id' => $id
+      ];
+  }
+
+  return $operadoresObjeto;
+}
