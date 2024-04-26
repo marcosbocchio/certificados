@@ -590,6 +590,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('partes-manuales', 'PartesManualesController');
     Route::put('/api/partes-manuales/{id}', 'PartesController@update');
     Route::get('/informes-sin-parte', 'PartesManualesController@getInformesSinParte');
+    Route::get('informes-con-parte', 'PartesManualesController@getInformesConParte');
     Route::get(
         'partes/informe_importado/{id}',
         'PartesController@getInformeImportado'

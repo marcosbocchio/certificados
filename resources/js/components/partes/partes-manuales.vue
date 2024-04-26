@@ -165,8 +165,8 @@ export default {
       opcionesHorarios: [
       { value: 'A', label: 'LUNES A VIERNES 7 - A 16.30 HS' },
       { value: 'B', label: 'LUNES A VIERNES 7 - A 19HS' },
-      { value: 'C', label: 'SABADOS - DOMINGOS - FERIADOS - 7 A 19 HS' },
-      { value: 'D', label: 'LUNES A DOMINGO - HORARIO NOCTURNO' }
+      { value: 'C', label: 'SAB. - DOM. - FERIADOS - 7 A 19 HS' },
+      { value: 'D', label: 'LUNES A DOM. - HORARIO NOCTURNO' }
     ],
       opcionesPlanta: this.plantas.map(planta => ({ label: planta.codigo, value: planta.codigo })),
       opcionesOperadores: this.operadores.map(operador => ({ label: operador.nombre, value: operador.id})),
@@ -268,7 +268,6 @@ export default {
     },
     quitarDetalle(index) {
       this.detalles.splice(index, 1);
-      this.mostrarToast('Detalle eliminado.', 'warning');
     },
     resetDetalle() {
       this.detalle = {

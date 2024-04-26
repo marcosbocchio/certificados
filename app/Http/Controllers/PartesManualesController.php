@@ -238,8 +238,8 @@ class PartesManualesController extends Controller
             }
     
             // Asociar los informes seleccionados, si los hay, al parte manual actualizado
-            if (!empty($validatedData['selectedInformes'])) {
-                foreach ($validatedData['selectedInformes'] as $informeId) {
+            if (!empty($request->selectedInformes)) {
+                foreach ($request->selectedInformes as $informeId) {
                     $informe = Informe::find($informeId);
                     if ($informe) {
                         $informe->parte_id = $parteManual->id;
@@ -248,7 +248,20 @@ class PartesManualesController extends Controller
                     }
                 }
             }
-    
+            log::info($request->selectedInformes);
+
+             // Desasociar los informes deseleccionados
+            if (!empty($request->deselectedInformes)) {
+                foreach ($request->deselectedInformes as $informeId) {
+                    $informe = Informe::find($informeId);
+                    if ($informe) {
+                        $informe->parte_id = null;
+                        $informe->parte_manual_sn = 0;
+                        $informe->save();
+                    }
+                }
+            }
+            log::info($request->deselectedInformes);
             \DB::commit();
             return response()->json(['message' => 'Parte manual actualizado exitosamente.'], 200);
         } catch (\Exception $e) {
@@ -273,5 +286,32 @@ class PartesManualesController extends Controller
                                     ->get();
 
         return response()->json($informesSinParte);
+    }
+
+    public function getInformesConParte(Request $request) {
+        $parteId = $request->query('parte_id');
+        $otId = $request->query('ot_id');  // Recuperar ot_id del query string
+    
+        try {
+            $informesConParte = Informe::select(
+                'informes.*', 
+                'metodo_ensayos.metodo', 
+                'users.name as solicitante', 
+                'plantas.nombre as nombre_planta',
+                \DB::raw("DATE_FORMAT(informes.fecha, '%d/%m/%Y') as fecha_formateada")
+            )
+            ->leftJoin('metodo_ensayos', 'informes.metodo_ensayo_id', '=', 'metodo_ensayos.id')
+            ->leftJoin('users', 'informes.solicitado_por', '=', 'users.id')
+            ->leftJoin('plantas', 'informes.planta_id', '=', 'plantas.id')
+            ->where('informes.parte_id', $parteId)
+            ->where('informes.ot_id', $otId)  // Filtrar por ot_id
+            ->where('informes.parte_manual_sn', 1)  // Filtrar por parte_manual_sn = 1
+            ->get();
+    
+            return response()->json($informesConParte);
+        } catch (\Exception $e) {
+            \Log::error("Error retrieving reports with part: " . $e->getMessage());
+            return response()->json(['error' => 'Server Error'], 500);
+        }
     }
 }

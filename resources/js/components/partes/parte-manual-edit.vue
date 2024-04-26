@@ -123,6 +123,15 @@
                 </tr>
               </thead>
               <tbody>
+                <tr v-for="(informe, index) in informesConParte" :key="informe.id">
+                  <td><input type="checkbox" v-model="informe.selected" @click="actualizarNumeroInforme(informe)" /></td>
+                  <td>{{ informe.metodo }}</td>
+                  <td>{{ formatearNumero(informe.metodo, informe.numero) }}</td>
+                  <td>{{ informe.obra }}</td>
+                  <td>{{ informe.nombre_planta }}</td>
+                  <td>{{ informe.fecha_formateada }}</td>
+                  <td>{{ informe.solicitante }}</td>
+                </tr>
                 <tr v-for="(informe, index) in informesSinParte" :key="informe.id">
                   <td><input type="checkbox" v-model="informe.selected" @click="actualizarNumeroInforme(informe)" /></td>
                   <td>{{ informe.metodo }}</td>
@@ -214,6 +223,7 @@ export default {
       cliente: this.cliente_nombre_data,
       proyecto: this.proyecto_data,
       ordenTrabajo: this.ot_data.numero,
+      informesConParte:[],
       informesSinParte: [],
       detalles: [],
       opcionesPlanta: this.plantas_data.map(planta => ({ label: planta.codigo, value: planta.codigo })),
@@ -222,8 +232,8 @@ export default {
       opcionesHorarios: [
       { value: 'A', label: 'LUNES A VIERNES 7 - A 16.30 HS' },
       { value: 'B', label: 'LUNES A VIERNES 7 - A 19HS' },
-      { value: 'C', label: 'SABADOS - DOMINGOS - FERIADOS - 7 A 19 HS' },
-      { value: 'D', label: 'LUNES A DOMINGO - HORARIO NOCTURNO' }
+      { value: 'C', label: 'SAB. - DOM. - FERIADOS - 7 A 19 HS' },
+      { value: 'D', label: 'LUNES A DOM. - HORARIO NOCTURNO' }
     ],
       isSaving: false,
       detalle: {
@@ -243,6 +253,7 @@ export default {
     if (this.fecha) {
       this.cargarInformesSinParte();
     }
+    this.cargarInformesConParte();
     this.pushDetalles();
     this.fecha = this.fecha_data;
   },
@@ -349,7 +360,6 @@ export default {
 },
     quitarDetalle(index) {
       this.detalles.splice(index, 1);
-      this.mostrarToast('Detalle eliminado.', 'warning');
     },
     resetDetalle() {
       this.detalle = {
@@ -376,42 +386,36 @@ export default {
     }
   },
   storeSection() {
-  this.isSaving = true;
-  const data = {
-    fecha: this.fecha,
-    ot: this.ot_data.id,
-    cliente: this.cliente,
-    proyecto: this.proyecto,
-    ordenTrabajo: this.ordenTrabajo,
-    detalles: this.detalles,
-    ot_obra: this.ot.obra ?? '-',
-    selectedInformes: this.informesSinParte
-      .filter(informe => informe.selected)
-      .map(informe => informe.id)
-  };
+    this.isSaving = true;
+    const data = {
+        fecha: this.fecha,
+        ot: this.ot_data.id,
+        cliente: this.cliente,
+        proyecto: this.proyecto,
+        ordenTrabajo: this.ordenTrabajo,
+        detalles: this.detalles,
+        ot_obra: this.ot.obra ?? '-',
+        selectedInformes: this.informesSinParte.filter(informe => informe.selected).map(informe => informe.id),
+        deselectedInformes: this.informesConParte.filter(informe => !informe.selected).map(informe => informe.id)  // Nueva línea
+    };
 
-  axios
-    .put(`/api/partes-manuales/${this.parte_manual_data.id}`, data) // Modifica la URL para incluir el ID del registro a actualizar
-    .then(response => {
-      console.log('Datos actualizados exitosamente', response);
-      window.open('/pdf-partemanual/' + this.parte_manual_data.id, '_blank');
-      window.location.href = '/partes/ot/' + this.ot_data.id, '_blank'
-    })
-    .catch(error => {
-      console.error('Error al actualizar los datos:', error);
-      this.isSaving = false;
-      let errorMessage = 'Error desconocido';
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        errorMessage = error.response.data.message;
-      } else if (error.message) {
-        errorMessage = error.message;
-      }
-      this.mostrarToast('Error al actualizar: ' + errorMessage, 'error');
-    });
+    axios.put(`/api/partes-manuales/${this.parte_manual_data.id}`, data)
+        .then(response => {
+            console.log('Datos actualizados exitosamente', response);
+            window.open('/pdf-partemanual/' + this.parte_manual_data.id, '_blank');
+            window.location.href = '/partes/ot/' + this.ot_data.id, '_blank';
+        })
+        .catch(error => {
+            console.error('Error al actualizar los datos:', error);
+            this.isSaving = false;
+            let errorMessage = 'Error desconocido';
+            if (error.response && error.response.data && error.response.data.message) {
+                errorMessage = error.response.data.message;
+            } else if (error.message) {
+                errorMessage = error.message;
+            }
+            this.mostrarToast('Error al actualizar: ' + errorMessage, 'error');
+        });
 },
     mostrarToast(mensaje, tipo) {
   if (tipo === 'success') {
@@ -429,6 +433,7 @@ cargarInformesSinParte() {
             ...informe,
             selected: false
           }));
+          console.log('noparte',this.informesSinParte); 
         })
         .catch(error => {
           if (error.response && error.response.data && error.response.data.message) {
@@ -441,6 +446,21 @@ cargarInformesSinParte() {
           console.log(error.config);
         });
     },
+    cargarInformesConParte() {
+    const url = `/api/informes-con-parte?parte_id=${this.parte_manual_data.id}&ot_id=${this.ot_data.id}`;
+    axios.get(url)
+        .then(response => {
+            this.informesConParte = response.data.map(informe => ({
+                ...informe,
+                selected: true  // Marcamos todos los informes como seleccionados
+            }));
+            console.log('Informes con parte:', this.informesConParte);
+        })
+        .catch(error => {
+            console.error('Error al cargar los informes con parte:', error);
+            this.mostrarToast('Error al cargar los informes: ' + error.message, 'error');
+        });
+}
   }
 }
 </script>
