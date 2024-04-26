@@ -8,16 +8,30 @@ use PDF;
 use App\Ots;
 use App\Contratistas;
 use App\Clientes;
+use App\User;
 
 class PdfManualController extends Controller
 {
     public function imprimir($idParteManual)
     {
-        // Obtener el parte manual con sus detalles
+        
         $parteManual = ParteManual::with('detalles')->findOrFail($idParteManual);
         $parteManual->fecha = date('d-m-Y', strtotime($parteManual->fecha));
         $ot = Ots::findOrFail($parteManual->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
+        // Recolectar todos los IDs de operador para los detalles
+        $operador1Ids = $parteManual->detalles->pluck('operador1')->unique()->filter();
+        $operador2Ids = $parteManual->detalles->pluck('operador2')->unique()->filter();
+
+        // Buscar los nombres de los operadores en una sola consulta
+        $operadores1 = User::whereIn('id', $operador1Ids)->get()->keyBy('id');
+        $operadores2 = User::whereIn('id', $operador2Ids)->get()->keyBy('id');
+
+        // Asignar nombres a cada detalle
+        foreach ($parteManual->detalles as $detalle) {
+            $detalle->operador1name = $operadores1[$detalle->operador1]->name ?? '-';
+            $detalle->operador2name = $operadores2[$detalle->operador2]->name ?? '-';
+        }
         // Preparar los datos para la vista del PDF
         $datos = [
             'parteManual' => $parteManual,

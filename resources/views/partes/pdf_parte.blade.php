@@ -71,10 +71,10 @@
         <table style="border-collapse: collapse; width: 100%;">
             <!-- Fila 1 -->
             <tr>
-                <th style="width: 550px;" >&nbsp;</th>
+                <th style="width: 545px;" >&nbsp;</th>
                 <th style="width: 35px;"  >&nbsp;</th>
-                <th style="width: 185px;" >&nbsp;</th>
-                <th style="width: 92.5px;" >&nbsp;</th>
+                <th style="width: 179px;" >&nbsp;</th>
+                <th style="width: 123px;" >&nbsp;</th>
             </tr>
             <tr>
             <th rowspan="6" style="text-align:left; position: fixed; top:-30px;">
@@ -113,11 +113,11 @@
                     <th style="width: 20px;border: 2px solid black;">Técnica</th>
                     <th style="width: 20px;border: 2px solid black;">Cant.</th>
                     <th style="width: 100px;border: 2px solid black;">Planta</th>
-                    <th style="width: 250px;border: 2px solid black;">Equipo/Linea</th>
+                    <th style="width: 230px;border: 2px solid black;">Equipo/Linea</th>
                     <th style="width: 170px;border: 2px solid black;">Operadores</th>
                     <th style="width: 30px;border: 2px solid black;">Horario</th>
-                    <th style="width: 200px;border: 2px solid black;">N° Informe</th>
-                    <th style="width: 100px;border: 2px solid black;" colspan="2">FIRMAS</th>
+                    <th style="width: 190px;border: 2px solid black;">N° Informe</th>
+                    <th style="width: 130px;border: 2px solid black;" colspan="2">FIRMAS</th>
                 </tr>
                 <!-- Bucle para las filas de la tabla actual -->
                 @for ($j = $i; $j < $i + $filasPorTabla; $j++)
@@ -129,8 +129,8 @@
                             <td>{{ $detalles[$j]->planta}}</td>
                             <td>{{ $detalles[$j]->equipo}}</td>
                             <td>
-                                {{ $detalles[$j]->operador1 ? $detalles[$j]->operador1 : '-' }} / 
-                                {{ $detalles[$j]->operador2 ? $detalles[$j]->operador2 : '-' }}
+                                {{ $detalles[$j]->operador1name ? $detalles[$j]->operador1name : '-' }} / 
+                                {{ $detalles[$j]->operador2name ? $detalles[$j]->operador2name : '-' }}
                             </td>
                             <td>{{ $detalles[$j]->horario}}</td>
                             <td>{{ $detalles[$j]->informe_nro}}</td>
@@ -268,7 +268,7 @@
             <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 733;
+        $x = 715;
         $y = 72;
         $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");

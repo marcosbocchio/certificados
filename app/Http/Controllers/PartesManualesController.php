@@ -109,22 +109,31 @@ class PartesManualesController extends Controller
         }
     }
 
-    public function getPartesPaginadas()
-    {
-        // Obtener todas las partes manuales con la columna numero_formateado, nombre del usuario y fecha formateada, ordenadas por fecha
-        $partes = ParteManual::leftJoin('users', 'parte_manual.usuario_alta_id', '=', 'users.id')
-            ->select(
-                \DB::raw("LPAD(parte_manual.id, 8, '0') as numero_formateado"),
-                'parte_manual.id',
-                'parte_manual.usuario_alta_id',
-                'users.name as nombre_usuario',
-                \DB::raw("DATE_FORMAT(parte_manual.fecha, '%d/%m/%Y') as fecha_formateada")
-            )
-            ->orderBy('parte_manual.fecha', 'desc')  // Ordena por la columna fecha de manera descendente
-            ->get();
-    
-        return $partes;
+    public function getPartesPaginadas(Request $request)
+{
+    // Recupera el ot_id desde la solicitud, null si no se proporciona
+    $otId = $request->query('ot_id');
+
+    // Construye la consulta base
+    $query = ParteManual::leftJoin('users', 'parte_manual.usuario_alta_id', '=', 'users.id')
+        ->select(
+            \DB::raw("LPAD(parte_manual.id, 8, '0') as numero_formateado"),
+            'parte_manual.id',
+            'parte_manual.usuario_alta_id',
+            'users.name as nombre_usuario',
+            \DB::raw("DATE_FORMAT(parte_manual.fecha, '%d/%m/%Y') as fecha_formateada")
+        );
+
+    // Filtra por ot_id si se proporciona
+    if (!is_null($otId)) {
+        $query->where('parte_manual.ot_id', $otId);
     }
+
+    // Ordena por fecha de manera descendente y aplica la paginación
+    $partes = $query->orderBy('parte_manual.fecha', 'desc')->paginate(10);
+
+    return $partes;
+}
 
     public function store(Request $request)
     {
@@ -254,7 +263,7 @@ class PartesManualesController extends Controller
         $otId = $request->query('ot_id');
         
         // Ajusta la consulta para obtener los informes que coincidan exactamente con la fecha seleccionada
-        $informesSinParte = Informe::select('informes.*', 'metodo_ensayos.metodo', 'users.name as solicitante', 'plantas.nombre as nombre_planta')
+        $informesSinParte = Informe::select('informes.*', 'metodo_ensayos.metodo', 'users.name as solicitante', 'plantas.nombre as nombre_planta',\DB::raw("DATE_FORMAT(informes.fecha, '%d/%m/%Y') as fecha_formateada")) // Formatea la fecha como DD/MM/YYYY)
                                     ->leftJoin('metodo_ensayos', 'informes.metodo_ensayo_id', '=', 'metodo_ensayos.id')
                                     ->leftJoin('users', 'informes.solicitado_por', '=', 'users.id')
                                     ->leftJoin('plantas', 'informes.planta_id', '=', 'plantas.id') // Unión con la tabla plantas

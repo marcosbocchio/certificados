@@ -50,7 +50,7 @@
 
               <div class="form-group col-md-3">
                 <label for="horario">Horario *</label>
-                <v-select v-model="detalle.horario" :options="['A', 'B', 'C', 'D']"></v-select>
+                <v-select v-model="detalle.horario" :options="opcionesHorarios" label="label" :reduce="horario => horario.value"></v-select>
               </div>
               <div class="form-group col-md-3">
                 <label for="n_informe">N° Informe *</label>
@@ -58,8 +58,9 @@
               </div>
               <div class="form-group col-md-3">
                 <label>Operadores *</label>
-                <v-select v-model="detalle.operadores" :options="opcionesOperadores" multiple :max="2" placeholder="Selecciona hasta 2 operadores"></v-select>
+                <v-select v-model="detalle.operadores" :options="opcionesOperadores" multiple :max="2"></v-select>
               </div>
+              <div class="clearfix"></div>
               <div class="form-group col-md-3 boton-centrado">
                 <label></label>
                 <button type="button" @click="agregarDetalle"><span class="fa fa-plus-circle"></span></button>
@@ -124,14 +125,14 @@
                   <td>{{ formatearNumero(informe.metodo, informe.numero) }}</td>
                   <td>{{ informe.obra }}</td>
                   <td>{{ informe.nombre_planta }}</td>
-                  <td>{{ informe.fecha }}</td>
+                  <td>{{ informe.fecha_formateada }}</td>
                   <td>{{ informe.solicitante }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Guardar Todo</button>
+        <button type="submit" class="btn btn-primary" :disabled="isSaving" ref="saveButton">Guardar</button>
       </form>
     </div>
   </div>
@@ -161,15 +162,22 @@ export default {
       ordenTrabajo: this.ordenTrabajoNumero,
       informesSinParte: [],
       detalles: [],
-      opcionesPlanta: this.plantas.map(planta => ({ label: planta.nombre, value: planta.codigo })),
+      opcionesHorarios: [
+      { value: 'A', label: 'LUNES A VIERNES 7 - A 16.30 HS' },
+      { value: 'B', label: 'LUNES A VIERNES 7 - A 19HS' },
+      { value: 'C', label: 'SABADOS - DOMINGOS - FERIADOS - 7 A 19 HS' },
+      { value: 'D', label: 'LUNES A DOMINGO - HORARIO NOCTURNO' }
+    ],
+      opcionesPlanta: this.plantas.map(planta => ({ label: planta.codigo, value: planta.codigo })),
       opcionesOperadores: this.operadores.map(operador => ({ label: operador.nombre, value: operador.id})),
       ot: this.ot,
+      isSaving: false,
       detalle: {
         tecnica: '',
         cantidad: 0,
         planta: '',
         equipo_linea: '',
-        horario: '',
+        horario: null,
         n_informe: '',
         operadores: []
       },
@@ -226,7 +234,6 @@ export default {
     }
     this.detalles.push({ ...this.detalle });
     this.resetDetalle();
-    toastr.success('Detalle agregado correctamente.');
   },
   validarDetalle() {
     const errores = [];
@@ -275,7 +282,7 @@ export default {
       };
     },
     storeSection() {
-      // Lógica para guardar un nuevo registro
+      this.isSaving = true;
       const data = {
         fecha: this.fecha,
         ot_id: this.ot_id,
@@ -299,7 +306,7 @@ export default {
     if (error.response && error.response.status === 422) {
         const errors = error.response.data.errors; // Asegúrate de que el backend envía un objeto 'errors'
         console.error('Errores de validación:', errors);
-        // Mostrar los errores usando Toastr
+        this.isSaving = false;
         Object.keys(errors).forEach(key => {
             errors[key].forEach(message => {
                 toastr.error(message, key, { timeOut: 5000 });

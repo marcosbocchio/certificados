@@ -50,7 +50,7 @@
 
               <div class="form-group col-md-3">
                 <label for="horario">Horario *</label>
-                <v-select v-model="detalle.horario" :options="['A', 'B', 'C', 'D']"></v-select>
+                <v-select v-model="detalle.horario" :options="opcionesHorarios" label="label" :reduce="horario => horario.value"></v-select>
               </div>
               <div class="form-group col-md-3">
                 <label for="n_informe">N° Informe *</label>
@@ -129,14 +129,14 @@
                   <td>{{ formatearNumero(informe.metodo, informe.numero) }}</td>
                   <td>{{ informe.obra }}</td>
                   <td>{{ informe.nombre_planta }}</td>
-                  <td>{{ informe.fecha }}</td>
+                  <td>{{ informe.fecha_formateada }}</td>
                   <td>{{ informe.solicitante }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Guardar Todo</button>
+        <button type="submit" class="btn btn-primary" :disabled="isSaving" ref="saveButton">Guardar</button>
       </form>
     </div>
   </div>
@@ -216,9 +216,16 @@ export default {
       ordenTrabajo: this.ot_data.numero,
       informesSinParte: [],
       detalles: [],
-      opcionesPlanta: this.plantas_data.map(planta => ({ label: planta.nombre, value: planta.codigo })),
+      opcionesPlanta: this.plantas_data.map(planta => ({ label: planta.codigo, value: planta.codigo })),
       opcionesOperadores: this.operadores_data.map(operador => ({ label: operador.nombre, value: operador.id})),
       ot: this.ot_data,
+      opcionesHorarios: [
+      { value: 'A', label: 'LUNES A VIERNES 7 - A 16.30 HS' },
+      { value: 'B', label: 'LUNES A VIERNES 7 - A 19HS' },
+      { value: 'C', label: 'SABADOS - DOMINGOS - FERIADOS - 7 A 19 HS' },
+      { value: 'D', label: 'LUNES A DOMINGO - HORARIO NOCTURNO' }
+    ],
+      isSaving: false,
       detalle: {
         tecnica: '',
         cantidad: 0,
@@ -273,7 +280,6 @@ export default {
         this.detalles.push({ ...this.detalle });
         console.log('detalles:', this.detalle);
         this.resetDetalle();
-        this.mostrarToast('Detalle agregado correctamente.', 'success');
       }
     },
     pushDetalles() {
@@ -370,7 +376,7 @@ export default {
     }
   },
   storeSection() {
-  // Lógica para actualizar un registro existente
+  this.isSaving = true;
   const data = {
     fecha: this.fecha,
     ot: this.ot_data.id,
@@ -393,6 +399,7 @@ export default {
     })
     .catch(error => {
       console.error('Error al actualizar los datos:', error);
+      this.isSaving = false;
       let errorMessage = 'Error desconocido';
       if (
         error.response &&

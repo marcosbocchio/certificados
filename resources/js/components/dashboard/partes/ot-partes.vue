@@ -15,7 +15,7 @@
           >
           </cuadro-largo-enod>
        </div>
-       <div v-show="ot_data.cliente_id == 15">
+       <div v-show="parte_esp == 1">
 
        
        <div class="clearfix"></div>
@@ -48,7 +48,7 @@
                             </thead>
                             <tbody>
                                 <!-- Aquí iterarás sobre los datos para mostrar las filas -->
-                                <tr v-for="(parte, index) in partes" :key="index">
+                                <tr v-for="(parte, index) in partes.data" :key="index">
                                     <td>{{ parte.numero_formateado }}</td>
                                     <td>{{ parte.nombre_usuario }}</td>
                                     <td>{{ parte.fecha_formateada }}</td>
@@ -68,6 +68,13 @@
                             </tbody>
                         </table>
                     </div>
+                    <pagination
+                        :data="partes" 
+                        @pagination-change-page="fetchPartesPaginadas"
+                        :limit="3">
+                        <span slot="prev-nav">&lt; Previous</span>
+                        <span slot="next-nav">Next &gt;</span>
+                    </pagination>
                 </div>
             </div>
         </div>
@@ -152,6 +159,7 @@ export default {
 
      ot_id_data : '',
      ot_data:{},
+     parte_esp:'',
 
   },
 
@@ -188,21 +196,21 @@ export default {
      },
 
   methods : {
-    fetchPartesPaginadas() {
-    axios.get('partes-manuales/paginate')
-        .then(response => {
-            this.partes = response.data;
-            console.log(this.partes);
-        })
-        .catch(error => {
-            if (error.response) {
-                console.error('Error al obtener partes manuales:', error.response.status);
-            } else if (error.request) {
-                console.error('Error al realizar la solicitud:', error.request);
-            } else {
-                console.error('Error:', error.message);
-            }
-        });
+    fetchPartesPaginadas(page = 1) {
+    axios.get(`partes-manuales/paginate?ot_id=${this.ot_data.id}&page=${page}`)
+    .then(response => {
+        this.partes = response.data;  // Asegúrate de que la respuesta contiene los datos de paginación esperados
+        console.log(this.partes); // Esto te ayudará a verificar que la paginación funciona correctamente
+    })
+    .catch(error => {
+        if (error.response) {
+            console.error('Error al obtener partes manuales:', error.response.status);
+        } else if (error.request) {
+            console.error('Error al realizar la solicitud:', error.request);
+        } else {
+            console.error('Error:', error.message);
+        }
+    });
 },
       getResults :function(page = 1){
 

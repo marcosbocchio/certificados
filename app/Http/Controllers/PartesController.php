@@ -21,6 +21,7 @@ use App\InformesImportados;
 use App\ParteServicios;
 use Illuminate\Support\Facades\Log;
 use App\ParteVehiculos;
+use App\Clientes;
 
 class PartesController extends Controller
 {
@@ -44,6 +45,8 @@ class PartesController extends Controller
       $user = auth()->user();
 
       $ot = Ots::where('id',$ot_id)->with('cliente')->first();
+      $cliente = Clientes::where('id',$ot->cliente_id)->first();
+      $parte_esp = $cliente->sn_parte_esp;
       $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
 
       return view('ot-partes.index',compact('ot_id',
@@ -51,7 +54,8 @@ class PartesController extends Controller
                                              'ot',
                                              'header_titulo',
                                              'header_sub_titulo',
-                                             'header_descripcion'));
+                                             'header_descripcion',
+                                             'parte_esp'));
 
     }
 
