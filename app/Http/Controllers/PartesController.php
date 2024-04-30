@@ -817,7 +817,7 @@ class PartesController extends Controller
 
     public function PartesTotal($ot_id){
 
-        return Partes::where('ot_id',$ot_id)->count();
+        return Partes::where('ot_id',$ot_id)->count() + ParteManual::where('ot_id',$ot_id)->count();
 
     }
 
