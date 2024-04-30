@@ -7,6 +7,7 @@ use App\Http\Requests\ParteRequest;
 // use App\helpers;
 use App\Ots;
 use App\Partes;
+use App\ParteManual;
 use App\ParteDetalles;
 use App\ParteOperadores;
 use App\Medidas;
@@ -817,7 +818,7 @@ class PartesController extends Controller
 
     public function PartesTotal($ot_id){
 
-        return Partes::where('ot_id',$ot_id)->count();
+        return Partes::where('ot_id',$ot_id)->count() + ParteManual::where('ot_id',$ot_id)->count();
 
     }
 

@@ -165,6 +165,23 @@
           </ul>
         </li>
       @endcan
+       
+      @can('Asistencia'){{-- Nueva opción de menú agregada --}}
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-cubes"></i> <span>Control de Asistencia</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @can('Asistencia')
+              <li><a href="{{ route('stock-table') }}">horarios y servicios</a></li>
+              <li><a href="{{ route('stock-total') }}">Stock</a></li> 
+            @endcan
+          </ul>
+        </li>
+      @endcan
 
         @can('DOSIMETRIA')
           <li class="treeview">

@@ -479,6 +479,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('stock/{id}/desanular', 'StockController@desanularInforme');
     Route::post('stock/edit', 'StockController@reemplazarStockProducto');
     Route::resource('stock', 'StockController');
+    //Asistencia
+    Route::resource('Asistencia', 'AsistenciaController');
+
 
     //procedimientos
     Route::resource(

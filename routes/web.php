@@ -92,6 +92,10 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/imprimir-stock/{id}', 'PdfStockController@imprimir')->name('imprimir.stock');
       Route::get('/imprimir-todo-stock', 'PdfStockController@imprimirTodoStock')->name('imprimir.todo.stock');
       
+      Route::get('/area/enod/asistencia', 'AsistenciaController@callView')->name('asistencia');
+      Route::get('/area/enod/asistencia-nuevo', 'AsistenciaController@nuevo')->name('asistencia-nuevo');
+
+
       Route::get('/area/enod/contratistas', 'ContratistasController@callView')->name('contratistas');
       Route::get('/area/enod/unidades-medidas', 'UnidadesMedidasController@callView')->name('unidades-medidas');
       Route::get('/area/enod/medidas', 'MedidasController@callView')->name('medidas');

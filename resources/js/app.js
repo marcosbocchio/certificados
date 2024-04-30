@@ -365,6 +365,12 @@ Vue.component('stock-registro', Registro);
 import EditStock from './components/stock/stock-edit.vue';
 Vue.component('stock-edit', EditStock);
 
+/* Asistencia */
+import Asistencia from './components/control-asistencia/asistencia-table.vue';
+Vue.component('asistencia-table', Asistencia);
+import AsistenciaNuevo from './components/control-asistencia/asistencia-nuevo.vue';
+Vue.component('asistencia-nuevo', AsistenciaNuevo);
+
 
 /* modal confirmacion */
 
