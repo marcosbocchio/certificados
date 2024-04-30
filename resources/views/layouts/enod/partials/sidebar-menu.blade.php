@@ -176,7 +176,7 @@
           </a>
           <ul class="treeview-menu">
             @can('Asistencia')
-              <li><a href="{{ route('stock-table') }}">horarios y servicios</a></li>
+              <li><a href="{{ route('asistencia') }}">horarios y servicios</a></li>
               <li><a href="{{ route('stock-total') }}">Stock</a></li> 
             @endcan
           </ul>

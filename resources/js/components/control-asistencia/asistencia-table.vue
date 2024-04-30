@@ -1,8 +1,7 @@
 <template>
     <div>
-      <!-- Botón de agregar -->
-      <button class="btn btn-primary" @click="agregarNuevo">
-        <i class="fa fa-plus"></i> Agregar
+      <button class="btn btn-enod" @click="agregarNuevo" style="background-color: rgb(255, 204, 0); color: rgb(0, 0, 0);" :disabled="!$can('S_compras_edita')">
+        <span class="fa fa-plus-circle"></span> Nuevo 
       </button>
   
       <!-- Tabla -->
