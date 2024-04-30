@@ -7,6 +7,7 @@ use App\Http\Requests\ParteRequest;
 // use App\helpers;
 use App\Ots;
 use App\Partes;
+use App\ParteManual;
 use App\ParteDetalles;
 use App\ParteOperadores;
 use App\Medidas;
