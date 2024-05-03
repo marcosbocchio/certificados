@@ -14,7 +14,7 @@
             padding-top: 0px;
         }
         header{
-            position: fixed; top:-45px;
+            position: fixed; top:-46px;
             right: 2px;
             width: 100%;
         }
@@ -71,10 +71,10 @@
         <table style="border-collapse: collapse; width: 100%;">
             <!-- Fila 1 -->
             <tr>
-                <th style="width: 380px;" >&nbsp;</th>
-                <th style="width: 35px;" >&nbsp;</th>
-                <th style="width: 200px;" >&nbsp;</th>
-                <th style="width: 118px;" >&nbsp;</th>
+                <th style="width: 545px;" >&nbsp;</th>
+                <th style="width: 40px;"  >&nbsp;</th>
+                <th style="width: 167px;" >&nbsp;</th>
+                <th style="width: 234px;" >&nbsp;</th>
             </tr>
             <tr>
             <th rowspan="6" style="text-align:left; position: fixed; top:-30px;">
@@ -107,18 +107,17 @@
 
         @for ($i = 0; $i < count($detalles); $i += $filasPorTabla)
             <!-- Inicio de la tabla -->
-            <table class="table_datos" style="border: 2px solid black;position: fixed; top:68px;">
+            <table class="table_datos" style="border: 2px solid black;position: fixed; top:67px;">
                 <!-- Cabecera de la tabla -->
                 <tr>
                     <th style="width: 20px;border: 2px solid black;">Técnica</th>
                     <th style="width: 20px;border: 2px solid black;">Cant.</th>
-                    <th style="width: 70px;border: 2px solid black;">Planta</th>
-                    <th style="width: 150px;border: 2px solid black;">Equipo/Linea</th>
+                    <th style="width: 100px;border: 2px solid black;">Planta</th>
+                    <th style="width: 160px;border: 2px solid black;">Equipo/Linea</th>
                     <th style="width: 170px;border: 2px solid black;">Operadores</th>
-                    <th style="width: 20px;border: 2px solid black;">Horario</th>
-                    <th style="width: 140px;border: 2px solid black;">N° Informe</th>
-                    <th style="width: 110px;border: 2px solid black;">Inspector</th>
-                    <th style="width: 145px;border: 2px solid black;" colspan="2">FIRMAS</th>
+                    <th style="width: 30px;border: 2px solid black;">Horario</th>
+                    <th style="width: 160px;border: 2px solid black;">N° Informe</th>
+                    <th style="width: 220px;border: 2px solid black;" colspan="2">FIRMAS</th>
                 </tr>
                 <!-- Bucle para las filas de la tabla actual -->
                 @for ($j = $i; $j < $i + $filasPorTabla; $j++)
@@ -137,9 +136,7 @@
                             <td>{{ $detalles[$j]->informe_nro}}</td>
                             <td>{{ $detalles[$j]->inspector_name}}</td>
                             <td>&nbsp;</td>
-                            <td>&nbsp;</td>
                         @else
-                            <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
@@ -271,8 +268,8 @@
             <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 715;
-        $y = 72;
+        $x = 680;
+        $y = 71;
         $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
         $size = 9;

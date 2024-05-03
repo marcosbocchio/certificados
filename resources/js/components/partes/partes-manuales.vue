@@ -43,7 +43,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="equipo_linea">Equipo/Linea *</label>
-                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="22">
+                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="18">
               </div>
 
               <div class="clearfix"></div>
@@ -54,7 +54,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="n_informe">N° Informe *</label>
-                <input type="text" v-model="detalle.n_informe" class="form-control" maxlength="22">
+                <input type="text" v-model="detalle.n_informe" class="form-control" maxlength="18">
               </div>
               <div class="form-group col-md-3">
                 <label>Operadores *</label>
