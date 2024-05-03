@@ -20,6 +20,7 @@
   :plantas='@json($plantas)'
   :operadores='@json($operador_opcion)'
   :ot="'{{ $ot }}'"
+  :inspectores_op ='@json($inspectores_op)'
   ></partes-manuales>
 
  </div>

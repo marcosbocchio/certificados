@@ -15,7 +15,7 @@
         }
         header{
             position: fixed; top:-45px;
-            right: 2px;
+            right: -8px;
             width: 100%;
         }
         body {
@@ -71,10 +71,10 @@
         <table style="border-collapse: collapse; width: 100%;">
             <!-- Fila 1 -->
             <tr>
-                <th style="width: 545px;" >&nbsp;</th>
-                <th style="width: 35px;"  >&nbsp;</th>
-                <th style="width: 179px;" >&nbsp;</th>
-                <th style="width: 123px;" >&nbsp;</th>
+                <th style="width: 380px;" >&nbsp;</th>
+                <th style="width: 35px;" >&nbsp;</th>
+                <th style="width: 200px;" >&nbsp;</th>
+                <th style="width: 116px;" >&nbsp;</th>
             </tr>
             <tr>
             <th rowspan="6" style="text-align:left; position: fixed; top:-30px;">
@@ -107,17 +107,18 @@
 
         @for ($i = 0; $i < count($detalles); $i += $filasPorTabla)
             <!-- Inicio de la tabla -->
-            <table class="table_datos" style="border: 2px solid black;position: fixed; top:67px;">
+            <table class="table_datos" style="border: 2px solid black;position: fixed; top:68px;">
                 <!-- Cabecera de la tabla -->
                 <tr>
                     <th style="width: 20px;border: 2px solid black;">Técnica</th>
                     <th style="width: 20px;border: 2px solid black;">Cant.</th>
-                    <th style="width: 100px;border: 2px solid black;">Planta</th>
-                    <th style="width: 230px;border: 2px solid black;">Equipo/Linea</th>
+                    <th style="width: 70px;border: 2px solid black;">Planta</th>
+                    <th style="width: 150px;border: 2px solid black;">Equipo/Linea</th>
                     <th style="width: 170px;border: 2px solid black;">Operadores</th>
-                    <th style="width: 30px;border: 2px solid black;">Horario</th>
-                    <th style="width: 190px;border: 2px solid black;">N° Informe</th>
-                    <th style="width: 130px;border: 2px solid black;" colspan="2">FIRMAS</th>
+                    <th style="width: 20px;border: 2px solid black;">Horario</th>
+                    <th style="width: 140px;border: 2px solid black;">N° Informe</th>
+                    <th style="width: 110px;border: 2px solid black;">Inspector</th>
+                    <th style="width: 145px;border: 2px solid black;" colspan="2">FIRMAS</th>
                 </tr>
                 <!-- Bucle para las filas de la tabla actual -->
                 @for ($j = $i; $j < $i + $filasPorTabla; $j++)
@@ -134,9 +135,11 @@
                             </td>
                             <td>{{ $detalles[$j]->horario}}</td>
                             <td>{{ $detalles[$j]->informe_nro}}</td>
+                            <td>{{ $detalles[$j]->inspector_name}}</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                         @else
+                            <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>

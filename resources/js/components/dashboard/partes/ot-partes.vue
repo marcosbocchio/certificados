@@ -59,6 +59,9 @@
                                         </button>
                                     </td>
                                     <td width="10px">
+                                        <button @click="informesEscaneadosManual(parte.id)" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
+                                    </td>
+                                    <td width="10px">
                                         <!-- Botón de PDF -->
                                         <button @click="generatePDFManual(parte.id)" class="btn btn-default btn-sm">
                                             <span class="fa fa-file-pdf-o"></span>
@@ -268,7 +271,12 @@ export default {
 
         informesEscaneados(id){
 
-            window.location.href =  '/documentos-escaneados/ot/' + this.ot_id_data + '/parte/' + id ;
+            window.location.href =  '/documentos-escaneados/ot/' + this.ot_id_data + '/partemanual/' + id ;
+
+        },
+        informesEscaneadosManual(id){
+
+            window.location.href =  '/documentos-escaneados/ot/' + this.ot_id_data + '/partemanual/' + id ;
 
         }
     },

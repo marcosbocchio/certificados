@@ -11,7 +11,7 @@ class ParteManualDetalle extends Model
     protected $fillable = [
         'parte_manual_id', 'planta', 'tecnica', 'cantidad', 
         'equipo', 'operador1', 'operador2', 'horario', 
-        'informe_id', 'informe_nro'
+        'informe_id', 'informe_nro','inspector_id'
     ];
 
     public function parteManual()
