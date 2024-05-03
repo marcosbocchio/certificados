@@ -15,7 +15,7 @@
         }
         header{
             position: fixed; top:-45px;
-            right: -8px;
+            right: 2px;
             width: 100%;
         }
         body {
@@ -74,7 +74,7 @@
                 <th style="width: 380px;" >&nbsp;</th>
                 <th style="width: 35px;" >&nbsp;</th>
                 <th style="width: 200px;" >&nbsp;</th>
-                <th style="width: 116px;" >&nbsp;</th>
+                <th style="width: 118px;" >&nbsp;</th>
             </tr>
             <tr>
             <th rowspan="6" style="text-align:left; position: fixed; top:-30px;">
