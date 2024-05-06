@@ -44,7 +44,7 @@
     },
     methods: {
       agregarNuevo() {
-        // Lógica para agregar un nuevo item
+        window.location.href =  '/area/enod/asistencia-nuevo'
       },
       editar(item) {
         // Lógica para editar un item
