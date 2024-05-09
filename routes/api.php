@@ -341,6 +341,10 @@ Route::group(['middleware' => 'auth:api'], function () {
         'DocumentacionesController@getDocOtOperarios'
     );
     Route::get(
+        'documentaciones/equipo/{user_id}',
+        'DocumentacionesController@getDocOtEquipo'
+    );
+    Route::get(
         'documentaciones/vehiculos/{vehiculo_id}',
         'DocumentacionesController@getDocVehiculo'
     );
@@ -348,6 +352,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'documentaciones/interno_equipo/{interno_equipo_id}',
         'DocumentacionesController@getDocInternoEquipo'
     );
+
     Route::get(
         'documentaciones/ot/{ot_id}/interno_equipo/{interno_equipo_id}/fuentes_documentaciones',
         'DocumentacionesController@getDocPorInternoOt'
@@ -481,7 +486,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('stock', 'StockController');
     //Asistencia
     Route::resource('Asistencia', 'AsistenciaController');
-
+    Route::post('/guardar_asistencia', 'AsistenciaController@guardarAsistencia');
+    Route::get('/area/enod/asistencia', 'AsistenciaController@getPaginatedAsistencia')->name('api.asistencia.paginated');
 
     //procedimientos
     Route::resource(
@@ -612,6 +618,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'PartesController@getInformePmiParte'
     );
 
+    
     //certificados
     Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');
     Route::get(

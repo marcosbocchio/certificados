@@ -1,140 +1,195 @@
 <template>
-    <div>
-      <!-- Box 1: Frente y Fecha -->
-      <div class="box box-custom-enod">
-        <div class="box-body">
+  <div>
+    <!-- Box 1: Frente y Fecha -->
+    <div class="box box-custom-enod">
+      <div class="box-body row">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="frente">Frente *</label>
-            <input id="frente" type="text" v-model="nuevoDetalle.frente" class="form-control" placeholder="Frente">
+            <v-select v-model="frente_selected" :options="frentes_opciones" label="codigo" id="frente"></v-select>
           </div>
+        </div>
+        <div class="col-md-3">
           <div class="form-group">
             <label for="fecha">Fecha *</label>
-            <date-picker id="fecha" v-model="nuevoDetalle.fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Seleccione fecha"></date-picker>
+            <date-picker id="fecha" v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY"></date-picker>
           </div>
         </div>
       </div>
-  
-      <!-- Box 2: Detalle de los inputs para llenar la tabla -->
-      <div class="box box-custom-enod">
-        <div class="box-body">
+    </div>
+
+    <!-- Box 2: Detalle de los inputs para llenar la tabla -->
+    <div class="box box-custom-enod">
+      <div class="box-body row">
+        <div class="col-md-2">
           <div class="form-group">
-            <label for="operador">Operador *</label>
-            <input id="operador" type="text" v-model="nuevoDetalle.operador" class="form-control" placeholder="Operador">
+            <label for="frente">Operador *</label>
+            <v-select v-model="operador_selected" :options="operarios_opciones" label="name" id="operador"></v-select>
           </div>
+        </div>
+        <div class="col-md-2">
           <div class="form-group">
             <label for="entrada">Entrada *</label>
-            <input id="entrada" type="text" v-model="nuevoDetalle.entrada" class="form-control" placeholder="Entrada">
+            <!-- Utilizamos input de tipo time -->
+            <input id="entrada" type="time" v-model="entrada_selected" class="form-control" placeholder="Entrada">
           </div>
+        </div>
+        <div class="col-md-2">
           <div class="form-group">
             <label for="salida">Salida *</label>
-            <input id="salida" type="text" v-model="nuevoDetalle.salida" class="form-control" placeholder="Salida">
+            <!-- Utilizamos input de tipo time -->
+            <input id="salida" type="time" v-model="salida_selected" class="form-control" placeholder="Salida">
           </div>
+        </div>
+        <div class="col-md-2">
           <div class="form-group">
-            <label for="contratista">Contratista *</label>
-            <input id="contratista" type="text" v-model="nuevoDetalle.contratista" class="form-control" placeholder="Contratista">
+            <label for="frente">Contratista *</label>
+            <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre" id="contratista"></v-select>
           </div>
+        </div>
+        <div class="col-md-2">
           <div class="form-group">
             <label for="parte">Parte *</label>
-            <input id="parte" type="text" v-model="nuevoDetalle.parte" class="form-control" placeholder="Parte">
+            <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
           </div>
-          <button type="button" @click="agregarDetalle" class="btn btn-primary">Agregar Detalle</button>
+        </div>
+        <div class="col-md-3">
+          <button type="button" @click="agregarDetalle"><span class="fa fa-plus-circle"></span></button>
         </div>
       </div>
-  
-      <!-- Tabla de Detalles -->
-      <div class="box box-custom-enod">
-        <div class="box-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Frente</th>
-                <th>Fecha</th>
-                <th>Operador</th>
-                <th>Entrada</th>
-                <th>Salida</th>
-                <th>Contratista</th>
-                <th>Parte</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(detalle, index) in detalles" :key="index">
-                <td>{{ detalle.frente }}</td>
-                <td>{{ detalle.fecha }}</td>
-                <td>{{ detalle.operador }}</td>
-                <td>{{ detalle.entrada }}</td>
-                <td>{{ detalle.salida }}</td>
-                <td>{{ detalle.contratista }}</td>
-                <td>{{ detalle.parte }}</td>
-                <td>
-                  <button @click="eliminarDetalle(index)" class="btn btn-danger">
-                    <i class="fa fa-trash"></i> Borrar
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    </div>
+
+    <!-- Tabla de Detalles -->
+    <div class="box box-custom-enod">
+      <div class="box-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Operador</th>
+              <th>Entrada</th>
+              <th>Salida</th>
+              <th>Contratista</th>
+              <th>Parte</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(detalle, index) in detalles" :key="index">
+              <td>{{ detalle.operador.name }}</td>
+              <td>{{ detalle.entrada }}</td>
+              <td>{{ detalle.salida }}</td>
+              <td>{{ detalle.contratista.nombre }}</td>
+              <td>{{ detalle.parte }}</td>
+              <td>
+                <button @click="eliminarDetalle(index)" class="text-center">
+                  <i class="fa fa-minus-circle"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-  
-      <!-- Botones de Acción -->
-      <div class="form-actions">
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="form-actions">
+      <div class="col-md-12">
         <button @click="cancelar" class="btn btn-secondary">Cancelar</button>
         <button @click="confirmar" class="btn btn-success">OK</button>
       </div>
     </div>
-  </template>
-  
-  <script>
-  import DatePicker from 'vue2-datepicker';
-  import 'vue2-datepicker/index.css';
-  
-  export default {
-    components: {
-      DatePicker
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import vSelect from 'vue-select';
+
+export default {
+  components: {
+    DatePicker,
+    vSelect
+  },
+  props: {
+    frentes_opciones: {
+      type: Array,
+      required: true
     },
-    data() {
-      return {
-        detalles: [],
-        nuevoDetalle: {
-          frente: '',
-          fecha: '',
-          operador: '',
-          entrada: '',
-          salida: '',
-          contratista: '',
-          parte: ''
-        }
+    operarios_opciones: {
+      type: Array,
+      required: true
+    },
+    contratistas_opciones: {
+      type: Array,
+      required: true
+    },
+  },
+  data() {
+    return {
+      detalles: [],
+      fecha: '',
+      frente_selected: '',
+      operador_selected: '',
+      entrada_selected: '',
+      salida_selected: '',
+      contratista_selected: '',
+      parte_selected: '',
+      nuevoDetalle: { operador: '', entrada: '', salida: '', contratista: '', parte: '' }
+    };
+  },
+  methods: {
+    agregarDetalle() {
+      this.nuevoDetalle = {
+        operador: this.operador_selected,
+        entrada: this.entrada_selected,
+        salida: this.salida_selected,
+        contratista: this.contratista_selected,
+        parte: this.parte_selected
       };
+      this.detalles.push(this.nuevoDetalle);
+      this.operador_selected = '';
+      this.entrada_selected = '';
+      this.salida_selected = '';
+      this.contratista_selected = '';
+      this.parte_selected = '';
     },
-    methods: {
-      agregarDetalle() {
-        this.detalles.push({...this.nuevoDetalle});
-        this.nuevoDetalle = { frente: '', fecha: '', operador: '', entrada: '', salida: '', contratista: '', parte: '' };
-      },
-      eliminarDetalle(index) {
-        this.detalles.splice(index, 1);
-      },
-      cancelar() {
-        // Aquí debes definir qué sucederá cuando se presione "Cancelar"
-      },
-      confirmar() {
-        // Aquí debes definir qué sucederá cuando se presione "OK"
-      }
+    eliminarDetalle(index) {
+      this.detalles.splice(index, 1);
+    },
+    cancelar() {
+      // Implementar lógica para cancelar
+    },
+    confirmar() {
+      axios.post('/api/guardar_asistencia', {
+        frente_id: this.frente_selected.id,
+        fecha: this.fecha,
+        detalles: this.detalles
+      })
+      .then(response => {
+        // Manejar la respuesta exitosa
+        console.log('Guardado exitosamente:', response);
+      })
+      .catch(error => {
+        // Manejar errores
+        console.error('Error al guardar:', error);
+      });
     }
   }
-  </script>
-  
-  <style scoped>
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-  }
-  
-  .btn-primary {
-    margin-top: 15px;
-  }
-  
-  /* Agrega tus propios estilos para mantener la estética de la página */
-  </style>
+}
+</script>
+
+<style scoped>
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  margin-top: 15px;
+}
+
+/* Agrega tus propios estilos para mantener la estética de la página */
+</style>

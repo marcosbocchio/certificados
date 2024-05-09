@@ -271,21 +271,25 @@ export default {
         return existe;
     },
 
-    selectDoc : function(k){
+    selectDoc: function(k) {
+    this.index = k;
+    let id = this.users_ot_operarios[k].id;
+    this.isLoadingC = true;
+    this.user_ot_operario_id = id;
+    axios.defaults.baseURL = this.url;
 
-        this.index = k ;
-        let id = this.users_ot_operarios[k].id ;
-        this.isLoadingC  = true;
-        this.user_ot_operario_id = id;
-        axios.defaults.baseURL = this.url ;
-        var urlRegistros = 'documentaciones/ot_operarios/' + this.ot_id_data + '/' + id + '?api_token=' + Laravel.user.api_token;
+    var urlRegistrosOperarios = 'documentaciones/ot_operarios/' + this.ot_id_data + '/' + id + '?api_token=' + Laravel.user.api_token;
+    var urlRegistrosEquipos = 'documentaciones/equipo/' + id + '?api_token=' + Laravel.user.api_token;
 
-        axios.get(urlRegistros).then(response =>{
-
-                this.documentaciones = response.data
-                this.isLoadingC  = false;
-            });
-    },
+    axios.all([
+        axios.get(urlRegistrosOperarios),
+        axios.get(urlRegistrosEquipos)
+    ]).then(axios.spread((operarios, equipos) => {
+        // Combina los resultados de ambas llamadas
+        this.documentaciones = operarios.data.concat(equipos.data);
+        this.isLoadingC = false;
+    }));
+},
 
     submit :function () {
 

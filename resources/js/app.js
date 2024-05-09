@@ -370,6 +370,8 @@ import Asistencia from './components/control-asistencia/asistencia-table.vue';
 Vue.component('asistencia-table', Asistencia);
 import AsistenciaNuevo from './components/control-asistencia/asistencia-nuevo.vue';
 Vue.component('asistencia-nuevo', AsistenciaNuevo);
+import AsistenciaEdit from './components/control-asistencia/asistencia-edit.vue';
+Vue.component('asistencia-edit', AsistenciaEdit);
 
 
 /* modal confirmacion */
