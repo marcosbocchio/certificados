@@ -251,6 +251,34 @@ class DocumentacionesController extends Controller
 
     }
 
+    public function getDocOtEquipo($user_id) {
+
+        DB::enableQueryLog();
+    
+        // Selecciona solo los documentos asociados con equipos a través de interno_equipo_documentaciones
+        $documentacion = Documentaciones::selectRaw('documentaciones.id,
+                                                     documentaciones.tipo,
+                                                     documentaciones.descripcion,
+                                                     documentaciones.titulo as titulo,
+                                                     documentaciones.path,
+                                                     documentaciones.metodo_ensayo_id,
+                                                     documentaciones.fecha_caducidad,
+                                                     users.name')
+                                        ->join('interno_equipo_documentaciones', 'interno_equipo_documentaciones.documentacion_id', '=', 'documentaciones.id')
+                                        ->join('users', 'users.id', '=', 'interno_equipo_documentaciones.interno_equipo_user_id')
+                                        ->where('interno_equipo_documentaciones.interno_equipo_user_id', $user_id)
+                                        ->where('documentaciones.visible_sn', 1)
+                                        ->whereRaw("date(documentaciones.fecha_caducidad) > curdate()")
+                                        ->get();
+    
+        $queries = DB::getQueryLog();
+        foreach($queries as $i => $query) {
+            Log::debug("Query $i: " . json_encode($query));
+        }
+        return $documentacion;
+    }
+    
+
     public function getDocVehiculo($vehiculo_id){
 
         /*

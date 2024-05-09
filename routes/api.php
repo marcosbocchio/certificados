@@ -341,6 +341,10 @@ Route::group(['middleware' => 'auth:api'], function () {
         'DocumentacionesController@getDocOtOperarios'
     );
     Route::get(
+        'documentaciones/equipo/{user_id}',
+        'DocumentacionesController@getDocOtEquipo'
+    );
+    Route::get(
         'documentaciones/vehiculos/{vehiculo_id}',
         'DocumentacionesController@getDocVehiculo'
     );
