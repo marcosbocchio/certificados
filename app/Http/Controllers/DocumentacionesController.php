@@ -204,14 +204,12 @@ class DocumentacionesController extends Controller
 
     public function operarios($id)
     {
-
-        $document = Documentaciones::where('id' , $id)
-                                     ->where('tipo','USUARIO')
-                                     ->firstOrFail();
-
+        $document = Documentaciones::where('id', $id)
+                                   ->whereIn('tipo', ['USUARIO', 'EQUIPO'])  // Permite 'USUARIO' y 'EQUIPO'
+                                   ->firstOrFail();
+    
         $path = public_path($document->path);
         return response()->file($path);
-
     }
 
     public function getDocOtOperarios($ot_id,$user_id){
@@ -277,7 +275,7 @@ class DocumentacionesController extends Controller
         }
         return $documentacion;
     }
-    
+
 
     public function getDocVehiculo($vehiculo_id){
 
