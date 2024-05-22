@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\AsistenciaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -488,6 +489,14 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('Asistencia', 'AsistenciaController');
     Route::post('/guardar_asistencia', 'AsistenciaController@guardarAsistencia');
     Route::get('/area/enod/asistencia', 'AsistenciaController@getPaginatedAsistencia')->name('api.asistencia.paginated');
+    Route::get('/asistencia/{id}', 'AsistenciaController@getAsistencia');
+    Route::post('/asistencia/{id}/update', 'AsistenciaController@updateAsistencia')->name('asistencia.update');
+    Route::get('/asistencia-mensual/{year}/{month}', 'AsistenciaController@getAsistenciaMensual');
+    Route::get('/feriados', 'AsistenciaController@getFeriados');
+    Route::get('/asistencia-operadores', 'AsistenciaController@getAsistenciaAgrupadaPorOperador');
+    Route::post('/guardar-pagos', 'AsistenciaController@guardarPagos');
+
+
 
     //procedimientos
     Route::resource(

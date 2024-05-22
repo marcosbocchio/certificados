@@ -94,7 +94,9 @@ Route::group(['middleware' => ['auth']], function () {
       
       Route::get('/area/enod/asistencia', 'AsistenciaController@callView')->name('asistencia');
       Route::get('/area/enod/asistencia-nuevo', 'AsistenciaController@nuevo')->name('asistencia-nuevo');
+      Route::get('/area/enod/asistencia-resumen', 'AsistenciaController@resumenView')->name('asistencia-resumen');
       Route::get('/asistencia/edit/{id}', 'AsistenciaController@edit')->name('asistencia.edit');
+      Route::get('/asistencia/copia/{id}', 'AsistenciaController@copia')->name('asistencia.copia');
 
       Route::get('/area/enod/contratistas', 'ContratistasController@callView')->name('contratistas');
       Route::get('/area/enod/unidades-medidas', 'UnidadesMedidasController@callView')->name('unidades-medidas');

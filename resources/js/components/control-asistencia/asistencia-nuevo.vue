@@ -6,13 +6,19 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="frente">Frente *</label>
-            <v-select v-model="frente_selected" :options="frentes_opciones" label="codigo" id="frente"></v-select>
+            <v-select v-model="frente_selected" :options="frentes_opciones" label="codigo" id="frente" @input="actualizarFechasBloqueadas"></v-select>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="fecha">Fecha *</label>
-            <date-picker id="fecha" v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY"></date-picker>
+            <date-picker 
+              id="fecha" 
+              v-model="fecha" 
+              value-type="YYYY-MM-DD" 
+              format="DD-MM-YYYY"
+              :disabled-date="bloquearFechas">
+            </date-picker>
           </div>
         </div>
       </div>
@@ -23,27 +29,39 @@
       <div class="box-body row">
         <div class="col-md-2">
           <div class="form-group">
-            <label for="frente">Operador *</label>
-            <v-select v-model="operador_selected" :options="operarios_opciones" label="name" id="operador"></v-select>
+            <label for="operador">Operador *</label>
+            <v-select v-model="operador_selected" :options="filtrarOperarios()" label="name" id="operador"></v-select>
           </div>
         </div>
         <div class="col-md-2">
           <div class="form-group">
             <label for="entrada">Entrada *</label>
-            <!-- Utilizamos input de tipo time -->
-            <input id="entrada" type="time" v-model="entrada_selected" class="form-control" placeholder="Entrada">
+            <div class="bootstrap-timepicker">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+                <timeselector v-model="entrada_selected"></timeselector>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-md-2">
           <div class="form-group">
             <label for="salida">Salida *</label>
-            <!-- Utilizamos input de tipo time -->
-            <input id="salida" type="time" v-model="salida_selected" class="form-control" placeholder="Salida">
+            <div class="bootstrap-timepicker">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+                <timeselector v-model="salida_selected"></timeselector>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label for="frente">Contratista *</label>
+            <label for="contratista">Contratista *</label>
             <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre" id="contratista"></v-select>
           </div>
         </div>
@@ -53,8 +71,10 @@
             <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
           </div>
         </div>
-        <div class="col-md-3">
-          <button type="button" @click="agregarDetalle"><span class="fa fa-plus-circle"></span></button>
+        <div class="col-md-1">
+          <div style="display:flex;justify-content: flex-start;align-items: center;">
+            <button type="button" @click="agregarDetalle" style="margin-top:25px;"><span class="fa fa-plus-circle"></span></button>
+          </div>
         </div>
       </div>
     </div>
@@ -62,7 +82,7 @@
     <!-- Tabla de Detalles -->
     <div class="box box-custom-enod">
       <div class="box-body">
-        <table class="table">
+        <table class="table table-hover table-striped table-condensed">
           <thead>
             <tr>
               <th>Operador</th>
@@ -70,7 +90,7 @@
               <th>Salida</th>
               <th>Contratista</th>
               <th>Parte</th>
-              <th>Acciones</th>
+              <th style="text-align: center;">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -80,10 +100,8 @@
               <td>{{ detalle.salida }}</td>
               <td>{{ detalle.contratista.nombre }}</td>
               <td>{{ detalle.parte }}</td>
-              <td>
-                <button @click="eliminarDetalle(index)" class="text-center">
-                  <i class="fa fa-minus-circle"></i>
-                </button>
+              <td style="text-align:center">
+                <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
               </td>
             </tr>
           </tbody>
@@ -94,8 +112,7 @@
     <!-- Botones de Acción -->
     <div class="form-actions">
       <div class="col-md-12">
-        <button @click="cancelar" class="btn btn-secondary">Cancelar</button>
-        <button @click="confirmar" class="btn btn-success">OK</button>
+        <button @click="confirmar" class="btn btn-enod">Guardar</button>
       </div>
     </div>
   </div>
@@ -105,12 +122,16 @@
 import axios from 'axios';
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
+import 'vue2-datepicker/locale/es';
 import vSelect from 'vue-select';
+import Timeselector from 'vue-timeselector';
+import moment from 'moment';
 
 export default {
   components: {
     DatePicker,
-    vSelect
+    vSelect,
+    Timeselector
   },
   props: {
     frentes_opciones: {
@@ -125,41 +146,58 @@ export default {
       type: Array,
       required: true
     },
+    fechas_por_frente: {
+      type: Object,
+      required: true
+    }
   },
   data() {
     return {
       detalles: [],
       fecha: '',
       frente_selected: '',
+      fechas_bloqueadas: [],
       operador_selected: '',
-      entrada_selected: '',
-      salida_selected: '',
+      entrada_selected: moment('08:00', 'HH:mm').toDate(),
+      salida_selected: moment('17:00', 'HH:mm').toDate(),
       contratista_selected: '',
-      parte_selected: '',
-      nuevoDetalle: { operador: '', entrada: '', salida: '', contratista: '', parte: '' }
+      parte_selected: ''
     };
   },
   methods: {
+    actualizarFechasBloqueadas() {
+      if (this.frente_selected && this.fechas_por_frente[this.frente_selected.id]) {
+        this.fechas_bloqueadas = this.fechas_por_frente[this.frente_selected.id];
+      } else {
+        this.fechas_bloqueadas = [];
+      }
+    },
+    bloquearFechas(date) {
+      return this.fechas_bloqueadas.includes(moment(date).format('YYYY-MM-DD'));
+    },
+    filtrarOperarios() {
+      if (this.frente_selected && this.frente_selected.id === 2) {
+        return this.operarios_opciones.filter(operario => operario.local_neuquen_sn === 1);
+      }
+      return this.operarios_opciones;
+    },
     agregarDetalle() {
-      this.nuevoDetalle = {
+      const nuevoDetalle = {
         operador: this.operador_selected,
-        entrada: this.entrada_selected,
-        salida: this.salida_selected,
+        entrada: moment(this.entrada_selected).format('HH:mm'),
+        salida: moment(this.salida_selected).format('HH:mm'),
         contratista: this.contratista_selected,
         parte: this.parte_selected
       };
-      this.detalles.push(this.nuevoDetalle);
+      this.detalles.push(nuevoDetalle);
       this.operador_selected = '';
-      this.entrada_selected = '';
-      this.salida_selected = '';
+      this.entrada_selected = moment('08:00', 'HH:mm').toDate();
+      this.salida_selected = moment('17:00', 'HH:mm').toDate();
       this.contratista_selected = '';
       this.parte_selected = '';
     },
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
-    },
-    cancelar() {
-      // Implementar lógica para cancelar
     },
     confirmar() {
       axios.post('/api/guardar_asistencia', {
@@ -170,12 +208,16 @@ export default {
       .then(response => {
         // Manejar la respuesta exitosa
         console.log('Guardado exitosamente:', response);
+        window.location.href = '/area/enod/asistencia';
       })
       .catch(error => {
         // Manejar errores
         console.error('Error al guardar:', error);
       });
     }
+  },
+  watch: {
+    frente_selected: 'actualizarFechasBloqueadas'
   }
 }
 </script>
@@ -187,9 +229,21 @@ export default {
   margin-top: 20px;
 }
 
-.btn-primary {
-  margin-top: 15px;
+.btn-enod {
+  background-color: rgb(255, 204, 0);
+  color: rgb(0, 0, 0);
 }
 
-/* Agrega tus propios estilos para mantener la estética de la página */
+/* Estilo para el botón de eliminar en la tabla */
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
 </style>

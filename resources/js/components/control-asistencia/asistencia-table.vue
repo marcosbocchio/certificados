@@ -1,53 +1,69 @@
 <template>
   <div>
-    <div class="header">
-      <button class="btn btn-enod" @click="agregarNuevo" style="background-color: rgb(255, 204, 0); color: rgb(0, 0, 0);" :disabled="!$can('S_compras_edita')">
-        <span class="fa fa-plus-circle"></span> Nuevo
-      </button>
-    </div>
-    <div class="box box-custom-enod">
-      <!-- Botón Nuevo en la parte superior -->
-  
-      <!-- Tabla de Items -->
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-              <tr>
-                  <th>Frente</th>
-                  <th>Fecha</th>
-                  <th>Acciones</th>
-              </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in items" :key="item.id">
-                <td>{{ item.frente ? item.frente.codigo : 'No disponible' }}</td>
-                <td>{{ item.fecha }}</td>
-                <td>
-                    <button class="btn btn-info" @click="editar(item)">Editar</button>
-                    <button class="btn btn-secondary" @click="copiar(item)">Copiar</button>
-                </td>
-            </tr>
-          </tbody>
-      </table>
-      </div>
-  
-      <!-- Paginación -->
-      <div class="pagination">
-        <button @click="changePage(currentPage - 1)" :disabled="currentPage <= 1">Anterior</button>
-        <button @click="changePage(currentPage + 1)" :disabled="currentPage >= pageCount">Siguiente</button>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-custom-enod top-buffer">
+          <div class="box-header with-border">
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="box-body">
+            <button class="btn btn-enod" @click="agregarNuevo" :disabled="!$can('S_compras_edita')">
+              <span class="fa fa-plus-circle"></span> Nuevo
+            </button>
+            <div class="table-responsive top-buffer">
+              <table class="table table-hover table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Frente</th>
+                    <th>Fecha</th>
+                    <th style="text-align: center;" colspan="2">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in items" :key="item.id">
+                    <td>{{ item.frente ? item.frente.codigo : 'No disponible' }}</td>
+                    <td>{{ item.fecha }}</td>
+                    <td width="10px">
+                      <button class="btn btn-warning btn-sm" @click="editar(item)" title="Editar">
+                        <i class="fa fa-pencil"></i>
+                      </button>
+                    </td>
+                    <td width="10px">
+                      <button class="btn btn-default btn-sm" @click="copiar(item)" title="Copiar">
+                        <i class="fa fa-copy"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination
+              :data="pagination"
+              @pagination-change-page="fetchData">
+              <span slot="prev-nav">&lt; Anterior</span>
+              <span slot="next-nav">Siguiente &gt;</span>
+            </pagination>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       items: [],
       pagination: {},
       currentPage: 1,
-      pageCount: 0, // Inicializando pageCount aquí
     };
   },
   mounted() {
@@ -58,23 +74,18 @@ export default {
       window.location.href = '/area/enod/asistencia-nuevo';
     },
     editar(item) {
-    window.location.href = `/asistencia/edit/${item.id}`; // Asegúrate de que la URL esté correcta según tu configuración de rutas
-  },
+      window.location.href = `/asistencia/edit/${item.id}`;
+    },
     copiar(item) {
-      // Lógica para copiar un item
+      window.location.href = `/asistencia/copia/${item.id}`;
     },
-    changePage(page) {
-      if (page > 0 && page <= this.pageCount) {
-        this.fetchData(page);
-      }
-    },
-    fetchData(page) {
-      axios.get(`/api/area/enod/asistencia?page=${page}`)
+    fetchData(page = 1) {
+      const params = { page };
+      axios.get('/api/area/enod/asistencia', { params })
         .then(response => {
           this.items = response.data.data;
           this.pagination = response.data;
           this.currentPage = page;
-          this.pageCount = response.data.last_page; // Asegurarse de actualizar pageCount aquí
         })
         .catch(error => {
           console.error('Error al cargar los datos:', error);
@@ -83,36 +94,9 @@ export default {
   }
 }
 </script>
+
 <style scoped>
-.box {
-  border: 1px solid #ddd;
-  padding: 20px;
+.top-buffer {
   margin-top: 20px;
-}
-
-.header {
-  margin-bottom: 20px;
-}
-
-.table-responsive {
-  overflow-x: auto;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.btn-enod {
-  background-color: rgb(255, 204, 0);
-  color: rgb(0, 0, 0);
-}
-
-@media (max-width: 768px) {
-  .btn-enod {
-    width: 100%;
-    margin-bottom: 10px;
-  }
 }
 </style>

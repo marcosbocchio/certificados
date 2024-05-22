@@ -368,10 +368,18 @@ Vue.component('stock-edit', EditStock);
 /* Asistencia */
 import Asistencia from './components/control-asistencia/asistencia-table.vue';
 Vue.component('asistencia-table', Asistencia);
+
 import AsistenciaNuevo from './components/control-asistencia/asistencia-nuevo.vue';
 Vue.component('asistencia-nuevo', AsistenciaNuevo);
+
 import AsistenciaEdit from './components/control-asistencia/asistencia-edit.vue';
 Vue.component('asistencia-edit', AsistenciaEdit);
+
+import AsistenciaResumen from './components/control-asistencia/asistencia-resumen.vue';
+Vue.component('asistencia-resumen', AsistenciaResumen);
+
+import AsistenciaCopia from './components/control-asistencia/asistencia-copia.vue';
+Vue.component('asistencia-copia', AsistenciaCopia);
 
 
 /* modal confirmacion */

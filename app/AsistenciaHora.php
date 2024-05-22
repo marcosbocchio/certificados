@@ -19,6 +19,4 @@ class AsistenciaHora extends Model
     {
         return $this->hasMany(AsistenciaDetalle::class, 'asistencia_horas_id');
     }
-
-    
 }
