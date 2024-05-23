@@ -1,6 +1,6 @@
+@ -1,224 +1,238 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
     <!-- Box 1: Frente y Fecha -->
     <div class="box box-custom-enod">
       <div class="box-body row">
@@ -96,7 +96,7 @@
               <td>{{ detalle.contratista ? detalle.contratista.nombre : '-' }}</td>
               <td>{{ detalle.parte }}</td>
               <td style="text-align: center;">
-                <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
+                  <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
               </td>
             </tr>
           </tbody>
@@ -110,6 +110,11 @@
         <button @click="confirmar" class="btn btn-enod">Guardar</button>
       </div>
     </div>
+    <loading
+            :active.sync="isLoading"
+            :loader="'bars'"
+            :color="'red'">
+          </loading>
   </div>
 </template>
 
@@ -122,8 +127,8 @@ import vSelect from 'vue-select';
 import Timeselector from 'vue-timeselector';
 import moment from 'moment';
 import Loading from 'vue-loading-overlay';
+import { toastrInfo,toastrDefault } from '../toastrConfig';
 import 'vue-loading-overlay/dist/vue-loading.css';
-import { toastr } from 'toastr';
 
 export default {
   components: {
@@ -164,7 +169,7 @@ export default {
       salida_selected: moment('17:00', 'HH:mm').toDate(),
       contratista_selected: '',
       parte_selected: '',
-      isLoading: false
+      isLoading: false,
     };
   },
   methods: {
@@ -183,26 +188,24 @@ export default {
       this.parte_selected = '';
     },
     cargarDatos() {
-      this.isLoading = true;
-      axios.get(`/api/asistencia/${this.asistenciaId}`)
-        .then(response => {
-          this.detalles = response.data.detalles.map(detalle => ({
-            ...detalle,
-            entrada: moment(detalle.entrada, 'HH:mm:ss').format('HH:mm'),
-            salida: moment(detalle.salida, 'HH:mm:ss').format('HH:mm')
-          }));
-          this.fecha = response.data.fecha;
-          this.frente_selected = response.data.frente;
-          this.isDisabled = false;
-          this.isLoading = false;
-          toastr.info('Datos cargados correctamente');
-        })
-        .catch(error => {
-          console.error('Error cargando los datos de asistencia:', error);
-          this.isLoading = false;
-          toastr.error('Error cargando los datos de asistencia');
-        });
-    },
+    this.isLoading = true; // Inicia el estado de carga
+    axios.get(`/api/asistencia/${this.asistenciaId}`)
+      .then(response => {
+        this.detalles = response.data.detalles.map(detalle => ({
+          ...detalle,
+          entrada: moment(detalle.entrada, 'HH:mm:ss').format('HH:mm'),
+          salida: moment(detalle.salida, 'HH:mm:ss').format('HH:mm')
+        }));
+        this.fecha = response.data.fecha;
+        this.frente_selected = response.data.frente;
+      })
+      .catch(error => {
+        console.error('Error cargando los datos de asistencia:', error);
+      })
+      .finally(() => {
+        this.isLoading = false; // Finaliza el estado de carga
+      });
+},
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
     },
@@ -213,24 +216,24 @@ export default {
       return this.operarios_opciones;
     },
     confirmar() {
-      this.isLoading = true;
-      axios.post(`/api/asistencia/${this.asistenciaId}/update`, {
-        detalles: this.detalles,
-        fecha: this.fecha,
-        frente: this.frente_selected
-      })
-      .then(response => {
-        this.isLoading = false;
-        toastr.info('Asistencia actualizada con éxito!');
-        window.location.href = '/area/enod/asistencia';
-        // Redireccionar o actualizar la vista según sea necesario
-      })
-      .catch(error => {
-        console.error('Error actualizando la asistencia:', error);
-        this.isLoading = false;
-        toastr.error('Error actualizando la asistencia');
-      });
-    }
+    this.isLoading = true; // Inicia el estado de carga
+    axios.post(`/api/asistencia/${this.asistenciaId}/update`, {
+      detalles: this.detalles,
+      fecha: this.fecha,
+      frente_id: this.frente_selected.id
+    })
+    .then(response => {
+      toastr.success('Asistencia actualizada con éxito!'); // Notificación de éxito
+      window.location.href = '/area/enod/asistencia'; // Redireccionamiento
+    })
+    .catch(error => {
+      console.error('Error actualizando la asistencia:', error);
+      toastr.error('Error al actualizar la asistencia.'); // Notificación de error
+    })
+    .finally(() => {
+      this.isLoading = false; // Finaliza el estado de carga
+    });
+}
   }
 }
 </script>
@@ -245,11 +248,9 @@ export default {
 .btn-primary {
   margin-top: 15px;
 }
-
 .v-select.disabled, .date-picker.disabled {
   background-color: #6c757d; /* Gris claro, ajusta según tu tema */
   cursor: not-allowed;
 }
-
 /* Agrega tus propios estilos para mantener la estética de la página */
 </style>

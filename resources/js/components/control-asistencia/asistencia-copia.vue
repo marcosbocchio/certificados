@@ -109,7 +109,11 @@
         </table>
       </div>
     </div>
-
+    <loading
+            :active.sync="isLoading"
+            :loader="'bars'"
+            :color="'red'">
+          </loading>
     <!-- Botones de Acción -->
     <div class="form-actions">
       <div class="col-md-12">
@@ -128,9 +132,8 @@ import vSelect from 'vue-select';
 import Timeselector from 'vue-timeselector';
 import moment from 'moment';
 import Loading from 'vue-loading-overlay';
+import { toastrInfo,toastrDefault } from '../toastrConfig';
 import 'vue-loading-overlay/dist/vue-loading.css';
-import toastr from 'toastr';
-import 'toastr/build/toastr.min.css';
 
 export default {
   components: {
@@ -208,46 +211,44 @@ export default {
       this.parte_selected = '';
     },
     cargarDatos() {
-      this.isLoading = true;
-      axios.get(`/api/asistencia/${this.asistenciaId}`)
-        .then(response => {
-          this.detalles = response.data.detalles.map(detalle => ({
-            ...detalle,
-            entrada: moment(detalle.entrada, 'HH:mm:ss').format('HH:mm'),
-            salida: moment(detalle.salida, 'HH:mm:ss').format('HH:mm')
-          }));
-          this.fecha = response.data.fecha;
-          this.frente_selected = response.data.frente;
-          this.isLoading = false;
-        })
-        .catch(error => {
-          console.error('Error cargando los datos de asistencia:', error);
-          this.isLoading = false;
-          toastr.error('Error cargando los datos de asistencia');
-        });
-    },
+  this.isLoading = true; // Activate loading indicator
+  axios.get(`/api/asistencia/${this.asistenciaId}`)
+    .then(response => {
+      this.detalles = response.data.detalles.map(detalle => ({
+        ...detalle,
+        entrada: moment(detalle.entrada, 'HH:mm:ss').format('HH:mm'),
+        salida: moment(detalle.salida, 'HH:mm:ss').format('HH:mm')
+      }));
+    })
+    .catch(error => {
+      console.error('Error cargando los datos de asistencia:', error);
+      toastr.error('Error cargando los datos de asistencia. Ver la consola para más detalles.');
+    })
+    .finally(() => {
+      this.isLoading = false; // Deactivate loading indicator
+    });
+},
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
     },
     confirmar() {
-      this.isLoading = true;
-      axios.post(`/api/asistencia/${this.asistenciaId}/update`, {
-        detalles: this.detalles,
-        fecha: this.fecha,
-        frente: this.frente_selected
-      })
-      .then(response => {
-        this.isLoading = false;
-        toastr.info('Asistencia actualizada con éxito!');
-        window.location.href = '/area/enod/asistencia';
-        // Redireccionar o actualizar la vista según sea necesario
-      })
-      .catch(error => {
-        console.error('Error actualizando la asistencia:', error);
-        this.isLoading = false;
-        toastr.error('Error actualizando la asistencia');
-      });
-    }
+  this.isLoading = true; // Enable loading before the request
+  axios.post('/api/guardar_asistencia', {
+    frente_id: this.frente_selected.id,
+    fecha: this.fecha,
+    detalles: this.detalles
+  })
+  .then(response => {
+    toastr.success('Guardado exitosamente:', response);
+    window.location.href = '/area/enod/asistencia';
+  })
+  .catch(error => {
+    toastr.error('Error al guardar:', error);
+  })
+  .finally(() => {
+    this.isLoading = false; // Disable loading after the request
+  });
+}
   },
   mounted() {
     this.cargarDatos();

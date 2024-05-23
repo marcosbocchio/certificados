@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
     <!-- Box 1: Frente y Fecha -->
     <div class="box box-custom-enod">
       <div class="box-body row">
@@ -116,6 +115,11 @@
         <button @click="confirmar" class="btn btn-enod">Guardar</button>
       </div>
     </div>
+          <loading
+            :active.sync="isLoading"
+            :loader="'bars'"
+            :color="'red'">
+          </loading>
   </div>
 </template>
 
@@ -128,8 +132,8 @@ import vSelect from 'vue-select';
 import Timeselector from 'vue-timeselector';
 import moment from 'moment';
 import Loading from 'vue-loading-overlay';
+import { toastrInfo,toastrDefault } from '../toastrConfig';
 import 'vue-loading-overlay/dist/vue-loading.css';
-import { toastrInfo, toastrDefault } from '../toastrConfig';
 
 export default {
   components: {
@@ -167,7 +171,7 @@ export default {
       salida_selected: moment('17:00', 'HH:mm').toDate(),
       contratista_selected: '',
       parte_selected: '',
-      isLoading: false
+      isLoading: false,
     };
   },
   methods: {
@@ -206,23 +210,23 @@ export default {
       this.detalles.splice(index, 1);
     },
     confirmar() {
-      this.isLoading = true;
-      axios.post('/api/guardar_asistencia', {
-        frente_id: this.frente_selected.id,
-        fecha: this.fecha,
-        detalles: this.detalles
-      })
-      .then(response => {
-        this.isLoading = false;
-        toastrInfo('Guardado exitosamente');
-        window.location.href = '/area/enod/asistencia';
-      })
-      .catch(error => {
-        this.isLoading = false;
-        toastrDefault('Error al guardar');
-        console.error('Error al guardar:', error);
-      });
-    }
+  this.isLoading = true; // Enable loading before the request
+  axios.post('/api/guardar_asistencia', {
+    frente_id: this.frente_selected.id,
+    fecha: this.fecha,
+    detalles: this.detalles
+  })
+  .then(response => {
+    toastr.success('Guardado exitosamente:', response);
+    window.location.href = '/area/enod/asistencia';
+  })
+  .catch(error => {
+    toastr.error('Error al guardar:', error);
+  })
+  .finally(() => {
+    this.isLoading = false; // Disable loading after the request
+  });
+}
   },
   watch: {
     frente_selected: 'actualizarFechasBloqueadas'

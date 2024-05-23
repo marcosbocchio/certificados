@@ -99,6 +99,20 @@ export default {
       required: true
     },
   },
+  watch: {
+    // Watcher para el frente seleccionado
+    frente_selected(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.fetchAsistencia();
+      }
+    },
+    // Watcher para el mes y año seleccionados
+    selectedMonthYear(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.fetchAsistencia();
+      }
+    }
+  },
   data() {
     return {
       frente_selected: '',
@@ -111,70 +125,78 @@ export default {
   },
   methods: {
     async fetchAsistencia() {
-      if (!this.selectedMonthYear || !this.frente_selected) {
-        toastr.error('Por favor, seleccione una fecha y un frente');
-        return;
+  // Verificar que se hayan seleccionado un frente y una fecha
+  if (!this.selectedMonthYear || !this.frente_selected) {
+    toastr.error('Por favor, seleccione una fecha y un frente');
+    return;
+  }
+
+  // Verificar si el frente seleccionado tiene ID = 2 y en ese caso no realizar la búsqueda
+  if (this.frente_selected.id === 2) {
+    this.operarios = []; // Limpiar la lista de operarios si es necesario
+    this.diasHabiles = '';
+    return;
+  }
+
+  const [year, month] = this.selectedMonthYear.split('-');
+  this.isLoading = true;
+
+  try {
+    const response = await axios.get('/api/asistencia-operadores', {
+      params: {
+        year: year,
+        month: month,
+        frent_id: this.frente_selected.id
       }
+    });
 
-      const [year, month] = this.selectedMonthYear.split('-');
-      this.isLoading = true;
+    this.diasHabiles = response.data.diasDelMes.diasHabiles;
 
-      try {
-        const response = await axios.get('/api/asistencia-operadores', {
-          params: {
-            year: year,
-            month: month,
-            frent_id: this.frente_selected.id
-          }
-        });
-
-        this.diasHabiles = response.data.diasDelMes.diasHabiles;
-
-        if (Array.isArray(response.data.asistencias)) {
-          this.operarios = response.data.asistencias.map(operador => ({
-            operador: operador.operador,
-            id: operador.operador.id,
-            diasHabiles: operador.diasHabiles,
-            sabados: operador.sabados,
-            domingos: operador.domingos,
-            feriados: operador.feriados,
-            horasExtras: operador.horasExtras,
-            serviciosExtrasS1: operador.serviciosExtrasS1,
-            serviciosExtrasS2: operador.serviciosExtrasS2,
-            serviciosExtrasS3: operador.serviciosExtrasS3,
-            serviciosExtrasS4: operador.serviciosExtrasS4,
-            serviciosExtrasS5: operador.serviciosExtrasS5,
-            pagoS1: operador.pagoS1 || false,
-            pagoS2: operador.pagoS2 || false,
-            pagoS3: operador.pagoS3 || false,
-            pagoS4: operador.pagoS4 || false,
-            pagoS5: operador.pagoS5 || false,
-            pagosExtMensual: operador.pagosExtMensual || false,
-            precargadoPagoS1: operador.pagoS1 || false,
-            precargadoPagoS2: operador.pagoS2 || false,
-            precargadoPagoS3: operador.pagoS3 || false,
-            precargadoPagoS4: operador.pagoS4 || false,
-            precargadoPagoS5: operador.pagoS5 || false,
-            precargadoPagosExtMensual: operador.pagosExtMensual || false
-          }));
-        } else {
-          this.operarios = [];
-          console.error('Unexpected data format:', response.data.asistencias);
-        }
-        this.message = '';
-      } catch (error) {
-        if (error.response && error.response.status === 404) {
-          toastr.error(error.response.data.message);
-          this.operarios = [];
-          this.diasHabiles = '';
-        } else {
-          console.error('Error fetching asistencia:', error);
-          toastr.error('Error al cargar los datos');
-        }
-      } finally {
-        this.isLoading = false;
-      }
-    },
+    if (Array.isArray(response.data.asistencias)) {
+      this.operarios = response.data.asistencias.map(operador => ({
+        operador: operador.operador,
+        id: operador.operador.id,
+        diasHabiles: operador.diasHabiles,
+        sabados: operador.sabados,
+        domingos: operador.domingos,
+        feriados: operador.feriados,
+        horasExtras: operador.horasExtras,
+        serviciosExtrasS1: operador.serviciosExtrasS1,
+        serviciosExtrasS2: operador.serviciosExtrasS2,
+        serviciosExtrasS3: operador.serviciosExtrasS3,
+        serviciosExtrasS4: operador.serviciosExtrasS4,
+        serviciosExtrasS5: operador.serviciosExtrasS5,
+        pagoS1: operador.pagoS1 || false,
+        pagoS2: operador.pagoS2 || false,
+        pagoS3: operador.pagoS3 || false,
+        pagoS4: operador.pagoS4 || false,
+        pagoS5: operador.pagoS5 || false,
+        pagosExtMensual: operador.pagosExtMensual || false,
+        precargadoPagoS1: operador.pagoS1 || false,
+        precargadoPagoS2: operador.pagoS2 || false,
+        precargadoPagoS3: operador.pagoS3 || false,
+        precargadoPagoS4: operador.pagoS4 || false,
+        precargadoPagoS5: operador.pagoS5 || false,
+        precargadoPagosExtMensual: operador.pagosExtMensual || false
+      }));
+    } else {
+      this.operarios = [];
+      console.error('Unexpected data format:', response.data.asistencias);
+    }
+    this.message = '';
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      toastr.error(error.response.data.message);
+      this.operarios = [];
+      this.diasHabiles = '';
+    } else {
+      console.error('Error fetching asistencia:', error);
+      toastr.error('Error al cargar los datos');
+    }
+  } finally {
+    this.isLoading = false;
+  }
+},
     async guardarPagos() {
       this.isLoading = true;
       try {

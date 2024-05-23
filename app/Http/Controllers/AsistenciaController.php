@@ -155,11 +155,8 @@ class AsistenciaController extends Controller
     public function updateAsistencia(Request $request, $id)
     {
         $asistenciaHora = AsistenciaHora::findOrFail($id);
-
         Log::info('Actualizando asistencia con ID:', ['id' => $id, 'data' => $request->all()]);
-
         AsistenciaDetalle::where('asistencia_horas_id', $id)->delete();
-
         $asistenciaHora->fecha = $request->fecha;
         $asistenciaHora->frente_id = $request->frente_id;
         $asistenciaHora->save();
@@ -167,10 +164,10 @@ class AsistenciaController extends Controller
         foreach ($request->detalles as $detalle) {
             $nuevoDetalle = new AsistenciaDetalle([
                 'asistencia_horas_id' => $asistenciaHora->id,
-                'operador_id' => $detalle['operador_id'],
+                'operador_id' => $detalle['operador']['id'],
                 'entrada' => $detalle['entrada'],
                 'salida' => $detalle['salida'],
-                'contratista_id' => $detalle['contratista_id'],
+                'contratista_id' => $detalle['contratista']['id'],
                 'parte' => $detalle['parte'],
             ]);
             $nuevoDetalle->save();
