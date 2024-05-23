@@ -12,7 +12,7 @@
           </div>
           
           <div class="box-body">
-            <button class="btn btn-enod" @click="agregarNuevo" :disabled="!$can('S_compras_edita')">
+            <button class="btn btn-enod" @click="agregarNuevo" :disabled="!$can('S_asistencia_edit')">
               <span class="fa fa-plus-circle"></span> Nuevo
             </button>
             <div class="table-responsive top-buffer">
