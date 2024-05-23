@@ -1,225 +1,220 @@
 <template>
   <div>
-    <!-- Box 1: Frente y Fecha -->
-    <div class="box box-custom-enod">
-      <div class="box-body row">
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="frente">Frente *</label>
-            <v-select v-model="frente_selected" :options="frentes_opciones" label="codigo" id="frente" @input="actualizarFechasBloqueadas"></v-select>
+    <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
+    
+    <!-- Filtros de Fecha y Días Hábiles -->
+    <div class="box box-custom-enod top-buffer">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="frente">Frente *</label>
+              <v-select v-model="frente_selected" :options="frentes_opciones" label="codigo" id="frente"></v-select>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="fecha">Fecha *</label>
-            <date-picker 
-              id="fecha" 
-              v-model="fecha" 
-              value-type="YYYY-MM-DD" 
-              format="DD-MM-YYYY"
-              :disabled-date="bloquearFechas">
-            </date-picker>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="month">Mes y Año:</label>
+              <input type="month" v-model="selectedMonthYear" @input="fetchAsistencia" class="form-control" placeholder=""/>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="diasHabiles">Días Hábiles del Mes:</label>
+              <input type="text" v-model="diasHabiles" disabled class="form-control"/>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Box 2: Detalle de los inputs para llenar la tabla -->
-    <div class="box box-custom-enod">
-      <div class="box-body row">
-        <div class="col-md-2">
-          <div class="form-group">
-            <label for="operador">Operador *</label>
-            <v-select v-model="operador_selected" :options="filtrarOperarios()" label="name" id="operador"></v-select>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="form-group">
-            <label for="entrada">Entrada *</label>
-            <div class="bootstrap-timepicker">
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-                <timeselector v-model="entrada_selected"></timeselector>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="form-group">
-            <label for="salida">Salida *</label>
-            <div class="bootstrap-timepicker">
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-                <timeselector v-model="salida_selected"></timeselector>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="form-group">
-            <label for="contratista">Contratista *</label>
-            <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre" id="contratista"></v-select>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="form-group">
-            <label for="parte">Parte *</label>
-            <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
-          </div>
-        </div>
-        <div class="col-md-1">
-          <div style="display:flex;justify-content: flex-start;align-items: center;">
-            <button type="button" @click="agregarDetalle" style="margin-top:25px;"><span class="fa fa-plus-circle"></span></button>
-          </div>
+    <!-- Mostrar semanas -->
+    <div class="box box-custom-enod top-buffer" v-if="semanas.length">
+      <div class="box-body">
+        <div v-for="(semana, index) in semanas" :key="index" class="semana">
+          <h5>Semana {{ index + 1 }}: {{ semana.inicio }} a {{ semana.fin }}</h5>
         </div>
       </div>
     </div>
 
-    <!-- Tabla de Detalles -->
-    <div class="box box-custom-enod">
+    <!-- Tabla de Asistencia -->
+    <div class="box box-custom-enod top-buffer">
       <div class="box-body">
         <table class="table table-hover table-striped table-condensed">
           <thead>
             <tr>
               <th>Operador</th>
-              <th>Entrada</th>
-              <th>Salida</th>
-              <th>Contratista</th>
-              <th>Parte</th>
-              <th style="text-align: center;">Acciones</th>
+              <th>Días Hábiles</th>
+              <th>Sab.</th>
+              <th>Dom.</th>
+              <th>Feriados</th>
+              <th>Horas Extras</th>
+              <th>Servicios Extras S1</th>
+              <th>Pago S1</th>
+              <th>Servicios Extras S2</th>
+              <th>Pago S2</th>
+              <th>Servicios Extras S3</th>
+              <th>Pago S3</th>
+              <th>Servicios Extras S4</th>
+              <th>Pago S4</th>
+              <th>Servicios Extras S5</th>
+              <th>Pago S5</th>
+              <th>Pagos Ext. Mensual</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(detalle, index) in detalles" :key="index">
-              <td>{{ detalle.operador.name }}</td>
-              <td>{{ detalle.entrada }}</td>
-              <td>{{ detalle.salida }}</td>
-              <td>{{ detalle.contratista.nombre }}</td>
-              <td>{{ detalle.parte }}</td>
-              <td style="text-align:center">
-                <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
-              </td>
+            <tr v-for="operador in operarios" :key="operador.operador.id">
+              <td>{{ operador.operador.name }}</td>
+              <td>{{ operador.diasHabiles }}</td>
+              <td>{{ operador.sabados }}</td>
+              <td>{{ operador.domingos }}</td>
+              <td>{{ operador.feriados }}</td>
+              <td>{{ operador.horasExtras }}</td>
+              <td>{{ operador.serviciosExtrasS1 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS1" /></td>
+              <td>{{ operador.serviciosExtrasS2 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS2" /></td>
+              <td>{{ operador.serviciosExtrasS3 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS3" /></td>
+              <td>{{ operador.serviciosExtrasS4 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS4" /></td>
+              <td>{{ operador.serviciosExtrasS5 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS5" /></td>
+              <td><input type="checkbox" v-model="operador.pagosExtMensual" /></td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- Botones de Acción -->
-    <div class="form-actions">
-      <div class="col-md-12">
-        <button @click="confirmar" class="btn btn-enod">Guardar</button>
-      </div>
+    <div v-if="message" class="alert alert-warning">
+      {{ message }}
     </div>
+
+    <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
-import 'vue2-datepicker/locale/es';
-import vSelect from 'vue-select';
-import Timeselector from 'vue-timeselector';
-import moment from 'moment';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 export default {
   components: {
-    DatePicker,
-    vSelect,
-    Timeselector
+    Loading
   },
   props: {
     frentes_opciones: {
       type: Array,
       required: true
     },
-    operarios_opciones: {
-      type: Array,
-      required: true
-    },
-    contratistas_opciones: {
-      type: Array,
-      required: true
-    },
-    fechas_por_frente: {
-      type: Object,
-      required: true
-    }
   },
   data() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const currentMonthYear = `${year}-${month}`;
+
     return {
-      detalles: [],
-      fecha: '',
       frente_selected: '',
-      fechas_bloqueadas: [],
-      operador_selected: '',
-      entrada_selected: moment('08:00', 'HH:mm').toDate(),
-      salida_selected: moment('17:00', 'HH:mm').toDate(),
-      contratista_selected: '',
-      parte_selected: ''
+      selectedMonthYear: currentMonthYear,
+      diasHabiles: '',
+      operarios: [],
+      message: '',
+      semanas: [],
+      isLoading: false
     };
   },
   methods: {
-    actualizarFechasBloqueadas() {
-      if (this.frente_selected && this.fechas_por_frente[this.frente_selected.id]) {
-        this.fechas_bloqueadas = this.fechas_por_frente[this.frente_selected.id];
-      } else {
-        this.fechas_bloqueadas = [];
+    async fetchAsistencia() {
+      if (!this.selectedMonthYear || !this.frente_selected) {
+        this.message = 'Por favor, seleccione una fecha y un frente.';
+        return;
+      }
+
+      const [year, month] = this.selectedMonthYear.split('-');
+      this.isLoading = true;
+
+      try {
+        const response = await axios.get('/api/asistencia-operadores', {
+          params: {
+            year: year,
+            month: month,
+            frent_id: this.frente_selected.id
+          }
+        });
+
+        this.diasHabiles = response.data.diasDelMes.diasHabiles;
+        this.semanas = response.data.diasDelMes.semanas;
+
+        if (Array.isArray(response.data.asistencias)) {
+          this.operarios = response.data.asistencias.map(operador => ({
+            operador: operador.operador,
+            id: operador.operador.id,
+            diasHabiles: operador.diasHabiles,
+            sabados: operador.sabados,
+            domingos: operador.domingos,
+            feriados: operador.feriados,
+            horasExtras: operador.horasExtras,
+            serviciosExtrasS1: operador.serviciosExtrasS1,
+            serviciosExtrasS2: operador.serviciosExtrasS2,
+            serviciosExtrasS3: operador.serviciosExtrasS3,
+            serviciosExtrasS4: operador.serviciosExtrasS4,
+            serviciosExtrasS5: operador.serviciosExtrasS5,
+            pagoS1: operador.pagoS1 || false,
+            pagoS2: operador.pagoS2 || false,
+            pagoS3: operador.pagoS3 || false,
+            pagoS4: operador.pagoS4 || false,
+            pagoS5: operador.pagoS5 || false,
+            pagosExtMensual: operador.pagosExtMensual || false
+          }));
+        } else {
+          this.operarios = [];
+          console.error('Unexpected data format:', response.data.asistencias);
+        }
+        this.message = '';
+        toastr.info('Datos cargados correctamente');
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          this.message = error.response.data.message;
+          this.operarios = [];
+          this.diasHabiles = '';
+        } else {
+          console.error('Error fetching asistencia:', error);
+          toastr.error('Error al cargar los datos');
+        }
+      } finally {
+        this.isLoading = false;
       }
     },
-    bloquearFechas(date) {
-      return this.fechas_bloqueadas.includes(moment(date).format('YYYY-MM-DD'));
-    },
-    filtrarOperarios() {
-      if (this.frente_selected && this.frente_selected.id === 2) {
-        return this.operarios_opciones.filter(operario => operario.local_neuquen_sn === 1);
+    async guardarPagos() {
+      this.isLoading = true;
+      try {
+        const operariosSeleccionados = this.operarios.filter(operador => 
+          operador.pagoS1 || operador.pagoS2 || operador.pagoS3 || operador.pagoS4 || operador.pagoS5 || operador.pagosExtMensual
+        );
+
+        const response = await axios.post('/api/guardar-pagos', {
+          frente_id: this.frente_selected.id,
+          selectedMonthYear: this.selectedMonthYear,
+          operarios: operariosSeleccionados,
+        });
+
+        this.message = 'Pagos guardados con éxito.';
+        toastr.info('Pagos guardados con éxito');
+      } catch (error) {
+        this.message = 'Error al guardar los pagos.';
+        console.error(error);
+        toastr.error('Error al guardar los pagos');
+      } finally {
+        this.isLoading = false;
       }
-      return this.operarios_opciones;
-    },
-    agregarDetalle() {
-      const nuevoDetalle = {
-        operador: this.operador_selected,
-        entrada: moment(this.entrada_selected).format('HH:mm'),
-        salida: moment(this.salida_selected).format('HH:mm'),
-        contratista: this.contratista_selected,
-        parte: this.parte_selected
-      };
-      this.detalles.push(nuevoDetalle);
-      this.operador_selected = '';
-      this.entrada_selected = moment('08:00', 'HH:mm').toDate();
-      this.salida_selected = moment('17:00', 'HH:mm').toDate();
-      this.contratista_selected = '';
-      this.parte_selected = '';
-    },
-    eliminarDetalle(index) {
-      this.detalles.splice(index, 1);
-    },
-    confirmar() {
-      axios.post('/api/guardar_asistencia', {
-        frente_id: this.frente_selected.id,
-        fecha: this.fecha,
-        detalles: this.detalles
-      })
-      .then(response => {
-        // Manejar la respuesta exitosa
-        console.log('Guardado exitosamente:', response);
-        window.location.href = '/area/enod/asistencia';
-      })
-      .catch(error => {
-        // Manejar errores
-        console.error('Error al guardar:', error);
-      });
     }
-  },
-  watch: {
-    frente_selected: 'actualizarFechasBloqueadas'
   }
-}
+};
 </script>
 
 <style scoped>
@@ -229,21 +224,14 @@ export default {
   margin-top: 20px;
 }
 
-.btn-enod {
-  background-color: rgb(255, 204, 0);
-  color: rgb(0, 0, 0);
+.btn-primary {
+  margin-top: 15px;
 }
 
-/* Estilo para el botón de eliminar en la tabla */
-.btn-danger {
-  background-color: #dc3545;
-  color: #fff;
+.v-select.disabled, .date-picker.disabled {
+  background-color: #6c757d; /* Gris claro, ajusta según tu tema */
+  cursor: not-allowed;
 }
 
-.btn-sm {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  border-radius: 0.2rem;
-}
+/* Agrega tus propios estilos para mantener la estética de la página */
 </style>

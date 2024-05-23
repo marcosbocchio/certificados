@@ -1,5 +1,7 @@
 <template>
   <div>
+    <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
+    
     <!-- Filtros de Fecha y Días Hábiles -->
     <div class="box box-custom-enod top-buffer">
       <div class="box-body">
@@ -13,7 +15,7 @@
           <div class="col-md-4">
             <div class="form-group">
               <label for="month">Mes y Año:</label>
-              <input type="month" v-model="selectedMonthYear" @input="fetchAsistencia" class="form-control" placeholder=""/>
+              <input type="month" v-model="selectedMonthYear" @input="fetchAsistencia" class="form-control" placeholder="Seleccione mes y año" />
             </div>
           </div>
           <div class="col-md-4">
@@ -22,15 +24,6 @@
               <input type="text" v-model="diasHabiles" disabled class="form-control"/>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mostrar semanas -->
-    <div class="box box-custom-enod top-buffer" v-if="semanas.length">
-      <div class="box-body">
-        <div v-for="(semana, index) in semanas" :key="index" class="semana">
-          <h5>Semana {{ index + 1 }}: {{ semana.inicio }} a {{ semana.fin }}</h5>
         </div>
       </div>
     </div>
@@ -85,18 +78,21 @@
       </div>
     </div>
 
-    <div v-if="message" class="alert alert-warning">
-      {{ message }}
-    </div>
-
     <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 export default {
+  components: {
+    Loading
+  },
   props: {
     frentes_opciones: {
       type: Array,
@@ -110,17 +106,18 @@ export default {
       diasHabiles: '',
       operarios: [],
       message: '',
-      semanas: []
+      isLoading: false
     };
   },
   methods: {
     async fetchAsistencia() {
       if (!this.selectedMonthYear || !this.frente_selected) {
-        this.message = 'Por favor, seleccione una fecha y un frente.';
+        toastr.error('Por favor, seleccione una fecha y un frente');
         return;
       }
 
       const [year, month] = this.selectedMonthYear.split('-');
+      this.isLoading = true;
 
       try {
         const response = await axios.get('/api/asistencia-operadores', {
@@ -132,7 +129,6 @@ export default {
         });
 
         this.diasHabiles = response.data.diasDelMes.diasHabiles;
-        this.semanas = response.data.diasDelMes.semanas;
 
         if (Array.isArray(response.data.asistencias)) {
           this.operarios = response.data.asistencias.map(operador => ({
@@ -162,15 +158,19 @@ export default {
         this.message = '';
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          this.message = error.response.data.message;
+          toastr.error(error.response.data.message);
           this.operarios = [];
           this.diasHabiles = '';
         } else {
           console.error('Error fetching asistencia:', error);
+          toastr.error('Error al cargar los datos');
         }
+      } finally {
+        this.isLoading = false;
       }
     },
     async guardarPagos() {
+      this.isLoading = true;
       try {
         const operariosSeleccionados = this.operarios.filter(operador => 
           operador.pagoS1 || operador.pagoS2 || operador.pagoS3 || operador.pagoS4 || operador.pagoS5 || operador.pagosExtMensual
@@ -180,14 +180,34 @@ export default {
           frente_id: this.frente_selected.id,
           selectedMonthYear: this.selectedMonthYear,
           operarios: operariosSeleccionados,
-        });
-
-        this.message = 'Pagos guardados con éxito.';
+        });        
+        toastr.success('Pagos guardados con éxito');
       } catch (error) {
-        this.message = 'Error al guardar los pagos.';
         console.error(error);
+        toastr.error('Error al guardar los pagos');
+      } finally {
+        this.isLoading = false;
       }
     }
   }
 };
 </script>
+
+<style scoped>
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  margin-top: 15px;
+}
+
+.v-select.disabled, .date-picker.disabled {
+  background-color: #6c757d; /* Gris claro, ajusta según tu tema */
+  cursor: not-allowed;
+}
+
+/* Agrega tus propios estilos para mantener la estética de la página */
+</style>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
     <!-- Box 1: Frente y Fecha -->
     <div class="box box-custom-enod">
       <div class="box-body row">
@@ -126,12 +127,17 @@ import 'vue2-datepicker/locale/es';
 import vSelect from 'vue-select';
 import Timeselector from 'vue-timeselector';
 import moment from 'moment';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 export default {
   components: {
     DatePicker,
     vSelect,
-    Timeselector
+    Timeselector,
+    Loading
   },
   props: {
     asistenciaId: {
@@ -165,7 +171,8 @@ export default {
       salida_selected: moment('17:00', 'HH:mm').toDate(),
       contratista_selected: '',
       parte_selected: '',
-      fechas_bloqueadas: []
+      fechas_bloqueadas: [],
+      isLoading: false
     };
   },
   methods: {
@@ -201,6 +208,7 @@ export default {
       this.parte_selected = '';
     },
     cargarDatos() {
+      this.isLoading = true;
       axios.get(`/api/asistencia/${this.asistenciaId}`)
         .then(response => {
           this.detalles = response.data.detalles.map(detalle => ({
@@ -210,30 +218,39 @@ export default {
           }));
           this.fecha = response.data.fecha;
           this.frente_selected = response.data.frente;
+          this.isLoading = false;
         })
         .catch(error => {
           console.error('Error cargando los datos de asistencia:', error);
-          alert('Error cargando los datos de asistencia. Ver la consola para más detalles.');
+          this.isLoading = false;
+          toastr.error('Error cargando los datos de asistencia');
         });
     },
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
     },
     confirmar() {
+      this.isLoading = true;
       axios.post(`/api/asistencia/${this.asistenciaId}/update`, {
         detalles: this.detalles,
         fecha: this.fecha,
         frente: this.frente_selected
       })
       .then(response => {
-        alert('Asistencia actualizada con éxito!');
+        this.isLoading = false;
+        toastr.info('Asistencia actualizada con éxito!');
         window.location.href = '/area/enod/asistencia';
         // Redireccionar o actualizar la vista según sea necesario
       })
       .catch(error => {
         console.error('Error actualizando la asistencia:', error);
+        this.isLoading = false;
+        toastr.error('Error actualizando la asistencia');
       });
     }
+  },
+  mounted() {
+    this.cargarDatos();
   }
 }
 </script>
