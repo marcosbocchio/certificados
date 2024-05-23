@@ -62,16 +62,16 @@
               <td>{{ operador.feriados }}</td>
               <td>{{ operador.horasExtras }}</td>
               <td>{{ operador.serviciosExtrasS1 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS1" /></td>
+              <td><input type="checkbox" v-model="operador.pagoS1" :disabled="operador.precargadoPagoS1" /></td>
               <td>{{ operador.serviciosExtrasS2 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS2" /></td>
+              <td><input type="checkbox" v-model="operador.pagoS2" :disabled="operador.precargadoPagoS2" /></td>
               <td>{{ operador.serviciosExtrasS3 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS3" /></td>
+              <td><input type="checkbox" v-model="operador.pagoS3" :disabled="operador.precargadoPagoS3" /></td>
               <td>{{ operador.serviciosExtrasS4 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS4" /></td>
+              <td><input type="checkbox" v-model="operador.pagoS4" :disabled="operador.precargadoPagoS4" /></td>
               <td>{{ operador.serviciosExtrasS5 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS5" /></td>
-              <td><input type="checkbox" v-model="operador.pagosExtMensual" /></td>
+              <td><input type="checkbox" v-model="operador.pagoS5" :disabled="operador.precargadoPagoS5" /></td>
+              <td><input type="checkbox" v-model="operador.pagosExtMensual" :disabled="operador.precargadoPagosExtMensual" /></td>
             </tr>
           </tbody>
         </table>
@@ -149,7 +149,13 @@ export default {
             pagoS3: operador.pagoS3 || false,
             pagoS4: operador.pagoS4 || false,
             pagoS5: operador.pagoS5 || false,
-            pagosExtMensual: operador.pagosExtMensual || false
+            pagosExtMensual: operador.pagosExtMensual || false,
+            precargadoPagoS1: operador.pagoS1 || false,
+            precargadoPagoS2: operador.pagoS2 || false,
+            precargadoPagoS3: operador.pagoS3 || false,
+            precargadoPagoS4: operador.pagoS4 || false,
+            precargadoPagoS5: operador.pagoS5 || false,
+            precargadoPagosExtMensual: operador.pagosExtMensual || false
           }));
         } else {
           this.operarios = [];

@@ -184,28 +184,28 @@ class AsistenciaController extends Controller
         $year = $request->year;
         $month = $request->month;
         $frenteId = $request->frent_id;
-
+    
         $asistenciaHoras = AsistenciaHora::with(['detalles.operador'])
             ->whereYear('fecha', $year)
             ->whereMonth('fecha', $month)
             ->where('frente_id', $frenteId)
             ->get();
-
+    
         if ($asistenciaHoras->isEmpty()) {
             return response()->json(['message' => 'No se encontraron datos para la fecha y frente seleccionados.'], 404);
         }
-
+    
         $diasDelMes = $this->calcularDiasDelMes($year, $month);
         $horasDiariasLaborables = Frentes::find($frenteId)->horas_diarias_laborables;
         $resumenOperarios = $this->calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDiariasLaborables);
-
+    
         // Obtener registros de operador_control
         $mes = Carbon::createFromFormat('Y-m', "$year-$month")->format('m-Y');
         $operadorControl = OperadorControl::where('frente_id', $frenteId)
             ->where('mes', $mes)
             ->get()
             ->keyBy('operador_id');
-
+    
         // Integrar datos de operador_control con los datos calculados
         foreach ($resumenOperarios as &$operador) {
             $operadorId = $operador['operador']['id'];
@@ -222,6 +222,12 @@ class AsistenciaController extends Controller
                     $operador['serviciosExtrasS3'] = $control->servicios_extras_s3;
                     $operador['serviciosExtrasS4'] = $control->servicios_extras_s4;
                     $operador['serviciosExtrasS5'] = $control->servicios_extras_s5;
+                    $operador['pagosExtMensual'] = true;
+                    $operador['pagoS1'] = true;
+                    $operador['pagoS2'] = true;
+                    $operador['pagoS3'] = true;
+                    $operador['pagoS4'] = true;
+                    $operador['pagoS5'] = true;
                 } else {
                     if ($control->servicios_extras_s1 !== null) {
                         $operador['serviciosExtrasS1'] = $control->servicios_extras_s1;
@@ -246,7 +252,7 @@ class AsistenciaController extends Controller
                 }
             }
         }
-
+    
         return response()->json([
             'diasDelMes' => $diasDelMes,
             'asistencias' => $resumenOperarios

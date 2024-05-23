@@ -139,6 +139,7 @@ class UserController extends Controller
         $User->name = $request['name'];
         $User->email = $request['email'];
         $User->habilitado_sn = $request['habilitado_sn'];
+        $User->local_neuquen_sn = $request['local_neuquen_sn'];
 
         if($request['password'] != '********'){
 
