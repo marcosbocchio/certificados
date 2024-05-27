@@ -13,9 +13,9 @@
             </div>
           </div>
           <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group no-margin">
               <label for="month">Mes y Año:</label>
-              <input type="month" v-model="selectedMonthYear" @input="fetchAsistencia" class="form-control" placeholder="Seleccione mes y año" />
+              <date-picker v-model="selectedDate" type="month" format="MM-YYYY" @input="fetchAsistencia" class="date-picker-custom" />
             </div>
           </div>
           <div class="col-md-4">
@@ -88,10 +88,13 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css';
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 
 export default {
   components: {
-    Loading
+    Loading,
+    DatePicker
   },
   props: {
     frentes_opciones: {
@@ -99,104 +102,87 @@ export default {
       required: true
     },
   },
-  watch: {
-    // Watcher para el frente seleccionado
-    frente_selected(newVal, oldVal) {
-      if (newVal !== oldVal) {
-        this.fetchAsistencia();
-      }
-    },
-    // Watcher para el mes y año seleccionados
-    selectedMonthYear(newVal, oldVal) {
-      if (newVal !== oldVal) {
-        this.fetchAsistencia();
-      }
-    }
-  },
   data() {
     return {
       frente_selected: '',
-      selectedMonthYear: '',
+      selectedDate: null,
       diasHabiles: '',
       operarios: [],
-      message: '',
       isLoading: false
     };
   },
-  methods: {
-    async fetchAsistencia() {
-  // Verificar que se hayan seleccionado un frente y una fecha
-  if (!this.selectedMonthYear || !this.frente_selected) {
-    toastr.error('Por favor, seleccione una fecha y un frente');
-    return;
-  }
-
-  // Verificar si el frente seleccionado tiene ID = 2 y en ese caso no realizar la búsqueda
-  if (this.frente_selected.id === 2) {
-    this.operarios = []; // Limpiar la lista de operarios si es necesario
-    this.diasHabiles = '';
-    return;
-  }
-
-  const [year, month] = this.selectedMonthYear.split('-');
-  this.isLoading = true;
-
-  try {
-    const response = await axios.get('/api/asistencia-operadores', {
-      params: {
-        year: year,
-        month: month,
-        frent_id: this.frente_selected.id
+  watch: {
+    frente_selected(newVal) {
+      if (newVal) {
+        this.fetchAsistencia();
       }
-    });
-
-    this.diasHabiles = response.data.diasDelMes.diasHabiles;
-
-    if (Array.isArray(response.data.asistencias)) {
-      this.operarios = response.data.asistencias.map(operador => ({
-        operador: operador.operador,
-        id: operador.operador.id,
-        diasHabiles: operador.diasHabiles,
-        sabados: operador.sabados,
-        domingos: operador.domingos,
-        feriados: operador.feriados,
-        horasExtras: operador.horasExtras,
-        serviciosExtrasS1: operador.serviciosExtrasS1,
-        serviciosExtrasS2: operador.serviciosExtrasS2,
-        serviciosExtrasS3: operador.serviciosExtrasS3,
-        serviciosExtrasS4: operador.serviciosExtrasS4,
-        serviciosExtrasS5: operador.serviciosExtrasS5,
-        pagoS1: operador.pagoS1 || false,
-        pagoS2: operador.pagoS2 || false,
-        pagoS3: operador.pagoS3 || false,
-        pagoS4: operador.pagoS4 || false,
-        pagoS5: operador.pagoS5 || false,
-        pagosExtMensual: operador.pagosExtMensual || false,
-        precargadoPagoS1: operador.pagoS1 || false,
-        precargadoPagoS2: operador.pagoS2 || false,
-        precargadoPagoS3: operador.pagoS3 || false,
-        precargadoPagoS4: operador.pagoS4 || false,
-        precargadoPagoS5: operador.pagoS5 || false,
-        precargadoPagosExtMensual: operador.pagosExtMensual || false
-      }));
-    } else {
-      this.operarios = [];
-      console.error('Unexpected data format:', response.data.asistencias);
+    },
+    selectedDate(newVal) {
+      if (newVal) {
+        this.fetchAsistencia();
+      }
     }
-    this.message = '';
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      toastr.error(error.response.data.message);
-      this.operarios = [];
-      this.diasHabiles = '';
-    } else {
-      console.error('Error fetching asistencia:', error);
-      toastr.error('Error al cargar los datos');
-    }
-  } finally {
-    this.isLoading = false;
-  }
-},
+  },
+  methods: {
+    formatDateToMonthYear(date) {
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      return `${month < 10 ? '0' : ''}${month}-${year}`;
+    },
+    async fetchAsistencia() {
+      if (!this.selectedDate || !this.frente_selected) {
+        return;
+      }
+
+      const formattedDate = this.formatDateToMonthYear(this.selectedDate);
+      const [month, year] = formattedDate.split('-');
+      this.isLoading = true;
+
+      try {
+        const response = await axios.get('/api/asistencia-operadores', {
+          params: {
+            year,
+            month,
+            frent_id: this.frente_selected.id
+          }
+        });
+
+        this.diasHabiles = response.data.diasDelMes.diasHabiles;
+        this.operarios = response.data.asistencias.map(operador => ({
+          operador: operador.operador,
+          diasHabiles: operador.diasHabiles,
+          sabados: operador.sabados,
+          domingos: operador.domingos,
+          feriados: operador.feriados,
+          horasExtras: operador.horasExtras,
+          serviciosExtrasS1: operador.serviciosExtrasS1,
+          serviciosExtrasS2: operador.serviciosExtrasS2,
+          serviciosExtrasS3: operador.serviciosExtrasS3,
+          serviciosExtrasS4: operador.serviciosExtrasS4,
+          serviciosExtrasS5: operador.serviciosExtrasS5,
+          pagoS1: operador.pagoS1 || false,
+          pagoS2: operador.pagoS2 || false,
+          pagoS3: operador.pagoS3 || false,
+          pagoS4: operador.pagoS4 || false,
+          pagoS5: operador.pagoS5 || false,
+          pagosExtMensual: operador.pagosExtMensual || false,
+          precargadoPagoS1: operador.pagoS1 || false,
+          precargadoPagoS2: operador.pagoS2 || false,
+          precargadoPagoS3: operador.pagoS3 || false,
+          precargadoPagoS4: operador.pagoS4 || false,
+          precargadoPagoS5: operador.pagoS5 || false,
+          precargadoPagosExtMensual: operador.pagosExtMensual || false
+        }));
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          toastr.error(error.response.data.message);
+        } else {
+          toastr.error('Error al cargar los datos');
+        }
+      } finally {
+        this.isLoading = false;
+      }
+    },
     async guardarPagos() {
       this.isLoading = true;
       try {
@@ -204,14 +190,14 @@ export default {
           operador.pagoS1 || operador.pagoS2 || operador.pagoS3 || operador.pagoS4 || operador.pagoS5 || operador.pagosExtMensual
         );
 
-        const response = await axios.post('/api/guardar-pagos', {
+        await axios.post('/api/guardar-pagos', {
           frente_id: this.frente_selected.id,
-          selectedMonthYear: this.selectedMonthYear,
+          selectedMonthYear: this.formatDateToMonthYear(this.selectedDate),
           operarios: operariosSeleccionados,
-        });        
+        });
+        
         toastr.success('Pagos guardados con éxito');
       } catch (error) {
-        console.error(error);
         toastr.error('Error al guardar los pagos');
       } finally {
         this.isLoading = false;
@@ -220,6 +206,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .form-actions {
@@ -232,10 +219,25 @@ export default {
   margin-top: 15px;
 }
 
-.v-select.disabled, .date-picker.disabled {
-  background-color: #6c757d; /* Gris claro, ajusta según tu tema */
-  cursor: not-allowed;
+.no-margin {
+  margin: 0;
+  padding: 0;
 }
 
-/* Agrega tus propios estilos para mantener la estética de la página */
+.date-picker-custom {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.date-picker-custom .form-control {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.v-select.disabled, .date-picker.disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
 </style>

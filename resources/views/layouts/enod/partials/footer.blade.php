@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="col-lg-12 text-center">
-            <strong>Copyright &copy; 2020 <a href="http://www.enodndt.com.ar/" target="_blank">Enod</a>.</strong> Todos los derechos reservados.
+            <strong>Copyright &copy; 2024 <a href="http://www.enodndt.com.ar/" target="_blank">Enod</a>.</strong> Todos los derechos reservados.
         </div>
     </div>
     <!-- Default to the left -->
