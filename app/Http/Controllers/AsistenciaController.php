@@ -114,10 +114,10 @@ class AsistenciaController extends Controller
 
     public function getPaginatedAsistencia()
     {
-        $asistencia = AsistenciaHora::with('frente')->orderBy('id', 'desc')->paginate(10);
+        $asistencia = AsistenciaHora::with('frente')->orderBy('fecha', 'desc')->paginate(10);
         return response()->json($asistencia);
     }
-
+    
     public function getAsistencia($id)
     {
         Log::info("Recibida solicitud para Asistencia con ID: {$id}");
