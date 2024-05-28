@@ -7,6 +7,7 @@ use App\DocumentosEscaneados;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\DocumentoEscaneadoRequest;
+use Illuminate\Support\Facades\Log;
 
 
 class DocumentosEscaneadosController extends Controller
@@ -21,9 +22,9 @@ class DocumentosEscaneadosController extends Controller
         $user = auth()->user(); 
         $header_titulo = "Documentos Escaneados";
         $header_descripcion ="Alta | Baja | Modificación";    
-     
+        log::info('documento en index ' . $tipo_documento);
         return view('documentos-escaneados.index',compact('ot_id', 
-                                                          'tipo_documento',  
+                                                          'tipo_documento',
                                                           'id',                                                                          
                                                           'user',                                       
                                                           'header_titulo',
@@ -33,17 +34,18 @@ class DocumentosEscaneadosController extends Controller
     public function DocumentosEscaneadosOt($ot_id,$tipo_documento,$id){
 
         $filtro  = $this->getFiltro($tipo_documento);
+        log::info('documento en DocumentosEscaneadosOt ' . $tipo_documento);
         return DocumentosEscaneados::where('ot_id',$ot_id)   
                                      ->where($filtro,$id)    
-                                     ->with('Usuario')                                    
-                                      ->get();
+                                     ->with('Usuario')
+                                     ->get();
 
     }
 
     public function getFiltro($tipo_documento){
 
         $filtro  = '';
-
+        log::info('documento ' . $tipo_documento);
         switch ($tipo_documento) {
 
             case 'informe':
@@ -52,6 +54,10 @@ class DocumentosEscaneadosController extends Controller
 
             case 'parte':
                 $filtro = 'parte_id';
+                break;
+
+            case 'partemanual':
+                $filtro = 'parte_manual_id';
                 break;
                 
             case 'certificado':
@@ -116,6 +122,9 @@ class DocumentosEscaneadosController extends Controller
 
             case 'parte':
                 $documento_escaneado->parte_id = $request->id;
+                break;
+            case 'partemanual':
+                $documento_escaneado->parte_manual_id = $request->id;
                 break;
                 
             case 'certificado':

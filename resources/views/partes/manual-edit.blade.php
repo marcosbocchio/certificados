@@ -18,6 +18,7 @@
         :detalles_data="{{ $detalles }}"
         :plantas_data="{{ $plantas}}"
         :operadores_data='@json($operador_opcion)'
+        :inspectores_op = '@json($inspectores_op)'
     ></partes-manuales-edit>
 </div>
 @endsection

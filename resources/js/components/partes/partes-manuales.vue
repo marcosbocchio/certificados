@@ -43,7 +43,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="equipo_linea">Equipo/Linea *</label>
-                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="25">
+                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="18">
               </div>
 
               <div class="clearfix"></div>
@@ -54,11 +54,15 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="n_informe">N° Informe *</label>
-                <input type="text" v-model="detalle.n_informe" class="form-control" maxlength="25">
+                <input type="text" v-model="detalle.n_informe" class="form-control" maxlength="18">
               </div>
               <div class="form-group col-md-3">
                 <label>Operadores *</label>
                 <v-select v-model="detalle.operadores" :options="opcionesOperadores" multiple :max="2"></v-select>
+              </div>
+              <div class="form-group col-md-3">
+                <label>inspector *</label>
+                <v-select v-model="detalle.inspector_secl" :options="inspectores_op" label="name"></v-select>
               </div>
               <div class="clearfix"></div>
               <div class="form-group col-md-3 boton-centrado">
@@ -79,6 +83,8 @@
                       <th>Horario</th>
                       <th>N° Informe</th>
                       <th>Operadores</th>
+                      <th>Inspector</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -90,6 +96,7 @@
                       <td>{{ detalle.horario }}</td>
                       <td>{{ detalle.n_informe }}</td>
                       <td>{{ obtenerLabelOperador(detalle.operadores[0]) }} / {{ obtenerLabelOperador(detalle.operadores[1]) }}</td>
+                      <td>{{ detalle.inspector_secl.name }}</td>
                       <td>
                         <a @click="quitarDetalle(index)"><app-icon img="minus-circle" color="black"></app-icon></a>
                       </td>
@@ -148,7 +155,7 @@ import { Toast } from 'bootstrap';
 
 export default {
   name: "ParteManualComponent",
-  props: ['ot_id', 'cliente', 'proyecto', 'ordenTrabajoNumero', 'plantas', 'operadores', 'ot'],
+  props: ['ot_id', 'cliente', 'proyecto', 'ordenTrabajoNumero', 'plantas', 'operadores', 'ot','inspectores_op'],
   components: {
     DatePicker,
     'v-select': vSelect
@@ -170,6 +177,7 @@ export default {
     ],
       opcionesPlanta: this.plantas.map(planta => ({ label: planta.codigo, value: planta.codigo })),
       opcionesOperadores: this.operadores.map(operador => ({ label: operador.nombre, value: operador.id})),
+      inspectores_op: this.inspectores_op.map(inspector => ({ label: inspector.name, value: inspector.id })),
       ot: this.ot,
       isSaving: false,
       detalle: {
@@ -179,6 +187,7 @@ export default {
         equipo_linea: '',
         horario: null,
         n_informe: '',
+        inspector_secl:'',
         operadores: []
       },
       opcionesTecnica: ['CR', 'ADM', 'LP', 'PM', 'PMI', 'RG', 'US', 'US-AT', 'US-N2', 'US-PHA', 'DU', 'RM', 'TT'],
@@ -232,6 +241,7 @@ export default {
     if (!this.validarDetalle()) {
       return;
     }
+    console.log(this.detalle);
     this.detalles.push({ ...this.detalle });
     this.resetDetalle();
   },
@@ -243,6 +253,7 @@ export default {
     if (!this.detalle.equipo_linea) errores.push('Por favor, ingresa el equipo o línea.');
     if (!this.detalle.horario) errores.push('Por favor, selecciona un horario.');
     if (!this.detalle.n_informe) errores.push('Por favor, ingresa el número de informe.');
+    if (!this.detalle.inspector_secl) errores.push('Por favor, ingresa un inspector.');
     if (this.detalle.operadores.length > 2) errores.push('No puedes seleccionar más de dos operadores.');
 
     errores.forEach(error => toastr.error(error));
@@ -281,7 +292,7 @@ export default {
       };
     },
     storeSection() {
-      this.isSaving = true;
+      
       const data = {
         fecha: this.fecha,
         ot_id: this.ot_id,
@@ -297,6 +308,7 @@ export default {
 
       axios.post('/api/partes-manuales', data)
       .then(response => {
+        this.isSaving = true;
         window.open('/pdf-partemanual/' + response.data.id, '_blank');
         window.location.href = '/partes/ot/' + this.ot_id;
         this.mostrarToast('Datos guardados exitosamente', 'success');

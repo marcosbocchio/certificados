@@ -19,7 +19,7 @@ class PartesManualesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['role_or_permission:Sistemas'], ['only' => ['index', 'create', 'store', 'update', 'edit']]);
+        $this->middleware(['role_or_permission:Sistemas|T_partes_acceder'], ['only' => ['index', 'create', 'store', 'update', 'edit']]);
     }
     public function index($ot_id)
     {
@@ -40,6 +40,8 @@ class PartesManualesController extends Controller
 
 
         $operador_opcion = obtenerNombresOperadoresPorOt($ot_id);
+
+        $inspectores_op = User::where('cliente_id',$ot->cliente_id)->get();
         
         return view('partes.manual', compact(
             'ot_id',
@@ -52,7 +54,9 @@ class PartesManualesController extends Controller
             'ordenTrabajoNumero',
             'plantas',
             'operador_opcion',
-            'ot'
+            'inspectores_op',
+            'ot',
+
         ));
     }
 
@@ -75,7 +79,7 @@ class PartesManualesController extends Controller
             $detalles = ParteManualDetalle::where('parte_manual_id', $id)->get();
             $plantas = Plantas::where('cliente_id', $ot->cliente_id)->get();
             $operador_opcion = obtenerNombresOperadoresPorOt($ot->id);
-            
+            $inspectores_op = User::where('cliente_id',$ot->cliente_id)->get();
             return view('partes.manual-edit', compact(
                 'parteManual',
                 'fecha_sin_hora',
@@ -90,6 +94,7 @@ class PartesManualesController extends Controller
                 'operador_opcion',
                 'header_descripcion',
                 'user',
+                'inspectores_op',
                 'header_sub_titulo',
             ));
         } catch (\Exception $e) {
@@ -110,30 +115,32 @@ class PartesManualesController extends Controller
     }
 
     public function getPartesPaginadas(Request $request)
-{
-    // Recupera el ot_id desde la solicitud, null si no se proporciona
-    $otId = $request->query('ot_id');
-
-    // Construye la consulta base
-    $query = ParteManual::leftJoin('users', 'parte_manual.usuario_alta_id', '=', 'users.id')
-        ->select(
-            \DB::raw("LPAD(parte_manual.id, 8, '0') as numero_formateado"),
-            'parte_manual.id',
-            'parte_manual.usuario_alta_id',
-            'users.name as nombre_usuario',
-            \DB::raw("DATE_FORMAT(parte_manual.fecha, '%d/%m/%Y') as fecha_formateada")
-        );
-
-    // Filtra por ot_id si se proporciona
-    if (!is_null($otId)) {
-        $query->where('parte_manual.ot_id', $otId);
+    {
+        // Recupera el ot_id desde la solicitud, null si no se proporciona
+        $otId = $request->query('ot_id');
+    
+        // Construye la consulta base
+        $query = ParteManual::leftJoin('users', 'parte_manual.usuario_alta_id', '=', 'users.id')
+            ->select(
+                \DB::raw("LPAD(parte_manual.id, 8, '0') as numero_formateado"),
+                'parte_manual.id',
+                'parte_manual.usuario_alta_id',
+                'users.name as nombre_usuario',
+                \DB::raw("DATE_FORMAT(parte_manual.fecha, '%d/%m/%Y') as fecha_formateada")
+            );
+    
+        // Filtra por ot_id si se proporciona
+        if (!is_null($otId)) {
+            $query->where('parte_manual.ot_id', $otId);
+        }
+    
+        // Ordena primero por fecha de manera descendente y luego por id de manera descendente
+        $partes = $query->orderBy('parte_manual.fecha', 'desc')
+                         ->orderBy('parte_manual.id', 'desc')
+                         ->paginate(10);
+    
+        return $partes;
     }
-
-    // Ordena por fecha de manera descendente y aplica la paginación
-    $partes = $query->orderBy('parte_manual.fecha', 'desc')->paginate(10);
-
-    return $partes;
-}
 
     public function store(Request $request)
     {
@@ -152,7 +159,7 @@ class PartesManualesController extends Controller
             'detalles' => 'required|array',
             'selectedInformes' => 'array',
         ]);
-
+        Log::info('Detalles recibidos: ' . json_encode($request->detalles));
         try {
             \DB::beginTransaction();
             $parteManual = ParteManual::create([
@@ -160,7 +167,11 @@ class PartesManualesController extends Controller
                 'usuario_alta_id' => $user_id,
                 'fecha' => $request->fecha,
             ]);
+
+            
             foreach ($request->detalles as $detalle) {
+                log::info('_______asd');
+                log::info($detalle['inspector_secl']['id']);
                 ParteManualDetalle::create([
                     'parte_manual_id' => $parteManual->id,
                     'tecnica' => $detalle['tecnica'],
@@ -170,6 +181,7 @@ class PartesManualesController extends Controller
                     'operador1' => $detalle['operadores'][0]['value'] ?? null,
                     'operador2' => $detalle['operadores'][1]['value'] ?? null,
                     'horario' => $detalle['horario'],
+                    'inspector_id' => $detalle['inspector_secl']['id'],
                     'informe_nro' => $detalle['n_informe'],
                 ]);
             }
@@ -233,6 +245,7 @@ class PartesManualesController extends Controller
                     'operador1' => $detalle['operadores'][0]['value'] ?? null,
                     'operador2' => $detalle['operadores'][1]['value'] ?? null,
                     'horario' => $detalle['horario'],
+                    'inspector_id' => $detalle['inspector_secl']['id'],
                     'informe_nro' => $detalle['n_informe'],
                 ]);
             }

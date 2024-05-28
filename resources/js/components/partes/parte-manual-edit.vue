@@ -43,7 +43,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="equipo_linea">Equipo/Linea *</label>
-                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="30">
+                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="18">
               </div>
 
               <div class="clearfix"></div>
@@ -54,7 +54,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label for="n_informe">N° Informe *</label>
-                <input type="text" v-model="detalle.n_informe" class="form-control" maxlength="30">
+                <input type="text" v-model="detalle.n_informe" class="form-control" maxlength="18">
               </div>
               <div class="form-group col-md-3">
                 <label>Operadores *</label>
@@ -63,6 +63,10 @@
                   multiple
                   :max="2">
                 </v-select>
+              </div>
+              <div class="form-group col-md-3">
+                <label>inspector *</label>
+                <v-select v-model="detalle.inspector_secl" :options="inspectores_op" label="name"></v-select>
               </div>
               <div class="clearfix"></div>
               <div class="form-group col-md-3 boton-centrado">
@@ -83,6 +87,8 @@
                       <th>Horario</th>
                       <th>N° Informe</th>
                       <th>Operadores</th>
+                      <th>Inspector</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -94,6 +100,7 @@
                       <td>{{ detalle.horario }}</td>
                       <td>{{ detalle.n_informe }}</td>
                       <td>{{ obtenerLabelOperador(detalle.operadores[0]) }} / {{ obtenerLabelOperador(detalle.operadores[1]) }}</td>
+                      <td>{{ detalle.inspector_secl ? detalle.inspector_secl.name : '-' }}</td>
                       <td>
                         <a @click="quitarDetalle(index)"><app-icon img="minus-circle" color="black"></app-icon></a>
                       </td>
@@ -207,6 +214,10 @@ export default {
     type: Array,
     required: true
   },
+  inspectores_op:{
+    type: Array,
+    required: true
+  },
   operadores_data:{
   type: Array,
   required: true
@@ -228,6 +239,7 @@ export default {
       detalles: [],
       opcionesPlanta: this.plantas_data.map(planta => ({ label: planta.codigo, value: planta.codigo })),
       opcionesOperadores: this.operadores_data.map(operador => ({ label: operador.nombre, value: operador.id})),
+      inspectores_op: this.inspectores_op.map(inspector => ({ label: inspector.name, value: inspector.id })),
       ot: this.ot_data,
       opcionesHorarios: [
       { value: 'A', label: 'LUNES A VIERNES 7 - A 16.30 HS' },
@@ -243,6 +255,7 @@ export default {
         equipo_linea: '',
         horario: '',
         n_informe: '',
+        inspector_secl:'',
         operadores: []
       },
       opcionesTecnica: ['CR', 'ADM', 'LP', 'PM', 'PMI', 'RG', 'US', 'US-AT', 'US-N2', 'US-PHA', 'DU', 'RM', 'TT'],
@@ -296,11 +309,12 @@ export default {
     pushDetalles() {
     // Recorrer el array detalles_data
     this.detalles_data.forEach(detalle => {
-      const operador1Id = parseInt(detalle.operador1, 10);
+    const operador1Id = parseInt(detalle.operador1, 10);
     const operador2Id = parseInt(detalle.operador2, 10);
-
+    
     const operador1 = this.obtenerNombreOperador(operador1Id);
     const operador2 = this.obtenerNombreOperador(operador2Id);
+    const inspector = this.obtenerNombreInspector(detalle.inspector_id);
 
   // Crear un nuevo objeto para el detalle con los nombres actualizados
   const nuevoDetalle = {
@@ -310,6 +324,7 @@ export default {
     equipo_linea: detalle.equipo,
     horario: detalle.horario,
     n_informe: detalle.informe_nro,
+    inspector_secl: { name: inspector.name, id:inspector.id },
     operadores: [operador1, operador2]
   };
 
@@ -383,6 +398,19 @@ export default {
     } else {
       // Devolver un mensaje indicando que el operador no se encontró
       return 'Operador no encontrado';
+    }
+  },
+    obtenerNombreInspector(id) {
+    // Buscar el operador en opcionesOperadores
+    const inspectorEncontrado = this.inspectores_op.find(inspector => inspector.id === id);
+    console.log('inspector:',inspectorEncontrado);
+    // Verificar si se encontró el operador
+    if (inspectorEncontrado) {
+      // Devolver el nombre del operador
+      return inspectorEncontrado;
+    } else {
+      // Devolver un mensaje indicando que el operador no se encontró
+      return 'inspector no encontrado';
     }
   },
   storeSection() {

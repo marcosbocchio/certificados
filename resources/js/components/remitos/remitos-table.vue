@@ -36,7 +36,7 @@
                            <table class="table table-hover table-striped table-condensed">
                                <thead>
                                    <tr>
-                                       <th>N°</th>
+                                       <th>N°.</th>
                                        <th>Frente origen</th>
                                        <th>Frente destino</th>
                                        <th>Receptor</th>
