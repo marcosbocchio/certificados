@@ -167,7 +167,7 @@ export default {
       frente_selected: '',
       operador_selected: '',
       entrada_selected: moment('08:00', 'HH:mm').toDate(),
-      salida_selected: moment('17:00', 'HH:mm').toDate(),
+      salida_selected: moment('16:00', 'HH:mm').toDate(),
       contratista_selected: '',
       parte_selected: '',
       isLoading: false,

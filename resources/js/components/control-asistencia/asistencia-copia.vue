@@ -214,7 +214,7 @@ export default {
       this.detalles.push(nuevoDetalle);
       this.operador_selected = '';
       this.entrada_selected = moment('08:00', 'HH:mm').toDate();
-      this.salida_selected = moment('17:00', 'HH:mm').toDate();
+      this.salida_selected = moment('16:00', 'HH:mm').toDate();
       this.contratista_selected = '';
       this.parte_selected = '';
     },

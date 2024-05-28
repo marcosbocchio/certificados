@@ -169,7 +169,8 @@ methods: {
       }));
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        toastr.error(error.response.data.message);
+        console.error(error.response.data.message);
+        this.operarios=[];
       } else {
         toastr.error('Error al cargar los datos');
       }
@@ -232,7 +233,9 @@ width: 100%;
 margin: 0;
 padding: 0;
 }
-
+.v-select-custom{
+  height: 110%;
+}
 .date-picker-custom .form-control {
 width: 100%;
 margin: 0;

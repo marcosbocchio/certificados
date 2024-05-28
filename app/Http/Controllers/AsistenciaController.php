@@ -312,7 +312,7 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
                     $resumenOperarios[$operadorId]['horasExtras'] += $horasTrabajadas - $horasDiariasLaborables;
                 }
 
-                if ($frenteId != 2 && !$this->esFeriado($fecha, $diasDelMes['feriadosArray']) && !$fecha->isSaturday() && !$fecha->isSunday()) {
+                if (!$this->esFeriado($fecha, $diasDelMes['feriadosArray']) && !$fecha->isSaturday() && !$fecha->isSunday()) {
                     $resumenOperarios[$operadorId]['diasHabiles']++;
                 }
             }

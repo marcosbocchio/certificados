@@ -1,20 +1,12 @@
 <template>
   <div>
+    <button class="btn btn-enod" @click="agregarNuevo" :disabled="!$can('A_asistencia_edit')">
+      <span class="fa fa-plus-circle"></span> Nuevo
+    </button>
     <div class="row">
       <div class="col-md-12">
         <div class="box box-custom-enod top-buffer">
-          <div class="box-header with-border">
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
-              </button>
-            </div>
-          </div>
-          
           <div class="box-body">
-            <button class="btn btn-enod" @click="agregarNuevo" :disabled="!$can('A_asistencia_edit')">
-              <span class="fa fa-plus-circle"></span> Nuevo
-            </button>
             <div class="table-responsive top-buffer">
               <table class="table table-hover table-striped table-condensed">
                 <thead>
