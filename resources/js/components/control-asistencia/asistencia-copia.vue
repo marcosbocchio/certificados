@@ -28,13 +28,13 @@
     <!-- Box 2: Detalle de los inputs para llenar la tabla -->
     <div class="box box-custom-enod">
       <div class="box-body row">
-        <div class="col-md-2">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="operador">Operador *</label>
             <v-select v-model="operador_selected" :options="filtrarOperarios()" label="name" id="operador"></v-select>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="entrada">Entrada *</label>
             <div class="bootstrap-timepicker">
@@ -47,7 +47,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="salida">Salida *</label>
             <div class="bootstrap-timepicker">
@@ -60,19 +60,20 @@
             </div>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="contratista">Contratista *</label>
             <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre" id="contratista"></v-select>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="clearfix"></div>
+        <div class="col-md-3">
           <div class="form-group">
             <label for="parte">Parte *</label>
             <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
           </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-3">
           <div style="display:flex;justify-content: flex-start;align-items: center;">
             <button type="button" @click="agregarDetalle" style="margin-top:25px;"><span class="fa fa-plus-circle"></span></button>
           </div>
@@ -196,6 +197,13 @@ export default {
       return this.operarios_opciones;
     },
     agregarDetalle() {
+      const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
+  
+  // Si el operador ya está en la lista, mostrar un toastr.error
+  if (existeOperador) {
+    toastr.error('Operador ya seleccionado');
+    return;
+  }
       const nuevoDetalle = {
         operador: this.operador_selected,
         entrada: moment(this.entrada_selected).format('HH:mm'),
