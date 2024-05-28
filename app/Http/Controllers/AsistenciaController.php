@@ -291,29 +291,39 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
                 ];
             }
 
+            // Contar feriados
             if ($this->esFeriado($fecha, $diasDelMes['feriadosArray']) && $detalle->contratista_id === null) {
                 if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
                     $resumenOperarios[$operadorId]['feriados']++;
                 }
-            } elseif ($fecha->isSaturday() && $detalle->contratista_id === null) {
+            }
+
+            // Contar sábados
+            elseif ($fecha->isSaturday() && $detalle->contratista_id === null) {
                 if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
                     $resumenOperarios[$operadorId]['sabados']++;
                 }
-            } elseif ($fecha->isSunday() && $detalle->contratista_id === null) {
+            }
+
+            // Contar domingos
+            elseif ($fecha->isSunday() && $detalle->contratista_id === null) {
                 if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
                     $resumenOperarios[$operadorId]['domingos']++;
                 }
             }
 
+            // Contar días hábiles
+            if (!$this->esFeriado($fecha, $diasDelMes['feriadosArray']) && !$fecha->isSaturday() && !$fecha->isSunday()) {
+                $resumenOperarios[$operadorId]['diasHabiles']++;
+            }
+
+            // Contar servicios extras
             if ($detalle->contratista_id !== null) {
                 $resumenOperarios[$operadorId]["serviciosExtrasS$semanaDelMes"]++;
             } else {
+                // Contar horas extras
                 if ($horasTrabajadas > $horasDiariasLaborables && $frenteId != 2) {
                     $resumenOperarios[$operadorId]['horasExtras'] += $horasTrabajadas - $horasDiariasLaborables;
-                }
-
-                if (!$this->esFeriado($fecha, $diasDelMes['feriadosArray']) && !$fecha->isSaturday() && !$fecha->isSunday()) {
-                    $resumenOperarios[$operadorId]['diasHabiles']++;
                 }
             }
         }
