@@ -98,6 +98,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/asistencia/edit/{id}', 'AsistenciaController@edit')->name('asistencia.edit');
       Route::get('/asistencia/copia/{id}', 'AsistenciaController@copia')->name('asistencia.copia');
 
+      Route::get('/area/enod/asignacion-nuevo', 'AsignacionRopaController@nuevo')->name('asignacion-nuevo');
+
       Route::get('/area/enod/contratistas', 'ContratistasController@callView')->name('contratistas');
       Route::get('/area/enod/unidades-medidas', 'UnidadesMedidasController@callView')->name('unidades-medidas');
       Route::get('/area/enod/medidas', 'MedidasController@callView')->name('medidas');
