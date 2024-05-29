@@ -31,7 +31,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="operador">Operador *</label>
-            <v-select v-model="operador_selected" :options="filtrarOperarios()" label="name" id="operador"></v-select>
+            <v-select v-model="operador_selected" :options="operarios_opciones" label="name" id="operador"></v-select>
           </div>
         </div>
         <div class="col-md-3">

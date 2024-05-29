@@ -30,7 +30,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="operador">Operador *</label>
-            <v-select v-model="operador_selected" :options="filtrarOperarios()" label="name" id="operador"></v-select>
+            <v-select v-model="operador_selected" :options="operarios_opciones" label="name" id="operador"></v-select>
           </div>
         </div>
         <div class="col-md-3">
@@ -188,7 +188,7 @@ export default {
     },
     filtrarOperarios() {
       if (this.frente_selected && this.frente_selected.id === 2) {
-        return this.operarios_opciones.filter(operario => operario.local_neuquen_sn === 1);
+        return this.operarios_opciones;
       }
       return this.operarios_opciones;
     },
