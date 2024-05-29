@@ -99,8 +99,8 @@
               <td>{{ detalle.operador.name }}</td>
               <td>{{ detalle.entrada }}</td>
               <td>{{ detalle.salida }}</td>
-              <td>{{ detalle.contratista.nombre }}</td>
-              <td>{{ detalle.parte }}</td>
+              <td>{{ detalle.contratista ? detalle.contratista.nombre : '-' }}</td>
+              <td>{{ detalle.parte ? detalle.parte : '-'}}</td>
               <td style="text-align:center">
                 <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
               </td>
@@ -193,51 +193,68 @@ export default {
       return this.operarios_opciones;
     },
     agregarDetalle() {
-  // Verificar si el operador ya está en la lista de detalles
-  const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
-  
-  // Si el operador ya está en la lista, mostrar un toastr.error
-  if (existeOperador) {
-    toastr.error('Operador ya seleccionado');
-    return;
-  }
-
-  // Si el operador no está en la lista, agregarlo
-  const nuevoDetalle = {
-    operador: this.operador_selected,
-    entrada: moment(this.entrada_selected).format('HH:mm'),
-    salida: moment(this.salida_selected).format('HH:mm'),
-    contratista: this.contratista_selected,
-    parte: this.parte_selected
-  };
-  this.detalles.push(nuevoDetalle);
-  this.operador_selected = '';
-  this.entrada_selected = moment('08:00', 'HH:mm').toDate();
-  this.salida_selected = moment('16:00', 'HH:mm').toDate();
-  this.contratista_selected = '';
-  this.parte_selected = '';
-},
+      // Verificar si el operador ya está en la lista de detalles
+      const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
+      
+      // Si el operador ya está en la lista, mostrar un toastr.error
+      if (existeOperador) {
+        toastr.error('Operador ya seleccionado');
+        return;
+      }
+      if (!this.operador_selected) {
+        toastr.error('Debe seleccionar un operador');
+        return;
+      }
+      // Si el operador no está en la lista, agregarlo
+      const nuevoDetalle = {
+        operador: this.operador_selected,
+        entrada: moment(this.entrada_selected).format('HH:mm'),
+        salida: moment(this.salida_selected).format('HH:mm'),
+        contratista: this.contratista_selected,
+        parte: this.parte_selected
+      };
+      this.detalles.push(nuevoDetalle);
+      this.operador_selected = '';
+      this.entrada_selected = moment('08:00', 'HH:mm').toDate();
+      this.salida_selected = moment('16:00', 'HH:mm').toDate();
+      this.contratista_selected = '';
+      this.parte_selected = '';
+    },
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
     },
     confirmar() {
-  this.isLoading = true; // Enable loading before the request
-  axios.post('/api/guardar_asistencia', {
-    frente_id: this.frente_selected.id,
-    fecha: this.fecha,
-    detalles: this.detalles
-  })
-  .then(response => {
-    toastr.success('Guardado exitosamente:', response);
-    window.location.href = '/area/enod/asistencia';
-  })
-  .catch(error => {
-    toastr.error('Error al guardar:', error);
-  })
-  .finally(() => {
-    this.isLoading = false; // Disable loading after the request
-  });
-}
+      // Validaciones por separado con mensajes Toastr
+      if (!this.frente_selected) {
+        toastr.error('Debe seleccionar un frente');
+        return;
+      }
+      if (!this.fecha) {
+        toastr.error('Debe seleccionar una fecha');
+        return;
+      }
+      if (this.detalles.length === 0) {
+        toastr.error('Debe agregar al menos un detalle');
+        return;
+      }
+      this.isLoading = true; // Enable loading before the request
+      axios.post('/api/guardar_asistencia', {
+        frente_id: this.frente_selected.id,
+        fecha: this.fecha,
+        detalles: this.detalles
+      })
+      .then(response => {
+        toastr.success('Guardado exitosamente:', response);
+        window.location.href = '/area/enod/asistencia';
+      })
+      .catch(error => {
+        toastr.error('Error al guardar:', error);
+      })
+      .finally(() => {
+        this.isLoading = false; // Disable loading after the request.finally(() => {
+        this.isLoading = false; // Disable loading after the request
+      });
+    }
   },
   watch: {
     frente_selected: 'actualizarFechasBloqueadas'

@@ -169,15 +169,15 @@
       @can('Asistencia'){{-- Nueva opción de menú agregada --}}
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-clock-o"></i> <span>Control de Asistencia</span>
+            <i class="fa fa-clock-o"></i> <span>ASISTENCIAS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             @can('Asistencia')
-              <li><a href="{{ route('asistencia') }}">horarios y servicios</a></li>
-              <li><a href="{{ route('asistencia-resumen') }}">asistencia tabla</a></li> 
+              <li><a href="{{ route('asistencia') }}">Carga</a></li>
+              <li><a href="{{ route('asistencia-resumen') }}">Resumen</a></li> 
             @endcan
           </ul>
         </li>

@@ -101,7 +101,7 @@
               <td>{{ detalle.entrada }}</td>
               <td>{{ detalle.salida }}</td>
               <td>{{ detalle.contratista ? detalle.contratista.nombre : '-' }}</td>
-              <td>{{ detalle.parte }}</td>
+              <td>{{ detalle.parte ? detalle.parte : '-'}}</td>
               <td style="text-align: center;">
                 <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
               </td>
