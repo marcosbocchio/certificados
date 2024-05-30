@@ -282,7 +282,6 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
             $salida = Carbon::parse($detalle->salida);
             $horasTrabajadas = $salida->diffInMinutes($entrada) / 60;
             $semanaDelMes = $this->getSemanaDelMes($fecha, $diasDelMes['semanas']);
-            $frenteId = $asistenciaHora->frente_id;
             $localNeuquen = $detalle->operador->local_neuquen_sn;
 
             if (!isset($resumenOperarios[$operadorId])) {
@@ -294,14 +293,14 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
                     'feriados' => 0,
                     'horasExtras' => 0,
                     'serviciosExtrasS1' => 0,
-                    'serviciosExtrasS2' => 0,
-                    'serviciosExtrasS3' => 0,
-                    'serviciosExtrasS4' => 0,
-                    'serviciosExtrasS5' => 0,
                     'pagoS1' => false,
+                    'serviciosExtrasS2' => 0,
                     'pagoS2' => false,
+                    'serviciosExtrasS3' => 0,
                     'pagoS3' => false,
+                    'serviciosExtrasS4' => 0,
                     'pagoS4' => false,
+                    'serviciosExtrasS5' => 0,
                     'pagoS5' => false,
                     'pagosExtMensual' => false
                 ];
@@ -309,38 +308,22 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
 
             // Contar feriados
             if ($this->esFeriado($fecha, $diasDelMes['feriadosArray']) && $detalle->contratista_id === null) {
-                if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
-                    $resumenOperarios[$operadorId]['feriados']++;
-                } else {
-                    $resumenOperarios[$operadorId]['feriados'] = '-';
-                }
+                $resumenOperarios[$operadorId]['feriados']++;
             }
 
             // Contar sábados
-            elseif ($fecha->isSaturday() && $detalle->contratista_id === null) {
-                if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
-                    $resumenOperarios[$operadorId]['sabados']++;
-                } else {
-                    $resumenOperarios[$operadorId]['sabados'] = '-';
-                }
+            if ($fecha->isSaturday() && $detalle->contratista_id === null) {
+                $resumenOperarios[$operadorId]['sabados']++;
             }
 
             // Contar domingos
-            elseif ($fecha->isSunday() && $detalle->contratista_id === null) {
-                if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
-                    $resumenOperarios[$operadorId]['domingos']++;
-                } else {
-                    $resumenOperarios[$operadorId]['domingos'] = '-';
-                }
+            if ($fecha->isSunday() && $detalle->contratista_id === null) {
+                $resumenOperarios[$operadorId]['domingos']++;
             }
 
             // Contar días hábiles
             if (!$this->esFeriado($fecha, $diasDelMes['feriadosArray']) && !$fecha->isSaturday() && !$fecha->isSunday()) {
-                if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
-                    $resumenOperarios[$operadorId]['diasHabiles']++;
-                } else {
-                    $resumenOperarios[$operadorId]['diasHabiles'] = '-';
-                }
+                $resumenOperarios[$operadorId]['diasHabiles']++;
             }
 
             // Contar servicios extras
@@ -348,7 +331,7 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
                 $resumenOperarios[$operadorId]["serviciosExtrasS$semanaDelMes"]++;
             } else {
                 // Contar horas extras
-                if ($horasTrabajadas > $horasDiariasLaborables && $frenteId != 2) {
+                if ($horasTrabajadas > $horasDiariasLaborables) {
                     $resumenOperarios[$operadorId]['horasExtras'] += $horasTrabajadas - $horasDiariasLaborables;
                 }
             }
@@ -357,8 +340,6 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
 
     return array_values($resumenOperarios);
 }
-
-
 private function getSemanaDelMes($fecha, $semanas)
 {
     foreach ($semanas as $index => $semana) {

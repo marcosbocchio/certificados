@@ -56,10 +56,14 @@
         <tbody>
           <tr v-for="operador in operarios" :key="operador.operador.id">
             <td>{{ operador.operador.name }}</td>
-            <td>{{ operador.diasHabiles }}</td>
-            <td>{{ operador.sabados }}</td>
-            <td>{{ operador.domingos }}</td>
-            <td>{{ operador.feriados }}</td>
+            <td v-if="frente_selected.id === 2">-</td>
+            <td v-else>{{ operador.diasHabiles }}</td>
+            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+            <td v-else>{{ operador.sabados }}</td>
+            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+            <td v-else>{{ operador.domingos }}</td>
+            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+            <td v-else>{{ operador.feriados }}</td>
             <td>{{ operador.horasExtras }}</td>
             <td>{{ operador.serviciosExtrasS1 }}</td>
             <td><input type="checkbox" v-model="operador.pagoS1" :disabled="operador.precargadoPagoS1" /></td>
@@ -140,7 +144,7 @@ methods: {
           frent_id: this.frente_selected.id
         }
       });
-
+      console.log(response.data.asistencias);
       this.diasHabiles = response.data.diasDelMes.diasHabiles;
       this.operarios = response.data.asistencias.map(operador => ({
         operador: operador.operador,
