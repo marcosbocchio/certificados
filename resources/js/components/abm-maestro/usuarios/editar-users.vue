@@ -22,7 +22,7 @@
                                             Cliente
                                         </label>
                                         <label>&nbsp;&nbsp;
-                                            <input type="checkbox" v-model="local_neuquen_sn" true-value="1" false-value="0">
+                                            <input type="checkbox" v-model="Registro.local_neuquen_sn" :true-value="1" :false-value="0">
                                             Local Neuquén
                                         </label>
                                     </div>
@@ -215,7 +215,7 @@
         data() { return {
     
             Registro : {
-                'local_neuquen_sn': '0',
+                'local_neuquen_sn': '',
                 'name'  : '',
                 'email' : '',
                 'dni'   : '',
@@ -346,8 +346,8 @@
                     this.Registro.password = '********';
                     this.password2 = '********';
                     this.Registro.path = this.selectRegistro.path;
-                    this.Registro.local_neuquen_sn = this.selectRegistro.local_neuquen_sn ? '1' : '0';
-    
+                    this.Registro.local_neuquen_sn = this.selectRegistro.local_neuquen_sn;
+                    console.log('this.llego: ', this.Registro.local_neuquen_sn);
                     console.log('this.isEnod: ', this.isEnod);
                     if(this.selectRegistro.cliente_id !== null) {
                         this.isEnod = false;

@@ -177,11 +177,14 @@ export default {
     agregarDetalle() {
       const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
   
-  // Si el operador ya está en la lista, mostrar un toastr.error
-  if (existeOperador) {
-    toastr.error('Operador ya seleccionado');
-    return;
-  }
+      if (existeOperador) {
+        toastr.error('Operador ya seleccionado');
+        return;
+      }
+      if (!this.operador_selected) {
+        toastr.error('Debe seleccionar un operador');
+        return;
+      }
       this.detalles.push({
         operador: this.operador_selected,
         entrada: moment(this.entrada_selected).format('HH:mm'),

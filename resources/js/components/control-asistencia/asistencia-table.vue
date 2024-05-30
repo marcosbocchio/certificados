@@ -1,8 +1,37 @@
 <template>
   <div>
-    <button class="btn btn-enod" @click="agregarNuevo" :disabled="!$can('A_asistencia_edit')">
-      <span class="fa fa-plus-circle"></span> Nuevo
-    </button>
+    <div class="filters row">
+      <div class="col-md-3">
+        <button class="btn btn-enod" @click="agregarNuevo" :disabled="!$can('A_asistencia_edit')">
+          <span class="fa fa-plus-circle"></span> Nuevo
+        </button>
+      </div>
+      <div class="col-md-1">
+
+      </div>
+      <div class="col-md-3">
+        <date-picker
+          v-model="selectedDate"
+          type="month"
+          format="MM-YYYY"
+          @input="fetchData"
+          class="date-picker-custom"
+          placeholder="Seleccione una fecha"
+        ></date-picker>
+      </div>
+      <div class="col-md-2">
+
+      </div>
+      <div class="col-md-3">
+        <v-select
+          v-model="selectedFrente"
+          :options="frentes"
+          label="codigo"
+          placeholder="Seleccione un frente"
+          @input="fetchData"
+        ></v-select>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-12">
         <div class="box box-custom-enod top-buffer">
@@ -49,19 +78,36 @@
 
 <script>
 import axios from 'axios';
+import VSelect from 'vue-select';
+import DatePicker from 'vue2-datepicker';
 
 export default {
+  components: {
+    'v-select': VSelect,
+    'date-picker': DatePicker
+  },
   data() {
     return {
       items: [],
       pagination: {},
       currentPage: 1,
+      frentes: [],
+      selectedFrente: null,
+      selectedDate: null,
     };
   },
   mounted() {
+    this.fetchFrentes();
     this.fetchData(this.currentPage);
   },
   methods: {
+    fetchFrentes() {
+      axios.get('/api/frentes').then(response => {
+        this.frentes = response.data;
+      }).catch(error => {
+        console.error('Error al cargar los frentes:', error);
+      });
+    },
     agregarNuevo() {
       window.location.href = '/area/enod/asistencia-nuevo';
     },
@@ -72,7 +118,13 @@ export default {
       window.location.href = `/asistencia/copia/${item.id}`;
     },
     fetchData(page = 1) {
-      const params = { page };
+      const params = {
+        page,
+        frente_id: this.selectedFrente ? this.selectedFrente.id : null,
+        date: this.selectedDate ? this.selectedDate.toISOString().slice(0, 7) : null,
+        sort_by: 'fecha',
+        sort_order: 'desc'
+      };
       axios.get('/api/area/enod/asistencia', { params })
         .then(response => {
           this.items = response.data.data;
@@ -90,5 +142,11 @@ export default {
 <style scoped>
 .top-buffer {
   margin-top: 20px;
+}
+.filters {
+  margin-bottom: 20px;
+}
+.date-picker-custom {
+  width: 100%;
 }
 </style>

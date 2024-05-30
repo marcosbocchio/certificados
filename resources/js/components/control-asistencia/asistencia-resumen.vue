@@ -179,12 +179,18 @@ methods: {
     }
   },
   async guardarPagos() {
+    // Verificar si al menos un checkbox está seleccionado
+    const operariosSeleccionados = this.operarios.filter(operador => 
+      operador.pagoS1 || operador.pagoS2 || operador.pagoS3 || operador.pagoS4 || operador.pagoS5 || operador.pagosExtMensual
+    );
+
+    if (operariosSeleccionados.length === 0) {
+      toastr.error('Por favor, seleccione al menos un pago antes de guardar.');
+      return;
+    }
+    
     this.isLoading = true;
     try {
-      const operariosSeleccionados = this.operarios.filter(operador => 
-        operador.pagoS1 || operador.pagoS2 || operador.pagoS3 || operador.pagoS4 || operador.pagoS5 || operador.pagosExtMensual
-      );
-
       const fechaFormateada = this.selectedDate.toISOString().substr(0, 7); // Formato YYYY-MM
 
       await axios.post('/api/guardar-pagos', {

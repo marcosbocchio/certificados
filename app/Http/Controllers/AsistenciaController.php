@@ -112,9 +112,20 @@ class AsistenciaController extends Controller
         return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id'));
     }
 
-    public function getPaginatedAsistencia()
+    public function getPaginatedAsistencia(Request $request)
     {
-        $asistencia = AsistenciaHora::with('frente')->orderBy('fecha', 'desc')->paginate(10);
+        $query = AsistenciaHora::with('frente');
+    
+        if ($request->has('frente_id') && $request->frente_id) {
+            $query->where('frente_id', $request->frente_id);
+        }
+    
+        if ($request->has('date') && $request->date) {
+            [$year, $month] = explode('-', $request->date);
+            $query->whereMonth('fecha', $month)->whereYear('fecha', $year);
+        }
+    
+        $asistencia = $query->orderBy('fecha', 'desc')->paginate(10);
         return response()->json($asistencia);
     }
     
@@ -325,7 +336,7 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
 
             // Contar días hábiles
             if (!$this->esFeriado($fecha, $diasDelMes['feriadosArray']) && !$fecha->isSaturday() && !$fecha->isSunday()) {
-                if ($frenteId != 2) {
+                if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
                     $resumenOperarios[$operadorId]['diasHabiles']++;
                 } else {
                     $resumenOperarios[$operadorId]['diasHabiles'] = '-';
