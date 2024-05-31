@@ -5,6 +5,7 @@
 <div id="app">
 
    <asistencia-table
+   :frentes_data="{{ $frentes }}"
    ></asistencia-table>
 
 </div>

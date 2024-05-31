@@ -53,32 +53,32 @@
             <th>Pagos Ext. Mensual</th>
           </tr>
         </thead>
-        <tbody>
-          <tr v-for="operador in operarios" :key="operador.operador.id">
-            <td>{{ operador.operador.name }}</td>
-            <td v-if="frente_selected.id === 2">-</td>
-            <td v-else>{{ operador.diasHabiles }}</td>
-            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-            <td v-else>{{ operador.sabados }}</td>
-            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-            <td v-else>{{ operador.domingos }}</td>
-            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-            <td v-else>{{ operador.feriados }}</td>
-            <td v-if="frente_selected.id === 2">-</td>
-            <td v-else>{{ operador.horasExtras }}</td>
-            <td>{{ operador.serviciosExtrasS1 }}</td>
-            <td><input type="checkbox" v-model="operador.pagoS1" :disabled="operador.precargadoPagoS1" /></td>
-            <td>{{ operador.serviciosExtrasS2 }}</td>
-            <td><input type="checkbox" v-model="operador.pagoS2" :disabled="operador.precargadoPagoS2" /></td>
-            <td>{{ operador.serviciosExtrasS3 }}</td>
-            <td><input type="checkbox" v-model="operador.pagoS3" :disabled="operador.precargadoPagoS3" /></td>
-            <td>{{ operador.serviciosExtrasS4 }}</td>
-            <td><input type="checkbox" v-model="operador.pagoS4" :disabled="operador.precargadoPagoS4" /></td>
-            <td>{{ operador.serviciosExtrasS5 }}</td>
-            <td><input type="checkbox" v-model="operador.pagoS5" :disabled="operador.precargadoPagoS5" /></td>
-            <td><input type="checkbox" v-model="operador.pagosExtMensual" :disabled="operador.precargadoPagosExtMensual" /></td>
-          </tr>
-        </tbody>
+          <tbody>
+            <tr v-for="operador in operarios" :key="operador.operador.id">
+              <td :class="{ 'neuquen-highlight': operador.operador.local_neuquen_sn === 1 }">{{ operador.operador.name }}</td>
+              <td v-if="frente_selected.id === 2">-</td>
+              <td v-else>{{ operador.diasHabiles }}</td>
+              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+              <td v-else>{{ operador.sabados }}</td>
+              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+              <td v-else>{{ operador.domingos }}</td>
+              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+              <td v-else>{{ operador.feriados }}</td>
+              <td v-if="frente_selected.id === 2">-</td>
+              <td v-else>{{ operador.horasExtras }}</td>
+              <td>{{ operador.serviciosExtrasS1 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS1" :disabled="operador.precargadoPagoS1" /></td>
+              <td>{{ operador.serviciosExtrasS2 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS2" :disabled="operador.precargadoPagoS2" /></td>
+              <td>{{ operador.serviciosExtrasS3 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS3" :disabled="operador.precargadoPagoS3" /></td>
+              <td>{{ operador.serviciosExtrasS4 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS4" :disabled="operador.precargadoPagoS4" /></td>
+              <td>{{ operador.serviciosExtrasS5 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS5" :disabled="operador.precargadoPagoS5" /></td>
+              <td><input type="checkbox" v-model="operador.pagosExtMensual" :disabled="operador.precargadoPagosExtMensual" /></td>
+            </tr>
+          </tbody>
       </table>
     </div>
   </div>
@@ -256,5 +256,9 @@ padding: 0;
 .v-select.disabled, .date-picker.disabled {
 background-color: #6c757d;
 cursor: not-allowed;
+}
+.neuquen-highlight {
+  background-color: #000000;
+  color: rgb(255, 204, 0);
 }
 </style>

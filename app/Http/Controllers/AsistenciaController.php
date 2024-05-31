@@ -27,7 +27,15 @@ class AsistenciaController extends Controller
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
         $header_descripcion = ".";
-        return view('control-asistencia.asistencia-table', compact('user', 'header_titulo', 'header_descripcion'));
+        
+        // Obtener los frente_id únicos de AsistenciaHora
+        $frenteIds = AsistenciaHora::distinct()->pluck('frente_id');
+        
+        // Obtener los frentes correspondientes
+        $frentes = Frentes::whereIn('id', $frenteIds)->get();
+        
+        // Pasar los datos a la vista
+        return view('control-asistencia.asistencia-table', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
     }
 
     public function resumenView()
