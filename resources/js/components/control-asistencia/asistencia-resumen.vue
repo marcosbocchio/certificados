@@ -30,59 +30,58 @@
 
   <!-- Tabla de Asistencia -->
   <div class="box box-custom-enod top-buffer">
-      <div class="box-body table-responsive">
-        <table class="table table-hover table-striped table-condensed">
-          <thead>
-            <tr>
-              <th>Operador</th>
-              <th>Días Hábiles</th>
-              <th>Sab.</th>
-              <th>Dom.</th>
-              <th>Feriados</th>
-              <th>Horas Extras</th>
-              <th>Servicios Extras S1</th>
-              <th>Pago S1</th>
-              <th>Servicios Extras S2</th>
-              <th>Pago S2</th>
-              <th>Servicios Extras S3</th>
-              <th>Pago S3</th>
-              <th>Servicios Extras S4</th>
-              <th>Pago S4</th>
-              <th>Servicios Extras S5</th>
-              <th>Pago S5</th>
-              <th>Pagos Ext. Mensual</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="operador in operarios" :key="operador.operador.id">
-              <td :class="{ 'neuquen-highlight': operador.operador.local_neuquen_sn === 1 }">{{ operador.operador.name }}</td>
-              <td v-if="frente_selected.id === 2">-</td>
-              <td v-else>{{ operador.diasHabiles }}</td>
-              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-              <td v-else>{{ operador.sabados }}</td>
-              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-              <td v-else>{{ operador.domingos }}</td>
-              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-              <td v-else>{{ operador.feriados }}</td>
-              <td v-if="frente_selected.id === 2">-</td>
-              <td v-else>{{ operador.horasExtras }}</td>
-              <td>{{ operador.serviciosExtrasS1 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS1" :disabled="operador.precargadoPagoS1" /></td>
-              <td>{{ operador.serviciosExtrasS2 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS2" :disabled="operador.precargadoPagoS2" /></td>
-              <td>{{ operador.serviciosExtrasS3 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS3" :disabled="operador.precargadoPagoS3" /></td>
-              <td>{{ operador.serviciosExtrasS4 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS4" :disabled="operador.precargadoPagoS4" /></td>
-              <td>{{ operador.serviciosExtrasS5 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS5" :disabled="operador.precargadoPagoS5" /></td>
-              <td><input type="checkbox" v-model="operador.pagosExtMensual" :disabled="operador.precargadoPagosExtMensual" /></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="box-body table-responsive">
+      <table class="table table-hover table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>Operador</th>
+            <th>Días Hábiles</th>
+            <th>Sab.</th>
+            <th>Dom.</th>
+            <th>Feriados</th>
+            <th>Horas Extras</th>
+            <th>Servicios Extras S1</th>
+            <th>Pago S1</th>
+            <th>Servicios Extras S2</th>
+            <th>Pago S2</th>
+            <th>Servicios Extras S3</th>
+            <th>Pago S3</th>
+            <th>Servicios Extras S4</th>
+            <th>Pago S4</th>
+            <th>Servicios Extras S5</th>
+            <th>Pago S5</th>
+            <th>Pagos Ext. Mensual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="operador in operarios" :key="operador.operador.id">
+            <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }">{{ operador.operador.name }}</td>
+            <td v-if="frente_selected.id === 2">-</td>
+            <td v-else>{{ operador.diasHabiles }}</td>
+            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+            <td v-else>{{ operador.sabados }}</td>
+            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+            <td v-else>{{ operador.domingos }}</td>
+            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+            <td v-else>{{ operador.feriados }}</td>
+            <td v-if="frente_selected.id === 2">-</td>
+            <td v-else>{{ operador.horasExtras }}</td>
+            <td>{{ operador.serviciosExtrasS1 }}</td>
+            <td><input type="checkbox" v-model="operador.pagoS1" :disabled="operador.precargadoPagoS1" /></td>
+            <td>{{ operador.serviciosExtrasS2 }}</td>
+            <td><input type="checkbox" v-model="operador.pagoS2" :disabled="operador.precargadoPagoS2" /></td>
+            <td>{{ operador.serviciosExtrasS3 }}</td>
+            <td><input type="checkbox" v-model="operador.pagoS3" :disabled="operador.precargadoPagoS3" /></td>
+            <td>{{ operador.serviciosExtrasS4 }}</td>
+            <td><input type="checkbox" v-model="operador.pagoS4" :disabled="operador.precargadoPagoS4" /></td>
+            <td>{{ operador.serviciosExtrasS5 }}</td>
+            <td><input type="checkbox" v-model="operador.pagoS5" :disabled="operador.precargadoPagoS5" /></td>
+            <td><input type="checkbox" v-model="operador.pagosExtMensual" :disabled="operador.precargadoPagosExtMensual" /></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
+  </div>
   <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
 </div>
 </template>
