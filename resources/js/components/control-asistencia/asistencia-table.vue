@@ -7,8 +7,8 @@
           </button>
         </div>
         <div class="col-md-1"></div>
-        <div class="col-md-3 input-group">
-          
+        <div class="col-md-3">
+          <div class="input-group">
             <label for="selectedDate" class="input-label">Fecha:</label>
             <date-picker
               v-model="selectedDate"
@@ -17,11 +17,11 @@
               @input="fetchData"
               class="v-s"
             ></date-picker>
-          
+          </div>
         </div>
         <div class="col-md-2"></div>
-        <div class="col-md-3 input-group">
-          
+        <div class="col-md-3">
+          <div class="input-group">
             <label for="selectedFrente" class="input-label">Frente:</label>
             <v-select
               v-model="selectedFrente"
@@ -30,7 +30,7 @@
               @input="fetchData"
               class="v-s"
             ></v-select>      
-          
+          </div>
         </div>
       </div>
       <div class="row">
