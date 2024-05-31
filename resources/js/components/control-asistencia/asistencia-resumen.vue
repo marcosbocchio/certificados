@@ -8,8 +8,8 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="frente">Frente *</label>
-            <v-select v-model="frente_selected" :options="frentes_opciones" label="codigo" id="frente"></v-select>
+            <label for="frente">Frente:</label>
+            <v-select v-model="frente_selected" :options="frentes_opciones" label="codigo" id="frente" clearable></v-select>
           </div>
         </div>
         <div class="col-md-4">
@@ -30,29 +30,29 @@
 
   <!-- Tabla de Asistencia -->
   <div class="box box-custom-enod top-buffer">
-    <div class="box-body">
-      <table class="table table-hover table-striped table-condensed">
-        <thead>
-          <tr>
-            <th>Operador</th>
-            <th>Días Hábiles</th>
-            <th>Sab.</th>
-            <th>Dom.</th>
-            <th>Feriados</th>
-            <th>Horas Extras</th>
-            <th>Servicios Extras S1</th>
-            <th>Pago S1</th>
-            <th>Servicios Extras S2</th>
-            <th>Pago S2</th>
-            <th>Servicios Extras S3</th>
-            <th>Pago S3</th>
-            <th>Servicios Extras S4</th>
-            <th>Pago S4</th>
-            <th>Servicios Extras S5</th>
-            <th>Pago S5</th>
-            <th>Pagos Ext. Mensual</th>
-          </tr>
-        </thead>
+      <div class="box-body table-responsive">
+        <table class="table table-hover table-striped table-condensed">
+          <thead>
+            <tr>
+              <th>Operador</th>
+              <th>Días Hábiles</th>
+              <th>Sab.</th>
+              <th>Dom.</th>
+              <th>Feriados</th>
+              <th>Horas Extras</th>
+              <th>Servicios Extras S1</th>
+              <th>Pago S1</th>
+              <th>Servicios Extras S2</th>
+              <th>Pago S2</th>
+              <th>Servicios Extras S3</th>
+              <th>Pago S3</th>
+              <th>Servicios Extras S4</th>
+              <th>Pago S4</th>
+              <th>Servicios Extras S5</th>
+              <th>Pago S5</th>
+              <th>Pagos Ext. Mensual</th>
+            </tr>
+          </thead>
           <tbody>
             <tr v-for="operador in operarios" :key="operador.operador.id">
               <td :class="{ 'neuquen-highlight': operador.operador.local_neuquen_sn === 1 }">{{ operador.operador.name }}</td>
@@ -79,9 +79,9 @@
               <td><input type="checkbox" v-model="operador.pagosExtMensual" :disabled="operador.precargadoPagosExtMensual" /></td>
             </tr>
           </tbody>
-      </table>
+        </table>
+      </div>
     </div>
-  </div>
 
   <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
 </div>

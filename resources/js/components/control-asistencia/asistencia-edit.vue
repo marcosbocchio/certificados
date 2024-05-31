@@ -56,14 +56,14 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="contratista">Contratista *</label>
+            <label for="contratista">Contratista</label>
             <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre" id="contratista"></v-select>
           </div>
         </div>
         <div class="clearfix"></div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="parte">Parte *</label>
+            <label for="parte">Parte</label>
             <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
           </div>
         </div>
@@ -183,6 +183,14 @@ export default {
       }
       if (!this.operador_selected) {
         toastr.error('Debe seleccionar un operador');
+        return;
+      }
+      if (!this.entrada_selected) {
+        toastr.error('Debe seleccionar horario de entrada');
+        return;
+      }
+      if (!this.salida_selected) {
+        toastr.error('Debe seleccionar horario de salida');
         return;
       }
       this.detalles.push({

@@ -7,25 +7,30 @@
           </button>
         </div>
         <div class="col-md-1"></div>
-        <div class="col-md-3">
-          <v-select
-            v-model="selectedFrente"
-            :options="frentes"
-            label="codigo"
-            placeholder="Seleccione un frente"
-            @input="fetchData"
-          ></v-select>
+        <div class="col-md-3 input-group">
+          
+            <label for="selectedDate" class="input-label">Fecha:</label>
+            <date-picker
+              v-model="selectedDate"
+              type="month"
+              format="MM-YYYY"
+              @input="fetchData"
+              class="v-s"
+            ></date-picker>
+          
         </div>
         <div class="col-md-2"></div>
-        <div class="col-md-3">
-          <date-picker
-            v-model="selectedDate"
-            type="month"
-            format="MM-YYYY"
-            @input="fetchData"
-            class="date-picker-custom"
-            placeholder="Seleccione una fecha"
-          ></date-picker>
+        <div class="col-md-3 input-group">
+          
+            <label for="selectedFrente" class="input-label">Frente:</label>
+            <v-select
+              v-model="selectedFrente"
+              :options="frentes"  
+              label="codigo"
+              @input="fetchData"
+              class="v-s"
+            ></v-select>      
+          
         </div>
       </div>
       <div class="row">
@@ -95,7 +100,7 @@
         pagination: {},
         currentPage: 1,
         frentes: [],
-        selectedFrente: null,
+        selectedFrente: '‎ ',
         selectedDate: null,
       };
     },
@@ -145,4 +150,15 @@
   .filters {
     margin-bottom: 20px;
   }
+  .input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-label {
+  margin-right: 10px;
+}
+.v-s{
+  width: 80%;
+}
   </style>

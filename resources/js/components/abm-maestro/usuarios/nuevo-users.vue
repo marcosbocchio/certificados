@@ -21,7 +21,7 @@
                                             <input type="radio" name="cliente" :value="false" v-model="isEnod">
                                             Cliente
                                         </label>
-                                        <label>&nbsp;&nbsp;
+                                        <label v-if="isEnod">&nbsp;&nbsp;
                                             <input type="checkbox" v-model="Registro.local_neuquen_sn" :true-value="1" :false-value="0">
                                             Local Neuquén
                                         </label>
