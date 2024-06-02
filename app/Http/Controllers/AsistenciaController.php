@@ -26,8 +26,16 @@ class AsistenciaController extends Controller
     {
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
-        $header_descripcion = "Tabla";
-        return view('control-asistencia.asistencia-table', compact('user', 'header_titulo', 'header_descripcion'));
+        $header_descripcion = ".";
+        
+        // Obtener los frente_id únicos de AsistenciaHora
+        $frenteIds = AsistenciaHora::distinct()->pluck('frente_id');
+        
+        // Obtener los frentes correspondientes
+        $frentes = Frentes::whereIn('id', $frenteIds)->get();
+        
+        // Pasar los datos a la vista
+        return view('control-asistencia.asistencia-table', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
     }
 
     public function resumenView()
@@ -43,7 +51,7 @@ class AsistenciaController extends Controller
     {
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
-        $header_descripcion = "Tabla";
+        $header_descripcion = "Carga";
     
         $frente_sn = Frentes::where('controla_hs_extras_sn', 1)->get();
         $contratistas = Contratistas::all();
@@ -72,7 +80,7 @@ class AsistenciaController extends Controller
     {
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
-        $header_descripcion = "Editar Asistencia";
+        $header_descripcion = "Copia";
         $frente_sn = Frentes::where('controla_hs_extras_sn', 1)->get();
             // Obtener los user_id únicos de la tabla ot_operarios
             $uniqueUserIds = OtOperarios::select('user_id')
@@ -97,7 +105,7 @@ class AsistenciaController extends Controller
     {
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
-        $header_descripcion = "Editar Asistencia";
+        $header_descripcion = "Edit";
         $frente_sn = Frentes::where('controla_hs_extras_sn', 1)->get();
          // Obtener los user_id únicos de la tabla ot_operarios
          $uniqueUserIds = OtOperarios::select('user_id')
@@ -112,9 +120,20 @@ class AsistenciaController extends Controller
         return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id'));
     }
 
-    public function getPaginatedAsistencia()
+    public function getPaginatedAsistencia(Request $request)
     {
-        $asistencia = AsistenciaHora::with('frente')->orderBy('fecha', 'desc')->paginate(10);
+        $query = AsistenciaHora::with('frente');
+    
+        if ($request->has('frente_id') && $request->frente_id) {
+            $query->where('frente_id', $request->frente_id);
+        }
+    
+        if ($request->has('date') && $request->date) {
+            [$year, $month] = explode('-', $request->date);
+            $query->whereMonth('fecha', $month)->whereYear('fecha', $year);
+        }
+    
+        $asistencia = $query->orderBy('fecha', 'desc')->paginate(10);
         return response()->json($asistencia);
     }
     
@@ -248,6 +267,11 @@ class AsistenciaController extends Controller
         }
     }
 
+    // Ordenar los operadores alfabéticamente por nombre
+    usort($resumenOperarios, function ($a, $b) {
+        return strcmp($a['operador']['name'], $b['operador']['name']);
+    });
+
     return response()->json([
         'diasDelMes' => $diasDelMes,
         'asistencias' => $resumenOperarios
@@ -266,7 +290,6 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
             $salida = Carbon::parse($detalle->salida);
             $horasTrabajadas = $salida->diffInMinutes($entrada) / 60;
             $semanaDelMes = $this->getSemanaDelMes($fecha, $diasDelMes['semanas']);
-            $frenteId = $asistenciaHora->frente_id;
             $localNeuquen = $detalle->operador->local_neuquen_sn;
 
             if (!isset($resumenOperarios[$operadorId])) {
@@ -278,14 +301,14 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
                     'feriados' => 0,
                     'horasExtras' => 0,
                     'serviciosExtrasS1' => 0,
-                    'serviciosExtrasS2' => 0,
-                    'serviciosExtrasS3' => 0,
-                    'serviciosExtrasS4' => 0,
-                    'serviciosExtrasS5' => 0,
                     'pagoS1' => false,
+                    'serviciosExtrasS2' => 0,
                     'pagoS2' => false,
+                    'serviciosExtrasS3' => 0,
                     'pagoS3' => false,
+                    'serviciosExtrasS4' => 0,
                     'pagoS4' => false,
+                    'serviciosExtrasS5' => 0,
                     'pagoS5' => false,
                     'pagosExtMensual' => false
                 ];
@@ -293,23 +316,17 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
 
             // Contar feriados
             if ($this->esFeriado($fecha, $diasDelMes['feriadosArray']) && $detalle->contratista_id === null) {
-                if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
-                    $resumenOperarios[$operadorId]['feriados']++;
-                }
+                $resumenOperarios[$operadorId]['feriados']++;
             }
 
             // Contar sábados
-            elseif ($fecha->isSaturday() && $detalle->contratista_id === null) {
-                if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
-                    $resumenOperarios[$operadorId]['sabados']++;
-                }
+            if ($fecha->isSaturday() && $detalle->contratista_id === null) {
+                $resumenOperarios[$operadorId]['sabados']++;
             }
 
             // Contar domingos
-            elseif ($fecha->isSunday() && $detalle->contratista_id === null) {
-                if ($frenteId != 2 || ($frenteId == 2 && $localNeuquen == 1)) {
-                    $resumenOperarios[$operadorId]['domingos']++;
-                }
+            if ($fecha->isSunday() && $detalle->contratista_id === null) {
+                $resumenOperarios[$operadorId]['domingos']++;
             }
 
             // Contar días hábiles
@@ -322,7 +339,7 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
                 $resumenOperarios[$operadorId]["serviciosExtrasS$semanaDelMes"]++;
             } else {
                 // Contar horas extras
-                if ($horasTrabajadas > $horasDiariasLaborables && $frenteId != 2) {
+                if ($horasTrabajadas > $horasDiariasLaborables) {
                     $resumenOperarios[$operadorId]['horasExtras'] += $horasTrabajadas - $horasDiariasLaborables;
                 }
             }
@@ -331,8 +348,6 @@ private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDi
 
     return array_values($resumenOperarios);
 }
-
-
 private function getSemanaDelMes($fecha, $semanas)
 {
     foreach ($semanas as $index => $semana) {

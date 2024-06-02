@@ -21,8 +21,8 @@
                                             <input type="radio" name="cliente" :value="false" v-model="isEnod">
                                             Cliente
                                         </label>
-                                        <label>&nbsp;&nbsp;
-                                            <input type="checkbox" v-model="Registro.local_neuquen_sn" true-value="1" false-value="0">
+                                        <label v-if="isEnod">&nbsp;&nbsp;
+                                            <input type="checkbox" v-model="Registro.local_neuquen_sn" :true-value="1" :false-value="0">
                                             Local Neuquén
                                         </label>
                                     </div>
@@ -445,8 +445,7 @@
                     'roles'     :this.user_rol,
                     'firmas' : this.Registro.firmas,
                     'habilitado_sn': this.Registro.habilitado_sn,
-                    'local_neuquen_sn': this.Registro.local_neuquen_sn // Agregado para local neuquen
-    
+                    'local_neuquen_sn': this.Registro.local_neuquen_sn
                     }).then(response => {
                       this.$emit('store');
                       this.errors=[];
