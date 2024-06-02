@@ -1,90 +1,90 @@
 <template>
-<div>
-  <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
-  
-  <!-- Filtros de Fecha y Días Hábiles -->
-  <div class="box box-custom-enod top-buffer">
-    <div class="box-body">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="frente">Frente:</label>
-            <v-select v-model="frente_selected" :options="frentes_opciones" label="codigo" id="frente" clearable></v-select>
+  <div>
+    <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
+    
+    <!-- Filtros de Fecha y Días Hábiles -->
+    <div class="box box-custom-enod top-buffer">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="frente">Frente:</label>
+              <v-select v-model="frente_selected" :options="frentes_opciones" label="codigo" id="frente" clearable></v-select>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="month">Mes y Año:</label>
-            <date-picker v-model="selectedDate" type="month" format="MM-YYYY" @input="fetchAsistencia" class="date-picker-custom" />
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="month">Mes y Año:</label>
+              <date-picker v-model="selectedDate" type="month" format="MM-YYYY" @input="fetchAsistencia" class="date-picker-custom" />
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="diasHabiles">Días Hábiles del Mes:</label>
-            <input type="text" v-model="diasHabiles" disabled class="form-control"/>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="diasHabiles">Días Hábiles del Mes:</label>
+              <input type="text" v-model="diasHabiles" disabled class="form-control"/>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Tabla de Asistencia -->
-  <div class="box box-custom-enod top-buffer">
-    <div class="box-body table-responsive">
-      <table class="table table-hover table-striped table-condensed">
-        <thead>
-          <tr>
-            <th>Operador</th>
-            <th>Días Hábiles</th>
-            <th>Sab.</th>
-            <th>Dom.</th>
-            <th>Feriados</th>
-            <th>Horas Extras</th>
-            <th>Servicios Extras S1</th>
-            <th>Pago S1</th>
-            <th>Servicios Extras S2</th>
-            <th>Pago S2</th>
-            <th>Servicios Extras S3</th>
-            <th>Pago S3</th>
-            <th>Servicios Extras S4</th>
-            <th>Pago S4</th>
-            <th>Servicios Extras S5</th>
-            <th>Pago S5</th>
-            <th>Pagos Ext. Mensual</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="operador in operarios" :key="operador.operador.id">
-            <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }">{{ operador.operador.name }}</td>
-            <td v-if="frente_selected.id === 2">-</td>
-            <td v-else>{{ operador.diasHabiles }}</td>
-            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-            <td v-else>{{ operador.sabados }}</td>
-            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-            <td v-else>{{ operador.domingos }}</td>
-            <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-            <td v-else>{{ operador.feriados }}</td>
-            <td v-if="frente_selected.id === 2">-</td>
-            <td v-else>{{ operador.horasExtras }}</td>
-            <td>{{ operador.serviciosExtrasS1 }}</td>
-            <td><input type="checkbox" v-model="operador.pagoS1" :disabled="operador.precargadoPagoS1" /></td>
-            <td>{{ operador.serviciosExtrasS2 }}</td>
-            <td><input type="checkbox" v-model="operador.pagoS2" :disabled="operador.precargadoPagoS2" /></td>
-            <td>{{ operador.serviciosExtrasS3 }}</td>
-            <td><input type="checkbox" v-model="operador.pagoS3" :disabled="operador.precargadoPagoS3" /></td>
-            <td>{{ operador.serviciosExtrasS4 }}</td>
-            <td><input type="checkbox" v-model="operador.pagoS4" :disabled="operador.precargadoPagoS4" /></td>
-            <td>{{ operador.serviciosExtrasS5 }}</td>
-            <td><input type="checkbox" v-model="operador.pagoS5" :disabled="operador.precargadoPagoS5" /></td>
-            <td><input type="checkbox" v-model="operador.pagosExtMensual" :disabled="operador.precargadoPagosExtMensual" /></td>
-          </tr>
-        </tbody>
-      </table>
+  
+    <!-- Tabla de Asistencia -->
+    <div class="box box-custom-enod top-buffer">
+      <div class="box-body table-responsive">
+        <table class="table table-hover table-striped table-condensed">
+          <thead>
+            <tr>
+              <th style="width: 76px;">Pagos Mensual</th>
+              <th style="width: 130px;">Operador</th>
+              <th style="width: 76px;">Días Hábiles</th>
+              <th style="width: 28px;">Sab.</th>
+              <th style="width: 28px;">Dom.</th>
+              <th style="width: 57px;">Feriados</th>
+              <th style="width: 77px;">Horas Extras</th>
+              <th style="width: 115px;">Servicios Extras S1</th>
+              <th style="width: 48px;">Pago S1</th>
+              <th style="width: 115px;">Servicios Extras S2</th>
+              <th style="width: 48px;">Pago S2</th>
+              <th style="width: 115px;">Servicios Extras S3</th>
+              <th style="width: 48px;">Pago S3</th>
+              <th style="width: 115px;">Servicios Extras S4</th>
+              <th style="width: 48px;">Pago S4</th>
+              <th style="width: 115px;">Servicios Extras S5</th>
+              <th style="width: 48px;">Pago S5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="operador in operarios" :key="operador.operador.id">
+              <td><input type="checkbox" v-model="operador.pagosExtMensual" :disabled="operador.precargadoPagosExtMensual" /></td>
+              <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }">{{ operador.operador.name }}</td>
+              <td v-if="frente_selected.id === 2">-</td>
+              <td v-else>{{ operador.diasHabiles }}</td>
+              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+              <td v-else>{{ operador.sabados }}</td>
+              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+              <td v-else>{{ operador.domingos }}</td>
+              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
+              <td v-else>{{ operador.feriados }}</td>
+              <td v-if="frente_selected.id === 2">-</td>
+              <td v-else>{{ operador.horasExtras }}</td>
+              <td>{{ operador.serviciosExtrasS1 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS1" :disabled="operador.precargadoPagoS1" /></td>
+              <td>{{ operador.serviciosExtrasS2 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS2" :disabled="operador.precargadoPagoS2" /></td>
+              <td>{{ operador.serviciosExtrasS3 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS3" :disabled="operador.precargadoPagoS3" /></td>
+              <td>{{ operador.serviciosExtrasS4 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS4" :disabled="operador.precargadoPagoS4" /></td>
+              <td>{{ operador.serviciosExtrasS5 }}</td>
+              <td><input type="checkbox" v-model="operador.pagoS5" :disabled="operador.precargadoPagoS5" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+    <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
   </div>
-  <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
-</div>
-</template>
+  </template>
 
 <script>
 import axios from 'axios';
@@ -224,40 +224,59 @@ methods: {
 
 <style scoped>
 .form-actions {
-display: flex;
-justify-content: flex-end;
-margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 }
 
 .btn-primary {
-margin-top: 15px;
+  margin-top: 15px;
 }
 
 .no-margin {
-margin: 0;
-padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .date-picker-custom {
-width: 100%;
-margin: 0;
-padding: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
-.v-select-custom{
+
+.v-select-custom {
   height: 110%;
 }
+
 .date-picker-custom .form-control {
-width: 100%;
-margin: 0;
-padding: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .v-select.disabled, .date-picker.disabled {
-background-color: #6c757d;
-cursor: not-allowed;
+  background-color: #6c757d;
+  cursor: not-allowed;
 }
+
 .neuquen-highlight {
   background-color: #000000;
   color: rgb(255, 204, 0);
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table thead th,
+.table tbody td {
+  text-align: center; /* Centrar el texto */
+  white-space: nowrap;
+}
+
+
+.table tbody td input[type="checkbox"] {
+  margin: 0 auto; /* Centrar los checkboxes */
+  display: block;
 }
 </style>
