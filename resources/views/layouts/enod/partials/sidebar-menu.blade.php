@@ -169,7 +169,7 @@
       @can('Asistencia'){{-- Nueva opción de menú agregada --}}
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-clock-o"></i> <span>ASISTENCIAS</span>
+          <i class="fas fa-calendar-alt"></i> <span>ASISTENCIAS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

@@ -495,7 +495,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/feriados', 'AsistenciaController@getFeriados');
     Route::get('/asistencia-operadores', 'AsistenciaController@getAsistenciaAgrupadaPorOperador');
     Route::post('/guardar-pagos', 'AsistenciaController@guardarPagos');
-
+    //Asignacion
+    Route::get('/obtener_detalles_remito/{remito_id}', 'AsignacionRopaController@obtenerDetallesRemito');
 
 
     //procedimientos

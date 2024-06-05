@@ -380,10 +380,15 @@ Vue.component('asistencia-resumen', AsistenciaResumen);
 
 import AsistenciaCopia from './components/control-asistencia/asistencia-copia.vue';
 Vue.component('asistencia-copia', AsistenciaCopia);
+
 /* asignacion ropa */
 
 import AsignacionNuevo from './components/asignaciones/asignacion-nuevo.vue';
 Vue.component('asignacion-nuevo', AsignacionNuevo);
+import AsignacionRemito from './components/asignaciones/asignacion-remito.vue';
+Vue.component('asignacion-remito', AsignacionRemito);
+import AsignacionOperador from './components/asignaciones/asignacion-operador.vue';
+Vue.component('asignacion-operador', AsignacionOperador);
 
 /* modal confirmacion */
 
