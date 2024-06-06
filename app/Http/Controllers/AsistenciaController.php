@@ -57,13 +57,10 @@ class AsistenciaController extends Controller
         $contratistas = Contratistas::all();
     
         // Obtener los user_id únicos de la tabla ot_operarios
-        $uniqueUserIds = OtOperarios::select('user_id')
-            ->groupBy('user_id')
-            ->havingRaw('COUNT(user_id) = 1')
-            ->pluck('user_id');
-    
-        // Obtener los usuarios de la tabla User usando los user_id únicos
-        $operarios = User::whereIn('id', $uniqueUserIds)->get();
+        $operarios = User::whereNull('cliente_id')
+                ->where('habilitado_sn', 1)
+                ->orderBy('name', 'asc')
+                ->get();
     
         // Obtener las fechas existentes de asistencia_horas agrupadas por frente_id
         $fechasPorFrente = AsistenciaHora::select('frente_id', 'fecha')
@@ -82,14 +79,10 @@ class AsistenciaController extends Controller
         $header_titulo = "Control Asistencia";
         $header_descripcion = "Copia";
         $frente_sn = Frentes::where('controla_hs_extras_sn', 1)->get();
-            // Obtener los user_id únicos de la tabla ot_operarios
-            $uniqueUserIds = OtOperarios::select('user_id')
-            ->groupBy('user_id')
-            ->havingRaw('COUNT(user_id) = 1')
-            ->pluck('user_id');
-    
-        // Obtener los usuarios de la tabla User usando los user_id únicos
-        $operarios = User::whereIn('id', $uniqueUserIds)->get();
+        $operarios = User::whereNull('cliente_id')
+        ->where('habilitado_sn', 1)
+        ->orderBy('name', 'asc')
+        ->get();
         $contratistas = Contratistas::all();
         $fechasPorFrente = AsistenciaHora::select('frente_id', 'fecha')
         ->get()
@@ -107,14 +100,10 @@ class AsistenciaController extends Controller
         $header_titulo = "Control Asistencia";
         $header_descripcion = "Edit";
         $frente_sn = Frentes::where('controla_hs_extras_sn', 1)->get();
-         // Obtener los user_id únicos de la tabla ot_operarios
-         $uniqueUserIds = OtOperarios::select('user_id')
-         ->groupBy('user_id')
-         ->havingRaw('COUNT(user_id) = 1')
-         ->pluck('user_id');
- 
-        // Obtener los usuarios de la tabla User usando los user_id únicos
-        $operarios = User::whereIn('id', $uniqueUserIds)->get();
+        $operarios = User::whereNull('cliente_id')
+                ->where('habilitado_sn', 1)
+                ->orderBy('name', 'asc')
+                ->get();
         $contratistas = Contratistas::all();
 
         return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id'));
