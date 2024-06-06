@@ -495,6 +495,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/feriados', 'AsistenciaController@getFeriados');
     Route::get('/asistencia-operadores', 'AsistenciaController@getAsistenciaAgrupadaPorOperador');
     Route::post('/guardar-pagos', 'AsistenciaController@guardarPagos');
+    Route::get('/calcular-dias-del-mes/{year}/{month}', 'AsistenciaController@calcularDiasDelMes');
 
 
 

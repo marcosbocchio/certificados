@@ -132,11 +132,15 @@ methods: {
     if (!this.selectedDate || !this.frente_selected) {
       return;
     }
-    
+
     const { year, month } = this.formatDateToMonthYear(this.selectedDate);
     this.isLoading = true;
 
     try {
+      // Llamada a la nueva API para calcular los días del mes
+      const diasDelMesResponse = await axios.get(`/api/calcular-dias-del-mes/${year}/${month}`);
+      this.diasHabiles = diasDelMesResponse.data.diasHabiles;
+
       const response = await axios.get('/api/asistencia-operadores', {
         params: {
           year,
@@ -144,8 +148,7 @@ methods: {
           frent_id: this.frente_selected.id
         }
       });
-      console.log(response.data.asistencias);
-      this.diasHabiles = response.data.diasDelMes.diasHabiles;
+
       this.operarios = response.data.asistencias.map(operador => ({
         operador: operador.operador,
         diasHabiles: operador.diasHabiles,
@@ -174,7 +177,7 @@ methods: {
     } catch (error) {
       if (error.response && error.response.status === 404) {
         console.error(error.response.data.message);
-        this.operarios=[];
+        this.operarios = [];
       } else {
         toastr.error('Error al cargar los datos');
       }

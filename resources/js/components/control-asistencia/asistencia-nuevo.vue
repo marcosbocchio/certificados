@@ -213,7 +213,10 @@ export default {
         toastr.error('Debe seleccionar horario de salida');
         return;
       }
-      // Si el operador no está en la lista, agregarlo
+      if (this.contratista_selected && !this.parte_selected) {
+        toastr.error('Parte obligatorio');
+        return;
+      }
       const nuevoDetalle = {
         operador: this.operador_selected,
         entrada: moment(this.entrada_selected).format('HH:mm'),
