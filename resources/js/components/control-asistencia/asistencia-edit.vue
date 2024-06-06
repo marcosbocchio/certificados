@@ -193,6 +193,10 @@ export default {
         toastr.error('Debe seleccionar horario de salida');
         return;
       }
+      if (this.contratista_selected && !this.parte_selected) {
+        toastr.error('Parte obligatorio');
+        return;
+      }
       this.detalles.push({
         operador: this.operador_selected,
         entrada: moment(this.entrada_selected).format('HH:mm'),
