@@ -166,7 +166,7 @@
         </li>
       @endcan
        
-      @can('Asistencia'){{-- Nueva opción de menú agregada --}}
+      @can('ASISTENCIA'){{-- Nueva opción de menú agregada --}}
         <li class="treeview">
           <a href="#">
             <i class="fa fa-clock-o"></i> <span>ASISTENCIAS</span>
@@ -175,9 +175,11 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            @can('Asistencia')
+            @can('ASISTENCIA')
               <li><a href="{{ route('asistencia') }}">Carga</a></li>
-              <li><a href="{{ route('asistencia-resumen') }}">Resumen</a></li> 
+            @endcan
+            @can('A_resumen_view')
+              <li><a href="{{ route('asistencia-resumen') }}">Resumen</a></li>
             @endcan
           </ul>
         </li>

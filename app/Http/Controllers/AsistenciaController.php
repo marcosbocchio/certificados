@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\AsistenciaHora;
 use App\AsistenciaDetalle;
 use App\Frentes;
+use App\FrenteOperador;
 use App\User;
 use App\Contratistas;
 use App\OtOperarios;
@@ -33,9 +34,10 @@ class AsistenciaController extends Controller
         
         // Obtener los frentes correspondientes
         $frentes = Frentes::whereIn('id', $frenteIds)->get();
-        
+        $user_frente = FrenteOperador::where('user_id',$user->id)->get();
+        log::info($user_frente);
         // Pasar los datos a la vista
-        return view('control-asistencia.asistencia-table', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
+        return view('control-asistencia.asistencia-table', compact('user', 'header_titulo', 'header_descripcion', 'frentes','user_frente'));
     }
 
     public function resumenView()
