@@ -406,6 +406,7 @@ methods :{
         this.users_empresa = response.data
         });
     },
+    
    async seleccionarObra(){
         if(this.ot && !this.ot.obra){
             this.selObra = !this.selObra;

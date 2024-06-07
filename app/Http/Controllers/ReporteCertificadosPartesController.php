@@ -64,32 +64,31 @@ class ReporteCertificadosPartesController extends Controller
 
     }
 
-    public function getCertificados($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta){
-
+    public function getCertificados($cliente_id, $ot_id, $obra, $fecha_desde, $fecha_hasta, $user_id) {
+        // Validar y corregir los parámetros
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
         $obra = $obra == 'null' ? '' : $obra;
-
-        if($fecha_desde == 'null'){
-            $fecha_desde =  date('2000-01-01');
-         }
-
-        if($fecha_hasta == 'null'){
-            $fecha_hasta =  date('2100-01-01');
-        }
-        $obra = str_replace('--','/',$obra);
-
+        $user_id = $user_id == 'null' ? 0 : $user_id;
+        $fecha_desde = $fecha_desde == 'null' ? '2000-01-01' : $fecha_desde;
+        $fecha_hasta = $fecha_hasta == 'null' ? '2100-01-01' : $fecha_hasta;
+    
+        // Reemplazar '--' por '/' en el campo obra
+        $obra = str_replace('--', '/', $obra);
+    
+        // Página y paginación
         $page = Input::get('page', 1);
-        Log::debug($page);
         $paginate = 10;
-
-        $data = DB::select('CALL getCertificados(?,?,?,?,?)',array($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta));
+    
+        // Llamar al procedimiento almacenado con los parámetros en el orden correcto
+        $data = DB::select('CALL getCertificados(?,?,?,?,?,?)', array($cliente_id, $ot_id, $obra, $fecha_desde, $fecha_hasta, $user_id));
+        
+        // Paginación manual
         $offSet = ($page * $paginate) - $paginate;
         $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
         $data = new \Illuminate\Pagination\LengthAwarePaginator(array_values($itemsForCurrentPage), count($data), $paginate, $page);
-        Log::debug($data);
+    
         return $data;
-
     }
 
 

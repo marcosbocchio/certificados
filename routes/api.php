@@ -752,7 +752,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'ReporteCertificadosPartesController@getPartes'
     );
     Route::get(
-        'reporte-certificados/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}',
+        'reporte-certificados/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/user/{user_id}',
         'ReporteCertificadosPartesController@getCertificados'
     );
 
