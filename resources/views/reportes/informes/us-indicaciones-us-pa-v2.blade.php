@@ -1,3 +1,4 @@
+@ -1,169 +1,169 @@
 
 <table style="text-align: center;border-collapse: collapse;" class="bordered-td">
         <thead>
@@ -6,7 +7,7 @@
             </tr>
             <tr>
                 <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
-                    <p id="vertical" style="margin-left: 15px; margin-right: 15px; padding: 0; white-space: nowrap;">ELEMENTO</p>
+                    <p id="vertical" style="margin-left: 15px; margin-right: 15px; padding: 0;">ELEMENTO</p>
                 </th>
                 <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
                     <p id="vertical" style="margin-left: -10px; margin-right: -10px; padding: 0; white-space: nowrap;">SOLDADORES</p>
@@ -52,8 +53,8 @@
         <tbody>
         @foreach ($indicaciones_us_pa  as $indicacion)
             <tr>
-                <td style="font-size: 10px;height: 20px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
-                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->soldador_p_id }} / {{ $indicacion->soldador_z_id }}</td>
+            <td style="font-size: 10px; height: 20px; text-align: center; word-wrap: break-word; white-space: normal;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
+            <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->soldador_p_id }} / {{ $indicacion->soldador_z_id }}</td>
                 <td style="font-size: 10px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
                 <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
                 <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->barrido }}</td>
