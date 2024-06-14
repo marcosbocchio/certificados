@@ -177,10 +177,18 @@
                             </tr>
                             <tr>
                             <td colspan="3">
-    {{ $equipo && $equipo->equipo ? $equipo->equipo->instrumento_medicion . ' / ' . $equipo->equipo->codigo : '-' }}
-</td>
+                            @if($equipo && $equipo->equipo)
+                                    {{ $equipo->equipo->instrumento_medicion . ' / ' . $equipo->equipo->codigo }}
+                                @else
+                                    {{ '-' }}
+                                @endif
+                            </td>
+
+                            @if($equipo && $equipo->equipo)
                                 <td colspan="1">{{$iluminacion->codigo}}</td>
-                            </tr>
+                            @else
+                                <td colspan="1">luz natural</td>
+                            @endif
 
                             <tr>
                                 <th colspan="2">Líquido Penetrante.</th>
