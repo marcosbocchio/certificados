@@ -29,6 +29,10 @@
                   <li><a href="{{ route('usuarios') }}">Usuarios</a></li>
                 @endcan
 
+                @can('M_frentes')
+                  <li><a href="{{ route('frentesAsignacion') }}">Frentes</a></li>
+                @endcan
+
                 @can('M_clientes')
                   <li><a href="{{ route('clientes') }}">Clientes</a></li>
                 @endcan

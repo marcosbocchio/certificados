@@ -111,4 +111,9 @@ class User extends Authenticatable
 
     }
 
+    public function frentesOperador()
+    {
+        return $this->hasMany(FrenteOperador::class, 'user_id', 'id');
+    }
+
 }

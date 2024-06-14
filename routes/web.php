@@ -82,6 +82,9 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/clientes', 'ClientesController@callView')->name('clientes');
 
       Route::get('/area/enod/proveedores', 'ProveedoresController@callView')->name('proveedor');
+      
+      Route::get('/area/enod/frentes', 'FrentesAsignacionController@callView')->name('frentesAsignacion');
+
 
       Route::get('/area/enod/stock', 'StockController@callView')->name('stock');
       Route::get('/area/enod/stock-table', 'StockController@callViewTable')->name('stock-table');

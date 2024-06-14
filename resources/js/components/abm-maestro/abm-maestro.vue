@@ -112,6 +112,7 @@
 
              eventNewRegistro.$emit('open',this.modelo);
            },
+           
 
            aplicarFiltro : function(){
 

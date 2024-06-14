@@ -32,7 +32,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('proveedores/paginate', 'ProveedoresController@paginate');
     Route::get('proveedores/get-proveedores', 'ProveedoresController@getProveedores');
     Route::resource('proveedores', 'ProveedoresController');
-
+//frente asignacion
+    Route::get('frentesAsignacion/paginate', 'FrentesAsignacionController@getFrentes');
+    Route::post('frentesAsignacion/store', 'FrentesAsignacionController@store');
+    Route::get('frente-usuarios', 'FrentesAsignacionController@getUser');
+    Route::get('frente-usuario/{id_frente}', 'FrentesAsignacionController@getUserFrente');
+    Route::post('frente-usuarios/update', 'FrentesAsignacionController@updateFrenteUsuarios');
 
     Route::get('contratistas/paginate', 'ContratistasController@paginate');
     Route::resource('contratistas', 'ContratistasController');

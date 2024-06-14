@@ -126,6 +126,12 @@ Vue.component('table-proveedores', require('./components/abm-maestro/proveedores
 Vue.component('nuevo-proveedores', require('./components/abm-maestro/proveedores/nuevo-proveedores.vue').default);
 Vue.component('editar-proveedores', require('./components/abm-maestro/proveedores/editar-proveedores.vue').default);
 
+//frenteAsignacion
+Vue.component('table-frentesAsignacion', require('./components/abm-maestro/frentesAsignacion/table-frentesAsignacion.vue').default);
+Vue.component('nuevo-frentesAsignacion', require('./components/abm-maestro/frentesAsignacion/nuevo-frentesAsignacion.vue').default);
+Vue.component('editar-frentesAsignacion', require('./components/abm-maestro/frentesAsignacion/editar-frentesAsignacion.vue').default);
+Vue.component('usuariosF', require('./components/abm-maestro/frentesAsignacion/usuariosF.vue').default);
+
 //contratistas
 Vue.component('table-contratistas', require('./components/abm-maestro/contratistas/table-contratistas.vue').default);
 Vue.component('nuevo-contratistas', require('./components/abm-maestro/contratistas/nuevo-contratistas.vue').default);
