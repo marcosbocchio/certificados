@@ -176,7 +176,9 @@
                                 <th colspan="1">Iluminaciones </th>
                             </tr>
                             <tr>
-                                <td colspan="3">{{$equipo->equipo->instrumento_medicion}} / {{$equipo->equipo->codigo}}</td>
+                            <td colspan="3">
+    {{ $equipo && $equipo->equipo ? $equipo->equipo->instrumento_medicion . ' / ' . $equipo->equipo->codigo : '-' }}
+</td>
                                 <td colspan="1">{{$iluminacion->codigo}}</td>
                             </tr>
 

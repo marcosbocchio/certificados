@@ -31,7 +31,6 @@ class InformeLpRequest extends FormRequest
             'material'                  => 'required',
             'plano_isom'                => 'required|Max:30',
             'diametro'                  => 'required',
-            'interno_equipo'            => 'required',
             'procedimiento'             => 'required',
             'norma_evaluacion'          => 'required',
             'norma_ensayo'              => 'required',
