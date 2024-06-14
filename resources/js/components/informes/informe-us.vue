@@ -588,6 +588,12 @@
                                     <input type="number" v-model="nro_indicacion_us_pa" class="form-control" id="nro_indicacion_us_pa">
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="barrido_up_pa" title="Barrido">Barrido *</label>
+                                    <input type="text" v-model="barrido_us_pa" class="form-control" id="barrido_us_pa" maxlength="3">
+                                </div>
+                            </div>
 
                             <div class="col-md-3">
                                 <div class="form-group" >
@@ -602,6 +608,7 @@
                                     <input type="text" v-model="angulo_incidencia_us_pa" class="form-control" id="angulo_incidencia_us_pa">
                                 </div>
                             </div>
+                            <div class="clearfix"></div>
 
                             <div class="col-md-3">
                                 <div class="form-group" >
@@ -609,7 +616,6 @@
                                     <input type="number" v-model="camino_sonico_us_pa" class="form-control" id="camino_sonico_us_pa">
                                 </div>
                             </div>
-                            <div class="clearfix"></div>
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="x_us_pa" title="X (cm)">X *</label>
@@ -630,6 +636,7 @@
                                     <input type="number" v-model="z_us_pa" class="form-control" id="z_us_pa">
                                 </div>
                             </div>
+                            <div class="clearfix"></div>
 
                             <div class="col-md-3">
                                 <div class="form-group" >
@@ -637,7 +644,6 @@
                                     <input type="number" v-model="longitud_us_pa" class="form-control" id="longitud_us_pa">
                                 </div>
                             </div>
-                            <div class="clearfix"></div>
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="nivel_registro_us_pa" title="Nivel Registro">Nivel Registro *</label>
@@ -668,6 +674,7 @@
                                                 <th  class="col-lg-1">Soldador Z</th>
                                                 <th  class="col-lg-1">ø</th>
                                                 <th  class="col-lg-1">N° Ind.</th>
+                                                <th  class="col-lg-1">Barrido</th>
                                                 <th  class="col-lg-1">P.E.</th>
                                                 <th  class="col-lg-1">A.I.</th>
                                                 <th  class="col-lg-1">C.S.</th>
@@ -688,6 +695,7 @@
                                                 <td>{{ obtenerCodigoSoldadorPorId(item.soldadorZ) }}</td>
                                                 <td>{{ item.diametro_us_pa }}</td>
                                                 <td>{{ item.nro_indicacion_us_pa}}</td>
+                                                <td>{{ item.barrido_us_pa}}</td>
                                                 <td>{{ item.posicion_examen_us_pa}}</td>
                                                 <td>{{ item.angulo_incidencia_us_pa}}</td>
                                                 <td>{{ item.camino_sonico_us_pa}}</td>
@@ -1174,6 +1182,7 @@ export default {
         elemento_us_pa:'',
         diametro_us_pa:{},
         nro_indicacion_us_pa:'',
+        barrido_us_pa:'',
         posicion_examen_us_pa:'',
         angulo_incidencia_us_pa:'',
         camino_sonico_us_pa:'',
@@ -1719,6 +1728,11 @@ export default {
                 return ;
             }
 
+            if (!this.barrido_us_pa) {
+                toastr.error('El campo barrido es obligatorio');
+                return ;
+            }
+
             if(this.nivel_nro_indicacion_us_paregistro  > 9999) {
                 toastr.error('El campo nivel nro indicacion no debe ser mayor a 9999');
                 return ;
@@ -1729,7 +1743,7 @@ export default {
                 return ;
             }
 
-            if(this.posicion_examen_us_pa.length  > 5) {
+            if(this.posicion_examen_us_pa.length  > 7) {
                 toastr.error('El campo posicion examen no debe contener más de 5 caracteres');
                 return ;
              }
@@ -1810,6 +1824,7 @@ export default {
                 soldadorZ: this.soldadorZ ? this.soldadorZ.id : '',
                 diametro_us_pa: this.diametro_us_pa ? this.diametro_us_pa.diametro : '',
                 nro_indicacion_us_pa:this.nro_indicacion_us_pa,
+                barrido_us_pa:this.barrido_us_pa,
                 posicion_examen_us_pa:this.posicion_examen_us_pa,
                 angulo_incidencia_us_pa:this.angulo_incidencia_us_pa,
                 camino_sonico_us_pa:this.camino_sonico_us_pa,
