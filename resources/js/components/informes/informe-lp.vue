@@ -564,10 +564,10 @@ props :{
             required : false
                 },
 
-        interno_equipodata : {
-            type : [ Object ],
-            required : false
-            },
+        interno_equipodata: {
+            type: Object,
+            required: false
+        },
 
         procedimientodata : {
             type : [ Object ],
@@ -821,6 +821,9 @@ data() {return {
                this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante });
                this.setearTipoPenetrante();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
+            }
+            if(this.interno_equipo === '-'){
+                this.interno_equipo = null;
             }
 
         },

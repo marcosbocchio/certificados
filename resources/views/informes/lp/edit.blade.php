@@ -25,7 +25,7 @@
      :material2data ="{{$informe_material_accesorio}}"
      :diametrodata="{{$informe_diametro}}"
      :diametro_espesordata="{{$informe_diametroEspesor}}"
-     :interno_equipodata="{{$informe_interno_equipo}}"
+     :interno_equipodata="{{$informe_interno_equipo ? json_encode($informe_interno_equipo) : json_encode('-')}}"
      :procedimientodata="{{$informe_procedimiento}}"
      :norma_evaluaciondata="{{$informe_norma_evaluacion}}"
      :norma_ensayodata="{{$informe_norma_ensayo}}"
