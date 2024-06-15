@@ -35,9 +35,11 @@ Route::group(['middleware' => 'auth:api'], function () {
 //frente asignacion
     Route::get('frentesAsignacion/paginate', 'FrentesAsignacionController@getFrentes');
     Route::post('frentesAsignacion/store', 'FrentesAsignacionController@store');
+    Route::put('frentesAsignacion/update/{id}', 'FrentesAsignacionController@update');
     Route::get('frente-usuarios', 'FrentesAsignacionController@getUser');
     Route::get('frente-usuario/{id_frente}', 'FrentesAsignacionController@getUserFrente');
     Route::post('frente-usuarios/update', 'FrentesAsignacionController@updateFrenteUsuarios');
+
 
     Route::get('contratistas/paginate', 'ContratistasController@paginate');
     Route::resource('contratistas', 'ContratistasController');

@@ -72,15 +72,16 @@ export default {
                 return;
             }
 
-            axios.put(`frentes/${this.frente.id}`, {
+            axios.put(`frentesAsignacion/update/${this.frente.id}`, {
                 codigo: this.frente.codigo,
                 descripcion: this.frente.descripcion,
                 horas_diarias_laborables: this.frente.horas_diarias_laborables,
                 centro_distribucion_sn: this.frente.centro_distribucion_sn,
                 controla_hs_extras_sn: this.frente.controla_hs_extras_sn
+
+
             })
             .then(response => {
-                // Cerrar el modal después de guardar
                 $('#editar-frente').modal('hide');
                 this.limpiarFormulario();
             })

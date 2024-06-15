@@ -73,7 +73,7 @@ class FrentesAsignacionController extends Controller
     {
         $frenteId = $request->input('frente_id');
         $usuarioIds = $request->input('usuarios_asociados');
-
+        log::info($request);
         // Eliminar todas las asociaciones actuales del frente
         FrentesOperador::where('frente_id', $frenteId)->delete();
 
