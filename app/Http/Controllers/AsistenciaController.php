@@ -20,7 +20,7 @@ class AsistenciaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['role_or_permission:Sistemas|A_asistencia_acceder'], ['only' => ['callViewTotalStock', 'getAsistencia']]);
+        $this->middleware(['role_or_permission:Sistemas|A_asistencia_acceder'], ['only' => ['callViewTotalStock', 'getAsistencia','callView']]);
     }
 
     public function callView()
