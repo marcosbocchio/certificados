@@ -16,7 +16,7 @@
               <tr v-for="registro in registros" :key="registro.id">
                 <td>{{ registro.codigo }}</td>
                 <td style="text-align: center;">{{ registro.descripcion || '-' }}</td>
-                <td style="text-align: center;">{{ registro.horas_diarias_laborables || '-' }}</td>
+                <td style="text-align: center;">{{ formatHoras(registro.horas_diarias_laborables) || '-' }}</td>
                 <td width="10px">
                   <button class="btn btn-warning btn-sm" title="Editar" @click.prevent="updateValue(registro)">
                     <span class="fa fa-edit"></span>
@@ -41,7 +41,8 @@
 </template>
 
 <script>
-import { eventEditRegistro,eventModal} from '../../event-bus';
+import { eventEditRegistro, eventModal } from '../../event-bus';
+import { EventBus } from '../../event-bus';
 
 export default {
   data() {
@@ -52,6 +53,7 @@ export default {
   },
   created() {
     this.fetchFrentes();
+    EventBus.$on('registro-guardado', this.fetchFrentes);
   },
   methods: {
     fetchFrentes() {
@@ -70,8 +72,12 @@ export default {
     updateValue(registro) {
       eventEditRegistro.$emit('editar', registro);
     },
-    goToUsuarios(registro)  {
+    goToUsuarios(registro) {
       eventModal.$emit('open', registro);
+    },
+    formatHoras(value) {
+      if (value === null || value === undefined) return '-';
+      return Number.isInteger(value) ? value : parseFloat(value).toFixed(1).replace(/\.0$/, '');
     }
   }
 }

@@ -55,7 +55,7 @@
                         class="btn btn-warning btn-sm" 
                         @click="editar(item)" 
                         title="Editar"
-                        :disabled="!item.frente || item.frente.id !== user_frente[0]?.frente_id"
+                        :disabled="!puedeEditar(item)"
                       >
                         <i class="fa fa-pencil"></i>
                       </button>
@@ -65,7 +65,7 @@
                         class="btn btn-default btn-sm" 
                         @click="copiar(item)" 
                         title="Copiar"
-                        :disabled="!item.frente || item.frente.id !== user_frente[0]?.frente_id"
+                        :disabled="!puedeCopiar(item)"
                       >
                         <i class="fa fa-copy"></i>
                       </button>
@@ -115,6 +115,7 @@ export default {
   mounted() {
     this.fetchFrentes();
     this.fetchData(this.currentPage);
+    console.log(this.user_frente);
   },
   methods: {
     agregarNuevo() {
@@ -146,6 +147,12 @@ export default {
         .catch(error => {
           console.error('Error al cargar los datos:', error);
         });
+    },
+    puedeEditar(item) {
+      return this.user_frente.some(frente => frente.frente_id === item.frente.id);
+    },
+    puedeCopiar(item) {
+      return this.user_frente.some(frente => frente.frente_id === item.frente.id);
     }
   }
 }

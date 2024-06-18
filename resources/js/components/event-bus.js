@@ -6,5 +6,6 @@ export const eventDeleteFile = new Vue();
 export const eventEditHeaderInforme = new Vue();
 export const eventHeaderParte = new Vue();
 export const eventModal = new Vue();
+export const EventBus = new Vue();
 const eventAlerta = new Vue();
 export default eventAlerta;

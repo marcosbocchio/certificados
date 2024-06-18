@@ -6,19 +6,23 @@
           <button type="button" class="close" @click="cerrarModal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title">Usuarios del Frente: {{ frenteSeleccionado.codigo }}</h4>
+          <h4 class="modal-title">Usuarios del Frente: {{ frenteSeleccionado?.codigo }}</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
             <label for="usuario">Agregar Usuario</label>
-            <select v-model="usuarioSeleccionado" class="form-control">
-              <option v-for="usuario in usuarios" :key="usuario.id" :value="usuario">{{ usuario.name }}</option>
-            </select>
+            <v-select
+              v-model="usuarioSeleccionado"
+              :options="usuarios"
+              label="name"
+            ></v-select>
           </div>
           <div class="row">
             <div class="col-md-3">
-              <div style="display:flex;justify-content: flex-start;align-items: center;">
-                <button type="button" @click="agregarUsuario"><span class="fa fa-plus-circle"></span></button>
+              <div style="display: flex; justify-content: flex-start; align-items: center;">
+                <button type="button">
+                  <span @click="agregarUsuario" class="fa fa-plus-circle"></span>
+                </button>
               </div>
             </div>
           </div>
@@ -55,17 +59,22 @@
 
 <script>
 import axios from 'axios';
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
 import { eventModal } from '../../event-bus';
 import { toastrInfo, toastrDefault } from '../../toastrConfig';
 
 export default {
+  components: {
+    'v-select': vSelect,
+  },
   data() {
     return {
       frenteSeleccionado: null,
       usuarios: [],
       usuarioSeleccionado: null,
       usuariosAsociados: [],
-      loading: false
+      loading: false,
     };
   },
   created() {
@@ -122,7 +131,7 @@ export default {
 
         axios.post('/frente-usuarios/update', {
           frente_id: this.frenteSeleccionado.id,
-          usuarios_asociados: usuarioIds
+          usuarios_asociados: usuarioIds,
         })
         .then(response => {
           this.loading = false;
@@ -137,8 +146,8 @@ export default {
       } else {
         toastr.error('No se han seleccionado usuarios.', toastrInfo);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

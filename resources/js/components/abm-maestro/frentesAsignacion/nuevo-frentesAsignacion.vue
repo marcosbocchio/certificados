@@ -12,13 +12,13 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="codigo">Código *</label>
-                  <input autocomplete="off" id="codigo" v-model="codigo" type="text" name="codigo" class="form-control" required>
+                  <input autocomplete="off" id="codigo" v-model="codigo" type="text" name="codigo" class="form-control">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="horas">Horas Laborales *</label>
-                  <input autocomplete="off" id="horas" type="number" name="horas" class="form-control" v-model.number="horas_diarias_laborables" min="0" required>
+                  <input autocomplete="off" id="horas" type="number" name="horas" class="form-control" v-model.number="horas_diarias_laborables" min="0" step="0.1">
                 </div>
               </div>
               <div class="col-md-12">
@@ -55,13 +55,14 @@
 import axios from 'axios';
 import { eventNewRegistro } from '../../event-bus';
 import { toastrInfo, toastrDefault } from '../../toastrConfig';
+import { EventBus } from '../../event-bus';
 
 export default {
   data() {
     return {
       codigo: '',
       descripcion: '',
-      horas_diarias_laborables: 8,
+      horas_diarias_laborables: '',
       centro_distribucion_sn: false,
       controla_hs_extras_sn: false
     };
@@ -83,6 +84,7 @@ export default {
         controla_hs_extras_sn: this.controla_hs_extras_sn ? 1 : 0
       })
       .then(response => {
+        EventBus.$emit('registro-guardado');
         $('#nuevo-frente').modal('hide');
         toastr.success('Frente Guardado');
         this.limpiarFormulario();
@@ -97,7 +99,7 @@ export default {
     limpiarFormulario() {
       this.codigo = '';
       this.descripcion = '';
-      this.horas_diarias_laborables = 8;
+      this.horas_diarias_laborables = '';
       this.centro_distribucion_sn = false;
       this.controla_hs_extras_sn = false;
     }

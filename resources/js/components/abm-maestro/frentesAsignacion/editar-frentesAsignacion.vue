@@ -18,7 +18,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="horas">Horas Laborales *</label>
-                                    <input autocomplete="off" id="horas" type="number" name="horas" class="form-control" v-model.number="frente.horas_diarias_laborables" min="0" required>
+                                    <input autocomplete="off" id="horas" type="number" name="horas" class="form-control" v-model.number="frente.horas_diarias_laborables" min="0" step="0.1">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -56,10 +56,15 @@ import axios from 'axios';
 import { eventEditRegistro } from '../../event-bus';
 
 export default {
-    
     data() {
         return {
-            frente: {}
+            frente: {
+                codigo: '',
+                descripcion: '',
+                horas_diarias_laborables: '',
+                centro_distribucion_sn: false,
+                controla_hs_extras_sn: false
+            }
         };
     },
     created() {
@@ -78,15 +83,12 @@ export default {
                 horas_diarias_laborables: this.frente.horas_diarias_laborables,
                 centro_distribucion_sn: this.frente.centro_distribucion_sn,
                 controla_hs_extras_sn: this.frente.controla_hs_extras_sn
-
-
             })
             .then(response => {
                 $('#editar-frente').modal('hide');
                 this.limpiarFormulario();
             })
             .catch(error => {
-              
                 console.error(error);
             });
         },
@@ -95,7 +97,13 @@ export default {
             $('#editar-frente').modal('show');
         },
         limpiarFormulario() {
-            this.frente = {};
+            this.frente = {
+                codigo: '',
+                descripcion: '',
+                horas_diarias_laborables: '',
+                centro_distribucion_sn: false,
+                controla_hs_extras_sn: false
+            };
         }
     }
 };
