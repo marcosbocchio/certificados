@@ -179,7 +179,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            @can('ASISTENCIA')
+            @can('A_asistencia_acceder')
               <li><a href="{{ route('asistencia') }}">Carga</a></li>
             @endcan
             @can('A_resumen_view')
