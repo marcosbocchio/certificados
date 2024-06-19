@@ -40,6 +40,7 @@
 <script>
   import {mapState} from 'vuex'
   import { eventNewRegistro, eventEditRegistro, eventModal } from '../event-bus';
+  import { EventBus } from '../event-bus';
     export default {
       name: 'abm-maestro',
       props : {
@@ -59,6 +60,7 @@
       created : function(){
 
         this.getResults();
+        EventBus.$on('registro-guardado', this.getResults);
 
       },
 

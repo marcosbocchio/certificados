@@ -19,7 +19,8 @@ class FrentesAsignacionController extends Controller
 
     public function getFrentes(Request $request)
     {
-        $frentes = Frentes::orderBy('codigo')->paginate(10);
+        $perPage = 10; // Número de elementos por página
+        $frentes = Frentes::orderBy('codigo')->paginate($perPage);
         return response()->json($frentes);
     }
 

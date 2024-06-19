@@ -42,33 +42,22 @@
 
 <script>
 import { eventEditRegistro, eventModal } from '../../event-bus';
-import { EventBus } from '../../event-bus';
 
 export default {
-  data() {
-    return {
-      registros: [],
-      loading: true,
-    };
-  },
-  created() {
-    this.fetchFrentes();
-    EventBus.$on('registro-guardado', this.fetchFrentes);
+  props: {
+    registros: {
+      type: Array,
+      required: true,
+      default: function() {
+        return [];
+      }
+    },
+    loading: {
+      type: Boolean,
+      required: true
+    }
   },
   methods: {
-    fetchFrentes() {
-      this.loading = true;
-      axios.get('frentesAsignacion/paginate')
-        .then(response => {
-          this.registros = response.data.data;
-        })
-        .catch(error => {
-          console.error('Error fetching frentes:', error);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
     updateValue(registro) {
       eventEditRegistro.$emit('editar', registro);
     },
