@@ -182,7 +182,7 @@ export default {
     fetchRemitoDetails() {
         if (this.remito_selected && this.remito_selected.id) {
             this.isLoading = true;
-            axios.get(`/api/obtener_detalles_remito/${this.remito_selected.id}`)
+            axios.get(`/api/obtener-detalles-remito/${this.remito_selected.id}`)
                 .then(response => {
                     this.detalle_remito_data = response.data.detalle_remito_data;
                     this.productos_remito_data = response.data.productos_remito_data;
