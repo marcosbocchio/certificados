@@ -224,6 +224,7 @@ export default {
             );
             this.productos_filtrados = resultado;
             this.isLoading = false;
+            window.location.href = `/area/enod/asignacion-remito/${this.remito_selected.id}`;
           })
           .catch(error => {
             console.error("Error al obtener los detalles del remito:", error);
@@ -240,7 +241,6 @@ export default {
         })
         .catch(error => {
           console.error("Error al obtener los detalles de asignación EPP:", error);
-          toastr.error('Error al cargar los detalles de asignación EPP');
         });
     },
   }
