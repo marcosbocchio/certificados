@@ -202,7 +202,7 @@ export default {
       .then(response => {
         this.isLoading = false;
         toastr.success('Asignación guardada correctamente');
-        // Lógica adicional después de guardar, si es necesario
+        window.location.href = `/area/enod/asignacion-remito/${this.remito_selected.id}`;
       })
       .catch(error => {
         console.error("Error al guardar la asignación EPP:", error);
@@ -224,7 +224,6 @@ export default {
             );
             this.productos_filtrados = resultado;
             this.isLoading = false;
-            window.location.href = `/area/enod/asignacion-remito/${this.remito_selected.id}`;
           })
           .catch(error => {
             console.error("Error al obtener los detalles del remito:", error);
