@@ -6,6 +6,7 @@
 
    <asistencia-table
    :frentes_data="{{ $frentes }}"
+   :user_frente="{{ $user_frente }}"
    ></asistencia-table>
 
 </div>

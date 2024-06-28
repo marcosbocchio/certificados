@@ -29,6 +29,10 @@
                   <li><a href="{{ route('usuarios') }}">Usuarios</a></li>
                 @endcan
 
+                @can('M_frentes')
+                  <li><a href="{{ route('frentesAsignacion') }}">Frentes</a></li>
+                @endcan
+
                 @can('M_clientes')
                   <li><a href="{{ route('clientes') }}">Clientes</a></li>
                 @endcan
@@ -166,7 +170,7 @@
         </li>
       @endcan
        
-      @can('Asistencia'){{-- Nueva opción de menú agregada --}}
+      @can('ASISTENCIA'){{-- Nueva opción de menú agregada --}}
         <li class="treeview">
           <a href="#">
           <i class="fas fa-calendar-alt"></i> <span>ASISTENCIAS</span>
@@ -175,9 +179,11 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            @can('Asistencia')
+            @can('A_asistencia_acceder')
               <li><a href="{{ route('asistencia') }}">Carga</a></li>
-              <li><a href="{{ route('asistencia-resumen') }}">Resumen</a></li> 
+            @endcan
+            @can('A_resumen_view')
+              <li><a href="{{ route('asistencia-resumen') }}">Resumen</a></li>
             @endcan
           </ul>
         </li>

@@ -25,8 +25,8 @@
                                 </a>
                             </div>
                             <v-select v-show="selCliente" v-model="cliente" label="nombre_fantasia" :options="clientesOperador" @input="CambioCliente()" ></v-select>
-
                         </li>
+
                         <li class="list-group-item pointer">
                             <div v-show="!selOt">
                                 <span class="titulo-li">OT</span>
@@ -37,6 +37,7 @@
                             </div>
                             <v-select v-show="selOt" v-model="ot" label="numero" :options="ots" @input="CambioOt()" ></v-select>
                         </li>
+
                         <li class="list-group-item pointer">
                             <div v-show="!selObra">
                                 <span class="titulo-li">Obra</span>
@@ -47,24 +48,33 @@
                             </div>
                             <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>
                         </li>
+
+                        <li class="list-group-item pointer">
+                            <div v-show="!selGenerador">
+                                <span class="titulo-li">Generador</span>
+                                <a @click="selGenerador = !selGenerador" class="pull-right">
+                                    <div v-if="generador_selected">{{generador_selected.name}}</div>
+                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
+                                </a>
+                            </div>
+                            <v-select v-show="selGenerador" v-model="generador_selected" label="name" :options="users_empresa" @input="selGenerador = !selGenerador"></v-select>
+                        </li>
+
                         <li class="list-fecha list-group-item pointer">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-6">
-                                    <date-picker v-model="fecha_desde" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Desde" ></date-picker>
+                                    <DatePicker v-model="fecha_desde" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Desde" ></DatePicker>
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-6">
-                                    <date-picker v-model="fecha_hasta" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Hasta" ></date-picker>
+                                    <DatePicker v-model="fecha_hasta" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Hasta" ></DatePicker>
                                 </div>
                             </div>
                         </li>
                     </ul>
 
-                    <a  @click="Buscar()">
-                        <button class="btn btn-enod  btn-block"><span class="fa fa-search"></span>
-                            Buscar
-                        </button>
+                    <a @click="Buscar()">
+                        <button class="btn btn-enod btn-block"><span class="fa fa-search"></span> Buscar</button>
                     </a>
-
                 </div>
             </div>
         </div>
@@ -131,7 +141,7 @@
 
 <script>
 import moment from 'moment';
-import Datepicker from 'vuejs-datepicker';
+import DatePicker from 'vue2-datepicker';
 import {mapState} from 'vuex';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import Tabs from 'vue-tabs-component';
@@ -145,7 +155,7 @@ export default {
 
     components: {
 
-      Datepicker,
+      DatePicker,
       Loading,
       DoughnutChart,
       BarChart,
@@ -178,6 +188,9 @@ export default {
         selOt:false,
         selObra:false,
         selComponente:false,
+        selGenerador: false,
+        users_empresa: [],
+        generador_selected:'',
         fecha_actual: moment(new Date()).format('DD-MM-YYYY'),
 
         /* Tabla PARTES */
@@ -193,7 +206,7 @@ export default {
     mounted() {
 
         this.$store.dispatch('loadClientesOperador',this.user.id);
-
+        this.getUsersEmpresa();
     },
 
     computed :{
@@ -255,19 +268,27 @@ methods :{
         }
     },
 
-   async Buscar(page = 1) {
-     this.$store.commit('loading', true);
-     this.tablaCertificados = {};
+    async Buscar(page = 1) {
+    this.$store.commit('loading', true);
+    this.tablaCertificados = {};
 
-        try {
-            let url3 = 'reporte-certificados' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra.replace('/','--') : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?page='+ page + '&api_token=' + Laravel.user.api_token;
-            let res3 = await axios.get(url3);
-            this.tablaCertificados = res3.data;
-        }catch(error){
-
-        }finally  {this.$store.commit('loading', false);}
-
-   },
+    try {
+        let url3 = 'reporte-certificados' + 
+                   '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + 
+                   '/ot/' + (this.ot ? this.ot.id : 'null' )  + 
+                   '/obra/' + (this.obra ? this.obra.obra.replace('/','--') : 'null' ) + 
+                   '/fecha_desde/' + this.fecha_desde + 
+                   '/fecha_hasta/' + this.fecha_hasta + 
+                   '/user/' + (this.generador_selected ? this.generador_selected.id : 'null' ) +
+                   '?page=' + page + '&api_token=' + Laravel.user.api_token;
+        let res3 = await axios.get(url3);
+        this.tablaCertificados = res3.data;
+    } catch (error) {
+        console.error(error);
+    } finally {
+        this.$store.commit('loading', false);
+    }
+},
 
    async seleccionarObra() {
         if(this.ot && !this.ot.obra){
@@ -280,6 +301,13 @@ methods :{
         this.obra = this.obra == null ? '' : this.obra;
         this.selObra = !this.selObra;
 
+    },
+    getUsersEmpresa : function(){
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'users/empresa' + '?api_token=' + Laravel.user.api_token;
+        axios.get(urlRegistros).then(response =>{
+        this.users_empresa = response.data
+        });
     },
 
 

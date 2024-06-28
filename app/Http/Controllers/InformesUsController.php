@@ -211,6 +211,7 @@ class InformesUsController extends Controller
             $detalle_us_pa_us->soldador_p_id = $detalle_us_pa['soldadorP'];
             $detalle_us_pa_us->soldador_z_id = $detalle_us_pa['soldadorZ'];
             $detalle_us_pa_us->nro_indicacion = $detalle_us_pa['nro_indicacion_us_pa'];
+            $detalle_us_pa_us->barrido = $detalle_us_pa['barrido_us_pa'];
             $detalle_us_pa_us->posicion_examen = $detalle_us_pa['posicion_examen_us_pa'];
             $detalle_us_pa_us->angulo_incidencia = $detalle_us_pa['angulo_incidencia_us_pa'];
             $detalle_us_pa_us->camino_sonico = $detalle_us_pa['camino_sonico_us_pa'];
@@ -389,6 +390,7 @@ class InformesUsController extends Controller
                                         detalle_us_pa_us.soldador_z_id as soldadorZ,
                                         detalle_us_pa_us.diametro as diametro_us_pa,
                                         detalle_us_pa_us.nro_indicacion as nro_indicacion_us_pa,
+                                        detalle_us_pa_us.barrido as barrido_us_pa,
                                         detalle_us_pa_us.posicion_examen as posicion_examen_us_pa,
                                         detalle_us_pa_us.angulo_incidencia as angulo_incidencia_us_pa,
                                         detalle_us_pa_us.camino_sonico as camino_sonico_us_pa,

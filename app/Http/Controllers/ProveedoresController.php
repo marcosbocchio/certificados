@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProveedorRequest; // Asegúrate de importar tu ProveedorRequest
-use App\Proveedor; // Usa el namespace correcto para tu modelo Proveedor
+use App\Http\Requests\ProveedorRequest; 
+use App\Proveedor; 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;

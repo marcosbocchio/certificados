@@ -219,40 +219,70 @@ b {
     <table style="text-align: center;border-collapse: collapse;" class="bordered" >
         <thead>
             <tr>
-                <td style="border-bottom: 2px solid #000;background:#D8D8D8" colspan="13" >REGISTRO DE MEDICIONES</td>
+                <td style="border-bottom: 2px solid #000;background:#D8D8D8" colspan="14" >REGISTRO DE MEDICIONES</td>
             </tr>
             <tr>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 20px;margin-right: 20px;">ELEMENTO</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 20px;margin-right: 20px;">SOLDADORES</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 20px;margin-right: 20px;">DIAMETRO</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -20px;margin-right: -20px;">N° INDICACIÓN</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -20px;margin-right: -20px;">POSICION EXAMEN</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -20px;margin-right: -20px;">ANG. INCIDENCIA</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -20px;margin-right:  -20px;">CAMINO SONICO</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 20px;margin-right: 20px;">X (cm)</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 20px;margin-right: 20px;">Y (mm)</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 20px;margin-right: 20px;">Z (mm)</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -20px;margin-right: -20px;">LONGITUD (mm)</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -20.8px;margin-right: -20px;">NIVEL REGISTRO</div></th>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;" ><div id="vertical" style="margin-left: -20px;margin-right: -20px;">RESULTADO</div></th>
+            <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: 15px; margin-right: 15px; padding: 0; white-space: nowrap;">ELEMENTO</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -10px; margin-right: -10px; padding: 0; white-space: nowrap;">SOLDADORES</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -15px; margin-right: -15px; padding: 0; white-space: nowrap;">DIAMETRO</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -26px; margin-right: -26px; padding: 0; white-space: nowrap;">N° INDICACIÓN</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -10px; margin-right: -10px; padding: 0; white-space: nowrap;">BARRIDO</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -38px; margin-right: -38px; padding: 0; white-space: nowrap;">POSICION EXAMEN</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -30px; margin-right: -30px; padding: 0; white-space: nowrap;">ANG. INCIDENCIA</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -35px; margin-right: -35px; padding: 0; white-space: nowrap;">CAMINO SONICO</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -2px; margin-right: -2px; padding: 0; white-space: nowrap;">X (mm)</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -2px; margin-right: -2px; padding: 0; white-space: nowrap;">Y (mm)</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -2px; margin-right: -2px; padding: 0; white-space: nowrap;">Z (mm)</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -30px; margin-right: -20px; padding: 0; white-space: nowrap;">LONGITUD (mm)</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -30px; margin-right: -30px; padding: 0; white-space: nowrap;">NIVEL REGISTRO</p>
+                </th>
+                <th id="rotate" style="border-right: 1px solid #000; font-size: 13px; font-weight: normal;">
+                    <p id="vertical" style="margin-left: -13px; margin-right: -13px; padding: 0; white-space: nowrap;">RESULTADO</p>
+                </th>
                 <th id="rotate" style="font-size: 13px;font-weight: normal;" ><div id="vertical" style="margin-left: -20px;margin-right: -20px;">REFERENCIA</div></th>
             </tr>
         </thead>
         <tbody>
             @foreach ($indicaciones_us_pa  as $indicacion)
             <tr>
-                  <td style="font-size: 10px;height: 16px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->soldador_p_id }} / {{ $indicacion->soldador_z_id }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->posicion_examen) }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->angulo_incidencia) }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->camino_sonico }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->x }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->y }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->z }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->longitud }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->nivel_registro)}}</td>
+            <td style="font-size: 10px;height: 20px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->soldador_p_id }} / {{ $indicacion->soldador_z_id }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->barrido }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->posicion_examen) }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->angulo_incidencia) }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->camino_sonico }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->x }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->y }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->z }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->longitud }}</td>
+                <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->nivel_registro)}}</td>
 
                   <td style="font-size: 10px;text-align: center;" class="bordered-td">
                   @if($indicacion->aceptable_sn)

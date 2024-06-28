@@ -32,6 +32,13 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('proveedores/paginate', 'ProveedoresController@paginate');
     Route::get('proveedores/get-proveedores', 'ProveedoresController@getProveedores');
     Route::resource('proveedores', 'ProveedoresController');
+//frente asignacion
+    Route::get('frentesAsignacion/paginate', 'FrentesAsignacionController@getFrentes');
+    Route::post('frentesAsignacion/store', 'FrentesAsignacionController@store');
+    Route::put('frentesAsignacion/update/{id}', 'FrentesAsignacionController@update');
+    Route::get('frente-usuarios', 'FrentesAsignacionController@getUser');
+    Route::get('frente-usuario/{id_frente}', 'FrentesAsignacionController@getUserFrente');
+    Route::post('frente-usuarios/update', 'FrentesAsignacionController@updateFrenteUsuarios');
 
 
     Route::get('contratistas/paginate', 'ContratistasController@paginate');
@@ -757,7 +764,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'ReporteCertificadosPartesController@getPartes'
     );
     Route::get(
-        'reporte-certificados/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}',
+        'reporte-certificados/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/user/{user_id}',
         'ReporteCertificadosPartesController@getCertificados'
     );
 

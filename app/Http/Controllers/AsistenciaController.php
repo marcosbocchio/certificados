@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\AsistenciaHora;
 use App\AsistenciaDetalle;
 use App\Frentes;
+use App\FrenteOperador;
 use App\User;
 use App\Contratistas;
 use App\OtOperarios;
@@ -19,7 +20,7 @@ class AsistenciaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['role_or_permission:Sistemas|A_asistencia_acceder'], ['only' => ['callViewTotalStock', 'getAsistencia']]);
+        $this->middleware(['role_or_permission:Sistemas|A_asistencia_acceder'], ['only' => ['callViewTotalStock', 'getAsistencia','callView']]);
     }
 
     public function callView()
@@ -32,10 +33,14 @@ class AsistenciaController extends Controller
         $frenteIds = AsistenciaHora::distinct()->pluck('frente_id');
         
         // Obtener los frentes correspondientes
+        $user_frente = FrenteOperador::where('user_id',$user->id)->get();
+
+        log::info($user_frente);
+
         $frentes = Frentes::whereIn('id', $frenteIds)->get();
         
         // Pasar los datos a la vista
-        return view('control-asistencia.asistencia-table', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
+        return view('control-asistencia.asistencia-table', compact('user', 'header_titulo', 'header_descripcion', 'frentes','user_frente'));
     }
 
     public function resumenView()
@@ -53,7 +58,10 @@ class AsistenciaController extends Controller
         $header_titulo = "Control Asistencia";
         $header_descripcion = "Carga";
     
-        $frente_sn = Frentes::where('controla_hs_extras_sn', 1)->get();
+        $user_frente = FrenteOperador::where('user_id', $user->id)->pluck('frente_id');
+        $frente_sn = Frentes::whereIn('id', $user_frente)
+            ->where('controla_hs_extras_sn', 1)
+            ->get();
         $contratistas = Contratistas::all();
     
         // Obtener los user_id únicos de la tabla ot_operarios
@@ -78,7 +86,11 @@ class AsistenciaController extends Controller
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
         $header_descripcion = "Copia";
-        $frente_sn = Frentes::where('controla_hs_extras_sn', 1)->get();
+        $user_frente = FrenteOperador::where('user_id', $user->id)->pluck('frente_id');
+        $frente_sn = Frentes::whereIn('id', $user_frente)
+            ->where('controla_hs_extras_sn', 1)
+            ->get();
+        $contratistas = Contratistas::all();
         $operarios = User::whereNull('cliente_id')
         ->where('habilitado_sn', 1)
         ->orderBy('name', 'asc')
@@ -99,7 +111,11 @@ class AsistenciaController extends Controller
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
         $header_descripcion = "Edit";
-        $frente_sn = Frentes::where('controla_hs_extras_sn', 1)->get();
+        $user_frente = FrenteOperador::where('user_id', $user->id)->pluck('frente_id');
+        $frente_sn = Frentes::whereIn('id', $user_frente)
+            ->where('controla_hs_extras_sn', 1)
+            ->get();
+        $contratistas = Contratistas::all();
         $operarios = User::whereNull('cliente_id')
                 ->where('habilitado_sn', 1)
                 ->orderBy('name', 'asc')

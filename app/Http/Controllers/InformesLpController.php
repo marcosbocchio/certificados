@@ -194,7 +194,14 @@ class InformesLpController extends Controller
         $informe_material_accesorio = Materiales::find($informe->material2_id);
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
         $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();
-        $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
+
+        $informe_interno_equipo = $informe->interno_equipo_id 
+            ? internoEquipos::where('id', $informe->interno_equipo_id)->with('equipo')->first() 
+            : null;
+
+        // Si $informe_interno_equipo es null, asignamos un array vacío en su lugar
+        $informe_interno_equipo = $informe_interno_equipo ?? null;
+
         $documetacionesRepository = new DocumentacionesRepository;
         $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);
         $informe_norma_evaluacion = NormaEvaluaciones::find($informe->norma_evaluacion_id);
