@@ -214,55 +214,51 @@ class AsignacionRopaController extends Controller
         }
 
         public function actualizarAsignacionStock(Request $request)
-        {
-            $detalles = $request->detalles;
-            $observaciones = $request->observaciones;
-            log::info($request);
-            log::info($observaciones);
-            $user = auth()->user();
+{
+    $detalles = $request->detalles;
+    $observaciones = $request->observaciones;
+    log::info($request);
+    log::info($observaciones);
+    $user = auth()->user();
 
-            try {
-                DB::beginTransaction();
+    try {
+        DB::beginTransaction();
 
-                foreach ($detalles as $detalle) {
-                    $producto = Productos::find($detalle['producto']['id']);
+        foreach ($detalles as $detalle) {
+            $producto = Productos::find($detalle['producto']['id']);
 
-                    if ($producto) {
-                        // Verificar si la cantidad es positiva o negativa
-                        $cantidad = $detalle['cantidad'];
-                        if ($cantidad < 0) {
-                            // Si la cantidad es negativa, sumamos
-                            $producto->stock += abs($cantidad);
-                        } else {
-                            // Si la cantidad es positiva, restamos
-                            $producto->stock -= $cantidad;
-                        }
+            if ($producto) {
+                // Invertir el signo de la cantidad recibida
+                $cantidad = -$detalle['cantidad'];
 
-                        // Guardar el producto actualizado
-                        $producto->save();
+                // Actualizar el stock del producto
+                $producto->stock += $cantidad;
 
-                        // Registrar movimiento en la tabla de stock
-                        Stock::create([
-                            'fecha' => now(),
-                            'obs' => $observaciones,
-                            'cantidad' => $cantidad,
-                            'stock' => $producto->stock,
-                            'producto_id' => $producto->id,
-                            'tipo_movimiento' => 'EEP manual user',
-                            'user_id' => $user->id,
-                        ]);
-                    } else {
-                        throw new \Exception('Producto no encontrado');
-                    }
-                }
+                // Guardar el producto actualizado
+                $producto->save();
 
-                DB::commit();
-                return response()->json(['message' => 'Stock actualizado correctamente']);
-            } catch (\Exception $e) {
-                DB::rollBack();
-                return response()->json(['error' => 'Error al actualizar el stock: ' . $e->getMessage()], 500);
+                // Registrar movimiento en la tabla de stock
+                Stock::create([
+                    'fecha' => now(),
+                    'obs' => $observaciones,
+                    'cantidad' => $detalle['cantidad'], // Guardar la cantidad original en el registro de stock
+                    'stock' => $producto->stock,
+                    'producto_id' => $producto->id,
+                    'tipo_movimiento' => 'EEP manual user',
+                    'user_id' => $user->id,
+                ]);
+            } else {
+                throw new \Exception('Producto no encontrado');
             }
         }
+
+        DB::commit();
+        return response()->json(['message' => 'Stock actualizado correctamente']);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json(['error' => 'Error al actualizar el stock: ' . $e->getMessage()], 500);
+    }
+}
 
         public function getAsignaciones($operador_id)
         {
