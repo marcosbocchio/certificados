@@ -185,7 +185,7 @@ export default {
 
           // Llamar a actualizarStock después de guardar asignación
           this.actualizarStock(data.detalles, data.observaciones);
-          window.location.href = `/area/enod/asignacion-operador${this.operador_selected.id}`;
+          window.location.href = `/area/enod/asignacion-operador/${this.operador_selected.id}`;
         })
         .catch(error => {
           console.error('Error al guardar asignación:', error);
