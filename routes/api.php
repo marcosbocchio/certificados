@@ -497,7 +497,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/guardar-pagos', 'AsistenciaController@guardarPagos');
     Route::get('/calcular-dias-del-mes/{year}/{month}', 'AsistenciaController@calcularDiasDelMes');
     //Asignacion
-    Route::get('obtener-detalles-remito/{remito_id}','AsignacionRopaController@obtenerDetallesRemito');
+    Route::get('/obtener-detalles-remito/{remito_id}','AsignacionRopaController@obtenerDetallesRemito');
+    Route::get('/asignaciones-ropa/{operador_id}', 'AsignacionRopaController@getAsignaciones');
+    Route::get('/asignacion-epp-details/{operadorId}/{remitoId}', 'AsignacionRopaController@getAsignacionEppDetails');
+    Route::get('/asignacion-epp-details-by-fecha/{fecha}', 'AsignacionRopaController@getAsignacionEppDetailsByFecha');
+    Route::get('/asignacion-epp-operadores/{remitoId}', 'AsignacionRopaController@getOperadoresByRemito');
+    Route::post('/asignacion-epp','AsignacionRopaController@store');
 
     //procedimientos
     Route::resource(

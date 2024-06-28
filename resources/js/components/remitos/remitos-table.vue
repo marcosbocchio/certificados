@@ -68,8 +68,8 @@
                                             </button>
                                         </td>
                                         <td width="10px">
-                                            <button @click="AsignacionR(k)" class="btn btn-sm" title="Asignar Remito" :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 0">
-                                                <span class="fas fa-book"></span> <!-- Ícono de libreta -->
+                                            <button @click="AsignacionR(k)" class="btn btn-default btn-sm" title="EEP" :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 0">
+                                                <span class="fas fa-clipboard"></span>
                                             </button>
                                         </td>
                                        <td v-if="remito.interno_sn" width="10px"> 

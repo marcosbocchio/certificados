@@ -14,32 +14,31 @@
             <input type="text" v-model="remito" class="form-control" id="remito" disabled/>
           </div>
         </div>
-        <div class="col-md-4">
-          <!-- Espacio en blanco -->
+        <div class="col-md-4" style="margin-top: 29px;">
+          <button @click="mostrarPopup = true">
+            <span class="fa fa-plus-circle"></span>
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Tabla de Operadores -->
     <div class="box box-custom-enod top-buffer">
-      <div class="row">
-        <div class="col-md-12">
-          <button @click="mostrarPopup = true"><span class="fa fa-plus-circle"></span></button>
-        </div>
-      </div>
       <div class="box-body table-responsive">
         <table class="table table-hover table-striped table-condensed">
           <thead>
             <tr>
               <th>Operador</th>
-              <th>Acciones</th>
+              <th style="text-align:right">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(operador, index) in operadores" :key="index">
-              <td>{{ operador }}</td>
-              <td>
-                <button @click="editarOperador(index)" class="btn btn-warning btn-sm">Edit</button>
+              <td>{{ operador.name }}</td>
+              <td style="text-align:right">
+                <button @click="editarOperador(index)" class="btn btn-warning btn-sm">
+                  <span class="fa fa-edit"></span>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -48,12 +47,30 @@
     </div>
     
     <!-- Popup -->
-    <div v-if="mostrarPopup" class="popup">
-      <div class="popup-inner">
-        <h2>Seleccionar Operador</h2>
-        <v-select v-model="operador_selected" :options="operadores_opciones" label="name"></v-select>
-        <button @click="confirmarOperador">Seleccionar</button>
-        <button @click="mostrarPopup = false">Cancelar</button>
+    <div v-if="mostrarPopup" class="modal show" tabindex="-1" role="dialog" style="display: block;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Seleccionar Operador</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="operador-select">Operador</label>
+              <v-select v-model="operador_selected" :options="operadores_opciones" label="name"></v-select>
+            </div>
+          </div>
+          <div class="modal-footer row">
+            <div class="col-md-4" style="text-align: left;">
+              <button type="button" class="btn btn-enod" @click="confirmarOperador">Seleccionar</button>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-secondary" @click="mostrarPopup = false">Cancelar</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -89,25 +106,42 @@ export default {
       isLoading: false
     };
   },
+  mounted() {
+    this.fetchOperadores();
+  },
   methods: {
+    fetchOperadores() {
+      this.isLoading = true;
+      axios.get(`/api/asignacion-epp-operadores/${this.remito_data[0].id}`)
+        .then(response => {
+          this.operadores = response.data.operadores;
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.error("Error al obtener los operadores de asignación EPP:", error);
+          toastr.error('Error al cargar los operadores');
+          this.isLoading = false;
+        });
+    },
     otraFuncion() {
       console.log('Botón "+" presionado');
       this.$router.push('/otra-ruta');
     },
     editarOperador(index) {
-      const nuevoOperador = prompt('Edita el operador:', this.operadores[index]);
-      if (nuevoOperador !== null) {
-        this.operadores.splice(index, 1, nuevoOperador);
-      }
+      const userId = this.operadores[index].id;
+      const remitoId = this.remito_data[0].id;
+      console.log(userId, remitoId);
+      // Redirige a la ruta para editar el remito específico
+      window.location.href = `/area/enod/asignacion-nuevo/${userId}/remito/${remitoId}`;
     },
     confirmarOperador() {
-  if (!this.operador_selected) {
-    toastr.error('Debes seleccionar un operador');
-    return;
-  }
-  // Redirigir a la nueva ruta con el operador seleccionado en la URL
-  window.location.href = `/area/enod/asignacion-nuevo/${this.operador_selected.id}/remito/${this.remito_data[0].id}`;
-}
+      if (!this.operador_selected) {
+        toastr.error('Debes seleccionar un operador');
+        return;
+      }
+      // Redirigir a la nueva ruta con el operador seleccionado en la URL
+      window.location.href = `/area/enod/asignacion-nuevo/${this.operador_selected.id}/remito/${this.remito_data[0].id}`;
+    }
   }
 };
 </script>
@@ -116,18 +150,14 @@ export default {
 .box.box-custom-enod {
   padding: 20px;
 }
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+
+.modal.show {
+  display: block;
+  z-index: 1050;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-.popup-inner {
+
+.modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 5px;

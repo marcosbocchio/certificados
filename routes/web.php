@@ -101,6 +101,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/asignacion-nuevo/{operador}/remito/{id_remito?}', 'AsignacionRopaController@nuevo')->name('asignacion-nuevo');
       Route::get('/area/enod/asignacion-remito/{id_remito}', 'AsignacionRopaController@callRemito')->name('asignacion-remito');
       Route::get('/area/enod/asignacion-operador/{operador}', 'AsignacionRopaController@callOperador')->name('asignacion-operador');
+      Route::get('/area/enod/asignacion-operador-manual/{operador}/{fechaw}', 'AsignacionRopaController@callOperadorManual')->name('asignacion-operador-manual');
 
       Route::get('/area/enod/contratistas', 'ContratistasController@callView')->name('contratistas');
       Route::get('/area/enod/unidades-medidas', 'UnidadesMedidasController@callView')->name('unidades-medidas');

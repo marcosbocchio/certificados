@@ -389,6 +389,8 @@ import AsignacionRemito from './components/asignaciones/asignacion-remito.vue';
 Vue.component('asignacion-remito', AsignacionRemito);
 import AsignacionOperador from './components/asignaciones/asignacion-operador.vue';
 Vue.component('asignacion-operador', AsignacionOperador);
+import AsignacionOperadorManual from './components/asignaciones/asignacion-operador-manual.vue';
+Vue.component('asignacion-operador-manual', AsignacionOperadorManual);
 
 /* modal confirmacion */
 
