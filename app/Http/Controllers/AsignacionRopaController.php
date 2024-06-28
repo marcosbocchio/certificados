@@ -9,16 +9,18 @@ use App\AsistenciaDetalle;
 use App\DetalleRemitos;
 use App\Frentes;
 use App\User;
+use App\Stock;
+use App\Productos;
 use App\Remitos;
 use App\Asignacion_epp;
 use App\Detalle_asignacion_epp;
 use App\Contratistas;
 use App\OtOperarios;
 use App\OperadorControl;
-use App\Productos;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AsignacionRopaController extends Controller
 {
@@ -146,29 +148,35 @@ class AsignacionRopaController extends Controller
                 'remito_id' => 'nullable|exists:remitos,id',
                 'detalles' => 'required|array',
                 'detalles.*.producto.id' => 'required|exists:productos,id',
-                'detalles.*.cantidad' => 'required|integer|min:1',
+                'detalles.*.cantidad' => 'required',
                 'observaciones' => 'nullable|string',
                 'fecha' => 'required|date_format:Y-m-d H:i:s'  // Validar la fecha y hora
             ]);
-        
+
             $user = auth()->user();
             $fechaActual = $request->fecha;
-        
+
             // Verificar si ya existe una asignación para esta fecha y operador
-            $asignacionExistente = Asignacion_epp::where('fecha', $request->fecha)
-                ->where('operador_id', $request->operador_id)
-                ->first();
-        
+            if ($request->remito_id !== null) {
+                $asignacionExistente = Asignacion_epp::where('remito_id', $request->remito_id)
+                    ->where('operador_id', $request->operador_id)
+                    ->first();
+            } else {
+                $asignacionExistente = null;
+            }
+
+            log::info($asignacionExistente);
+
             if ($asignacionExistente) {
                 // Si ya existe, actualizamos los detalles existentes y la observación
                 $asignacionExistente->obs = $request->observaciones;
                 $asignacionExistente->save();
-        
+
                 foreach ($request->detalles as $detalle) {
                     $detalleExistente = Detalle_asignacion_epp::where('asignacion_epp_id', $asignacionExistente->id)
                         ->where('producto_id', $detalle['producto']['id'])
                         ->first();
-        
+
                     if ($detalleExistente) {
                         // Si existe, actualizamos la cantidad
                         $detalleExistente->cantidad = $detalle['cantidad'];
@@ -191,7 +199,7 @@ class AsignacionRopaController extends Controller
                     'remito_id' => $request->remito_id,
                     'obs' => $request->observaciones
                 ]);
-        
+
                 // detalles de asignación
                 foreach ($request->detalles as $detalle) {
                     Detalle_asignacion_epp::create([
@@ -201,8 +209,59 @@ class AsignacionRopaController extends Controller
                     ]);
                 }
             }
-        
+
             return response()->json(['message' => 'Asignación guardada correctamente'], 201);
+        }
+
+        public function actualizarAsignacionStock(Request $request)
+        {
+            $detalles = $request->detalles;
+            $observaciones = $request->observaciones;
+            log::info($request);
+            log::info($observaciones);
+            $user = auth()->user();
+
+            try {
+                DB::beginTransaction();
+
+                foreach ($detalles as $detalle) {
+                    $producto = Productos::find($detalle['producto']['id']);
+
+                    if ($producto) {
+                        // Verificar si la cantidad es positiva o negativa
+                        $cantidad = $detalle['cantidad'];
+                        if ($cantidad < 0) {
+                            // Si la cantidad es negativa, sumamos
+                            $producto->stock += abs($cantidad);
+                        } else {
+                            // Si la cantidad es positiva, restamos
+                            $producto->stock -= $cantidad;
+                        }
+
+                        // Guardar el producto actualizado
+                        $producto->save();
+
+                        // Registrar movimiento en la tabla de stock
+                        Stock::create([
+                            'fecha' => now(),
+                            'obs' => $observaciones,
+                            'cantidad' => $cantidad,
+                            'stock' => $producto->stock,
+                            'producto_id' => $producto->id,
+                            'tipo_movimiento' => 'EEP manual user',
+                            'user_id' => $user->id,
+                        ]);
+                    } else {
+                        throw new \Exception('Producto no encontrado');
+                    }
+                }
+
+                DB::commit();
+                return response()->json(['message' => 'Stock actualizado correctamente']);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return response()->json(['error' => 'Error al actualizar el stock: ' . $e->getMessage()], 500);
+            }
         }
 
         public function getAsignaciones($operador_id)
@@ -245,33 +304,7 @@ class AsignacionRopaController extends Controller
             }
         }
 
-        public function getAsignacionEppDetailsByFecha($fecha)
-        {
-            try {
-                // Buscar la asignación de EPP por fecha
-                $asignacion = Asignacion_epp::where('fecha', $fecha)
-                    ->with('detalles.producto') // Cargar detalles y productos asociados
-                    ->first();
 
-                if (!$asignacion) {
-                    return response()->json(['error' => 'No se encontró la asignación de EPP para la fecha especificada'], 404);
-                }
-
-                // Obtener las observaciones de la asignación
-                $observaciones = $asignacion->obs;
-
-                // Preparar los datos para enviar de vuelta
-                $response = [
-                    'asignacion' => $asignacion,
-                    'observaciones' => $observaciones, // Incluir observaciones en la respuesta
-                ];
-
-                return response()->json($response);
-            } catch (\Exception $e) {
-                Log::error('Error al obtener detalles de asignación de EPP por fecha: ' . $e->getMessage());
-                return response()->json(['error' => 'Error interno del servidor al obtener detalles de asignación de EPP por fecha'], 500);
-            }
-        }
 
         public function getOperadoresByRemito($remito_id)
         {

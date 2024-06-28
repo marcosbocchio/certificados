@@ -510,6 +510,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/asignacion-epp-details-by-fecha/{fecha}', 'AsignacionRopaController@getAsignacionEppDetailsByFecha');
     Route::get('/asignacion-epp-operadores/{remitoId}', 'AsignacionRopaController@getOperadoresByRemito');
     Route::post('/asignacion-epp','AsignacionRopaController@store');
+    Route::post('/actualizar-epp-stock','AsignacionRopaController@actualizarAsignacionStock');
 
     //procedimientos
     Route::resource(

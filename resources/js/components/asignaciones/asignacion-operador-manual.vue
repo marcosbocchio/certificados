@@ -18,13 +18,13 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="producto">Producto *</label>
-            <v-select v-model="producto_selected" :options="productos_opciones" label="codigo" id="producto"></v-select>
+            <v-select v-model="producto_selected" :options="productos_opciones" label="codigo" id="producto" @input="setMaxCantidad"></v-select>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="cantidad">Cantidad *</label>
-            <input id="cantidad" type="number" v-model="cantidad_selected" class="form-control" min="0" :max="maxCantidad" placeholder="Cantidad">
+            <input id="cantidad" type="number" v-model="cantidad_selected" class="form-control" :max="maxCantidad">
           </div>
         </div>
         <div class="col-md-1">
@@ -108,24 +108,30 @@ export default {
     }
   },
   created() {
-    this.fetchAsignacionEppDetails(this.fecha_data);
   },
   data() {
     return {
       operador_selected: this.operador_seleccionado,
       producto_selected: null,
       cantidad_selected: 0,
-      maxCantidad: 99,
+      maxCantidad: 0, // Inicializado como 0
       detalles: [],
       observaciones: '',
       isLoading: false,
-      operadores_opciones: [], // Inicializado como array vacío
+      operadores_opciones: [],
+      fechaActual: new Date().toISOString().slice(0, 19).replace('T', ' '),
     };
   },
   methods: {
+    setMaxCantidad() {
+      if (this.producto_selected) {
+        this.cantidad_selected = 0
+        this.maxCantidad = this.producto_selected.stock;
+      }
+    },
     agregarDetalle() {
-      if (!this.producto_selected || this.cantidad_selected <= 0) {
-        toastr.error('Producto o cantidad no válidos');
+      if (!this.producto_selected) {
+        toastr.error('Producto requerido');
         return;
       }
 
@@ -145,6 +151,7 @@ export default {
 
       this.producto_selected = null;
       this.cantidad_selected = 0;
+      this.maxCantidad = 0;
     },
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
@@ -162,7 +169,10 @@ export default {
         remito_id: null, // No hay remito asociado
         detalles: this.detalles,
         observaciones: this.observaciones,
+        fecha: this.fechaActual,
       };
+
+      console.log(data); // Añade esto para verificar los datos
 
       axios.post('/api/asignacion-epp', data)
         .then(response => {
@@ -170,7 +180,11 @@ export default {
           // Reiniciar campos después de guardar
           this.detalles = [];
           this.observaciones = '';
+          
           this.isLoading = false;
+
+          // Llamar a actualizarStock después de guardar asignación
+          this.actualizarStock(data.detalles, data.observaciones);
         })
         .catch(error => {
           console.error('Error al guardar asignación:', error);
@@ -178,18 +192,14 @@ export default {
           this.isLoading = false;
         });
     },
-    fetchAsignacionEppDetails(fecha) {
-      this.isLoading = true;
-      axios.get(`/api/asignacion-epp-details-by-fecha/${fecha}`)
+    actualizarStock(detalles, observaciones) {
+      axios.post('/api/actualizar-epp-stock', { detalles, observaciones })
         .then(response => {
-          this.detalles = response.data.asignacion.detalles;
-          this.observaciones = response.data.observaciones; // Asignar las observaciones recibidas
-          this.isLoading = false; // Detener el indicador de carga
+          toastr.success('Stock actualizado correctamente');
         })
         .catch(error => {
-          console.error("Error al obtener los detalles de asignación EPP por fecha:", error);
-          toastr.error('Error al cargar los detalles de asignación EPP');
-          this.isLoading = false; // Asegurarse de detener el indicador de carga en caso de error
+          console.error('Error al actualizar stock:', error);
+          toastr.error('Error al actualizar el stock');
         });
     },
   }

@@ -223,7 +223,6 @@ export default {
               this.productos_remito_data.find(p => p.id === producto.id)
             );
             this.productos_filtrados = resultado;
-            console.log(this.productos_filtrados);
             this.isLoading = false;
           })
           .catch(error => {

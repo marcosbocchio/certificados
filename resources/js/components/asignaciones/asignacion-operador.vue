@@ -38,8 +38,14 @@
               <td>{{ item.remito && item.remito.prefijo && item.remito.numero ? formatRemito(item.remito.prefijo, item.remito.numero) : 'no asignado' }}</td>
               <td>{{ item.user.name }}</td>
               <td style="text-align:right">
-                <button @click="editarItem(index)" class="btn btn-warning btn-sm"><span class="fa fa-edit"></span></button>
-              </td>
+                  <button 
+                    @click="editarItem(index)" 
+                    class="btn btn-warning btn-sm" 
+                    :disabled="item.remito === null"
+                  >
+                    <span class="fa fa-edit"></span>
+                  </button>
+                </td>
             </tr>
           </tbody>
         </table>
@@ -90,16 +96,16 @@ export default {
       window.location.href = `/area/enod/asignacion-operador-manual/${this.operador_data.id}/2100-01-01`;
     },
     editarItem(index) {
-  const userId = this.operador_data.id;
+      const userId = this.operador_data.id;
 
-  if (this.items[index].remito && this.items[index].remito.id) {
-    const remitoId = this.items[index].remito.id;
-    window.location.href = `/area/enod/asignacion-nuevo/${userId}/remito/${remitoId}`;
-  } else {
-    const formattedDate = this.formatDate(this.items[index].fecha);
-    window.location.href = `/area/enod/asignacion-operador-manual/${userId}/${formattedDate}`;
-  }
-},
+      if (this.items[index].remito && this.items[index].remito.id) {
+        const remitoId = this.items[index].remito.id;
+        window.location.href = `/area/enod/asignacion-nuevo/${userId}/remito/${remitoId}`;
+      } else {
+        const formattedDate = this.formatDate(this.items[index].fecha);
+        window.location.href = `/area/enod/asignacion-operador-manual/${userId}/${formattedDate}`;
+      }
+    },
     formatDate(date) {
       // Formatea la fecha a 'YYYY-MM-DD'
       const formattedDate = new Date(date);
