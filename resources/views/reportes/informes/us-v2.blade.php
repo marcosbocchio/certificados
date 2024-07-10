@@ -63,7 +63,7 @@ footer {
 
 
     <footer>
-    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
+    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA' || $tecnica->codigo='FMC-TFM')
         @include('reportes.partial.linea-amarilla')
         @include('reportes.informes.partial.observaciones')
         @include('reportes.partial.linea-amarilla')
@@ -98,7 +98,7 @@ footer {
 
     @include('reportes.partial.linea-amarilla')
 
-    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
+    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA' || $tecnica->codigo='FMC-TFM')
 
         <table style="text-align: center;border-collapse: collapse;margin-top: 10px;" width="100%">
             <tbody>
@@ -378,7 +378,7 @@ footer {
 
     <div class="page_break"></div>
 
-    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
+    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA' || $tecnica->codigo='FMC-TFM')
       @include('reportes.informes.us-indicaciones-us-pa-v2')
         
     @else
@@ -390,7 +390,7 @@ footer {
 
 @include('reportes.partial.nro_pagina')
 
-@if($tecnica->codigo=='US')
+@if($tecnica->codigo == 'US' || $tecnica->codigo='FMC-TFM')
 
     <script type="text/php">
         if ( isset($pdf) ) {
