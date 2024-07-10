@@ -538,7 +538,7 @@
                    </div>
                </div>
 
-              <div v-if="tecnica && (tecnica.codigo == 'US' || tecnica.codigo == 'PA')">
+              <div v-if="tecnica && (tecnica.codigo == 'US' || tecnica.codigo == 'PA' || tecnica.codigo=='FMC-TFM')">
                     <div class="box box-custom-enod">
 
                         <div class="box-header with-border">
