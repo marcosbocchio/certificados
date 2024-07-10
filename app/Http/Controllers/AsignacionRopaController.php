@@ -28,7 +28,7 @@ class AsignacionRopaController extends Controller
     public function nuevo($operador, $remito_id)
     {
         $user = auth()->user();
-        $header_titulo = "EEP";
+        $header_titulo = "EPP";
         $header_descripcion = "Alta | Modificación";
 
         // Obtener productos stockeables
@@ -59,7 +59,7 @@ class AsignacionRopaController extends Controller
     public function callRemito($id_remito)
     {
         $user = auth()->user();
-        $header_titulo = "EEP Remito";
+        $header_titulo = "EPP Remito";
         $header_descripcion = "Alta | Modificación";
 
         // Obtener los user_id únicos y los usuarios correspondientes
@@ -76,7 +76,7 @@ class AsignacionRopaController extends Controller
     public function callOperador($operador)
     {
         $user = auth()->user();
-        $header_titulo = "EEP Operador";
+        $header_titulo = "EPP Operador";
         $header_descripcion = "Alta | Modificación";
         // Obtener el operador completo usando el ID
         $operador_data = $this->getUser($operador);
@@ -84,10 +84,10 @@ class AsignacionRopaController extends Controller
         
     }
 
-    public function callOperadorManual($operador, $fechaw)
+    public function callOperadorManual($operador, $fechaw, $edit)
     {
         $user = auth()->user();
-        $header_titulo = "EEP";
+        $header_titulo = "EPP";
         $header_descripcion = "Alta | Modificación";
 
         // Obtener productos stockeables
@@ -95,12 +95,23 @@ class AsignacionRopaController extends Controller
 
         // Convertir la fecha a objeto Carbon si es necesario
         $fecha = Carbon::parse($fechaw);
-
+        $edit_data = $edit;
         $operador = $this->getUser($operador);
 
-        return view('asistencia-ropa.asistencia-operador-manual', compact('user', 'header_titulo', 'header_descripcion', 'productos', 'operador', 'fecha'));
+        return view('asistencia-ropa.asistencia-operador-manual', compact('user', 'header_titulo', 'header_descripcion', 'productos', 'operador', 'fecha','edit_data'));
     }
 
+    public function callViewReporteEPP(){
+
+        $user = auth()->user();
+        $header_titulo = "Reportes";
+        $header_descripcion ="EPP";
+        // Obtener los user_id únicos y los usuarios correspondientes
+        $uniqueUserIds = $this->getUniqueUserIds();
+        $operadores = $this->getUsersByIds($uniqueUserIds);
+        return view('reporte-epp.epp',compact('user','header_titulo','header_descripcion','operadores'));
+
+    }
     
     /* funciones */
 
@@ -128,16 +139,33 @@ class AsignacionRopaController extends Controller
         public function obtenerDetallesRemito($remito_id)
         {
             Log::info('Entro en obtener');
-    
-            $detalles = DetalleRemitos::where('remito_id', $remito_id)->get();
-    
-            $productos = $detalles->map(function ($detalle) {
-                return Productos::find($detalle->producto_id);
+
+            // Obtener detalles del remito
+            $detallesRemito = DetalleRemitos::where('remito_id', $remito_id)->get();
+
+            // Obtener asignaciones EPP relacionadas con el remito
+            $asignacionesEpp = Asignacion_epp::where('remito_id', $remito_id)->get();
+
+            // Recorrer las asignaciones EPP para obtener los detalles
+            $detallesAsignacionEpp = collect();
+            foreach ($asignacionesEpp as $asignacion) {
+                $detallesAsignacionEpp = $detallesAsignacionEpp->merge(Detalle_asignacion_epp::where('asignacion_epp_id', $asignacion->id)->get());
+            }
+
+            // Crear una colección de productos con cantidades actualizadas
+            $productosActualizados = $detallesRemito->map(function ($detalle) use ($detallesAsignacionEpp) {
+                $producto = Productos::find($detalle->producto_id);
+                $cantidadAsignada = $detallesAsignacionEpp->where('producto_id', $detalle->producto_id)->sum('cantidad');
+                $cantidadDisponible = $detalle->cantidad - $cantidadAsignada;
+                return [
+                    'producto' => $producto,
+                    'cantidad_disponible' => $cantidadDisponible
+                ];
             });
-    
+
             return response()->json([
-                'detalle_remito_data' => $detalles,
-                'productos_remito_data' => $productos,
+                'detalle_remito_data' => $detallesRemito,
+                'productos_actualizados' => $productosActualizados
             ]);
         }
 
@@ -300,7 +328,35 @@ class AsignacionRopaController extends Controller
             }
         }
 
-
+        public function getAsignacionEppDetailsByFecha($fecha)
+        {
+            try {
+                // Buscar la asignación de EPP por fecha
+                $asignacion = Asignacion_epp::where('fecha', $fecha)
+                    ->with('detalles.producto') // Cargar detalles y productos asociados
+                    ->first();
+        
+                if (!$asignacion) {
+                    return response()->json(['error' => 'No se encontró la asignación de EPP para la fecha especificada'], 404);
+                }
+        
+                // Obtener las observaciones y la fecha de la asignación
+                $observaciones = $asignacion->obs;
+                $fecha = $asignacion->fecha;
+        
+                // Preparar los datos para enviar de vuelta
+                $response = [
+                    'asignacion' => $asignacion,
+                    'observaciones' => $observaciones, // Incluir observaciones en la respuesta
+                    'fecha' => $fecha, // Incluir fecha en la respuesta
+                ];
+        
+                return response()->json($response);
+            } catch (\Exception $e) {
+                Log::error('Error al obtener detalles de asignación de EPP: ' . $e->getMessage());
+                return response()->json(['error' => 'Error interno del servidor al obtener detalles de asignación de EPP'], 500);
+            }
+        }
 
         public function getOperadoresByRemito($remito_id)
         {
@@ -317,5 +373,33 @@ class AsignacionRopaController extends Controller
             }
 
             return response()->json(['operadores' => $operadores]);
+        }
+
+        public function buscarAsignacionesEPP(Request $request)
+        {
+            // Verificar si se han proporcionado las fechas en la solicitud
+            $startDate = $request->input('start_date') ?? '2001-01-01';
+            $endDate = $request->input('end_date') ?? '2100-12-30';
+            $userId = $request->input('user_id');
+            $page = $request->input('page', 1);
+            $perPage = $request->input('per_page', 10);
+
+            // Llamar al procedimiento almacenado
+            $result = DB::select('CALL GetEPPAsignaciones(?, ?, ?)', [$startDate, $endDate, $userId]);
+
+            // Convertir el resultado en una colección
+            $collection = collect($result);
+
+            // Obtener la paginación
+            $paginated = $collection->forPage($page, $perPage);
+            $total = $collection->count();
+
+            return response()->json([
+                'data' => $paginated->values(),
+                'current_page' => $page,
+                'per_page' => $perPage,
+                'total' => $total,
+                'last_page' => ceil($total / $perPage),
+            ]);
         }
 }

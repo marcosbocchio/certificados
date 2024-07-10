@@ -1,7 +1,13 @@
 <template>
   <div>
     <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
-    
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" class="pull-left btn-enod btn-circle"  @click="goBack">
+          <span class="fa fa-arrow-left"></span>
+        </button>
+      </div>
+    </div>
     <!-- Input Operador y Botón de Agregar -->
     <div class="box box-custom-enod top-buffer">
       <div class="box-body row">
@@ -38,23 +44,24 @@
               <td>{{ item.remito && item.remito.prefijo && item.remito.numero ? formatRemito(item.remito.prefijo, item.remito.numero) : 'no asignado' }}</td>
               <td>{{ item.user.name }}</td>
               <td style="text-align:right">
-                  <button 
-                    @click="editarItem(index)" 
-                    class="btn btn-warning btn-sm" 
-                    :disabled="item.remito === null"
-                  >
-                    <span class="fa fa-edit"></span>
-                  </button>
-                </td>
+                <button 
+                  @click="editarItem(index)" 
+                  class="btn btn-warning btn-sm"
+                >
+                  <span class="fa fa-edit"></span>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+
+    
   </div>
 </template>
-  
-  <script>
+
+<script>
 import axios from 'axios';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
@@ -93,7 +100,8 @@ export default {
       }
     },
     redireccionAsignacion() {
-      window.location.href = `/area/enod/asignacion-operador-manual/${this.operador_data.id}/2100-01-01`;
+     const edit_data = false;
+      window.location.href = `/area/enod/asignacion-operador-manual/${this.operador_data.id}/2100-01-01/${edit_data}`;
     },
     editarItem(index) {
       const userId = this.operador_data.id;
@@ -103,8 +111,12 @@ export default {
         window.location.href = `/area/enod/asignacion-nuevo/${userId}/remito/${remitoId}`;
       } else {
         const formattedDate = this.formatDate(this.items[index].fecha);
-        window.location.href = `/area/enod/asignacion-operador-manual/${userId}/${formattedDate}`;
+        const edit = true;
+        window.location.href = `/area/enod/asignacion-operador-manual/${userId}/${formattedDate}/${edit}`;
       }
+    },
+    goBack() {
+      window.history.back();
     },
     formatDate(date) {
       // Formatea la fecha a 'YYYY-MM-DD'
@@ -121,9 +133,9 @@ export default {
   }
 };
 </script>
-  
-  <style scoped>
-  .box.box-custom-enod {
-    padding: 20px;
-  }
-  </style>
+
+<style scoped>
+.box.box-custom-enod {
+  padding: 20px;
+}
+</style>

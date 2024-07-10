@@ -25,7 +25,7 @@ class pdfInformesTtController extends Controller
         $ot_operador = $informe->ejecutorEnsayo;
        // $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
         $informe_solicitado_por = $informe->solicitado_por;
-        $titulo = "TRAMIENTO TERMICO";
+        $titulo = "TRATAMIENTO TERMICO";
         $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo['metodo']) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo['metodo']) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";

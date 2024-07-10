@@ -511,6 +511,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/asignacion-epp-operadores/{remitoId}', 'AsignacionRopaController@getOperadoresByRemito');
     Route::post('/asignacion-epp','AsignacionRopaController@store');
     Route::post('/actualizar-epp-stock','AsignacionRopaController@actualizarAsignacionStock');
+    Route::post('/buscar-asignaciones-epp', 'AsignacionRopaController@buscarAsignacionesEPP');
 
     //procedimientos
     Route::resource(

@@ -282,6 +282,10 @@
               @can('R_certificados_partes')
                    <li><a href="{{ route('reporte-partes') }}">Partes</a></li>
               @endcan
+
+              @can('R_resumen_epp')
+                   <li><a href="{{ route('reporte-resumen-epp') }}">Resumen epp</a></li>
+              @endcan
             </ul>
           </li>
         @endcan

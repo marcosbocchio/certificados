@@ -68,7 +68,7 @@
                                             </button>
                                         </td>
                                         <td width="10px">
-                                            <button @click="AsignacionR(k)" class="btn btn-default btn-sm" title="EEP" :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 0">
+                                            <button @click="AsignacionR(k)" class="btn btn-default btn-sm" title="EEP" :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 1">
                                                 <span class="fas fa-clipboard"></span>
                                             </button>
                                         </td>

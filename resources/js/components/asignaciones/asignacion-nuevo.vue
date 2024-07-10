@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div class="row">
+      <div class="col-md-12" style="margin-bottom: 10px;">
+        <button type="button" class="pull-left btn-enod btn-circle" @click="goBack">
+          <span class="fa fa-arrow-left"></span>
+        </button>
+      </div>
+    </div>
+
     <!-- Box 1: Operador y Remito -->
     <div class="box box-custom-enod">
       <div class="box-body row">
@@ -24,13 +32,14 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="producto">Producto *</label>
-            <v-select v-model="producto_selected" :options="productos_filtrados" label="codigo" id="producto"></v-select>
+            <v-select v-model="producto_selected" :options="productos_filtrados" label="descripcion" id="producto"></v-select>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="cantidad">Cantidad *</label>
             <input id="cantidad" type="number" v-model="cantidad_selected" class="form-control" min="0" :max="maxCantidad" placeholder="Cantidad">
+            <small v-if="producto_selected" class="text-danger">Disponibles: {{ maxCantidad }}</small>
           </div>
         </div>
         <div class="col-md-1">
@@ -52,7 +61,7 @@
           </thead>
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
-              <td>{{ detalle.producto.codigo }}</td>
+              <td>{{ detalle.producto.descripcion }}</td>
               <td>{{ detalle.cantidad }}</td>
               <td style="text-align:center">
                 <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
@@ -73,10 +82,11 @@
       </div>
     </div>
 
-    <!-- Botón de Guardar -->
-    <div class="form-actions">
-      <div class="col-md-12">
-        <button @click="confirmar" class="btn btn-enod">Guardar</button>
+    <div class="row">
+      <div class="form-actions">
+        <div class="col-md-12 text-left">
+          <button @click="confirmar" class="btn btn-enod">Guardar</button>
+        </div>
       </div>
     </div>
 
@@ -133,8 +143,7 @@ export default {
       observaciones: '',
       isLoading: false,
       detalle_remito_data: [],
-      productos_remito_data: [],
-      fechaActual: new Date().toISOString().slice(0, 19).replace('T', ' ') // Obtiene la fecha y hora actual en formato YYYY-MM-DD HH:MM:SS
+      productos_actualizados: []
     };
   },
   mounted() {
@@ -142,18 +151,14 @@ export default {
     if (this.remito_selected) {
       this.fetchRemitoDetails();
     }
-    
-    console.log("fecha:|", this.fechaActual);
-    this.fetchAsignacionEppDetails();
-    
   },
   watch: {
     producto_selected(newVal, oldVal) {
-      if (newVal && this.detalle_remito_data.length > 0) {
-        const detalle = this.detalle_remito_data.find(detalle => detalle.producto_id === newVal.id);
-        if (detalle) {
-          this.maxCantidad = detalle.cantidad;
-          this.cantidad_selected = Math.min(detalle.cantidad, this.cantidad_selected);
+      if (newVal && this.productos_actualizados.length > 0) {
+        const productoActualizado = this.productos_actualizados.find(producto => producto.producto.id === newVal.id);
+        if (productoActualizado) {
+          this.maxCantidad = productoActualizado.cantidad_disponible;
+          this.cantidad_selected = Math.min(productoActualizado.cantidad_disponible, this.cantidad_selected);
         } else {
           this.maxCantidad = 0;
           this.cantidad_selected = 0;
@@ -190,8 +195,32 @@ export default {
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
     },
+    fetchRemitoDetails() {
+      if (!this.remito_selected) return;
+
+      this.isLoading = true;
+      axios.get(`/api/obtener-detalles-remito/${this.remito_selected.id}`)
+        .then(response => {
+          this.detalle_remito_data = response.data.detalle_remito_data;
+          this.productos_actualizados = response.data.productos_actualizados;
+          this.isLoading = false;
+
+          // Actualizar productos_filtrados
+          this.productos_filtrados = this.productos_opciones.filter(producto => {
+            return this.productos_actualizados.some(actualizado => actualizado.producto.id === producto.id);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching remito details:', error);
+          this.isLoading = false;
+        });
+    },
+    goBack() {
+      window.history.back();
+    },
     confirmar() {
       this.isLoading = true;
+      console.log(this.detalles)
       axios.post('/api/asignacion-epp', {
         operador_id: this.operador_selected.id,
         remito_id: this.remito_selected.id,
@@ -209,43 +238,11 @@ export default {
         this.isLoading = false;
         toastr.error('Error al guardar la asignación');
       });
-    },
-    fetchRemitoDetails() {
-      if (this.remito_selected && this.remito_selected.id) {
-        this.isLoading = true;
-        axios.get(`/api/obtener-detalles-remito/${this.remito_selected.id}`)
-          .then(response => {
-            this.detalle_remito_data = response.data.detalle_remito_data;
-            this.productos_remito_data = response.data.productos_remito_data;
-
-            // Filtrar productos_opciones para incluir solo los productos en productos_remito_data
-            const resultado = this.productos_opciones.filter(producto =>
-              this.productos_remito_data.find(p => p.id === producto.id)
-            );
-            this.productos_filtrados = resultado;
-            this.isLoading = false;
-          })
-          .catch(error => {
-            console.error("Error al obtener los detalles del remito:", error);
-            this.isLoading = false;
-          });
-      }
-    },
-    fetchAsignacionEppDetails() {
-      axios.get(`/api/asignacion-epp-details/${this.operador_selected.id}/${this.remito_selected.id}`)
-        .then(response => {
-          this.detalles = response.data.asignacion.detalles;
-          this.observaciones = response.data.observaciones; // Asignar las observaciones recibidas
-          this.fechaActual = response.data.fecha; // Asignar la fecha recibida
-        })
-        .catch(error => {
-          console.error("Error al obtener los detalles de asignación EPP:", error);
-        });
-    },
+    }
   }
 };
 </script>
 
 <style scoped>
-/* Puedes agregar tus estilos personalizados aquí */
+/* Añade tus estilos personalizados aquí si es necesario */
 </style>

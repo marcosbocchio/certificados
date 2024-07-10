@@ -1,7 +1,15 @@
 <template>
   <div>
     <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" class="pull-left btn-enod btn-circle" @click="goBack">
+          <span class="fa fa-arrow-left"></span>
+        </button>
+      </div>
+    </div>
     
+    <!-- Botón para volver a la página anterior -->
     <!-- Input Remito y Botón de Agregar -->
     <div class="box box-custom-enod top-buffer">
       <div class="box-body row">
@@ -64,7 +72,6 @@
               <button type="button" class="btn btn-enod" @click="confirmarOperador">Seleccionar</button>
             </div>
             <div class="col-md-4">
-
             </div>
             <div class="col-md-4">
               <button type="button" class="btn btn-secondary" @click="mostrarPopup = false">Cancelar</button>
@@ -122,6 +129,9 @@ export default {
           toastr.error('Error al cargar los operadores');
           this.isLoading = false;
         });
+    },
+    goBack() {
+      window.history.back();
     },
     otraFuncion() {
       console.log('Botón "+" presionado');

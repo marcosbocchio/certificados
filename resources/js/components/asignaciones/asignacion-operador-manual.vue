@@ -1,6 +1,12 @@
 <template>
   <div>
-    <!-- Box 1: Operador -->
+    <div class="row">
+      <div class="col-md-12" style="margin-bottom: 10px;">
+        <button type="button" class="pull-left btn-enod btn-circle" @click="goBack">
+          <span class="fa fa-arrow-left"></span>
+        </button>
+      </div>
+    </div>
     <div class="box box-custom-enod">
       <div class="box-body row">
         <div class="col-md-3">
@@ -18,7 +24,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="producto">Producto *</label>
-            <v-select v-model="producto_selected" :options="productos_opciones" label="codigo" id="producto" @input="setMaxCantidad"></v-select>
+            <v-select v-model="producto_selected" :options="productos_opciones" label="descripcion" id="producto" @input="setMaxCantidad"></v-select>
           </div>
         </div>
         <div class="col-md-3">
@@ -46,7 +52,7 @@
           </thead>
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
-              <td>{{ detalle.producto.codigo }}</td>
+              <td>{{ detalle.producto.descripcion }}</td>
               <td>{{ detalle.cantidad }}</td>
               <td style="text-align:center">
                 <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
@@ -67,10 +73,11 @@
       </div>
     </div>
 
-    <!-- Botón de Guardar -->
-    <div class="form-actions">
-      <div class="col-md-12">
-        <button @click="guardarAsignacion" class="btn btn-enod">Guardar</button>
+    <div class="row">
+      <div class="form-actions">
+        <div class="col-md-12">
+          <button @click="guardarAsignacion" class="btn btn-enod" :disabled="isEditDisabled">Guardar</button>
+        </div>
       </div>
     </div>
 
@@ -105,9 +112,14 @@ export default {
     fecha_data: {
       type: String,
       required: true
+    },
+    edit_data: {
+      type: Boolean,
+      required: true
     }
   },
   created() {
+    this.obtenerAsignacionPorFecha(this.fecha_data);
   },
   data() {
     return {
@@ -122,10 +134,15 @@ export default {
       fechaActual: new Date().toISOString().slice(0, 19).replace('T', ' '),
     };
   },
+  computed: {
+    isEditDisabled() {
+      return this.edit_data;
+    }
+  },
   methods: {
     setMaxCantidad() {
       if (this.producto_selected) {
-        this.cantidad_selected = 0
+        this.cantidad_selected = 0;
         this.maxCantidad = this.producto_selected.stock;
       }
     },
@@ -203,10 +220,27 @@ export default {
           toastr.error('Error al actualizar el stock');
         });
     },
+    goBack() {
+      window.history.back();
+    },
+    obtenerAsignacionPorFecha(fecha) {
+      this.isLoading = true;
+      axios.get(`/api/asignacion-epp-details-by-fecha/${fecha}`)
+        .then(response => {
+          const asignacion = response.data.asignacion;
+          this.detalles = asignacion.detalles;
+          this.observaciones = response.data.observaciones; // Obtener observaciones
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.error('Error al obtener detalles de asignación:', error);
+          toastr.error('Error al obtener los detalles de la asignación');
+          this.isLoading = false;
+        });
+    }
   }
 };
 </script>
 
 <style scoped>
-/* Aquí puedes agregar estilos específicos para este componente */
 </style>
