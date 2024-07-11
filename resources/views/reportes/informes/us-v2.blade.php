@@ -11,7 +11,7 @@
 <style>
 
 
-    @if($tecnica->codigo == 'US' || $tecnica->codigo == 'PA')
+    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA' || $tecnica->codigo=='FMC-TFM')
         @page { 
             margin: 260px 40px 260px 40px !important;
             padding: 0px 0px 0px 0px !important; 
