@@ -41,7 +41,7 @@ class InternoEquipoRequest extends FormRequest
             ];
             $validacion = [
             'nro_serie'      => 'nullable| Max:45',
-            'nro_interno'    => 'required',
+            'nro_interno'    => 'required| Max:10',
             'equipo'         => 'required',
             ];
         $validacion_completa =array_merge($condicional,$validacion);
