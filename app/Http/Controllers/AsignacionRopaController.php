@@ -377,23 +377,20 @@ class AsignacionRopaController extends Controller
 
         public function buscarAsignacionesEPP(Request $request)
         {
-            // Verificar si se han proporcionado las fechas en la solicitud
             $startDate = $request->input('start_date') ?? '2001-01-01';
             $endDate = $request->input('end_date') ?? '2100-12-30';
             $userId = $request->input('user_id');
             $page = $request->input('page', 1);
             $perPage = $request->input('per_page', 10);
-
-            // Llamar al procedimiento almacenado
+        
+            // Llamar al procedimiento almacenado con las fechas y el ID de usuario
             $result = DB::select('CALL GetEPPAsignaciones(?, ?, ?)', [$startDate, $endDate, $userId]);
-
-            // Convertir el resultado en una colección
+        
+            // Convertir el resultado en una colección y paginarlo
             $collection = collect($result);
-
-            // Obtener la paginación
             $paginated = $collection->forPage($page, $perPage);
             $total = $collection->count();
-
+        
             return response()->json([
                 'data' => $paginated->values(),
                 'current_page' => $page,

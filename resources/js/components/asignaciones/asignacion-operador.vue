@@ -46,9 +46,12 @@
               <td style="text-align:right">
                 <button 
                   @click="editarItem(index)" 
-                  class="btn btn-warning btn-sm"
+                  :class="{'btn btn-warning btn-sm': isRemitoValido(index), 'btn btn-sm': !isRemitoValido(index)}"
                 >
-                  <span class="fa fa-edit"></span>
+                  <span 
+                    :class="isRemitoValido(index) ? 'fa fa-edit' : 'fa fa-eye'" 
+                    :style="!isRemitoValido(index) ? 'color: black;' : ''"
+                  ></span>
                 </button>
               </td>
             </tr>
@@ -102,6 +105,9 @@ export default {
     redireccionAsignacion() {
      const edit_data = false;
       window.location.href = `/area/enod/asignacion-operador-manual/${this.operador_data.id}/2100-01-01/${edit_data}`;
+    },
+    isRemitoValido(index) {
+      return this.items[index].remito; // Ajusta esta lógica según lo que consideres un remito válido
     },
     editarItem(index) {
       const userId = this.operador_data.id;

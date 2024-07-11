@@ -234,7 +234,6 @@ export default {
         })
         .catch(error => {
           console.error('Error al obtener detalles de asignación:', error);
-          toastr.error('Error al obtener los detalles de la asignación');
           this.isLoading = false;
         });
     }
