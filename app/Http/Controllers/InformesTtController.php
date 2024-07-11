@@ -7,6 +7,7 @@ use App\Ots;
 use App\InformesTt;
 use App\Informe;
 use App\DetallesTt;
+use App\Equipos;
 use App\Repositories\Documentaciones\DocumentacionesRepository;
 use App\Http\Requests\InformeTtRequest;
 use Illuminate\Support\Facades\DB;
@@ -172,6 +173,8 @@ class InformesTtController extends Controller
 
          return $informe;
     }
+
+
 
     public function destroy($id)
     {
