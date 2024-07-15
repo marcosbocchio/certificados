@@ -12,6 +12,7 @@ use \stdClass;
 use Illuminate\Support\Facades\Log;
 use App\Frentes;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class InternoEquiposController extends Controller
 {
