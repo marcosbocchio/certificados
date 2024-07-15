@@ -197,9 +197,7 @@ class InternoEquiposController extends Controller
         $paginate = 10;
 
         $data = DB::select(DB::raw('CALL ReporteInternoEquipos(?,?,?,?)'), array($tipo_equipamiento_id, $vencida_sn, $noVencidas_sn, $todos_sn));
-        Log::debug('data:' . json_encode($data));
-        Log::debug($tipo_equipamiento_id . '-' . $vencida_sn . '-' . $noVencidas_sn . '-' . $todos_sn);
-
+       
         if ($data) {
             $data = collect($data);
             $currentPage = LengthAwarePaginator::resolveCurrentPage();
