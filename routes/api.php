@@ -513,8 +513,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/actualizar-epp-stock','AsignacionRopaController@actualizarAsignacionStock');
     Route::post('/buscar-asignaciones-epp', 'AsignacionRopaController@buscarAsignacionesEPP');
 
-    //reporte-placa
-    Route::get('/reporte-placa/{frenteId}', 'PlacasUsadasController@getInformesRI');
+    //reporte-placas
+    Route::get('/reporte-placas/ots', 'PlacasUsadasController@getOTs');
+    Route::get('/reporte-placas/partes/{otId}', 'PlacasUsadasController@getPartes');
+    Route::get('/reporte-placas/informes/{parte_id}/{fecha_desde}/{fecha_hasta}', 'PlacasUsadasController@getInformesRI');
+
 
     //procedimientos
     Route::resource(

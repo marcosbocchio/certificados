@@ -1,148 +1,228 @@
 <template>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="box box-custom-enod">
-          <div class="box-body box-profile">
-            <ul class="list-group list-group-unbordered">
-              <li class="list-group-item pointer">
-                <div v-show="!selFrente">
-                  <span class="titulo-li">Frente ID</span>
-                  <a @click="selFrente = !selFrente" class="pull-right">
-                    <div v-if="frenteId">{{ frenteId }}</div>
-                    <div v-else><span class="seleccionar">Seleccionar</span></div>
-                  </a>
-                </div>
-                <v-select v-show="selFrente" v-model="frenteId" :options="frentes" @input="CambioFrente"></v-select>
-              </li>
-            </ul>
-            <button @click="Buscar(1)" class="btn btn-enod btn-block">
-              <span class="fa fa-search"></span> Buscar
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9">
-        <div v-if="tablaInformes && tablaInformes.length">
-          <div class="box box-custom-enod">
-            <div class="box-header with-border">
-              <h3 class="box-title">Detalle</h3>
-            </div>
-            <div class="box-body">
-              <div class="table-responsive table-scroll">
-                <table class="table table-striped table-condensed">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Parte ID</th>
-                      <th>Informe ID</th>
-                      <th>Informe Importado ID</th>
-                      <th>Costura Original</th>
-                      <th>Costura Final</th>
-                      <th>Pulgadas Original</th>
-                      <th>Pulgadas Final</th>
-                      <th>Placas Original</th>
-                      <th>Placas Final</th>
-                      <th>CM Original</th>
-                      <th>CM Final</th>
-                      <th>Pieza Original</th>
-                      <th>Pieza Final</th>
-                      <th>Nro Original</th>
-                      <th>Nro Final</th>
-                      <th>Observaciones Original</th>
-                      <th>Observaciones Final</th>
-                      <th>Metros Lineales</th>
-                      <th>Created At</th>
-                      <th>Updated At</th>
-                      <th>Informe Sel</th>
-                      <th>Número Formateado</th>
-                      <th>Fecha Formateada</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(item, k) in tablaInformes" :key="k">
-                      <td>{{ item.id }}</td>
-                      <td>{{ item.parte_id }}</td>
-                      <td>{{ item.informe_id }}</td>
-                      <td>{{ item.informe_importado_id }}</td>
-                      <td>{{ item.costura_original }}</td>
-                      <td>{{ item.costura_final }}</td>
-                      <td>{{ item.pulgadas_original }}</td>
-                      <td>{{ item.pulgadas_final }}</td>
-                      <td>{{ item.placas_original }}</td>
-                      <td>{{ item.placas_final }}</td>
-                      <td>{{ item.cm_original }}</td>
-                      <td>{{ item.cm_final }}</td>
-                      <td>{{ item.pieza_original }}</td>
-                      <td>{{ item.pieza_final }}</td>
-                      <td>{{ item.nro_original }}</td>
-                      <td>{{ item.nro_final }}</td>
-                      <td>{{ item.observaciones_original }}</td>
-                      <td>{{ item.observaciones_final }}</td>
-                      <td>{{ item.metros_lineales }}</td>
-                      <td>{{ item.created_at }}</td>
-                      <td>{{ item.updated_at }}</td>
-                      <td>{{ item.informe_sel }}</td>
-                      <td>{{ item.numero_formateado }}</td>
-                      <td>{{ item.fecha_formateada }}</td>
-                    </tr>
-                  </tbody>
-                </table>
+  <div class="row">
+    <!-- Col-md-3 parte (filtro) -->
+    <div class="col-md-3">
+      <div class="box box-custom-enod">
+        <div class="box-body box-profile">
+          <ul class="list-group list-group-unbordered">
+            <!-- Selección de frente -->
+            <li class="list-group-item pointer">
+              <div v-show="!selFrente">
+                <span class="titulo-li">Frente ID</span>
+                <a @click="selFrente = !selFrente" class="pull-right">
+                  <div v-if="selectedFrente">{{ selectedFrente.numero }} <br> <small>{{ selectedFrente.proyecto }}</small></div>
+                  <div v-else><span class="seleccionar">Seleccionar</span></div>
+                </a>
               </div>
-            </div>
-          </div>
+              <v-select v-show="selFrente" v-model="selectedFrente" :options="frentes" :reduce="ot => ot.id" @input="CambioFrente">
+                <template #option="option">
+                  <div>
+                    <strong>{{ option.numero }}</strong> <br>
+                    <small>{{ option.proyecto }}</small>
+                  </div>
+                </template>
+                <template #selected-option="option">
+                  <div>
+                    <strong>{{ option.numero }}</strong> <br>
+                    <small>{{ option.proyecto }}</small>
+                  </div>
+                </template>
+              </v-select>
+            </li>
+            <!-- Selección de fecha desde -->
+            <li class="list-group-item">
+              <date-picker v-model="fechaDesde" value-type="YYYY-MM-DD" format="DD-MM-YYYY" :disabled="!selectedFrente"></date-picker>
+            </li>
+            <!-- Selección de fecha hasta -->
+            <li class="list-group-item">
+              <date-picker v-model="fechaHasta" value-type="YYYY-MM-DD" format="DD-MM-YYYY" :disabled="!selectedFrente"></date-picker>
+            </li>
+          </ul>
+          <!-- Botón de búsqueda -->
+          <button @click="Buscar" class="btn btn-enod btn-block" :disabled="!selectedFrente || !fechaDesde || !fechaHasta">
+            <span class="fa fa-search"></span> Buscar
+          </button>
         </div>
-        <div v-else>
-          <div class="box box-custom-enod">
-            <div class="box-body">
-              <h4>No hay datos para mostrar</h4>
-            </div>
-          </div>
-        </div>
-        <loading :active.sync="isLoading" :loader="'bars'" :color="'red'"></loading>
       </div>
     </div>
-  </template>
-  
-  <script>
-  import vSelect from 'vue-select';
-  import 'vue-select/dist/vue-select.css';
-  import Loading from 'vue-loading-overlay';
-  import 'vue-loading-overlay/dist/vue-loading.css';
-  
-  export default {
-    props: ['user'],
-    components: { vSelect, Loading },
-    data() {
-      return {
-        frenteId: '11622',
-        frentes: [], // Lista de IDs de frentes
-        tablaInformes: [],
-        isLoading: false,
-        selFrente: false,
-      };
-    },
-    methods: {
-      async Buscar(page = 1) {
-        if (!this.frenteId) return;
-        this.isLoading = true;
-        try {
-          const response = await axios.get(`/api/reporte-placa/${this.frenteId}`);
-          this.tablaInformes = response.data;
-        } catch (error) {
-          console.error(error);
-        } finally {
-          this.isLoading = false;
-        }
-      },
-      CambioFrente() {
-        this.selFrente = false;
+    <!-- Col-md-9 Resultados -->
+    <div class="col-md-9">
+      <!-- Si hay informes para mostrar -->
+      <div v-if="tablaInformes && tablaInformes.length > 0">
+        <div class="box box-custom-enod">
+          <div class="box-header with-border">
+            <h3 class="box-title">Detalle</h3>
+          </div>
+          <div class="box-body">
+            <div class="table-responsive table-scroll">
+              <table class="table table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th>Parte</th>
+                    <th>Total de M Usados</th>
+                    <th>Total de Placas</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Mostrar una fila con los totales -->
+                  <tr v-if="totalCMFinal !== null && totalPlacasFinal !== null">
+                    <td>{{ formatParteId(selectedParte) }}</td>
+                    <td>{{ totalCMFinal }}</td>
+                    <td>{{ totalPlacasFinal }}</td>
+                    <td>{{ formatFecha(tablaInformes[0].created_at) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Si no hay informes para mostrar -->
+      <div v-else>
+        <div class="box box-custom-enod">
+          <div class="box-body">
+            <h4>No hay datos para mostrar</h4>
+          </div>
+        </div>
+      </div>
+      <!-- Loader mientras se cargan los datos -->
+      <loading :active.sync="isLoading" :loader="'bars'" :color="'red'"></loading>
+    </div>
+  </div>
+</template>
+
+<script>
+import vSelect from 'vue-select';
+import Datepicker from 'vuejs-datepicker';
+import 'vue-select/dist/vue-select.css';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+import axios from 'axios';
+
+export default {
+  props: ['user'],
+  components: { vSelect, Loading, 'date-picker': Datepicker },
+  data() {
+    return {
+      selectedFrente: null,
+      frentes: [],
+      selectedParte: null,
+      fechaDesde: null,
+      fechaHasta: null,
+      tablaInformes: [],
+      isLoading: false,
+      totalCMFinal: null,
+      totalPlacasFinal: null,
+      selFrente: false,
+    };
+  },
+  mounted() {
+    this.loadFrentes();
+  },
+  methods: {
+    async loadFrentes() {
+      try {
+        const response = await axios.get('/api/reporte-placas/ots');
+        this.frentes = response.data.map(ot => ({
+          id: ot.id,
+          numero: ot.numero,
+          proyecto: ot.proyecto
+        }));
+      } catch (error) {
+        console.error('Error loading frentes:', error);
       }
+    },
+    async loadPartes(otId) {
+      try {
+        const response = await axios.get(`/api/reporte-placas/partes/${otId}`);
+        return response.data.map(parte => ({
+          id: parte.id,
+          created_at: parte.created_at
+        }));
+      } catch (error) {
+        console.error('Error loading partes:', error);
+        return [];
+      }
+    },
+    async Buscar() {
+      if (!this.selectedFrente || !this.fechaDesde || !this.fechaHasta) return;
+
+      this.isLoading = true;
+
+      const fechaDesdeFormatted = this.fechaDesde.toISOString().slice(0, 10);
+      const fechaHastaFormatted = this.fechaHasta.toISOString().slice(0, 10);
+
+      console.log('Fetching informes with:', this.selectedFrente, fechaDesdeFormatted, fechaHastaFormatted);
+
+      try {
+        // Cargar todos los partes del frente seleccionado
+        const partes = await this.loadPartes(this.selectedFrente.id);
+
+        // Inicializar informes vacíos
+        let informes = [];
+
+        // Iterar sobre cada parte y cargar informes para cada uno
+        for (let i = 0; i < partes.length; i++) {
+          const parte = partes[i];
+          const response = await axios.get(`/api/reporte-placas/informes/${parte.id}/${fechaDesdeFormatted}/${fechaHastaFormatted}`);
+          informes = informes.concat(response.data.informes);
+        }
+
+        // Inicializamos los totales
+        let totalCMFinal = 0;
+        let totalPlacasFinal = 0;
+
+        // Recorremos los informes para sumar los valores de cm_final y placas_usadas
+        informes.forEach(informe => {
+          // Suma de cm_final
+          if (informe.cm_final) {
+            const [a, b] = informe.cm_final.split('x').map(Number);
+            totalCMFinal += a * b;
+          }
+
+          // Suma de placas_usadas
+          if (informe.placas_final) {
+            totalPlacasFinal += Number(informe.placas_final);
+          }
+        });
+
+        // Guardamos los totales calculados
+        this.totalCMFinal = totalCMFinal / 100; // Dividimos por 100 como solicitaste
+        this.totalPlacasFinal = totalPlacasFinal;
+
+        console.log('Totals:', {
+          totalCMFinal: this.totalCMFinal,
+          totalPlacasFinal: this.totalPlacasFinal
+        });
+
+        // Asignamos los informes a la tablaInformes del componente
+        this.tablaInformes = informes;
+
+        console.log('Informes fetched:', this.tablaInformes);
+      } catch (error) {
+        console.error('Error fetching informes:', error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async CambioFrente(frenteId) {
+      this.selectedFrente = this.frentes.find(frente => frente.id === frenteId);
+    },
+    formatParteId(id) {
+      return id.toString().padStart(3, '0');
+    },
+    formatFecha(fecha) {
+      if (typeof fecha !== 'string') {
+        return fecha;
+      }
+      const [year, month, day] = fecha.split(' ')[0].split('-');
+      return `${day}-${month}-${year}`;
     }
-  };
-  </script>
-  
-  <style>
-  .table-scroll {
-    overflow-x: auto;
   }
-  </style>
+};
+</script>
+
+<style scoped>
+
+</style>
