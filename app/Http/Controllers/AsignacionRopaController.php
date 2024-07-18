@@ -401,7 +401,7 @@ class AsignacionRopaController extends Controller
         
             // Aplicar paginación y obtener resultados
             $results = $query->paginate($perPage);
-        
+            log::info($$results);
             return response()->json($results);
         }
 }
