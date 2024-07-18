@@ -115,6 +115,7 @@ export default {
           per_page: 10
         });
         this.tablaAsignaciones = response.data;
+        console.log(this.tablaAsignaciones);
       } catch (error) {
         console.error(error);
       } finally {
