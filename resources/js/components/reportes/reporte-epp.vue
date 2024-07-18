@@ -108,13 +108,14 @@ export default {
       this.isLoading = true;
       try {
         const response = await axios.post('/api/buscar-asignaciones-epp', {
-          start_date: this.fecha_desde || '2001-01-01',
-          end_date: this.fecha_hasta || '2100-12-30',
-          user_id: this.operador ? this.operador.id : null,
+          start_date: this.fecha_desde,
+          end_date: this.fecha_hasta,
+          user_id: this.operador.id,
           page: page,
           per_page: 10
         });
         this.tablaAsignaciones = response.data;
+        console.log('datos:',this.fecha_desde,this.fecha_hasta,this.operador.id)
         console.log(this.tablaAsignaciones);
       } catch (error) {
         console.error(error);
