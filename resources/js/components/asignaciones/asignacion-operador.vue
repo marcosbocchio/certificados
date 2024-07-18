@@ -116,7 +116,7 @@ export default {
         const remitoId = this.items[index].remito.id;
         window.location.href = `/area/enod/asignacion-nuevo/${userId}/remito/${remitoId}`;
       } else {
-        const formattedDate = this.formatDate(this.items[index].fecha);
+        const formattedDate = this.items[index].fecha;
         const edit = true;
         window.location.href = `/area/enod/asignacion-operador-manual/${userId}/${formattedDate}/${edit}`;
       }

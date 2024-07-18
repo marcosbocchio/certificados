@@ -330,7 +330,9 @@ class AsignacionRopaController extends Controller
 
         public function getAsignacionEppDetailsByFecha($fecha)
         {
-            try {
+            log::info($fecha);
+            log::info('entro en getAsignacionEppDetailsByFecha');
+            
                 // Buscar la asignación de EPP por fecha
                 $asignacion = Asignacion_epp::where('fecha', $fecha)
                     ->with('detalles.producto') // Cargar detalles y productos asociados
@@ -350,12 +352,8 @@ class AsignacionRopaController extends Controller
                     'observaciones' => $observaciones, // Incluir observaciones en la respuesta
                     'fecha' => $fecha, // Incluir fecha en la respuesta
                 ];
-        
+                log::info($response);
                 return response()->json($response);
-            } catch (\Exception $e) {
-                Log::error('Error al obtener detalles de a de EPP: ' . $e->getMessage());
-                return response()->json(['error' => 'Error interno del servidor al obtener detalles de asignación de EPP'], 500);
-            }
         }
 
         public function getOperadoresByRemito($remito_id)
