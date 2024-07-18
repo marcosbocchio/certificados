@@ -38,7 +38,6 @@ class PlacasUsadasController extends Controller
     // Obtener informes y procesar datos
     public function getInformesRI($parte_id, $fecha_desde, $fecha_hasta)
     {
-        // Log de los datos recibidos desde la URL
         Log::info('Solicitud para obtener informes recibida:', [
             'parte_id' => $parte_id,
             'fecha_desde' => $fecha_desde,
@@ -49,14 +48,29 @@ class PlacasUsadasController extends Controller
         $fechaDesde = date('Y-m-d', strtotime($fecha_desde));
         $fechaHasta = date('Y-m-d', strtotime($fecha_hasta));
     
-        // Llamar al procedimiento almacenado o query necesario
+        // Obtener datos del parte
+        $parte = DB::table('partes')
+                    ->select('id', 'placas_repetidas', 'placas_testigos', 'created_at')
+                    ->where('id', $parte_id)
+                    ->first();
+    
+        // Verificar si se encontró el parte
+        if (!$parte) {
+            return response()->json(['error' => 'Parte no encontrado'], 404);
+        }
+    
+        // Llamar al procedimiento almacenado una sola vez
         $informes = DB::select('CALL GetInformesRI(?, ?, ?)', [$parte_id, $fechaDesde, $fechaHasta]);
     
-        // Log de los datos enviados en la respuesta
-        Log::info('Informes obtenidos:', [
+        // Retornar los informes y los datos del parte
+        return response()->json([
+            'parte' => [
+                'id' => $parte->id,
+                'placas_repetidas' => $parte->placas_repetidas,
+                'placas_testigos' => $parte->placas_testigos,
+                'created_at' => $parte->created_at,
+            ],
             'informes' => $informes,
         ]);
-    
-        return response()->json(['informes' => $informes]);
     }
 }

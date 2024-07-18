@@ -28,7 +28,7 @@
 
     <!-- Box 2: Producto y Detalles -->
     <div class="box box-custom-enod">
-      <div class="box-body row">
+      <div class="box-body row">  
         <div class="col-md-3">
           <div class="form-group">
             <label for="producto">Producto *</label>
@@ -143,7 +143,8 @@ export default {
       observaciones: '',
       isLoading: false,
       detalle_remito_data: [],
-      productos_actualizados: []
+      productos_actualizados: [],
+      fechaActual: new Date().toISOString().slice(0, 19).replace('T', ' ') // Obtiene la fecha y hora actual en formato YYYY-MM-DD HH:MM:SS
     };
   },
   mounted() {
@@ -151,6 +152,9 @@ export default {
     if (this.remito_selected) {
       this.fetchRemitoDetails();
     }
+
+    console.log("fecha:|", this.fechaActual);
+    this.fetchAsignacionEppDetails();
   },
   watch: {
     producto_selected(newVal, oldVal) {
@@ -215,34 +219,49 @@ export default {
           this.isLoading = false;
         });
     },
+    fetchAsignacionEppDetails() {
+      axios.get(`/api/asignacion-epp-details/${this.operador_selected.id}/${this.remito_selected.id}`)
+        .then(response => {
+          this.detalles = response.data.asignacion.detalles;
+          this.observaciones = response.data.observaciones; // Asignar las observaciones recibidas
+          this.fechaActual = response.data.fecha; // Asignar la fecha recibida
+        })
+        .catch(error => {
+          console.error("Error al obtener los detalles de asignación EPP:", error);
+        });
+    },
     goBack() {
       window.history.back();
     },
     confirmar() {
-      this.isLoading = true;
-      console.log(this.detalles)
-      axios.post('/api/asignacion-epp', {
-        operador_id: this.operador_selected.id,
-        remito_id: this.remito_selected.id,
-        detalles: this.detalles,
-        observaciones: this.observaciones,
-        fecha: this.fechaActual  // Incluye la fecha actual
-      })
-      .then(response => {
-        this.isLoading = false;
-        toastr.success('Asignación guardada correctamente');
-        window.location.href = `/area/enod/asignacion-remito/${this.remito_selected.id}`;
-      })
-      .catch(error => {
-        console.error("Error al guardar la asignación EPP:", error);
-        this.isLoading = false;
-        toastr.error('Error al guardar la asignación');
-      });
-    }
+    this.isLoading = true;
+    
+    // Definir la fecha actual si no está definida
+    const fechaActual = this.fechaActual || new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+    axios.post('/api/asignacion-epp', {
+      operador_id: this.operador_selected.id,
+      remito_id: this.remito_selected.id,
+      detalles: this.detalles,
+      observaciones: this.observaciones,
+      fecha: fechaActual
+    })
+    .then(response => {
+      this.isLoading = false;
+      toastr.success('Asignación guardada correctamente');
+
+      // Verificar que el remito_selected.id está definido antes de redirigir
+      if (this.remito_selected && this.remito_selected.id) {
+        window.location.replace(`/area/enod/asignacion-remito/${this.remito_selected.id}`);
+      } else {
+        console.error('Remito seleccionado no tiene ID');
+      }
+    })
+    .catch(error => {
+      console.error('Error al guardar asignación:', error);
+      this.isLoading = false;
+    });
+  }
   }
 };
 </script>
-
-<style scoped>
-/* Añade tus estilos personalizados aquí si es necesario */
-</style>

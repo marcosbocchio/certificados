@@ -353,7 +353,7 @@ class AsignacionRopaController extends Controller
         
                 return response()->json($response);
             } catch (\Exception $e) {
-                Log::error('Error al obtener detalles de asignación de EPP: ' . $e->getMessage());
+                Log::error('Error al obtener detalles de a de EPP: ' . $e->getMessage());
                 return response()->json(['error' => 'Error interno del servidor al obtener detalles de asignación de EPP'], 500);
             }
         }
@@ -377,26 +377,33 @@ class AsignacionRopaController extends Controller
 
         public function buscarAsignacionesEPP(Request $request)
         {
+            // Obtener los parámetros de la solicitud
             $startDate = $request->input('start_date') ?? '2001-01-01';
             $endDate = $request->input('end_date') ?? '2100-12-30';
             $userId = $request->input('user_id');
-            $page = $request->input('page', 1);
             $perPage = $request->input('per_page', 10);
+            
+            // Consulta para obtener las asignaciones de EPP
+            $query = DB::table('asignacion_epp AS ae')
+                        ->select('ae.fecha', DB::raw("CONCAT(r.prefijo, '-', LPAD(r.numero, 8, '0')) AS remito"),
+                                 'u.name AS op', 'p.descripcion AS epp', 'dae.cantidad AS cant')
+                        ->join('remitos AS r', 'ae.remito_id', '=', 'r.id')
+                        ->join('users AS u', 'ae.user_id', '=', 'u.id')
+                        ->join('detalle_asignacion_epp AS dae', 'ae.id', '=', 'dae.asignacion_epp_id')
+                        ->join('productos AS p', 'dae.producto_id', '=', 'p.id')
+                        ->whereBetween('ae.fecha', [$startDate, $endDate]);
         
-            // Llamar al procedimiento almacenado con las fechas y el ID de usuario
-            $result = DB::select('CALL GetEPPAsignaciones(?, ?, ?)', [$startDate, $endDate, $userId]);
+            // Aplicar filtro por usuario si se proporciona
+            if ($userId) {
+                $query->where('ae.user_id', $userId);
+            }
         
-            // Convertir el resultado en una colección y paginarlo
-            $collection = collect($result);
-            $paginated = $collection->forPage($page, $perPage);
-            $total = $collection->count();
+            // Obtener el total antes de paginar
+            $total = $query->count();
         
-            return response()->json([
-                'data' => $paginated->values(),
-                'current_page' => $page,
-                'per_page' => $perPage,
-                'total' => $total,
-                'last_page' => ceil($total / $perPage),
-            ]);
+            // Aplicar paginación y obtener resultados
+            $results = $query->paginate($perPage);
+        
+            return response()->json($results);
         }
 }

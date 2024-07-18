@@ -223,19 +223,18 @@ export default {
     goBack() {
       window.history.back();
     },
-    obtenerAsignacionPorFecha(fecha) {
+    async obtenerAsignacionPorFecha(fecha) {
       this.isLoading = true;
-      axios.get(`/api/asignacion-epp-details-by-fecha/${fecha}`)
-        .then(response => {
-          const asignacion = response.data.asignacion;
-          this.detalles = asignacion.detalles;
-          this.observaciones = response.data.observaciones; // Obtener observaciones
-          this.isLoading = false;
-        })
-        .catch(error => {
-          console.error('Error al obtener detalles de asignación:', error);
-          this.isLoading = false;
-        });
+      try {
+        const response = await axios.get(`/api/asignacionepp-detalle-fecha/${fecha}`);
+        const asignacion = response.data.asignacion;
+        this.detalles = asignacion.detalles;
+        this.observaciones = response.data.observaciones; // Obtener observaciones
+        this.isLoading = false;
+      } catch (error) {
+        console.error('Error al obtener detalles de asignación:', error);
+        this.isLoading = false;
+      }
     }
   }
 };

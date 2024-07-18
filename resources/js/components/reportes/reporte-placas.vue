@@ -5,41 +5,52 @@
       <div class="box box-custom-enod">
         <div class="box-body box-profile">
           <ul class="list-group list-group-unbordered">
-            <!-- Selección de frente -->
             <li class="list-group-item pointer">
               <div v-show="!selFrente">
                 <span class="titulo-li">Frente ID</span>
                 <a @click="selFrente = !selFrente" class="pull-right">
-                  <div v-if="selectedFrente">{{ selectedFrente.numero }} <br> <small>{{ selectedFrente.proyecto }}</small></div>
-                  <div v-else><span class="seleccionar">Seleccionar</span></div>
+                  <div v-if="selectedFrentes.length">
+                    <div v-for="frente in selectedFrentes" :key="frente.id">{{ frente.numero }}</div>
+                  </div>
+                  <div v-else>
+                    <span class="seleccionar">Seleccionar</span>
+                  </div>
                 </a>
               </div>
-              <v-select v-show="selFrente" v-model="selectedFrente" :options="frentes" :reduce="ot => ot.id" @input="CambioFrente">
-                <template #option="option">
-                  <div>
-                    <strong>{{ option.numero }}</strong> <br>
-                    <small>{{ option.proyecto }}</small>
-                  </div>
-                </template>
-                <template #selected-option="option">
-                  <div>
-                    <strong>{{ option.numero }}</strong> <br>
-                    <small>{{ option.proyecto }}</small>
-                  </div>
-                </template>
-              </v-select>
+              <v-select
+                multiple
+                v-show="selFrente"
+                v-model="selectedFrentes"
+                :options="frentes"
+                label="numero"
+                @input="CargarForFrente"
+              ></v-select>
             </li>
             <!-- Selección de fecha desde -->
             <li class="list-group-item">
-              <date-picker v-model="fechaDesde" value-type="YYYY-MM-DD" format="DD-MM-YYYY" :disabled="!selectedFrente"></date-picker>
+              <date-picker
+                v-model="fechaDesde"
+                value-type="YYYY-MM-DD"
+                format="DD-MM-YYYY"
+                :disabled="!selectedFrentes.length"
+              ></date-picker>
             </li>
             <!-- Selección de fecha hasta -->
             <li class="list-group-item">
-              <date-picker v-model="fechaHasta" value-type="YYYY-MM-DD" format="DD-MM-YYYY" :disabled="!selectedFrente"></date-picker>
+              <date-picker
+                v-model="fechaHasta"
+                value-type="YYYY-MM-DD"
+                format="DD-MM-YYYY"
+                :disabled="!selectedFrentes.length"
+              ></date-picker>
             </li>
           </ul>
           <!-- Botón de búsqueda -->
-          <button @click="Buscar" class="btn btn-enod btn-block" :disabled="!selectedFrente || !fechaDesde || !fechaHasta">
+          <button
+            @click="Buscar"
+            class="btn btn-enod btn-block"
+            :disabled="selectedFrentes.length === 0 || !fechaDesde || !fechaHasta"
+          >
             <span class="fa fa-search"></span> Buscar
           </button>
         </div>
@@ -65,12 +76,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Mostrar una fila con los totales -->
-                  <tr v-if="totalCMFinal !== null && totalPlacasFinal !== null">
-                    <td>{{ formatParteId(selectedParte) }}</td>
-                    <td>{{ totalCMFinal }}</td>
-                    <td>{{ totalPlacasFinal }}</td>
-                    <td>{{ formatFecha(tablaInformes[0].created_at) }}</td>
+                  <tr v-for="informe in tablaInformes" :key="informe.parte">
+                    <td>{{ formatParteId(informe.parte) }}</td>
+                    <td>{{ formatMetros(informe.totalCMFinal) }}</td>
+                    <td>{{ informe.totalPlacasUsadas }}</td>
+                    <td>{{ formatFecha(informe.fecha) }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -79,7 +89,7 @@
         </div>
       </div>
       <!-- Si no hay informes para mostrar -->
-      <div v-else>
+      <div v-else-if="tablaInformes !== null && tablaInformes.length === 0">
         <div class="box box-custom-enod">
           <div class="box-body">
             <h4>No hay datos para mostrar</h4>
@@ -87,7 +97,11 @@
         </div>
       </div>
       <!-- Loader mientras se cargan los datos -->
-      <loading :active.sync="isLoading" :loader="'bars'" :color="'red'"></loading>
+      <loading
+        :active.sync="isLoading"
+        :loader="'bars'"
+        :color="'red'"
+      ></loading>
     </div>
   </div>
 </template>
@@ -105,20 +119,15 @@ export default {
   components: { vSelect, Loading, 'date-picker': Datepicker },
   data() {
     return {
-      selectedFrente: null,
+      selectedFrentes: [],
       frentes: [],
-      selectedParte: null,
       fechaDesde: null,
       fechaHasta: null,
       tablaInformes: [],
+      parteList: [],
       isLoading: false,
-      totalCMFinal: null,
-      totalPlacasFinal: null,
       selFrente: false,
     };
-  },
-  mounted() {
-    this.loadFrentes();
   },
   methods: {
     async loadFrentes() {
@@ -138,91 +147,80 @@ export default {
         const response = await axios.get(`/api/reporte-placas/partes/${otId}`);
         return response.data.map(parte => ({
           id: parte.id,
-          created_at: parte.created_at
+          created_at: parte.created_at,
+          placas_repetidas: parte.placas_repetidas ? parseInt(parte.placas_repetidas, 10) : 0,
+          placas_testigos: parte.placas_testigos ? parseInt(parte.placas_testigos, 10) : 0
         }));
       } catch (error) {
         console.error('Error loading partes:', error);
         return [];
       }
     },
+    async CargarForFrente() {
+      this.parteList = [];
+      for (const frente of this.selectedFrentes) {
+        const partes = await this.loadPartes(frente.id);
+        this.parteList.push(...partes);
+      }
+      console.log(this.parteList);
+    },
     async Buscar() {
-      if (!this.selectedFrente || !this.fechaDesde || !this.fechaHasta) return;
+      if (this.selectedFrentes.length === 0 || !this.fechaDesde || !this.fechaHasta) {
+        return;
+      }
 
       this.isLoading = true;
-
-      const fechaDesdeFormatted = this.fechaDesde.toISOString().slice(0, 10);
-      const fechaHastaFormatted = this.fechaHasta.toISOString().slice(0, 10);
-
-      console.log('Fetching informes with:', this.selectedFrente, fechaDesdeFormatted, fechaHastaFormatted);
+      this.tablaInformes = [];
+      const fechaDesdeFormatted = new Date(this.fechaDesde).toISOString().split('T')[0];
+      const fechaHastaFormatted = new Date(this.fechaHasta).toISOString().split('T')[0];
 
       try {
-        // Cargar todos los partes del frente seleccionado
-        const partes = await this.loadPartes(this.selectedFrente.id);
+        for (const parte of this.parteList) {
+          const response = await axios.get(`/api/reporte-placas/informes-ri/${parte.id}/${fechaDesdeFormatted}/${fechaHastaFormatted}`);
+          if (response.data && response.data.informes && response.data.informes.length > 0) {
+            let totalCMFinal = { width: 0, height: 0 };
+            let totalPlacasUsadas = 0;
 
-        // Inicializar informes vacíos
-        let informes = [];
+            response.data.informes.forEach(informe => {
+              const [width, height] = informe.cm_final.split('x').map(Number);
+              totalCMFinal.width += width;
+              totalCMFinal.height += height;
+              totalPlacasUsadas += parseInt(informe.placas_final, 10);
+            });
 
-        // Iterar sobre cada parte y cargar informes para cada uno
-        for (let i = 0; i < partes.length; i++) {
-          const parte = partes[i];
-          const response = await axios.get(`/api/reporte-placas/informes/${parte.id}/${fechaDesdeFormatted}/${fechaHastaFormatted}`);
-          informes = informes.concat(response.data.informes);
+            totalPlacasUsadas += parte.placas_repetidas + parte.placas_testigos;
+
+            this.tablaInformes.push({
+              parte: parte.id,
+              fecha: parte.created_at,
+              totalCMFinal: `${totalCMFinal.width}x${totalCMFinal.height}`,
+              totalPlacasUsadas
+            });
+          }
         }
-
-        // Inicializamos los totales
-        let totalCMFinal = 0;
-        let totalPlacasFinal = 0;
-
-        // Recorremos los informes para sumar los valores de cm_final y placas_usadas
-        informes.forEach(informe => {
-          // Suma de cm_final
-          if (informe.cm_final) {
-            const [a, b] = informe.cm_final.split('x').map(Number);
-            totalCMFinal += a * b;
-          }
-
-          // Suma de placas_usadas
-          if (informe.placas_final) {
-            totalPlacasFinal += Number(informe.placas_final);
-          }
-        });
-
-        // Guardamos los totales calculados
-        this.totalCMFinal = totalCMFinal / 100; // Dividimos por 100 como solicitaste
-        this.totalPlacasFinal = totalPlacasFinal;
-
-        console.log('Totals:', {
-          totalCMFinal: this.totalCMFinal,
-          totalPlacasFinal: this.totalPlacasFinal
-        });
-
-        // Asignamos los informes a la tablaInformes del componente
-        this.tablaInformes = informes;
-
-        console.log('Informes fetched:', this.tablaInformes);
       } catch (error) {
         console.error('Error fetching informes:', error);
       } finally {
         this.isLoading = false;
       }
     },
-    async CambioFrente(frenteId) {
-      this.selectedFrente = this.frentes.find(frente => frente.id === frenteId);
-    },
-    formatParteId(id) {
-      return id.toString().padStart(3, '0');
-    },
     formatFecha(fecha) {
-      if (typeof fecha !== 'string') {
-        return fecha;
-      }
-      const [year, month, day] = fecha.split(' ')[0].split('-');
-      return `${day}-${month}-${year}`;
+      return new Date(fecha).toLocaleDateString('es-AR');
+    },
+    formatParteId(parteId) {
+      return parteId.toString().padStart(3, '0');
+    },
+    formatMetros(totalCMFinal) {
+      const [width, height] = totalCMFinal.split('x').map(num => parseFloat(num) / 100);
+      return `${width.toFixed(2)}x${height.toFixed(2)} m`;
     }
+  },
+  mounted() {
+    this.loadFrentes();
   }
 };
 </script>
 
 <style scoped>
-
+/* Estilos específicos del componente */
 </style>

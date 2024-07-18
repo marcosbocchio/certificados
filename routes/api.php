@@ -503,20 +503,21 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/asistencia-operadores', 'AsistenciaController@getAsistenciaAgrupadaPorOperador');
     Route::post('/guardar-pagos', 'AsistenciaController@guardarPagos');
     Route::get('/calcular-dias-del-mes/{year}/{month}', 'AsistenciaController@calcularDiasDelMes');
-    //Asignacion
-    Route::get('/obtener-detalles-remito/{remito_id}','AsignacionRopaController@obtenerDetallesRemito');
+    // Asignacion
+    Route::get('/obtener-detalles-remito/{remito_id}', 'AsignacionRopaController@obtenerDetallesRemito');
     Route::get('/asignaciones-ropa/{operador_id}', 'AsignacionRopaController@getAsignaciones');
     Route::get('/asignacion-epp-details/{operadorId}/{remitoId}', 'AsignacionRopaController@getAsignacionEppDetails');
-    Route::get('/asignacion-epp-details-by-fecha/{fecha}', 'AsignacionRopaController@getAsignacionEppDetailsByFecha');
+    Route::get('/asignacionepp-detalle-fecha/{fecha}', 'AsignacionRopaController@getAsignacionEppDetailsByFecha');
     Route::get('/asignacion-epp-operadores/{remitoId}', 'AsignacionRopaController@getOperadoresByRemito');
-    Route::post('/asignacion-epp','AsignacionRopaController@store');
-    Route::post('/actualizar-epp-stock','AsignacionRopaController@actualizarAsignacionStock');
+    Route::post('/asignacion-epp', 'AsignacionRopaController@store');
+    Route::post('/actualizar-epp-stock', 'AsignacionRopaController@actualizarAsignacionStock');
     Route::post('/buscar-asignaciones-epp', 'AsignacionRopaController@buscarAsignacionesEPP');
+
 
     //reporte-placas
     Route::get('/reporte-placas/ots', 'PlacasUsadasController@getOTs');
     Route::get('/reporte-placas/partes/{otId}', 'PlacasUsadasController@getPartes');
-    Route::get('/reporte-placas/informes/{parte_id}/{fecha_desde}/{fecha_hasta}', 'PlacasUsadasController@getInformesRI');
+    Route::get('/reporte-placas/informes-ri/{parte_id}/{fecha_desde}/{fecha_hasta}', 'PlacasUsadasController@getInformesRI');
 
 
     //procedimientos

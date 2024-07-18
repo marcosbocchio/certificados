@@ -287,7 +287,7 @@
                    <li><a href="{{ route('reporte-resumen-epp') }}">Resumen epp</a></li>
               @endcan
 
-              @can('R_resumen_epp')
+              @can('R_resumen_placas')
                    <li><a href="{{ route('reporte-resumen-placasU') }}">Resumen placas</a></li>
               @endcan
             </ul>
