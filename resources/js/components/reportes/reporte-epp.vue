@@ -53,9 +53,9 @@
                   <tr v-for="(item, k) in tablaAsignaciones.data" :key="k">
                     <td>{{ item.fecha }}</td>
                     <td>{{ item.remito }}</td>
-                    <td>{{ item.op }}</td>
+                    <td>{{ item.operador }}</td>
                     <td>{{ item.epp }}</td>
-                    <td>{{ item.cant }}</td>
+                    <td>{{ item.cantidad }}</td>
                   </tr>
                 </tbody>
               </table>
