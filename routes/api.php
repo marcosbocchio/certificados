@@ -515,10 +515,11 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
     //reporte-placas
-    Route::get('/reporte-placas/ots', 'PlacasUsadasController@getOTs');
-    Route::get('/reporte-placas/partes/{otId}', 'PlacasUsadasController@getPartes');
-    Route::get('/reporte-placas/informes-ri/{parte_id}/{fecha_desde}/{fecha_hasta}', 'PlacasUsadasController@getInformesRI');
 
+    Route::get('/reporte-placas/frentes', 'PlacasUsadasController@getFrentePlacas');
+    Route::get('/reporte-placas/remitos', 'PlacasUsadasController@getRemitosPlacas');
+    Route::post('/reporte-placas/remitos-productos', 'PlacasUsadasController@getRemitosProductos');
+    Route::post('/reporte-placas/resumen-productos', 'PlacasUsadasController@resumenProductos');
 
     //procedimientos
     Route::resource(

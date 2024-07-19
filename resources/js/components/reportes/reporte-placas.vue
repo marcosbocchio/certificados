@@ -1,102 +1,75 @@
 <template>
   <div class="row">
-    <!-- Col-md-3 parte (filtro) -->
     <div class="col-md-3">
       <div class="box box-custom-enod">
         <div class="box-body box-profile">
           <ul class="list-group list-group-unbordered">
             <li class="list-group-item pointer">
-              <div v-show="!selFrente">
-                <span class="titulo-li">Frente ID</span>
-                <a @click="selFrente = !selFrente" class="pull-right">
-                  <div v-if="selectedFrentes.length">
-                    <div v-for="frente in selectedFrentes" :key="frente.id">{{ frente.numero }}</div>
-                  </div>
-                  <div v-else>
-                    <span class="seleccionar">Seleccionar</span>
-                  </div>
-                </a>
-              </div>
+              <span class="titulo-li">Frente</span>
               <v-select
                 multiple
-                v-show="selFrente"
                 v-model="selectedFrentes"
                 :options="frentes"
-                label="numero"
-                @input="CargarForFrente"
+                label="codigo"
+                @input="CargarRemitos"
               ></v-select>
             </li>
-            <!-- Selección de fecha desde -->
             <li class="list-group-item">
               <date-picker
                 v-model="fechaDesde"
                 value-type="YYYY-MM-DD"
                 format="DD-MM-YYYY"
-                :disabled="!selectedFrentes.length"
               ></date-picker>
             </li>
-            <!-- Selección de fecha hasta -->
             <li class="list-group-item">
               <date-picker
                 v-model="fechaHasta"
                 value-type="YYYY-MM-DD"
-                format="DD-MM-YYYY"
-                :disabled="!selectedFrentes.length"
               ></date-picker>
             </li>
+            <li class="list-group-item pointer">
+              <span class="titulo-li">Remito</span>
+              <v-select
+                multiple
+                v-model="selectedRemitos"
+                :options="remitos"
+                label="formatted"
+                :disabled="!selectedFrentes.length || !fechaDesde || !fechaHasta"
+              ></v-select>
+            </li>
           </ul>
-          <!-- Botón de búsqueda -->
           <button
             @click="Buscar"
             class="btn btn-enod btn-block"
-            :disabled="selectedFrentes.length === 0 || !fechaDesde || !fechaHasta"
+            :disabled="selectedRemitos.length === 0 || !fechaDesde || !fechaHasta"
           >
             <span class="fa fa-search"></span> Buscar
           </button>
         </div>
       </div>
     </div>
-    <!-- Col-md-9 Resultados -->
     <div class="col-md-9">
-      <!-- Si hay informes para mostrar -->
-      <div v-if="tablaInformes && tablaInformes.length > 0">
+      <div v-if="productos.length > 0">
         <div class="box box-custom-enod">
           <div class="box-header with-border">
-            <h3 class="box-title">Detalle</h3>
+            <h3 class="box-title">Productos Relacionados</h3>
           </div>
           <div class="box-body">
-            <div class="table-responsive table-scroll">
-              <table class="table table-striped table-condensed">
-                <thead>
-                  <tr>
-                    <th>Parte</th>
-                    <th>Total de M Usados</th>
-                    <th>Total de Placas</th>
-                    <th>Fecha</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="informe in tablaInformes" :key="informe.parte">
-                    <td>{{ formatParteId(informe.parte) }}</td>
-                    <td>{{ formatMetros(informe.totalCMFinal) }}</td>
-                    <td>{{ informe.totalPlacasUsadas }}</td>
-                    <td>{{ formatFecha(informe.fecha) }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <ul>
+              <li v-for="producto in productos" :key="producto.producto_id">
+                {{ producto.descripcion }} - {{ producto.cantidad }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <!-- Si no hay informes para mostrar -->
-      <div v-else-if="tablaInformes !== null && tablaInformes.length === 0">
+      <div v-else-if="productos.length === 0">
         <div class="box box-custom-enod">
           <div class="box-body">
-            <h4>No hay datos para mostrar</h4>
+            <h4>No hay productos relacionados</h4>
           </div>
         </div>
       </div>
-      <!-- Loader mientras se cargan los datos -->
       <loading
         :active.sync="isLoading"
         :loader="'bars'"
@@ -115,104 +88,68 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import axios from 'axios';
 
 export default {
-  props: ['user'],
   components: { vSelect, Loading, 'date-picker': Datepicker },
   data() {
     return {
       selectedFrentes: [],
       frentes: [],
+      selectedRemitos: [],
+      remitos: [],
+      productos: [],
       fechaDesde: null,
       fechaHasta: null,
-      tablaInformes: [],
-      parteList: [],
       isLoading: false,
-      selFrente: false,
     };
   },
   methods: {
     async loadFrentes() {
       try {
-        const response = await axios.get('/api/reporte-placas/ots');
-        this.frentes = response.data.map(ot => ({
-          id: ot.id,
-          numero: ot.numero,
-          proyecto: ot.proyecto
-        }));
+        const response = await axios.get('/api/reporte-placas/frentes');
+        this.frentes = response.data;
       } catch (error) {
         console.error('Error loading frentes:', error);
       }
     },
-    async loadPartes(otId) {
-      try {
-        const response = await axios.get(`/api/reporte-placas/partes/${otId}`);
-        return response.data.map(parte => ({
-          id: parte.id,
-          created_at: parte.created_at,
-          placas_repetidas: parte.placas_repetidas ? parseInt(parte.placas_repetidas, 10) : 0,
-          placas_testigos: parte.placas_testigos ? parseInt(parte.placas_testigos, 10) : 0
-        }));
-      } catch (error) {
-        console.error('Error loading partes:', error);
-        return [];
-      }
-    },
-    async CargarForFrente() {
-      this.parteList = [];
-      for (const frente of this.selectedFrentes) {
-        const partes = await this.loadPartes(frente.id);
-        this.parteList.push(...partes);
-      }
-      console.log(this.parteList);
-    },
-    async Buscar() {
-      if (this.selectedFrentes.length === 0 || !this.fechaDesde || !this.fechaHasta) {
-        return;
-      }
-
-      this.isLoading = true;
-      this.tablaInformes = [];
-      const fechaDesdeFormatted = new Date(this.fechaDesde).toISOString().split('T')[0];
-      const fechaHastaFormatted = new Date(this.fechaHasta).toISOString().split('T')[0];
-
-      try {
-        for (const parte of this.parteList) {
-          const response = await axios.get(`/api/reporte-placas/informes-ri/${parte.id}/${fechaDesdeFormatted}/${fechaHastaFormatted}`);
-          if (response.data && response.data.informes && response.data.informes.length > 0) {
-            let totalCMFinal = { width: 0, height: 0 };
-            let totalPlacasUsadas = 0;
-
-            response.data.informes.forEach(informe => {
-              const [width, height] = informe.cm_final.split('x').map(Number);
-              totalCMFinal.width += width;
-              totalCMFinal.height += height;
-              totalPlacasUsadas += parseInt(informe.placas_final, 10);
-            });
-
-            totalPlacasUsadas += parte.placas_repetidas + parte.placas_testigos;
-
-            this.tablaInformes.push({
-              parte: parte.id,
-              fecha: parte.created_at,
-              totalCMFinal: `${totalCMFinal.width}x${totalCMFinal.height}`,
-              totalPlacasUsadas
-            });
-          }
+    async CargarRemitos() {
+      this.selectedRemitos = [];
+      this.productos = [];
+      if (this.selectedFrentes.length > 0 && this.fechaDesde && this.fechaHasta) {
+        try {
+          const response = await axios.get('/api/reporte-placas/remitos', {
+            params: {
+              frentes_selected: this.selectedFrentes.map(frente => frente.id),
+              fecha_desde: this.fechaDesde,
+              fecha_hasta: this.fechaHasta
+            }
+          });
+          this.remitos = response.data.map(remito => ({
+            ...remito,
+            formatted: `${remito.prefijo}-${remito.numero.padStart(8, '0')}`
+          }));
+        } catch (error) {
+          console.error('Error loading remitos:', error);
         }
-      } catch (error) {
-        console.error('Error fetching informes:', error);
-      } finally {
-        this.isLoading = false;
       }
     },
-    formatFecha(fecha) {
-      return new Date(fecha).toLocaleDateString('es-AR');
+    async CargarProductos() {
+      this.productos = [];
+      if (this.selectedRemitos.length > 0) {
+        try {
+          const response = await axios.post('/api/reporte-placas/remitos-productos', {
+            ids_remitos: this.selectedRemitos.map(remito => remito.id)
+          });
+          const productos = response.data;
+          const resumenResponse = await axios.post('/api/reporte-placas/resumen-productos', {
+            lista_productos: productos
+          });
+          this.productos = resumenResponse.data;
+        } catch (error) {
+          console.error('Error loading productos:', error);
+        }
+      }
     },
-    formatParteId(parteId) {
-      return parteId.toString().padStart(3, '0');
-    },
-    formatMetros(totalCMFinal) {
-      const [width, height] = totalCMFinal.split('x').map(num => parseFloat(num) / 100);
-      return `${width.toFixed(2)}x${height.toFixed(2)} m`;
+    Buscar() {
+      this.CargarProductos();
     }
   },
   mounted() {
