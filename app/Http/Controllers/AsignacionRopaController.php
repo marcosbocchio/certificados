@@ -292,8 +292,9 @@ class AsignacionRopaController extends Controller
         {
             $asignaciones = Asignacion_epp::where('operador_id', $operador_id)
                 ->with('remito', 'user')
+                ->orderBy('updated_at', 'desc') // Ordena por updated_at de más nuevo a más viejo
                 ->get();
-
+        
             return response()->json($asignaciones);
         }
 
@@ -380,30 +381,31 @@ class AsignacionRopaController extends Controller
             $endDate = $request->input('end_date') ?? '2100-12-30';
             $userId = $request->input('user_id');
             $perPage = $request->input('per_page', 10);
-        
+
             // Consulta para obtener las asignaciones de EPP
             $query = DB::table('asignacion_epp AS ae')
-                        ->select(
-                            DB::raw("DATE_FORMAT(ae.fecha, '%Y-%m-%d') AS fecha"),
-                            DB::raw("CONCAT(LPAD(r.prefijo, 4, '0'), '-', LPAD(r.numero, 8, '0')) AS remito"),
-                            'u.name AS operador',
-                            'p.descripcion AS epp',
-                            'dae.cantidad AS cantidad'
-                        )
-                        ->join('remitos AS r', 'ae.remito_id', '=', 'r.id')
-                        ->join('users AS u', 'ae.operador_id', '=', 'u.id')
-                        ->join('detalle_asignacion_epp AS dae', 'ae.id', '=', 'dae.asignacion_epp_id')
-                        ->join('productos AS p', 'dae.producto_id', '=', 'p.id')
-                        ->whereBetween('ae.fecha', [$startDate, $endDate]);
-        
+                ->select(
+                    DB::raw("DATE_FORMAT(ae.fecha, '%Y-%m-%d') AS fecha"),
+                    DB::raw("CONCAT(LPAD(r.prefijo, 4, '0'), '-', LPAD(r.numero, 8, '0')) AS remito"),
+                    'u.name AS operador',
+                    'p.descripcion AS epp',
+                    'dae.cantidad AS cantidad'
+                )
+                ->join('remitos AS r', 'ae.remito_id', '=', 'r.id')
+                ->join('users AS u', 'ae.operador_id', '=', 'u.id')
+                ->join('detalle_asignacion_epp AS dae', 'ae.id', '=', 'dae.asignacion_epp_id')
+                ->join('productos AS p', 'dae.producto_id', '=', 'p.id')
+                ->whereBetween('ae.fecha', [$startDate, $endDate])
+                ->orderBy('ae.fecha', 'desc'); // Ordenar por fecha del más nuevo al más viejo
+
             // Aplicar filtro por usuario si se proporciona
             if ($userId) {
                 $query->where('ae.operador_id', $userId);
             }
-        
+
             // Obtener resultados
             $results = $query->paginate($perPage);
-        
+
             return response()->json($results);
         }
 }

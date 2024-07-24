@@ -3,41 +3,114 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Frente;
-use App\Models\Remito;
-use App\Models\DetalleRemito;
-use App\Models\Producto;
+use App\Frentes;
+use App\Remitos;
+use App\DetalleRemitos;
+use App\Productos;
+use App\Ots; // Asegúrate de que esta es la clase correcta para Ots
+use App\Partes; // Asegúrate de que esta es la clase correcta para Partes
+use App\ParteDetalles;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
-class PlacasUsadasController extends Controller
-{
-    public function callView()
+    class PlacasUsadasController extends Controller
     {
-        $user = auth()->user();
-        $header_titulo = "Reportes";
-        $header_descripcion = "Certificados";
-        return view('reporte-placas.placa', compact('user', 'header_titulo', 'header_descripcion'));
-    }
+        public function callView()
+        {
+            $user = auth()->user();
+            $header_titulo = "Reportes";
+            $header_descripcion = "Certificados";
+            return view('reporte-placas.placa', compact('user', 'header_titulo', 'header_descripcion'));
+        }
 
-    public function getFrentes()
-    {
-        $frentes = Frente::select('id', 'codigo')->get();
-        return response()->json($frentes);
-    }
-
-    public function getRemitos($frentes_selected)
-    {
-        $remitos = Remito::whereIn('frente_id', $frentes_selected)->select('id', 'prefijo', 'numero', 'fecha')->get();
-        return response()->json($remitos);
-    }
-
-    public function getRemitosProductos($remitos_selected)
-    {
-        $detalles = DetalleRemito::whereIn('remito_id', $remitos_selected)->get();
-        $productos = Producto::whereIn('id', $detalles->pluck('producto_id'))
-            ->where('relacionado_a_placas_sn', 1)
-            ->get(['id', 'nombre']);
+        // Función para obtener todos los frentes
+        public function getFrentePlacas()
+        {
+            $frentes = Frentes::all();
+            return response()->json($frentes);
+        }
         
-        return response()->json($productos);
+        // Función para obtener los remitos relacionados con un frente específico
+        public function getRemitosPlacas(Request $request)
+        {
+            $request->validate([
+                'frente_id' => 'required|exists:frentes,id',
+                'fecha_desde' => 'required|date',
+                'fecha_hasta' => 'required|date',
+            ]);
+    
+            try {
+                $remitos = Remito::where('frente_id', $request->frente_id)
+                    ->whereBetween('fecha', [$request->fecha_desde, $request->fecha_hasta])
+                    ->get();
+    
+                return response()->json($remitos, 200);
+            } catch (\Exception $e) {
+                return response()->json(['error' => 'Error al cargar los remitos'], 500);
+            }
+        }
+
+        // Función para obtener los productos de los remitos seleccionados y agrupar por producto_id
+        public function getRemitosPlacasProductos(Request $request)
+        {
+            $idsRemitos = $request->input('ids_remitos');
+            $fechaDesde = $request->input('fecha_desde');
+            $fechaHasta = $request->input('fecha_hasta');
+            
+            $productos = DetalleRemitos::whereIn('remito_id', $idsRemitos)
+                ->whereBetween('created_at', [$fechaDesde, $fechaHasta])
+                ->select('producto_id', DB::raw('SUM(cantidad) as cantidad'))
+                ->groupBy('producto_id')
+                ->with('producto')
+                ->get()
+                ->map(function ($detalle) {
+                    return [
+                        'producto_id' => $detalle->producto_id,
+                        'cantidad' => $detalle->cantidad,
+                        'descripcion' => $detalle->producto->descripcion
+                    ];
+                });
+
+            return response()->json($productos);
+        }
+
+        // Nueva función para obtener Ots
+        public function getOtsParte()
+        {
+            $ots = Ots::all(['id', 'numero', 'proyecto']);
+            return response()->json($ots);
+        }
+        // Nueva función para obtener partes por OTs y fechas
+        public function getPartesPlacas(Request $request)
+        {
+            $selectedOtsIds = $request->selected_ots;
+            $fechaOtDesde = $request->fecha_ot_desde;
+            $fechaOtHasta = $request->fecha_ot_hasta;
+
+            $partes = Partes::whereIn('ot_id', $selectedOtsIds)
+                ->whereBetween('fecha', [$fechaOtDesde, $fechaOtHasta])
+                ->select('id', 'placas_repetidas', 'placas_testigos')
+                ->get();
+
+            return response()->json($partes);
+        }
+        public function getDetallePlaca(Request $request)
+        {
+            log::info($request->input('ids_partes'));
+            $partesIds = $request->input('ids_partes');
+            // Obtener los detalles agrupados
+            $detallesAgrupados = ParteDetalles::whereIn('parte_id', $partesIds)
+                ->whereNotNull('placas_final') // Filtrar solo donde placas_final no es null
+                ->get()
+                ->groupBy('cm_final') // Agrupar por cm_final
+                ->map(function ($items, $cmFinal) {
+                    return [
+                        'cm_agrupacion' => $cmFinal,
+                        'placas_total' => $items->sum('placas_final'), // Sumar placas_final
+                    ];
+                })
+                ->values();
+
+            return response()->json($detallesAgrupados);
+        }
     }
-}
