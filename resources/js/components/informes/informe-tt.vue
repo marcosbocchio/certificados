@@ -77,7 +77,7 @@
                         <div class="col-md-3">
                             <div class="form-group size-pqr-eps" >
                                 <label for="procedimientos_soldadura">EPS / WPS</label>
-                                <v-select v-model="dataForm.ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>
+                                <v-select v-model="dataForm.ot_tipo_soldadura" label="eps" :options="['EP-CSI-BRH-1130']" id="procedimientos_soldadura"></v-select>
                             </div>
                         </div>
 

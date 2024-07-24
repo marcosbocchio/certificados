@@ -503,7 +503,26 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/asistencia-operadores', 'AsistenciaController@getAsistenciaAgrupadaPorOperador');
     Route::post('/guardar-pagos', 'AsistenciaController@guardarPagos');
     Route::get('/calcular-dias-del-mes/{year}/{month}', 'AsistenciaController@calcularDiasDelMes');
+    // Asignacion
+    Route::get('/obtener-detalles-remito/{remito_id}', 'AsignacionRopaController@obtenerDetallesRemito');
+    Route::get('/asignaciones-ropa/{operador_id}', 'AsignacionRopaController@getAsignaciones');
+    Route::get('/asignacion-epp-details/{operadorId}/{remitoId}', 'AsignacionRopaController@getAsignacionEppDetails');
+    Route::get('/asignacionepp-detalle-fecha/{fecha}', 'AsignacionRopaController@getAsignacionEppDetailsByFecha');
+    Route::get('/asignacion-epp-operadores/{remitoId}', 'AsignacionRopaController@getOperadoresByRemito');
+    Route::post('/asignacion-epp', 'AsignacionRopaController@store');
+    Route::post('/actualizar-epp-stock', 'AsignacionRopaController@actualizarAsignacionStock');
+    Route::post('/buscar-asignaciones-epp', 'AsignacionRopaController@buscarAsignacionesEPP');
 
+
+    //reporte-placas
+
+    Route::get('/reporte-placas/frentes', 'PlacasUsadasController@getFrentePlacas');
+    Route::get('/reporte-placas/remitos', 'PlacasUsadasController@getRemitosPlacas');
+    Route::post('/reporte-placas/remitos-productos', 'PlacasUsadasController@getRemitosPlacasProductos');
+    Route::post('/reporte-placas/resumen-productos', 'PlacasUsadasController@resumenListaProductos');
+    Route::get('/reporte-placas/ots', 'PlacasUsadasController@getOtsParte');
+    Route::post('/reporte-placas/partes-placas', 'PlacasUsadasController@getPartesPlacas');
+    Route::post('/reporte-placas/partes-detalles-placas', 'PlacasUsadasController@getDetallePlaca');
 
 
     //procedimientos

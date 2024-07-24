@@ -26,6 +26,7 @@ class ReporteCertificadosPartesController extends Controller
         return view('reporte-certificados.certificados',compact('user','header_titulo','header_descripcion'));
 
     }
+    
     public function callViewPartes(){
 
         $user = auth()->user();

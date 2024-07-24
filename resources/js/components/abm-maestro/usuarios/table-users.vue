@@ -9,7 +9,7 @@
               <th>Nombre</th>
               <th>Email</th>
               <th>Cliente</th>
-              <th colspan="2">&nbsp;</th>
+              <th colspan="3">&nbsp;</th>
             </tr>
           </thead>
           <tbody>
@@ -24,6 +24,11 @@
               </td>
               <td width="10px">
                 <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_usuarios_edita')"><span class="fa fa-edit"></span></button>
+              </td>
+              <td width="10px">
+                <button @click="AsignacionO(registro)" class="btn btn-default btn-sm" title="EEP" :disabled="!$can('M_usuarios_edita')">
+                    <span class="fas fa-clipboard"></span>
+                </button>
               </td>
               <td width="10px">
                 <button class="btn btn-danger btn-sm" title="Eliminar " v-on:click.prevent="$emit('confirmarDelete',registro,registro.name)" :disabled="!$can('M_usuarios_edita')"><span class="fa fa-trash"></span></button>
@@ -64,6 +69,9 @@
     methods: {
     updateValue: function (registro) {
        this.$emit('editar', registro);
+    },
+    AsignacionO : function(registro){
+      window.location.href =  '/area/enod/asignacion-operador/' + registro.id
     }
   }
   }

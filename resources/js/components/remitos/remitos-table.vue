@@ -67,6 +67,11 @@
                                                 <span class="fa fa-edit"></span>
                                             </button>
                                         </td>
+                                        <td width="10px">
+                                            <button @click="AsignacionR(k)" class="btn btn-default btn-sm" title="EEP" :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 1">
+                                                <span class="fas fa-clipboard"></span>
+                                            </button>
+                                        </td>
                                        <td v-if="remito.interno_sn" width="10px"> 
                                            <a :href="'/pdf/remito/' + remito.id" target="_blank" class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a>
                                        </td>
@@ -186,6 +191,11 @@ export default {
     editRemito : function(index){
 
         window.location.href =  '/area/enod/remito/' + this.remitos.data[index].id +'/edit'
+
+    },
+    AsignacionR : function(index){
+        
+        window.location.href =  '/area/enod/asignacion-remito/' + this.remitos.data[index].id
 
     }
  }

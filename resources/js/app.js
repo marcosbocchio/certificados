@@ -314,6 +314,8 @@ Vue.component('elementos', require('./components/reportes/elementos.vue').defaul
 Vue.component('placas', require('./components/reportes/placas.vue').default);
 Vue.component('reporte-certificados', require('./components/reportes/reporte-certificados.vue').default);
 Vue.component('reporte-resumen-certificado', require('./components/reportes/reporte-resumen-certificado.vue').default);
+Vue.component('reporte-epp', require('./components/reportes/reporte-epp.vue').default);
+Vue.component('reporte-placas', require('./components/reportes/reporte-placas.vue').default);
 Vue.component('reporte-partes', require('./components/reportes/reporte-partes.vue').default);
 Vue.component('reporte-interno-equipos-ri', require('./components/reportes/reporte-interno-equipos-ri.vue').default);
 
@@ -387,6 +389,16 @@ Vue.component('asistencia-resumen', AsistenciaResumen);
 import AsistenciaCopia from './components/control-asistencia/asistencia-copia.vue';
 Vue.component('asistencia-copia', AsistenciaCopia);
 
+/* asignacion ropa */
+
+import AsignacionNuevo from './components/asignaciones/asignacion-nuevo.vue';
+Vue.component('asignacion-nuevo', AsignacionNuevo);
+import AsignacionRemito from './components/asignaciones/asignacion-remito.vue';
+Vue.component('asignacion-remito', AsignacionRemito);
+import AsignacionOperador from './components/asignaciones/asignacion-operador.vue';
+Vue.component('asignacion-operador', AsignacionOperador);
+import AsignacionOperadorManual from './components/asignaciones/asignacion-operador-manual.vue';
+Vue.component('asignacion-operador-manual', AsignacionOperadorManual);
 
 /* modal confirmacion */
 

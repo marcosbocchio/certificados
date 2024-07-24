@@ -101,6 +101,14 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/asistencia/edit/{id}', 'AsistenciaController@edit')->name('asistencia.edit');
       Route::get('/asistencia/copia/{id}', 'AsistenciaController@copia')->name('asistencia.copia');
 
+
+      Route::get('/area/enod/reportes/resumen-epp','AsignacionRopaController@callViewReporteEPP')->name('reporte-resumen-epp');
+      Route::get('/area/enod/asignacion-nuevo/{operador}/remito/{id_remito?}', 'AsignacionRopaController@nuevo')->name('asignacion-nuevo');
+      Route::get('/area/enod/asignacion-remito/{id_remito}', 'AsignacionRopaController@callRemito')->name('asignacion-remito');
+      Route::get('/area/enod/asignacion-operador/{operador}', 'AsignacionRopaController@callOperador')->name('asignacion-operador');
+      Route::get('/area/enod/asignacion-operador-manual/{operador}/{fechaw}/{edit}', 'AsignacionRopaController@callOperadorManual')->name('asignacion-operador-manual');
+
+      
       Route::get('/area/enod/contratistas', 'ContratistasController@callView')->name('contratistas');
       Route::get('/area/enod/unidades-medidas', 'UnidadesMedidasController@callView')->name('unidades-medidas');
       Route::get('/area/enod/medidas', 'MedidasController@callView')->name('medidas');
@@ -178,6 +186,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/reportes/resumen-certificado','ReporteResumenCertificadoController@callView')->name('reporte-resumen-certificado');
       Route::get('/area/enod/reportes/certificados','ReporteCertificadosPartesController@callView')->name('reporte-certificados');
       Route::get('/area/enod/reportes/partes','ReporteCertificadosPartesController@callViewPartes')->name('reporte-partes');
+      Route::get('/area/enod/reportes/placasU','PlacasUsadasController@callView')->name('reporte-resumen-placasU');
+
 
       /* QR */
       Route::get('/area/enod/qr/interno_equipos','QrController@callViewInternoEquipo')->name('qr-interno-equipos');

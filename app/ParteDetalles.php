@@ -13,5 +13,10 @@ class ParteDetalles extends Model
         return $this->belongsTo('App\UnidadesMedidas','unidades_medida_id','id');
         
     }
+    
+    public function parte()
+    {
+        return $this->belongsTo(Partes::class, 'parte_id', 'id');
+    }
 
 }
