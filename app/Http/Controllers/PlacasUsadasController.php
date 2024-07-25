@@ -51,17 +51,17 @@ use Illuminate\Support\Facades\Log;
         public function getRemitosPlacasProductos(Request $request)
         {
             $idsRemitos = $request->input('ids_remitos');
-            
+
             $productos = DetalleRemitos::whereIn('remito_id', $idsRemitos)
-                ->select('producto_id', DB::raw('SUM(cantidad) as cantidad'))
-                ->groupBy('producto_id')
-                ->with('producto')
+                ->join('productos', 'detalle_remitos.producto_id', '=', 'productos.id')
+                ->select('detalle_remitos.producto_id', 'productos.relacionado_a_placas_sn', 'productos.descripcion', DB::raw('SUM(detalle_remitos.cantidad) as cantidad'))
+                ->groupBy('detalle_remitos.producto_id', 'productos.relacionado_a_placas_sn', 'productos.descripcion')
                 ->get()
                 ->map(function ($detalle) {
                     return [
                         'producto_id' => $detalle->producto_id,
-                        'cantidad' => $detalle->cantidad,
-                        'descripcion' => $detalle->producto->descripcion
+                        'cantidad' => $detalle->relacionado_a_placas_sn ? $detalle->cantidad : 1,
+                        'descripcion' => $detalle->descripcion
                     ];
                 });
 
