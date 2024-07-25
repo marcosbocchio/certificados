@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Log;
         {
             $user = auth()->user();
             $header_titulo = "Reportes";
-            $header_descripcion = "Certificados";
+            $header_descripcion = "placas usadas";
             return view('reporte-placas.placa', compact('user', 'header_titulo', 'header_descripcion'));
         }
 
