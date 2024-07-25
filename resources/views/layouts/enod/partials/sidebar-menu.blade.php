@@ -286,6 +286,9 @@
               @can('R_resumen_epp')
                    <li><a href="{{ route('reporte-resumen-epp') }}">Entrega indumentaria laboral</a></li>
               @endcan
+              @can('R_resumen_epp')
+                   <li><a href="{{ route('reporte-resumen-placasU') }}">placas entregas</a></li>
+              @endcan
 
 
             </ul>

@@ -11,42 +11,39 @@
                 v-model="selectedFrente"
                 :options="frentes"
                 label="codigo"
+                @input="handleFrenteChange"
+                class="custom-select"
               ></v-select>
             </li>
             <!-- Datepickers para Fecha Desde/Hasta -->
-            <li class="list-group-item">
-              <span class="titulo-li">Fecha Desde</span>
-              <date-picker
-                v-model="fechaDesde"
-                value-type="YYYY-MM-DD"
-                format="DD-MM-YYYY"
-              ></date-picker>
+            <li class="list-fecha list-group-item pointer">
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                  <date-picker
+                    v-model="fechaDesde"
+                    value-type="YYYY-MM-DD"
+                    format="DD-MM-YYYY"
+                    placeholder="Desde"
+                  ></date-picker>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                  <date-picker
+                    v-model="fechaHasta"
+                    value-type="YYYY-MM-DD"
+                    format="DD-MM-YYYY"
+                    placeholder="Hasta"
+                  ></date-picker>
+                </div>
+              </div>
             </li>
-            <li class="list-group-item">
-              <span class="titulo-li">Fecha Hasta</span>
-              <date-picker
-                v-model="fechaHasta"
-                value-type="YYYY-MM-DD"
-                format="DD-MM-YYYY"
-              ></date-picker>
-            </li>
-            <!-- Botón para Cargar Remitos -->
-            <button
-              @click="CargarRemitos"
-              class="btn btn-enod btn-block"
-              :disabled="!selectedFrente || !fechaDesde || !fechaHasta"
-            >
-              <span class="fa fa-refresh"></span> Cargar Remitos
-            </button>
             <!-- Select para Remitos -->
-            <li class="list-group-item pointer" v-if="remitos.length > 0">
-              <span class="titulo-li">Remito</span>
+            <li class="list-group-item pointer">
+              <span class="titulo-li">Remitos</span>
               <v-select
                 v-model="selectedRemitos"
                 :options="remitos"
                 label="formatted"
                 multiple
-                :disabled="remitos.length === 0"
               ></v-select>
             </li>
             <!-- Select para OTs -->
@@ -64,22 +61,26 @@
                 </template>
               </v-select>
             </li>
-            <!-- Añadido filtro de fechas para OTs -->
-            <li class="list-group-item">
-              <span class="titulo-li">Fecha OT Desde</span>
-              <date-picker
-                v-model="fechaOtDesde"
-                value-type="YYYY-MM-DD"
-                format="DD-MM-YYYY"
-              ></date-picker>
-            </li>
-            <li class="list-group-item">
-              <span class="titulo-li">Fecha OT Hasta</span>
-              <date-picker
-                v-model="fechaOtHasta"
-                value-type="YYYY-MM-DD"
-                format="DD-MM-YYYY"
-              ></date-picker>
+            <!-- Filtro de fechas para OTs -->
+            <li class="list-fecha list-group-item pointer">
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                  <date-picker
+                    v-model="fechaOtDesde"
+                    value-type="YYYY-MM-DD"
+                    format="DD-MM-YYYY"
+                    placeholder="Desde"
+                  ></date-picker>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                  <date-picker
+                    v-model="fechaOtHasta"
+                    value-type="YYYY-MM-DD"
+                    format="DD-MM-YYYY"
+                    placeholder="Hasta"
+                  ></date-picker>
+                </div>
+              </div>
             </li>
           </ul>
           <!-- Botón Buscar -->
@@ -110,20 +111,22 @@
             </h3>
           </div>
           <div class="box-body">
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>Cantidad</th>
-                  <th>Producto</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="producto in productos" :key="producto.producto_id">
-                  <td>{{ producto.cantidad }}</td>
-                  <td>{{ producto.descripcion }}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th class="col-md-1">Cantidad</th>
+                    <th class="col-md-2">Producto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="producto in productos" :key="producto.producto_id">
+                    <td>{{ producto.cantidad }}</td>
+                    <td>{{ producto.descripcion }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -144,26 +147,28 @@
             </h3>
           </div>
           <div class="box-body">
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>Cantidad</th>
-                  <th>Medida Placa</th>
-                  <th>Total cm²</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="detalle in detallesPlacas" :key="detalle.cm_agrupacion">
-                  <td>{{ detalle.placas_total }}</td>
-                  <td>{{ detalle.cm_agrupacion }}</td>
-                  <td>{{ calculateTotalCm(detalle) }}</td>
-                </tr>
-                <tr>
-                  <td colspan="2"><strong>Total:</strong></td>
-                  <td><strong>{{ calculateGrandTotal }}</strong></td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-striped table-condensed">
+                <thead>
+                  <tr>
+                    <th class="col-md-1">Cantidad</th>
+                    <th class="col-md-2">Medida Placa</th>
+                    <th class="col-md-2">Total cm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="detalle in detallesPlacas" :key="detalle.cm_agrupacion">
+                    <td>{{ detalle.placas_total }}</td>
+                    <td>{{ detalle.cm_agrupacion }}</td>
+                    <td>{{ calculateTotalCm(detalle) }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><strong>Total:</strong></td>
+                    <td><strong>{{ calculateGrandTotal }}</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -182,15 +187,20 @@
 </template>
 
 <script>
-import vSelect from "vue-select";
-import Datepicker from "vuejs-datepicker";
-import "vue-select/dist/vue-select.css";
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
-import axios from "axios";
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+import axios from 'axios';
 
 export default {
-  components: { vSelect, Loading, "date-picker": Datepicker },
+  components: {
+  DatePicker,
+  vSelect,
+  Loading
+  },
   data() {
     return {
       selectedFrente: null,
@@ -200,12 +210,11 @@ export default {
       productos: [],
       fechaDesde: null,
       fechaHasta: null,
-      selectedOts: [], // Nuevo estado para OTs seleccionados
+      selectedOts: [], // Estado para OTs seleccionados
       ots: [], // Lista de opciones de OTs
-      fechaOtDesde: null, // Nuevo estado para fecha OT desde
-      fechaOtHasta: null, // Nuevo estado para fecha OT hasta
-      partes: [], // Nueva lista para almacenar los resultados de partes
-      detallesPlacas: [], // Nueva lista para almacenar los detalles de placas
+      fechaOtDesde: null, // Estado para fecha OT desde
+      fechaOtHasta: null, // Estado para fecha OT hasta
+      detallesPlacas: [], // Lista para almacenar detalles de placas
       isLoading: false,
     };
   },
@@ -218,9 +227,26 @@ export default {
         console.error("Error loading frentes:", error);
       }
     },
+    async CargarOts() {
+      try {
+        const response = await axios.get("/api/reporte-placas/ots");
+        this.ots = response.data;
+      } catch (error) {
+        console.error("Error loading OTs:", error);
+      }
+    },
+    async handleFrenteChange() {
+      if (this.fechaDesde && this.fechaHasta) {
+        this.CargarRemitos();
+      }
+    },
+    async handleFechaChange() {
+      if (this.selectedFrente) {
+        this.CargarRemitos();
+      }
+    },
     async CargarRemitos() {
       if (!this.selectedFrente || !this.fechaDesde || !this.fechaHasta) {
-        alert("Por favor, selecciona un frente y las fechas.");
         return;
       }
 
@@ -250,15 +276,12 @@ export default {
       }
     },
     async CargarProductos() {
-      this.productos = [];
       if (this.selectedRemitos.length > 0) {
         try {
           const response = await axios.post(
             "/api/reporte-placas/remitos-productos",
             {
               ids_remitos: this.selectedRemitos.map((remito) => remito.id),
-              fecha_desde: this.fechaDesde,
-              fecha_hasta: this.fechaHasta,
             }
           );
           this.productos = response.data;
@@ -267,119 +290,95 @@ export default {
         }
       }
     },
-    async loadOts() {
+    async Buscar() {
+  try {
+    this.isLoading = true;
+
+    // Primero obtén las partes
+    const responsePartes = await axios.post("/api/reporte-placas/partes-placas", {
+      fecha_ot_desde: this.fechaOtDesde,
+      fecha_ot_hasta: this.fechaOtHasta,
+      ots_ids: this.selectedOts.map((ot) => ot.id),
+    });
+    this.CargarProductos();
+    this.partes = responsePartes.data;
+
+    // Luego, obtén los detalles de las placas usando las partes obtenidas
+    const responseDetalles = await axios.post("/api/reporte-placas/partes-detalles-placas", {
+      ids_partes: this.partes.map(parte => parte.id),
+    });
+
+    this.detallesPlacas = responseDetalles.data;
+
+    this.isLoading = false;
+  } catch (error) {
+    console.error("Error fetching details:", error);
+    this.isLoading = false;
+  }
+},
+    async getRemitosPlacas(partes) {
       try {
-        const response = await axios.get("/api/reporte-placas/ots");
-        this.ots = response.data;
-      } catch (error) {
-        console.error("Error loading ots:", error);
-      }
-    },
-    async CargarPartes() {
-      this.partes = [];
-      if (this.selectedOts.length > 0) {
-        try {
-          const response = await axios.post(
-            "/api/reporte-placas/ot-detalle-placas",
-            {
-              ids_ots: this.selectedOts.map((ot) => ot.id),
-              fecha_desde: this.fechaOtDesde,
-              fecha_hasta: this.fechaOtHasta,
-            }
-          );
-          this.partes = response.data;
-        } catch (error) {
-          console.error("Error loading partes:", error);
-        }
-      }
-    },
-    Buscar() {
-      if (
-        this.selectedRemitos.length === 0 ||
-        !this.fechaDesde ||
-        !this.fechaHasta ||
-        this.selectedOts.length === 0 ||
-        !this.fechaOtDesde ||
-        !this.fechaOtHasta
-      ) {
-        return;
-      }
-
-      this.isLoading = true;
-
-      // Cargar productos y partes en paralelo
-      Promise.all([this.CargarProductos(), this.CargarPartes()])
-        .then(([productos, partes]) => {
-          this.productos = productos;
-          this.partes = partes;
-          this.detallesPlacas = this.agruparPartes(partes);
-        })
-        .catch((error) => {
-          console.error("Error in search:", error);
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
-    },
-    agruparPartes(partes) {
-      // Agrupar las partes según sea necesario y devolver la estructura de datos agrupada
-      return partes.reduce((acc, parte) => {
-        const cmAgrupacion = parte.cm_agrupacion;
-        const index = acc.findIndex(
-          (item) => item.cm_agrupacion === cmAgrupacion
+        const response = await axios.post(
+          "/api/reporte-placas/remitos-productos",
+          {
+            partes: partes,
+          }
         );
-        if (index >= 0) {
-          acc[index].placas_total += parte.placas_total;
-        } else {
-          acc.push({
-            cm_agrupacion: cmAgrupacion,
-            placas_total: parte.placas_total,
-          });
-        }
-        return acc;
-      }, []);
+        return response.data;
+      } catch (error) {
+        console.error("Error getting remitos placas:", error);
+        return [];
+      }
     },
+    formatDate(date) {
+      return new Date(date).toLocaleDateString('es-AR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      });
+    },
+    // Calcular el total cm² de una placa
     calculateTotalCm(detalle) {
-      // Calcula el total de cm² para un detalle dado
-      return parseFloat(detalle.cm_agrupacion) * detalle.placas_total;
+      const dimensiones = this.extractDimensions(detalle.cm_agrupacion);
+      return dimensiones ? detalle.placas_total * dimensiones : 0;
     },
+    // Extraer dimensiones de una cadena de formato "ancho x alto"
+    extractDimensions(dimensionString) {
+  const parts = dimensionString.split('x').map(part => part.trim()); // Divide la cadena y elimina espacios
+  if (parts.length === 2) {
+    const [width, height] = parts.map(Number); // Convierte las partes a números
+    return height; // Retorna solo el valor de 'height'
+  }
+  return null; // Retorna null si no tiene el formato esperado
+},
   },
   computed: {
-    // Calcula el total general de cm² para todas las placas
     calculateGrandTotal() {
-      return this.detallesPlacas.reduce(
-        (total, detalle) =>
-          total + parseFloat(detalle.cm_agrupacion) * detalle.placas_total,
-        0
-      );
+      return this.detallesPlacas.reduce((total, detalle) => {
+        return total + this.calculateTotalCm(detalle);
+      }, 0);
+    }
+  },
+  watch: {
+    fechaDesde() {
+      this.handleFechaChange();
+    },
+    fechaHasta() {
+      this.handleFechaChange();
+    },
+    selectedFrente() {
+      if (this.fechaDesde && this.fechaHasta) {
+        this.handleFrenteChange();
+      }
     },
   },
-  filters: {
-    formatDate(value) {
-      if (!value) return "";
-      const date = new Date(value);
-      return date.toLocaleDateString();
-    },
-  },
-  mounted() {
+  created() {
     this.loadFrentes();
-    this.loadOts();
+    this.CargarOts();
   },
 };
 </script>
 
 <style scoped>
-.upSelect {
-  font-weight: bold;
-}
-.downSelect {
-  color: #555;
-  font-size: 12px;
-}
-.pointer {
-  cursor: pointer;
-}
-.v-select {
-  width: 100%;
-}
+
 </style>

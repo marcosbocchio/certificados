@@ -39,26 +39,20 @@ use Illuminate\Support\Facades\Log;
                 'fecha_hasta' => 'required|date',
             ]);
     
-            try {
-                $remitos = Remito::where('frente_id', $request->frente_id)
+            
+                $remitos = Remitos::where('frente_destino_id', $request->frente_id)
                     ->whereBetween('fecha', [$request->fecha_desde, $request->fecha_hasta])
                     ->get();
     
-                return response()->json($remitos, 200);
-            } catch (\Exception $e) {
-                return response()->json(['error' => 'Error al cargar los remitos'], 500);
-            }
+                return response()->json($remitos);
         }
 
         // Función para obtener los productos de los remitos seleccionados y agrupar por producto_id
         public function getRemitosPlacasProductos(Request $request)
         {
             $idsRemitos = $request->input('ids_remitos');
-            $fechaDesde = $request->input('fecha_desde');
-            $fechaHasta = $request->input('fecha_hasta');
             
             $productos = DetalleRemitos::whereIn('remito_id', $idsRemitos)
-                ->whereBetween('created_at', [$fechaDesde, $fechaHasta])
                 ->select('producto_id', DB::raw('SUM(cantidad) as cantidad'))
                 ->groupBy('producto_id')
                 ->with('producto')
@@ -83,7 +77,7 @@ use Illuminate\Support\Facades\Log;
         // Nueva función para obtener partes por OTs y fechas
         public function getPartesPlacas(Request $request)
         {
-            $selectedOtsIds = $request->selected_ots;
+            $selectedOtsIds = $request->ots_ids;
             $fechaOtDesde = $request->fecha_ot_desde;
             $fechaOtHasta = $request->fecha_ot_hasta;
 
