@@ -47,8 +47,8 @@ class AsignacionRopaController extends Controller
         
 
         // Obtener los user_id únicos y los usuarios correspondientes
-        $uniqueUserIds = $this->getUniqueUserIds();
-        $operadores = $this->getUsersByIds($uniqueUserIds);
+        
+        $operadores = $this->getUsersByIds();
 
         // Obtener el operador completo usando el ID
         $operador = $this->getUser($operador);
@@ -63,8 +63,8 @@ class AsignacionRopaController extends Controller
         $header_descripcion = "Alta | Modificación";
 
         // Obtener los user_id únicos y los usuarios correspondientes
-        $uniqueUserIds = $this->getUniqueUserIds();
-        $operadores = $this->getUsersByIds($uniqueUserIds);
+        
+        $operadores = $this->getUsersByIds();
         $remito_data = Remitos::where('id',$id_remito)->get()->map(function ($remito) {
             $remito->formateado = sprintf('%04d-%08d', $remito->prefijo, $remito->numero);
             return $remito;
@@ -107,8 +107,8 @@ class AsignacionRopaController extends Controller
         $header_titulo = "Reportes";
         $header_descripcion ="EPP";
         // Obtener los user_id únicos y los usuarios correspondientes
-        $uniqueUserIds = $this->getUniqueUserIds();
-        $operadores = $this->getUsersByIds($uniqueUserIds);
+        
+        $operadores = $this->getUsersByIds();
         return view('reporte-epp.epp',compact('user','header_titulo','header_descripcion','operadores'));
 
     }
@@ -125,11 +125,11 @@ class AsignacionRopaController extends Controller
         }
     
         // Función para obtener los usuarios de la tabla User usando los user_id únicos
-        private function getUsersByIds($ids)
+        private function getUsersByIds()
         {
-            return User::whereIn('id', $ids)
-                        ->orderBy('name', 'asc')    // Ordenar por nombre alfabéticamente
-                        ->get();
+            return User::whereNull('cliente_id')  // Filtrar usuarios con cliente_id null
+                ->orderBy('name', 'asc')  // Ordenar por nombre alfabéticamente
+                ->get();
         }
     
         // Función para obtener un usuario por su ID
