@@ -128,7 +128,6 @@ class AsignacionRopaController extends Controller
         private function getUsersByIds($ids)
         {
             return User::whereIn('id', $ids)
-                        ->where('habilitado_sn', 1) // Filtrar usuarios habilitados
                         ->orderBy('name', 'asc')    // Ordenar por nombre alfabéticamente
                         ->get();
         }
