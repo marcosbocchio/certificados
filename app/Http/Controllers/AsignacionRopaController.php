@@ -127,7 +127,10 @@ class AsignacionRopaController extends Controller
         // Función para obtener los usuarios de la tabla User usando los user_id únicos
         private function getUsersByIds($ids)
         {
-            return User::whereIn('id', $ids)->get();
+            return User::whereIn('id', $ids)
+                        ->where('habilitado_sn', 1) // Filtrar usuarios habilitados
+                        ->orderBy('name', 'asc')    // Ordenar por nombre alfabéticamente
+                        ->get();
         }
     
         // Función para obtener un usuario por su ID
