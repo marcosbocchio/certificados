@@ -251,7 +251,7 @@ methods: {
       }));
   } catch (error) {
     console.error(error);
-    toastr.error('Error al obtener los datos de asistencia');
+  
   } finally {
     this.isLoading = false;
   }
