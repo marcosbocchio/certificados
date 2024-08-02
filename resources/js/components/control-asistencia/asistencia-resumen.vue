@@ -36,6 +36,7 @@
             <tr>
               <th style="width: 76px;">Pagos Mensual</th>
               <th style="width: 130px;">Operador</th>
+              <th style="width: 100px;">Responsabilidad</th>
               <th style="width: 76px;">Días Hábiles</th>
               <th style="width: 28px;">Sab.</th>
               <th style="width: 28px;">Dom.</th>
@@ -55,8 +56,16 @@
           </thead>
           <tbody>
             <tr v-for="operador in operarios" :key="operador.operador.id">
-              <td><input type="checkbox" v-model="operador.pagosExtMensual" :disabled="operador.precargadoPagosExtMensual" /></td>
+              <td>
+                <div class="checkbox-container">
+                  <input type="checkbox" v-model="operador.pagosExtMensual" @change="openPopup(operador, 'pago_mes')" :disabled="operador.precargadoPagosExtMensual" />
+                  <div class="date-tooltip" v-if="operador.fecha_pago_mes">
+                    {{ operador.fecha_pago_mes }}
+                  </div>
+                </div>
+              </td>
               <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }">{{ operador.operador.name }}</td>
+              <td>{{ operador.responsabilidad }}</td>
               <td v-if="frente_selected.id === 2">-</td>
               <td v-else>{{ operador.diasHabiles }}</td>
               <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
@@ -68,18 +77,76 @@
               <td v-if="frente_selected.id === 2">-</td>
               <td v-else>{{ operador.horasExtras }}</td>
               <td>{{ operador.serviciosExtrasS1 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS1" :disabled="operador.precargadoPagoS1" /></td>
+              <td>
+                <div class="checkbox-container">
+                  <input type="checkbox" v-model="operador.pagoS1" @change="openPopup(operador, 'pago_s1')" :disabled="operador.precargadoPagoS1" />
+                  <div class="date-tooltip" v-if="operador.fecha_pago_s1">
+                    {{ operador.fecha_pago_s1 }}
+                  </div>
+                </div>
+              </td>
               <td>{{ operador.serviciosExtrasS2 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS2" :disabled="operador.precargadoPagoS2" /></td>
+              <td>
+                <div class="checkbox-container">
+                  <input type="checkbox" v-model="operador.pagoS2" @change="openPopup(operador, 'pago_s2')" :disabled="operador.precargadoPagoS2" />
+                  <div class="date-tooltip" v-if="operador.fecha_pago_s2">
+                    {{ operador.fecha_pago_s2 }}
+                  </div>
+                </div>
+              </td>
               <td>{{ operador.serviciosExtrasS3 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS3" :disabled="operador.precargadoPagoS3" /></td>
+              <td>
+                <div class="checkbox-container">
+                  <input type="checkbox" v-model="operador.pagoS3" @change="openPopup(operador, 'pago_s3')" :disabled="operador.precargadoPagoS3" />
+                  <div class="date-tooltip" v-if="operador.fecha_pago_s3">
+                    {{ operador.fecha_pago_s3 }}
+                  </div>
+                </div>
+              </td>
               <td>{{ operador.serviciosExtrasS4 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS4" :disabled="operador.precargadoPagoS4" /></td>
+              <td>
+                <div class="checkbox-container">
+                  <input type="checkbox" v-model="operador.pagoS4" @change="openPopup(operador, 'pago_s4')" :disabled="operador.precargadoPagoS4" />
+                  <div class="date-tooltip" v-if="operador.fecha_pago_s4">
+                    {{ operador.fecha_pago_s4 }}
+                  </div>
+                </div>
+              </td>
               <td>{{ operador.serviciosExtrasS5 }}</td>
-              <td><input type="checkbox" v-model="operador.pagoS5" :disabled="operador.precargadoPagoS5" /></td>
+              <td>
+                <div class="checkbox-container">
+                  <input type="checkbox" v-model="operador.pagoS5" @change="openPopup(operador, 'pago_s5')" :disabled="operador.precargadoPagoS5" />
+                  <div class="date-tooltip" v-if="operador.fecha_pago_s5">
+                    {{ operador.fecha_pago_s5 }}
+                  </div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <!-- Pop-up de Selección de Fecha -->
+      <div v-if="mostrarPopup" class="modal show" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Seleccionar Fecha para {{ tipoPagoSeleccionado }}</h5>
+              <button type="button" class="close" @click="cerrarPopup">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="fecha-select">Fecha</label>
+                <date-picker v-model="fechaSeleccionada" type="date" format="dd-MM-yyyy" class="date-picker-custom" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="confirmarFecha">Confirmar</button>
+              <button type="button" class="btn btn-secondary" @click="cerrarPopup">Cancelar</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
@@ -108,13 +175,17 @@ props: {
 },
 data() {
   return {
-    frente_selected: '',
-    selectedDate: '',
-    diasHabiles: '',
-    operarios: [],
-    isLoading: false
-  };
-},
+      frente_selected: null,
+      selectedDate: null,
+      diasHabiles: '',
+      operarios: [],
+      isLoading: false,
+      mostrarPopup: false,
+      operadorSeleccionado: null,
+      fechaSeleccionada: null,
+      tipoPagoSeleccionado: null
+    };
+  },
 watch: {
   frente_selected(newVal) {
     if (newVal) {
@@ -129,28 +200,26 @@ watch: {
 },
 methods: {
   async fetchAsistencia() {
-    if (!this.selectedDate || !this.frente_selected) {
-      return;
-    }
+    if (!this.selectedDate || !this.frente_selected) return;
 
-    const { year, month } = this.formatDateToMonthYear(this.selectedDate);
-    this.isLoading = true;
+  const { year, month } = this.formatDateToMonthYear(this.selectedDate);
+  this.isLoading = true;
 
-    try {
-      // Llamada a la nueva API para calcular los días del mes
-      const diasDelMesResponse = await axios.get(`/api/calcular-dias-del-mes/${year}/${month}`);
-      this.diasHabiles = diasDelMesResponse.data.diasHabiles;
+  try {
+    const diasDelMesResponse = await axios.get(`/api/calcular-dias-del-mes/${year}/${month}`);
+    this.diasHabiles = diasDelMesResponse.data.diasHabiles;
 
-      const response = await axios.get('/api/asistencia-operadores', {
-        params: {
-          year,
-          month,
-          frent_id: this.frente_selected.id
-        }
-      });
+    const response = await axios.get('/api/asistencia-operadores', {
+      params: {
+        year,
+        month,
+        frent_id: this.frente_selected.id
+      }
+    });
 
-      this.operarios = response.data.asistencias.map(operador => ({
+    this.operarios = response.data.asistencias.map(operador => ({
         operador: operador.operador,
+        responsabilidad: operador.responsabilidad,
         diasHabiles: operador.diasHabiles,
         sabados: operador.sabados,
         domingos: operador.domingos,
@@ -161,6 +230,12 @@ methods: {
         serviciosExtrasS3: operador.serviciosExtrasS3,
         serviciosExtrasS4: operador.serviciosExtrasS4,
         serviciosExtrasS5: operador.serviciosExtrasS5,
+        fecha_pago_s1: operador.fecha_pago_s1,
+        fecha_pago_s2: operador.fecha_pago_s2,
+        fecha_pago_s3: operador.fecha_pago_s3,
+        fecha_pago_s4: operador.fecha_pago_s4,
+        fecha_pago_s5: operador.fecha_pago_s5,
+        fecha_pago_mes: operador.fecha_pago_mes,
         pagoS1: operador.pagoS1 || false,
         pagoS2: operador.pagoS2 || false,
         pagoS3: operador.pagoS3 || false,
@@ -174,17 +249,53 @@ methods: {
         precargadoPagoS5: operador.pagoS5 || false,
         precargadoPagosExtMensual: operador.pagosExtMensual || false
       }));
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        console.error(error.response.data.message);
-        this.operarios = [];
-      } else {
-        toastr.error('Error al cargar los datos');
-      }
-    } finally {
-      this.isLoading = false;
-    }
+  } catch (error) {
+    console.error(error);
+    toastr.error('Error al obtener los datos de asistencia');
+  } finally {
+    this.isLoading = false;
+  }
   },
+  openPopup(operador, tipoPago) {
+      this.operadorSeleccionado = operador;
+      this.tipoPagoSeleccionado = tipoPago;
+      this.fechaSeleccionada = null; // Reset the date picker
+      this.mostrarPopup = true;
+    },
+
+    cerrarPopup() {
+      this.mostrarPopup = false;
+      this.operadorSeleccionado = null;
+      this.tipoPagoSeleccionado = null;
+    },
+    confirmarFecha() {
+      if (!this.operadorSeleccionado || !this.tipoPagoSeleccionado || !this.fechaSeleccionada) return;
+
+      const formattedDate = this.fechaSeleccionada.toISOString().split('T')[0]; // Format date to YYYY-MM-DD
+
+      switch (this.tipoPagoSeleccionado) {
+        case 'pago_mes':
+          this.operadorSeleccionado.fecha_pago_mes = formattedDate;
+          break;
+        case 'pago_s1':
+          this.operadorSeleccionado.fecha_pago_s1 = formattedDate;
+          break;
+        case 'pago_s2':
+          this.operadorSeleccionado.fecha_pago_s2 = formattedDate;
+          break;
+        case 'pago_s3':
+          this.operadorSeleccionado.fecha_pago_s3 = formattedDate;
+          break;
+        case 'pago_s4':
+          this.operadorSeleccionado.fecha_pago_s4 = formattedDate;
+          break;
+        case 'pago_s5':
+          this.operadorSeleccionado.fecha_pago_s5 = formattedDate;
+          break;
+      }
+
+      this.cerrarPopup();
+    },
   async guardarPagos() {
     // Verificar si al menos un checkbox está seleccionado
     const operariosSeleccionados = this.operarios.filter(operador => 
@@ -281,5 +392,32 @@ methods: {
 .table tbody td input[type="checkbox"] {
   margin: 0 auto; /* Centrar los checkboxes */
   display: block;
+}
+
+.checkbox-container {
+  position: relative;
+  display: inline-block;
+}
+
+.date-tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Sitúa el tooltip arriba del checkbox */
+  left: 50%;
+  margin-left: -60px; /* Centra el tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.checkbox-container:hover .date-tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 </style>

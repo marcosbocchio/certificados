@@ -22,6 +22,12 @@ class OperadorControl extends Model
         'servicios_extras_s3',
         'servicios_extras_s4',
         'servicios_extras_s5',
+        'fecha_pago_s1',
+        'fecha_pago_s2',
+        'fecha_pago_s3',
+        'fecha_pago_s4',
+        'fecha_pago_s5',
+        'fecha_pago_mes',
         'pago_mes_sn'
     ];
 }

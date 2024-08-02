@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AsistenciaDetalle extends Model
 {
     protected $table = 'asistencia_detalle';
-    protected $fillable = ['asistencia_horas_id', 'operador_id', 'entrada', 'salida', 'contratista_id', 'parte'];
+    protected $fillable = ['asistencia_horas_id','ayudante_sn', 'operador_id', 'entrada', 'salida', 'contratista_id', 'parte'];
 
     // Relación con AsistenciaHora
     public function asistenciaHora()

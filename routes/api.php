@@ -495,6 +495,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     //Asistencia
     Route::resource('Asistencia', 'AsistenciaController');
     Route::post('/guardar_asistencia', 'AsistenciaController@guardarAsistencia');
+    Route::post('/asistencia-comprobar-parte', 'AsistenciaController@controlarParte');
     Route::get('/area/enod/asistencia', 'AsistenciaController@getPaginatedAsistencia')->name('api.asistencia.paginated');
     Route::get('/asistencia/{id}', 'AsistenciaController@getAsistencia');
     Route::post('/asistencia/{id}/update', 'AsistenciaController@updateAsistencia')->name('asistencia.update');

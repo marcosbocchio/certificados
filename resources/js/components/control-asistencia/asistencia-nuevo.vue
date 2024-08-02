@@ -87,6 +87,7 @@
           <thead>
             <tr>
               <th>Operador</th>
+              <th>Responsabilidad</th>
               <th>Entrada</th>
               <th>Salida</th>
               <th>Contratista</th>
@@ -97,6 +98,12 @@
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
               <td>{{ detalle.operador.name }}</td>
+              <td>
+                <select v-model="detalle.ayudante_sn">
+                  <option value="1">Operador</option>
+                  <option value="0">Ayudante</option>
+                </select>
+              </td>
               <td>{{ detalle.entrada }}</td>
               <td>{{ detalle.salida }}</td>
               <td>{{ detalle.contratista ? detalle.contratista.nombre : '-' }}</td>
@@ -169,7 +176,7 @@ export default {
       fechas_bloqueadas: [],
       operador_selected: '',
       entrada_selected: moment('08:00', 'HH:mm').toDate(),
-      salida_selected: moment('17:00', 'HH:mm').toDate(),
+      salida_selected: moment('16:00', 'HH:mm').toDate(),
       contratista_selected: '',
       parte_selected: '',
       isLoading: false,
@@ -192,45 +199,71 @@ export default {
       }
       return this.operarios_opciones;
     },
-    agregarDetalle() {
-      // Verificar si el operador ya está en la lista de detalles
-      const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
-      
-      // Si el operador ya está en la lista, mostrar un toastr.error
-      if (existeOperador) {
-        toastr.error('Operador ya seleccionado');
-        return;
+    async verificarParte() {
+    try {
+      const response = await axios.post('/api/asistencia-comprobar-parte', {
+        num: this.parte_selected
+      });
+      if (!response.data.exists) {
+        toastr.error('Parte inexistente');
+        return false; // Indica que el parte no existe
       }
-      if (!this.operador_selected) {
-        toastr.error('Debe seleccionar un operador');
-        return;
-      }
-      if (!this.entrada_selected) {
-        toastr.error('Debe seleccionar horario de entrada');
-        return;
-      }
-      if (!this.salida_selected) {
-        toastr.error('Debe seleccionar horario de salida');
-        return;
-      }
-      if (this.contratista_selected && !this.parte_selected) {
-        toastr.error('Parte obligatorio');
-        return;
-      }
-      const nuevoDetalle = {
-        operador: this.operador_selected,
-        entrada: moment(this.entrada_selected).format('HH:mm'),
-        salida: moment(this.salida_selected).format('HH:mm'),
-        contratista: this.contratista_selected,
-        parte: this.parte_selected
-      };
-      this.detalles.push(nuevoDetalle);
-      this.operador_selected = '';
-      this.entrada_selected = moment('08:00', 'HH:mm').toDate();
-      this.salida_selected = moment('16:00', 'HH:mm').toDate();
-      this.contratista_selected = '';
-      this.parte_selected = '';
-    },
+      return true; // Indica que el parte existe
+    } catch (error) {
+      toastr.error('Error al verificar el parte');
+      return false; // Indica que ocurrió un error en la verificación
+    }
+  },
+  async agregarDetalle() {
+    // Verificar si el operador ya está en la lista de detalles
+    const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
+    
+    // Si el operador ya está en la lista, mostrar un toastr.error
+    if (existeOperador) {
+      toastr.error('Operador ya seleccionado');
+      return;
+    }
+    if (!this.operador_selected) {
+      toastr.error('Debe seleccionar un operador');
+      return;
+    }
+    if (!this.entrada_selected) {
+      toastr.error('Debe seleccionar horario de entrada');
+      return;
+    }
+    if (!this.salida_selected) {
+      toastr.error('Debe seleccionar horario de salida');
+      return;
+    }
+    if (this.contratista_selected && !this.parte_selected) {
+      toastr.error('Parte obligatorio');
+      return;
+    }
+
+    // Verificar si el parte es válido
+    const parteValido = await this.verificarParte();
+    if (!parteValido) {
+      return;
+    }
+
+    // Calcular los valores para nuevoDetalle
+    const nuevoDetalle = {
+      operador: this.operador_selected,
+      entrada: moment(this.entrada_selected).format('HH:mm'),
+      salida: moment(this.salida_selected).format('HH:mm'),
+      contratista: this.contratista_selected,
+      parte: this.parte_selected,
+      ayudante_sn: this.operador_selected.habilitado_arn_sn, // Usar el valor predeterminado
+    };
+
+    // Agregar nuevoDetalle a la lista de detalles
+    this.detalles.push(nuevoDetalle);
+    this.operador_selected = '';
+    this.entrada_selected = moment('08:00', 'HH:mm').toDate();
+    this.salida_selected = moment('16:00', 'HH:mm').toDate();
+    this.contratista_selected = '';
+    this.parte_selected = '';
+  },
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
     },

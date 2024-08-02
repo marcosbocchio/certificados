@@ -12,6 +12,7 @@ use App\User;
 use App\Contratistas;
 use App\OtOperarios;
 use App\OperadorControl;
+use App\Partes;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
@@ -35,7 +36,6 @@ class AsistenciaController extends Controller
         // Obtener los frentes correspondientes
         $user_frente = FrenteOperador::where('user_id',$user->id)->get();
 
-        log::info($user_frente);
 
         $frentes = Frentes::whereIn('id', $frenteIds)->get();
         
@@ -166,6 +166,7 @@ class AsistenciaController extends Controller
             $asistenciaDetalle = new AsistenciaDetalle;
             $asistenciaDetalle->asistencia_horas_id = $asistenciaHora->id;
             $asistenciaDetalle->operador_id = $detalle['operador']['id'];
+            $asistenciaDetalle->ayudante_sn = $detalle['ayudante_sn'];
             $asistenciaDetalle->entrada = $detalle['entrada'];
             $asistenciaDetalle->salida = $detalle['salida'];
             $asistenciaDetalle->contratista_id = $detalle['contratista']['id'];
@@ -189,6 +190,7 @@ class AsistenciaController extends Controller
             $nuevoDetalle = new AsistenciaDetalle([
                 'asistencia_horas_id' => $asistenciaHora->id,
                 'operador_id' => $detalle['operador']['id'],
+                'ayudante_sn' => $detalle['ayudante_sn'],
                 'entrada' => $detalle['entrada'],
                 'salida' => $detalle['salida'],
                 'contratista_id' => $detalle['contratista']['id'],
@@ -201,261 +203,324 @@ class AsistenciaController extends Controller
     }
 
     public function getAsistenciaAgrupadaPorOperador(Request $request)
-    {
-        $year = $request->year;
-        $month = $request->month;
-        $frenteId = $request->frent_id;
-        $diasDelMes = $this->calcularDiasDelMes($year, $month);
-    
-        $asistenciaHoras = AsistenciaHora::with(['detalles.operador'])
-            ->whereYear('fecha', $year)
-            ->whereMonth('fecha', $month)
-            ->where('frente_id', $frenteId)
-            ->get();
-    
-        if ($asistenciaHoras->isEmpty()) {
-            return response()->json([
-                'diasDelMes' => $diasDelMes,
-                'message' => 'No se encontraron datos para la fecha y frente seleccionados.'
-            ], 404);
-        }
-    
-        $horasDiariasLaborables = Frentes::find($frenteId)->horas_diarias_laborables;
-        $resumenOperarios = $this->calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDiariasLaborables);
-    
-        $mes = Carbon::createFromFormat('Y-m', "$year-$month")->format('m-Y');
-        $operadorControl = OperadorControl::where('frente_id', $frenteId)
-            ->where('mes', $mes)
-            ->get()
-            ->keyBy('operador_id');
-    
-        foreach ($resumenOperarios as &$operador) {
-            $operadorId = $operador['operador']['id'];
-            if (isset($operadorControl[$operadorId])) {
-                $control = $operadorControl[$operadorId];
-                if ($control->pago_mes_sn) {
-                    $operador['diasHabiles'] = $control->dias_habiles_trabajados;
-                    $operador['sabados'] = $control->sabados_trabajados;
-                    $operador['domingos'] = $control->domingos_trabajados;
-                    $operador['feriados'] = $control->feriados_trabajados;
-                    $operador['horasExtras'] = $control->horas_extras_trabajadas;
-                    $operador['serviciosExtrasS1'] = $control->servicios_extras_s1;
-                    $operador['serviciosExtrasS2'] = $control->servicios_extras_s2;
-                    $operador['serviciosExtrasS3'] = $control->servicios_extras_s3;
-                    $operador['serviciosExtrasS4'] = $control->servicios_extras_s4;
-                    $operador['serviciosExtrasS5'] = $control->servicios_extras_s5;
-                    $operador['pagosExtMensual'] = true;
-                    $operador['pagoS1'] = true;
-                    $operador['pagoS2'] = true;
-                    $operador['pagoS3'] = true;
-                    $operador['pagoS4'] = true;
-                    $operador['pagoS5'] = true;
-                } else {
-                    if ($control->servicios_extras_s1 !== null) {
-                        $operador['serviciosExtrasS1'] = $control->servicios_extras_s1;
-                        $operador['pagoS1'] = true;
-                    }
-                    if ($control->servicios_extras_s2 !== null) {
-                        $operador['serviciosExtrasS2'] = $control->servicios_extras_s2;
-                        $operador['pagoS2'] = true;
-                    }
-                    if ($control->servicios_extras_s3 !== null) {
-                        $operador['serviciosExtrasS3'] = $control->servicios_extras_s3;
-                        $operador['pagoS3'] = true;
-                    }
-                    if ($control->servicios_extras_s4 !== null) {
-                        $operador['serviciosExtrasS4'] = $control->servicios_extras_s4;
-                        $operador['pagoS4'] = true;
-                    }
-                    if ($control->servicios_extras_s5 !== null) {
-                        $operador['serviciosExtrasS5'] = $control->servicios_extras_s5;
-                        $operador['pagoS5'] = true;
-                    }
-                }
-            }
-        }
-    
-        // Ordenar los operadores alfabéticamente por nombre
-        usort($resumenOperarios, function ($a, $b) {
-            return strcmp($a['operador']['name'], $b['operador']['name']);
-        });
-    
+{
+    $year = $request->year;
+    $month = $request->month;
+    $frenteId = $request->frent_id;
+    $diasDelMes = $this->calcularDiasDelMes($year, $month);
+
+    $asistenciaHoras = AsistenciaHora::with(['detalles.operador'])
+        ->whereYear('fecha', $year)
+        ->whereMonth('fecha', $month)
+        ->where('frente_id', $frenteId)
+        ->get();
+
+    if ($asistenciaHoras->isEmpty()) {
         return response()->json([
             'diasDelMes' => $diasDelMes,
-            'asistencias' => $resumenOperarios
-        ]);
+            'message' => 'No se encontraron datos para la fecha y frente seleccionados.'
+        ], 404);
     }
 
-private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDiariasLaborables)
-{
-    $resumenOperarios = [];
+    $horasDiariasLaborables = Frentes::find($frenteId)->horas_diarias_laborables;
+    $resumenOperarios = $this->calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDiariasLaborables);
 
-    foreach ($asistenciaHoras as $asistenciaHora) {
-        foreach ($asistenciaHora->detalles as $detalle) {
-            $operadorId = $detalle->operador->id;
-            $fecha = Carbon::parse($asistenciaHora->fecha);
-            $entrada = Carbon::parse($detalle->entrada);
-            $salida = Carbon::parse($detalle->salida);
-            $horasTrabajadas = $salida->diffInMinutes($entrada) / 60;
-            $semanaDelMes = $this->getSemanaDelMes($fecha, $diasDelMes['semanas']);
-            $localNeuquen = $detalle->operador->local_neuquen_sn;
+    // Calcular la responsabilidad general
+    $responsabilidadGeneral = $this->obtenerResponsabilidad($resumenOperarios);
 
-            if (!isset($resumenOperarios[$operadorId])) {
-                $resumenOperarios[$operadorId] = [
-                    'operador' => $detalle->operador,
-                    'diasHabiles' => 0,
-                    'sabados' => 0,
-                    'domingos' => 0,
-                    'feriados' => 0,
-                    'horasExtras' => 0,
-                    'serviciosExtrasS1' => 0,
-                    'pagoS1' => false,
-                    'serviciosExtrasS2' => 0,
-                    'pagoS2' => false,
-                    'serviciosExtrasS3' => 0,
-                    'pagoS3' => false,
-                    'serviciosExtrasS4' => 0,
-                    'pagoS4' => false,
-                    'serviciosExtrasS5' => 0,
-                    'pagoS5' => false,
-                    'pagosExtMensual' => false
-                ];
-            }
+    $mes = Carbon::createFromFormat('Y-m', "$year-$month")->format('m-Y');
+    $operadorControl = OperadorControl::where('frente_id', $frenteId)
+        ->where('mes', $mes)
+        ->get()
+        ->keyBy('operador_id');
 
-            // Contar feriados
-            if ($this->esFeriado($fecha, $diasDelMes['feriadosArray']) && $detalle->contratista_id === null) {
-                $resumenOperarios[$operadorId]['feriados']++;
-            }
-
-            // Contar sábados
-            if ($fecha->isSaturday() && $detalle->contratista_id === null) {
-                $resumenOperarios[$operadorId]['sabados']++;
-            }
-
-            // Contar domingos
-            if ($fecha->isSunday() && $detalle->contratista_id === null) {
-                $resumenOperarios[$operadorId]['domingos']++;
-            }
-
-            // Contar días hábiles
-            if (!$this->esFeriado($fecha, $diasDelMes['feriadosArray']) && !$fecha->isSaturday() && !$fecha->isSunday()) {
-                $resumenOperarios[$operadorId]['diasHabiles']++;
-            }
-
-            // Contar servicios extras
-            if ($detalle->contratista_id !== null) {
-                $resumenOperarios[$operadorId]["serviciosExtrasS$semanaDelMes"]++;
+    foreach ($resumenOperarios as &$operador) {
+        $operadorId = $operador['operador']['id'];
+        if (isset($operadorControl[$operadorId])) {
+            $control = $operadorControl[$operadorId];
+            if ($control->pago_mes_sn) {
+                $operador['diasHabiles'] = $control->dias_habiles_trabajados;
+                $operador['sabados'] = $control->sabados_trabajados;
+                $operador['domingos'] = $control->domingos_trabajados;
+                $operador['feriados'] = $control->feriados_trabajados;
+                $operador['horasExtras'] = $control->horas_extras_trabajadas;
+                $operador['serviciosExtrasS1'] = $control->servicios_extras_s1;
+                $operador['serviciosExtrasS2'] = $control->servicios_extras_s2;
+                $operador['serviciosExtrasS3'] = $control->servicios_extras_s3;
+                $operador['serviciosExtrasS4'] = $control->servicios_extras_s4;
+                $operador['serviciosExtrasS5'] = $control->servicios_extras_s5;
+                $operador['pagosExtMensual'] = true;
+                $operador['pagoS1'] = true;
+                $operador['pagoS2'] = true;
+                $operador['pagoS3'] = true;
+                $operador['pagoS4'] = true;
+                $operador['pagoS5'] = true;
+                $operador['fecha_pago_s1'] = $control->fecha_pago_s1 ?? null;
+                $operador['fecha_pago_s2'] = $control->fecha_pago_s2 ?? null;
+                $operador['fecha_pago_s3'] = $control->fecha_pago_s3 ?? null;
+                $operador['fecha_pago_s4'] = $control->fecha_pago_s4 ?? null;
+                $operador['fecha_pago_s5'] = $control->fecha_pago_s5 ?? null;
+                $operador['fecha_pago_mes'] = $control->fecha_pago_mes ?? null;
             } else {
-                // Contar horas extras
-                if ($horasTrabajadas > $horasDiariasLaborables) {
-                    $resumenOperarios[$operadorId]['horasExtras'] += $horasTrabajadas - $horasDiariasLaborables;
+                if ($control->servicios_extras_s1 !== null) {
+                    $operador['serviciosExtrasS1'] = $control->servicios_extras_s1;
+                    $operador['pagoS1'] = true;
+                    $operador['fecha_pago_s1'] = $control->fecha_pago_s1  ?? null;
+                }
+                if ($control->servicios_extras_s2 !== null) {
+                    $operador['serviciosExtrasS2'] = $control->servicios_extras_s2;
+                    $operador['pagoS2'] = true;
+                    $operador['fecha_pago_s2'] = $control->fecha_pago_s2 ?? null;
+                }
+                if ($control->servicios_extras_s3 !== null) {
+                    $operador['serviciosExtrasS3'] = $control->servicios_extras_s3;
+                    $operador['pagoS3'] = true;
+                    $operador['fecha_pago_s3'] = $control->fecha_pago_s3 ?? null;
+                }
+                if ($control->servicios_extras_s4 !== null) {
+                    $operador['serviciosExtrasS4'] = $control->servicios_extras_s4;
+                    $operador['pagoS4'] = true;
+                    $operador['fecha_pago_s4'] = $control->fecha_pago_s4 ?? null;
+                }
+                if ($control->servicios_extras_s5 !== null) {
+                    $operador['serviciosExtrasS5'] = $control->servicios_extras_s5;
+                    $operador['pagoS5'] = true;
+                    $operador['fecha_pago_s5'] = $control->fecha_pago_s5 ?? null;
                 }
             }
         }
+
+        // Añadir la responsabilidad a cada operador
+        $operador['responsabilidad'] = $responsabilidadGeneral;
     }
 
-    return array_values($resumenOperarios);
+    // Ordenar los operadores alfabéticamente por nombre
+    usort($resumenOperarios, function ($a, $b) {
+        return strcmp($a['operador']['name'], $b['operador']['name']);
+    });
+
+    return response()->json([
+        'diasDelMes' => $diasDelMes,
+        'asistencias' => $resumenOperarios
+    ]);
 }
 
-private function getSemanaDelMes($fecha, $semanas)
-{
-    foreach ($semanas as $index => $semana) {
-        if ($fecha->between(Carbon::parse($semana['inicio']), Carbon::parse($semana['fin']))) {
-            return $index + 1; // Retornar el índice de la semana (ajustado a 1 basado)
+    public function obtenerResponsabilidad($resumenOperarios) {
+        // Inicializar contadores
+        $hayUno = false;
+        $todosSonCero = true;
+        
+        // Iterar sobre cada elemento del array
+        foreach ($resumenOperarios as $operario) {
+            // Verificar si la propiedad 'ayudante_sn' existe y es numérica
+            if (isset($operario['ayudante_sn'])) {
+                // Si 'ayudante_sn' no es null, verificar su valor
+                if ($operario['ayudante_sn'] === 1) {
+                    $hayUno = true; // Hay al menos un 1
+                } elseif ($operario['ayudante_sn'] !== 0) {
+                    $todosSonCero = false; // Hay algún valor distinto de 0
+                }
+            }
         }
-    }
-    return 0; // En caso de error
-}
 
-public function calcularDiasDelMes($year, $month)
-{
-    $feriados = $this->getFeriados($year);
-    $diasHabiles = 0;
-    $sabados = 0;
-    $domingos = 0;
-    $feriadosCount = 0;
-    $feriadosArray = [];
-    $semanas = [];
-
-    $totalDias = Carbon::createFromDate($year, $month)->daysInMonth;
-    $inicioMes = Carbon::create($year, $month, 1);
-    $inicioSemana = $inicioMes->copy()->startOfWeek(Carbon::SATURDAY);
-
-    $finMes = Carbon::create($year, $month, $totalDias);
-    $finSemana = $finMes->copy()->endOfWeek(Carbon::FRIDAY);
-
-    for ($fecha = $inicioSemana; $fecha->lte($finSemana); $fecha->addDay()) {
-        $diaDeLaSemana = $fecha->dayOfWeek;
-        $esFeriado = $this->esFeriado($fecha, $feriados);
-
-        if ($esFeriado) {
-            $feriadosCount++;
-            $feriadosArray[] = $fecha->toDateString();
-        } elseif ($diaDeLaSemana == Carbon::SUNDAY) {
-            $domingos++;
-        } elseif ($diaDeLaSemana == Carbon::SATURDAY) {
-            $sabados++;
+        // Determinar el texto basado en los contadores
+        if ($hayUno) {
+            return 'operador'; // Hay al menos un 1
+        } elseif ($todosSonCero) {
+            return 'ayudante'; // Todos son 0 o 'ayudante_sn' es null
         } else {
-            $diasHabiles++;
-        }
-
-        $semanaInicio = $fecha->copy()->startOfWeek(Carbon::SATURDAY);
-        $semanaFin = $fecha->copy()->endOfWeek(Carbon::FRIDAY);
-
-        if (!isset($semanas[$semanaInicio->weekOfYear])) {
-            $semanas[$semanaInicio->weekOfYear] = [
-                'inicio' => $semanaInicio->toDateString(),
-                'fin' => $semanaFin->toDateString()
-            ];
+            return 'desconocido'; // No se puede determinar la responsabilidad
         }
     }
+    public function controlarParte(Request $request)
+    {
+        // Validar que el parámetro 'num' esté presente
+        $request->validate([
+            'num' => 'required|string'
+        ]);
 
-    return [
-        'diasHabiles' => $diasHabiles,
-        'sabados' => $sabados,
-        'domingos' => $domingos,
-        'feriados' => $feriadosCount,
-        'feriadosArray' => $feriadosArray,
-        'semanas' => array_values($semanas)
-    ];
-}
+        // Obtener el número del parte
+        $num = $request->input('num');
 
-private function getFeriados($year)
-{
-    $path = public_path('feriados/feriados.json');
-    if (!File::exists($path)) {
-        return [];
+        // Eliminar ceros a la izquierda para obtener el ID original
+        $id = ltrim($num, '0');
+
+        // Buscar si existe el parte con el ID
+        $parte = Partes::find($id);
+
+        // Retornar true si existe, false si no
+        return response()->json(['exists' => !is_null($parte)]);
+    }
+    private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDiariasLaborables)
+    {
+        $resumenOperarios = [];
+        foreach ($asistenciaHoras as $asistenciaHora) {
+            foreach ($asistenciaHora->detalles as $detalle) {
+                $operadorId = $detalle->operador->id;
+                $fecha = Carbon::parse($asistenciaHora->fecha);
+                $entrada = Carbon::parse($detalle->entrada);
+                $salida = Carbon::parse($detalle->salida);
+                $horasTrabajadas = $salida->diffInMinutes($entrada) / 60;
+                $semanaDelMes = $this->getSemanaDelMes($fecha, $diasDelMes['semanas']);
+                $localNeuquen = $detalle->operador->local_neuquen_sn;
+                $ayudante_sn = $detalle->ayudante_sn;
+                if (!isset($resumenOperarios[$operadorId])) {
+                    $resumenOperarios[$operadorId] = [
+                        'operador' => $detalle->operador,
+                        'ayudante_sn'=> $ayudante_sn,
+                        'diasHabiles' => 0,
+                        'sabados' => 0,
+                        'domingos' => 0,
+                        'feriados' => 0,
+                        'horasExtras' => 0,
+                        'serviciosExtrasS1' => 0,
+                        'pagoS1' => false,
+                        'serviciosExtrasS2' => 0,
+                        'pagoS2' => false,
+                        'serviciosExtrasS3' => 0,
+                        'pagoS3' => false,
+                        'serviciosExtrasS4' => 0,
+                        'pagoS4' => false,
+                        'serviciosExtrasS5' => 0,
+                        'pagoS5' => false,
+                        'pagosExtMensual' => false,
+                        
+                    ];
+                }
+
+                // Contar feriados
+                if ($this->esFeriado($fecha, $diasDelMes['feriadosArray']) && $detalle->contratista_id === null) {
+                    $resumenOperarios[$operadorId]['feriados']++;
+                }
+
+                // Contar sábados
+                if ($fecha->isSaturday() && $detalle->contratista_id === null) {
+                    $resumenOperarios[$operadorId]['sabados']++;
+                }
+
+                // Contar domingos
+                if ($fecha->isSunday() && $detalle->contratista_id === null) {
+                    $resumenOperarios[$operadorId]['domingos']++;
+                }
+
+                // Contar días hábiles
+                if (!$this->esFeriado($fecha, $diasDelMes['feriadosArray']) && !$fecha->isSaturday() && !$fecha->isSunday()) {
+                    $resumenOperarios[$operadorId]['diasHabiles']++;
+                }
+
+                // Contar servicios extras
+                if ($detalle->contratista_id !== null) {
+                    $resumenOperarios[$operadorId]["serviciosExtrasS$semanaDelMes"]++;
+                } else {
+                    // Contar horas extras
+                    if ($horasTrabajadas > $horasDiariasLaborables) {
+                        $resumenOperarios[$operadorId]['horasExtras'] += $horasTrabajadas - $horasDiariasLaborables;
+                    }
+                }
+            }
+        }
+
+        return array_values($resumenOperarios);
     }
 
-    $json = File::get($path);
-    $data = json_decode($json, true);
-
-    // Verificar si el año existe en el JSON
-    if (!isset($data[$year])) {
-        return [];
+    private function getSemanaDelMes($fecha, $semanas)
+    {
+        foreach ($semanas as $index => $semana) {
+            if ($fecha->between(Carbon::parse($semana['inicio']), Carbon::parse($semana['fin']))) {
+                return $index + 1; // Retornar el índice de la semana (ajustado a 1 basado)
+            }
+        }
+        return 0; // En caso de error
     }
 
-    // Filtrar los feriados por año y transformar el formato de los feriados
-    $feriadosAnuales = $data[$year];
-    $feriadosArray = array_map(function($feriado) use ($year) {
-        return Carbon::create($year, $feriado['mes'], $feriado['dia'])->toDateString();
-    }, $feriadosAnuales);
+    public function calcularDiasDelMes($year, $month)
+    {
+        $feriados = $this->getFeriados($year);
+        $diasHabiles = 0;
+        $sabados = 0;
+        $domingos = 0;
+        $feriadosCount = 0;
+        $feriadosArray = [];
+        $semanas = [];
 
-    return $feriadosArray;
-}
+        $totalDias = Carbon::createFromDate($year, $month)->daysInMonth;
+        $inicioMes = Carbon::create($year, $month, 1);
+        $inicioSemana = $inicioMes->copy()->startOfWeek(Carbon::SATURDAY);
+
+        $finMes = Carbon::create($year, $month, $totalDias);
+        $finSemana = $finMes->copy()->endOfWeek(Carbon::FRIDAY);
+
+        for ($fecha = $inicioSemana; $fecha->lte($finSemana); $fecha->addDay()) {
+            $diaDeLaSemana = $fecha->dayOfWeek;
+            $esFeriado = $this->esFeriado($fecha, $feriados);
+
+            if ($esFeriado) {
+                $feriadosCount++;
+                $feriadosArray[] = $fecha->toDateString();
+            } elseif ($diaDeLaSemana == Carbon::SUNDAY) {
+                $domingos++;
+            } elseif ($diaDeLaSemana == Carbon::SATURDAY) {
+                $sabados++;
+            } else {
+                $diasHabiles++;
+            }
+
+            $semanaInicio = $fecha->copy()->startOfWeek(Carbon::SATURDAY);
+            $semanaFin = $fecha->copy()->endOfWeek(Carbon::FRIDAY);
+
+            if (!isset($semanas[$semanaInicio->weekOfYear])) {
+                $semanas[$semanaInicio->weekOfYear] = [
+                    'inicio' => $semanaInicio->toDateString(),
+                    'fin' => $semanaFin->toDateString()
+                ];
+            }
+        }
+
+        return [
+            'diasHabiles' => $diasHabiles,
+            'sabados' => $sabados,
+            'domingos' => $domingos,
+            'feriados' => $feriadosCount,
+            'feriadosArray' => $feriadosArray,
+            'semanas' => array_values($semanas)
+        ];
+    }
+
+    private function getFeriados($year)
+    {
+        $path = public_path('feriados/feriados.json');
+        if (!File::exists($path)) {
+            return [];
+        }
+
+        $json = File::get($path);
+        $data = json_decode($json, true);
+
+        // Verificar si el año existe en el JSON
+        if (!isset($data[$year])) {
+            return [];
+        }
+
+        // Filtrar los feriados por año y transformar el formato de los feriados
+        $feriadosAnuales = $data[$year];
+        $feriadosArray = array_map(function($feriado) use ($year) {
+            return Carbon::create($year, $feriado['mes'], $feriado['dia'])->toDateString();
+        }, $feriadosAnuales);
+
+        return $feriadosArray;
+    }
 
 
-private function esFeriado($fecha, $feriados)
-{
-    return in_array($fecha->toDateString(), $feriados);
-}
+    private function esFeriado($fecha, $feriados)
+    {
+        return in_array($fecha->toDateString(), $feriados);
+    }
 
     public function guardarPagos(Request $request)
     {
         $frenteId = $request->frente_id;
         $selectedMonthYear = $request->selectedMonthYear;
         $operarios = $request->operarios;
-
         foreach ($operarios as $operador) {
             // Guardar solo si algún check está seleccionado
             if ($operador['pagoS1'] || $operador['pagoS2'] || $operador['pagoS3'] || $operador['pagoS4'] || $operador['pagoS5'] || $operador['pagosExtMensual']) {
@@ -466,7 +531,7 @@ private function esFeriado($fecha, $feriados)
                 $attributes = [
                     'frente_id' => $frenteId,
                     'operador_id' => $operador['operador']['id'],
-                    'mes' => $mes
+                    'mes' => $mes,
                 ];
 
                 // Datos para actualizar o crear el registro
@@ -485,25 +550,35 @@ private function esFeriado($fecha, $feriados)
                         'servicios_extras_s4' => $operador['serviciosExtrasS4'],
                         'servicios_extras_s5' => $operador['serviciosExtrasS5'],
                         'pago_mes_sn' => true,
+                        'fecha_pago_s1' => $operador['fecha_pago_s1'] ?? null,
+                        'fecha_pago_s2' => $operador['fecha_pago_s2'] ?? null,
+                        'fecha_pago_s3' => $operador['fecha_pago_s3'] ?? null,
+                        'fecha_pago_s4' => $operador['fecha_pago_s4'] ?? null,
+                        'fecha_pago_s5' => $operador['fecha_pago_s5'] ?? null,
+                        'fecha_pago_mes' => $operador['fecha_pago_mes'] ?? null,
                     ];
                 } else {
                     if ($operador['pagoS1']) {
                         $values['servicios_extras_s1'] = $operador['serviciosExtrasS1'];
+                        $values['fecha_pago_s1'] = $operador['fecha_pago_s1'] ?? null;
                     }
                     if ($operador['pagoS2']) {
                         $values['servicios_extras_s2'] = $operador['serviciosExtrasS2'];
+                        $values['fecha_pago_s2'] = $operador['fecha_pago_s2'] ?? null;
                     }
                     if ($operador['pagoS3']) {
                         $values['servicios_extras_s3'] = $operador['serviciosExtrasS3'];
+                        $values['fecha_pago_s3'] = $operador['fecha_pago_s3'] ?? null;
                     }
                     if ($operador['pagoS4']) {
                         $values['servicios_extras_s4'] = $operador['serviciosExtrasS4'];
+                        $values['fecha_pago_s4'] = $operador['fecha_pago_s4'] ?? null;
                     }
                     if ($operador['pagoS5']) {
                         $values['servicios_extras_s5'] = $operador['serviciosExtrasS5'];
+                        $values['fecha_pago_s5'] = $operador['fecha_pago_s5'] ?? null;
                     }
                 }
-
                 // Crear o actualizar el registro
                 OperadorControl::updateOrCreate($attributes, $values);
             }
