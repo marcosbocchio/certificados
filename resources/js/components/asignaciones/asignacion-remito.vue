@@ -72,6 +72,7 @@
               <button type="button" class="btn btn-enod" @click="confirmarOperador">Seleccionar</button>
             </div>
             <div class="col-md-4">
+              <!-- Espacio vacío entre los botones -->
             </div>
             <div class="col-md-4">
               <button type="button" class="btn btn-secondary" @click="mostrarPopup = false">Cancelar</button>
@@ -80,6 +81,7 @@
         </div>
       </div>
     </div>
+    <!-- Popup -->
   </div>
 </template>
 

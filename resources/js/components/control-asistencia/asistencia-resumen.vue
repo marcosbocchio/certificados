@@ -58,7 +58,7 @@
             <tr v-for="operador in operarios" :key="operador.operador.id">
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagosExtMensual" @change="openPopup(operador, 'pago_mes')" :disabled="operador.precargadoPagosExtMensual" />
+                  <input type="checkbox" v-model="operador.pagosExtMensual" @change="openPopup(operador, 'Pago Mes')" :disabled="operador.precargadoPagosExtMensual" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_mes">
                     {{ operador.fecha_pago_mes }}
                   </div>
@@ -79,7 +79,7 @@
               <td>{{ operador.serviciosExtrasS1 }}</td>
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS1" @change="openPopup(operador, 'pago_s1')" :disabled="operador.precargadoPagoS1" />
+                  <input type="checkbox" v-model="operador.pagoS1" @change="openPopup(operador, 'Pago S1')" :disabled="operador.precargadoPagoS1" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_s1">
                     {{ operador.fecha_pago_s1 }}
                   </div>
@@ -88,7 +88,7 @@
               <td>{{ operador.serviciosExtrasS2 }}</td>
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS2" @change="openPopup(operador, 'pago_s2')" :disabled="operador.precargadoPagoS2" />
+                  <input type="checkbox" v-model="operador.pagoS2" @change="openPopup(operador, 'Pago S2')" :disabled="operador.precargadoPagoS2" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_s2">
                     {{ operador.fecha_pago_s2 }}
                   </div>
@@ -97,7 +97,7 @@
               <td>{{ operador.serviciosExtrasS3 }}</td>
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS3" @change="openPopup(operador, 'pago_s3')" :disabled="operador.precargadoPagoS3" />
+                  <input type="checkbox" v-model="operador.pagoS3" @change="openPopup(operador, 'Pago S3')" :disabled="operador.precargadoPagoS3" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_s3">
                     {{ operador.fecha_pago_s3 }}
                   </div>
@@ -106,7 +106,7 @@
               <td>{{ operador.serviciosExtrasS4 }}</td>
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS4" @change="openPopup(operador, 'pago_s4')" :disabled="operador.precargadoPagoS4" />
+                  <input type="checkbox" v-model="operador.pagoS4" @change="openPopup(operador, 'Pago S4')" :disabled="operador.precargadoPagoS4" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_s4">
                     {{ operador.fecha_pago_s4 }}
                   </div>
@@ -115,7 +115,7 @@
               <td>{{ operador.serviciosExtrasS5 }}</td>
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS5" @change="openPopup(operador, 'pago_s5')" :disabled="operador.precargadoPagoS5" />
+                  <input type="checkbox" v-model="operador.pagoS5" @change="openPopup(operador, 'Pago S5')" :disabled="operador.precargadoPagoS5" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_s5">
                     {{ operador.fecha_pago_s5 }}
                   </div>
@@ -125,29 +125,35 @@
           </tbody>
         </table>
       </div>
+
       <!-- Pop-up de Selección de Fecha -->
-      <div v-if="mostrarPopup" class="modal show" tabindex="-1" role="dialog">
+      <div v-if="mostrarPopup" class="modal show" tabindex="-1" role="dialog" style="display: block;">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Seleccionar Fecha para {{ tipoPagoSeleccionado }}</h5>
-              <button type="button" class="close" @click="cerrarPopup">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <h4 class="modal-title">Seleccionar Fecha de {{ tipoPagoSeleccionado }}</h4>
             </div>
             <div class="modal-body">
               <div class="form-group">
                 <label for="fecha-select">Fecha</label>
-                <date-picker v-model="fechaSeleccionada" type="date" format="dd-MM-yyyy" class="date-picker-custom" />
+                <date-picker v-model="fechaSeleccionada" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY"></date-picker>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" @click="confirmarFecha">Confirmar</button>
-              <button type="button" class="btn btn-secondary" @click="cerrarPopup">Cancelar</button>
+            <div class="modal-footer row">
+              <div class="col-md-4" style="text-align: left;">
+                <button type="button" class="btn btn-enod" @click="confirmarFecha">Confirmar</button>
+              </div>
+              <div class="col-md-4">
+                <!-- Espacio vacío entre los botones -->
+              </div>
+              <div class="col-md-4">
+                <button type="button" class="btn btn-secondary" @click="cerrarPopup">Cancelar</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- Pop-up de Selección de Fecha -->
     </div>
     <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
   </div>
@@ -216,10 +222,10 @@ methods: {
         frent_id: this.frente_selected.id
       }
     });
-
+    console.log(response.data.asistencias);
     this.operarios = response.data.asistencias.map(operador => ({
         operador: operador.operador,
-        responsabilidad: operador.responsabilidad,
+        responsabilidad: operador.ayudante_sn,
         diasHabiles: operador.diasHabiles,
         sabados: operador.sabados,
         domingos: operador.domingos,
@@ -230,12 +236,12 @@ methods: {
         serviciosExtrasS3: operador.serviciosExtrasS3,
         serviciosExtrasS4: operador.serviciosExtrasS4,
         serviciosExtrasS5: operador.serviciosExtrasS5,
-        fecha_pago_s1: operador.fecha_pago_s1,
-        fecha_pago_s2: operador.fecha_pago_s2,
-        fecha_pago_s3: operador.fecha_pago_s3,
-        fecha_pago_s4: operador.fecha_pago_s4,
-        fecha_pago_s5: operador.fecha_pago_s5,
-        fecha_pago_mes: operador.fecha_pago_mes,
+        fecha_pago_s1: this.formatDate(operador.fecha_pago_s1),
+        fecha_pago_s2: this.formatDate(operador.fecha_pago_s2),
+        fecha_pago_s3: this.formatDate(operador.fecha_pago_s3),
+        fecha_pago_s4: this.formatDate(operador.fecha_pago_s4),
+        fecha_pago_s5: this.formatDate(operador.fecha_pago_s5),
+        fecha_pago_mes: this.formatDate(operador.fecha_pago_mes),
         pagoS1: operador.pagoS1 || false,
         pagoS2: operador.pagoS2 || false,
         pagoS3: operador.pagoS3 || false,
@@ -268,29 +274,42 @@ methods: {
       this.operadorSeleccionado = null;
       this.tipoPagoSeleccionado = null;
     },
+    formatDate(dateString) {
+      if (!dateString) {
+      return ''; // O el mensaje que desees, como 'Fecha no disponible'
+    }
+      // Crear un objeto Date a partir de la cadena de fecha
+      const date = new Date(dateString);
+
+      // Obtener el año, mes y día
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Mes es 0-indexado, por lo que se suma 1
+      const day = String(date.getDate()).padStart(2, '0');
+
+      // Devolver la fecha formateada
+      return `${year}-${month}-${day}`;
+    },
     confirmarFecha() {
       if (!this.operadorSeleccionado || !this.tipoPagoSeleccionado || !this.fechaSeleccionada) return;
 
-      const formattedDate = this.fechaSeleccionada.toISOString().split('T')[0]; // Format date to YYYY-MM-DD
-
       switch (this.tipoPagoSeleccionado) {
-        case 'pago_mes':
-          this.operadorSeleccionado.fecha_pago_mes = formattedDate;
+        case 'Pago Mes':
+          this.operadorSeleccionado.fecha_pago_mes = this.fechaSeleccionada;
           break;
-        case 'pago_s1':
-          this.operadorSeleccionado.fecha_pago_s1 = formattedDate;
+        case 'Pago S1':
+          this.operadorSeleccionado.fecha_pago_s1 = this.fechaSeleccionada;
           break;
-        case 'pago_s2':
-          this.operadorSeleccionado.fecha_pago_s2 = formattedDate;
+        case 'Pago S2':
+          this.operadorSeleccionado.fecha_pago_s2 = this.fechaSeleccionada;
           break;
-        case 'pago_s3':
-          this.operadorSeleccionado.fecha_pago_s3 = formattedDate;
+        case 'Pago S3':
+          this.operadorSeleccionado.fecha_pago_s3 = this.fechaSeleccionada;
           break;
-        case 'pago_s4':
-          this.operadorSeleccionado.fecha_pago_s4 = formattedDate;
+        case 'Pago S4':
+          this.operadorSeleccionado.fecha_pago_s4 = this.fechaSeleccionada;
           break;
-        case 'pago_s5':
-          this.operadorSeleccionado.fecha_pago_s5 = formattedDate;
+        case 'Pago S5':
+          this.operadorSeleccionado.fecha_pago_s5 = this.fechaSeleccionada;
           break;
       }
 
@@ -337,47 +356,6 @@ methods: {
 </script>
 
 <style scoped>
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.btn-primary {
-  margin-top: 15px;
-}
-
-.no-margin {
-  margin: 0;
-  padding: 0;
-}
-
-.date-picker-custom {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.v-select-custom {
-  height: 110%;
-}
-
-.date-picker-custom .form-control {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.v-select.disabled, .date-picker.disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}
-
-.neuquen-highlight {
-  background-color: #000000;
-  color: rgb(255, 204, 0);
-}
-
 .table-responsive {
   overflow-x: auto;
 }
@@ -387,7 +365,6 @@ methods: {
   text-align: center; /* Centrar el texto */
   white-space: nowrap;
 }
-
 
 .table tbody td input[type="checkbox"] {
   margin: 0 auto; /* Centrar los checkboxes */
@@ -419,5 +396,21 @@ methods: {
 .checkbox-container:hover .date-tooltip {
   visibility: visible;
   opacity: 1;
+}
+
+.box.box-custom-enod {
+  padding: 20px;
+}
+
+.modal.show {
+  display: block;
+  z-index: 1050;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
 }
 </style>
