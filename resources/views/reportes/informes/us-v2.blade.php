@@ -11,7 +11,7 @@
 <style>
 
 
-    @if($tecnica->codigo == 'US' || $tecnica->codigo == 'PA')
+    @if($tecnica->codigo == 'US' || $tecnica->codigo == 'PA' || $tecnica->codigo=='FMC-TFM')
         @page { 
             margin: 260px 40px 260px 40px !important;
             padding: 0px 0px 0px 0px !important; 
@@ -52,7 +52,40 @@ footer {
 <body>
 
 <header>
-    @include('reportes.partial.header-principal-portrait')
+    @if($tecnica->codigo=='FMC-TFM')
+        <table style="text-align: center;" width="100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td rowspan="4" style="width: 210px;">
+                                        <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px;margin-left:2px;">
+                                    </td>
+                                    <td style="font-size: 18px; height: 30px;width: 295px; text-align: center;" rowspan="4"><b>{{ $titulo }}</b></td>
+                                    <td style="font-size: 9px;" ><b style="margin-left:35px;">
+                                        {{ $tipo_reporte}}</b>{{ $nro }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 10px;"><b style="margin-left: 35px;">FECHA: </b>{{ $fecha }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 11px;"><b style="margin-left: 35px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 11px;">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        @else
+            @include('reportes.partial.header-principal-portrait')
+        @endif
     @include('reportes.partial.linea-amarilla')
     @include('reportes.partial.header-cliente-comitente-portrait')
     @include('reportes.partial.linea-gris')
@@ -405,7 +438,21 @@ footer {
             $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
         }
     </script>
+    @elseif ($tecnica->codigo=='FMC-TFM')
 
+    <script type="text/php">
+        if ( isset($pdf) ) {
+            $x = 520;
+            $y = 78;
+            $text = "RG.79 Rev.01";
+            $font = $fontMetrics->get_font("serif", "normal");
+            $size = 8;
+            $color = array(0,0,0);
+            $word_space = 0.0;  //  default
+            $char_space = 0.0;  //  default
+            $angle = 0.0;   //  default
+            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+        }
 @elseif ($tecnica->codigo=='PA')
 
     <script type="text/php">

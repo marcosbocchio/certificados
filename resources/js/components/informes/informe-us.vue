@@ -611,29 +611,35 @@
                             <div class="clearfix"></div>
 
                             <div class="col-md-3">
-                                <div class="form-group" >
+                                <div class="form-group">
                                     <label for="camino_sonico_us_pa" title="Camino sónico">Camino Sónico *</label>
-                                    <input type="number" v-model="camino_sonico_us_pa" class="form-control" id="camino_sonico_us_pa">
+                                    <input 
+                                        type="number" 
+                                        v-model="camino_sonico_us_pa" 
+                                        class="form-control" 
+                                        id="camino_sonico_us_pa" 
+                                        step="0.01" 
+                                    >
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="x_us_pa" title="X (cm)">X *</label>
-                                    <input type="number" v-model="x_us_pa" class="form-control" id="x_us_pa">
+                                    <input type="number" v-model="x_us_pa" class="form-control" id="x_us_pa" step="0.01">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="y_us_pa" title="Y (mm)">Y *</label>
-                                    <input type="number" v-model="y_us_pa" class="form-control" id="y_us_pa">
+                                    <input type="number" v-model="y_us_pa" class="form-control" id="y_us_pa" step="0.01">
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="z_us_pa" title="Z (mm)">Z *</label>
-                                    <input type="number" v-model="z_us_pa" class="form-control" id="z_us_pa">
+                                    <input type="number" v-model="z_us_pa" class="form-control" id="z_us_pa" step="0.01">
                                 </div>
                             </div>
                             <div class="clearfix"></div>
@@ -641,13 +647,13 @@
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="longitud_us_pa" title="Longitud (mm)">Longitud (mm) *</label>
-                                    <input type="number" v-model="longitud_us_pa" class="form-control" id="longitud_us_pa">
+                                    <input type="number" v-model="longitud_us_pa" class="form-control" id="longitud_us_pa" step="0.01">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="nivel_registro_us_pa" title="Nivel Registro">Nivel Registro *</label>
-                                    <input type="number" v-model="nivel_registro_us_pa" class="form-control" id="nivel_registro_us_pa">
+                                    <input type="number" v-model="nivel_registro_us_pa" class="form-control" id="nivel_registro_us_pa" step="0.01">
                                 </div>
                             </div>
 
@@ -1705,118 +1711,157 @@ export default {
 
              });
         },
-
+        validarDecimales(valor, decimales = 2) {
+        const regex = new RegExp(`^-?\\d+(?:\\.\\d{0,${decimales}})?$`);
+        return regex.test(valor);
+        },
          addTabla_us_pa : function () {
 
             if (!this.elemento_us_pa) {
                 toastr.error('El campo elemento es obligatorio');
-                return ;
+                return;
             }
 
-            if(this.elemento_us_pa.length  > 30) {
+            if (this.elemento_us_pa.length > 30) {
                 toastr.error('El campo elemento no debe contener más de 30 caracteres');
-                return ;
-             }
+                return;
+            }
 
-            if(this.diametro_us_pa && this.diametro_us_pa.length  > 10) {
+            if (this.diametro_us_pa && this.diametro_us_pa.length > 10) {
                 toastr.error('El campo diametro no debe contener más de 10 caracteres');
-                return ;
-             }
+                return;
+            }
 
-             if (!this.nro_indicacion_us_pa) {
+            if (!this.nro_indicacion_us_pa) {
                 toastr.error('El campo nivel registro es obligatorio');
-                return ;
+                return;
             }
 
             if (!this.barrido_us_pa) {
                 toastr.error('El campo barrido es obligatorio');
-                return ;
+                return;
             }
 
-            if(this.nivel_nro_indicacion_us_paregistro  > 9999) {
+            if (this.nivel_nro_indicacion_us_paregistro > 9999) {
                 toastr.error('El campo nivel nro indicacion no debe ser mayor a 9999');
-                return ;
-             }
+                return;
+            }
 
             if (!this.posicion_examen_us_pa) {
                 toastr.error('El campo posicion examen es obligatorio');
-                return ;
+                return;
             }
 
-            if(this.posicion_examen_us_pa.length  > 7) {
-                toastr.error('El campo posicion examen no debe contener más de 5 caracteres');
-                return ;
-             }
+            if (this.posicion_examen_us_pa.length > 7) {
+                toastr.error('El campo posicion examen no debe contener más de 7 caracteres');
+                return;
+            }
 
             if (!this.angulo_incidencia_us_pa) {
                 toastr.error('El campo angulo incidencia es obligatorio');
-                return ;
+                return;
             }
 
-            if(this.angulo_incidencia_us_pa.length  > 10) {
+            if (this.angulo_incidencia_us_pa.length > 10) {
                 toastr.error('El campo angulo incidencia no debe contener más de 10 caracteres');
-                return ;
-             }
+                return;
+            }
 
             if (!this.camino_sonico_us_pa) {
                 toastr.error('El campo camino sonico es obligatorio');
-                return ;
+                return;
             }
 
-            if(this.camino_sonico_us_pa.length  > 6) {
+            if (this.camino_sonico_us_pa.length > 7) {
                 toastr.error('El campo camino sonico no debe contener más de 6 caracteres');
-                return ;
-             }
+                return;
+            }
+
+            // Validación de decimales para camino_sonico_us_pa
+            if (!this.validarDecimales(this.camino_sonico_us_pa)) {
+                toastr.error('El campo camino sonico no debe tener más de 2 decimales');
+                return;
+            }
 
             if (!this.x_us_pa) {
                 toastr.error('El campo X es obligatorio');
-                return ;
+                return;
             }
 
-            if(this.x_us_pa  > 9999) {
+            if (this.x_us_pa > 9999) {
                 toastr.error('El campo X no debe ser mayor a 9999');
-                return ;
-             }
+                return;
+            }
+
+            // Validación de decimales para x_us_pa
+            if (!this.validarDecimales(this.x_us_pa)) {
+                toastr.error('El campo X no debe tener más de 2 decimales');
+                return;
+            }
 
             if (!this.y_us_pa) {
                 toastr.error('El campo Y es obligatorio');
-                return ;
+                return;
             }
 
-            if(this.y_us_pa  > 9999) {
+            if (this.y_us_pa > 9999) {
                 toastr.error('El campo Y no debe ser mayor a 9999');
-                return ;
-             }
+                return;
+            }
+
+            // Validación de decimales para y_us_pa
+            if (!this.validarDecimales(this.y_us_pa)) {
+                toastr.error('El campo Y no debe tener más de 2 decimales');
+                return;
+            }
 
             if (!this.z_us_pa) {
                 toastr.error('El campo Z es obligatorio');
-                return ;
+                return;
             }
 
-            if(this.z_us_pa  > 9999) {
+            if (this.z_us_pa > 9999) {
                 toastr.error('El campo Z no debe ser mayor a 9999');
-                return ;
-             }
+                return;
+            }
+
+            // Validación de decimales para z_us_pa
+            if (!this.validarDecimales(this.z_us_pa)) {
+                toastr.error('El campo Z no debe tener más de 2 decimales');
+                return;
+            }
 
             if (!this.longitud_us_pa) {
                 toastr.error('El campo longitud es obligatorio');
-                return ;
+                return;
             }
 
-            if(this.longitud_us_pa  > 9999) {
+            if (this.longitud_us_pa > 9999) {
                 toastr.error('El campo longitud no debe ser mayor a 9999');
-                return ;
-             }
+                return;
+            }
+
+            // Validación de decimales para longitud_us_pa
+            if (!this.validarDecimales(this.longitud_us_pa)) {
+                toastr.error('El campo longitud no debe tener más de 2 decimales');
+                return;
+            }
 
             if (!this.nivel_registro_us_pa) {
                 toastr.error('El campo nivel registro es obligatorio');
-                return ;
+                return;
             }
 
-            if(this.nivel_registro_us_pa.length  > 3) {
-                toastr.error('El campo nivel registro no debe contener más de 3 caracteres');
-                return ;
-             }
+            if (this.nivel_registro_us_pa.length > 6) {
+                toastr.error('El campo nivel registro no debe contener más de 6 caracteres');
+                return;
+            }
+
+            // Validación de decimales para nivel_registro_us_pa
+            if (!this.validarDecimales(this.nivel_registro_us_pa)) {
+                toastr.error('El campo nivel registro no debe tener más de 2 decimales');
+                return;
+            }
 
             this.Tabla_us_pa.push({
                 elemento_us_pa: this.elemento_us_pa,
