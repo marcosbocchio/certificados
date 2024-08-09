@@ -196,7 +196,22 @@ export default {
       }
       return this.operarios_opciones;
     },
-    agregarDetalle() {
+    async verificarParte() {
+    try {
+      const response = await axios.post('/api/asistencia-comprobar-parte', {
+        num: this.parte_selected
+      });
+      if (!response.data.exists) {
+        toastr.error('Parte inexistente');
+        return false; // Indica que el parte no existe
+      }
+      return true; // Indica que el parte existe
+    } catch (error) {
+      toastr.error('Error al verificar el parte');
+      return false; // Indica que ocurrió un error en la verificación
+    }
+  },
+    async agregarDetalle() {
       const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
   
       if (existeOperador) {
@@ -218,6 +233,13 @@ export default {
       if (this.contratista_selected && !this.parte_selected) {
         toastr.error('Parte obligatorio');
         return;
+      }
+      // Verificar si el parte es válido
+    if (this.parte_selected) {
+        const parteValido = await this.verificarParte();
+        if (!parteValido) {
+          return;
+        }
       }
       const nuevoDetalle = {
         operador: this.operador_selected,
