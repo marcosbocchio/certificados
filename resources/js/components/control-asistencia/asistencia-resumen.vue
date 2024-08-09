@@ -266,7 +266,7 @@ methods: {
   openPopup(operador, tipoPago) {
       this.operadorSeleccionado = operador;
       this.tipoPagoSeleccionado = tipoPago;
-      this.fechaSeleccionada = null; // Reset the date picker
+      this.fechaSeleccionada = null;
       this.mostrarPopup = true;
     },
 
@@ -274,6 +274,7 @@ methods: {
       this.mostrarPopup = false;
       this.operadorSeleccionado = null;
       this.tipoPagoSeleccionado = null;
+      this.fechaSeleccionada = null;
     },
     formatDate(dateString) {
       if (!dateString) {
