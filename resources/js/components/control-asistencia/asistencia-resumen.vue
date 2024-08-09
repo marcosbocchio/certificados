@@ -1,7 +1,6 @@
 <template>
   <div>
     <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
-    
     <!-- Filtros de Fecha y Días Hábiles -->
     <div class="box box-custom-enod top-buffer">
       <div class="box-body">
@@ -25,6 +24,7 @@
             </div>
           </div>
         </div>
+        
       </div>
     </div>
   
@@ -66,8 +66,9 @@
                   </div>
                 </div>
               </td>
-              <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }">
-                {{ operador.operador.name }}
+              <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }"
+                  @click="pdfusuario(operador.operador.id)">
+                  {{ operador.operador.name }}
               </td>
               <td>{{ operador.responsabilidad }}</td>
               <td v-if="frente_selected.id === 2">-</td>
@@ -236,7 +237,6 @@ methods: {
         frent_id: this.frente_selected.id
       }
     });
-    console.log(response.data.asistencias);
     this.operarios = response.data.asistencias.map(operador => ({
         operador: operador.operador,
         responsabilidad: operador.ayudante_sn,
@@ -364,9 +364,24 @@ methods: {
       year: year.toString(),
       month: month < 10 ? '0' + month : month.toString()
     };
-  }
-}
-};
+  },
+  exportarTodoPDF() {
+    const { year, month } = this.formatDateToMonthYear(this.selectedDate);
+    const frent_id = this.frente_selected.id;
+
+    const url = `/area/enod/asistencia-pdf?year=${year}&month=${month}&frent_id=${frent_id}`;
+
+    // Abre la URL en una nueva ventana
+    window.open(url, '_blank');
+  },
+  pdfusuario(operadorId) {
+        // Construir la URL con los parámetros
+        const url = `/area/enod/asistencia-pdf-user/${operadorId}/${this.frente_selected.id}/${this.selectedDate}`;
+
+        // Abrir el PDF en una nueva pestaña
+        window.open(url, '_blank');
+    }
+  }};
 </script>
 
 <style scoped>

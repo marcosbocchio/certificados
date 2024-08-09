@@ -144,7 +144,7 @@ class AsistenciaController extends Controller
     
     public function getAsistencia($id)
     {
-        Log::info("Recibida solicitud para Asistencia con ID: {$id}");
+        
 
         $asistencia = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista'])->findOrFail($id);
 
@@ -153,9 +153,7 @@ class AsistenciaController extends Controller
 
     public function guardarAsistencia(Request $request)
     {
-        Log::info('Registro de asistencia recibido:', [
-            'data' => $request->all()
-        ]);
+        
 
         $asistenciaHora = new AsistenciaHora;
         $asistenciaHora->frente_id = $request->frente_id;
@@ -180,7 +178,7 @@ class AsistenciaController extends Controller
     public function updateAsistencia(Request $request, $id)
     {
         $asistenciaHora = AsistenciaHora::findOrFail($id);
-        Log::info('Actualizando asistencia con ID:', ['id' => $id, 'data' => $request->all()]);
+        
         AsistenciaDetalle::where('asistencia_horas_id', $id)->delete();
         $asistenciaHora->fecha = $request->fecha;
         $asistenciaHora->frente_id = $request->frente_id;
@@ -295,7 +293,7 @@ class AsistenciaController extends Controller
                 }
             }
         }
-        log::info($resumenOperarios);
+        
         // Ordenar los operadores alfabéticamente por nombre
         usort($resumenOperarios, function ($a, $b) {
             return strcmp($a['operador']['name'], $b['operador']['name']);

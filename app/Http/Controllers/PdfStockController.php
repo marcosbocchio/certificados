@@ -13,7 +13,6 @@ class PdfStockController extends Controller
 {
     public function imprimir(Request $request, $productoId)
 {
-    Log::info('Fecha inicio recibida para el PDF:', [$request->query('fechaInicio')]);
     $fechaInicio = $request->query('fechaInicio', Carbon::now()->subDays(30)->toDateString());
     $fechaInicioFormato = Carbon::parse($fechaInicio)->format('d-m-Y');
     
