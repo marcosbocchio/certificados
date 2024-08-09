@@ -1,3 +1,4 @@
+@ -1,417 +1,431 @@
 <template>
   <div>
     <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
@@ -15,7 +16,7 @@
           <div class="col-md-4">
             <div class="form-group">
               <label for="month">Mes y Año:</label>
-              <date-picker v-model="selectedDate" type="month" format="MM-YYYY" @input="fetchAsistencia" />
+              <date-picker v-model="selectedDate" type="month" format="MM-YYYY" @input="fetchAsistencia" class="date-picker-custom" />
             </div>
           </div>
           <div class="col-md-4">
@@ -58,17 +59,13 @@
             <tr v-for="operador in operarios" :key="operador.operador.id">
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagosExtMensual" 
-                         @change="handleCheckboxChange(operador, 'Pago Mes')" 
-                         :disabled="operador.precargadoPagosExtMensual" />
+                  <input type="checkbox" v-model="operador.pagosExtMensual" @change="openPopup(operador, 'Pago Mes')" :disabled="operador.precargadoPagosExtMensual" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_mes">
                     {{ operador.fecha_pago_mes }}
                   </div>
                 </div>
               </td>
-              <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }">
-                {{ operador.operador.name }}
-              </td>
+              <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }">{{ operador.operador.name }}</td>
               <td>{{ operador.responsabilidad }}</td>
               <td v-if="frente_selected.id === 2">-</td>
               <td v-else>{{ operador.diasHabiles }}</td>
@@ -83,9 +80,7 @@
               <td>{{ operador.serviciosExtrasS1 }}</td>
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS1" 
-                         @change="handleCheckboxChange(operador, 'Pago S1')" 
-                         :disabled="operador.precargadoPagoS1" />
+                  <input type="checkbox" v-model="operador.pagoS1" @change="openPopup(operador, 'Pago S1')" :disabled="operador.precargadoPagoS1" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_s1">
                     {{ operador.fecha_pago_s1 }}
                   </div>
@@ -94,9 +89,7 @@
               <td>{{ operador.serviciosExtrasS2 }}</td>
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS2" 
-                         @change="handleCheckboxChange(operador, 'Pago S2')" 
-                         :disabled="operador.precargadoPagoS2" />
+                  <input type="checkbox" v-model="operador.pagoS2" @change="openPopup(operador, 'Pago S2')" :disabled="operador.precargadoPagoS2" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_s2">
                     {{ operador.fecha_pago_s2 }}
                   </div>
@@ -105,9 +98,7 @@
               <td>{{ operador.serviciosExtrasS3 }}</td>
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS3" 
-                         @change="handleCheckboxChange(operador, 'Pago S3')" 
-                         :disabled="operador.precargadoPagoS3" />
+                  <input type="checkbox" v-model="operador.pagoS3" @change="openPopup(operador, 'Pago S3')" :disabled="operador.precargadoPagoS3" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_s3">
                     {{ operador.fecha_pago_s3 }}
                   </div>
@@ -116,9 +107,7 @@
               <td>{{ operador.serviciosExtrasS4 }}</td>
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS4" 
-                         @change="handleCheckboxChange(operador, 'Pago S4')" 
-                         :disabled="operador.precargadoPagoS4" />
+                  <input type="checkbox" v-model="operador.pagoS4" @change="openPopup(operador, 'Pago S4')" :disabled="operador.precargadoPagoS4" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_s4">
                     {{ operador.fecha_pago_s4 }}
                   </div>
@@ -127,9 +116,7 @@
               <td>{{ operador.serviciosExtrasS5 }}</td>
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS5" 
-                         @change="handleCheckboxChange(operador, 'Pago S5')" 
-                         :disabled="operador.precargadoPagoS5" />
+                  <input type="checkbox" v-model="operador.pagoS5" @change="openPopup(operador, 'Pago S5')" :disabled="operador.precargadoPagoS5" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_s5">
                     {{ operador.fecha_pago_s5 }}
                   </div>
@@ -142,7 +129,7 @@
 
       <!-- Pop-up de Selección de Fecha -->
       <div v-if="mostrarPopup" class="modal show" tabindex="-1" role="dialog" style="display: block;">
-        <div class="modal-dialog">
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Seleccionar Fecha de {{ tipoPagoSeleccionado }}</h4>
@@ -171,7 +158,7 @@
     </div>
     <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
   </div>
-</template>
+  </template>
 
 <script>
 import axios from 'axios';

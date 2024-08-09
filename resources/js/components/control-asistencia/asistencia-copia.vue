@@ -282,6 +282,18 @@ export default {
       this.detalles.splice(index, 1);
     },
     confirmar() {
+      if (!this.frente_selected) {
+        toastr.error('Debe seleccionar un frente');
+        return;
+      }
+      if (!this.fecha) {
+        toastr.error('Debe seleccionar una fecha');
+        return;
+      }
+      if (this.detalles.length === 0) {
+        toastr.error('Debe agregar al menos un detalle');
+        return;
+      }
   this.isLoading = true; // Enable loading before the request
   axios.post('/api/guardar_asistencia', {
     frente_id: this.frente_selected.id,
