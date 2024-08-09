@@ -223,10 +223,12 @@ export default {
     }
 
     // Verificar si el parte es válido
-    const parteValido = await this.verificarParte();
-    if (!parteValido) {
-      return;
-    }
+    if (this.parte_selected) {
+        const parteValido = await this.verificarParte();
+        if (!parteValido) {
+          return;
+        }
+      }
 
     // Calcular los valores para nuevoDetalle
     const nuevoDetalle = {

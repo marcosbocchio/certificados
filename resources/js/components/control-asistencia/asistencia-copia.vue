@@ -88,6 +88,7 @@
           <thead>
             <tr>
               <th>Operador</th>
+              <th>Responsabilidad</th>
               <th>Entrada</th>
               <th>Salida</th>
               <th>Contratista</th>
@@ -98,6 +99,12 @@
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
               <td>{{ detalle.operador.name }}</td>
+              <td>
+                <select v-model="detalle.ayudante_sn">
+                  <option value="1">Operador</option>
+                  <option value="0">Ayudante</option>
+                </select>
+              </td>
               <td>{{ detalle.entrada }}</td>
               <td>{{ detalle.salida }}</td>
               <td>{{ detalle.contratista ? detalle.contratista.nombre : '-' }}</td>
@@ -187,6 +194,21 @@ export default {
         this.fechas_bloqueadas = [];
       }
     },
+    async verificarParte() {
+    try {
+      const response = await axios.post('/api/asistencia-comprobar-parte', {
+        num: this.parte_selected
+      });
+      if (!response.data.exists) {
+        toastr.error('Parte inexistente');
+        return false; // Indica que el parte no existe
+      }
+      return true; // Indica que el parte existe
+    } catch (error) {
+      toastr.error('Error al verificar el parte');
+      return false; // Indica que ocurrió un error en la verificación
+    }
+  },
     bloquearFechas(date) {
       return this.fechas_bloqueadas.includes(moment(date).format('YYYY-MM-DD'));
     },
@@ -196,7 +218,7 @@ export default {
       }
       return this.operarios_opciones;
     },
-    agregarDetalle() {
+    async agregarDetalle() {
       const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
   
       if (existeOperador) {
@@ -219,12 +241,19 @@ export default {
         toastr.error('Parte obligatorio');
         return;
       }
+      if (this.parte_selected) {
+        const parteValido = await this.verificarParte();
+        if (!parteValido) {
+          return;
+        }
+      }
       const nuevoDetalle = {
         operador: this.operador_selected,
         entrada: moment(this.entrada_selected).format('HH:mm'),
         salida: moment(this.salida_selected).format('HH:mm'),
         contratista: this.contratista_selected,
-        parte: this.parte_selected
+        parte: this.parte_selected,
+        ayudante_sn: this.operador_selected.habilitado_arn_sn,
       };
       this.detalles.push(nuevoDetalle);
       this.operador_selected = '';
@@ -244,9 +273,7 @@ export default {
       }));
     })
     .catch(error => {
-      console.error('Error cargando los datos de asistencia:', error);
-      toastr.error('Error cargando los datos de asistencia. Ver la consola para más detalles.');
-    })
+      console.error('Error cargando los datos de asistencia:', error);    })
     .finally(() => {
       this.isLoading = false; // Deactivate loading indicator
     });
