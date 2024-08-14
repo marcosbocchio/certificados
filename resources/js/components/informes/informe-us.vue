@@ -1731,8 +1731,8 @@ export default {
                 toastr.error('El campo diametro no debe contener más de 10 caracteres');
                 return;
             }
-            if (!this.diametro_us_pa) {
-                toastr.error('El campo nivel registro es diametro');
+            if (!this.diametro_us_pa.diametro) {
+                toastr.error('El campo diametro es obligatorio');
                 return;
             }
             if (!this.nro_indicacion_us_pa) {
