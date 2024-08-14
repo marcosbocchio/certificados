@@ -22,7 +22,7 @@
         .title {
             font-size: 18px;
             font-weight: bold;
-            text-align: center;
+            text-align: left;
             padding: 8px;
         }
         .date {
@@ -65,81 +65,105 @@
     </style>
 </head>
 <body>
-    <header>
-        <table class="header-table">
-            <tr>
-                <td class="logo">
-                    <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
-                </td>
-                <td class="title">CONTROL ASISTENCIA</td>
-                <td class="date"><b>FECHA:</b> {{ date('d-m-Y') }}</td>
-            </tr>
-        </table>
-        <div style="height: 3px; background-color: rgb(255,204, 0); margin-top: 10px;"></div>
-    </header>
+    @php
+        $chunks = array_chunk($operarios, 12);
+    @endphp
 
-    <main>
-        <table class="info-table">
-            <tr>
-                <td><strong>Frente:</strong> {{ $frente->codigo }}</td>
-                <td><strong>Mes y Año:</strong> {{ $mes }} / {{ $año }}</td>
-                <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
-            </tr>
-        </table>
-
-        <table class="table">
-            <thead>
+    @foreach($chunks as $chunk)
+        <header>
+            <table class="header-table">
                 <tr>
-                    <th>Operario</th>
-                    <th>Días Háb.</th>
-                    <th>Sáb.</th>
-                    <th>Dom.</th>
-                    <th>Fer.</th>
-                    <th>Hs. Ext.</th>
-                    <th>S.E S1</th>
-                    <th>Pago S1</th>
-                    <th>S.E S2</th>
-                    <th>Pago S2</th>
-                    <th>S.E S3</th>
-                    <th>Pago S3</th>
-                    <th>S.E S4</th>
-                    <th>Pago S4</th>
-                    <th>S.E S5</th>
-                    <th>Pago S5</th>
-                    <th>Pago Mes</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($operarios as $operario)
-                <tr>
-                    <td>
-                        <div style="font-weight: bold; text-align: center; font-size: 10px;">
-                            {{ $operario['operador']['name'] }}
-                        </div>
-                        <div style="text-align: center;font-size: 9px;">
-                            {{ $operario['ayudante_sn'] }}
-                        </div>
+                    <td class="logo">
+                        <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
                     </td>
-                    <td>{{ $operario['diasHabiles'] }}</td>
-                    <td>{{ $operario['sabados'] }}</td>
-                    <td>{{ $operario['domingos'] }}</td>
-                    <td>{{ $operario['feriados'] }}</td>
-                    <td>{{ $operario['horasExtras'] }}</td>
-                    <td>{{ $operario['serviciosExtrasS1'] }}</td>
-                    <td>{{ $operario['fecha_pago_s1'] ?? '-' }}</td>
-                    <td>{{ $operario['serviciosExtrasS2'] }}</td>
-                    <td>{{ $operario['fecha_pago_s2'] ?? '-' }}</td>
-                    <td>{{ $operario['serviciosExtrasS3'] }}</td>
-                    <td>{{ $operario['fecha_pago_s3'] ?? '-' }}</td>
-                    <td>{{ $operario['serviciosExtrasS4'] }}</td>
-                    <td>{{ $operario['fecha_pago_s4'] ?? '-' }}</td>
-                    <td>{{ $operario['serviciosExtrasS5'] }}</td>
-                    <td>{{ $operario['fecha_pago_s5'] ?? '-' }}</td>
-                    <td>{{ $operario['fecha_pago_mes'] ?? '-' }}</td>
+                    <td class="title">CONTROL ASISTENCIA</td>
+                    <td class="date"><b>FECHA:</b> {{ date('d-m-Y') }}</td>
                 </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </main>
+            </table>
+            <div style="height: 3px; background-color: rgb(255,204, 0); margin-top: 10px;"></div>
+            <table class="info-table">
+                <tr>
+                    <td width="340px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
+                    <td width="323px"><strong>Mes y Año:</strong> {{ $mes }} / {{ $año }}</td>
+                    <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
+                </tr>
+            </table>
+        </header>
+
+        <main>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Operario</th>
+                        <th>Días Háb.</th>
+                        <th>Sáb.</th>
+                        <th>Dom.</th>
+                        <th>Fer.</th>
+                        <th>Hs. Ext.</th>
+                        <th>S.E S1</th>
+                        <th>Pago S1</th>
+                        <th>S.E S2</th>
+                        <th>Pago S2</th>
+                        <th>S.E S3</th>
+                        <th>Pago S3</th>
+                        <th>S.E S4</th>
+                        <th>Pago S4</th>
+                        <th>S.E S5</th>
+                        <th>Pago S5</th>
+                        <th>Pago Mes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($chunk as $operario)
+                    <tr>
+                        <td>
+                            <div style="font-weight: bold; text-align: center; font-size: 10px;">
+                                {{ $operario['operador']['name'] }}
+                            </div>
+                            <div style="text-align: center;font-size: 9px;">
+                                {{ $operario['ayudante_sn'] }}
+                            </div>
+                        </td>
+                        <td>{{ $operario['diasHabiles'] }}</td>
+                        <td>{{ $operario['sabados'] }}</td>
+                        <td>{{ $operario['domingos'] }}</td>
+                        <td>{{ $operario['feriados'] }}</td>
+                        <td>{{ $operario['horasExtras'] }}</td>
+                        <td>{{ $operario['serviciosExtrasS1'] }}</td>
+                        <td>{{ $operario['fecha_pago_s1'] ?? '-' }}</td>
+                        <td>{{ $operario['serviciosExtrasS2'] }}</td>
+                        <td>{{ $operario['fecha_pago_s2'] ?? '-' }}</td>
+                        <td>{{ $operario['serviciosExtrasS3'] }}</td>
+                        <td>{{ $operario['fecha_pago_s3'] ?? '-' }}</td>
+                        <td>{{ $operario['serviciosExtrasS4'] }}</td>
+                        <td>{{ $operario['fecha_pago_s4'] ?? '-' }}</td>
+                        <td>{{ $operario['serviciosExtrasS5'] }}</td>
+                        <td>{{ $operario['fecha_pago_s5'] ?? '-' }}</td>
+                        <td>{{ $operario['fecha_pago_mes'] ?? '-' }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </main>
+
+        @if(!$loop->last)
+            <div style="page-break-after: always;"></div>
+        @endif
+    @endforeach
+
+    <script type="text/php">
+    if ( isset($pdf) ) {
+        $x = 755;
+        $y = 55;
+        $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
+        $font = $fontMetrics->get_font("serif", "bold");
+        $size = 8;
+        $color = array(0,0,0);
+        $word_space = 0.0;  //  default
+        $char_space = 0.0;  //  default
+        $angle = 0.0;   //  default
+        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+    }
+    </script>
 </body>
 </html>

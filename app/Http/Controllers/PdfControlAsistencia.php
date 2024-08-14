@@ -54,73 +54,96 @@ class PdfControlAsistencia extends Controller
     }
 
     public function pdfUsuario($operadorId, $frenteId, $selectedDate)
-    {
-        // Formatear la fecha usando el método definido
-        $fecha = $this->formatFecha($selectedDate);
-        $selectedMonth = $fecha->format('m');
-        $selectedYear = $fecha->format('Y');
+{
+    // Configurar la localización de Carbon a español
+    Carbon::setLocale('es');
     
-        // Obtener los feriados para el año seleccionado
-        $feriados = $this->getFeriados($selectedYear);
+    // Formatear la fecha usando el método definido
+    $fecha = $this->formatFecha($selectedDate);
+    $selectedMonth = $fecha->format('m');
+    $selectedYear = $fecha->format('Y');
+
+    // Obtener los feriados para el año seleccionado
+    $feriados = $this->getFeriados($selectedYear);
+
+    // Buscar el Frente usando el frenteId
+    $frente = Frentes::find($frenteId);
+    $horasDiariasLaborables = $frente->horas_diarias_laborables;
+
+    // Obtener las horas de asistencia
+    $asistenciaHoras = $this->obtenerAsistenciaHoras($frenteId, $selectedYear, $selectedMonth);
+    $asistenciaHorasIds = $asistenciaHoras->pluck('id');
+    $asistenciaDetalles = $this->obtenerAsistenciaDetalles($asistenciaHorasIds, $operadorId);
+
+    // Combinar las asistencias con sus detalles
+    $combinacion = $this->combinarAsistenciasYDetalles($asistenciaHoras, $asistenciaDetalles);
+
+    // Mapeo de los días de la semana en inglés a español
+    $diasEnEspanol = [
+        'Monday' => 'Lunes',
+        'Tuesday' => 'Martes',
+        'Wednesday' => 'Miércoles',
+        'Thursday' => 'Jueves',
+        'Friday' => 'Viernes',
+        'Saturday' => 'Sábado',
+        'Sunday' => 'Domingo',
+    ];
+
+    // Agrupar las asistencias por día de la semana en español
+    $resultado = [];
+    foreach ($combinacion as $asistencia) {
+        $fechaAsistencia = Carbon::parse($asistencia['fecha']);
+        $horasTrabajadas = $this->calcularHorasTrabajadass($asistencia['entrada'], $asistencia['salida']);
+        $feriadoSn = $this->esFeriado($fechaAsistencia, $feriados);
     
-        // Buscar el Frente usando el frenteId
-        $frente = Frentes::find($frenteId);
-        $horasDiariasLaborables = $frente->horas_diarias_laborables;
+        // Obtener el día de la semana en español
+        $diaSemana = $fechaAsistencia->format('l'); // 'Sunday', 'Monday', etc.
+        $diaSemanaEspanol = $diasEnEspanol[$diaSemana];
     
-        // Obtener las horas de asistencia
-        $asistenciaHoras = $this->obtenerAsistenciaHoras($frenteId, $selectedYear, $selectedMonth);
-        $asistenciaHorasIds = $asistenciaHoras->pluck('id');
-        $asistenciaDetalles = $this->obtenerAsistenciaDetalles($asistenciaHorasIds, $operadorId);
-    
-        // Combinar las asistencias con sus detalles
-        $combinacion = $this->combinarAsistenciasYDetalles($asistenciaHoras, $asistenciaDetalles);
-    
-        // Agrupar las asistencias por día de la semana
-        $resultado = [];
-        foreach ($combinacion as $asistencia) {
-            $fechaAsistencia = Carbon::parse($asistencia['fecha']);
-            $horasTrabajadas = $this->calcularHorasTrabajadass($asistencia['entrada'], $asistencia['salida']);
+        // Calcular horasExtras basado en la presencia del contratista_id
+        if ($asistencia['contratista_id'] !== null) {
+            $horasExtras = 0; // Si hay contratista, no se consideran horas extras
+        } else {
             $horasExtras = max(0, $horasTrabajadas - $horasDiariasLaborables);
-            $feriadoSn = $this->esFeriado($fechaAsistencia, $feriados);
-    
-            $diaSemana = $fechaAsistencia->format('l'); // 'Sunday', 'Monday', etc.
-            $resultado[$diaSemana][] = [
-                'fecha' => $fechaAsistencia->toDateString(),
-                'entrada' => $asistencia['entrada'],
-                'salida' => $asistencia['salida'],
-                'contratista_id' => $asistencia['contratista_id'],
-                'horas_trabajadas' => $horasTrabajadas,
-                'hora_extras' => $horasExtras,
-                'servicio_extra' => $asistencia['contratista_id'] ? 1 : 0,
-                'feriado_sn' => $feriadoSn,
-            ];
         }
     
-        // Ordenar días de la semana
-        $ordenDiasSemana = [
-            'Sunday', 'Saturday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
+        $resultado[$diaSemanaEspanol][] = [
+            'fecha' => $fechaAsistencia->toDateString(),
+            'entrada' => $asistencia['entrada'],
+            'salida' => $asistencia['salida'],
+            'contratista_id' => $asistencia['contratista_id'],
+            'horas_trabajadas' => $horasTrabajadas,
+            'hora_extras' => $horasExtras,
+            'servicio_extra' => $asistencia['contratista_id'] ? 1 : 0,
+            'feriado_sn' => $feriadoSn,
         ];
-    
-        uksort($resultado, function($a, $b) use ($ordenDiasSemana) {
-            return array_search($a, $ordenDiasSemana) - array_search($b, $ordenDiasSemana);
-        });
-
-        // Calcular días del mes
-        $diasDelMes = $this->calcularDiasDelMes($selectedYear, $selectedMonth);
-    
-        // Generar PDF
-        $pdf = PDF::loadView('asistencia-ropa.asistneciaPDFUser', [
-            'resultado' => $resultado,
-            'selectedMonth' => $selectedMonth,
-            'selectedYear' => $selectedYear,
-            'frente' => $frente,
-            'diasDelMes' => $diasDelMes,
-            'fecha' => $fecha->toDateString(),
-            'operador' => 'User::find($operadorId)', // Asegúrate de que este método esté disponible
-        ])->setPaper('a4', 'landscape');
-    
-        return $pdf->stream('asistencia-usuario.pdf');
     }
+
+    // Ordenar días de la semana en español
+    $ordenDiasSemana = [
+        'Domingo', 'Sábado', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'
+    ];
+
+    uksort($resultado, function($a, $b) use ($ordenDiasSemana) {
+        return array_search($a, $ordenDiasSemana) - array_search($b, $ordenDiasSemana);
+    });
+
+    // Calcular días del mes
+    $diasDelMes = $this->calcularDiasDelMes($selectedYear, $selectedMonth);
+
+    // Generar PDF
+    $pdf = PDF::loadView('asistencia-ropa.asistneciaPDFUser', [
+        'resultado' => $resultado,
+        'selectedMonth' => $selectedMonth,
+        'selectedYear' => $selectedYear,
+        'frente' => $frente,
+        'diasDelMes' => $diasDelMes,
+        'fecha' => $fecha->toDateString(),
+        'operador' => User::find($operadorId), // Asegúrate de que este método esté disponible
+    ])->setPaper('a4', 'landscape');
+
+    return $pdf->stream('asistencia-usuario.pdf');
+}
 
     private function calcularHorasTrabajadass($entrada, $salida)
     {

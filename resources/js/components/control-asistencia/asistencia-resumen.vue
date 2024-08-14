@@ -1,7 +1,7 @@
 <template>
   <div>
     <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
-    <button @click="exportarTodoPDF" class="btn btn-enod exportar-todo-pdf">Exportar PDF</button>
+    
     <!-- Filtros de Fecha y Días Hábiles -->
     <div class="box box-custom-enod top-buffer">
       <div class="box-body">
@@ -31,6 +31,7 @@
   
     <!-- Tabla de Asistencia -->
     <div class="box box-custom-enod top-buffer">
+      <button @click="exportarTodoPDF" class="exportar-todo-pdf" :disabled="!selectedDate">Exportar PDF</button>
       <div class="box-body table-responsive">
         <table class="table table-hover table-striped table-condensed">
           <thead>
@@ -68,7 +69,8 @@
                 </div>
               </td>
               <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }"
-                  @click="pdfusuario(operador.operador.id)">
+                  @click="pdfusuario(operador.operador.id)"
+                  :style="{ cursor: 'pointer' }">
                   {{ operador.operador.name }}
               </td>
               <td>{{ operador.responsabilidad }}</td>
@@ -437,7 +439,9 @@ methods: {
   z-index: 1050;
   background-color: rgba(0, 0, 0, 0.5);
 }
-
+.exportar-todo-pdf{
+  margin-left: 10px;
+}
 .modal-content {
   background-color: white;
   padding: 20px;
