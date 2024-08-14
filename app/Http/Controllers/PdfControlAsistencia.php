@@ -26,6 +26,8 @@ class PdfControlAsistencia extends Controller
         $month = $request->input('month');
         $frenteId = $request->input('frent_id');
 
+        $frente = Frentes::find($frenteId);
+
         if (!$year || !$month || !$frenteId) {
             return response()->json(['error' => 'Faltan datos necesarios.'], 400);
         }
@@ -39,125 +41,181 @@ class PdfControlAsistencia extends Controller
 
         $asistencias = $asistenciaAgrupada->original['asistencias'];
         $diasDelMes = $asistenciaAgrupada->original['diasDelMes'];
-
         // Genera el PDF utilizando la vista 'asistencia-ropa.asistenciaPDF'
         $pdf = PDF::loadView('asistencia-ropa.asistenciaPDF', [
             'operarios' => $asistencias,
-            'diasDelMes' => $diasDelMes
-        ])->setPaper('a4', 'portrait');
+            'diasDelMes' => $diasDelMes,
+            'frente' => $frente,
+            'mes' => $month,
+            'año' => $year,
+        ])->setPaper('a4', 'landscape');
 
         return $pdf->stream('asistencia-resumen.pdf');
     }
 
     public function pdfUsuario($operadorId, $frenteId, $selectedDate)
     {
-        // Recuperar los datos necesarios usando los parámetros
-        $operador = User::find($operadorId);
-        $frente = Frentes::find($frenteId);
-    
-        // Eliminar la parte problemática de la cadena de fecha
-        $formattedDate = preg_replace('/\(.+\)/', '', $selectedDate);
-    
-        // Parsear y formatear la fecha para obtener solo el mes y año
-        $fecha = Carbon::parse($formattedDate);
+        // Formatear la fecha usando el método definido
+        $fecha = $this->formatFecha($selectedDate);
         $selectedMonth = $fecha->format('m');
         $selectedYear = $fecha->format('Y');
     
-        // Buscar en asistencia_horas usando frenteId y filtrar por mes y año
-        $asistenciaHoras = AsistenciaHora::where('frente_id', $frenteId)
+        // Obtener los feriados para el año seleccionado
+        $feriados = $this->getFeriados($selectedYear);
+    
+        // Buscar el Frente usando el frenteId
+        $frente = Frentes::find($frenteId);
+        $horasDiariasLaborables = $frente->horas_diarias_laborables;
+    
+        // Obtener las horas de asistencia
+        $asistenciaHoras = $this->obtenerAsistenciaHoras($frenteId, $selectedYear, $selectedMonth);
+        $asistenciaHorasIds = $asistenciaHoras->pluck('id');
+        $asistenciaDetalles = $this->obtenerAsistenciaDetalles($asistenciaHorasIds, $operadorId);
+    
+        // Combinar las asistencias con sus detalles
+        $combinacion = $this->combinarAsistenciasYDetalles($asistenciaHoras, $asistenciaDetalles);
+    
+        // Agrupar las asistencias por día de la semana
+        $resultado = [];
+        foreach ($combinacion as $asistencia) {
+            $fechaAsistencia = Carbon::parse($asistencia['fecha']);
+            $horasTrabajadas = $this->calcularHorasTrabajadass($asistencia['entrada'], $asistencia['salida']);
+            $horasExtras = max(0, $horasTrabajadas - $horasDiariasLaborables);
+            $feriadoSn = $this->esFeriado($fechaAsistencia, $feriados);
+    
+            $diaSemana = $fechaAsistencia->format('l'); // 'Sunday', 'Monday', etc.
+            $resultado[$diaSemana][] = [
+                'fecha' => $fechaAsistencia->toDateString(),
+                'entrada' => $asistencia['entrada'],
+                'salida' => $asistencia['salida'],
+                'contratista_id' => $asistencia['contratista_id'],
+                'horas_trabajadas' => $horasTrabajadas,
+                'hora_extras' => $horasExtras,
+                'servicio_extra' => $asistencia['contratista_id'] ? 1 : 0,
+                'feriado_sn' => $feriadoSn,
+            ];
+        }
+    
+        // Ordenar días de la semana
+        $ordenDiasSemana = [
+            'Sunday', 'Saturday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
+        ];
+    
+        uksort($resultado, function($a, $b) use ($ordenDiasSemana) {
+            return array_search($a, $ordenDiasSemana) - array_search($b, $ordenDiasSemana);
+        });
+
+        // Calcular días del mes
+        $diasDelMes = $this->calcularDiasDelMes($selectedYear, $selectedMonth);
+    
+        // Generar PDF
+        $pdf = PDF::loadView('asistencia-ropa.asistneciaPDFUser', [
+            'resultado' => $resultado,
+            'selectedMonth' => $selectedMonth,
+            'selectedYear' => $selectedYear,
+            'frente' => $frente,
+            'diasDelMes' => $diasDelMes,
+            'fecha' => $fecha->toDateString(),
+            'operador' => 'User::find($operadorId)', // Asegúrate de que este método esté disponible
+        ])->setPaper('a4', 'landscape');
+    
+        return $pdf->stream('asistencia-usuario.pdf');
+    }
+
+    private function calcularHorasTrabajadass($entrada, $salida)
+    {
+        // Convertir a instancias de Carbon si no lo son
+        $entrada = $entrada instanceof Carbon ? $entrada : Carbon::parse($entrada);
+        $salida = $salida instanceof Carbon ? $salida : Carbon::parse($salida);
+    
+        // Calcular la diferencia en horas
+        $diferencia = $salida->diffInHours($entrada);
+        
+        return $diferencia;
+    }
+    private function formatFecha($selectedDate)
+    {
+        // Eliminar la parte problemática de la cadena de fecha
+        $formattedDate = preg_replace('/\(.+\)/', '', $selectedDate);
+
+        // Parsear y formatear la fecha para obtener solo el mes y año
+        return Carbon::parse($formattedDate);
+    }
+
+    private function obtenerAsistenciaHoras($frenteId, $selectedYear, $selectedMonth)
+    {
+        return AsistenciaHora::where('frente_id', $frenteId)
             ->whereYear('fecha', $selectedYear)
             ->whereMonth('fecha', $selectedMonth)
             ->get();
-    
-        // Obtener los IDs de asistencia_horas
-        $asistenciaHorasIds = $asistenciaHoras->pluck('id');
-    
-        // Buscar en asistencia_detalle usando asistencia_horas_id y operadorId
-        $asistenciaDetalles = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
+    }
+
+    private function obtenerAsistenciaDetalles($asistenciaHorasIds, $operadorId)
+    {
+        return AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
             ->where('operador_id', $operadorId)
             ->get();
-    
-        // Crear un nuevo objeto que contenga los datos combinados
+    }
+    private function combinarAsistenciasYDetalles($asistenciaHoras, $asistenciaDetalles)
+    {
         $resultado = [];
-    
+
         foreach ($asistenciaHoras as $asistencia) {
-            // Asegurarse de que la fecha sea un objeto Carbon
             $fechaAsistencia = $asistencia->fecha instanceof Carbon ? $asistencia->fecha : Carbon::parse($asistencia->fecha);
-    
-            // Crear una estructura para cada asistencia
-            $detalle = [
-                'id' => $asistencia->id,
-                'fecha' => $fechaAsistencia->format('Y-m-d'),
-                'detalles' => []  // Para almacenar detalles relacionados
-            ];
-    
+
             // Obtener los detalles correspondientes a este asistenciaHoras
             $detallesRelacionados = $asistenciaDetalles->where('asistencia_horas_id', $asistencia->id);
-    
+
             foreach ($detallesRelacionados as $detalleRelacion) {
                 // Obtener el nombre del operador
                 $operador = User::find($detalleRelacion->operador_id);
                 $name = $operador ? $operador->name : 'N/A';
-    
-                // Agregar el detalle al arreglo de detalles
-                $detalle['detalles'][] = [
+
+                // Crear un objeto plano con todos los datos
+                $resultado[] = [
+                    'id' => $asistencia->id,
+                    'fecha' => $fechaAsistencia->format('Y-m-d'),
                     'name' => $name,
                     'entrada' => $detalleRelacion->entrada,
                     'salida' => $detalleRelacion->salida,
-                    'contratista_id' => $detalleRelacion->contratista_id
+                    'contratista_id' => $detalleRelacion->contratista_id,
                 ];
             }
-    
-            // Agregar al resultado final
-            $resultado[] = $detalle;
         }
-    
-        // Mostrar la información obtenida para depuración
-        dd($resultado);
-    
-        // Generar el PDF utilizando compact para pasar los datos a la vista
-        $pdf = PDF::loadView('asistencia-ropa.asistenciaPDFUser', compact('operador', 'frente', 'fecha', 'resultado'));
-    
-        // Descargar o mostrar el PDF
-        return $pdf->stream('asistencia-resumen-user.pdf');
-    }
 
+        return $resultado;
+    }
     public function getAsistenciaAgrupadaPorOperador($year, $month, $frenteId)
     {
         $diasDelMes = $this->calcularDiasDelMes($year, $month);
-
+    
         $asistenciaHoras = AsistenciaHora::with(['detalles.operador'])
             ->whereYear('fecha', $year)
             ->whereMonth('fecha', $month)
             ->where('frente_id', $frenteId)
             ->get();
-
-        // Calcular la responsabilidad general
+    
         if ($asistenciaHoras->isEmpty()) {
             return response()->json([
                 'diasDelMes' => $diasDelMes,
                 'message' => 'No se encontraron datos para la fecha y frente seleccionados.'
             ], 404);
         }
-
+    
         $horasDiariasLaborables = Frentes::find($frenteId)->horas_diarias_laborables;
         $resumenOperarios = $this->calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDiariasLaborables);
-
+    
         $mes = Carbon::createFromFormat('Y-m', "$year-$month")->format('m-Y');
         $operadorControl = OperadorControl::where('frente_id', $frenteId)
             ->where('mes', $mes)
             ->get()
             ->keyBy('operador_id');
-
+    
         foreach ($resumenOperarios as &$operador) {
             $operadorId = $operador['operador']['id'];
-
-            // Llamar a la función obtenerResponsabilidad
             $responsabilidad = $this->obtenerResponsabilidad($operadorId, $month);
-
-            // Agregar el resultado a la propiedad del operador
             $operador['ayudante_sn'] = $responsabilidad;
-
+    
             if (isset($operadorControl[$operadorId])) {
                 $control = $operadorControl[$operadorId];
                 if ($control->pago_mes_sn) {
@@ -177,47 +235,48 @@ class PdfControlAsistencia extends Controller
                     $operador['pagoS3'] = true;
                     $operador['pagoS4'] = true;
                     $operador['pagoS5'] = true;
-                    $operador['fecha_pago_s1'] = $control->fecha_pago_s1 ?? null;
-                    $operador['fecha_pago_s2'] = $control->fecha_pago_s2 ?? null;
-                    $operador['fecha_pago_s3'] = $control->fecha_pago_s3 ?? null;
-                    $operador['fecha_pago_s4'] = $control->fecha_pago_s4 ?? null;
-                    $operador['fecha_pago_s5'] = $control->fecha_pago_s5 ?? null;
-                    $operador['fecha_pago_mes'] = $control->fecha_pago_mes ?? null;
+                    
+                    // Formatear fechas sin hora
+                    $operador['fecha_pago_s1'] = $control->fecha_pago_s1 ? Carbon::parse($control->fecha_pago_s1)->format('d-m-Y') : null;
+                    $operador['fecha_pago_s2'] = $control->fecha_pago_s2 ? Carbon::parse($control->fecha_pago_s2)->format('d-m-Y') : null;
+                    $operador['fecha_pago_s3'] = $control->fecha_pago_s3 ? Carbon::parse($control->fecha_pago_s3)->format('d-m-Y') : null;
+                    $operador['fecha_pago_s4'] = $control->fecha_pago_s4 ? Carbon::parse($control->fecha_pago_s4)->format('d-m-Y') : null;
+                    $operador['fecha_pago_s5'] = $control->fecha_pago_s5 ? Carbon::parse($control->fecha_pago_s5)->format('d-m-Y') : null;
+                    $operador['fecha_pago_mes'] = $control->fecha_pago_mes ? Carbon::parse($control->fecha_pago_mes)->format('d-m-Y') : null;
                 } else {
                     if ($control->servicios_extras_s1 !== null) {
                         $operador['serviciosExtrasS1'] = $control->servicios_extras_s1;
                         $operador['pagoS1'] = true;
-                        $operador['fecha_pago_s1'] = $control->fecha_pago_s1 ?? null;
+                        $operador['fecha_pago_s1'] = $control->fecha_pago_s1 ? Carbon::parse($control->fecha_pago_s1)->format('d-m-Y') : null;
                     }
                     if ($control->servicios_extras_s2 !== null) {
                         $operador['serviciosExtrasS2'] = $control->servicios_extras_s2;
                         $operador['pagoS2'] = true;
-                        $operador['fecha_pago_s2'] = $control->fecha_pago_s2 ?? null;
+                        $operador['fecha_pago_s2'] = $control->fecha_pago_s2 ? Carbon::parse($control->fecha_pago_s2)->format('d-m-Y') : null;
                     }
                     if ($control->servicios_extras_s3 !== null) {
                         $operador['serviciosExtrasS3'] = $control->servicios_extras_s3;
                         $operador['pagoS3'] = true;
-                        $operador['fecha_pago_s3'] = $control->fecha_pago_s3 ?? null;
+                        $operador['fecha_pago_s3'] = $control->fecha_pago_s3 ? Carbon::parse($control->fecha_pago_s3)->format('d-m-Y') : null;
                     }
                     if ($control->servicios_extras_s4 !== null) {
                         $operador['serviciosExtrasS4'] = $control->servicios_extras_s4;
                         $operador['pagoS4'] = true;
-                        $operador['fecha_pago_s4'] = $control->fecha_pago_s4 ?? null;
+                        $operador['fecha_pago_s4'] = $control->fecha_pago_s4 ? Carbon::parse($control->fecha_pago_s4)->format('d-m-Y') : null;
                     }
                     if ($control->servicios_extras_s5 !== null) {
                         $operador['serviciosExtrasS5'] = $control->servicios_extras_s5;
                         $operador['pagoS5'] = true;
-                        $operador['fecha_pago_s5'] = $control->fecha_pago_s5 ?? null;
+                        $operador['fecha_pago_s5'] = $control->fecha_pago_s5 ? Carbon::parse($control->fecha_pago_s5)->format('d-m-Y') : null;
                     }
                 }
             }
         }
-        
-        // Ordenar los operadores alfabéticamente por nombre
+    
         usort($resumenOperarios, function ($a, $b) {
             return strcmp($a['operador']['name'], $b['operador']['name']);
         });
-
+    
         return response()->json([
             'diasDelMes' => $diasDelMes,
             'asistencias' => $resumenOperarios

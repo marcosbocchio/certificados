@@ -10,7 +10,7 @@
             font-size: 10px;
             color: #333;
         }
-        .header-table, .table {
+        .header-table, .table, .info-table {
             width: 100%;
             border-collapse: collapse;
         }
@@ -23,6 +23,7 @@
             font-size: 18px;
             font-weight: bold;
             text-align: center;
+            padding: 8px;
         }
         .date {
             font-size: 10px;
@@ -34,7 +35,7 @@
         }
         .table th, .table td {
             padding: 8px;
-            text-align: left;
+            text-align: center;
             border: 1px solid #ddd;
         }
         .table th {
@@ -44,11 +45,22 @@
         .table tbody tr:nth-child(odd) {
             background-color: #F2F2F2;
         }
-        .page-break {
-            page-break-after: always;
+        .info-table td {
+            padding: 6px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-weight: bold;
+            background-color: #f2f2f2;
+            font-size: 11px;
+        }
+        .info-table td:first-child {
+            text-align: left;
+        }
+        .info-table td:last-child {
+            text-align: right;
         }
         @page {
-            margin: 20mm;
+            margin: 10mm;
         }
     </style>
 </head>
@@ -67,202 +79,67 @@
     </header>
 
     <main>
-    @php
-        $data = $operarios; // Asegúrate de que $operarios es el array con los datos
-        $chunkSize = 6; // Tamaño de cada bloque de datos
-        $chunks = array_chunk($data, $chunkSize);
-    @endphp
+        <table class="info-table">
+            <tr>
+                <td><strong>Frente:</strong> {{ $frente->codigo }}</td>
+                <td><strong>Mes y Año:</strong> {{ $mes }} / {{ $año }}</td>
+                <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
+            </tr>
+        </table>
 
-    @foreach($chunks as $index => $chunk)
-        @php
-            // Determinar el tamaño de las tablas en la página actual
-            $table1 = array_slice($chunk, 0, 3);
-            $table2 = array_slice($chunk, 3, 3);
-        @endphp
-
-        <!-- Tabla 1 -->
         <table class="table">
             <thead>
                 <tr>
-                    <th></th>
-                    @foreach($table1 as $operario)
-                        <th>
-                            <div style="font-weight: bold; text-align: center; font-size: 12px;">
-                                {{ $operario['operador']['name'] }}
-                            </div>
-                            <div style="text-align: center;font-size: 9px;">
-                                {{ $operario['ayudante_sn'] }}
-                            </div>
-                        </th>
-                    @endforeach
+                    <th>Operario</th>
+                    <th>Días Háb.</th>
+                    <th>Sáb.</th>
+                    <th>Dom.</th>
+                    <th>Fer.</th>
+                    <th>Hs. Ext.</th>
+                    <th>S.E S1</th>
+                    <th>Pago S1</th>
+                    <th>S.E S2</th>
+                    <th>Pago S2</th>
+                    <th>S.E S3</th>
+                    <th>Pago S3</th>
+                    <th>S.E S4</th>
+                    <th>Pago S4</th>
+                    <th>S.E S5</th>
+                    <th>Pago S5</th>
+                    <th>Pago Mes</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach($operarios as $operario)
                 <tr>
-                    <td>Días Hábiles</td>
-                    @foreach($table1 as $operario)
-                        <td>{{ $operario['diasHabiles'] }}</td>
-                    @endforeach
+                    <td>
+                        <div style="font-weight: bold; text-align: center; font-size: 10px;">
+                            {{ $operario['operador']['name'] }}
+                        </div>
+                        <div style="text-align: center;font-size: 9px;">
+                            {{ $operario['ayudante_sn'] }}
+                        </div>
+                    </td>
+                    <td>{{ $operario['diasHabiles'] }}</td>
+                    <td>{{ $operario['sabados'] }}</td>
+                    <td>{{ $operario['domingos'] }}</td>
+                    <td>{{ $operario['feriados'] }}</td>
+                    <td>{{ $operario['horasExtras'] }}</td>
+                    <td>{{ $operario['serviciosExtrasS1'] }}</td>
+                    <td>{{ $operario['fecha_pago_s1'] ?? '-' }}</td>
+                    <td>{{ $operario['serviciosExtrasS2'] }}</td>
+                    <td>{{ $operario['fecha_pago_s2'] ?? '-' }}</td>
+                    <td>{{ $operario['serviciosExtrasS3'] }}</td>
+                    <td>{{ $operario['fecha_pago_s3'] ?? '-' }}</td>
+                    <td>{{ $operario['serviciosExtrasS4'] }}</td>
+                    <td>{{ $operario['fecha_pago_s4'] ?? '-' }}</td>
+                    <td>{{ $operario['serviciosExtrasS5'] }}</td>
+                    <td>{{ $operario['fecha_pago_s5'] ?? '-' }}</td>
+                    <td>{{ $operario['fecha_pago_mes'] ?? '-' }}</td>
                 </tr>
-                <tr>
-                    <td>Sábados</td>
-                    @foreach($table1 as $operario)
-                        <td>{{ $operario['sabados'] }}</td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Domingos</td>
-                    @foreach($table1 as $operario)
-                        <td>{{ $operario['domingos'] }}</td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Feriados</td>
-                    @foreach($table1 as $operario)
-                        <td>{{ $operario['feriados'] }}</td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Horas Extras</td>
-                    @foreach($table1 as $operario)
-                        <td>{{ $operario['horasExtras'] }}</td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Servicios Extras S1</td>
-                    @foreach($table1 as $operario)
-                        <td>{{ $operario['serviciosExtrasS1'] }}</td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Servicios Extras S2</td>
-                    @foreach($table1 as $operario)
-                        <td>{{ $operario['serviciosExtrasS2'] }}</td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Servicios Extras S3</td>
-                    @foreach($table1 as $operario)
-                        <td>{{ $operario['serviciosExtrasS3'] }}</td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Servicios Extras S4</td>
-                    @foreach($table1 as $operario)
-                        <td>{{ $operario['serviciosExtrasS4'] }}</td>
-                    @endforeach
-                </tr>
-                <tr>
-                    <td>Servicios Extras S5</td>
-                    @foreach($table1 as $operario)
-                        <td>{{ $operario['serviciosExtrasS5'] }}</td>
-                    @endforeach
-                </tr>
+                @endforeach
             </tbody>
         </table>
-
-        <!-- Tabla 2 (si existe) -->
-        @if(count($table2) > 0)
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        @foreach($table2 as $operario)
-                            <th>
-                                <div style="font-weight: bold; text-align: center; font-size: 12px;">
-                                    {{ $operario['operador']['name'] }}
-                                </div>
-                                <div style="text-align: center;font-size: 9px;">
-                                    {{ $operario['ayudante_sn'] }}
-                                </div>
-                            </th>
-                        @endforeach
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Días Hábiles</td>
-                        @foreach($table2 as $operario)
-                            <td>{{ $operario['diasHabiles'] }}</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td>Sábados</td>
-                        @foreach($table2 as $operario)
-                            <td>{{ $operario['sabados'] }}</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td>Domingos</td>
-                        @foreach($table2 as $operario)
-                            <td>{{ $operario['domingos'] }}</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td>Feriados</td>
-                        @foreach($table2 as $operario)
-                            <td>{{ $operario['feriados'] }}</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td>Horas Extras</td>
-                        @foreach($table2 as $operario)
-                            <td>{{ $operario['horasExtras'] }}</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td>Servicios Extras S1</td>
-                        @foreach($table2 as $operario)
-                            <td>{{ $operario['serviciosExtrasS1'] }}</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td>Servicios Extras S2</td>
-                        @foreach($table2 as $operario)
-                            <td>{{ $operario['serviciosExtrasS2'] }}</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td>Servicios Extras S3</td>
-                        @foreach($table2 as $operario)
-                            <td>{{ $operario['serviciosExtrasS3'] }}</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td>Servicios Extras S4</td>
-                        @foreach($table2 as $operario)
-                            <td>{{ $operario['serviciosExtrasS4'] }}</td>
-                        @endforeach
-                    </tr>
-                    <tr>
-                        <td>Servicios Extras S5</td>
-                        @foreach($table2 as $operario)
-                            <td>{{ $operario['serviciosExtrasS5'] }}</td>
-                        @endforeach
-                    </tr>
-                </tbody>
-            </table>
-        @endif
-
-        <!-- Salto de página solo si hay más bloques para mostrar -->
-        @if($index + 1 < count($chunks))
-            <div class="page-break"></div>
-            <!-- Insertar encabezado para las nuevas páginas -->
-            <header>
-                <table class="header-table">
-                    <tr>
-                        <td class="logo">
-                            <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
-                        </td>
-                        <td class="title">CONTROL ASISTENCIA</td>
-                        <td class="date"><b>FECHA:</b> {{ date('d-m-Y') }}</td>
-                    </tr>
-                </table>
-                <div style="height: 3px; background-color: rgb(255,204, 0); margin-top: 10px;"></div>
-            </header>
-        @endif
-
-    @endforeach
     </main>
 </body>
 </html>

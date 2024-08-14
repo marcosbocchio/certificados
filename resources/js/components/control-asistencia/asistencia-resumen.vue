@@ -1,6 +1,7 @@
 <template>
   <div>
     <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
+    <button @click="exportarTodoPDF" class="btn btn-enod exportar-todo-pdf">Exportar PDF</button>
     <!-- Filtros de Fecha y Días Hábiles -->
     <div class="box box-custom-enod top-buffer">
       <div class="box-body">
