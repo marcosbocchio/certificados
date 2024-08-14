@@ -577,7 +577,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group" >
-                                    <label for="diametro_us_pa" title="Diametro">ø</label>
+                                    <label for="diametro_us_pa" title="Diametro">ø *</label>
                                     <v-select v-model="diametro_us_pa" label="diametro" :options="diametros" taggable id="diametro_us_pa"></v-select>
                                 </div>
                             </div>
@@ -1731,7 +1731,10 @@ export default {
                 toastr.error('El campo diametro no debe contener más de 10 caracteres');
                 return;
             }
-
+            if (!this.diametro_us_pa) {
+                toastr.error('El campo nivel registro es diametro');
+                return;
+            }
             if (!this.nro_indicacion_us_pa) {
                 toastr.error('El campo nivel registro es obligatorio');
                 return;
