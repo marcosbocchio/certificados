@@ -258,6 +258,7 @@ methods: {
       }));
   } catch (error) {
     console.error(error);
+    this.operarios = {};
   
   } finally {
     this.isLoading = false;
