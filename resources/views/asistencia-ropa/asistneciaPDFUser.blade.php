@@ -116,9 +116,9 @@
         <div class="content">
             <table class="info-table">
                 <tr>
-                    <td width="343px"><strong>Operador:</strong> {{ $operador->name }}</td>
-                    <td width="254px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
-                    <td width="190px"><strong>Mes y Año:</strong> {{ $selectedMonth }} / {{ $selectedYear }}</td>
+                    <td width="303px"><strong>Operador:</strong> {{ $operador->name }}</td>
+                    <td width="230px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
+                    <td width="230px"><strong>Mes y Año:</strong> {{ $selectedMonth }} / {{ $selectedYear }}</td>
                     <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
                 </tr>
             </table>
@@ -138,11 +138,11 @@
         <table class="content-table">
             <thead>
                 <tr>
-                    <th>Día</th>
-                    <th>Fecha</th>
-                    <th>Horas Trabajadas</th>
-                    <th>Horas Extras</th>
-                    <th>Servicio Extra</th>
+                    <th width="70px">Día</th>
+                    <th width="70px">Fecha</th>
+                    <th width="120px">Horas Trabajadas</th>
+                    <th width="120px">Horas Extras</th>
+                    <th width="120px">Servicio Extra</th>
                 </tr>
             </thead>
             <tbody>
@@ -193,25 +193,25 @@
                             </table>
                             <div class="separator"></div>
                             <div class="content">
-                                <table class="info-table">
-                                    <tr>
-                                        <td><strong>Operador:</strong> {{ $operador->name }}</td>
-                                        <td><strong>Frente:</strong> {{ $frente->codigo }}</td>
-                                        <td><strong>Mes y Año:</strong> {{ $selectedMonth }} / {{ $selectedYear }}</td>
-                                        <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
-                                    </tr>
-                                </table>
+                            <table class="info-table">
+                            <tr>
+                                <td width="303px"><strong>Operador:</strong> {{ $operador->name }}</td>
+                                <td width="230px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
+                                <td width="230px"><strong>Mes y Año:</strong> {{ $selectedMonth }} / {{ $selectedYear }}</td>
+                                <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
+                            </tr>
+                            </table>
                             </div>
                         </header>
                         <table class="content-table">
                             <thead>
-                                <tr>
-                                    <th>Día</th>
-                                    <th>Fecha</th>
-                                    <th>Horas Trabajadas</th>
-                                    <th>Horas Extras</th>
-                                    <th>Servicio Extra</th>
-                                </tr>
+                            <tr>
+                                <th width="70px">Día</th>
+                                <th width="70px">Fecha</th>
+                                <th width="120px">Horas Trabajadas</th>
+                                <th width="120px">Horas Extras</th>
+                                <th width="120px">Servicio Extra</th>
+                            </tr>
                             </thead>
                             <tbody>
                         @endif
@@ -223,10 +223,10 @@
         <!-- Tabla de Totales -->
         <table class="totals-table">
             <tr>
-                <td width="153px"><strong>Total</strong></td>
-                <td width="160px">&nbsp;</td>
-                <td width="247px">&nbsp;</td>
-                <td width="182px">{{ $totalHorasExtras }}</td>
+                <td width="136px"><strong>Total</strong></td>
+                <td width="136px">&nbsp;</td>
+                <td width="224px">&nbsp;</td>
+                <td width="224px">{{ $totalHorasExtras }}</td>
                 <td>{{ $totalServicioExtra }}</td>
             </tr>
         </table>

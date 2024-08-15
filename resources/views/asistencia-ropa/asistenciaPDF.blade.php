@@ -83,8 +83,8 @@
             <div style="height: 3px; background-color: rgb(255,204, 0); margin-top: 10px;"></div>
             <table class="info-table">
                 <tr>
-                    <td width="340px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
-                    <td width="323px"><strong>Mes y Año:</strong> {{ $mes }} / {{ $año }}</td>
+                    <td width="343px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
+                    <td width="352px"><strong>Mes y Año:</strong> {{ $mes }} / {{ $año }}</td>
                     <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
                 </tr>
             </table>
@@ -94,23 +94,23 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Operario</th>
-                        <th>Días Háb.</th>
-                        <th>Sáb.</th>
-                        <th>Dom.</th>
-                        <th>Fer.</th>
-                        <th>Hs. Ext.</th>
-                        <th>S.E S1</th>
-                        <th>Pago S1</th>
-                        <th>S.E S2</th>
-                        <th>Pago S2</th>
-                        <th>S.E S3</th>
-                        <th>Pago S3</th>
-                        <th>S.E S4</th>
-                        <th>Pago S4</th>
-                        <th>S.E S5</th>
-                        <th>Pago S5</th>
-                        <th>Pago Mes</th>
+                        <th width="100px">Operario</th>
+                        <th width="20px">Días Háb.</th>
+                        <th width="20px">Sáb.</th>
+                        <th width="20px">Dom.</th>
+                        <th width="20px">Fer.</th>
+                        <th width="20px">Hs. Ext.</th>
+                        <th width="20px">S.E S1</th>
+                        <th width="52px">Pago S1</th>
+                        <th width="20px">S.E S2</th>
+                        <th width="52px">Pago S2</th>
+                        <th width="20px">S.E S3</th>
+                        <th width="52px">Pago S3</th>
+                        <th width="20px">S.E S4</th>
+                        <th width="53px">Pago S4</th>
+                        <th width="20px">S.E S5</th>
+                        <th width="55px">Pago S5</th>
+                        <th width="52px">Pago Mes</th>
                     </tr>
                 </thead>
                 <tbody>

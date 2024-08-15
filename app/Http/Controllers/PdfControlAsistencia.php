@@ -106,6 +106,12 @@ class PdfControlAsistencia extends Controller
         } else {
             $horasExtras = max(0, $horasTrabajadas - $horasDiariasLaborables);
         }
+        
+        // Si el frenteId es 2 y es un día laborable, establecer horas_trabajadas y hora_extras a 0
+        if ($frenteId == 2 && in_array($diaSemanaEspanol, ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'])) {
+            $horasTrabajadas = 0;
+            $horasExtras = 0;
+        }
     
         $resultado[$diaSemanaEspanol][] = [
             'fecha' => $fechaAsistencia->toDateString(),
@@ -118,7 +124,7 @@ class PdfControlAsistencia extends Controller
             'feriado_sn' => $feriadoSn,
         ];
     }
-
+   
     // Ordenar días de la semana en español
     $ordenDiasSemana = [
         'Domingo', 'Sábado', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'

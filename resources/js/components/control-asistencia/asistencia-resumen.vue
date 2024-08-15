@@ -68,7 +68,11 @@
                   </div>
                 </div>
               </td>
-              <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }">{{ operador.operador.name }}</td>
+              <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }"
+                  @click="pdfusuario(operador.operador.id)"
+                  :style="{ cursor: 'pointer' }">
+                  {{ operador.operador.name }}
+              </td>
               <td>{{ operador.responsabilidad }}</td>
               <td v-if="frente_selected.id === 2">-</td>
               <td v-else>{{ operador.diasHabiles }}</td>
