@@ -100,6 +100,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/asistencia-resumen', 'AsistenciaController@resumenView')->name('asistencia-resumen');
       Route::get('/asistencia/edit/{id}', 'AsistenciaController@edit')->name('asistencia.edit');
       Route::get('/asistencia/copia/{id}', 'AsistenciaController@copia')->name('asistencia.copia');
+      Route::get('/area/enod/asistencia-pdf', 'PdfControlAsistencia@imprimirAsistenciaResumen')->name('asistencia-pdf');
+      Route::get('/area/enod/asistencia-pdf-user/{operadorId}/{frenteId}/{selectedDate}', 'PdfControlAsistencia@pdfUsuario');
 
 
       Route::get('/area/enod/reportes/resumen-epp','AsignacionRopaController@callViewReporteEPP')->name('reporte-resumen-epp');

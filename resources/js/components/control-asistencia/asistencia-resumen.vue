@@ -31,6 +31,7 @@
   
     <!-- Tabla de Asistencia -->
     <div class="box box-custom-enod top-buffer">
+      <button @click="exportarTodoPDF" class="exportar-todo-pdf" :disabled="!selectedDate">Exportar PDF</button>
       <div class="box-body table-responsive">
         <table class="table table-hover table-striped table-condensed">
           <thead>
@@ -59,7 +60,9 @@
             <tr v-for="operador in operarios" :key="operador.operador.id">
               <td>
                 <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagosExtMensual" @change="openPopup(operador, 'Pago Mes')" :disabled="operador.precargadoPagosExtMensual" />
+                  <input type="checkbox" v-model="operador.pagosExtMensual" 
+                         @change="openPopup(operador, 'Pago Mes')" 
+                         :disabled="operador.precargadoPagosExtMensual" />
                   <div class="date-tooltip" v-if="operador.fecha_pago_mes">
                     {{ operador.fecha_pago_mes }}
                   </div>
@@ -353,7 +356,23 @@ methods: {
       year: year.toString(),
       month: month < 10 ? '0' + month : month.toString()
     };
-  }
+  },
+  exportarTodoPDF() {
+    const { year, month } = this.formatDateToMonthYear(this.selectedDate);
+    const frent_id = this.frente_selected.id;
+
+    const url = `/area/enod/asistencia-pdf?year=${year}&month=${month}&frent_id=${frent_id}`;
+
+    // Abre la URL en una nueva ventana
+    window.open(url, '_blank');
+  },
+  pdfusuario(operadorId) {
+        // Construir la URL con los parámetros
+        const url = `/area/enod/asistencia-pdf-user/${operadorId}/${this.frente_selected.id}/${this.selectedDate}`;
+
+        // Abrir el PDF en una nueva pestaña
+        window.open(url, '_blank');
+    }
 }
 };
 </script>
