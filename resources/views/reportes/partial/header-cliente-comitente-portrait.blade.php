@@ -2,7 +2,7 @@
 <table width="100%" >
     <tbody>
         <tr>                         
-            <td style="font-size: 12px;width: 195px;"><span class="titulosHead">Cliente</span> </td>  
+            <td style="font-size: 12px;width: 215px;"><span class="titulosHead">Cliente</span> </td>  
 
             <td style="width: 130px;" rowspan="3">
 
@@ -14,7 +14,7 @@
 
             </td>         
 
-            <td style="font-size: 12px; width: 195px;">
+            <td style="font-size: 12px; width: 175px;">
 
                 @if($contratista)
                     <span class="titulosHead" style="margin-left: 12px;">Comitente</span> 
