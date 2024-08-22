@@ -334,8 +334,8 @@ export default {
     },
     confirmar() {
       console.log(this.detalles);
-    this.isLoading = true; // Inicia el estado de carga
-    axios.post(`/api/asistencia/${this.asistenciaId}/update`, {
+      this.isLoading = true; // Inicia el estado de carga
+      axios.post(`/api/asistencia/${this.asistenciaId}/update`, {
       detalles: this.detalles,
       fecha: this.fecha,
       frente_id: this.frente_selected.id

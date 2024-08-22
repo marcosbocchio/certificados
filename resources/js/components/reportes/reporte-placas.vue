@@ -117,6 +117,10 @@
                     <td>{{ producto.descripcion }}</td>
                     <td>{{ producto.cantidad * producto.metros }}</td>
                   </tr>
+                  <tr>
+                    <td colspan="2"><strong>Total:</strong></td>
+                    <td><strong>{{ total }}</strong></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -363,7 +367,12 @@ export default {
 
     // Limitar el resultado a 2 decimales
     return total.toFixed(2);
-  }
+  },
+  total() {
+      return this.productos.reduce((sum, producto) => {
+        return sum + producto.cantidad * producto.metros;
+      }, 0);
+    }
   },
   watch: {
     fechaDesde() {

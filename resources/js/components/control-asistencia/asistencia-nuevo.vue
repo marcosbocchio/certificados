@@ -358,7 +358,12 @@ export default {
     }
   },
   watch: {
-    frente_selected: 'actualizarFechasBloqueadas'
+    frente_selected: 'actualizarFechasBloqueadas',
+    fecha(newFecha, oldFecha) {
+      if (newFecha !== oldFecha) {
+        this.detalles = []; 
+      }
+    }
   }
 }
 </script>

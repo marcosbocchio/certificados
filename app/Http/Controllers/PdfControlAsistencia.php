@@ -400,7 +400,7 @@ class PdfControlAsistencia extends Controller
                 }
 
                 // Contar feriados
-                if ($this->esFeriado($fecha, $diasDelMes['feriadosArray']) && $detalle->contratista_id === null) {
+                if ($this->esFeriado($fecha, $diasDelMes['feriadosArray'])) {
                     $resumenOperarios[$operadorId]['feriados']++;
                 }
 
