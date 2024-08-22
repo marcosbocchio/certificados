@@ -31,6 +31,12 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="codigo">Metros Totales</label>
+                                    <input autocomplete="off" v-model="Registro.metros" type="number" name="metros" class="form-control" min="0" step="0.01">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="name">Unidad Medida *</label>
                                     <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
                                 </div>
@@ -56,6 +62,7 @@ export default {
 
         Registro : {
             'codigo'  : '',
+            'metros'  : '',
             'descripcion' : '',
             'visible_ot'  : false,
             'stokeable_sn':false,
@@ -80,6 +87,7 @@ export default {
         openModal : function(origen){
             this.Registro = {
                     'codigo'  : '',
+                    'metros'  : '',
                     'descripcion' : '',
                     'visible_ot'  : false,
                     'stockeable_sn':false,

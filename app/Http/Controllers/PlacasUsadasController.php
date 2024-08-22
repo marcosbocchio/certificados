@@ -50,27 +50,29 @@ use Illuminate\Support\Facades\Log;
         public function getRemitosPlacasProductos(Request $request)
         {
             $idsRemitos = $request->input('ids_remitos');
-
+        
             $productos = DetalleRemitos::whereIn('remito_id', $idsRemitos)
                 ->join('productos', 'detalle_remitos.producto_id', '=', 'productos.id')
                 ->where('productos.relacionado_a_placas_sn', 1)
                 ->select(
                     'detalle_remitos.producto_id',
                     'productos.descripcion',
+                    'productos.metros', 
                     DB::raw('SUM(detalle_remitos.cantidad) as cantidad')
                 )
-                ->groupBy('detalle_remitos.producto_id', 'productos.descripcion')
+                ->groupBy('detalle_remitos.producto_id', 'productos.descripcion', 'productos.metros') 
                 ->get();
-
+        
             // Mapeo de productos para el formato de respuesta
             $productosFormatted = $productos->map(function ($detalle) {
                 return [
                     'producto_id' => $detalle->producto_id,
                     'cantidad' => $detalle->cantidad,
-                    'descripcion' => $detalle->descripcion
+                    'descripcion' => $detalle->descripcion,
+                    'metros' => $detalle->metros 
                 ];
             });
-
+        
             return response()->json($productosFormatted);
         }
 

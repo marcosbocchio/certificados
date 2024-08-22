@@ -139,6 +139,7 @@ class ProductosController extends Controller
 
         $producto->codigo = $request['codigo'];
         $producto->descripcion = $request['descripcion'];
+        $producto->metros = $request['metros'];
         $producto->unidades_medida_id = $request['unidad_medida']['id'];
         $producto->visible_ot = $request->visible_ot;
         $producto->stockeable_sn = $request->stockeable_sn;

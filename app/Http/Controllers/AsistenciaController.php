@@ -125,6 +125,41 @@ class AsistenciaController extends Controller
         return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id'));
     }
 
+    public function controlarUser($id_user, $fecha)
+    {
+        log::info($fecha);
+        $mes = $fecha;  // Directamente asignamos $fecha a $mes porque ya tiene el formato correcto
+    
+        // Buscar en la base de datos usando operador_id y mes
+        $operadorControl = OperadorControl::where('operador_id', $id_user)
+            ->where('mes', $mes)  // Comparamos directamente con el campo mes
+            ->first();
+    
+        Log::info($operadorControl);
+    
+        if ($operadorControl) {
+            // Crear la respuesta en una variable
+            $response = [
+                'fecha_pago_s1' => $operadorControl->fecha_pago_s1,
+                'fecha_pago_s2' => $operadorControl->fecha_pago_s2,
+                'fecha_pago_s3' => $operadorControl->fecha_pago_s3,
+                'fecha_pago_s4' => $operadorControl->fecha_pago_s4,
+                'fecha_pago_s5' => $operadorControl->fecha_pago_s5,
+                'fecha_pago_mes' => $operadorControl->fecha_pago_mes,
+            ];
+    
+            // Registrar la respuesta en el log
+            Log::info('Respuesta de controlarUser:', $response);
+    
+            // Devolver la respuesta como JSON
+            return response()->json($response);
+        }
+    
+        // Registrar que no se encontraron registros
+        Log::info('No se encontraron registros para el usuario ID: ' . $id_user . ' en el mes: ' . $mes);
+        return response()->json(['message' => 'No se encontraron registros.'], 404);
+    }
+
     public function getPaginatedAsistencia(Request $request)
     {
         $query = AsistenciaHora::with('frente');

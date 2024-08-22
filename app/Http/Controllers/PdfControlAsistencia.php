@@ -405,12 +405,12 @@ class PdfControlAsistencia extends Controller
                 }
 
                 // Contar sábados
-                if ($fecha->isSaturday() && $detalle->contratista_id === null) {
+                if ($fecha->isSaturday()) {
                     $resumenOperarios[$operadorId]['sabados']++;
                 }
 
                 // Contar domingos
-                if ($fecha->isSunday() && $detalle->contratista_id === null) {
+                if ($fecha->isSunday()) {
                     $resumenOperarios[$operadorId]['domingos']++;
                 }
 

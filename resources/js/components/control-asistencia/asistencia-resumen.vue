@@ -68,10 +68,10 @@
                   </div>
                 </div>
               </td>
-              <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }"
-                  @click="pdfusuario(operador.operador.id)"
-                  :style="{ cursor: 'pointer' }">
+              <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }">
+                <a @click.prevent="pdfusuario(operador.operador.id)" :style="{ cursor: 'pointer'}">
                   {{ operador.operador.name }}
+                </a>
               </td>
               <td>{{ operador.responsabilidad }}</td>
               <td v-if="frente_selected.id === 2">-</td>

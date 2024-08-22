@@ -196,6 +196,20 @@ export default {
       return false; // Indica que ocurrió un error en la verificación
     }
   },
+  async verificarUser(user_id, fecha) {
+  try {
+    // Formatea la fecha al estilo "MM-YYYY"
+    const date = new Date(fecha);
+    const formattedDate = `${('0' + (date.getMonth() + 1)).slice(-2)}-${date.getFullYear()}`;
+    
+    const response = await axios.get(`/api/asistencia-comprobar-user/${user_id}/${formattedDate}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log('Error al verificar el usuario:', error.message);
+    return false; // Asume que el usuario no existe si hay un error.
+  }
+},
   async agregarDetalle() {
     // Verificar si el operador ya está en la lista de detalles
     const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
@@ -221,6 +235,48 @@ export default {
       toastr.error('Parte obligatorio');
       return;
     }
+
+         // Verificar si la fecha ya está bloqueada para este operador
+  const fecha_operador = await this.verificarUser(this.operador_selected.id, this.fecha);
+  const fechaSeleccionada = moment(this.fecha);
+
+  // Comprobar si el mes está cerrado
+  if (fecha_operador.fecha_pago_mes != null) {
+    toastr.error('El operador tiene el mes cerrado');
+    return;
+  }
+
+  // Definir las semanas del mes
+  const inicioMes = fechaSeleccionada.clone().startOf('month');
+  const semanas = [
+    { inicio: inicioMes.clone(), fin: inicioMes.clone().add(1, 'weeks').subtract(1, 'days') }, // Semana 1
+    { inicio: inicioMes.clone().add(1, 'weeks'), fin: inicioMes.clone().add(2, 'weeks').subtract(1, 'days') }, // Semana 2
+    { inicio: inicioMes.clone().add(2, 'weeks'), fin: inicioMes.clone().add(3, 'weeks').subtract(1, 'days') }, // Semana 3
+    { inicio: inicioMes.clone().add(3, 'weeks'), fin: inicioMes.clone().add(4, 'weeks').subtract(1, 'days') }, // Semana 4
+    { inicio: inicioMes.clone().add(4, 'weeks'), fin: inicioMes.clone().endOf('month') } // Semana 5 (si existe)
+  ];
+
+  // Verificar cada semana
+  if (fecha_operador.fecha_pago_s1 != null && fechaSeleccionada.isBetween(semanas[0].inicio, semanas[0].fin, null, '[]')) {
+    toastr.error('El operador tiene la semana 1 cerrada');
+    return;
+  }
+  if (fecha_operador.fecha_pago_s2 != null && fechaSeleccionada.isBetween(semanas[1].inicio, semanas[1].fin, null, '[]')) {
+    toastr.error('El operador tiene la semana 2 cerrada');
+    return;
+  }
+  if (fecha_operador.fecha_pago_s3 != null && fechaSeleccionada.isBetween(semanas[2].inicio, semanas[2].fin, null, '[]')) {
+    toastr.error('El operador tiene la semana 3 cerrada');
+    return;
+  }
+  if (fecha_operador.fecha_pago_s4 != null && fechaSeleccionada.isBetween(semanas[3].inicio, semanas[3].fin, null, '[]')) {
+    toastr.error('El operador tiene la semana 4 cerrada');
+    return;
+  }
+  if (fecha_operador.fecha_pago_s5 != null && fechaSeleccionada.isBetween(semanas[4].inicio, semanas[4].fin, null, '[]')) {
+    toastr.error('El operador tiene la semana 5 cerrada');
+    return;
+  }
 
     // Verificar si el parte es válido
     if (this.parte_selected) {
