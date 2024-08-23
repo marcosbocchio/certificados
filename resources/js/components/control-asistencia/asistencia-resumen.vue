@@ -83,7 +83,7 @@
               <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
               <td v-else>{{ operador.feriados }}</td>
               <td v-if="frente_selected.id === 2">-</td>
-              <td v-else>{{ operador.horasExtras }}</td>
+              <td v-else>{{ formatToTwoDecimals(operador.horasExtras) }}</td>
               <td>{{ operador.serviciosExtrasS1 }}</td>
               <td>
                 <div class="checkbox-container">
@@ -213,6 +213,13 @@ watch: {
   }
 },
 methods: {
+  formatToTwoDecimals(value) {
+      if (Number.isInteger(value)) {
+        return value; // Retorna el valor tal cual si es un entero
+      } else {
+        return parseFloat(value).toFixed(2); // Formatea a 2 decimales si no es un entero
+      }
+    },
   async fetchAsistencia() {
     if (!this.selectedDate || !this.frente_selected) return;
 

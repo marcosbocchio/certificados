@@ -15,6 +15,10 @@
                                     <label for="checkbox1" style="margin-left:5px;">VISIBLE OT</label>
                                     <input style="margin-left:20px;" type="checkbox" id="checkbox2" v-model="Registro.stockeable_sn">
                                     <label style="margin-left:5px;" for="checkbox2">STOKEABLE</label>
+
+                                    <!-- Nuevo checkbox agregado -->
+                                    <input style="margin-left: 20px;" type="checkbox" id="checkbox3" v-model="Registro.relacionado_a_placas_sn">
+                                    <label style="margin-left: 5px;" for="checkbox3">RELACIONADO A PLACAS</label>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -74,6 +78,7 @@ export default {
             'descripcion' : '',
             'visible_ot'  : false,
             'stockeable_sn':false,
+            'relacionado_a_placas_sn':false,
          },
 
          unidad_medida :{},
@@ -106,6 +111,7 @@ export default {
             this.Registro.descripcion = this.selectRegistro.descripcion;
             this.Registro.visible_ot  = this.selectRegistro.visible_ot;
             this.Registro.stockeable_sn = this.selectRegistro.stockeable_sn;
+            this.Registro.relacionado_a_placas_sn = this.selectRegistro.relacionado_a_placas_sn;
             this.unidad_medida = this.selectRegistro.unidad_medidas;
 
             console.log(this.selectRegistro.cliente_id);

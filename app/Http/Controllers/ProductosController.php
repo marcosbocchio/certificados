@@ -143,6 +143,7 @@ class ProductosController extends Controller
         $producto->unidades_medida_id = $request['unidad_medida']['id'];
         $producto->visible_ot = $request->visible_ot;
         $producto->stockeable_sn = $request->stockeable_sn;
+        $producto->relacionado_a_placas_sn = $request->relacionado_a_placas_sn;
         $producto->save();
 
     }
