@@ -61,15 +61,15 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="contratista">Contratista</label>
-            <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre" id="contratista"></v-select>
+            <label for="contratista">cliente</label>
+            <v-select v-model="contratista_selected" :options="contratistas_opciones" label="name" id="contratista"></v-select>
           </div>
         </div>
         <div class="clearfix"></div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="parte">Parte</label>
-            <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
+            <input id="parte" type="text" v-model="parte_selected" class="form-control">
           </div>
         </div>
         <div class="col-md-3">
@@ -86,29 +86,52 @@
         <table class="table table-hover table-striped table-condensed">
           <thead>
             <tr>
-              <th>Operador</th>
-              <th>Responsabilidad</th>
-              <th>Entrada</th>
-              <th>Salida</th>
-              <th>Contratista</th>
-              <th>Parte</th>
-              <th style="text-align: center;">Acciones</th>
+              <th class="col-md-2 text-center">Operador</th>
+              <th class="col-md-2 text-center">Responsabilidad</th>
+              <th class="col-md-2 text-center">Entrada</th>
+              <th class="col-md-2 text-center">Salida</th>
+              <th class="col-md-2 text-center">cliente</th>
+              <th class="col-md-2 text-center">Parte</th>
+              <th style="text-align: center;" colspan="2">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
               <td>{{ detalle.operador.name }}</td>
               <td>
-                <select v-model="detalle.ayudante_sn">
+                <select v-model="detalle.ayudante_sn" class="form-control">
                   <option value="1">Operador</option>
                   <option value="0">Ayudante</option>
                 </select>
               </td>
-              <td>{{ detalle.entrada }}</td>
-              <td>{{ detalle.salida }}</td>
-              <td>{{ detalle.contratista ? detalle.contratista.nombre : '-' }}</td>
-              <td>{{ detalle.parte ? detalle.parte : '-'}}</td>
-              <td style="text-align:center">
+              <td>
+                <input type="time" v-model="detalle.entrada"  class="form-control"/>
+              </td>
+              <td>
+                <input type="time" v-model="detalle.salida"  class="form-control"/>
+              </td>
+              <td>
+                <v-select
+                  v-model="detalle.contratista"
+                  :options="contratistas_opciones"
+                  label="name"
+                  :reduce="contratista => contratista"
+                ></v-select>
+              </td>
+              <td>
+                <input 
+                  type="text" 
+                  v-model="detalle.parte"
+                  class="form-control"
+                  @blur="verificarParte(detalle.parte, index)"
+                />
+              </td>
+              <td style="width: 10px;">
+                <i :class="detalle.observaciones ? 'fas fa-comment-alt' : 'far fa-comment-alt'" 
+                  @click="abrirObservacionModal(index)"
+                  style="cursor: pointer;"></i>
+              </td>
+              <td>
                 <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
               </td>
             </tr>
@@ -116,7 +139,22 @@
         </table>
       </div>
     </div>
-
+    <div class="modal fade" id="observacionModal" tabindex="-1" aria-labelledby="observacionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal">
+          <div class="modal-header">
+            <h5 class="modal-title" id="observacionModalLabel">Agregar Observación</h5>
+          </div>
+          <div class="modal-body">
+            <textarea v-model="observacionTexto" class="form-control custom-textarea" rows="4" maxlength="200"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="ocultarModal">Cancelar</button>
+            <button type="button" class="btn btn-enod" @click="guardarObservacion">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Botones de Acción -->
     <div class="form-actions">
       <div class="col-md-12">
@@ -172,6 +210,7 @@ export default {
     return {
       detalles: [],
       fecha: '',
+      observacionTexto: '',
       frente_selected: '',
       fechas_bloqueadas: [],
       operador_selected: '',
@@ -183,6 +222,21 @@ export default {
     };
   },
   methods: {
+    abrirObservacionModal(index) {
+      this.observacionIndex = index;
+      this.observacionTexto = this.detalles[index].observaciones || ''; // Cargar la observación si existe
+      $('#observacionModal').modal('show'); // Mostrar el modal (usando jQuery)
+    },
+    guardarObservacion() {
+      if (this.observacionIndex !== null) {
+        this.$set(this.detalles[this.observacionIndex], 'observaciones', this.observacionTexto);
+        console.log(this.detalles[this.observacionIndex]);
+        $('#observacionModal').modal('hide'); // Ocultar el modal después de guardar
+      }
+    },
+    ocultarModal() {
+      $('#observacionModal').modal('hide');
+    },
     actualizarFechasBloqueadas() {
       if (this.frente_selected && this.fechas_por_frente[this.frente_selected.id]) {
         this.fechas_bloqueadas = this.fechas_por_frente[this.frente_selected.id];
@@ -199,10 +253,10 @@ export default {
       }
       return this.operarios_opciones;
     },
-    async verificarParte() {
+    async verificarParte(parte_true) {
     try {
       const response = await axios.post('/api/asistencia-comprobar-parte', {
-        num: this.parte_selected
+        num: parte_true
       });
       if (!response.data.exists) {
         toastr.error('Parte inexistente');
@@ -297,7 +351,7 @@ export default {
   }
     // Verificar si el parte es válido
     if (this.parte_selected) {
-        const parteValido = await this.verificarParte();
+        const parteValido = await this.verificarParte(this.parte_selected);
         if (!parteValido) {
           return;
         }
@@ -310,7 +364,8 @@ export default {
       salida: moment(this.salida_selected).format('HH:mm'),
       contratista: this.contratista_selected,
       parte: this.parte_selected,
-      ayudante_sn: this.operador_selected.habilitado_arn_sn, // Usar el valor predeterminado
+      ayudante_sn: this.operador_selected.habilitado_arn_sn,
+      observacion : this.observaciones ? this.observaciones : '', // Usar el valor predeterminado
     };
 
     // Agregar nuevoDetalle a la lista de detalles
@@ -320,6 +375,7 @@ export default {
     this.salida_selected = moment('16:00', 'HH:mm').toDate();
     this.contratista_selected = '';
     this.parte_selected = '';
+    this.observaciones = '';
   },
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
@@ -380,7 +436,6 @@ export default {
   color: rgb(0, 0, 0);
 }
 
-/* Estilo para el botón de eliminar en la tabla */
 .btn-danger {
   background-color: #dc3545;
   color: #fff;
@@ -392,4 +447,47 @@ export default {
   line-height: 1.5;
   border-radius: 0.2rem;
 }
+
+.custom-modal {
+  border-radius: 0.5rem;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+}
+
+.custom-textarea {
+  border-radius: 0.5rem;
+  border: 1px solid #ced4da;
+  resize: none;
+  padding: 0.5rem;
+}
+
+.modal-header {
+  border-bottom: 1px solid #dee2e6;
+  padding: 1rem;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-content {
+  border-radius: 0.5rem;
+}
+
+.modal-body {
+  padding: 1rem;
+}
+
+.modal-footer .btn {
+  margin-left: 0.5rem;
+}
+
 </style>

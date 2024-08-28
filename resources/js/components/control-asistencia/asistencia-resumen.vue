@@ -398,7 +398,12 @@ methods: {
   text-align: center; /* Centrar el texto */
   white-space: nowrap;
 }
-
+.neuquen-highlight {
+  background-color: #000000;
+}
+.neuquen-highlight a{
+  color: rgb(255, 204, 0);
+}
 .table tbody td input[type="checkbox"] {
   margin: 0 auto; /* Centrar los checkboxes */
   display: block;

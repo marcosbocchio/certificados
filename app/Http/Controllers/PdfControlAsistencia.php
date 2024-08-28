@@ -89,15 +89,15 @@ class PdfControlAsistencia extends Controller
         'Sunday' => 'Domingo',
     ];
 
-    // Agrupar las asistencias por día de la semana en español
+    // Agrupar las asistencias por día de la semana
     $resultado = [];
     foreach ($combinacion as $asistencia) {
         $fechaAsistencia = Carbon::parse($asistencia['fecha']);
         $horasTrabajadas = $this->calcularHorasTrabajadass($asistencia['entrada'], $asistencia['salida']);
         $feriadoSn = $this->esFeriado($fechaAsistencia, $feriados);
     
-        // Obtener el día de la semana en español
-        $diaSemana = $fechaAsistencia->format('l'); // 'Sunday', 'Monday', etc.
+        // Obtener el día de la semana 
+        $diaSemana = $fechaAsistencia->format('l');
         $diaSemanaEspanol = $diasEnEspanol[$diaSemana];
     
         // Calcular horasExtras basado en la presencia del contratista_id
@@ -109,8 +109,8 @@ class PdfControlAsistencia extends Controller
         
         // Si el frenteId es 2 y es un día laborable, establecer horas_trabajadas y hora_extras a 0
         if ($frenteId == 2 && in_array($diaSemanaEspanol, ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'])) {
-            $horasTrabajadas = 0;
-            $horasExtras = 0;
+            $horasTrabajadas = '-';
+            $horasExtras = '-';
         }
     
         $resultado[$diaSemanaEspanol][] = [

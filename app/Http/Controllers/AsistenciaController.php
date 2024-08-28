@@ -59,10 +59,12 @@ class AsistenciaController extends Controller
         $header_descripcion = "Carga";
     
         $user_frente = FrenteOperador::where('user_id', $user->id)->pluck('frente_id');
+
         $frente_sn = Frentes::whereIn('id', $user_frente)
             ->where('controla_hs_extras_sn', 1)
             ->get();
-        $contratistas = Contratistas::all();
+
+        $contratistas = User::whereNotNull('cliente_id')->get();
     
         // Obtener los user_id únicos de la tabla ot_operarios
         $operarios = User::whereNull('cliente_id')
@@ -115,12 +117,12 @@ class AsistenciaController extends Controller
         $frente_sn = Frentes::whereIn('id', $user_frente)
             ->where('controla_hs_extras_sn', 1)
             ->get();
-        $contratistas = Contratistas::all();
+        $contratistas = User::whereNotNull('cliente_id')->get();
         $operarios = User::whereNull('cliente_id')
                 ->where('habilitado_sn', 1)
                 ->orderBy('name', 'asc')
                 ->get();
-        $contratistas = Contratistas::all();
+        $contratistas = User::whereNotNull('cliente_id')->get();
 
         return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id'));
     }
@@ -182,7 +184,7 @@ class AsistenciaController extends Controller
         Log::info("Recibida solicitud para Asistencia con ID: {$id}");
 
         $asistencia = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista'])->findOrFail($id);
-
+        log::info($asistencia);
         return response()->json($asistencia);
     }
 
@@ -206,6 +208,7 @@ class AsistenciaController extends Controller
             $asistenciaDetalle->salida = $detalle['salida'];
             $asistenciaDetalle->contratista_id = $detalle['contratista']['id'];
             $asistenciaDetalle->parte = $detalle['parte'];
+            $asistenciaDetalle->observaciones = $detalle['observaciones'];
             $asistenciaDetalle->save();
         }
 
@@ -230,6 +233,7 @@ class AsistenciaController extends Controller
                 'salida' => $detalle['salida'],
                 'contratista_id' => $detalle['contratista']['id'],
                 'parte' => $detalle['parte'],
+                'observaciones' => $detalle['observaciones'],
             ]);
             $nuevoDetalle->save();
         }

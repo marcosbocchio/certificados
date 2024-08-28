@@ -1,4 +1,3 @@
-@ -1,224 +1,238 @@
 <template>
   <div>
     <!-- Box 1: Frente y Fecha -->
@@ -56,8 +55,8 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="contratista">Contratista</label>
-            <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre" id="contratista"></v-select>
+            <label for="contratista">cliente</label>
+            <v-select v-model="contratista_selected" :options="contratistas_opciones" label="name" id="contratista"></v-select>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -78,40 +77,78 @@
     <!-- Tabla de Detalles -->
     <div class="box box-custom-enod">
       <div class="box-body">
-        <table class="table">
+        <table class="table table-hover table-striped table-condensed">
           <thead>
             <tr>
-              <th>Operador</th>
-              <th>Responsabilidad</th>
-              <th>Entrada</th>
-              <th>Salida</th>
-              <th>Contratista</th>
-              <th>Parte</th>
-              <th style="text-align: center;">Acciones</th>
+              <th class="col-md-2 text-center">Operador</th>
+              <th class="col-md-2 text-center">Responsabilidad</th>
+              <th class="col-md-2 text-center">Entrada</th>
+              <th class="col-md-2 text-center">Salida</th>
+              <th class="col-md-2 text-center">cliente</th>
+              <th class="col-md-2 text-center">Parte</th>
+              <th style="text-align: center;" colspan="2">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
               <td>{{ detalle.operador.name }}</td>
               <td>
-                <select v-model="detalle.ayudante_sn">
+                <select v-model="detalle.ayudante_sn" class="form-control">
                   <option value="1">Operador</option>
                   <option value="0">Ayudante</option>
                 </select>
               </td>
-              <td>{{ detalle.entrada }}</td>
-              <td>{{ detalle.salida }}</td>
-              <td>{{ detalle.contratista ? detalle.contratista.nombre : '-' }}</td>
-              <td>{{ detalle.parte ? detalle.parte : '-'}}</td>
-              <td style="text-align: center;">
-                  <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
+              <td>
+                <input type="time" v-model="detalle.entrada"  class="form-control"/>
+              </td>
+              <td>
+                <input type="time" v-model="detalle.salida"  class="form-control"/>
+              </td>
+              <td>
+                <v-select
+                  v-model="detalle.contratista"
+                  :options="contratistas_opciones"
+                  label="name"
+                  :reduce="contratista => contratista"
+                ></v-select>
+              </td>
+              <td>
+                <input 
+                  type="text" 
+                  v-model="detalle.parte"
+                  class="form-control"
+                  @blur="verificarParte(detalle.parte, index)"
+                />
+              </td>
+              <td style="width: 10px;">
+                <i :class="detalle.observaciones ? 'fas fa-comment-alt' : 'far fa-comment-alt'" 
+                  @click="abrirObservacionModal(index)"
+                  style="cursor: pointer;"></i>
+              </td>
+              <td>
+                <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    
+    <div class="modal fade" id="observacionModal" tabindex="-1" aria-labelledby="observacionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal">
+          <div class="modal-header">
+            <h5 class="modal-title" id="observacionModalLabel">Agregar Observación</h5>
+          </div>
+          <div class="modal-body">
+            <textarea v-model="observacionTexto" class="form-control custom-textarea" rows="4" maxlength="200"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="ocultarModal">Cancelar</button>
+            <button type="button" class="btn btn-enod" @click="guardarObservacion">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Botones de Acción -->
     <div class="form-actions">
       <div class="col-md-12">
@@ -172,15 +209,32 @@ export default {
       fecha: '',
       isDisabled: true, 
       frente_selected: '',
+      observacionTexto: '',
       operador_selected: '',
       entrada_selected: moment('08:00', 'HH:mm').toDate(),
       salida_selected: moment('16:00', 'HH:mm').toDate(),
+      observacionTexto: '',
       contratista_selected: '',
       parte_selected: '',
       isLoading: false,
     };
   },
   methods: {
+    abrirObservacionModal(index) {
+      this.observacionIndex = index;
+      this.observacionTexto = this.detalles[index].observaciones || ''; // Cargar la observación si existe
+      $('#observacionModal').modal('show'); // Mostrar el modal (usando jQuery)
+    },
+    guardarObservacion() {
+      if (this.observacionIndex !== null) {
+        this.$set(this.detalles[this.observacionIndex], 'observaciones', this.observacionTexto);
+        console.log(this.detalles[this.observacionIndex]);
+        $('#observacionModal').modal('hide'); // Ocultar el modal después de guardar
+      }
+    },
+    ocultarModal() {
+      $('#observacionModal').modal('hide');
+    },
     async verificarParte() {
     try {
       const response = await axios.post('/api/asistencia-comprobar-parte', {
@@ -293,7 +347,8 @@ export default {
       salida: moment(this.salida_selected).format('HH:mm'),
       contratista: this.contratista_selected,
       parte: this.parte_selected,
-      ayudante_sn: this.operador_selected.habilitado_arn_sn, // Usar el valor predeterminado
+      ayudante_sn: this.operador_selected.habilitado_arn_sn,
+      observacion : this.observaciones ? this.observaciones : '',
     };
 
     // Agregar nuevoDetalle a la lista de detalles
@@ -303,6 +358,7 @@ export default {
     this.salida_selected = moment('16:00', 'HH:mm').toDate();
     this.contratista_selected = '';
     this.parte_selected = '';
+    this.observaciones = '';
   },
     cargarDatos() {
     this.isLoading = true; // Inicia el estado de carga
@@ -315,6 +371,7 @@ export default {
         }));
         this.fecha = response.data.fecha;
         this.frente_selected = response.data.frente;
+        
       })
       .catch(error => {
         console.error('Error cargando los datos de asistencia:', error);
