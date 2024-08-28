@@ -62,7 +62,7 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="contratista">cliente</label>
-            <v-select v-model="contratista_selected" :options="contratistas_opciones" label="name" id="contratista"></v-select>
+            <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre_fantasia" id="contratista"></v-select>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -114,7 +114,7 @@
                 <v-select
                   v-model="detalle.contratista"
                   :options="contratistas_opciones"
-                  label="name"
+                  label="nombre_fantasia"
                   :reduce="contratista => contratista"
                 ></v-select>
               </td>

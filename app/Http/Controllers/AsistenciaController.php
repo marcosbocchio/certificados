@@ -9,6 +9,7 @@ use App\AsistenciaDetalle;
 use App\Frentes;
 use App\FrenteOperador;
 use App\User;
+use App\Clientes;
 use App\Contratistas;
 use App\OtOperarios;
 use App\OperadorControl;
@@ -64,7 +65,7 @@ class AsistenciaController extends Controller
             ->where('controla_hs_extras_sn', 1)
             ->get();
 
-        $contratistas = User::whereNotNull('cliente_id')->get();
+        $contratistas = Clientes::all();
     
         // Obtener los user_id únicos de la tabla ot_operarios
         $operarios = User::whereNull('cliente_id')
@@ -117,12 +118,11 @@ class AsistenciaController extends Controller
         $frente_sn = Frentes::whereIn('id', $user_frente)
             ->where('controla_hs_extras_sn', 1)
             ->get();
-        $contratistas = User::whereNotNull('cliente_id')->get();
+            $contratistas = Clientes::all();
         $operarios = User::whereNull('cliente_id')
                 ->where('habilitado_sn', 1)
                 ->orderBy('name', 'asc')
                 ->get();
-        $contratistas = User::whereNotNull('cliente_id')->get();
 
         return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id'));
     }
