@@ -394,17 +394,24 @@ export default {
       }
       // Recorremos cada detalle y verificamos el parte
       for (let detalle of this.detalles) {
-        // Verificación del 'parte' solo si tiene más de un carácter
-        if (detalle.parte && detalle.parte.length > 1) {
-          let parteEsValido = await this.verificarParte(detalle.parte);
-          if (!parteEsValido) {
-            // Si el parte no es válido, mostramos un error con el nombre del operador
-            toastr.error(`Parte inexistente para el operador ${detalle.operador.name}`);
-            this.isLoading = false; // Finaliza el estado de carga si estaba activo
-            return; // Detenemos la ejecución de la función
-          }
-        }
-      }
+  // Verificación si hay contratista y el parte es requerido
+  if (detalle.contratista && (!detalle.parte || detalle.parte.length < 1)) {
+    toastr.error(`Parte requerido para el operador ${detalle.operador.name}`);
+    this.isLoading = false;
+    return;
+  }
+
+  // Verificación del 'parte' solo si tiene más de un carácter
+  if (detalle.parte && detalle.parte.length > 1) {
+    let parteEsValido = await this.verificarParte(detalle.parte);
+    if (!parteEsValido) {
+      // Si el parte no es válido, mostramos un error con el nombre del operador
+      toastr.error(`Parte inexistente para el operador ${detalle.operador.name}`);
+      this.isLoading = false; // Finaliza el estado de carga si estaba activo
+      return; // Detenemos la ejecución de la función
+    }
+  }
+}
 
       // Si todos los partes son válidos, procedemos con la carga
       this.isLoading = true; 

@@ -390,6 +390,13 @@ export default {
     async confirmar() {
   // Recorremos cada detalle y verificamos el parte
   for (let detalle of this.detalles) {
+  // Verificación si hay contratista y el parte es requerido
+  if (detalle.contratista && (!detalle.parte || detalle.parte.length < 1)) {
+    toastr.error(`Parte requerido para el operador ${detalle.operador.name}`);
+    this.isLoading = false;
+    return;
+  }
+
   // Verificación del 'parte' solo si tiene más de un carácter
   if (detalle.parte && detalle.parte.length > 1) {
     let parteEsValido = await this.verificarParte(detalle.parte);
