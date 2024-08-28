@@ -99,16 +99,16 @@
             <tr v-for="(detalle, index) in detalles" :key="index">
               <td>{{ detalle.operador.name }}</td>
               <td>
-                <select v-model="detalle.ayudante_sn" class="form-control">
+                <select v-model="detalle.ayudante_sn">
                   <option value="1">Operador</option>
                   <option value="0">Ayudante</option>
                 </select>
               </td>
               <td>
-                <input type="time" v-model="detalle.entrada"  class="form-control"/>
+                <input type="time" v-model="detalle.entrada" />
               </td>
               <td>
-                <input type="time" v-model="detalle.salida"  class="form-control"/>
+                <input type="time" v-model="detalle.salida"  />
               </td>
               <td>
                 <v-select
@@ -122,8 +122,7 @@
                 <input 
                   type="text" 
                   v-model="detalle.parte"
-                  class="form-control"
-                  @blur="verificarParte(detalle.parte, index)"
+                  
                 />
               </td>
               <td style="width: 10px;">
@@ -395,6 +394,10 @@ export default {
       }
       // Recorremos cada detalle y verificamos el parte
       for (let detalle of this.detalles) {
+        if (detalle.contratista !== null) {
+          continue; // Si contratista no es null, saltamos a la siguiente iteración
+        }
+
         let parteEsValido = await this.verificarParte(detalle.parte);
         if (!parteEsValido) {
           // Si el parte no es válido, mostramos un error con el nombre del operador

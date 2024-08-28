@@ -117,7 +117,6 @@
                   type="text" 
                   v-model="detalle.parte"
                   class="form-control"
-                  @blur="verificarParte(detalle.parte, index)"
                 />
               </td>
               <td style="width: 10px;">
@@ -391,6 +390,10 @@ export default {
     async confirmar() {
   // Recorremos cada detalle y verificamos el parte
   for (let detalle of this.detalles) {
+    if (detalle.contratista !== null) {
+      continue; // Si contratista no es null, saltamos a la siguiente iteración
+    }
+
     let parteEsValido = await this.verificarParte(detalle.parte);
     if (!parteEsValido) {
       // Si el parte no es válido, mostramos un error con el nombre del operador
