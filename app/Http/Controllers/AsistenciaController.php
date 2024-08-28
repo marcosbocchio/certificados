@@ -208,7 +208,7 @@ class AsistenciaController extends Controller
             $asistenciaDetalle->salida = $detalle['salida'];
             $asistenciaDetalle->contratista_id = $detalle['contratista']['id'];
             $asistenciaDetalle->parte = $detalle['parte'];
-            $asistenciaDetalle->observaciones = $detalle['observaciones'];
+            $asistenciaDetalle->observaciones = $detalle['observaciones'] ?? null;
             $asistenciaDetalle->save();
         }
 
@@ -218,7 +218,6 @@ class AsistenciaController extends Controller
     public function updateAsistencia(Request $request, $id)
     {
         $asistenciaHora = AsistenciaHora::findOrFail($id);
-        Log::info('Actualizando asistencia con ID:', ['id' => $id, 'data' => $request->all()]);
         AsistenciaDetalle::where('asistencia_horas_id', $id)->delete();
         $asistenciaHora->fecha = $request->fecha;
         $asistenciaHora->frente_id = $request->frente_id;
@@ -233,7 +232,7 @@ class AsistenciaController extends Controller
                 'salida' => $detalle['salida'],
                 'contratista_id' => $detalle['contratista']['id'],
                 'parte' => $detalle['parte'],
-                'observaciones' => $detalle['observaciones'],
+                'observaciones' => $detalle['observaciones'] ?? null,
             ]);
             $nuevoDetalle->save();
         }

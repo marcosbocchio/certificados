@@ -390,10 +390,8 @@ export default {
     async confirmar() {
   // Recorremos cada detalle y verificamos el parte
   for (let detalle of this.detalles) {
-    if (detalle.contratista !== null) {
-      continue; // Si contratista no es null, saltamos a la siguiente iteración
-    }
-
+  // Verificación del 'parte' solo si tiene más de un carácter
+  if (detalle.parte && detalle.parte.length > 1) {
     let parteEsValido = await this.verificarParte(detalle.parte);
     if (!parteEsValido) {
       // Si el parte no es válido, mostramos un error con el nombre del operador
@@ -402,6 +400,7 @@ export default {
       return; // Detenemos la ejecución de la función
     }
   }
+}
 
   // Si todos los partes son válidos, procedemos con la carga
   this.isLoading = true; // Inicia el estado de carga
