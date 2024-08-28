@@ -253,21 +253,20 @@ export default {
       }
       return this.operarios_opciones;
     },
-    async verificarParte(parte_true) {
-    try {
-      const response = await axios.post('/api/asistencia-comprobar-parte', {
-        num: parte_true
-      });
-      if (!response.data.exists) {
-        toastr.error('Parte inexistente');
-        return false; // Indica que el parte no existe
-      }
-      return true; // Indica que el parte existe
-    } catch (error) {
-      toastr.error('Error al verificar el parte');
-      return false; // Indica que ocurrió un error en la verificación
+    async verificarParte(parte) {
+  try {
+    const response = await axios.post('/api/asistencia-comprobar-parte', {
+      num: parte
+    });
+    if (!response.data.exists) {
+      return false; // Indica que el parte no existe
     }
-  },
+    return true; // Indica que el parte existe
+  } catch (error) {
+    toastr.error('Error al verificar el parte');
+    return false; // Indica que ocurrió un error en la verificación
+  }
+},
   async verificarUser(user_id, fecha) {
   try {
     // Formatea la fecha al estilo "MM-YYYY"
@@ -349,13 +348,13 @@ export default {
     toastr.error('El operador tiene la semana 5 cerrada');
     return;
   }
-    // Verificar si el parte es válido
-    if (this.parte_selected) {
-        const parteValido = await this.verificarParte(this.parte_selected);
-        if (!parteValido) {
-          return;
-        }
-      }
+  if (this.parte_selected) {
+    const parteValido = await this.verificarParte(this.parte_selected);
+    if (!parteValido) {
+      toastr.error(`Parte "${this.parte_selected}" inexistente`);
+      return; // Si el parte no es válido, detenemos la ejecución
+    }
+  }
 
     // Calcular los valores para nuevoDetalle
     const nuevoDetalle = {
@@ -380,7 +379,7 @@ export default {
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
     },
-    confirmar() {
+    async confirmar() {
       // Validaciones por separado con mensajes Toastr
       if (!this.frente_selected) {
         toastr.error('Debe seleccionar un frente');
@@ -394,6 +393,18 @@ export default {
         toastr.error('Debe agregar al menos un detalle');
         return;
       }
+      // Recorremos cada detalle y verificamos el parte
+      for (let detalle of this.detalles) {
+        let parteEsValido = await this.verificarParte(detalle.parte);
+        if (!parteEsValido) {
+          // Si el parte no es válido, mostramos un error con el nombre del operador
+          toastr.error(`Parte inexistente para el operador ${detalle.operador.name}`);
+          this.isLoading = false; // Finaliza el estado de carga si estaba activo
+          return; // Detenemos la ejecución de la función
+        }
+      }
+
+      // Si todos los partes son válidos, procedemos con la carga
       this.isLoading = true; 
       axios.post('/api/guardar_asistencia', {
         frente_id: this.frente_selected.id,

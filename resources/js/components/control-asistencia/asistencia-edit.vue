@@ -235,21 +235,20 @@ export default {
     ocultarModal() {
       $('#observacionModal').modal('hide');
     },
-    async verificarParte() {
-    try {
-      const response = await axios.post('/api/asistencia-comprobar-parte', {
-        num: this.parte_selected
-      });
-      if (!response.data.exists) {
-        toastr.error('Parte inexistente');
-        return false; // Indica que el parte no existe
-      }
-      return true; // Indica que el parte existe
-    } catch (error) {
-      toastr.error('Error al verificar el parte');
-      return false; // Indica que ocurrió un error en la verificación
+    async verificarParte(parte) {
+  try {
+    const response = await axios.post('/api/asistencia-comprobar-parte', {
+      num: parte
+    });
+    if (!response.data.exists) {
+      return false; // Indica que el parte no existe
     }
-  },
+    return true; // Indica que el parte existe
+  } catch (error) {
+    toastr.error('Error al verificar el parte');
+    return false; // Indica que ocurrió un error en la verificación
+  }
+},
   async verificarUser(user_id, fecha) {
   try {
     // Formatea la fecha al estilo "MM-YYYY"
@@ -332,13 +331,13 @@ export default {
     return;
   }
 
-    // Verificar si el parte es válido
-    if (this.parte_selected) {
-        const parteValido = await this.verificarParte();
-        if (!parteValido) {
-          return;
-        }
-      }
+  if (this.parte_selected) {
+    const parteValido = await this.verificarParte(this.parte_selected);
+    if (!parteValido) {
+      toastr.error(`Parte "${this.parte_selected}" inexistente`);
+      return; // Si el parte no es válido, detenemos la ejecución
+    }
+  }
 
     // Calcular los valores para nuevoDetalle
     const nuevoDetalle = {
@@ -389,26 +388,33 @@ export default {
       }
       return this.operarios_opciones;
     },
-    confirmar() {
-      console.log(this.detalles);
-      this.isLoading = true; // Inicia el estado de carga
-      axios.post(`/api/asistencia/${this.asistenciaId}/update`, {
-      detalles: this.detalles,
-      fecha: this.fecha,
-      frente_id: this.frente_selected.id
-    })
-    .then(response => {
-      toastr.success('Asistencia actualizada con éxito!'); // Notificación de éxito
-      window.location.href = '/area/enod/asistencia';
-    })
-    .catch(error => {
-      console.error('Error actualizando la asistencia:', error);
-      toastr.error('Error al actualizar la asistencia.'); // Notificación de error
-    })
-    .finally(() => {
-      this.isLoading = false; // Finaliza el estado de carga
-    });
-}
+    async confirmar() {
+  // Recorremos cada detalle y verificamos el parte
+  for (let detalle of this.detalles) {
+    let parteEsValido = await this.verificarParte(detalle.parte);
+    if (!parteEsValido) {
+      // Si el parte no es válido, mostramos un error con el nombre del operador
+      toastr.error(`Parte inexistente para el operador ${detalle.operador.name}`);
+      this.isLoading = false; // Finaliza el estado de carga si estaba activo
+      return; // Detenemos la ejecución de la función
+    }
+  }
+
+  // Si todos los partes son válidos, procedemos con la carga
+  this.isLoading = true; // Inicia el estado de carga
+  axios.post(`/api/asistencia/${this.asistenciaId}/update`, {
+    detalles: this.detalles,
+    fecha: this.fecha,
+    frente_id: this.frente_selected.id
+  }).then(response => {
+    this.isLoading = false; // Finaliza el estado de carga
+    toastr.success('Detalles actualizados con éxito');
+    window.location.href = '/area/enod/asistencia';
+  }).catch(error => {
+    this.isLoading = false; // Finaliza el estado de carga
+    toastr.error('Error al actualizar los detalles');
+  });
+},
   }
 }
 </script>
