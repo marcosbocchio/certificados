@@ -24,6 +24,6 @@ class AsistenciaDetalle extends Model
     // Relación con Contratistas
     public function contratista()
     {
-        return $this->belongsTo(User::class, 'contratista_id');
+        return $this->belongsTo(Clientes::class, 'contratista_id');
     }
 }
