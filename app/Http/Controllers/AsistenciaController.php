@@ -129,7 +129,7 @@ class AsistenciaController extends Controller
 
     public function controlarUser($id_user, $fecha)
     {
-        log::info($fecha);
+
         $mes = $fecha;  // Directamente asignamos $fecha a $mes porque ya tiene el formato correcto
     
         // Buscar en la base de datos usando operador_id y mes
@@ -137,7 +137,7 @@ class AsistenciaController extends Controller
             ->where('mes', $mes)  // Comparamos directamente con el campo mes
             ->first();
     
-        Log::info($operadorControl);
+
     
         if ($operadorControl) {
             // Crear la respuesta en una variable
@@ -151,14 +151,14 @@ class AsistenciaController extends Controller
             ];
     
             // Registrar la respuesta en el log
-            Log::info('Respuesta de controlarUser:', $response);
+
     
             // Devolver la respuesta como JSON
             return response()->json($response);
         }
     
-        // Registrar que no se encontraron registros
-        Log::info('No se encontraron registros para el usuario ID: ' . $id_user . ' en el mes: ' . $mes);
+
+
         return response()->json(['message' => 'No se encontraron registros.'], 404);
     }
 
@@ -181,18 +181,15 @@ class AsistenciaController extends Controller
     
     public function getAsistencia($id)
     {
-        Log::info("Recibida solicitud para Asistencia con ID: {$id}");
+
 
         $asistencia = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista'])->findOrFail($id);
-        log::info($asistencia);
+
         return response()->json($asistencia);
     }
 
     public function guardarAsistencia(Request $request)
     {
-        Log::info('Registro de asistencia recibido:', [
-            'data' => $request->all()
-        ]);
 
         $asistenciaHora = new AsistenciaHora;
         $asistenciaHora->frente_id = $request->frente_id;
@@ -333,7 +330,6 @@ class AsistenciaController extends Controller
                 }
             }
         }
-        log::info($resumenOperarios);
         // Ordenar los operadores alfabéticamente por nombre
         usort($resumenOperarios, function ($a, $b) {
             return strcmp($a['operador']['name'], $b['operador']['name']);
