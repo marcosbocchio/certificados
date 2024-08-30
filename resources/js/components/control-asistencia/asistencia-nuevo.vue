@@ -253,19 +253,34 @@ export default {
       return this.operarios_opciones;
     },
     async verificarParte(parte) {
-  try {
-    const response = await axios.post('/api/asistencia-comprobar-parte', {
-      num: parte
-    });
-    if (!response.data.exists) {
-      return false; // Indica que el parte no existe
+    try {
+      // Verificar que el formato sea válido (solo números y guiones)
+      const regex = /^[0-9]+(-[0-9]+)?$/;
+      if (!regex.test(parte)) {
+        toastr.error('Formato de parte inválido. Use solo números o "-" para separar.');
+        return false; // Formato inválido
+      }
+
+      // Separar los números si hay un guion
+      const partes = parte.split('-');
+      
+      // Verificar cada parte por separado
+      for (let i = 0; i < partes.length; i++) {
+        const response = await axios.post('/api/asistencia-comprobar-parte', {
+          num: partes[i]
+        });
+        if (!response.data.exists) {
+          toastr.error(`El parte ${partes[i]} no existe.`);
+          return false; // Indica que uno de los partes no existe
+        }
+      }
+
+      return true; // Todos los partes son válidos
+    } catch (error) {
+      toastr.error('Error al verificar el parte');
+      return false; // Indica que ocurrió un error en la verificación
     }
-    return true; // Indica que el parte existe
-  } catch (error) {
-    toastr.error('Error al verificar el parte');
-    return false; // Indica que ocurrió un error en la verificación
-  }
-},
+  },
   async verificarUser(user_id, fecha) {
   try {
     // Formatea la fecha al estilo "MM-YYYY"
@@ -347,10 +362,11 @@ export default {
     toastr.error('El operador tiene la semana 5 cerrada');
     return;
   }
+
   if (this.parte_selected) {
     const parteValido = await this.verificarParte(this.parte_selected);
     if (!parteValido) {
-      toastr.error(`Parte "${this.parte_selected}" inexistente`);
+      console.error(`Parte "${this.parte_selected}" inexistente`);
       return; // Si el parte no es válido, detenemos la ejecución
     }
   }
@@ -394,24 +410,24 @@ export default {
       }
       // Recorremos cada detalle y verificamos el parte
       for (let detalle of this.detalles) {
-  // Verificación si hay contratista y el parte es requerido
-  if (detalle.contratista && (!detalle.parte || detalle.parte.length < 1)) {
-    toastr.error(`Parte requerido para el operador ${detalle.operador.name}`);
-    this.isLoading = false;
-    return;
-  }
+      // Verificación si hay contratista y el parte es requerido
+      if (detalle.contratista && (!detalle.parte || detalle.parte.length < 1)) {
+        toastr.error(`Parte requerido para el operador ${detalle.operador.name}`);
+        this.isLoading = false;
+        return;
+      }
 
-  // Verificación del 'parte' solo si tiene más de un carácter
-  if (detalle.parte && detalle.parte.length > 1) {
-    let parteEsValido = await this.verificarParte(detalle.parte);
-    if (!parteEsValido) {
-      // Si el parte no es válido, mostramos un error con el nombre del operador
-      toastr.error(`Parte inexistente para el operador ${detalle.operador.name}`);
-      this.isLoading = false; // Finaliza el estado de carga si estaba activo
-      return; // Detenemos la ejecución de la función
+      // Verificación del 'parte' solo si tiene más de un carácter
+      if (detalle.parte && detalle.parte.length > 1) {
+        let parteEsValido = await this.verificarParte(detalle.parte);
+        if (!parteEsValido) {
+          // Si el parte no es válido, mostramos un error con el nombre del operador
+          toastr.error(`Parte inexistente para el operador ${detalle.operador.name}`);
+          this.isLoading = false; // Finaliza el estado de carga si estaba activo
+          return; // Detenemos la ejecución de la función
+        }
+      }
     }
-  }
-}
 
       // Si todos los partes son válidos, procedemos con la carga
       this.isLoading = true; 

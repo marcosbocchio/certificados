@@ -84,7 +84,7 @@
               <th class="col-md-2 text-center">Responsabilidad</th>
               <th class="col-md-2 text-center">Entrada</th>
               <th class="col-md-2 text-center">Salida</th>
-              <th class="col-md-2 text-center">cliente</th>
+              <th class="col-md-2 text-center">Cliente</th>
               <th class="col-md-2 text-center">Parte</th>
               <th style="text-align: center;" colspan="2">Acciones</th>
             </tr>
@@ -99,10 +99,10 @@
                 </select>
               </td>
               <td>
-                <input type="time" v-model="detalle.entrada"  class="form-control"/>
+                <input type="time" v-model="detalle.entrada" class="form-control" />
               </td>
               <td>
-                <input type="time" v-model="detalle.salida"  class="form-control"/>
+                <input type="time" v-model="detalle.salida" class="form-control" />
               </td>
               <td>
                 <v-select
@@ -117,10 +117,11 @@
                   type="text" 
                   v-model="detalle.parte"
                   class="form-control"
+                  @blur="verificarParteEdicion(detalle)"
                 />
               </td>
               <td style="width: 10px;">
-                <i :class="detalle.observaciones ? 'fas fa-comment-alt' : 'far fa-comment-alt'" 
+                <i :class="detalle.observaciones ? 'fas fa-comment-alt' : 'far fa-comment-alt'"
                   @click="abrirObservacionModal(index)"
                   style="cursor: pointer;"></i>
               </td>
@@ -235,19 +236,45 @@ export default {
       $('#observacionModal').modal('hide');
     },
     async verificarParte(parte) {
-  try {
-    const response = await axios.post('/api/asistencia-comprobar-parte', {
-      num: parte
-    });
-    if (!response.data.exists) {
-      return false; // Indica que el parte no existe
-    }
-    return true; // Indica que el parte existe
-  } catch (error) {
-    toastr.error('Error al verificar el parte');
-    return false; // Indica que ocurrió un error en la verificación
-  }
-},
+      const regex = /^[0-9]+(-[0-9]+)?$/;
+      if (!regex.test(parte)) {
+        toastr.error('Formato de parte inválido. Use solo números o "-" para separar.');
+        return false; // Formato inválido
+      }
+
+      const partes = parte.split('-');
+      for (let i = 0; i < partes.length; i++) {
+        try {
+          const response = await axios.post('/api/asistencia-comprobar-parte', {
+            num: partes[i]
+          });
+          if (!response.data.exists) {
+            toastr.error(`El parte ${partes[i]} no existe.`);
+            return false; // Parte no existe
+          }
+        } catch (error) {
+          toastr.error('Error al verificar el parte');
+          return false; // Error en la verificación
+        }
+      }
+      return true; // Todos los partes son válidos
+    },
+
+    async verificarTodosLosPartes() {
+      for (let detalle of this.detalles) {
+        if (detalle.contratista && detalle.parte) {
+          const parteValido = await this.verificarParte(detalle.parte);
+          if (!parteValido) {
+            toastr.error(`Parte "${detalle.parte}" del operador "${detalle.operador.name}" es inválido`);
+            return false; // Detener si algún parte no es válido
+          }
+        } else if (detalle.contratista && !detalle.parte) {
+          toastr.error(`Parte requerido para el operador "${detalle.operador.name}"`);
+          return false; // Detener si falta algún parte
+        }
+      }
+      return true; // Todos los partes son válidos
+    },
   async verificarUser(user_id, fecha) {
   try {
     // Formatea la fecha al estilo "MM-YYYY"
@@ -333,7 +360,7 @@ export default {
   if (this.parte_selected) {
     const parteValido = await this.verificarParte(this.parte_selected);
     if (!parteValido) {
-      toastr.error(`Parte "${this.parte_selected}" inexistente`);
+      console.error(`Parte "${this.parte_selected}" inexistente`);
       return; // Si el parte no es válido, detenemos la ejecución
     }
   }
@@ -388,26 +415,12 @@ export default {
       return this.operarios_opciones;
     },
     async confirmar() {
-  // Recorremos cada detalle y verificamos el parte
-  for (let detalle of this.detalles) {
-  // Verificación si hay contratista y el parte es requerido
-  if (detalle.contratista && (!detalle.parte || detalle.parte.length < 1)) {
-    toastr.error(`Parte requerido para el operador ${detalle.operador.name}`);
-    this.isLoading = false;
-    return;
-  }
-
-  // Verificación del 'parte' solo si tiene más de un carácter
-  if (detalle.parte && detalle.parte.length > 1) {
-    let parteEsValido = await this.verificarParte(detalle.parte);
-    if (!parteEsValido) {
-      // Si el parte no es válido, mostramos un error con el nombre del operador
-      toastr.error(`Parte inexistente para el operador ${detalle.operador.name}`);
-      this.isLoading = false; // Finaliza el estado de carga si estaba activo
-      return; // Detenemos la ejecución de la función
-    }
-  }
-}
+ // Verificar todos los partes antes de guardar
+ const todosValidos = await this.verificarTodosLosPartes();
+      if (!todosValidos) {
+        this.isLoading = false;
+        return; // Si hay partes no válidos, detenemos la ejecución
+      }
 
   // Si todos los partes son válidos, procedemos con la carga
   this.isLoading = true; // Inicia el estado de carga
