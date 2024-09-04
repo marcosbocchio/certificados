@@ -25,13 +25,27 @@
                    </div>
             
 
-                    <div class="col-md-12">
-                       <div class="form-group">   
-                            <label for="metodo_ensayo">Método de Ensayo *</label>      
-                                <input v-if="metodo_ensayos.metodo == 'US'" type="checkbox" id="checkbox" v-model="Registro.palpador_sn" style="float:right"> 
-                                <label v-if="metodo_ensayos.metodo == 'US'" for="tipo" style="float:right;margin-right: 5px;">PALPADOR</label>   
-                            <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" @input="resetInstrumentoMedicion" ></v-select> 
-                      </div>
+                   <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="metodo_ensayo">Método de Ensayo *</label>
+                            <input v-if="metodo_ensayos.metodo == 'US'" type="checkbox" id="checkbox" v-model="Registro.palpador_sn" style="float:right"> 
+                            <label v-if="metodo_ensayos.metodo == 'US'" for="tipo" style="float:right; margin-right: 5px;">PALPADOR</label>
+                            
+                            <!-- v-select with metodo and descripcion -->
+                            <v-select 
+                                v-model="metodo_ensayos" 
+                                label="metodo" 
+                                :options="metodos_ensayos" 
+                                @input="resetInstrumentoMedicion">
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.metodo }}</span> <br>
+                                    <span class="downSelect">{{ option.descripcion }}</span>
+                                </template>
+                                <template slot="selected-option" slot-scope="option">
+                                    <span>{{ option.metodo }} - {{ option.descripcion }}</span>
+                                </template>
+                            </v-select>
+                        </div>
                     </div>
 
                     <div class="col-md-12">

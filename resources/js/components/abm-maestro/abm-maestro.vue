@@ -1,37 +1,60 @@
 <template>
   <div class="row">
 
-         <div class="form-group">
-
-            <div class="col-md-1 col-xs-2">
-              <button class="btn btn-enod" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)"><span class="fa fa-plus-circle"></span> Nuevo</button>
-            </div>
-
-            <div v-show="inputSearch.includes(modelo)">
-              <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
-                <div class="input-group">
-                    <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
-                    <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
-                </div>
-              </div>
-            </div>
-
+    <div class="form-group">
+        <!-- Botón "Nuevo" -->
+        <div class="col-md-1 col-xs-2">
+            <button class="btn btn-enod" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)">
+                <span class="fa fa-plus-circle"></span> Nuevo
+            </button>
         </div>
 
-      <div class="clearfix"></div>
+        <!-- Checkboxes y buscador alineados horizontalmente -->
+        <div v-show="modelo === 'productos'">
+            <div class="col-md-8 col-xs-10 d-flex align-items-center text-right">
+                <label>
+                    <input type="checkbox" v-model="filterStockeable" @change="getResults"> Stockeable
+                </label>
+                <label>
+                    <input type="checkbox" v-model="filterRelacionPlacas" @change="getResults"> Relacionado a Placas
+                </label>
+            </div>
+            <div class="col-md-3 col-xs-9 p-0">
+                <div class="input-group">
+                    <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
+                    <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
 
-      <div class="col-md-12">
-          <component :is= setTablaComponente :registros="registros.data" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro" @trazabilidad="open_trazabilidad_fuente" :loading="loading"/>
-          <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getResults" :modelo="modelo"></delete-registro>
-          <component :is= setNuevoComponente :modelo ="modelo" @store="getResults"/>
-          <component :is= setEditarComponente :selectRegistro="selectRegistro" @update="getResults"/>
-          <pagination
-                    :data="registros" @pagination-change-page="getResults" :limit="3" >
-                    <span slot="prev-nav">&lt; Previous</span>
-                    <span slot="next-nav">Next &gt;</span>
-          </pagination>
+        <!-- Campo de búsqueda adicional si el modelo no es 'productos' -->
+        <div v-show="inputSearch.includes(modelo)">
+            <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
+                <div class="input-group">
+                    <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
+                    <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-      </div>
+    <div class="clearfix"></div>
+
+    <div class="col-md-12">
+        <component :is= setTablaComponente :registros="registros.data" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro" @trazabilidad="open_trazabilidad_fuente" :loading="loading"/>
+        <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getResults" :modelo="modelo"></delete-registro>
+        <component :is= setNuevoComponente :modelo ="modelo" @store="getResults"/>
+        <component :is= setEditarComponente :selectRegistro="selectRegistro" @update="getResults"/>
+        <pagination :data="registros" @pagination-change-page="getResults" :limit="3">
+            <span slot="prev-nav">&lt; Previous</span>
+            <span slot="next-nav">Next &gt;</span>
+        </pagination>
+    </div>
+
     <div class="clearfix"></div>
 
   </div>
@@ -128,7 +151,9 @@
                 axios.defaults.baseURL = this.url ;
                 console.log('modelo',this.modelo)
                 var urlRegistros = this.modelo + '/paginate' + '?page='+ page + '&search=' + this.search;
-                console.log(urlRegistros)
+                if (this.modelo === 'productos') {
+                  urlRegistros += `&stockeable_sn=${this.filterStockeable ? 1 : ''}&relacionado_a_placas_sn=${this.filterRelacionPlacas ? 1 : ''}`;
+                }
                 axios.get(urlRegistros).then(response =>{
                      this.registros = response.data
                      console.log(this.registros)
