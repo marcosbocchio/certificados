@@ -206,6 +206,8 @@ class AsistenciaController extends Controller
             $asistenciaDetalle->contratista_id = $detalle['contratista']['id'];
             $asistenciaDetalle->parte = $detalle['parte'];
             $asistenciaDetalle->observaciones = $detalle['observaciones'] ?? null;
+            $asistenciaDetalle->hora_extra_sn = $detalle['hora_extra_sn'];
+            $asistenciaDetalle->s_d_f_sn = $detalle['s_d_f_sn'];
             $asistenciaDetalle->save();
         }
 
@@ -230,6 +232,8 @@ class AsistenciaController extends Controller
                 'contratista_id' => $detalle['contratista']['id'],
                 'parte' => $detalle['parte'],
                 'observaciones' => $detalle['observaciones'] ?? null,
+                'hora_extra_sn' => $detalle['hora_extra_sn'],
+                's_d_f_sn' => $detalle['s_d_f_sn'],
             ]);
             $nuevoDetalle->save();
         }
@@ -484,10 +488,10 @@ class AsistenciaController extends Controller
 
         $totalDias = Carbon::createFromDate($year, $month)->daysInMonth;
         $inicioMes = Carbon::create($year, $month, 1);
-        $inicioSemana = $inicioMes->copy()->startOfWeek(Carbon::SATURDAY);
+        $inicioSemana = $inicioMes->copy()->startOfWeek(Carbon::FRIDAY);
 
         $finMes = Carbon::create($year, $month, $totalDias);
-        $finSemana = $finMes->copy()->endOfWeek(Carbon::FRIDAY);
+        $finSemana = $finMes->copy()->endOfWeek(Carbon::THURSDAY);
 
         for ($fecha = $inicioSemana; $fecha->lte($finSemana); $fecha->addDay()) {
             $diaDeLaSemana = $fecha->dayOfWeek;
@@ -504,8 +508,8 @@ class AsistenciaController extends Controller
                 $diasHabiles++;
             }
 
-            $semanaInicio = $fecha->copy()->startOfWeek(Carbon::SATURDAY);
-            $semanaFin = $fecha->copy()->endOfWeek(Carbon::FRIDAY);
+            $semanaInicio = $fecha->copy()->startOfWeek(Carbon::FRIDAY);
+            $semanaFin = $fecha->copy()->endOfWeek(Carbon::THURSDAY);
 
             if (!isset($semanas[$semanaInicio->weekOfYear])) {
                 $semanas[$semanaInicio->weekOfYear] = [
@@ -515,7 +519,8 @@ class AsistenciaController extends Controller
             }
         }
 
-        return [
+        // Log the result before returning
+        $resultado = [
             'diasHabiles' => $diasHabiles,
             'sabados' => $sabados,
             'domingos' => $domingos,
@@ -523,6 +528,11 @@ class AsistenciaController extends Controller
             'feriadosArray' => $feriadosArray,
             'semanas' => array_values($semanas)
         ];
+
+        // Log the output for debugging
+        Log::info('Resultado de calcularDiasDelMes', $resultado);
+
+        return $resultado;
     }
 
     private function getFeriados($year)

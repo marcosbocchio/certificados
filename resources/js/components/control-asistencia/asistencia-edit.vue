@@ -66,6 +66,17 @@
             <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
           </div>
         </div>
+                <!-- Hora Extra Checkbox -->
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label v-if="mostrarHoraExtra">
+                      <input type="checkbox" v-model="hora_extra_sn"> Hora Extra
+                    </label>
+                    <label>
+                      <input type="checkbox" v-model="sdf_sn"> S D F
+                    </label>
+                  </div>
+                </div>
         <div class="col-md-3">
           <div style="display:flex;justify-content: flex-start;align-items: center;">
             <button type="button" @click="agregarDetalle" style="margin-top:25px;"><span class="fa fa-plus-circle"></span></button>
@@ -82,11 +93,11 @@
             <tr>
               <th class="col-md-2 text-center">Operador</th>
               <th class="col-md-2 text-center">Responsabilidad</th>
-              <th class="col-md-2 text-center">Entrada</th>
-              <th class="col-md-2 text-center">Salida</th>
-              <th class="col-md-2 text-center">Cliente</th>
+              <th class="col-md-1 text-center">Entrada</th>
+              <th class="col-md-1 text-center">Salida</th>
+              <th class="col-md-2 text-center">cliente</th>
               <th class="col-md-2 text-center">Parte</th>
-              <th style="text-align: center;" colspan="2">Acciones</th>
+              <th style="text-align: center;" colspan="4">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -119,6 +130,16 @@
                   class="form-control"
                   @blur="verificarParteEdicion(detalle)"
                 />
+              </td>
+              <td>
+                <label>
+                  <input type="checkbox" v-model="detalle.hora_extra_sn"> Hora Extra
+                </label>
+              </td>
+              <td>
+                <label>
+                  <input type="checkbox" v-model="detalle.sdf_sn"> S D F
+                </label>
               </td>
               <td style="width: 10px;">
                 <i :class="detalle.observaciones ? 'fas fa-comment-alt' : 'far fa-comment-alt'"
@@ -217,8 +238,33 @@ export default {
       contratista_selected: '',
       parte_selected: '',
       isLoading: false,
+      hora_extra_sn: false,
+      sdf_sn:false,
+      horas_calculadas:'',
     };
   },
+  computed: {
+  mostrarHoraExtra() {
+    // Se mostrará el checkbox solo si las horas calculadas son mayores que las horas diarias laborables
+    return this.horas_calculadas > this.frente_selected.horas_diarias_laborables;
+  }
+},
+watch: {
+    entrada_selected(newVal) {
+    console.log("Entrada seleccionada: ", this.entrada_selected);
+    if (this.salida_selected) {
+      // Si ya hay una salida seleccionada, calcular la diferencia
+      this.calcularDiferencia(this.entrada_selected, this.salida_selected);
+    }
+  },
+  salida_selected(newVal) {
+    console.log("Salida seleccionada: ", this.salida_selected);
+    if (this.entrada_selected) {
+      // Si ya hay una entrada seleccionada, calcular la diferencia
+      this.calcularDiferencia(this.entrada_selected, this.salida_selected);
+    }
+  }
+},
   methods: {
     abrirObservacionModal(index) {
       this.observacionIndex = index;
@@ -402,6 +448,7 @@ export default {
         console.error('Error cargando los datos de asistencia:', error);
       })
       .finally(() => {
+        console.log(this.detalles);
         this.isLoading = false; // Finaliza el estado de carga
       });
 },
@@ -437,6 +484,50 @@ export default {
     toastr.error('Error al actualizar los detalles');
   });
 },
+convertirATiempo(horaDate) {
+  // Asegurarse de que sea un objeto Date válido
+  if (horaDate instanceof Date && !isNaN(horaDate)) {
+    return {
+      hours: horaDate.getHours(),      // Extrae horas
+      minutes: horaDate.getMinutes(),  // Extrae minutos
+      seconds: horaDate.getSeconds()   // Extrae segundos (si lo necesitas)
+    };
+  } else {
+    console.error('El valor proporcionado no es un objeto Date válido.');
+    return null;
+  }
+},
+
+calcularDiferencia(horaInicio, horaFin) {
+  const inicio = this.convertirATiempo(horaInicio); // { hours, minutes, seconds }
+  const fin = this.convertirATiempo(horaFin); // { hours, minutes, seconds }
+
+  if (!inicio || !fin) {
+    console.error('No se pudieron obtener las horas correctamente.');
+    return null;
+  }
+
+  // Convertir ambas horas a segundos totales para mayor precisión
+  const segundosInicio = inicio.hours * 3600 + inicio.minutes * 60 + inicio.seconds;
+  const segundosFin = fin.hours * 3600 + fin.minutes * 60 + fin.seconds;
+
+  // Calcular diferencia en segundos
+  let diferenciaSegundos = segundosFin - segundosInicio;
+
+  // Si la diferencia es negativa (fin es antes que inicio), ajustamos para el siguiente día
+  if (diferenciaSegundos < 0) {
+    diferenciaSegundos += 24 * 3600; // Añadir un día en segundos
+  }
+
+  // Convertir de nuevo a horas, minutos y segundos
+  const horasDiferencia = Math.floor(diferenciaSegundos / 3600);
+  const minutosDiferencia = Math.floor((diferenciaSegundos % 3600) / 60);
+  const segundosDiferencia = diferenciaSegundos % 60;
+
+  this.horas_calculadas = horasDiferencia;
+  console.log(this.horas_calculadas);
+  return { horas: horasDiferencia, minutos: minutosDiferencia, segundos: segundosDiferencia };
+}
   }
 }
 </script>

@@ -48,7 +48,7 @@
     </td>
   </tr>
 </table>
-    <div v-if="stockItems.length">
+    <div>
       <div class="box box-custom-enod top-buffer">
         <div class="box-body">
           <div class="table-responsive">
@@ -57,7 +57,7 @@
                 <tr>
                   <th>Fecha</th>
                   <th>Proveedor</th>
-                  <th>Número Remito</th>
+                  <th>Número Remito</th>  <!-- 😎 -->
                   <th style="text-align: center;">anulado</th>
                   <th style="text-align: center; width: 10px;" colspan="2">Acciones</th>
                 </tr>
