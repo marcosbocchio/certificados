@@ -6,15 +6,15 @@
     <title>Control Asistencia</title>
     <style>
 
-@font-face {
-        font-family: 'fontawesome';
-        src: url('fonts/fontawesome-webfont.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
-    .fa {
-        font-family: 'fontawesome';
-    }
+    @font-face {
+            font-family: 'fontawesome';
+            src: url('fonts/fontawesome-webfont.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        .fa {
+            font-family: 'fontawesome';
+        }
 
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
@@ -188,9 +188,9 @@
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
                             <td style="text-align: center;">
                                 @if($asistencia['hora_extra_sn'])
-                                    <span style="padding-left: 85px;">&#10004;</span> <!-- Checkmark -->
+                                    <span style="font-family: 'fontawesome';">&#xf00c;</span> <!-- Icono de check -->
                                 @else
-                                    <span style="padding-left: 85px;">&#10008;</span> <!-- Cross -->
+                                    <span style="font-family: 'fontawesome';">&#xf00d;</span> <!-- Icono de cruz -->
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
@@ -201,13 +201,13 @@
                             <td class="empty-cell"></td>
                             <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
-                                <td style="text-align: center;">
-                                    @if($asistencia['hora_extra_sn'])
-                                        <span style="padding-left: 85px;">&#10004;</span> <!-- Checkmark -->
-                                    @else
-                                        <span style="padding-left: 85px;">&#10008;</span> <!-- Cross -->
-                                    @endif
-                                </td>
+                            <td style="text-align: center;">
+                                @if($asistencia['hora_extra_sn'])
+                                    <span style="font-family: 'fontawesome';">&#xf00c;</span> <!-- Icono de check -->
+                                @else
+                                    <span style="font-family: 'fontawesome';">&#xf00d;</span> <!-- Icono de cruz -->
+                                @endif
+                            </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
                             <td>{{ $fechaPago }}</td> <!-- Mostrar la fecha de pago -->
                         </tr>

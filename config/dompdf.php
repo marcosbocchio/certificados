@@ -49,7 +49,15 @@ return array(
          * Note: This directory must exist and be writable by the webserver process.
          */
         "font_cache" => storage_path('fonts/'),
-
+        'font_family' => [
+            'sans-serif' => [
+                'R' => 'Helvetica',  // Regular
+                'B' => 'Helvetica-Bold', // Bold
+            ],
+            'fontawesome' => [
+                'R' => storage_path('fonts/fontawesome-webfont.ttf'), // Ruta a la fuente FontAwesome regular
+            ],
+        ],
         /**
          * The location of a temporary directory.
          *
