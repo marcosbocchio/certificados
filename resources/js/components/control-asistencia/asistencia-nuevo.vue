@@ -360,7 +360,9 @@ export default {
       toastr.error('Parte obligatorio');
       return;
     }
-
+    if(!this.mostrarSDFCheckbox()){
+      this.sdf_sn = false;
+    }
      // Verificar si la fecha ya está bloqueada para este operador
   const fecha_operador = await this.verificarUser(this.operador_selected.id, this.fecha);
   const fechaSeleccionada = moment(this.fecha);
@@ -530,10 +532,17 @@ calcularDiferencia(horaInicio, horaFin) {
   const minutosDiferencia = Math.floor((diferenciaSegundos % 3600) / 60);
   const segundosDiferencia = diferenciaSegundos % 60;
 
-  this.horas_calculadas = horasDiferencia;
+  // Convertir los minutos a decimales y sumarlos a las horas
+  const horasConDecimales = horasDiferencia + (minutosDiferencia / 60);
+
+  // Redondear los segundos para evitar errores en la representación
+  const horasTotales = Math.round(horasConDecimales * 100) / 100;
+
+  this.horas_calculadas = horasTotales;
   console.log(this.horas_calculadas);
   console.log(this.fechaSeleccionada);
-  return { horas: horasDiferencia, minutos: minutosDiferencia, segundos: segundosDiferencia };
+
+  return { horas: horasTotales, minutos: minutosDiferencia, segundos: segundosDiferencia };
 },
 async obtenerFeriados() {
     const year = new Date(this.fecha).getFullYear(); // Obtenemos el año de la fecha seleccionada

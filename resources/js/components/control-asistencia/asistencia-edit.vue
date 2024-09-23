@@ -552,7 +552,6 @@ convertirATiempo(horaDate) {
     return null;
   }
 },
-
 calcularDiferencia(horaInicio, horaFin) {
   const inicio = this.convertirATiempo(horaInicio); // { hours, minutes, seconds }
   const fin = this.convertirATiempo(horaFin); // { hours, minutes, seconds }
@@ -579,9 +578,17 @@ calcularDiferencia(horaInicio, horaFin) {
   const minutosDiferencia = Math.floor((diferenciaSegundos % 3600) / 60);
   const segundosDiferencia = diferenciaSegundos % 60;
 
-  this.horas_calculadas = horasDiferencia;
+  // Convertir los minutos a decimales y sumarlos a las horas
+  const horasConDecimales = horasDiferencia + (minutosDiferencia / 60);
+
+  // Redondear los segundos para evitar errores en la representación
+  const horasTotales = Math.round(horasConDecimales * 100) / 100;
+
+  this.horas_calculadas = horasTotales;
   console.log(this.horas_calculadas);
-  return { horas: horasDiferencia, minutos: minutosDiferencia, segundos: segundosDiferencia };
+  console.log(this.fechaSeleccionada);
+
+  return { horas: horasTotales, minutos: minutosDiferencia, segundos: segundosDiferencia };
 },
 async obtenerFeriados() {
     const year = new Date(this.fecha).getFullYear(); // Obtenemos el año de la fecha seleccionada
