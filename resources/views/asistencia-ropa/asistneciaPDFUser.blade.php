@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css') }}">
     <title>Control Asistencia</title>
     <style>
+
+@font-face {
+        font-family: 'fontawesome';
+        src: url('fonts/fontawesome-webfont.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    .fa {
+        font-family: 'fontawesome';
+    }
+
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
             font-size: 10px;
@@ -178,9 +188,9 @@
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
                             <td style="text-align: center;">
                                 @if($asistencia['hora_extra_sn'])
-                                    <i class="fa fa-check" style="padding-left: 85px;"></i>
+                                    <span style="padding-left: 85px;">&#10004;</span> <!-- Checkmark -->
                                 @else
-                                    <i class="fa fa-times" style="padding-left: 85px;"></i>
+                                    <span style="padding-left: 85px;">&#10008;</span> <!-- Cross -->
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
@@ -191,13 +201,13 @@
                             <td class="empty-cell"></td>
                             <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
-                            <td style="text-align: center;">
-                                @if($asistencia['hora_extra_sn'])
-                                    <i class="fa fa-check" style="padding-left: 85px;"></i>
-                                @else
-                                    <i class="fa fa-times" style="padding-left: 85px;"></i>
-                                @endif
-                            </td>
+                                <td style="text-align: center;">
+                                    @if($asistencia['hora_extra_sn'])
+                                        <span style="padding-left: 85px;">&#10004;</span> <!-- Checkmark -->
+                                    @else
+                                        <span style="padding-left: 85px;">&#10008;</span> <!-- Cross -->
+                                    @endif
+                                </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
                             <td>{{ $fechaPago }}</td> <!-- Mostrar la fecha de pago -->
                         </tr>
