@@ -74,12 +74,12 @@
         </div>
         <!-- Hora Extra Checkbox -->
         <div class="col-md-3">
-          <div class="form-group">
+          <div class="form-group" style="margin-top: 30px;">
             <label v-if="mostrarHoraExtra">
-              <input type="checkbox" v-model="hora_extra_sn"> Hora Extra
+              <input type="checkbox" v-model="hora_extra_sn"> Pagar Hora Extra
             </label>
-            <label>
-              <input type="checkbox" v-model="sdf_sn"> S D F
+            <label v-if="mostrarSDFCheckbox()">
+              <input type="checkbox" v-model="sdf_sn"> Pagar Sab. / Dom. / Feriado
             </label>
           </div>
         </div>
@@ -138,12 +138,12 @@
               </td>
               <td>
                 <label>
-                  <input type="checkbox" v-model="detalle.hora_extra_sn"> Hora Extra
+                  <input type="checkbox" v-model="detalle.hora_extra_sn"> Hs. Ex.
                 </label>
               </td>
               <td>
                 <label>
-                  <input type="checkbox" v-model="detalle.sdf_sn"> S D F
+                  <input type="checkbox" v-model="detalle.s_d_f_sn"> Sab. Dom. Fer.
                 </label>
               </td>
               <td style="width: 10px;">
@@ -242,13 +242,21 @@ export default {
       hora_extra_sn: false,
       sdf_sn:false,
       horas_calculadas:'',
+      feriados: [],
     };
   },
   computed: {
-  mostrarHoraExtra() {
+    mostrarHoraExtra() {
+    const fechaSeleccionada = new Date(this.fecha); // Obtenemos la fecha seleccionada
+    const diaSemana = fechaSeleccionada.getDay(); // Obtiene el día de la semana (0 = Domingo, 1 = Lunes, ..., 6 = Sábado)
+    
+    // Verificamos si es día de semana (Lunes a Viernes, es decir, 1 a 5)
+    const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
+
     // Se mostrará el checkbox solo si las horas calculadas son mayores que las horas diarias laborables
-    return this.horas_calculadas > this.frente_selected.horas_diarias_laborables;
-  }
+    // y además si es un día de semana.
+    return this.horas_calculadas > this.frente_selected.horas_diarias_laborables && esDiaDeSemana;
+}
 },
   methods: {
     
@@ -270,6 +278,7 @@ export default {
     actualizarFechasBloqueadas() {
       if (this.frente_selected && this.fechas_por_frente[this.frente_selected.id]) {
         this.fechas_bloqueadas = this.fechas_por_frente[this.frente_selected.id];
+        this.sdf_sn = false;
       } else {
         this.fechas_bloqueadas = [];
       }
@@ -525,12 +534,43 @@ calcularDiferencia(horaInicio, horaFin) {
   console.log(this.horas_calculadas);
   console.log(this.fechaSeleccionada);
   return { horas: horasDiferencia, minutos: minutosDiferencia, segundos: segundosDiferencia };
-}
+},
+async obtenerFeriados() {
+    const year = new Date(this.fecha).getFullYear(); // Obtenemos el año de la fecha seleccionada
+    try {
+      const response = await axios.get(`/api/asistencia/getferiados/${year}`);
+      this.feriados = response.data;
+    } catch (error) {
+      console.error("Error al obtener los feriados:", error);
+    }
+  },
+  esFeriado() {
+    const fechaSeleccionada = new Date(this.fecha);
+    const dia = fechaSeleccionada.getDate();
+    const mes = fechaSeleccionada.getMonth() + 1; // `getMonth()` devuelve el mes en base 0 (enero es 0), por eso sumamos 1
+    console.log('dia--',dia,'mes--',mes);
+    console.log(this.feriados);
+    const feriado_encontrado = this.feriados.some(feriado => feriado.dia === dia && feriado.mes === mes);
+    console.log(feriado_encontrado);
+    return feriado_encontrado;
+  },
+  mostrarSDFCheckbox() {
+    const fechaSeleccionada = new Date(this.fecha);
+    const diaSemana = fechaSeleccionada.getDay(); 
+
+    // Verificamos si es sábado (6), domingo (0) o feriado
+    const esSabadoODomingo = diaSemana === 0 || diaSemana === 6;
+
+    return esSabadoODomingo || this.esFeriado();
+  },
+
   },
   watch: {
     frente_selected: 'actualizarFechasBloqueadas',
+    
     fecha(newFecha, oldFecha) {
       if (newFecha !== oldFecha) {
+        this.obtenerFeriados();
         this.detalles = []; 
       }
     },
@@ -548,17 +588,49 @@ calcularDiferencia(horaInicio, horaFin) {
       this.calcularDiferencia(this.entrada_selected, this.salida_selected);
     }
   },
+  mostrarHoraExtra(newVal) {
+    if (!newVal) {
+      this.hora_extra_sn = false; 
+    }
+  },
+  mostrarSDFCheckbox(newVal) {
+    if (!newVal) {
+      this.sdf_sn = false; 
+    }
+  },
   detalles: {
-    handler(newDetalles) {
-      newDetalles.forEach((detalle, index) => {
-        // Si cambia la entrada o salida, reinicia el valor de hora_extra_sn a false
-        if (detalle.entrada !== this.detalles[index].entrada || detalle.salida !== this.detalles[index].salida) {
-          this.$set(this.detalles[index], 'hora_extra_sn', false);
-        }
-      });
-    },
-    deep: true
-  }
+  handler(newDetalles) {
+    newDetalles.forEach((detalle, index) => {
+      // Función para convertir una hora en formato "HH:mm" a minutos totales
+      const convertirAHorasDecimal = (horaString) => {
+        const [horas, minutos] = horaString.split(':').map(Number);
+        return horas + (minutos / 60); // Retorna el total de horas en formato decimal
+      };
+
+      const entradaHoras = convertirAHorasDecimal(detalle.entrada); // Convertir "08:00" a horas decimales
+      const salidaHoras = convertirAHorasDecimal(detalle.salida);   // Convertir "18:00" a horas decimales
+
+      // Calcular la diferencia de horas (si la salida es menor que la entrada, ajustamos para un día siguiente)
+      let horasCalculadasDetalle = salidaHoras - entradaHoras;
+      if (horasCalculadasDetalle < 0) {
+        horasCalculadasDetalle += 24; // Si es negativa, asumimos que pasó a un día siguiente
+      }
+
+      // Actualizar el campo 'horas_calculadas_detalle' en el array
+      this.$set(this.detalles[index], 'horas_calculadas_detalle', horasCalculadasDetalle);
+
+      // Comparar con las horas laborales diarias del frente seleccionado
+      if (horasCalculadasDetalle < this.frente_selected.horas_diarias_laborables) {
+        // Si es menor, desmarcar hora_extra_sn
+        this.$set(this.detalles[index], 'hora_extra_sn', false);
+      } else {
+        // Si es mayor o igual, marcar hora_extra_sn
+        this.$set(this.detalles[index], 'hora_extra_sn', true);
+      }
+    });
+  },
+  deep: true
+}
 }
 }
 </script>

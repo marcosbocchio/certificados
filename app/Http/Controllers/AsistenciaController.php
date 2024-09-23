@@ -535,7 +535,7 @@ class AsistenciaController extends Controller
         return $resultado;
     }
 
-    private function getFeriados($year)
+    function getFeriados($year)
     {
         $path = public_path('feriados/feriados.json');
         if (!File::exists($path)) {
@@ -560,7 +560,7 @@ class AsistenciaController extends Controller
     }
 
 
-    private function esFeriado($fecha, $feriados)
+     function esFeriado($fecha, $feriados)
     {
         return in_array($fecha->toDateString(), $feriados);
     }

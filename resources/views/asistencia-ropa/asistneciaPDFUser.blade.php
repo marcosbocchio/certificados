@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css') }}">
     <title>Control Asistencia</title>
     <style>
         body {
@@ -127,110 +128,141 @@
 
     <!-- Attendance Details -->
     <div class="content">
-        @php
-            $rowCount = 0;
-            $rowsPerPage = 14; // Número de filas por página
-            $totalHorasTrabajadas = 0;
-            $totalHorasExtras = 0;
-            $totalServicioExtra = 0;
-        @endphp
+    @php
+        // Declaramos la función obtenerFechaPago
+        function obtenerFechaPago($fechaAsistencia, $semanas) {
+            foreach ($semanas as $semana) {
+                if ($fechaAsistencia >= $semana['inicio'] && $fechaAsistencia <= $semana['fin']) {
+                    return $semana['fecha_pago'] ?? '-'; // Retorna la fecha de pago o '-' si no está disponible
+                }
+            }
+            return '-'; // Si no coincide con ninguna semana
+        }
 
-        <table class="content-table">
-            <thead>
-                <tr>
-                    <th width="70px">Día</th>
-                    <th width="70px">Fecha</th>
-                    <th width="120px">Horas Trabajadas</th>
-                    <th width="120px">Horas Extras</th>
-                    <th width="120px">Servicio Extra</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($resultado as $dia => $asistencias)
-                    @foreach($asistencias as $index => $asistencia)
-                        @php
-                            $esFeriado = $asistencia['feriado_sn'] ? 'highlight' : '';
-                            $horasExtras = $asistencia['hora_extras'];
-                            $servicioExtra = $asistencia['servicio_extra'] ?? '-';
-                            $totalHorasExtras += $asistencia['hora_extras'];
-                            $totalServicioExtra += $asistencia['servicio_extra'] ? 1 : 0;
-                        @endphp
-                        @if($index === 0) <!-- Mostrar el día solo en la primera fila de ese día -->
-                            <tr>
-                                <td>{{ $dia }}</td>
-                                <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
-                                <td>{{ $asistencia['horas_trabajadas'] }}</td>
-                                <td>{{ $horasExtras }}</td>
-                                <td>{{ $servicioExtra }}</td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td class="empty-cell"></td>
-                                <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
-                                <td>{{ $asistencia['horas_trabajadas'] }}</td>
-                                <td>{{ $horasExtras }}</td>
-                                <td>{{ $servicioExtra }}</td>
-                            </tr>
-                        @endif
+        $rowCount = 0;
+        $rowsPerPage = 14; // Número de filas por página
+        $totalHorasTrabajadas = 0;
+        $totalHorasExtras = 0;
+        $totalServicioExtra = 0;
+    @endphp
 
-                        @php $rowCount++; @endphp
-
-                        @if($rowCount % $rowsPerPage === 0) <!-- Dividir tabla cada 14 filas -->
-                            </tbody>
-                        </table>
-                        
-                        <!-- Repetir el encabezado -->
-                        <div style="page-break-before: always;"></div> <!-- Opcional: para forzar una nueva página -->
-                        <header>
-                            <table class="header-table">
-                                <tr>
-                                    <td class="logo">
-                                        <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
-                                    </td>
-                                    <td class="title">CONTROL ASISTENCIA</td>
-                                    <td class="date"><b>FECHA:</b> {{ $fecha }}</td>
-                                </tr>
-                            </table>
-                            <div class="separator"></div>
-                            <div class="content">
-                            <table class="info-table">
-                            <tr>
-                                <td width="303px"><strong>Operador:</strong> {{ $operador->name }}</td>
-                                <td width="230px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
-                                <td width="230px"><strong>Mes y Año:</strong> {{ $selectedMonth }} / {{ $selectedYear }}</td>
-                                <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
-                            </tr>
-                            </table>
-                            </div>
-                        </header>
-                        <table class="content-table">
-                            <thead>
-                            <tr>
-                                <th width="70px">Día</th>
-                                <th width="70px">Fecha</th>
-                                <th width="120px">Horas Trabajadas</th>
-                                <th width="120px">Horas Extras</th>
-                                <th width="120px">Servicio Extra</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                        @endif
-                    @endforeach
-                @endforeach
-            </tbody>
-        </table>
-
-        <!-- Tabla de Totales -->
-        <table class="totals-table">
+    <table class="content-table">
+        <thead>
             <tr>
-                <td width="136px"><strong>Total</strong></td>
-                <td width="136px">&nbsp;</td>
-                <td width="224px">&nbsp;</td>
-                <td width="224px">{{ $totalHorasExtras }}</td>
-                <td>{{ $totalServicioExtra }}</td>
+                <th width="70px">Día</th>
+                <th width="70px">Fecha</th>
+                <th width="120px">Horas Trabajadas</th>
+                <th width="120px">Horas Extras</th>
+                <th width="120px">Servicio Extra</th>
+                <th width="100px">Fecha Pago</th>
             </tr>
-        </table>
-    </div>
+        </thead>
+        <tbody>
+            @foreach($resultado as $dia => $asistencias)
+                @foreach($asistencias as $index => $asistencia)
+                    @php
+                        $esFeriado = $asistencia['feriado_sn'] ? 'highlight' : '';
+                        $horasExtras = $asistencia['hora_extras'];
+                        $servicioExtra = $asistencia['servicio_extra'] ?? '-';
+                        $totalHorasExtras += $asistencia['hora_extras'];
+                        $totalServicioExtra += $asistencia['servicio_extra'] ? 1 : 0;
+
+                        // Obtenemos la fecha de pago usando la función
+                        $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
+                        $fechaPago = date('Y-m-d', strtotime($asistencia['fecha']));
+                    @endphp
+                    @if($index === 0) <!-- Mostrar el día solo en la primera fila de ese día -->
+                        <tr>
+                            <td>{{ $dia }}</td>
+                            <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
+                            <td>{{ $asistencia['horas_trabajadas'] }}</td>
+                            <td style="text-align: center;">
+                                @if($asistencia['hora_extra_sn'])
+                                    <i class="fa fa-check" style="padding-left: 85px;"></i>
+                                @else
+                                    <i class="fa fa-times" style="padding-left: 85px;"></i>
+                                @endif
+                            </td>
+                            <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
+                            <td>{{ $fechaPago }}</td> <!-- Mostrar la fecha de pago -->
+                        </tr>
+                    @else
+                        <tr>
+                            <td class="empty-cell"></td>
+                            <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
+                            <td>{{ $asistencia['horas_trabajadas'] }}</td>
+                            <td style="text-align: center;">
+                                @if($asistencia['hora_extra_sn'])
+                                    <i class="fa fa-check" style="padding-left: 85px;"></i>
+                                @else
+                                    <i class="fa fa-times" style="padding-left: 85px;"></i>
+                                @endif
+                            </td>
+                            <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
+                            <td>{{ $fechaPago }}</td> <!-- Mostrar la fecha de pago -->
+                        </tr>
+                    @endif
+
+                    @php $rowCount++; @endphp
+
+                    @if($rowCount % $rowsPerPage === 0) <!-- Dividir tabla cada 14 filas -->
+                        </tbody>
+                    </table>
+                    
+                    <!-- Repetir el encabezado -->
+                    <div style="page-break-before: always;"></div> <!-- Opcional: para forzar una nueva página -->
+                    <header>
+                        <table class="header-table">
+                            <tr>
+                                <td class="logo">
+                                    <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
+                                </td>
+                                <td class="title">CONTROL ASISTENCIA</td>
+                                <td class="date"><b>FECHA:</b> {{ $fecha }}</td>
+                            </tr>
+                        </table>
+                        <div class="separator"></div>
+                        <div class="content">
+                        <table class="info-table">
+                        <tr>
+                            <td width="303px"><strong>Operador:</strong> {{ $operador->name }}</td>
+                            <td width="230px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
+                            <td width="230px"><strong>Mes y Año:</strong> {{ $selectedMonth }} / {{ $selectedYear }}</td>
+                            <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
+                        </tr>
+                        </table>
+                        </div>
+                    </header>
+                    <table class="content-table">
+                        <thead>
+                        <tr>
+                            <th width="70px">Día</th>
+                            <th width="70px">Fecha</th>
+                            <th width="120px">Horas Trabajadas</th>
+                            <th width="120px">Horas Extras</th>
+                            <th width="120px">Servicio Extra</th>
+                            <th width="100px">Fecha Pago</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                    @endif
+                @endforeach
+            @endforeach
+        </tbody>
+    </table>
+
+    <!-- Tabla de Totales -->
+    <table class="totals-table">
+        <tr>
+            <td width="110px"><strong>Total</strong></td>
+            <td width="110px">&nbsp;</td>
+            <td width="183px">&nbsp;</td>
+            <td width="183px">&nbsp;</td>
+            <td>{{ $totalServicioExtra }}</td>
+            <td width="153px">&nbsp;</td>
+        </tr>
+    </table>
+</div>
 
     <script type="text/php">
         if ( isset($pdf) ) {

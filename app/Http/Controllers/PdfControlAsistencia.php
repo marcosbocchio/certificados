@@ -62,7 +62,7 @@ class PdfControlAsistencia extends Controller
         $fecha = $this->formatFecha($selectedDate);
         $selectedMonth = $fecha->format('m');
         $selectedYear = $fecha->format('Y');
-
+        log::info($operadorId . '-_______-' . $frenteId . '-_______-' . $selectedMonth . '-------' . $selectedYear);
         // Obtener los feriados para el año seleccionado
         $feriados = $this->getFeriados($selectedYear);
 
@@ -122,6 +122,8 @@ class PdfControlAsistencia extends Controller
                 'hora_extras' => $horasExtras,
                 'servicio_extra' => $asistencia['contratista_id'] ? 1 : 0,
                 'feriado_sn' => $feriadoSn,
+                'parte' => $asistencia['parte'],
+                'hora_extra_sn' =>$asistencia['hora_extra_sn'],
             ];
         }
     
@@ -134,9 +136,36 @@ class PdfControlAsistencia extends Controller
             return array_search($a, $ordenDiasSemana) - array_search($b, $ordenDiasSemana);
         });
 
-        // Calcular días del mes
-        $diasDelMes = $this->calcularDiasDelMes($selectedYear, $selectedMonth);
 
+        $fechasOperador = OperadorControl::where('frente_id', $frenteId)
+            ->where('operador_id', $operadorId)
+            ->where('mes', $fecha->format('m-Y'))
+            ->first();
+
+        $diasDelMes = $this->calcularDiasDelMes($selectedYear, $selectedMonth);
+        // Recorremos las semanas y asignamos las fechas de pago a las posiciones correspondientes
+        for ($i = 0; $i < count($diasDelMes['semanas']); $i++) {
+            switch ($i) {
+                case 0:
+                    $diasDelMes['semanas'][$i]['fecha_pago'] = $fechasOperador->fecha_pago_s1 ?? null;
+                    break;
+                case 1:
+                    $diasDelMes['semanas'][$i]['fecha_pago'] = $fechasOperador->fecha_pago_s2 ?? null;
+                    break;
+                case 2:
+                    $diasDelMes['semanas'][$i]['fecha_pago'] = $fechasOperador->fecha_pago_s3 ?? null;
+                    break;
+                case 3:
+                    $diasDelMes['semanas'][$i]['fecha_pago'] = $fechasOperador->fecha_pago_s4 ?? null;
+                    break;
+                case 4:
+                    $diasDelMes['semanas'][$i]['fecha_pago'] = $fechasOperador->fecha_pago_s5 ?? null;
+                    break;
+            }
+        }
+
+        // Opcional: Verificar el resultado
+        Log::info(json_encode($diasDelMes) . '-----------------------------');
         // Generar PDF
         $pdf = PDF::loadView('asistencia-ropa.asistneciaPDFUser', [
             'resultado' => $resultado,
@@ -145,7 +174,7 @@ class PdfControlAsistencia extends Controller
             'frente' => $frente,
             'diasDelMes' => $diasDelMes,
             'fecha' => $fecha->toDateString(),
-            'operador' => User::find($operadorId), // Asegúrate de que este método esté disponible
+            'operador' => User::find($operadorId), 
         ])->setPaper('a4', 'landscape');
 
         return $pdf->stream('asistencia-usuario.pdf');
@@ -162,10 +191,6 @@ class PdfControlAsistencia extends Controller
     
         // Convertir la diferencia a horas decimales y redondear a 2 decimales
         $diferenciaEnHorasDecimales = round($diferenciaEnMinutos / 60, 2);
-    
-        log::info($entrada);
-        log::info($salida);
-        log::info($diferenciaEnHorasDecimales);
     
         return $diferenciaEnHorasDecimales;
     }
@@ -216,6 +241,8 @@ class PdfControlAsistencia extends Controller
                     'entrada' => $detalleRelacion->entrada,
                     'salida' => $detalleRelacion->salida,
                     'contratista_id' => $detalleRelacion->contratista_id,
+                    'parte' => $detalleRelacion->parte,
+                    'hora_extra_sn' =>$detalleRelacion->hora_extra_sn,
                 ];
             }
         }
@@ -372,6 +399,7 @@ class PdfControlAsistencia extends Controller
             'semanas' => array_values($semanas)
         ];
     }
+    
     private function calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDiariasLaborables)
     {
         $resumenOperarios = [];
