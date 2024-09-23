@@ -3,19 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css') }}">
     <title>Control Asistencia</title>
     <style>
-
-    @font-face {
-            font-family: 'fontawesome';
-            src: url('fonts/fontawesome-webfont.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-        .fa {
-            font-family: 'fontawesome';
-        }
-
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
             font-size: 10px;
@@ -188,9 +178,9 @@
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
                             <td style="text-align: center;">
                                 @if($asistencia['hora_extra_sn'])
-                                    <span style="font-family: 'fontawesome';">&#xf00c;</span> <!-- Icono de check -->
+                                    <p>HORAS EXTRAS PAGAS</p>
                                 @else
-                                    <span style="font-family: 'fontawesome';">&#xf00d;</span> <!-- Icono de cruz -->
+                                    <P>HORAS EXTRAS NO PAGAS</P>
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
@@ -203,9 +193,9 @@
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
                             <td style="text-align: center;">
                                 @if($asistencia['hora_extra_sn'])
-                                    <span style="font-family: 'fontawesome';">&#xf00c;</span> <!-- Icono de check -->
+                                    <p>HORAS EXTRAS PAGAS</p>
                                 @else
-                                    <span style="font-family: 'fontawesome';">&#xf00d;</span> <!-- Icono de cruz -->
+                                    <P>HORAS EXTRAS NO PAGAS</P>
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
