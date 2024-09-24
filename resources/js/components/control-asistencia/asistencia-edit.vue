@@ -111,10 +111,10 @@
                 </select>
               </td>
               <td>
-                <input type="time" v-model="detalle.entrada" class="form-control" @change="detalle.hora_extra_sn = false"/>
+                <input type="time" v-model="detalle.entrada" class="form-control" @change="calcularHorasExtrasDetall(detalle, index)" />
               </td>
               <td>
-                <input type="time" v-model="detalle.salida" class="form-control" @change="detalle.hora_extra_sn = false"/>
+                <input type="time" v-model="detalle.salida" class="form-control" @change="calcularHorasExtrasDetall(detalle, index)" />
               </td>
               <td>
                 <v-select
@@ -284,39 +284,6 @@ watch: {
       this.sdf_sn = false; 
     }
   },
-  detalles: {
-  handler(newDetalles) {
-    newDetalles.forEach((detalle, index) => {
-      // Función para convertir una hora en formato "HH:mm" a minutos totales
-      const convertirAHorasDecimal = (horaString) => {
-        const [horas, minutos] = horaString.split(':').map(Number);
-        return horas + (minutos / 60); // Retorna el total de horas en formato decimal
-      };
-
-      const entradaHoras = convertirAHorasDecimal(detalle.entrada); // Convertir "08:00" a horas decimales
-      const salidaHoras = convertirAHorasDecimal(detalle.salida);   // Convertir "18:00" a horas decimales
-
-      // Calcular la diferencia de horas (si la salida es menor que la entrada, ajustamos para un día siguiente)
-      let horasCalculadasDetalle = salidaHoras - entradaHoras;
-      if (horasCalculadasDetalle < 0) {
-        horasCalculadasDetalle += 24; // Si es negativa, asumimos que pasó a un día siguiente
-      }
-
-      // Actualizar el campo 'horas_calculadas_detalle' en el array
-      this.$set(this.detalles[index], 'horas_calculadas_detalle', horasCalculadasDetalle);
-
-      // Comparar con las horas laborales diarias del frente seleccionado
-      if (horasCalculadasDetalle < this.frente_selected.horas_diarias_laborables) {
-        // Si es menor, desmarcar hora_extra_sn
-        this.$set(this.detalles[index], 'hora_extra_sn', false);
-      } else {
-        // Si es mayor o igual, marcar hora_extra_sn
-        this.$set(this.detalles[index], 'hora_extra_sn', true);
-      }
-    });
-  },
-  deep: true
-}
 },
   methods: {
     abrirObservacionModal(index) {
@@ -324,6 +291,52 @@ watch: {
       this.observacionTexto = this.detalles[index].observaciones || ''; // Cargar la observación si existe
       $('#observacionModal').modal('show'); // Mostrar el modal (usando jQuery)
     },
+    calcularHorasExtrasDetall(detalle, index) {
+  const entrada = detalle.entrada;
+  const salida = detalle.salida;
+  const horasLaborales = this.frente_selected.horas_diarias_laborables; // Dará valores como 8.0
+
+  console.log('entro en calcularHorasExtrasDetall');
+
+  if (entrada && salida) {
+    // Convertimos entrada y salida a arrays de horas y minutos
+    const [entradaHoras, entradaMinutos] = entrada.split(':').map(Number);
+    const [salidaHoras, salidaMinutos] = salida.split(':').map(Number);
+
+    // Creamos objetos Date para entrada y salida
+    const entradaDate = new Date();
+    entradaDate.setHours(entradaHoras, entradaMinutos, 0, 0);
+
+    const salidaDate = new Date();
+    salidaDate.setHours(salidaHoras, salidaMinutos, 0, 0);
+
+    // Calculamos la diferencia total en minutos entre entrada y salida
+    const diferenciaMinutos = (salidaDate - entradaDate) / (1000 * 60); // Diferencia en minutos totales
+
+    // Calculamos las horas y minutos trabajados
+    const horasTrabajadas = Math.floor(diferenciaMinutos / 60); // Horas completas trabajadas
+    const minutosTrabajados = diferenciaMinutos % 60; // Minutos restantes
+
+    // Convertimos las horas laborales estándar a minutos
+    const minutosLaboralesTotales = horasLaborales * 60; // Por ejemplo, 8.0 horas * 60 = 480 minutos
+
+    // Calculamos los minutos trabajados totales
+    const minutosTrabajadosTotales = (horasTrabajadas * 60) + minutosTrabajados;
+
+    console.log(minutosTrabajadosTotales, minutosLaboralesTotales);
+
+    // Comparamos los minutos trabajados con los minutos laborales
+    if (minutosTrabajadosTotales > minutosLaboralesTotales) {
+      detalle.hora_extra_sn = true; // Marca el checkbox de horas extras
+    } else {
+      detalle.hora_extra_sn = false; // Desmarca el checkbox
+    }
+
+  } else {
+    // Si faltan datos de entrada o salida, desmarcamos las horas extras
+    detalle.hora_extra_sn = false;
+  }
+},
     guardarObservacion() {
       if (this.observacionIndex !== null) {
         this.$set(this.detalles[this.observacionIndex], 'observaciones', this.observacionTexto);

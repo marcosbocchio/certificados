@@ -1,4 +1,3 @@
-@ -1,417 +1,431 @@
 <template>
   <div>
     <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
