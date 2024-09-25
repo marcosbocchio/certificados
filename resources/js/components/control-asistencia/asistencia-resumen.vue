@@ -27,141 +27,40 @@
         </div>
       </div>
     </div>
-  
+    
     <!-- Tabla de Asistencia -->
     <div class="box box-custom-enod top-buffer">
-      <button @click="exportarTodoPDF" class="exportar-todo-pdf" :disabled="!selectedDate">Exportar PDF</button>
-      <div class="box-body table-responsive">
-        <table class="table table-hover table-striped table-condensed">
-          <thead>
-            <tr>
-              <th style="width: 76px;">Pagos Mensual</th>
-              <th style="width: 130px;">Operador</th>
-              <th style="width: 100px;">Responsabilidad</th>
-              <th style="width: 76px;">Días Hábiles</th>
-              <th style="width: 28px;">Sab.</th>
-              <th style="width: 28px;">Dom.</th>
-              <th style="width: 57px;">Feriados</th>
-              <th style="width: 77px;">Horas Extras</th>
-              <th style="width: 115px;">Servicios Extras S1</th>
-              <th style="width: 48px;">Pago S1</th>
-              <th style="width: 115px;">Servicios Extras S2</th>
-              <th style="width: 48px;">Pago S2</th>
-              <th style="width: 115px;">Servicios Extras S3</th>
-              <th style="width: 48px;">Pago S3</th>
-              <th style="width: 115px;">Servicios Extras S4</th>
-              <th style="width: 48px;">Pago S4</th>
-              <th style="width: 115px;">Servicios Extras S5</th>
-              <th style="width: 48px;">Pago S5</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="operador in operarios" :key="operador.operador.id">
-              <td>
-                <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagosExtMensual" 
-                         @change="openPopup(operador, 'Pago Mes')" 
-                         :disabled="operador.precargadoPagosExtMensual" />
-                  <div class="date-tooltip" v-if="operador.fecha_pago_mes">
-                    {{ operador.fecha_pago_mes }}
-                  </div>
-                </div>
-              </td>
-              <td :class="{ 'neuquen-highlight': frente_selected.id === 2 && operador.operador.local_neuquen_sn === 1 }">
-                <a @click.prevent="pdfusuario(operador.operador.id)" :style="{ cursor: 'pointer'}">
-                  {{ operador.operador.name }}
-                </a>
-              </td>
-              <td>{{ operador.responsabilidad }}</td>
-              <td v-if="frente_selected.id === 2">-</td>
-              <td v-else>{{ operador.diasHabiles }}</td>
-              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-              <td v-else>{{ operador.sabados }}</td>
-              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-              <td v-else>{{ operador.domingos }}</td>
-              <td v-if="frente_selected.id === 2 && operador.operador.local_neuquen_sn === 0">-</td>
-              <td v-else>{{ operador.feriados }}</td>
-              <td v-if="frente_selected.id === 2">-</td>
-              <td v-else>{{ formatToTwoDecimals(operador.horasExtras) }}</td>
-              <td>{{ operador.serviciosExtrasS1 }}</td>
-              <td>
-                <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS1" @change="openPopup(operador, 'Pago S1')" :disabled="operador.precargadoPagoS1" />
-                  <div class="date-tooltip" v-if="operador.fecha_pago_s1">
-                    {{ operador.fecha_pago_s1 }}
-                  </div>
-                </div>
-              </td>
-              <td>{{ operador.serviciosExtrasS2 }}</td>
-              <td>
-                <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS2" @change="openPopup(operador, 'Pago S2')" :disabled="operador.precargadoPagoS2" />
-                  <div class="date-tooltip" v-if="operador.fecha_pago_s2">
-                    {{ operador.fecha_pago_s2 }}
-                  </div>
-                </div>
-              </td>
-              <td>{{ operador.serviciosExtrasS3 }}</td>
-              <td>
-                <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS3" @change="openPopup(operador, 'Pago S3')" :disabled="operador.precargadoPagoS3" />
-                  <div class="date-tooltip" v-if="operador.fecha_pago_s3">
-                    {{ operador.fecha_pago_s3 }}
-                  </div>
-                </div>
-              </td>
-              <td>{{ operador.serviciosExtrasS4 }}</td>
-              <td>
-                <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS4" @change="openPopup(operador, 'Pago S4')" :disabled="operador.precargadoPagoS4" />
-                  <div class="date-tooltip" v-if="operador.fecha_pago_s4">
-                    {{ operador.fecha_pago_s4 }}
-                  </div>
-                </div>
-              </td>
-              <td>{{ operador.serviciosExtrasS5 }}</td>
-              <td>
-                <div class="checkbox-container">
-                  <input type="checkbox" v-model="operador.pagoS5" @change="openPopup(operador, 'Pago S5')" :disabled="operador.precargadoPagoS5" />
-                  <div class="date-tooltip" v-if="operador.fecha_pago_s5">
-                    {{ operador.fecha_pago_s5 }}
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Pop-up de Selección de Fecha -->
-      <div v-if="mostrarPopup" class="modal show" tabindex="-1" role="dialog" style="display: block;">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Seleccionar Fecha de {{ tipoPagoSeleccionado }}</h4>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="fecha-select">Fecha</label>
-                <date-picker v-model="fechaSeleccionada" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY"></date-picker>
-              </div>
-            </div>
-            <div class="modal-footer row">
-              <div class="col-md-4" style="text-align: left;">
-                <button type="button" class="btn btn-enod" @click="confirmarFecha">Confirmar</button>
-              </div>
-              <div class="col-md-4">
-                <!-- Espacio vacío entre los botones -->
-              </div>
-              <div class="col-md-4">
-                <button type="button" class="btn btn-secondary" @click="cerrarPopup">Cancelar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Pop-up de Selección de Fecha -->
+    <button @click="getDatos" class="exportar-todo-pdf">Cargar Datos</button>
+    <div class="box-body table-responsive">
+      <table class="table table-hover table-striped table-condensed">
+        <thead>
+    <tr>
+      <th>Operador</th>
+      <th v-for="dia in diasDelMes" :key="dia">{{ dia }}</th>
+      <th>Días Hábiles</th>
+      <th>Sab.</th>
+      <th>Dom.</th>
+      <th>Feriados</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="(detalle, operador) in asistenciaDatos" :key="operador">
+      <td>{{ operador }}</td>
+      <td v-for="dia in diasDelMes" :key="dia">
+        <span v-if="tieneParteODetalle(detalle, dia)">
+          {{ obtenerValorDetalle(detalle, dia) }}
+        </span>
+        <span v-else>-</span>
+      </td>
+      <td>-</td> <!-- Días Hábiles -->
+      <td>-</td> <!-- Sab. -->
+      <td>-</td> <!-- Dom. -->
+      <td>-</td> <!-- Feriados -->
+    </tr>
+  </tbody>
+      </table>
     </div>
+  </div>
     <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
   </div>
   </template>
@@ -196,18 +95,22 @@ data() {
       mostrarPopup: false,
       operadorSeleccionado: null,
       fechaSeleccionada: null,
-      tipoPagoSeleccionado: null
+      tipoPagoSeleccionado: null,
+      diasDelMes: [], // Días del mes
+      asistenciaDatos: [],
     };
   },
 watch: {
   frente_selected(newVal) {
     if (newVal) {
-      this.fetchAsistencia();
+      console.log('a')
+      //this.getDatos();
     }
   },
   selectedDate(newVal) {
     if (newVal) {
-      this.fetchAsistencia();
+      console.log('a')
+      //this.getDatos();
     }
   }
 },
@@ -277,6 +180,68 @@ methods: {
     this.isLoading = false;
   }
   },
+  //datos nuevos ____________________________________________________
+  // Este método busca si hay detalles para el operador en un día específico
+  tieneParteODetalle(detalle, dia) {
+    return detalle.some(item => item.fechaAsignacion === this.formatearDia(dia));
+  },
+
+  // Este método devuelve el valor correspondiente al día
+  obtenerValorDetalle(detalle, dia) {
+    const asistencia = detalle.find(item => item.fechaAsignacion === this.formatearDia(dia));
+    
+    if (asistencia) {
+      if (asistencia.parte) {
+        return asistencia.parte; // Mostrar el valor de parte
+      } else if (asistencia.hora_extra_sn === 1) {
+        return 'Hs. Extra'; // Mostrar "Hs. Extra" si el campo es 1
+      } else {
+        return '-'; // Si no hay parte ni horas extra
+      }
+    }
+
+    return '-'; // Si no hay asistencia en esa fecha
+  },
+
+  // Método para formatear el día como una fecha correcta
+  formatearDia(dia) {
+    const year = new Date().getFullYear(); // Asumimos el año actual
+    const month = new Date().getMonth() + 1; // Asumimos el mes actual
+    return `${year}-${String(month).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+  },
+  
+  // Lógica para obtener los días del mes
+  getDiasDelMes(year, month) {
+    return Array.from({ length: new Date(year, month, 0).getDate() }, (_, i) => i + 1);
+  },
+
+  async getDatos() {
+    console.log("Frente:", this.frente_selected);
+    console.log("Fecha:", this.selectedDate);
+    
+    const formattedDate = this.selectedDate.getFullYear() + '-' + ('0' + (this.selectedDate.getMonth() + 1)).slice(-2);
+    console.log("Fecha formateada:", formattedDate);
+    
+    const diasDelMes = this.getDiasDelMes(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1); 
+    console.log("Días del mes:", diasDelMes);
+
+    try {
+      const response = await axios.get('/api/asistencia-operadores-datos', {
+        params: {
+          frente_id: this.frente_selected.id,
+          fecha: formattedDate
+        }
+      });
+
+      console.log("Respuesta de la API:", response.data);
+      this.asistenciaDatos = response.data; // Cargar los datos en asistenciaDatos
+      this.diasDelMes = diasDelMes; // Actualizar los días del mes
+    } catch (error) {
+      console.error("Error al llamar a la API:", error);
+    }
+  },
+//datos nuevos ____________________________________________________
+
   openPopup(operador, tipoPago) {
       this.operadorSeleccionado = operador;
       this.tipoPagoSeleccionado = tipoPago;

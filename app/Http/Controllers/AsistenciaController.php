@@ -241,6 +241,15 @@ class AsistenciaController extends Controller
         return response()->json(['message' => 'Asistencia actualizada con éxito!', 'data' => $asistenciaHora]);
     }
 
+    public function updateDetalleAsistencia(Request $request, $id)
+    {
+        $detalle = AsistenciaDetalle::findOrFail($id);
+        $detalle->observaciones = $request->observaciones;
+        $detalle->save();
+
+        return response()->json(['message' => 'Observación actualizada con éxito!', 'data' => $detalle]);
+    }
+
     public function getAsistenciaAgrupadaPorOperador(Request $request)
     {
         $year = $request->year;
@@ -377,6 +386,7 @@ class AsistenciaController extends Controller
             return 'desconocido'; // No se puede determinar la responsabilidad
         }
     }
+
     public function controlarParte(Request $request)
     {
         // Validar que el parámetro 'num' esté presente
@@ -634,5 +644,46 @@ class AsistenciaController extends Controller
         }
 
         return response()->json(['success' => 'Pagos guardados con éxito']);
+    }
+
+    public function getDatosAsistencia(Request $request)
+    {
+        // Obtener frente_id y fecha desde los parámetros de la URL
+        $frenteId = $request->input('frente_id');
+        $fecha = $request->input('fecha');
+    
+        // Buscar todas las filas en AsistenciaHora que coincidan con el frente y la fecha (año-mes)
+        $asistenciaHoras = AsistenciaHora::where('frente_id', $frenteId)
+                                        ->where('fecha', 'like', $fecha . '%') // Buscar por año-mes
+                                        ->get();
+    
+        // Obtener los IDs de AsistenciaHora para buscar en AsistenciaDetalle
+        $asistenciaHorasIds = $asistenciaHoras->pluck('id'); // Lista de IDs
+    
+        // Buscar en AsistenciaDetalle con esos IDs, cargar la relación con User y AsistenciaHora
+        $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
+                                              ->with(['operador', 'asistenciaHora'])  // Incluir relaciones
+                                              ->get()
+                                              ->groupBy(function($detalle) {
+                                                  // Agrupar por el nombre del operador en lugar del ID
+                                                  return $detalle->operador->name;
+                                              })
+                                              ->map(function($detalles) {
+                                                  // Verificar si todos los ayudante_sn son 0 o si alguno es 1
+                                                  $ayudanteSnFlag = $detalles->every(function($detalle) {
+                                                      return $detalle->ayudante_sn === 0;
+                                                  }) ? 'ayudante' : 'operador';
+    
+                                                  // Modificar cada grupo de detalles para incluir 'fechaAsignacion' y 'ayudante_sn'
+                                                  return $detalles->map(function($detalle) use ($ayudanteSnFlag) {
+                                                      return [
+                                                          'detalle' => $detalle,  // Todos los detalles del registro
+                                                          'fechaAsignacion' => $detalle->asistenciaHora->fecha,  // Fecha de AsistenciaHora
+                                                          'ayudante_sn' => $ayudanteSnFlag  // Ayudante u operador según los valores
+                                                      ];
+                                                  });
+                                              });
+    
+        return response()->json($detallesAgrupados);
     }
 }

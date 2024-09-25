@@ -73,7 +73,7 @@
             <label v-if="mostrarHoraExtra">
               <input type="checkbox" v-model="hora_extra_sn"> Pagar Hora Extra
             </label>
-            <label v-if="mostrarSDFCheckbox()">
+            <label v-if="mostrarSDFCheckbox">
               <input type="checkbox" v-model="sdf_sn"> Pagar Sab. / Dom. / Feriado
             </label>
           </div>
@@ -93,12 +93,17 @@
           <thead>
             <tr>
               <th class="col-md-2 text-center">Operador</th>
-              <th class="col-md-2 text-center">Responsabilidad</th>
+              <th class="col-md-1 text-center">Responsabilidad</th>
               <th class="col-md-1 text-center">Entrada</th>
               <th class="col-md-1 text-center">Salida</th>
               <th class="col-md-2 text-center">cliente</th>
               <th class="col-md-2 text-center">Parte</th>
-              <th style="text-align: center;" colspan="4">Acciones</th>
+              <th class="col-md-2 text-center">
+                <!-- Mostrar el texto y columna de acuerdo a los estados -->
+                <span v-if="mostrarSDFCheckboxCol">Sab. Dom. Fer.</span>
+                <span v-else-if="mostrarHoraExtraCol">Horas Extras</span>
+              </th>
+              <th style="text-align: right" colspan="2">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -129,21 +134,19 @@
                   type="text" 
                   v-model="detalle.parte"
                   class="form-control"
-                  @blur="verificarParteEdicion(detalle)"
                 />
               </td>
-              <td>
-                <label>
+              <td class="text-center">
+                <!-- Mostrar solo una opción dependiendo del estado -->
+                <label v-if="mostrarSDFCheckboxCol">
+                  <input type="checkbox" v-model="detalle.s_d_f_sn">
+                </label>
+                <label v-else-if="mostrarHoraExtraCol">
                   <input type="checkbox" v-model="detalle.hora_extra_sn"> Hs. Ex.
                 </label>
               </td>
-              <td>
-                <label>
-                  <input type="checkbox" v-model="detalle.s_d_f_sn"> Sab. Dom. Fer.
-                </label>
-              </td>
-              <td style="width: 10px;">
-                <i :class="detalle.observaciones ? 'fas fa-comment-alt' : 'far fa-comment-alt'"
+              <td style="width: 10px;margin-right: 10px">
+                <i :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'" 
                   @click="abrirObservacionModal(index)"
                   style="cursor: pointer;"></i>
               </td>
@@ -248,42 +251,98 @@ export default {
   },
   computed: {
     mostrarHoraExtra() {
-    const fechaSeleccionada = new Date(this.fecha); // Obtenemos la fecha seleccionada
-    const diaSemana = fechaSeleccionada.getDay(); // Obtiene el día de la semana (0 = Domingo, 1 = Lunes, ..., 6 = Sábado)
-    
-    // Verificamos si es día de semana (Lunes a Viernes, es decir, 1 a 5)
-    const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
+        const fechaSeleccionada = new Date(this.fecha);
+        const diaSemana = fechaSeleccionada.getDay();
 
-    // Se mostrará el checkbox solo si las horas calculadas son mayores que las horas diarias laborables
-    // y además si es un día de semana.
-    return this.horas_calculadas > this.frente_selected.horas_diarias_laborables && esDiaDeSemana;
-}
+        // Verificamos si el checkbox SDF debería mostrarse
+        if (this.mostrarSDFCheckboxCol) {
+            return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
+        }
+
+        // Verificamos si es día de semana (Lunes a Viernes, es decir, 1 a 5)
+        const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
+
+        // Si las horas calculadas son mayores que las horas diarias laborables y es día de semana
+        if (this.horas_calculadas > this.frente_selected.horas_diarias_laborables && esDiaDeSemana) {
+            this.hora_extra_sn = true; // Marca el checkbox como true
+            return true; // Mostrar el checkbox de hora extra
+        } else {
+            this.hora_extra_sn = false;
+            return false; // No mostrar el checkbox de hora extra
+        }
+    },
+    
+    mostrarHoraExtraCol() {
+        const fechaSeleccionada = new Date(this.fecha);
+        const diaSemana = fechaSeleccionada.getDay();
+
+        // Verificamos si el checkbox SDF debería mostrarse
+        if (this.mostrarSDFCheckboxCol) {
+            return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
+        }
+
+        const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
+
+        if (esDiaDeSemana) {
+            return true; // Mostrar el checkbox
+        } else {
+            return false; // No mostrar el checkbox
+        }
+    },
+    
+    mostrarSDFCheckbox() {
+        const fechaSeleccionada = new Date(this.fecha);
+        const diaSemana = fechaSeleccionada.getDay();
+
+        const esSabadoODomingo = diaSemana === 5 || diaSemana === 6;
+
+        if (esSabadoODomingo || this.esFeriado()) {
+            this.sdf_sn = true;
+            return true;
+        } else {
+            this.sdf_sn = false;
+            return false;
+        }
+    },
+
+    mostrarSDFCheckboxCol() {
+        const fechaSeleccionada = new Date(this.fecha);
+        const diaSemana = fechaSeleccionada.getDay();
+
+        const esSabadoODomingo = diaSemana === 5 || diaSemana === 6;
+
+        if (esSabadoODomingo || this.esFeriado()) {
+            return true; // Mostrar el checkbox
+        } else {
+            return false; // No mostrar el checkbox
+        }
+    },
 },
 watch: {
   entrada_selected(newVal) {
-    console.log("Entrada seleccionada: ", this.entrada_selected);
-    if (this.salida_selected) {
-      // Si ya hay una salida seleccionada, calcular la diferencia
-      this.calcularDiferencia(this.entrada_selected, this.salida_selected);
-    }
-  },
-  salida_selected(newVal) {
-    console.log("Salida seleccionada: ", this.salida_selected);
-    if (this.entrada_selected) {
-      // Si ya hay una entrada seleccionada, calcular la diferencia
-      this.calcularDiferencia(this.entrada_selected, this.salida_selected);
-    }
-  },
-  mostrarHoraExtra(newVal) {
-    if (!newVal) {
-      this.hora_extra_sn = false; 
-    }
-  },
-  mostrarSDFCheckbox(newVal) {
-    if (!newVal) {
-      this.sdf_sn = false; 
-    }
-  },
+
+if (this.salida_selected) {
+  // Si ya hay una salida seleccionada, calcular la diferencia
+  this.calcularDiferencia(this.entrada_selected, this.salida_selected);
+}
+},
+salida_selected(newVal) {
+
+if (this.entrada_selected) {
+  // Si ya hay una entrada seleccionada, calcular la diferencia
+  this.calcularDiferencia(this.entrada_selected, this.salida_selected);
+}
+},
+mostrarHoraExtra(newVal) {
+if (!newVal) {
+  this.hora_extra_sn = false; 
+}
+},
+mostrarSDFCheckbox(newVal) {
+if (!newVal) {
+  this.sdf_sn = false; 
+}
+},
 },
   methods: {
     abrirObservacionModal(index) {
@@ -337,13 +396,31 @@ watch: {
     detalle.hora_extra_sn = false;
   }
 },
-    guardarObservacion() {
-      if (this.observacionIndex !== null) {
+async guardarObservacion() {
+    if (this.observacionIndex !== null) {
+        // Actualiza el estado local
         this.$set(this.detalles[this.observacionIndex], 'observaciones', this.observacionTexto);
-        console.log(this.detalles[this.observacionIndex]);
-        $('#observacionModal').modal('hide'); // Ocultar el modal después de guardar
-      }
-    },
+
+        // Obtenemos el ID del detalle a actualizar
+        const detalleId = this.detalles[this.observacionIndex].id;
+
+        // Hacer la solicitud PATCH para actualizar la observación en la base de datos
+        try {
+            await axios.patch(`/api/asistencia-detalle/${detalleId}/update-observacion`, {
+                observaciones: this.observacionTexto
+            });
+
+            // Mostrar un mensaje de éxito
+            toastr.success('Observación actualizada con éxito!');
+        } catch (error) {
+            // Manejo de errores
+            toastr.error('Error al actualizar la observación');
+        }
+
+        // Ocultar el modal después de guardar
+        $('#observacionModal').modal('hide');
+    }
+},
     ocultarModal() {
       $('#observacionModal').modal('hide');
     },
@@ -476,6 +553,9 @@ watch: {
       return; // Si el parte no es válido, detenemos la ejecución
     }
   }
+  if(!this.mostrarSDFCheckboxCol){
+      this.sdf_sn = false;
+    }
 
     // Calcular los valores para nuevoDetalle
     const nuevoDetalle = {
@@ -498,6 +578,7 @@ watch: {
     this.contratista_selected = '';
     this.parte_selected = '';
     this.observaciones = '';
+
   },
     cargarDatos() {
     this.isLoading = true; // Inicia el estado de carga
@@ -510,7 +591,7 @@ watch: {
         }));
         this.fecha = response.data.fecha;
         this.frente_selected = response.data.frente;
-        
+        this.obtenerFeriados();
       })
       .catch(error => {
         console.error('Error cargando los datos de asistencia:', error);
@@ -565,6 +646,7 @@ convertirATiempo(horaDate) {
     return null;
   }
 },
+
 calcularDiferencia(horaInicio, horaFin) {
   const inicio = this.convertirATiempo(horaInicio); // { hours, minutes, seconds }
   const fin = this.convertirATiempo(horaFin); // { hours, minutes, seconds }
@@ -598,8 +680,6 @@ calcularDiferencia(horaInicio, horaFin) {
   const horasTotales = Math.round(horasConDecimales * 100) / 100;
 
   this.horas_calculadas = horasTotales;
-  console.log(this.horas_calculadas);
-  console.log(this.fechaSeleccionada);
 
   return { horas: horasTotales, minutos: minutosDiferencia, segundos: segundosDiferencia };
 },
@@ -608,28 +688,25 @@ async obtenerFeriados() {
     try {
       const response = await axios.get(`/api/asistencia/getferiados/${year}`);
       this.feriados = response.data;
+      console.log(this.feriados);
     } catch (error) {
       console.error("Error al obtener los feriados:", error);
     }
   },
   esFeriado() {
-    const fechaSeleccionada = new Date(this.fecha);
-    const dia = fechaSeleccionada.getDate();
-    const mes = fechaSeleccionada.getMonth() + 1; // `getMonth()` devuelve el mes en base 0 (enero es 0), por eso sumamos 1
+  const fechaSeleccionada = new Date(this.fecha + 'T00:00:00'); // Establecer la hora a medianoche
+  console.log('Fecha seleccionada:', fechaSeleccionada);
 
-    // Verificamos si la fecha seleccionada coincide con algún feriado
-    return this.feriados.some(feriado => feriado.dia === dia && feriado.mes === mes);
-  },
-  mostrarSDFCheckbox() {
-    this.obtenerFeriados();
-    const fechaSeleccionada = new Date(this.fecha);
-    const diaSemana = fechaSeleccionada.getDay(); 
+  const dia = fechaSeleccionada.getDate();
+  const mes = fechaSeleccionada.getMonth() + 1;
+  const anio = fechaSeleccionada.getFullYear();
 
-    // Verificamos si es sábado (6), domingo (0) o feriado
-    const esSabadoODomingo = diaSemana === 0 || diaSemana === 6;
+  const fechaFormateada = `${anio}-${('0' + mes).slice(-2)}-${('0' + dia).slice(-2)}`;
+  const feriado = this.feriados.includes(fechaFormateada);
 
-    return esSabadoODomingo || this.esFeriado();
-  },
+  console.log('Fecha formateada:', fechaFormateada, 'Es feriado:', feriado);
+  return feriado;
+},
   }
 }
 </script>

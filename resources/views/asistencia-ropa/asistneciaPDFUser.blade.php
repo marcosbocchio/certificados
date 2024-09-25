@@ -177,9 +177,9 @@
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
                             <td style="text-align: center;">
                                 @if($asistencia['hora_extra_sn'])
-                                    <p>HORAS EXTRAS PAGAS</p>
+                                    <p>S</p>
                                 @else
-                                    <P>HORAS EXTRAS NO PAGAS</P>
+                                    <P>N</P>
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
@@ -192,9 +192,9 @@
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
                             <td style="text-align: center;">
                                 @if($asistencia['hora_extra_sn'])
-                                    <p>HORAS EXTRAS PAGAS</p>
+                                    <p>S</p>
                                 @else
-                                    <P>HORAS EXTRAS NO PAGAS</P>
+                                    <P>N</P>
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>

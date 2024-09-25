@@ -501,9 +501,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/asistencia/{id}', 'AsistenciaController@getAsistencia');
     Route::get('/asistencia/getferiados/{year}', 'AsistenciaController@getFeriados');
     Route::post('/asistencia/{id}/update', 'AsistenciaController@updateAsistencia')->name('asistencia.update');
+    Route::patch('/asistencia-detalle/{id}/update-observacion', 'AsistenciaController@updateDetalleAsistencia');
     Route::get('/asistencia-mensual/{year}/{month}', 'AsistenciaController@getAsistenciaMensual');
     Route::get('/feriados', 'AsistenciaController@getFeriados');
     Route::get('/asistencia-operadores', 'AsistenciaController@getAsistenciaAgrupadaPorOperador');
+    Route::get('asistencia-operadores-datos', 'AsistenciaController@getDatosAsistencia');
     Route::post('/guardar-pagos', 'AsistenciaController@guardarPagos');
     Route::get('/calcular-dias-del-mes/{year}/{month}', 'AsistenciaController@calcularDiasDelMes');
     // Asignacion

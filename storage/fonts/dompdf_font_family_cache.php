@@ -78,6 +78,6 @@
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'fontawesome' => array(
-    'normal' => $fontDir . '/fontawesome-normal_88900f7a146d10f30ccddb9585ff8e82',
+    'normal' => $fontDir . '/fontawesome-normal_0d054c01a20249458ebc59d71623830f',
   ),
 ) ?>
