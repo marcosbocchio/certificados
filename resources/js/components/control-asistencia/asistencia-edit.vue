@@ -142,7 +142,7 @@
                   <input type="checkbox" v-model="detalle.s_d_f_sn">
                 </label>
                 <label v-else-if="mostrarHoraExtraCol">
-                  <input type="checkbox" v-model="detalle.hora_extra_sn"> Hs. Ex.
+                  <input type="checkbox" v-model="detalle.hora_extra_sn">
                 </label>
               </td>
               <td style="width: 10px;margin-right: 10px">
