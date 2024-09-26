@@ -243,11 +243,36 @@ class AsistenciaController extends Controller
 
     public function updateDetalleAsistencia(Request $request, $id)
     {
-        $detalle = AsistenciaDetalle::findOrFail($id);
-        $detalle->observaciones = $request->observaciones;
-        $detalle->save();
+        // Buscar si ya existe un detalle con asistencia_horas_id y operador_id
+        $detalleExistente = AsistenciaDetalle::where('asistencia_horas_id', $id)
+            ->where('operador_id', $request->operador_id)
+            ->first();
+        log::info($detalleExistente);
+        if ($detalleExistente) {
+            // Si el detalle existe, actualizar la observación
+            $detalleExistente->observaciones = $request->observaciones;
+            $detalleExistente->save();
 
-        return response()->json(['message' => 'Observación actualizada con éxito!', 'data' => $detalle]);
+            return response()->json(['message' => 'Observación actualizada con éxito!', 'data' => $detalleExistente]);
+        } else {
+            // Si no existe, creamos un nuevo registro en AsistenciaDetalle
+            $nuevoDetalle = new AsistenciaDetalle([
+                'asistencia_horas_id' => $id,
+                'operador_id' => $request->operador_id,
+                'ayudante_sn' => $request->ayudante_sn,
+                'entrada' => $request->entrada,
+                'salida' => $request->salida,
+                'contratista_id' => $request->contratista_id,
+                'parte' => $request->parte,
+                'observaciones' => $request->observaciones ?? null,
+                'hora_extra_sn' => $request->hora_extra_sn,
+                's_d_f_sn' => $request->s_d_f_sn,
+            ]);
+
+            $nuevoDetalle->save();
+
+            return response()->json(['message' => 'Nuevo detalle creado con éxito!', 'data' => $nuevoDetalle]);
+        }
     }
 
     public function getAsistenciaAgrupadaPorOperador(Request $request)

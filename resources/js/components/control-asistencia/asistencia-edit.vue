@@ -227,7 +227,7 @@ export default {
   },
   mounted() {
     this.cargarDatos();
-    this.mostrarSDFCheckbox();
+    this.mostrarSDFCheckbox;
   },
   data() {
     return {
@@ -401,20 +401,35 @@ async guardarObservacion() {
         // Actualiza el estado local
         this.$set(this.detalles[this.observacionIndex], 'observaciones', this.observacionTexto);
 
-        // Obtenemos el ID del detalle a actualizar
-        const detalleId = this.detalles[this.observacionIndex].id;
+        // Obtenemos el ID de la asistencia y el ID del operador
+        const asistenciaId = this.asistenciaId;  // Este debe ser pasado o definido previamente en el componente
+        const operadorId = this.detalles[this.observacionIndex].operador.id;
 
-        // Hacer la solicitud PATCH para actualizar la observación en la base de datos
+        console.log(asistenciaId);
+        console.log(operadorId);
+        // Crear un objeto con los datos necesarios
+        const detalleData = {
+    operador_id: operadorId,
+    ayudante_sn: this.detalles[this.observacionIndex].ayudante_sn,  // Se asume que ya es un valor adecuado (true/false o 1/0)
+    entrada: this.detalles[this.observacionIndex].entrada || '',   // Si `entrada` es null o undefined, se asigna un string vacío
+    salida: this.detalles[this.observacionIndex].salida || '',     // Si `salida` es null o undefined, se asigna un string vacío
+    contratista_id: this.detalles[this.observacionIndex].contratista ? this.detalles[this.observacionIndex].contratista.id : null,  // Asigna null si contratista es null
+    parte: this.detalles[this.observacionIndex].parte || null,     // Asigna null si `parte` es null o undefined
+    observaciones: this.observacionTexto,                          // Observación que se va a guardar
+    hora_extra_sn: this.detalles[this.observacionIndex].hora_extra_sn ? 1 : 0,  // Si `hora_extra_sn` es true, asigna 1, si no, 0
+    s_d_f_sn: this.detalles[this.observacionIndex].s_d_f_sn ? 1 : 0  // Si `s_d_f_sn` es true, asigna 1, si no, 0
+};
+
         try {
-            await axios.patch(`/api/asistencia-detalle/${detalleId}/update-observacion`, {
-                observaciones: this.observacionTexto
-            });
+            // Hacer la solicitud PATCH para buscar o crear el detalle
+            await axios.patch(`/api/asistencia-detalle/${asistenciaId}/guardar-observacion`, detalleData);
 
             // Mostrar un mensaje de éxito
             toastr.success('Observación actualizada con éxito!');
+
         } catch (error) {
             // Manejo de errores
-            toastr.error('Error al actualizar la observación');
+            toastr.error('Error al guardar la observación');
         }
 
         // Ocultar el modal después de guardar

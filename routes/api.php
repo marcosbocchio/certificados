@@ -501,7 +501,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/asistencia/{id}', 'AsistenciaController@getAsistencia');
     Route::get('/asistencia/getferiados/{year}', 'AsistenciaController@getFeriados');
     Route::post('/asistencia/{id}/update', 'AsistenciaController@updateAsistencia')->name('asistencia.update');
-    Route::patch('/asistencia-detalle/{id}/update-observacion', 'AsistenciaController@updateDetalleAsistencia');
+    Route::patch('/asistencia-detalle/{asistencia_horas_id}/guardar-observacion', 'AsistenciaController@updateDetalleAsistencia');
     Route::get('/asistencia-mensual/{year}/{month}', 'AsistenciaController@getAsistenciaMensual');
     Route::get('/feriados', 'AsistenciaController@getFeriados');
     Route::get('/asistencia-operadores', 'AsistenciaController@getAsistenciaAgrupadaPorOperador');
