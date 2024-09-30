@@ -182,6 +182,9 @@
             @can('A_asistencia_acceder')
               <li><a href="{{ route('asistencia') }}">Carga</a></li>
             @endcan
+            @can('A_resumen_view')
+              <li><a href="{{ route('asistencia-resumen') }}">Resumen</a></li>
+            @endcan
           </ul>
         </li>
       @endcan

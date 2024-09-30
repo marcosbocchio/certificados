@@ -30,38 +30,38 @@
     
     <!-- Tabla de Asistencia -->
     <div class="box box-custom-enod top-buffer">
-    <button @click="getDatos" class="exportar-todo-pdf">Cargar Datos</button>
-    <div class="box-body table-responsive">
-      <table class="table table-hover table-striped table-condensed">
-        <thead>
-    <tr>
-      <th>Operador</th>
-      <th v-for="dia in diasDelMes" :key="dia">{{ dia }}</th>
-      <th>Días Hábiles</th>
-      <th>Sab.</th>
-      <th>Dom.</th>
-      <th>Feriados</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="(detalle, operador) in asistenciaDatos" :key="operador">
-      <td>{{ operador }}</td>
-      <td v-for="dia in diasDelMes" :key="dia">
-        <span v-if="tieneParteODetalle(detalle, dia)">
-          {{ obtenerValorDetalle(detalle, dia) }}
-        </span>
-        <span v-else>-</span>
-      </td>
-      <td>-</td> <!-- Días Hábiles -->
-      <td>-</td> <!-- Sab. -->
-      <td>-</td> <!-- Dom. -->
-      <td>-</td> <!-- Feriados -->
-    </tr>
-  </tbody>
-      </table>
+      <button @click="getDatos" class="exportar-todo-pdf">Cargar Datos</button>
+      <div class="box-body table-responsive">
+        <table class="table table-hover table-striped table-condensed">
+          <thead>
+            <tr>
+              <th>Operador</th>
+              <th v-for="dia in diasDelMes" :key="dia.dia">{{ dia.dia }}</th>
+              <th>Hs. Ex</th>
+              <th>Sv. Ex</th>
+              <th>S/D/F</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(detalle, operador) in asistenciaDatos" :key="operador">
+              <td>{{ operador }} {{ operador.ayudante_sn }}</td>
+              <!-- Recorremos los días y mostramos el valor correspondiente -->
+              <td v-for="(dia, index) in diasDelMes" :key="index">
+                <span v-if="detalle[index]">
+                  <!-- Aplicamos la función para determinar qué mostrar -->
+                  {{ obtenerValorDetalle(detalle[index], dia) }}
+                </span>
+                <span v-else>-</span>
+              </td>
+              <!-- Calcular y mostrar las nuevas columnas -->
+              <td>{{ contarParametros(detalle, 'hora_extra_sn', 'sumar') }}</td>
+              <td>{{ contarParametros(detalle, 'contratista_id', 'conteo') }}</td>
+              <td>{{ contarParametros(detalle, 's_d_f_sn', 'sumar') }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-    <button @click="guardarPagos" class="btn btn-primary">Guardar</button>
   </div>
   </template>
 
@@ -96,8 +96,8 @@ data() {
       operadorSeleccionado: null,
       fechaSeleccionada: null,
       tipoPagoSeleccionado: null,
-      diasDelMes: [], // Días del mes
-      asistenciaDatos: [],
+      diasDelMes: [], // Aquí se guardan los días del mes
+      asistenciaDatos: {}, // Aquí se guarda la respuesta reorganizada de la API
     };
   },
 watch: {
@@ -109,6 +109,7 @@ watch: {
   },
   selectedDate(newVal) {
     if (newVal) {
+      console.log(this.selectedDate)
       console.log('a')
       //this.getDatos();
     }
@@ -187,20 +188,30 @@ methods: {
   },
 
   // Este método devuelve el valor correspondiente al día
-  obtenerValorDetalle(detalle, dia) {
-    const asistencia = detalle.find(item => item.fechaAsignacion === this.formatearDia(dia));
-    
-    if (asistencia) {
-      if (asistencia.parte) {
-        return asistencia.parte; // Mostrar el valor de parte
-      } else if (asistencia.hora_extra_sn === 1) {
-        return 'Hs. Extra'; // Mostrar "Hs. Extra" si el campo es 1
-      } else {
-        return '-'; // Si no hay parte ni horas extra
-      }
+  obtenerValorDetalle(detalle, parametro) {
+    // 1. Verificar si contratista_id tiene valor
+    if (detalle.contratista_id !== null) {
+      return detalle.parte; // Mostrar parte si contratista_id no es null
     }
 
-    return '-'; // Si no hay asistencia en esa fecha
+    // 2. Si contratista_id es null, verificar dia_semana_sn
+    if (parametro.dia_semana_sn === 1) {
+      // Si es día de semana, miramos hora_extra_sn
+      if (detalle.hora_extra_sn === 1) {
+        return '1'; // Mostrar 1 si tiene horas extra
+      }
+      return '0'; // Mostrar '-' si no tiene horas extra
+    }
+
+    // 3. Si es fin de semana o feriado, miramos s_d_f_sn
+    if (parametro.dia_semana_sn === 0) {
+      if (detalle.s_d_f_sn === 1) {
+        return 'sab'; // Mostrar el ícono si tiene S/D/F
+      }
+      return 'x'; // Mostrar '-' si no tiene S/D/F
+    }
+    
+    return '-'; // Por defecto mostramos '-'
   },
 
   // Método para formatear el día como una fecha correcta
@@ -211,18 +222,66 @@ methods: {
   },
   
   // Lógica para obtener los días del mes
-  getDiasDelMes(year, month) {
-    return Array.from({ length: new Date(year, month, 0).getDate() }, (_, i) => i + 1);
-  },
+  async getDiasDelMes(year, month) {
+  // Llamamos a la función para obtener los feriados antes de calcular los días
+  await this.obtenerFeriados();
 
-  async getDatos() {
+  // Obtenemos el número de días del mes
+  const numDias = new Date(year, month, 0).getDate();
+  
+  // Recorremos todos los días del mes
+  const diasDelMes = Array.from({ length: numDias }, (_, i) => {
+    const dia = i + 1;
+    const fecha = new Date(year, month - 1, dia); // Creamos la fecha completa
+    const diaSemana = fecha.getDay(); // 0 = domingo, 1 = lunes, ..., 6 = sábado
+    const esFeriado = this.esFeriado(fecha); // Verificamos si es feriado
+
+    // Creamos el objeto con todas las propiedades solicitadas
+    return {
+      dia, // El día del mes (1, 2, 3, etc.)
+      dia_semana_sn: diaSemana >= 1 && diaSemana <= 5 ? 1 : 0, // 1 si es entre lunes y viernes, 0 si no
+      sabado_sn: diaSemana === 6 ? 1 : 0, // 1 si es sábado
+      domingo_sn: diaSemana === 0 ? 1 : 0, // 1 si es domingo
+      feriado_sn: esFeriado ? 1 : 0 // 1 si es feriado, 0 si no
+    };
+  });
+
+  // Log de los datos antes de retornar
+  console.log('Datos del mes:', diasDelMes);
+
+  // Retornamos los datos
+  return diasDelMes;
+},
+esFeriado(fecha) {
+  const dia = fecha.getDate();
+  const mes = fecha.getMonth() + 1; // Los meses en JavaScript son 0-indexados
+  const anio = fecha.getFullYear();
+
+  // Formateamos la fecha como "YYYY-MM-DD"
+  const fechaFormateada = `${anio}-${('0' + mes).slice(-2)}-${('0' + dia).slice(-2)}`;
+
+  // Comparamos si la fecha formateada está en la lista de feriados
+  return this.feriados.includes(fechaFormateada);
+},async obtenerFeriados() {
+  const year = new Date(this.selectedDate).getFullYear(); // Obtenemos el año de la fecha seleccionada
+  try {
+    const response = await axios.get(`/api/asistencia/getferiados/${year}`);
+    this.feriados = response.data; // Guardamos la lista de feriados
+  } catch (error) {
+    console.error("Error al obtener los feriados:", error);
+    this.feriados = []; // Si hay error, dejamos la lista vacía
+  }
+},
+
+async getDatos() {
     console.log("Frente:", this.frente_selected);
     console.log("Fecha:", this.selectedDate);
     
     const formattedDate = this.selectedDate.getFullYear() + '-' + ('0' + (this.selectedDate.getMonth() + 1)).slice(-2);
     console.log("Fecha formateada:", formattedDate);
     
-    const diasDelMes = this.getDiasDelMes(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1); 
+    // Asegúrate de esperar a que getDiasDelMes termine usando await
+    const diasDelMes = await this.getDiasDelMes(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1); 
     console.log("Días del mes:", diasDelMes);
 
     try {
@@ -234,11 +293,63 @@ methods: {
       });
 
       console.log("Respuesta de la API:", response.data);
-      this.asistenciaDatos = response.data; // Cargar los datos en asistenciaDatos
-      this.diasDelMes = diasDelMes; // Actualizar los días del mes
+
+      // Inicializar un objeto para almacenar los datos reorganizados
+      let asistenciaReorganizada = {};
+
+      // Iterar sobre cada operador
+      for (let operador in response.data) {
+        // Inicializar una matriz para cada operador que contenga los días del mes
+        asistenciaReorganizada[operador] = diasDelMes.map(dia => {
+          // Convertir el día en el formato de fecha
+          let fechaDelDia = `${formattedDate}-${('0' + dia.dia).slice(-2)}`; // Usa dia.dia ya que el objeto tiene varias propiedades
+          
+          // Buscar si hay una entrada con la fecha que coincide con ese día
+          let detalleDelDia = response.data[operador].find(asistencia => asistencia.fechaAsignacion === fechaDelDia);
+          
+          // Si existe un detalle para ese día, lo guardamos junto con los parámetros; de lo contrario, devolvemos null
+          return detalleDelDia
+            ? {
+                detalle: detalleDelDia.detalle,
+                parametros: {
+                  dia_semana_sn: dia.dia_semana_sn,
+                  sabado_sn: dia.sabado_sn,
+                  domingo_sn: dia.domingo_sn,
+                  feriado_sn: dia.feriado_sn
+                }
+              }
+            : null; // Si no hay coincidencia, devolvemos null
+        });
+      }
+
+      console.log("Datos reorganizados por operador y día:", asistenciaReorganizada);
+      
+      // Puedes usar 'asistenciaReorganizada' para lo que necesites en tu tabla posteriormente
+      this.asistenciaDatos = asistenciaReorganizada;
+      this.diasDelMes = diasDelMes;
+
     } catch (error) {
       console.error("Error al llamar a la API:", error);
     }
+},
+    contarParametros(detalle, parametro, tipo) {
+    return detalle.reduce((contador, dia) => {
+      if (dia && dia.parametros) {
+        // Para sumas de horas extra (Hs. Ex)
+        if (tipo === 'sumar' && parametro === 'hora_extra_sn' && dia.parametros[parametro] === 1) {
+          return contador + 1; // Sumar solo los casos donde hora_extra_sn es 1
+        }
+        // Para conteo de contratistas (Sv. Ex)
+        if (tipo === 'conteo' && parametro === 'contratista_id' && dia.parametros[parametro] !== null) {
+          return contador + 1; // Contar solo si contratista_id no es null
+        }
+        // Para conteo de S/D/F
+        if (tipo === 'sumar' && parametro === 's_d_f_sn' && dia.parametros[parametro] === 1) {
+          return contador + 1; // Contar solo los casos donde s_d_f_sn es 1
+        }
+      }
+      return contador;
+    }, 0);
   },
 //datos nuevos ____________________________________________________
 
