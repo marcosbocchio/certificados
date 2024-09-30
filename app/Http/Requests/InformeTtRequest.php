@@ -32,6 +32,8 @@ class InformeTtRequest extends FormRequest
             'plano_isom'                       => 'required|Max:30',
             'procedimiento'                    => 'required',
             'norma_evaluacion'                 => 'required',
+            'ot_tipo_soldadura'                 => 'required',
+            'interno_equipo'                    => 'required',
             'norma_ensayo'                     => 'required',
             'ejecutor_ensayo'                  => 'required',
             'temperatura_inicial'              => 'required |numeric|between:0,10000',
@@ -40,6 +42,13 @@ class InformeTtRequest extends FormRequest
             'temperatura_enfriado'             => 'required |numeric|between:0,10000',
             'temperatura_final'                => 'required |numeric|between:0,10000',
             'observaciones'                    => 'Max:250',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'ot_tipo_soldadura.required' => 'El campo EPS / WPS es obligatorio.',
+            'interno_equipo.required'     => 'El campo Equipo es obligatorio.',
         ];
     }
 }
