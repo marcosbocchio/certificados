@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>AsistenciaPDF</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Asistencia</title>
     <style>
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
@@ -65,105 +65,55 @@
     </style>
 </head>
 <body>
-    @php
-        $chunks = array_chunk($operarios, 12);
-    @endphp
 
-    @foreach($chunks as $chunk)
-        <header>
-            <table class="header-table">
-                <tr>
-                    <td class="logo">
-                        <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
-                    </td>
-                    <td class="title">CONTROL ASISTENCIA</td>
-                    <td class="date"><b>FECHA:</b> {{ date('d-m-Y') }}</td>
-                </tr>
-            </table>
-            <div style="height: 3px; background-color: rgb(255,204, 0); margin-top: 10px;"></div>
-            <table class="info-table">
-                <tr>
-                    <td width="343px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
-                    <td width="352px"><strong>Mes y Año:</strong> {{ $mes }} / {{ $año }}</td>
-                    <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
-                </tr>
-            </table>
-        </header>
+<header>
+    <table class="header-table">
+        <tr>
+            <td class="logo">
+                <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
+            </td>
+            <td class="title">CONTROL ASISTENCIA</td>
+            <td class="date"><b>FECHA:</b></td>
+        </tr>
+    </table>
+    <div style="height: 3px; background-color: rgb(255,204, 0); margin-top: 10px;"></div>
+    <table class="info-table">
+        <tr>
+            <td><strong>Frente:</strong> {{ $frente }}</td>
+            <td><strong>Mes y Año:</strong> {{ $month }}/{{ $year }}</td>
+            <td><strong>Días Hábiles del Mes:</strong></td>
+        </tr>
+    </table>
+</header>
 
-        <main>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th width="100px">Operario</th>
-                        <th width="20px">Días Háb.</th>
-                        <th width="20px">Sáb.</th>
-                        <th width="20px">Dom.</th>
-                        <th width="20px">Fer.</th>
-                        <th width="20px">Hs. Ext.</th>
-                        <th width="20px">S.E S1</th>
-                        <th width="52px">Pago S1</th>
-                        <th width="20px">S.E S2</th>
-                        <th width="52px">Pago S2</th>
-                        <th width="20px">S.E S3</th>
-                        <th width="52px">Pago S3</th>
-                        <th width="20px">S.E S4</th>
-                        <th width="53px">Pago S4</th>
-                        <th width="20px">S.E S5</th>
-                        <th width="55px">Pago S5</th>
-                        <th width="52px">Pago Mes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($chunk as $operario)
-                    <tr>
-                        <td>
-                            <div style="font-weight: bold; text-align: center; font-size: 10px;">
-                                {{ $operario['operador']['name'] }}
-                            </div>
-                            <div style="text-align: center;font-size: 9px;">
-                                {{ $operario['ayudante_sn'] }}
-                            </div>
-                        </td>
-                        <td>{{ $operario['diasHabiles'] }}</td>
-                        <td>{{ $operario['sabados'] }}</td>
-                        <td>{{ $operario['domingos'] }}</td>
-                        <td>{{ $operario['feriados'] }}</td>
-                        <td>{{ $operario['horasExtras'] }}</td>
-                        <td>{{ $operario['serviciosExtrasS1'] }}</td>
-                        <td>{{ $operario['fecha_pago_s1'] ?? '-' }}</td>
-                        <td>{{ $operario['serviciosExtrasS2'] }}</td>
-                        <td>{{ $operario['fecha_pago_s2'] ?? '-' }}</td>
-                        <td>{{ $operario['serviciosExtrasS3'] }}</td>
-                        <td>{{ $operario['fecha_pago_s3'] ?? '-' }}</td>
-                        <td>{{ $operario['serviciosExtrasS4'] }}</td>
-                        <td>{{ $operario['fecha_pago_s4'] ?? '-' }}</td>
-                        <td>{{ $operario['serviciosExtrasS5'] }}</td>
-                        <td>{{ $operario['fecha_pago_s5'] ?? '-' }}</td>
-                        <td>{{ $operario['fecha_pago_mes'] ?? '-' }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </main>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Operador</th>
+            @foreach ($diasDelMes as $dia)
+                <th>{{ $dia['dia'] }}</th>
+            @endforeach
+            <th>Hs. Ex</th>
+            <th>Sv. Ex</th>
+            <th>S/D/F</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($asistenciaDatos as $operador => $detalle)
+        <tr>
+            <td>{{ $operador }}</td>
+            @foreach ($diasDelMes as $index => $dia)
+                <td>
+                    {{ isset($detalle[$index]) ? $obtenerValorDetalle($detalle[$index]['detalle'], $dia) : '-' }}
+                </td>
+            @endforeach
+            <td>{{ $contarParametros($detalle, 'hora_extra_sn', 'sumar') }}</td>
+            <td>{{ $contarParametros($detalle, 'contratista_id', 'conteo') }}</td>
+            <td>{{ $contarParametros($detalle, 's_d_f_sn', 'sumar') }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 
-        @if(!$loop->last)
-            <div style="page-break-after: always;"></div>
-        @endif
-    @endforeach
-
-    <script type="text/php">
-    if ( isset($pdf) ) {
-        $x = 755;
-        $y = 55;
-        $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
-        $font = $fontMetrics->get_font("serif", "bold");
-        $size = 8;
-        $color = array(0,0,0);
-        $word_space = 0.0;  //  default
-        $char_space = 0.0;  //  default
-        $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-    }
-    </script>
 </body>
 </html>

@@ -15,7 +15,7 @@
           <div class="col-md-4">
             <div class="form-group">
               <label for="month">Mes y Año:</label>
-              <date-picker v-model="selectedDate" type="month" format="MM-YYYY" @input="fetchAsistencia" class="date-picker-custom" />
+              <date-picker v-model="selectedDate" type="month" format="MM-YYYY" @input="getDatos" class="date-picker-custom" />
             </div>
           </div>
           <div class="col-md-4">
@@ -30,36 +30,42 @@
     
     <!-- Tabla de Asistencia -->
     <div class="box box-custom-enod top-buffer">
-      <button @click="getDatos" class="exportar-todo-pdf">Cargar Datos</button>
+      <div class="box-header">
+        <button @click="exportarTodoPDF()">Exportar PDF</button>
+      </div>
       <div class="box-body table-responsive">
         <table class="table table-hover table-striped table-condensed">
-          <thead>
-            <tr>
-              <th>Operador</th>
-              <th v-for="dia in diasDelMes" :key="dia.dia">{{ dia.dia }}</th>
-              <th>Hs. Ex</th>
-              <th>Sv. Ex</th>
-              <th>S/D/F</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(detalle, operador) in asistenciaDatos" :key="operador">
-              <td>{{ operador }} {{ operador.ayudante_sn }}</td>
-              <!-- Recorremos los días y mostramos el valor correspondiente -->
-              <td v-for="(dia, index) in diasDelMes" :key="index">
-                <span v-if="detalle[index]">
-                  <!-- Aplicamos la función para determinar qué mostrar -->
-                  {{ obtenerValorDetalle(detalle[index], dia) }}
+    <thead>
+        <tr>
+            <th>Operador</th>
+            <th v-for="dia in diasDelMes" :key="dia.dia">{{ dia.dia }}</th>
+            <th>Hs. Ex</th>
+            <th>Sv. Ex</th>
+            <th>S/D/F</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="(detalle, operador) in asistenciaDatos" :key="operador">
+            <td>
+                <a href="#" @click.prevent="pdfusuario(detalle.operador_id)">
+                  {{ operador }} 
+                </a>
+                ({{ detalle.ayudante_sn }})
+              </td>
+            <!-- Recorremos los días y mostramos el valor correspondiente -->
+            <td v-for="(dia, index) in detalle.dias" :key="index">
+                <span v-if="dia">
+                    {{ obtenerValorDetalle(dia.detalle, diasDelMes[index]) }}
                 </span>
                 <span v-else>-</span>
-              </td>
-              <!-- Calcular y mostrar las nuevas columnas -->
-              <td>{{ contarParametros(detalle, 'hora_extra_sn', 'sumar') }}</td>
-              <td>{{ contarParametros(detalle, 'contratista_id', 'conteo') }}</td>
-              <td>{{ contarParametros(detalle, 's_d_f_sn', 'sumar') }}</td>
-            </tr>
-          </tbody>
-        </table>
+            </td>
+            <!-- Calcular y mostrar las nuevas columnas -->
+            <td>{{ contarParametros(detalle.dias, 'hora_extra_sn', 'sumar') }}</td>
+            <td>{{ contarParametros(detalle.dias, 'contratista_id', 'conteo') }}</td>
+            <td>{{ contarParametros(detalle.dias, 's_d_f_sn', 'sumar') }}</td>
+        </tr>
+    </tbody>
+</table>
       </div>
     </div>
   </div>
@@ -103,84 +109,17 @@ data() {
 watch: {
   frente_selected(newVal) {
     if (newVal) {
-      console.log('a')
-      //this.getDatos();
+      getDatos();
     }
   },
   selectedDate(newVal) {
     if (newVal) {
-      console.log(this.selectedDate)
-      console.log('a')
-      //this.getDatos();
+      this.getDatos();
     }
   }
 },
 methods: {
-  formatToTwoDecimals(value) {
-      if (Number.isInteger(value)) {
-        return value; // Retorna el valor tal cual si es un entero
-      } else {
-        return parseFloat(value).toFixed(2); // Formatea a 2 decimales si no es un entero
-      }
-    },
-  async fetchAsistencia() {
-    if (!this.selectedDate || !this.frente_selected) return;
 
-  const { year, month } = this.formatDateToMonthYear(this.selectedDate);
-  this.isLoading = true;
-
-  try {
-    const diasDelMesResponse = await axios.get(`/api/calcular-dias-del-mes/${year}/${month}`);
-    this.diasHabiles = diasDelMesResponse.data.diasHabiles;
-
-    const response = await axios.get('/api/asistencia-operadores', {
-      params: {
-        year,
-        month,
-        frent_id: this.frente_selected.id
-      }
-    });
-    console.log(response.data.asistencias);
-    this.operarios = response.data.asistencias.map(operador => ({
-        operador: operador.operador,
-        responsabilidad: operador.ayudante_sn,
-        diasHabiles: operador.diasHabiles,
-        sabados: operador.sabados,
-        domingos: operador.domingos,
-        feriados: operador.feriados,
-        horasExtras: operador.horasExtras,
-        serviciosExtrasS1: operador.serviciosExtrasS1,
-        serviciosExtrasS2: operador.serviciosExtrasS2,
-        serviciosExtrasS3: operador.serviciosExtrasS3,
-        serviciosExtrasS4: operador.serviciosExtrasS4,
-        serviciosExtrasS5: operador.serviciosExtrasS5,
-        fecha_pago_s1: this.formatDate(operador.fecha_pago_s1),
-        fecha_pago_s2: this.formatDate(operador.fecha_pago_s2),
-        fecha_pago_s3: this.formatDate(operador.fecha_pago_s3),
-        fecha_pago_s4: this.formatDate(operador.fecha_pago_s4),
-        fecha_pago_s5: this.formatDate(operador.fecha_pago_s5),
-        fecha_pago_mes: this.formatDate(operador.fecha_pago_mes),
-        pagoS1: operador.pagoS1 || false,
-        pagoS2: operador.pagoS2 || false,
-        pagoS3: operador.pagoS3 || false,
-        pagoS4: operador.pagoS4 || false,
-        pagoS5: operador.pagoS5 || false,
-        pagosExtMensual: operador.pagosExtMensual || false,
-        precargadoPagoS1: operador.pagoS1 || false,
-        precargadoPagoS2: operador.pagoS2 || false,
-        precargadoPagoS3: operador.pagoS3 || false,
-        precargadoPagoS4: operador.pagoS4 || false,
-        precargadoPagoS5: operador.pagoS5 || false,
-        precargadoPagosExtMensual: operador.pagosExtMensual || false
-      }));
-  } catch (error) {
-    console.error(error);
-    this.operarios = {};
-  
-  } finally {
-    this.isLoading = false;
-  }
-  },
   //datos nuevos ____________________________________________________
   // Este método busca si hay detalles para el operador en un día específico
   tieneParteODetalle(detalle, dia) {
@@ -189,30 +128,40 @@ methods: {
 
   // Este método devuelve el valor correspondiente al día
   obtenerValorDetalle(detalle, parametro) {
+    // Depuración para ver los datos que llegan al método
+    console.log('Detalle:', detalle);
+    console.log('Parámetro:', parametro);
+
     // 1. Verificar si contratista_id tiene valor
-    if (detalle.contratista_id !== null) {
-      return detalle.parte; // Mostrar parte si contratista_id no es null
+    if (detalle.contratista_id !== null && detalle.contratista_id !== undefined) {
+        console.log('Mostrando parte:', detalle.parte);
+        return '"' + detalle.parte + '"'; // Mostrar parte si contratista_id no es null
     }
 
     // 2. Si contratista_id es null, verificar dia_semana_sn
     if (parametro.dia_semana_sn === 1) {
-      // Si es día de semana, miramos hora_extra_sn
-      if (detalle.hora_extra_sn === 1) {
-        return '1'; // Mostrar 1 si tiene horas extra
-      }
-      return '0'; // Mostrar '-' si no tiene horas extra
+        // Si es día de semana, miramos hora_extra_sn
+        if (detalle.hora_extra_sn === 1) {
+            console.log('Mostrando horas extra:', '1');
+            return '1'; // Mostrar 1 si tiene horas extra
+        }
+        console.log('Mostrando 0 por día de semana sin horas extra');
+        return '0'; // Mostrar '0' si no tiene horas extra
     }
 
     // 3. Si es fin de semana o feriado, miramos s_d_f_sn
     if (parametro.dia_semana_sn === 0) {
-      if (detalle.s_d_f_sn === 1) {
-        return 'sab'; // Mostrar el ícono si tiene S/D/F
-      }
-      return 'x'; // Mostrar '-' si no tiene S/D/F
+        if (detalle.s_d_f_sn === 1) {
+            console.log('Mostrando "sab" (sábado, domingo o feriado)');
+            return 'S/D/F'; // Mostrar el ícono si tiene S/D/F
+        }
+        console.log('Mostrando "x" por fin de semana sin S/D/F');
+        return '0'; // Mostrar 'x' si no tiene S/D/F
     }
-    
+
+    console.log('Mostrando "-" por defecto');
     return '-'; // Por defecto mostramos '-'
-  },
+},
 
   // Método para formatear el día como una fecha correcta
   formatearDia(dia) {
@@ -229,6 +178,9 @@ methods: {
   // Obtenemos el número de días del mes
   const numDias = new Date(year, month, 0).getDate();
   
+  // Inicializamos el contador de días hábiles
+  let diasHabiles = 0;
+
   // Recorremos todos los días del mes
   const diasDelMes = Array.from({ length: numDias }, (_, i) => {
     const dia = i + 1;
@@ -236,20 +188,30 @@ methods: {
     const diaSemana = fecha.getDay(); // 0 = domingo, 1 = lunes, ..., 6 = sábado
     const esFeriado = this.esFeriado(fecha); // Verificamos si es feriado
 
+    // Calculamos si es día hábil
+    const diaSemanaSN = esFeriado ? 0 : (diaSemana >= 1 && diaSemana <= 5 ? 1 : 0);
+
+    // Sumamos al contador de días hábiles
+    diasHabiles += diaSemanaSN;
+
     // Creamos el objeto con todas las propiedades solicitadas
     return {
       dia, // El día del mes (1, 2, 3, etc.)
-      dia_semana_sn: diaSemana >= 1 && diaSemana <= 5 ? 1 : 0, // 1 si es entre lunes y viernes, 0 si no
+      dia_semana_sn: diaSemanaSN, // 1 si es entre lunes y viernes y no es feriado, 0 si no
       sabado_sn: diaSemana === 6 ? 1 : 0, // 1 si es sábado
       domingo_sn: diaSemana === 0 ? 1 : 0, // 1 si es domingo
       feriado_sn: esFeriado ? 1 : 0 // 1 si es feriado, 0 si no
     };
   });
 
+  // Asignamos el total de días hábiles a this.diasHabiles
+  this.diasHabiles = diasHabiles;
+
   // Log de los datos antes de retornar
   console.log('Datos del mes:', diasDelMes);
+  console.log('Total de días hábiles:', this.diasHabiles);
 
-  // Retornamos los datos
+  // Retornamos solo los días del mes como antes
   return diasDelMes;
 },
 esFeriado(fecha) {
@@ -274,168 +236,102 @@ esFeriado(fecha) {
 },
 
 async getDatos() {
+    this.isLoading = true; // Indicar que la carga ha comenzado
+
     console.log("Frente:", this.frente_selected);
     console.log("Fecha:", this.selectedDate);
-    
+
     const formattedDate = this.selectedDate.getFullYear() + '-' + ('0' + (this.selectedDate.getMonth() + 1)).slice(-2);
     console.log("Fecha formateada:", formattedDate);
-    
-    // Asegúrate de esperar a que getDiasDelMes termine usando await
-    const diasDelMes = await this.getDiasDelMes(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1); 
-    console.log("Días del mes:", diasDelMes);
 
     try {
-      const response = await axios.get('/api/asistencia-operadores-datos', {
-        params: {
-          frente_id: this.frente_selected.id,
-          fecha: formattedDate
-        }
-      });
+        // Esperar a que getDiasDelMes termine
+        const diasDelMes = await this.getDiasDelMes(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1);
+        console.log("Días del mes:", diasDelMes);
 
-      console.log("Respuesta de la API:", response.data);
-
-      // Inicializar un objeto para almacenar los datos reorganizados
-      let asistenciaReorganizada = {};
-
-      // Iterar sobre cada operador
-      for (let operador in response.data) {
-        // Inicializar una matriz para cada operador que contenga los días del mes
-        asistenciaReorganizada[operador] = diasDelMes.map(dia => {
-          // Convertir el día en el formato de fecha
-          let fechaDelDia = `${formattedDate}-${('0' + dia.dia).slice(-2)}`; // Usa dia.dia ya que el objeto tiene varias propiedades
-          
-          // Buscar si hay una entrada con la fecha que coincide con ese día
-          let detalleDelDia = response.data[operador].find(asistencia => asistencia.fechaAsignacion === fechaDelDia);
-          
-          // Si existe un detalle para ese día, lo guardamos junto con los parámetros; de lo contrario, devolvemos null
-          return detalleDelDia
-            ? {
-                detalle: detalleDelDia.detalle,
-                parametros: {
-                  dia_semana_sn: dia.dia_semana_sn,
-                  sabado_sn: dia.sabado_sn,
-                  domingo_sn: dia.domingo_sn,
-                  feriado_sn: dia.feriado_sn
-                }
-              }
-            : null; // Si no hay coincidencia, devolvemos null
+        const response = await axios.get('/api/asistencia-operadores-datos', {
+            params: {
+                frente_id: this.frente_selected.id,
+                fecha: formattedDate
+            }
         });
-      }
 
-      console.log("Datos reorganizados por operador y día:", asistenciaReorganizada);
-      
-      // Puedes usar 'asistenciaReorganizada' para lo que necesites en tu tabla posteriormente
-      this.asistenciaDatos = asistenciaReorganizada;
-      this.diasDelMes = diasDelMes;
+        console.log("Respuesta de la API:", response.data);
+
+        // Inicializar un objeto para almacenar los datos reorganizados
+        let asistenciaReorganizada = {};
+
+        // Iterar sobre cada operador en la respuesta
+        for (let operador in response.data) {
+            // Obtener los datos de ayudante_sn y operador_id (presente en todas las fechas del operador)
+            const operadorData = response.data[operador][0]; // Obtener el primer dato para estos valores
+            const ayudante_sn = operadorData?.ayudante_sn || null;
+            const operador_id = operadorData?.detalle?.operador_id || null;
+
+            // Inicializar una matriz para cada operador que contenga los días del mes
+            asistenciaReorganizada[operador] = {
+                // Agregar los datos adicionales (ayudante_sn y operador_id)
+                ayudante_sn: ayudante_sn,
+                operador_id: operador_id,
+                dias: diasDelMes.map(dia => {
+                    // Convertir el día en el formato de fecha
+                    let fechaDelDia = `${formattedDate}-${('0' + dia.dia).slice(-2)}`; // Usa dia.dia ya que el objeto tiene varias propiedades
+
+                    // Buscar si hay una entrada con la fecha que coincide con ese día
+                    let detalleDelDia = response.data[operador].find(asistencia => asistencia.fechaAsignacion === fechaDelDia);
+
+                    // Si existe un detalle para ese día, lo guardamos junto con los parámetros; de lo contrario, devolvemos null
+                    return detalleDelDia
+                        ? {
+                            detalle: detalleDelDia.detalle,
+                            parametros: {
+                                dia_semana_sn: dia.dia_semana_sn,
+                                sabado_sn: dia.sabado_sn,
+                                domingo_sn: dia.domingo_sn,
+                                feriado_sn: dia.feriado_sn
+                            }
+                          }
+                        : null; // Si no hay coincidencia, devolvemos null
+                })
+            };
+        }
+
+        console.log("Datos reorganizados por operador:", asistenciaReorganizada);
+
+        // Asignar los datos obtenidos
+        this.asistenciaDatos = asistenciaReorganizada;
+        this.diasDelMes = diasDelMes;
 
     } catch (error) {
-      console.error("Error al llamar a la API:", error);
+        this.isLoading = true;
+        this.asistenciaDatos = {};
+        console.error("Error al llamar a la API:", error);
+    } finally {
+        // Finalizar la carga independientemente de si hubo error o no
+        this.isLoading = false;
     }
 },
-    contarParametros(detalle, parametro, tipo) {
+contarParametros(detalle, parametro, tipo) {
     return detalle.reduce((contador, dia) => {
-      if (dia && dia.parametros) {
-        // Para sumas de horas extra (Hs. Ex)
-        if (tipo === 'sumar' && parametro === 'hora_extra_sn' && dia.parametros[parametro] === 1) {
-          return contador + 1; // Sumar solo los casos donde hora_extra_sn es 1
+        if (dia && dia.detalle) {
+            // Para sumas de horas extra (Hs. Ex)
+            if (tipo === 'sumar' && parametro === 'hora_extra_sn' && dia.detalle[parametro] === 1) {
+                return contador + 1; // Sumar solo los casos donde hora_extra_sn es 1
+            }
+            // Para conteo de contratistas (Sv. Ex)
+            if (tipo === 'conteo' && parametro === 'contratista_id' && dia.detalle[parametro] !== null) {
+                return contador + 1; // Contar solo si contratista_id no es null
+            }
+            // Para conteo de S/D/F
+            if (tipo === 'sumar' && parametro === 's_d_f_sn' && dia.detalle[parametro] === 1) {
+                return contador + 1; // Contar solo los casos donde s_d_f_sn es 1
+            }
         }
-        // Para conteo de contratistas (Sv. Ex)
-        if (tipo === 'conteo' && parametro === 'contratista_id' && dia.parametros[parametro] !== null) {
-          return contador + 1; // Contar solo si contratista_id no es null
-        }
-        // Para conteo de S/D/F
-        if (tipo === 'sumar' && parametro === 's_d_f_sn' && dia.parametros[parametro] === 1) {
-          return contador + 1; // Contar solo los casos donde s_d_f_sn es 1
-        }
-      }
-      return contador;
+        return contador;
     }, 0);
-  },
+},
 //datos nuevos ____________________________________________________
-
-  openPopup(operador, tipoPago) {
-      this.operadorSeleccionado = operador;
-      this.tipoPagoSeleccionado = tipoPago;
-      this.fechaSeleccionada = null;
-      this.mostrarPopup = true;
-    },
-
-    cerrarPopup() {
-      this.mostrarPopup = false;
-      this.operadorSeleccionado = null;
-      this.tipoPagoSeleccionado = null;
-      this.fechaSeleccionada = null;
-    },
-    formatDate(dateString) {
-      if (!dateString) {
-      return ''; // O el mensaje que desees, como 'Fecha no disponible'
-    }
-      // Crear un objeto Date a partir de la cadena de fecha
-      const date = new Date(dateString);
-
-      // Obtener el año, mes y día
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // Mes es 0-indexado, por lo que se suma 1
-      const day = String(date.getDate()).padStart(2, '0');
-
-      // Devolver la fecha formateada
-      return `${year}-${month}-${day}`;
-    },
-    confirmarFecha() {
-      if (!this.operadorSeleccionado || !this.tipoPagoSeleccionado || !this.fechaSeleccionada) return;
-
-      switch (this.tipoPagoSeleccionado) {
-        case 'Pago Mes':
-          this.operadorSeleccionado.fecha_pago_mes = this.fechaSeleccionada;
-          break;
-        case 'Pago S1':
-          this.operadorSeleccionado.fecha_pago_s1 = this.fechaSeleccionada;
-          break;
-        case 'Pago S2':
-          this.operadorSeleccionado.fecha_pago_s2 = this.fechaSeleccionada;
-          break;
-        case 'Pago S3':
-          this.operadorSeleccionado.fecha_pago_s3 = this.fechaSeleccionada;
-          break;
-        case 'Pago S4':
-          this.operadorSeleccionado.fecha_pago_s4 = this.fechaSeleccionada;
-          break;
-        case 'Pago S5':
-          this.operadorSeleccionado.fecha_pago_s5 = this.fechaSeleccionada;
-          break;
-      }
-
-      this.cerrarPopup();
-    },
-  async guardarPagos() {
-    // Verificar si al menos un checkbox está seleccionado
-    const operariosSeleccionados = this.operarios.filter(operador => 
-      operador.pagoS1 || operador.pagoS2 || operador.pagoS3 || operador.pagoS4 || operador.pagoS5 || operador.pagosExtMensual
-    );
-
-    if (operariosSeleccionados.length === 0) {
-      toastr.error('Por favor, seleccione al menos un pago antes de guardar.');
-      return;
-    }
-    
-    this.isLoading = true;
-    try {
-      const fechaFormateada = this.selectedDate.toISOString().substr(0, 7); // Formato YYYY-MM
-
-      await axios.post('/api/guardar-pagos', {
-        frente_id: this.frente_selected.id,
-        selectedMonthYear: fechaFormateada,
-        operarios: operariosSeleccionados,
-      });
-      
-      toastr.success('Pagos guardados con éxito');
-    } catch (error) {
-      toastr.error('Error al guardar los pagos');
-    } finally {
-      this.isLoading = false;
-    }
-  },
-  formatDateToMonthYear(date) {
+formatDateToMonthYear(date) {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     return {
@@ -453,6 +349,7 @@ async getDatos() {
     window.open(url, '_blank');
   },
   pdfusuario(operadorId) {
+    console.log(operadorId);
         // Construir la URL con los parámetros
         const url = `/area/enod/asistencia-pdf-user/${operadorId}/${this.frente_selected.id}/${this.selectedDate}`;
 
