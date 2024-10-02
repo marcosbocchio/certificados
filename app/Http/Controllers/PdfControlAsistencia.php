@@ -29,12 +29,12 @@ class PdfControlAsistencia extends Controller
     
         // Obtén los días del mes
         $diasDelMes = $this->getDiasDelMes($year, $month);
-        
+        $diashabiles_mes = $this->contarDiasHabil($diasDelMes);
         // Obtén los detalles agrupados de la asistencia
         $detallesAgrupados = $this->getDatosAsistencia($frenteId, $year, $month);
     
         // Establecer nombre del frente (esto debe cambiarse según tu lógica)
-        $frente = 'Nombre del Frente'; // Cambia esto por el nombre real del frente que deseas mostrar
+        $frente = Frentes::find($frenteId); // Cambia esto por el nombre real del frente que deseas mostrar
     
         // Generar PDF
         $pdf = PDF::loadView('asistencia-ropa.asistenciaPDF', [
@@ -43,6 +43,7 @@ class PdfControlAsistencia extends Controller
             'year' => $year,
             'frente' => $frente,
             'diasDelMes' => $diasDelMes,
+            'diashabiles_mes' => $diashabiles_mes,
             'fecha' => now()->toDateString(),
             'obtenerValorDetalle' => function($detalle, $parametro) {
             return $this->obtenerValorDetalle($detalle, $parametro);
@@ -59,8 +60,10 @@ class PdfControlAsistencia extends Controller
 {
     // Verificar si contratista_id tiene valor
     if (isset($detalle['contratista_id']) && $detalle['contratista_id'] !== null) {
-        // Retornar parte con comillas
-        return '"' . $detalle['parte'] . '"'; // Mostrar parte si contratista_id no es null
+        // Si existe 'parte', separa por '-'
+        if (isset($detalle['parte'])) {
+            return explode('-', $detalle['parte']); // Retorna como un array
+        }
     }
 
     // Si contratista_id es null, verificar dia_semana_sn
@@ -75,34 +78,45 @@ class PdfControlAsistencia extends Controller
     // Si es fin de semana o feriado, miramos s_d_f_sn
     if ($parametro['dia_semana_sn'] === 0) {
         if (isset($detalle['s_d_f_sn']) && $detalle['s_d_f_sn'] === 1) {
-            return 'S/D/F'; // Mostrar el ícono si tiene S/D/F
+            return '1'; // Mostrar el ícono si tiene S/D/F
         }
         return '0'; // Mostrar '0' si no tiene S/D/F
     }
 
-    return '-'; // Por defecto mostramos '-'
+    return '0'; // Por defecto mostramos '-'
 }
 
-    protected function contarParametros($detalle, $parametro, $tipo)
-    {
-        return collect($detalle)->reduce(function ($contador, $dia) use ($parametro, $tipo) {
-            if ($dia && isset($dia['detalle'])) {
-                // Para sumas de horas extra (Hs. Ex)
-                if ($tipo === 'sumar' && $parametro === 'hora_extra_sn' && $dia['detalle'][$parametro] === 1) {
-                    return $contador + 1; // Sumar solo los casos donde hora_extra_sn es 1
-                }
-                // Para conteo de contratistas (Sv. Ex)
-                if ($tipo === 'conteo' && $parametro === 'contratista_id' && $dia['detalle'][$parametro] !== null) {
-                    return $contador + 1; // Contar solo si contratista_id no es null
-                }
-                // Para conteo de S/D/F
-                if ($tipo === 'sumar' && $parametro === 's_d_f_sn' && $dia['detalle'][$parametro] === 1) {
-                    return $contador + 1; // Contar solo los casos donde s_d_f_sn es 1
+protected function contarParametros($detalle, $parametro, $tipo)
+{
+    return collect($detalle)->reduce(function ($contador, $dia) use ($parametro, $tipo) {
+        if ($dia && isset($dia['parametros'])) {
+            $parametros = $dia['parametros']; // Accedemos a dia['parametros']
+
+            // Para sumar horas extra (Hs. Ex)
+            if ($tipo === 'sumar' && $parametro === 'hora_extra_sn' && isset($dia['detalle'][$parametro]) && $dia['detalle'][$parametro] == 1) {
+                return $contador + 1; // Sumar solo los casos donde hora_extra_sn es 1
+            }
+
+            // Para contar contratistas (Sv. Ex)
+            if ($tipo === 'conteo' && $parametro === 'contratista_id' && isset($dia['detalle'][$parametro]) && $dia['detalle'][$parametro] !== null) {
+                return $contador + 1; // Contar solo si contratista_id no es null
+            }
+
+            // Para contar Sábados
+            if ($tipo === 'sumar' && $parametro === 'sabado' && isset($parametros['sabado_sn']) && $parametros['sabado_sn'] == 1 && isset($dia['detalle']['s_d_f_sn']) && $dia['detalle']['s_d_f_sn'] == 1) {
+                return $contador + 1; // Contamos como sábado
+            }
+
+            // Para contar Domingos y Feriados juntos
+            if ($tipo === 'sumar' && $parametro === 'domingo_feriado' && isset($dia['detalle']['s_d_f_sn']) && $dia['detalle']['s_d_f_sn'] == 1) {
+                if ((isset($parametros['domingo_sn']) && $parametros['domingo_sn'] == 1) || (isset($parametros['feriado_sn']) && $parametros['feriado_sn'] == 1)) {
+                    return $contador + 1; // Contamos como domingo o feriado
                 }
             }
-            return $contador;
-        }, 0);
-    }
+        }
+        return $contador;
+    }, 0);
+}
     public function getDatosAsistencia($frenteId, $year, $month)
     {
         // Crear la fecha en formato 'YYYY-MM'
@@ -229,7 +243,17 @@ public function getDiasDelMes($year, $month)
     return $diasDelMes;
 }
 
+public function contarDiasHabil($diasDelMes)
+{
+    $diasHabil = 0;
 
+    foreach ($diasDelMes as $dia) {
+        // Sumar si es día hábil
+        $diasHabil += $dia['dia_semana_sn'];
+    }
+
+    return $diasHabil;
+}
 
     public function pdfUsuario($operadorId, $frenteId, $selectedDate)
     {

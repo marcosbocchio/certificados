@@ -38,10 +38,20 @@
     <thead>
         <tr>
             <th>Operador</th>
-            <th v-for="dia in diasDelMes" :key="dia.dia">{{ dia.dia }}</th>
-            <th>Hs. Ex</th>
-            <th>Sv. Ex</th>
-            <th>S/D/F</th>
+            <th>Responsabilidad</th>
+            <th v-for="dia in diasDelMes" :key="dia.dia" 
+                :class="{
+                  'domingo': dia.domingo_sn,
+                  'sabado': dia.sabado_sn,
+                  'feriado': dia.feriado_sn,
+                  'dia-semana': dia.dia_semana_sn
+                }">
+              {{ dia.dia }}
+            </th>
+            <th>E</th>
+            <th>SE</th>
+            <th>S</th>
+            <th>D/F</th>
         </tr>
     </thead>
     <tbody>
@@ -50,19 +60,20 @@
                 <a href="#" @click.prevent="pdfusuario(detalle.operador_id)">
                   {{ operador }} 
                 </a>
-                ({{ detalle.ayudante_sn }})
               </td>
+              <td>{{ detalle.ayudante_sn }}</td>
             <!-- Recorremos los días y mostramos el valor correspondiente -->
             <td v-for="(dia, index) in detalle.dias" :key="index">
                 <span v-if="dia">
                     {{ obtenerValorDetalle(dia.detalle, diasDelMes[index]) }}
                 </span>
-                <span v-else>-</span>
+                <span v-else>0</span>
             </td>
             <!-- Calcular y mostrar las nuevas columnas -->
-            <td>{{ contarParametros(detalle.dias, 'hora_extra_sn', 'sumar') }}</td>
+            <td>{{ contarParametros(detalle.dias, 'hora_extra_sn', 'sumar') }}</td> 
             <td>{{ contarParametros(detalle.dias, 'contratista_id', 'conteo') }}</td>
-            <td>{{ contarParametros(detalle.dias, 's_d_f_sn', 'sumar') }}</td>
+            <td>{{ contarParametros(detalle.dias, 'sabado', 'sumar') }}</td>
+            <td>{{ contarParametros(detalle.dias, 'domingo_feriado', 'sumar') }}</td>
         </tr>
     </tbody>
 </table>
@@ -106,15 +117,21 @@ data() {
       asistenciaDatos: {}, // Aquí se guarda la respuesta reorganizada de la API
     };
   },
-watch: {
+  watch: {
   frente_selected(newVal) {
+    // Verifica si el nuevo valor es válido antes de llamar a getDatos
     if (newVal) {
-      getDatos();
+      this.getDatos(); // Llama a getDatos con el contexto adecuado
+    } else {
+      this.asistenciaDatos = {}; // Limpiar datos si no hay frente seleccionado
     }
   },
   selectedDate(newVal) {
+    // Verifica si el nuevo valor es válido antes de llamar a getDatos
     if (newVal) {
-      this.getDatos();
+      this.getDatos(); // Llama a getDatos con el contexto adecuado
+    } else {
+      this.asistenciaDatos = {}; // Limpiar datos si no hay fecha seleccionada
     }
   }
 },
@@ -129,13 +146,11 @@ methods: {
   // Este método devuelve el valor correspondiente al día
   obtenerValorDetalle(detalle, parametro) {
     // Depuración para ver los datos que llegan al método
-    console.log('Detalle:', detalle);
-    console.log('Parámetro:', parametro);
 
     // 1. Verificar si contratista_id tiene valor
     if (detalle.contratista_id !== null && detalle.contratista_id !== undefined) {
         console.log('Mostrando parte:', detalle.parte);
-        return '"' + detalle.parte + '"'; // Mostrar parte si contratista_id no es null
+        return detalle.parte; // Mostrar parte si contratista_id no es null
     }
 
     // 2. Si contratista_id es null, verificar dia_semana_sn
@@ -153,14 +168,14 @@ methods: {
     if (parametro.dia_semana_sn === 0) {
         if (detalle.s_d_f_sn === 1) {
             console.log('Mostrando "sab" (sábado, domingo o feriado)');
-            return 'S/D/F'; // Mostrar el ícono si tiene S/D/F
+            return '1'; // Mostrar el ícono si tiene S/D/F
         }
         console.log('Mostrando "x" por fin de semana sin S/D/F');
         return '0'; // Mostrar 'x' si no tiene S/D/F
     }
 
     console.log('Mostrando "-" por defecto');
-    return '-'; // Por defecto mostramos '-'
+    return '0'; // Por defecto mostramos '-'
 },
 
   // Método para formatear el día como una fecha correcta
@@ -236,6 +251,14 @@ esFeriado(fecha) {
 },
 
 async getDatos() {
+    // Verificar que se haya seleccionado un mes antes de continuar
+    if (!this.selectedDate) {
+        console.log("Por favor, seleccione un mes y año antes de continuar.");
+        this.asistenciaDatos = {}; // Limpiar la tabla si no hay mes
+        this.isLoading = false; // Finalizar la carga
+        return; // Salir si no hay mes seleccionado
+    }
+
     this.isLoading = true; // Indicar que la carga ha comenzado
 
     console.log("Frente:", this.frente_selected);
@@ -257,6 +280,13 @@ async getDatos() {
         });
 
         console.log("Respuesta de la API:", response.data);
+
+        // Comprobar si hay datos en la respuesta
+        if (response.data.length === 0) {
+            console.log("No se encontraron datos para la consulta");
+            this.asistenciaDatos = {}; // Limpiar la tabla
+            return; // Salir si no hay datos
+        }
 
         // Inicializar un objeto para almacenar los datos reorganizados
         let asistenciaReorganizada = {};
@@ -303,9 +333,8 @@ async getDatos() {
         this.diasDelMes = diasDelMes;
 
     } catch (error) {
-        this.isLoading = true;
-        this.asistenciaDatos = {};
         console.error("Error al llamar a la API:", error);
+        this.asistenciaDatos = {}; // Limpiar la tabla en caso de error
     } finally {
         // Finalizar la carga independientemente de si hubo error o no
         this.isLoading = false;
@@ -313,18 +342,31 @@ async getDatos() {
 },
 contarParametros(detalle, parametro, tipo) {
     return detalle.reduce((contador, dia) => {
-        if (dia && dia.detalle) {
-            // Para sumas de horas extra (Hs. Ex)
+        if (dia && dia.parametros) {
+            const parametros = dia.parametros; // Accedemos a dia.parametros
+
+            // Para contar horas extra
             if (tipo === 'sumar' && parametro === 'hora_extra_sn' && dia.detalle[parametro] === 1) {
                 return contador + 1; // Sumar solo los casos donde hora_extra_sn es 1
             }
-            // Para conteo de contratistas (Sv. Ex)
+
+            // Para contar contratistas
             if (tipo === 'conteo' && parametro === 'contratista_id' && dia.detalle[parametro] !== null) {
                 return contador + 1; // Contar solo si contratista_id no es null
             }
-            // Para conteo de S/D/F
-            if (tipo === 'sumar' && parametro === 's_d_f_sn' && dia.detalle[parametro] === 1) {
-                return contador + 1; // Contar solo los casos donde s_d_f_sn es 1
+
+            // Contar solo sábados
+            if (tipo === 'sumar' && parametro === 'sabado') {
+                if (parametros.sabado_sn === 1 && dia.detalle.s_d_f_sn === 1) {
+                    return contador + 1; // Contamos como sábado
+                }
+            }
+
+            // Contar domingos y feriados juntos
+            if (tipo === 'sumar' && parametro === 'domingo_feriado') {
+                if ((parametros.domingo_sn === 1 || parametros.feriado_sn === 1) && dia.detalle.s_d_f_sn === 1) {
+                    return contador + 1; // Contamos como domingo o feriado
+                }
             }
         }
         return contador;
@@ -423,4 +465,21 @@ formatDateToMonthYear(date) {
   padding: 20px;
   border-radius: 5px;
 }
+
+.domingo {
+    background-color: #FFEB99; /* Color para domingos */
+  }
+
+  .sabado {
+    background-color: #FFCC99 ; /* Color para sábados */
+  }
+
+  .feriado {
+    background-color: #FF6666 ; /* Color para feriados */
+  }
+
+  .dia-semana {
+    background-color: #6BB5D9; /* Color para días de semana */
+  }
+  
 </style>

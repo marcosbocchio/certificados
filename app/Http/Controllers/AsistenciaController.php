@@ -127,6 +127,18 @@ class AsistenciaController extends Controller
         return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id'));
     }
 
+    public function pagos()
+    {
+        $user = auth()->user();
+        $header_titulo = "Control Asistencia";
+        $header_descripcion = "pagos";
+        $frentes = Frentes::all(); // Obtener todos los frentes
+        
+        // Convertimos los frentes a JSON para pasarlos al frontend
+        return view('control-asistencia.asistencia-pagos', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
+    }
+
+
     public function controlarUser($id_user, $fecha)
     {
 
