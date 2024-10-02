@@ -34,7 +34,7 @@
             border-collapse: collapse;
         }
         .table th, .table td {
-            padding: 8px;
+            padding: 5px;
             text-align: center;
             border: 1px solid #ddd;
         }
@@ -42,7 +42,6 @@
             background-color: #F2F2F2;
         }
         .info-table td {
-            padding: 6px;
             border: 1px solid #ddd;
             text-align: center;
             font-weight: bold;
@@ -77,7 +76,10 @@
     </style>
 </head>
 <body>
-
+@php
+    // Convertimos el arreglo en una colección
+    $asistenciaDatosCollection = collect($asistenciaDatos);
+@endphp
 <header>
     <table class="header-table">
         <tr>
@@ -98,59 +100,86 @@
     </table>
 </header>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Operador</th>
-            @foreach ($diasDelMes as $dia)
-                <th 
-                    class="
-                        @if ($dia['domingo_sn']) domingo @endif
-                        @if ($dia['sabado_sn']) sabado @endif
-                        @if ($dia['feriado_sn']) feriado @endif
-                        @if ($dia['dia_semana_sn']) dia-semana @endif
-                    "
-                >
-                    {{ $dia['dia'] }}
-                </th>
+@foreach ($asistenciaDatosCollection->chunk(25) as $asistenciaChunk) <!-- Dividir en grupos de 25 filas -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Operador</th>
+                @foreach ($diasDelMes as $dia)
+                    <th 
+                        class="
+                            @if ($dia['domingo_sn']) domingo @endif
+                            @if ($dia['sabado_sn']) sabado @endif
+                            @if ($dia['feriado_sn']) feriado @endif
+                            @if ($dia['dia_semana_sn']) dia-semana @endif
+                        "
+                    >
+                        {{ $dia['dia'] }}
+                    </th>
+                @endforeach
+                <th>E</th>
+                <th>SE</th>
+                <th>S</th>
+                <th>D/F</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($asistenciaChunk as $operador => $detalle)
+                <tr>
+                    <td style="padding: 5px;">{{ $operador }}</td>
+                    @foreach ($diasDelMes as $index => $dia)
+                        <td style="padding: 1px;">
+                            @if (isset($detalle[$index]))
+                                @php
+                                    $valores = $obtenerValorDetalle($detalle[$index]['detalle'], $dia);
+                                @endphp
+                                
+                                @if (is_array($valores))
+                                    @foreach ($valores as $valor)
+                                        {{ trim($valor) }}<br>
+                                    @endforeach
+                                @else
+                                    {{ $valores }}
+                                @endif
+                            @else
+                                0
+                            @endif
+                        </td>
+                    @endforeach
+                    <td>{{ $contarParametros($detalle, 'hora_extra_sn', 'sumar') }}</td>
+                    <td>{{ $contarParametros($detalle, 'contratista_id', 'conteo') }}</td>
+                    <td>{{ $contarParametros($detalle, 'sabado', 'sumar') }}</td>
+                    <td>{{ $contarParametros($detalle, 'domingo_feriado', 'sumar') }}</td>
+                </tr>
             @endforeach
-            <th>E</th>
-            <th>SE</th>
-            <th>S</th>
-            <th>D/F</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($asistenciaDatos as $operador => $detalle)
-        <tr>
-            <td>{{ $operador }}</td>
-            @foreach ($diasDelMes as $index => $dia)
-                <td>
-                    @if (isset($detalle[$index]))
-                        @php
-                            $valores = $obtenerValorDetalle($detalle[$index]['detalle'], $dia);
-                        @endphp
-                        
-                        @if (is_array($valores))
-                            @foreach ($valores as $valor)
-                                {{ trim($valor) }}<br>
-                            @endforeach
-                        @else
-                            {{ $valores }}
-                        @endif
-                    @else
-                        0
-                    @endif
+        </tbody>
+    </table>
+
+    <!-- Salto de página después de cada grupo de 25 filas, excepto el último -->
+    @if (!$loop->last)
+        <div style="page-break-after: always;"></div>
+        
+        <!-- Repetir cabecera en la siguiente página -->
+        <table class="header-table">
+            <tr>
+                <td class="logo">
+                    <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
                 </td>
-            @endforeach
-            <td>{{ $contarParametros($detalle, 'hora_extra_sn', 'sumar') }}</td>
-            <td>{{ $contarParametros($detalle, 'contratista_id', 'conteo') }}</td>
-            <td>{{ $contarParametros($detalle, 'sabado', 'sumar') }}</td>
-            <td>{{ $contarParametros($detalle, 'domingo_feriado', 'sumar') }}</td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+                <td class="title">CONTROL ASISTENCIA</td>
+                <td class="date"><b>FECHA:{{$fecha}}</b></td>
+            </tr>
+        </table>
+        <div style="height: 3px; background-color: rgb(255,204, 0); margin-top: 10px;"></div>
+        <table class="info-table">
+            <tr>
+                <td><strong>Frente:</strong> {{ $frente->codigo }}</td>
+                <td><strong>Mes y Año:</strong> {{ $month }}/{{ $year }}</td>
+                <td><strong>Días Hábiles del Mes:{{$diashabiles_mes}}</strong></td>
+            </tr>
+        </table>
+    @endif
+
+@endforeach
 
 </body>
 </html>

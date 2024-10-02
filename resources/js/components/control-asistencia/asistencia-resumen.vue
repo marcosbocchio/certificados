@@ -357,14 +357,16 @@ contarParametros(detalle, parametro, tipo) {
 
             // Contar solo sábados
             if (tipo === 'sumar' && parametro === 'sabado') {
-                if (parametros.sabado_sn === 1 && dia.detalle.s_d_f_sn === 1) {
+                if (parametros.sabado_sn === 1 && dia.detalle.s_d_f_sn === 1 && dia.detalle.contratista_id === null) {
+                  console.log(dia.detalle.contratista_id,'aaaaaaaaaaaaaaaaaaaaaaa');
                     return contador + 1; // Contamos como sábado
                 }
             }
 
             // Contar domingos y feriados juntos
             if (tipo === 'sumar' && parametro === 'domingo_feriado') {
-                if ((parametros.domingo_sn === 1 || parametros.feriado_sn === 1) && dia.detalle.s_d_f_sn === 1) {
+                if ((parametros.domingo_sn === 1 || parametros.feriado_sn === 1) && dia.detalle.s_d_f_sn === 1 && dia.detalle.contratista_id === null) {
+                  console.log(dia.detalle.contratista_id,'aaaaaaaaaaaaaaaaaaaaaaassssssssssssss');
                     return contador + 1; // Contamos como domingo o feriado
                 }
             }
