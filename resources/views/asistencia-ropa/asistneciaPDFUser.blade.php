@@ -163,7 +163,6 @@
                         $esFeriado = $asistencia['feriado_sn'] ? 'highlight' : '';
                         $horasExtras = $asistencia['hora_extras'];
                         $servicioExtra = $asistencia['servicio_extra'] ?? '-';
-                        $totalHorasExtras += $asistencia['hora_extras'];
                         $totalServicioExtra += $asistencia['servicio_extra'] ? 1 : 0;
 
                         // Obtenemos la fecha de pago usando la función
