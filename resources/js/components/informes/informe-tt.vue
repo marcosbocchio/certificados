@@ -76,14 +76,14 @@
 
                         <div class="col-md-3">
                             <div class="form-group size-pqr-eps" >
-                                <label for="procedimientos_soldadura">EPS / WPS</label>
-                                <v-select v-model="dataForm.ot_tipo_soldadura" label="eps" :options="['EP-CSI-BRH-1130']" id="procedimientos_soldadura"></v-select>
+                                <label for="procedimientos_soldadura">EPS / WPS *</label>
+                                <v-select v-model="dataForm.ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group size-pqr-eps">
-                                <label for="pqr">PQR</label>
+                                <label for="pqr">PQR *</label>
                                 <v-select v-model="dataForm.ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras" id="pqr"></v-select>
                             </div>
                         </div>
@@ -552,9 +552,11 @@ export default {
         setObra : function(value){
             this.dataForm.obra = value;
             this.dataForm.ot_tipo_soldadura = '';
+            
             if(this.dataForm.obra) {
                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.dataForm.obra });
             }
+            console.log('aaaaaa',this.ot_tipo_soldadura);
         },
 
         setPlanta : function(value){
