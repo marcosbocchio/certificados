@@ -508,6 +508,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('asistencia-operadores-datos', 'AsistenciaController@getDatosAsistencia');
     Route::post('/guardar-pagos', 'AsistenciaController@guardarPagos');
     Route::get('/calcular-dias-del-mes/{year}/{month}', 'AsistenciaController@calcularDiasDelMes');
+
+    Route::get('/asistencia_pagos', 'AsistenciaController@getAsistenciaPagos');
+    Route::post('/guardar_pagos', 'AsistenciaController@guardarPagosExtras');
+    Route::post('/guardar_pagos_servicios', 'AsistenciaController@guardarPagosExtrasServicos');
     // Asignacion
     Route::get('/obtener-detalles-remito/{remito_id}', 'AsignacionRopaController@obtenerDetallesRemito');
     Route::get('/asignaciones-ropa/{operador_id}', 'AsignacionRopaController@getAsignaciones');

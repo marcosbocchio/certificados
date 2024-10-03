@@ -131,13 +131,66 @@ class AsistenciaController extends Controller
     {
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
-        $header_descripcion = "pagos";
+        $header_descripcion = "Pagos Horas Extras | S/D/F";
         $frentes = Frentes::all(); // Obtener todos los frentes
         
-        // Convertimos los frentes a JSON para pasarlos al frontend
         return view('control-asistencia.asistencia-pagos', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
     }
+    public function pagosServicios()
+    {
+        $user = auth()->user();
+        $header_titulo = "Control Asistencia";
+        $header_descripcion = "Pagos Servicios";
+        $frentes = Frentes::all(); // Obtener todos los frentes
+        
+        return view('control-asistencia.asistencia-pagos-servicios', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
+    }
 
+    public function getAsistenciaPagos(Request $request)
+    {
+        \Log::info('Datos recibidos:', $request->all());
+    
+        // Filtrar asistencia por frente_id
+        $query = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista'])
+            ->where('frente_id', $request->frente_id);
+    
+        // Si se proporciona una fecha, filtrar por fecha también
+        if ($request->filled('fecha')) {
+            $query->where('fecha', 'like', $request->fecha . '%'); // Coincide con mes y año
+        }
+    
+        // Obtener los registros
+        $asistencia = $query->get();
+    
+        return response()->json($asistencia);
+    }
+
+    public function guardarPagosExtras(Request $request)
+    {
+        $datosPagos = $request->input('datosPagos');
+
+        foreach ($datosPagos as $pago) {
+            // Actualizar el pago_e_sdf en la tabla asistencia_detalle
+            AsistenciaDetalle::where('asistencia_horas_id', $pago['asistencia_horas_id'])
+                ->where('operador_id', $pago['operador_id'])
+                ->update(['pago_e_sdf' => $pago['pago_e_sdf']]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+    public function guardarPagosExtrasServicos(Request $request)
+    {
+        $datosPagos = $request->input('datosPagos');
+
+        foreach ($datosPagos as $pago) {
+            // Actualizar el pago_e_sdf en la tabla asistencia_detalle
+            AsistenciaDetalle::where('asistencia_horas_id', $pago['asistencia_horas_id'])
+                ->where('operador_id', $pago['operador_id'])
+                ->update(['pago_servicio_extra' => $pago['pago_servicio_extra']]);
+        }
+
+        return response()->json(['success' => true]);
+    }
 
     public function controlarUser($id_user, $fecha)
     {
@@ -193,7 +246,6 @@ class AsistenciaController extends Controller
     
     public function getAsistencia($id)
     {
-
 
         $asistencia = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista'])->findOrFail($id);
 
