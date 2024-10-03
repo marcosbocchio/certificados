@@ -224,6 +224,9 @@
       }
     }
   },
+  cerrarPopup() {
+      this.mostrarPopup = false; // Cerrar popup sin confirmar
+    },
   guardarPagos() {
     // Log de los datos seleccionados para pagar
     const datosPagos = this.operadores.flatMap(operador =>
