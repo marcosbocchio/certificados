@@ -185,6 +185,12 @@
             @can('A_resumen_view')
               <li><a href="{{ route('asistencia-resumen') }}">Resumen</a></li>
             @endcan
+            @can('A_asistencia_acceder')
+              <li><a href="{{ route('asistencia-pagos') }}">Pagar Horas Extras</a></li>
+            @endcan
+            @can('A_asistencia_acceder')
+              <li><a href="{{ route('asistencia-pagos-servicios') }}">Pagar Servicios</a></li>
+            @endcan
           </ul>
         </li>
       @endcan

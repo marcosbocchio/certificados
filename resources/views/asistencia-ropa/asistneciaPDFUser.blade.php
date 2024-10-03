@@ -182,7 +182,7 @@
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
-                            <td>{{ $fechaPago }}</td> <!-- Mostrar la fecha de pago -->
+                            <td>{{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}</td> <!-- Mostrar la fecha de pago -->
                         </tr>
                     @else
                         <tr>
@@ -197,7 +197,7 @@
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
-                            <td>{{ $fechaPago }}</td> <!-- Mostrar la fecha de pago -->
+                            <td>{{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}</td></td> <!-- Mostrar la fecha de pago -->
                         </tr>
                     @endif
 

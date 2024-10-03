@@ -326,10 +326,19 @@ async getDatos() {
             };
         }
 
-        console.log("Datos reorganizados por operador:", asistenciaReorganizada);
+        // Ordenar los operadores alfabéticamente
+        const operadoresOrdenados = Object.keys(asistenciaReorganizada).sort();
+
+        // Crear un nuevo objeto con los operadores ordenados
+        const asistenciaReorganizadaOrdenada = {};
+        operadoresOrdenados.forEach(operador => {
+            asistenciaReorganizadaOrdenada[operador] = asistenciaReorganizada[operador];
+        });
+
+        console.log("Datos reorganizados por operador (ordenados):", asistenciaReorganizadaOrdenada);
 
         // Asignar los datos obtenidos
-        this.asistenciaDatos = asistenciaReorganizada;
+        this.asistenciaDatos = asistenciaReorganizadaOrdenada;
         this.diasDelMes = diasDelMes;
 
     } catch (error) {

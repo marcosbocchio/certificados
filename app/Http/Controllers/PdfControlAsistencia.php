@@ -123,93 +123,96 @@ protected function contarParametros($detalle, $parametro, $tipo)
     }, 0);
 }
 
-    public function getDatosAsistencia($frenteId, $year, $month)
-    {
-        // Crear la fecha en formato 'YYYY-MM'
-        $fecha = sprintf('%04d-%02d', $year, $month);
-    
-        // Buscar todas las filas en AsistenciaHora que coincidan con el frente y la fecha (año-mes)
-        $asistenciaHoras = AsistenciaHora::where('frente_id', $frenteId)
-                                        ->where('fecha', 'like', $fecha . '%') // Buscar por año-mes
-                                        ->get();
-    
-        // Obtener los IDs de AsistenciaHora para buscar en AsistenciaDetalle
-        $asistenciaHorasIds = $asistenciaHoras->pluck('id'); // Lista de IDs
-    
-        // Buscar en AsistenciaDetalle con esos IDs, cargar la relación con User y AsistenciaHora
-        $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
-                                              ->with(['operador', 'asistenciaHora'])  // Incluir relaciones
-                                              ->get()
-                                              ->groupBy(function($detalle) {
-                                                  // Agrupar por el nombre del operador en lugar del ID
-                                                  return $detalle->operador->name;
-                                              })
-                                              ->map(function($detalles) {
-                                                  // Verificar si todos los ayudante_sn son 0 o si alguno es 1
-                                                  $ayudanteSnFlag = $detalles->every(function($detalle) {
-                                                      return $detalle->ayudante_sn === 0;
-                                                  }) ? 'ayudante' : 'operador';
-    
-                                                  // Modificar cada grupo de detalles para incluir 'fechaAsignacion' y 'ayudante_sn'
-                                                  return $detalles->map(function($detalle) use ($ayudanteSnFlag) {
-                                                      return [
-                                                          'detalle' => $detalle,  // Todos los detalles del registro
-                                                          'fechaAsignacion' => $detalle->asistenciaHora->fecha,  // Fecha de AsistenciaHora
-                                                          'ayudante_sn' => $ayudanteSnFlag  // Ayudante u operador según los valores
-                                                      ];
-                                                  });
+public function getDatosAsistencia($frenteId, $year, $month)
+{
+    // Crear la fecha en formato 'YYYY-MM'
+    $fecha = sprintf('%04d-%02d', $year, $month);
+
+    // Buscar todas las filas en AsistenciaHora que coincidan con el frente y la fecha (año-mes)
+    $asistenciaHoras = AsistenciaHora::where('frente_id', $frenteId)
+                                    ->where('fecha', 'like', $fecha . '%') // Buscar por año-mes
+                                    ->get();
+
+    // Obtener los IDs de AsistenciaHora para buscar en AsistenciaDetalle
+    $asistenciaHorasIds = $asistenciaHoras->pluck('id'); // Lista de IDs
+
+    // Buscar en AsistenciaDetalle con esos IDs, cargar la relación con User y AsistenciaHora
+    $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
+                                          ->with(['operador', 'asistenciaHora'])  // Incluir relaciones
+                                          ->get()
+                                          ->groupBy(function($detalle) {
+                                              // Agrupar por el nombre del operador en lugar del ID
+                                              return $detalle->operador->name;
+                                          })
+                                          ->map(function($detalles) {
+                                              // Verificar si todos los ayudante_sn son 0 o si alguno es 1
+                                              $ayudanteSnFlag = $detalles->every(function($detalle) {
+                                                  return $detalle->ayudante_sn === 0;
+                                              }) ? 'ayudante' : 'operador';
+
+                                              // Modificar cada grupo de detalles para incluir 'fechaAsignacion' y 'ayudante_sn'
+                                              return $detalles->map(function($detalle) use ($ayudanteSnFlag) {
+                                                  return [
+                                                      'detalle' => $detalle,  // Todos los detalles del registro
+                                                      'fechaAsignacion' => $detalle->asistenciaHora->fecha,  // Fecha de AsistenciaHora
+                                                      'ayudante_sn' => $ayudanteSnFlag  // Ayudante u operador según los valores
+                                                  ];
                                               });
-    
-        // Obtener los días del mes
-        $diasDelMes = $this->getDiasDelMes($year, $month);
-    
-        // Formato de la fecha
-        $formattedDate = sprintf('%04d-%02d', $year, $month);
-    
-        // Inicializar un array para almacenar los datos reorganizados
-        $asistenciaReorganizada = [];
-    
-        // Iterar sobre cada operador en los detalles agrupados
-        foreach ($detallesAgrupados as $operador => $asistencias) {
-            // Inicializar una matriz para cada operador que contenga los días del mes
-            $asistenciaReorganizada[$operador] = [];
-    
-            foreach ($diasDelMes as $dia) {
-                // Convertir el día en el formato de fecha
-                $fechaDelDia = sprintf('%s-%02d', $formattedDate, $dia['dia']); // Usa dia['dia']
-    
-                // Buscar si hay una entrada con la fecha que coincide con ese día
-                $detalleDelDia = array_filter($asistencias->toArray(), function ($asistencia) use ($fechaDelDia) {
-                    return $asistencia['fechaAsignacion'] === $fechaDelDia;
-                });
-    
-                // Si existe un detalle para ese día, lo guardamos junto con los parámetros; de lo contrario, devolvemos null
-                if (!empty($detalleDelDia)) {
-                    // Tomar el primer resultado que coincida
-                    $detalleDelDia = reset($detalleDelDia);
-    
-                    $asistenciaReorganizada[$operador][] = [
-                        'detalle' => $detalleDelDia['detalle'],
-                        'parametros' => [
-                            'dia_semana_sn' => $dia['dia_semana_sn'],
-                            'sabado_sn' => $dia['sabado_sn'],
-                            'domingo_sn' => $dia['domingo_sn'],
-                            'feriado_sn' => $dia['feriado_sn']
-                        ]
-                    ];
-                } else {
-                    // Si no hay coincidencia, devolvemos null
-                    $asistenciaReorganizada[$operador][] = null; // Si no hay coincidencia, devolvemos null
-                }
+                                          });
+
+    // Obtener los días del mes
+    $diasDelMes = $this->getDiasDelMes($year, $month);
+
+    // Formato de la fecha
+    $formattedDate = sprintf('%04d-%02d', $year, $month);
+
+    // Inicializar un array para almacenar los datos reorganizados
+    $asistenciaReorganizada = [];
+
+    // Iterar sobre cada operador en los detalles agrupados
+    foreach ($detallesAgrupados as $operador => $asistencias) {
+        // Inicializar una matriz para cada operador que contenga los días del mes
+        $asistenciaReorganizada[$operador] = [];
+
+        foreach ($diasDelMes as $dia) {
+            // Convertir el día en el formato de fecha
+            $fechaDelDia = sprintf('%s-%02d', $formattedDate, $dia['dia']); // Usa dia['dia']
+
+            // Buscar si hay una entrada con la fecha que coincide con ese día
+            $detalleDelDia = array_filter($asistencias->toArray(), function ($asistencia) use ($fechaDelDia) {
+                return $asistencia['fechaAsignacion'] === $fechaDelDia;
+            });
+
+            // Si existe un detalle para ese día, lo guardamos junto con los parámetros; de lo contrario, devolvemos null
+            if (!empty($detalleDelDia)) {
+                // Tomar el primer resultado que coincida
+                $detalleDelDia = reset($detalleDelDia);
+
+                $asistenciaReorganizada[$operador][] = [
+                    'detalle' => $detalleDelDia['detalle'],
+                    'parametros' => [
+                        'dia_semana_sn' => $dia['dia_semana_sn'],
+                        'sabado_sn' => $dia['sabado_sn'],
+                        'domingo_sn' => $dia['domingo_sn'],
+                        'feriado_sn' => $dia['feriado_sn']
+                    ]
+                ];
+            } else {
+                // Si no hay coincidencia, devolvemos null
+                $asistenciaReorganizada[$operador][] = null; // Si no hay coincidencia, devolvemos null
             }
         }
-    
-        // Log de los datos reorganizados por operador y día
-        Log::info('Datos reorganizados por operador y día:', $asistenciaReorganizada);
-    
-        // Devolver los detalles reorganizados
-        return $asistenciaReorganizada; // Devuelve los datos reorganizados
     }
+
+    // Ordenar alfabéticamente por el nombre de los operadores
+    ksort($asistenciaReorganizada);
+
+    // Log de los datos reorganizados por operador y día
+    Log::info('Datos reorganizados por operador y día:', $asistenciaReorganizada);
+
+    // Devolver los detalles reorganizados
+    return $asistenciaReorganizada; // Devuelve los datos reorganizados
+}
 public function formatearDia($dia)
 {
     $year = date('Y'); // Año actual
@@ -270,7 +273,7 @@ public function contarDiasHabil($diasDelMes)
         $fecha = $this->formatFecha($selectedDate);
         $selectedMonth = $fecha->format('m');
         $selectedYear = $fecha->format('Y');
-        log::info($operadorId . '-_______-' . $frenteId . '-_______-' . $selectedMonth . '-------' . $selectedYear);
+        
         // Obtener los feriados para el año seleccionado
         $feriados = $this->getFeriados($selectedYear);
 
@@ -325,6 +328,8 @@ public function contarDiasHabil($diasDelMes)
                 'fecha' => $fechaAsistencia->toDateString(),
                 'entrada' => $asistencia['entrada'],
                 'salida' => $asistencia['salida'],
+                'pago_e_sdf' => $asistencia['pago_e_sdf'],
+                'pago_servicio_extra' => $asistencia['pago_servicio_extra'],
                 'contratista_id' => $asistencia['contratista_id'],
                 'horas_trabajadas' => $horasTrabajadas,
                 'hora_extras' => $horasExtras,
@@ -426,6 +431,7 @@ public function contarDiasHabil($diasDelMes)
             ->where('operador_id', $operadorId)
             ->get();
     }
+
     private function combinarAsistenciasYDetalles($asistenciaHoras, $asistenciaDetalles)
     {
         $resultado = [];
@@ -448,6 +454,8 @@ public function contarDiasHabil($diasDelMes)
                     'name' => $name,
                     'entrada' => $detalleRelacion->entrada,
                     'salida' => $detalleRelacion->salida,
+                    'pago_e_sdf' => $detalleRelacion->pago_e_sdf,
+                    'pago_servicio_extra' => $detalleRelacion->pago_servicio_extra,
                     'contratista_id' => $detalleRelacion->contratista_id,
                     'parte' => $detalleRelacion->parte,
                     'hora_extra_sn' =>$detalleRelacion->hora_extra_sn,
