@@ -139,7 +139,7 @@
         }
 
         $rowCount = 0;
-        $rowsPerPage = 9; // Número de filas por página
+        $rowsPerPage = 8; // Número de filas por página
         $totalHorasTrabajadas = 0;
         $totalHorasExtras = 0;
         $totalServicioExtra = 0;
