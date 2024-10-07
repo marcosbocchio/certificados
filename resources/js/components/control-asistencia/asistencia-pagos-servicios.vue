@@ -227,6 +227,11 @@
   cerrarPopup() {
       this.mostrarPopup = false; // Cerrar popup sin confirmar
     },
+    toggleSelectAll(operador) {
+      operador.detalles.forEach(detalle => {
+        detalle.selected = operador.selectAll;
+      });
+    },
   guardarPagos() {
     // Log de los datos seleccionados para pagar
     const datosPagos = this.operadores.flatMap(operador =>
