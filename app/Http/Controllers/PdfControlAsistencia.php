@@ -337,6 +337,7 @@ public function contarDiasHabil($diasDelMes)
                 'feriado_sn' => $feriadoSn,
                 'parte' => $asistencia['parte'],
                 'hora_extra_sn' =>$asistencia['hora_extra_sn'],
+                's_d_f_sn' => $asistencia['s_d_f_sn'],
             ];
         }
     
@@ -459,6 +460,7 @@ public function contarDiasHabil($diasDelMes)
                     'contratista_id' => $detalleRelacion->contratista_id,
                     'parte' => $detalleRelacion->parte,
                     'hora_extra_sn' =>$detalleRelacion->hora_extra_sn,
+                    's_d_f_sn' =>$detalleRelacion->s_d_f_sn,
                 ];
             }
         }

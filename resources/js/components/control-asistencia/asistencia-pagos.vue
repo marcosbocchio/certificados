@@ -33,31 +33,30 @@
 
     <!-- Tabla de operadores -->
     <div v-for="operador in operadores" :key="operador.operador.id" class="box box-custom-enod">
-      <div class="box-header with-border">
+    <div class="box-header with-border">
         <div class="row">
-          <button class="btn btn-box-tool pull-right col-md-1" @click="operador.collapsed = !operador.collapsed">
-              <i v-if="operador.collapsed" class="fas fa-plus"></i>
-              <i v-else class="fas fa-minus"></i>
-          </button>
+            <button class="btn btn-box-tool pull-right col-md-1" @click="operador.collapsed = !operador.collapsed">
+                <i v-if="operador.collapsed" class="fas fa-plus"></i>
+                <i v-else class="fas fa-minus"></i>
+            </button>
         </div>
         <div class="container-fluid">
-          <div class="row">
-            
-              <h3 class="box-title col-md-10" style="cursor: pointer; white-space: nowrap;">
-                  <strong>{{ operador.operador.name }}</strong>
-              </h3>
-              <!-- Checkbox a la derecha -->
-              <div class="col-md-2 text-center">
-                <input
-                    class="form-check-input"
-                    type="checkbox" 
-                    v-model="operador.selectAll" 
-                    @change="toggleSelectAll(operador)" 
-                />
-              </div>
-          </div>
+            <div class="row">
+                <h3 class="box-title col-md-10" style="cursor: pointer; white-space: nowrap;">
+                    <strong>{{ operador.operador.name }}</strong>
+                </h3>
+                <!-- Checkbox para seleccionar todos -->
+                <div class="col-md-2 text-center">
+                  <input
+                      class="form-check-input"
+                      type="checkbox" 
+                      v-model="operador.selectAll" 
+                      @change="toggleSelectAll(operador)" 
+                  />
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
 
     <div class="box-body" v-show="!operador.collapsed">
         <div class="table-responsive">
@@ -82,7 +81,8 @@
                         <td class="text-center">
                             <input 
                                 type="checkbox" 
-                                v-model="detalle.selected" 
+                                v-model="detalle.selected"
+                                @change="checkIfAllSelected(operador)" 
                             />
                         </td>
                     </tr>
@@ -173,54 +173,55 @@ export default {
   },
   methods: {
     async fetchAsistencia() {
-      if (this.frente_selected) {
+    if (this.frente_selected) {
         try {
-          this.isLoading = true;
-          const response = await axios.get('/api/asistencia_pagos', {
-            params: {
-              frente_id: this.frente_selected.id,
-              fecha: this.fecha || null,
-            }
-          });
-          console.log(response.data);
-          const asistenciaAgrupada = response.data.reduce((result, item) => {
-            item.detalles.forEach(detalle => {
-              if (
-                (detalle.s_d_f_sn === 1 || detalle.hora_extra_sn === 1) && 
-                detalle.pago_e_sdf === null && 
-                detalle.no_pagar === null
-              ) {
-                const operadorId = detalle.operador.id;
-                if (!result[operadorId]) {
-                  result[operadorId] = {
-                    operador: detalle.operador, 
-                    detalles: [],
-                    selectAll: false,
-                    collapsed: false // Inicializar como colapsado
-                  };
+            this.isLoading = true;
+            const response = await axios.get('/api/asistencia_pagos', {
+                params: {
+                    frente_id: this.frente_selected.id,
+                    fecha: this.fecha || null,
                 }
-                result[operadorId].detalles.push({
-                  fecha: item.fecha,
-                  id: detalle.asistencia_horas_id,
-                  entrada: detalle.entrada || '-',
-                  salida: detalle.salida || '-',
-                  hora_extra_sn: detalle.hora_extra_sn === 1 ? 'S' : 'N',
-                  s_d_f_sn: detalle.s_d_f_sn === 1 ? 'S' : 'N',
-                  selected: false 
-                });
-              }
             });
-            return result;
-          }, {});
+            console.log(response.data);
 
-          this.operadores = Object.values(asistenciaAgrupada);
+            const asistenciaAgrupada = response.data.reduce((result, item) => {
+                item.detalles.forEach(detalle => {
+                    if (
+                        (detalle.s_d_f_sn === 1 || detalle.hora_extra_sn === 1) &&
+                        detalle.pago_e_sdf === null &&
+                        detalle.no_pagar === null
+                    ) {
+                        const operadorId = detalle.operador.id;
+                        if (!result[operadorId]) {
+                            result[operadorId] = {
+                                operador: detalle.operador,
+                                detalles: [],
+                                selectAll: false,
+                                collapsed: true
+                            };
+                        }
+                        result[operadorId].detalles.push({
+                            fecha: item.fecha,
+                            id: detalle.asistencia_horas_id,
+                            entrada: detalle.entrada || '-',
+                            salida: detalle.salida || '-',
+                            hora_extra_sn: detalle.hora_extra_sn === 1 ? 'S' : 'N',
+                            s_d_f_sn: detalle.s_d_f_sn === 1 ? 'S' : 'N',
+                            selected: false // Inicializar sin seleccionar
+                        });
+                    }
+                });
+                return result;
+            }, {});
+
+            this.operadores = Object.values(asistenciaAgrupada);
         } catch (error) {
-          console.error('Error al obtener la asistencia:', error);
+            console.error('Error al obtener la asistencia:', error);
         } finally {
-          this.isLoading = false;
+            this.isLoading = false;
         }
-      }
-    },
+    }
+},
     guardarPagos() {
     // Log de los datos seleccionados para pagar
     const datosPagos = this.operadores.flatMap(operador =>
@@ -260,10 +261,16 @@ export default {
       this.mostrarPopup = false; // Cerrar popup sin confirmar
     },
     toggleSelectAll(operador) {
-      operador.detalles.forEach(detalle => {
-        detalle.selected = operador.selectAll;
-      });
+        // Aplicar el valor de selectAll a cada detalle
+        operador.detalles.forEach(detalle => {
+            detalle.selected = operador.selectAll;
+        });
     },
+
+    checkIfAllSelected(operador) {
+        // Revisar si todos los detalles están seleccionados para actualizar selectAll
+        operador.selectAll = operador.detalles.every(detalle => detalle.selected);
+    }
   }
 };
 </script>

@@ -151,7 +151,7 @@
                 <th width="70px">Día</th>
                 <th width="70px">Fecha</th>
                 <th width="120px">Horas Trabajadas</th>
-                <th width="120px">Horas Extras</th>
+                <th width="120px">Horas Extras | S/D/F</th>
                 <th width="120px">Servicio Extra</th>
                 <th width="100px">Fecha Pago</th>
             </tr>
@@ -175,10 +175,10 @@
                             <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
                             <td style="text-align: center;">
-                                @if($asistencia['hora_extra_sn'])
+                                @if($asistencia['hora_extra_sn'] || $asistencia['s_d_f_sn'])
                                     <p>S</p>
                                 @else
-                                    <P>N</P>
+                                    <p>N</p>
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
@@ -190,10 +190,10 @@
                             <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
                             <td style="text-align: center;">
-                                @if($asistencia['hora_extra_sn'])
+                                @if($asistencia['hora_extra_sn'] || $asistencia['s_d_f_sn'])
                                     <p>S</p>
                                 @else
-                                    <P>N</P>
+                                    <p>N</p>
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>

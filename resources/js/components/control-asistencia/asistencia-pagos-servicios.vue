@@ -33,65 +33,64 @@
   
       <!-- Tabla de operadores -->
       <div v-for="operador in operadores" :key="operador.operador.id" class="box box-custom-enod">
-  
-      <div class="box-header with-border">
-        <div class="row">
-          <button class="btn btn-box-tool pull-right col-md-1" @click="operador.collapsed = !operador.collapsed">
-              <i v-if="operador.collapsed" class="fas fa-plus"></i>
-              <i v-else class="fas fa-minus"></i>
-          </button>
-        </div>
-        <div class="container-fluid">
-          <div class="row">
-            
-              <h3 class="box-title col-md-10" style="cursor: pointer; white-space: nowrap;">
-                  <strong>{{ operador.operador.name }}</strong>
-              </h3>
-              <!-- Checkbox a la derecha -->
-              <div class="col-md-2 text-center">
-                <input
-                    class="form-check-input"
-                    type="checkbox" 
-                    v-model="operador.selectAll" 
-                    @change="toggleSelectAll(operador)" 
-                />
-              </div>
-          </div>
+  <div class="box-header with-border">
+    <div class="row">
+      <button class="btn btn-box-tool pull-right col-md-1" @click="operador.collapsed = !operador.collapsed">
+          <i v-if="operador.collapsed" class="fas fa-plus"></i>
+          <i v-else class="fas fa-minus"></i>
+      </button>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <h3 class="box-title col-md-10" style="cursor: pointer; white-space: nowrap;">
+            <strong>{{ operador.operador.name }}</strong>
+        </h3>
+        <!-- Checkbox a la derecha -->
+        <div class="col-md-2 text-center">
+          <input
+              class="form-check-input"
+              type="checkbox" 
+              v-model="operador.selectAll" 
+              @change="toggleSelectAll(operador)" 
+          />
         </div>
       </div>
-  
-      <div class="box-body" v-show="!operador.collapsed">
-          <div class="table-responsive">
-              <table class="table table-hover table-striped table-condensed table-bordered">
-                  <thead>
-                      <tr>
-                          <th class="text-center col-md-2">Fecha</th>
-                          <th class="text-center col-md-2">Entrada</th>
-                          <th class="text-center col-md-2">Salida</th>
-                          <th class="text-center col-md-2">Contratista</th>
-                          <th class="text-center col-md-2">Parte</th>
-                          <th class="text-center col-md-2"></th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr v-for="detalle in operador.detalles" :key="detalle.fecha">
-                          <td class="text-center">{{ detalle.fecha }}</td>
-                          <td class="text-center">{{ detalle.entrada }}</td>
-                          <td class="text-center">{{ detalle.salida }}</td>
-                          <td class="text-center">{{ detalle.contratista.nombre_fantasia ||'-' }} </td>
-                          <td class="text-center">{{ detalle.parte || '-' }}</td>
-                          <td class="text-center">
-                              <input 
-                                  type="checkbox" 
-                                  v-model="detalle.selected" 
-                              />
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+    </div>
+  </div>
+
+  <div class="box-body" v-show="!operador.collapsed">
+      <div class="table-responsive">
+          <table class="table table-hover table-striped table-condensed table-bordered">
+              <thead>
+                  <tr>
+                      <th class="text-center col-md-2">Fecha</th>
+                      <th class="text-center col-md-2">Entrada</th>
+                      <th class="text-center col-md-2">Salida</th>
+                      <th class="text-center col-md-2">Contratista</th>
+                      <th class="text-center col-md-2">Parte</th>
+                      <th class="text-center col-md-2"></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="detalle in operador.detalles" :key="detalle.fecha">
+                      <td class="text-center">{{ detalle.fecha }}</td>
+                      <td class="text-center">{{ detalle.entrada }}</td>
+                      <td class="text-center">{{ detalle.salida }}</td>
+                      <td class="text-center">{{ detalle.contratista.nombre_fantasia ||'-' }} </td>
+                      <td class="text-center">{{ detalle.parte || '-' }}</td>
+                      <td class="text-center">
+                          <input 
+                              type="checkbox" 
+                              v-model="detalle.selected" 
+                              @change="checkSelectAll(operador)"
+                          />
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
       </div>
   </div>
+</div>
   
   
   
@@ -198,7 +197,7 @@
                     operador: detalle.operador, 
                     detalles: [],
                     selectAll: false,
-                    collapsed: false // Inicializar como colapsado
+                    collapsed: true // Inicializar como colapsado
                   };
                 }
                 result[operadorId].detalles.push({
@@ -228,10 +227,16 @@
       this.mostrarPopup = false; // Cerrar popup sin confirmar
     },
     toggleSelectAll(operador) {
-      operador.detalles.forEach(detalle => {
-        detalle.selected = operador.selectAll;
-      });
-    },
+    operador.detalles.forEach(detalle => {
+      detalle.selected = operador.selectAll;
+    });
+  },
+  
+  // Verifica si todos los detalles están seleccionados, y ajusta el selectAll
+  checkSelectAll(operador) {
+    const allSelected = operador.detalles.every(detalle => detalle.selected);
+    operador.selectAll = allSelected;
+  },
   guardarPagos() {
     // Log de los datos seleccionados para pagar
     const datosPagos = this.operadores.flatMap(operador =>
