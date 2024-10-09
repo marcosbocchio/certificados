@@ -52,7 +52,7 @@
                       type="checkbox" 
                       v-model="operador.selectAll" 
                       @change="toggleSelectAll(operador)" 
-                  />
+                  /><b style="margin-left: 5px;">Pagar Todos</b>
                 </div>
             </div>
         </div>
@@ -68,7 +68,8 @@
                         <th class="text-center col-md-2">Salida</th>
                         <th class="text-center col-md-2">Hora Extra</th>
                         <th class="text-center col-md-2">SDF</th>
-                        <th class="text-center col-md-2"></th>
+                        <th class="text-center col-md-1"></th>
+                        <td class="text-center col-md-1"><b>No Pagar</b></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,6 +85,9 @@
                                 v-model="detalle.selected"
                                 @change="checkIfAllSelected(operador)" 
                             />
+                        </td>
+                        <td class="text-center">
+                          <input type="checkbox" v-model="detalle.no_pagar" />
                         </td>
                     </tr>
                 </tbody>
@@ -207,7 +211,8 @@ export default {
                             salida: detalle.salida || '-',
                             hora_extra_sn: detalle.hora_extra_sn === 1 ? 'S' : 'N',
                             s_d_f_sn: detalle.s_d_f_sn === 1 ? 'S' : 'N',
-                            selected: false // Inicializar sin seleccionar
+                            selected: false,
+                            no_pagar:false,
                         });
                     }
                 });
@@ -222,15 +227,17 @@ export default {
         }
     }
 },
-    guardarPagos() {
+guardarPagos() {
     // Log de los datos seleccionados para pagar
     const datosPagos = this.operadores.flatMap(operador =>
         operador.detalles
-            .filter(detalle => detalle.selected) // Solo detalles seleccionados
+        .filter(detalle => detalle.selected || detalle.no_pagar) // Solo detalles seleccionados
             .map(detalle => ({
                 asistencia_horas_id: detalle.id,
                 operador_id: operador.operador.id,
-                pago_e_sdf: this.fechaSeleccionada
+                // Agregar la lógica para pagar o no pagar
+                pago_e_sdf: detalle.no_pagar ? null : this.fechaSeleccionada, // Si no es para pagar, se deja null
+                no_pagar: detalle.no_pagar ? 1 : 0 // Pasar el estado de no pagar
             }))
     );
 

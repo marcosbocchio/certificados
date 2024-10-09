@@ -33,64 +33,71 @@
   
       <!-- Tabla de operadores -->
       <div v-for="operador in operadores" :key="operador.operador.id" class="box box-custom-enod">
-  <div class="box-header with-border">
-    <div class="row">
-      <button class="btn btn-box-tool pull-right col-md-1" @click="operador.collapsed = !operador.collapsed">
-          <i v-if="operador.collapsed" class="fas fa-plus"></i>
-          <i v-else class="fas fa-minus"></i>
-      </button>
-    </div>
-    <div class="container-fluid">
-      <div class="row">
-        <h3 class="box-title col-md-10" style="cursor: pointer; white-space: nowrap;">
-            <strong>{{ operador.operador.name }}</strong>
-        </h3>
-        <!-- Checkbox a la derecha -->
-        <div class="col-md-2 text-center">
-          <input
-              class="form-check-input"
-              type="checkbox" 
-              v-model="operador.selectAll" 
-              @change="toggleSelectAll(operador)" 
-          />
+        <div class="box-header with-border">
+          <div class="row">
+            <button class="btn btn-box-tool pull-right col-md-1" @click="operador.collapsed = !operador.collapsed">
+                <i v-if="operador.collapsed" class="fas fa-plus"></i>
+                <i v-else class="fas fa-minus"></i>
+            </button>
+          </div>
+          <div class="container-fluid">
+            <div class="row">
+              <h3 class="box-title col-md-10" style="cursor: pointer; white-space: nowrap;">
+                  <strong>{{ operador.operador.name }}</strong>
+              </h3>
+              <!-- Checkbox a la derecha -->
+              <div class="col-md-1 text-center">
+                <input
+                    class="form-check-input"
+                    type="checkbox" 
+                    v-model="operador.selectAll" 
+                    @change="toggleSelectAll(operador)" 
+                />
+              </div>
+              <div class="col-md-1">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="box-body" v-show="!operador.collapsed">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-condensed table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-md-2">Fecha</th>
+                            <th class="text-center col-md-2">Entrada</th>
+                            <th class="text-center col-md-2">Salida</th>
+                            <th class="text-center col-md-2">Contratista</th>
+                            <th class="text-center col-md-2">Parte</th>
+                            <th class="text-center col-md-1"></th>
+                            <td class="text-center col-md-1"><b>No Pagar</b></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="detalle in operador.detalles" :key="detalle.fecha">
+                            <td class="text-center">{{ detalle.fecha }}</td>
+                            <td class="text-center">{{ detalle.entrada }}</td>
+                            <td class="text-center">{{ detalle.salida }}</td>
+                            <td class="text-center">{{ detalle.contratista.nombre_fantasia ||'-' }} </td>
+                            <td class="text-center">{{ detalle.parte || '-' }}</td>
+                            <td class="text-center">
+                                <input 
+                                    type="checkbox" 
+                                    v-model="detalle.selected" 
+                                    @change="checkSelectAll(operador)"
+                                />
+                            </td>
+                            <td class="text-center">
+                                <input type="checkbox" v-model="detalle.no_pagar" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="box-body" v-show="!operador.collapsed">
-      <div class="table-responsive">
-          <table class="table table-hover table-striped table-condensed table-bordered">
-              <thead>
-                  <tr>
-                      <th class="text-center col-md-2">Fecha</th>
-                      <th class="text-center col-md-2">Entrada</th>
-                      <th class="text-center col-md-2">Salida</th>
-                      <th class="text-center col-md-2">Contratista</th>
-                      <th class="text-center col-md-2">Parte</th>
-                      <th class="text-center col-md-2"></th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="detalle in operador.detalles" :key="detalle.fecha">
-                      <td class="text-center">{{ detalle.fecha }}</td>
-                      <td class="text-center">{{ detalle.entrada }}</td>
-                      <td class="text-center">{{ detalle.salida }}</td>
-                      <td class="text-center">{{ detalle.contratista.nombre_fantasia ||'-' }} </td>
-                      <td class="text-center">{{ detalle.parte || '-' }}</td>
-                      <td class="text-center">
-                          <input 
-                              type="checkbox" 
-                              v-model="detalle.selected" 
-                              @change="checkSelectAll(operador)"
-                          />
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
-      </div>
-  </div>
-</div>
   
   
   
@@ -207,7 +214,8 @@
                   salida: detalle.salida || '-',   // Usar '-' si salida es null
                   contratista: detalle.contratista || '-', // Usar '-' si no hay contratista
                   parte: detalle.parte || '-',  // Usar '-' si parte es null
-                  selected: false 
+                  selected: false,
+                  no_pagar: false,
                 });
               }
             }
@@ -241,11 +249,12 @@
     // Log de los datos seleccionados para pagar
     const datosPagos = this.operadores.flatMap(operador =>
         operador.detalles
-            .filter(detalle => detalle.selected) // Solo detalles seleccionados
+        .filter(detalle => detalle.selected || detalle.no_pagar)
             .map(detalle => ({
                 asistencia_horas_id: detalle.id,
                 operador_id: operador.operador.id,
-                pago_servicio_extra: this.fechaSeleccionada
+                pago_servicio_extra: detalle.no_pagar ? null : this.fechaSeleccionada,
+                no_pagar: detalle.no_pagar ? 1 : 0
             }))
     );
 

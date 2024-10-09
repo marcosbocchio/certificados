@@ -162,20 +162,30 @@ class AsistenciaController extends Controller
         // Obtener los registros
         $asistencia = $query->get();
     
+        // Ordenar los detalles por nombre de operador
+        $asistencia->each(function($asistenciaHora) {
+            $asistenciaHora->detalles = $asistenciaHora->detalles->sortBy(function($detalle) {
+                return strtolower($detalle->operador->nombre); // Asume que el nombre del operador está en 'nombre'
+            })->values(); // reindexar el array de detalles
+        });
+    
         return response()->json($asistencia);
     }
 
     public function guardarPagosExtras(Request $request)
     {
         $datosPagos = $request->input('datosPagos');
-
+        log::info($datosPagos);
         foreach ($datosPagos as $pago) {
-            // Actualizar el pago_e_sdf en la tabla asistencia_detalle
+            // Actualizar el pago_e_sdf y no_pagar en la tabla asistencia_detalle
             AsistenciaDetalle::where('asistencia_horas_id', $pago['asistencia_horas_id'])
                 ->where('operador_id', $pago['operador_id'])
-                ->update(['pago_e_sdf' => $pago['pago_e_sdf']]);
+                ->update([
+                    'pago_e_sdf' => $pago['pago_e_sdf'],
+                    'no_pagar' => $pago['no_pagar']
+                ]);
         }
-
+    
         return response()->json(['success' => true]);
     }
     public function guardarPagosExtrasServicos(Request $request)
@@ -186,7 +196,8 @@ class AsistenciaController extends Controller
             // Actualizar el pago_e_sdf en la tabla asistencia_detalle
             AsistenciaDetalle::where('asistencia_horas_id', $pago['asistencia_horas_id'])
                 ->where('operador_id', $pago['operador_id'])
-                ->update(['pago_servicio_extra' => $pago['pago_servicio_extra']]);
+                ->update(['pago_servicio_extra' => $pago['pago_servicio_extra'],
+            'no_pagar' => $pago['no_pagar']]);
         }
 
         return response()->json(['success' => true]);
