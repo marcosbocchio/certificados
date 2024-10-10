@@ -182,7 +182,13 @@
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
-                            <td>{{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}</td> <!-- Mostrar la fecha de pago -->
+                            <td>
+                                @if (!is_null($asistencia['no_pagar']))
+                                    Cancelado
+                                @else
+                                    {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}
+                                @endif
+                            </td> 
                         </tr>
                     @else
                         <tr>
@@ -197,7 +203,13 @@
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
-                            <td>{{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}</td></td> <!-- Mostrar la fecha de pago -->
+                            <td>
+                                @if (!is_null($asistencia['no_pagar']))
+                                    Cancelado
+                                @else
+                                    {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}
+                                @endif
+                            </td>
                         </tr>
                     @endif
 

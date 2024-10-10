@@ -204,7 +204,7 @@
                     operador: detalle.operador, 
                     detalles: [],
                     selectAll: false,
-                    collapsed: true // Inicializar como colapsado
+                    collapsed: false // Inicializar como colapsado
                   };
                 }
                 result[operadorId].detalles.push({
