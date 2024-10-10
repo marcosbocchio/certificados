@@ -79,7 +79,7 @@
                         <tr v-for="detalle in operador.detalles" :key="detalle.fecha">
                             <td class="text-center">{{ detalle.fecha }}</td>
                             <td class="text-center">{{ detalle.ayudante_sn }}</td>
-                            <td class="text-center">'-'</td>
+                            <td class="text-center">-</td>
                             <td class="text-center">{{ detalle.contratista.nombre_fantasia ||'-' }} </td>
                             <td class="text-center">{{ detalle.parte || '-' }}</td>
                             <td class="text-center">
