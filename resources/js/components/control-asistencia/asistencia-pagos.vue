@@ -63,9 +63,10 @@
             <table class="table table-hover table-striped table-condensed table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center col-md-2">Fecha</th>
-                        <th class="text-center col-md-2">Entrada</th>
-                        <th class="text-center col-md-2">Salida</th>
+                        <th class="text-center col-md-1">Fecha</th>
+                        <th class="text-center col-md-2">Responsabilidad</th>
+                        <th class="text-center col-md-1">Entrada</th>
+                        <th class="text-center col-md-1">Salida</th>
                         <th class="text-center col-md-2">Hora Extra</th>
                         <th class="text-center col-md-2">SDF</th>
                         <th class="text-center col-md-1"></th>
@@ -75,6 +76,7 @@
                 <tbody>
                     <tr v-for="detalle in operador.detalles" :key="detalle.fecha">
                         <td class="text-center">{{ detalle.fecha }}</td>
+                        <td class="text-center">{{ detalle.ayudante_sn }}</td>
                         <td class="text-center">{{ detalle.entrada }}</td>
                         <td class="text-center">{{ detalle.salida }}</td>
                         <td class="text-center">{{ detalle.hora_extra_sn }}</td>
@@ -168,12 +170,23 @@ export default {
       operadores: [],
       isLoading: false,
       mostrarPopup: false,  // Estado del modal
-      fechaSeleccionada: ''  // Fecha seleccionada en el modal
+      fechaSeleccionada: '',
+      feriados: [] // Lista de feriados cargada  // Fecha seleccionada en el modal
     };
   },
+  mounted() {
+    // Obtener feriados al montar el componente con el año actual
+    const yearActual = new Date().getFullYear();
+    this.obtenerFeriados(yearActual);
+  },
   watch: {
-    frente_selected: 'fetchAsistencia',
-    fecha: 'fetchAsistencia'
+    // Escuchar los cambios en la selección de fecha y actualizar feriados si cambia el año
+    fecha(newFecha) {
+      const year = new Date(newFecha).getFullYear();
+      this.obtenerFeriados(year); // Volver a obtener feriados con el nuevo año
+      this.fetchAsistencia(); // Refrescar los datos de asistencia
+    },
+    frente_selected: 'fetchAsistencia' // Refrescar asistencia si cambia el frente
   },
   methods: {
     async fetchAsistencia() {
@@ -201,18 +214,28 @@ export default {
                                 operador: detalle.operador,
                                 detalles: [],
                                 selectAll: false,
-                                collapsed: true
+                                collapsed: false
                             };
                         }
                         result[operadorId].detalles.push({
-                            fecha: item.fecha,
-                            id: detalle.asistencia_horas_id,
-                            entrada: detalle.entrada || '-',
-                            salida: detalle.salida || '-',
-                            hora_extra_sn: detalle.hora_extra_sn === 1 ? 'S' : 'N',
-                            s_d_f_sn: detalle.s_d_f_sn === 1 ? 'S' : 'N',
-                            selected: false,
-                            no_pagar:false,
+                          fecha: item.fecha,
+                          ayudante_sn: detalle.ayudante_sn === 0 ? 'Ayudante' : 'Operador',
+                          id: detalle.asistencia_horas_id,
+                          tipo_dia: this.determinarTipoDeDia(item.fecha), // Determinar tipo de día
+                          entrada: detalle.entrada || '-',
+                          salida: detalle.salida || '-',
+                          hora_extra_sn: detalle.hora_extra_sn === 1 ? 'Pagar' : 'No Pagar',
+
+                          // Comprobación simplificada para 'Domingo o Feriado'
+                          s_d_f_sn: detalle.s_d_f_sn === 1 
+                                              ? (this.determinarTipoDeDia(item.fecha) === 'Sábado' 
+                                                  ? 'Pagar Sábado' 
+                                                  : (this.determinarTipoDeDia(item.fecha) === 'Domingo o Feriado' 
+                                                      ? 'Pagar D/F' 
+                                                      : 'No Pagar')) 
+                                              : 'No Pagar',
+                          selected: false,
+                          no_pagar:false,
                         });
                     }
                 });
@@ -227,6 +250,41 @@ export default {
         }
     }
 },
+async obtenerFeriados(year) {
+      try {
+        const response = await axios.get(`/api/asistencia/getferiados/${year}`);
+        this.feriados = response.data;
+      } catch (error) {
+        console.error('Error al obtener los feriados:', error);
+      }
+    },
+  
+    esFeriado(fecha) {
+      const fechaSeleccionada = new Date(fecha + 'T00:00:00'); // Establecer la hora a medianoche
+      const dia = fechaSeleccionada.getDate();
+      const mes = fechaSeleccionada.getMonth() + 1;
+      const anio = fechaSeleccionada.getFullYear();
+      const fechaFormateada = `${anio}-${('0' + mes).slice(-2)}-${('0' + dia).slice(-2)}`;
+
+      return this.feriados.includes(fechaFormateada); // Verificar si es feriado
+    },
+
+    esFinDeSemana(fecha) {
+      const diaSemana = new Date(fecha).getDay(); // 6 = domingo, 5 = sábado
+      return diaSemana === 5 || diaSemana === 6; // Retorna true si es sábado o domingo
+    },
+
+    determinarTipoDeDia(fecha) {
+      const diaSemana = new Date(fecha).getDay(); // 6 = domingo, 5 = sábado
+
+      if (this.esFeriado(fecha) || diaSemana === 6) {
+        return 'Domingo o Feriado'; // Agrupamos domingo y feriado
+      } else if (diaSemana === 5) {
+        return 'Sábado'; // Mantener sábado separado
+      } else {
+        return 'Día laboral'; // Día de semana
+      }
+    },
 guardarPagos() {
     // Log de los datos seleccionados para pagar
     const datosPagos = this.operadores.flatMap(operador =>
