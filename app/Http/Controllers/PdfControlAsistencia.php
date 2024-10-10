@@ -338,6 +338,8 @@ public function contarDiasHabil($diasDelMes)
                 'parte' => $asistencia['parte'],
                 'hora_extra_sn' =>$asistencia['hora_extra_sn'],
                 's_d_f_sn' => $asistencia['s_d_f_sn'],
+                'ayudante_sn' => $asistencia['ayudante_sn'],
+                'no_pagar' => $asistencia['no_pagar'],
             ];
         }
     
@@ -461,6 +463,8 @@ public function contarDiasHabil($diasDelMes)
                     'parte' => $detalleRelacion->parte,
                     'hora_extra_sn' =>$detalleRelacion->hora_extra_sn,
                     's_d_f_sn' =>$detalleRelacion->s_d_f_sn,
+                    'ayudante_sn' =>$detalleRelacion->ayudante_sn,
+                    'no_pagar' =>$detalleRelacion->no_pagar,
                 ];
             }
         }

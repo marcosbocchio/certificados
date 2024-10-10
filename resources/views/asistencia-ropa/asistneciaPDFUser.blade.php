@@ -116,9 +116,9 @@
         <div class="content">
             <table class="info-table">
                 <tr>
-                    <td width="303px"><strong>Operador:</strong> {{ $operador->name }}</td>
-                    <td width="230px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
-                    <td width="230px"><strong>Mes y Año:</strong> {{ $selectedMonth }} / {{ $selectedYear }}</td>
+                    <td width="218px"><strong>Operador:</strong> {{ $operador->name }}</td>
+                    <td width="294px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
+                    <td width="344px"><strong>Mes y Año:</strong> {{ $selectedMonth }} / {{ $selectedYear }}</td>
                     <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
                 </tr>
             </table>
@@ -150,6 +150,7 @@
             <tr>
                 <th width="70px">Día</th>
                 <th width="70px">Fecha</th>
+                <th width="70px">Responsabilidad</th>
                 <th width="120px">Horas Trabajadas</th>
                 <th width="120px">Horas Extras | S/D/F</th>
                 <th width="120px">Servicio Extra</th>
@@ -173,12 +174,19 @@
                         <tr>
                             <td>{{ $dia }}</td>
                             <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
+                            <td>
+                                {{ $asistencia['ayudante_sn'] === 1 ? 'Operador' : ($asistencia['ayudante_sn'] === 0 ? 'Ayudante' : '') }}
+                            </td>
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
                             <td style="text-align: center;">
-                                @if($asistencia['hora_extra_sn'] || $asistencia['s_d_f_sn'])
-                                    <p>S</p>
-                                @else
-                                    <p>N</p>
+                            @if($asistencia['servicio_extra'] === 0)
+                                    @if($asistencia['hora_extra_sn'] || $asistencia['s_d_f_sn'])
+                                        <p>Si</p>
+                                    @else
+                                        <p>No</p>
+                                    @endif
+                                @elseif($asistencia['servicio_extra'] === 1)
+                                    <p>No</p>
                                 @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
@@ -194,13 +202,20 @@
                         <tr>
                             <td class="empty-cell"></td>
                             <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
+                            <td>
+                                {{ $asistencia['ayudante_sn'] === 1 ? 'Operador' : ($asistencia['ayudante_sn'] === 0 ? 'Ayudante' : '') }}
+                            </td>
                             <td>{{ $asistencia['horas_trabajadas'] }}</td>
                             <td style="text-align: center;">
+                            @if($asistencia['servicio_extra'] === 0)
                                 @if($asistencia['hora_extra_sn'] || $asistencia['s_d_f_sn'])
-                                    <p>S</p>
+                                    <p>Si</p>
                                 @else
-                                    <p>N</p>
+                                    <p>No</p>
                                 @endif
+                            @elseif($asistencia['servicio_extra'] === 1)
+                                <p>No</p>
+                            @endif
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
                             <td>
@@ -248,8 +263,9 @@
                         <tr>
                             <th width="70px">Día</th>
                             <th width="70px">Fecha</th>
+                            <th width="70px">Responsabilidad</th>
                             <th width="120px">Horas Trabajadas</th>
-                            <th width="120px">Horas Extras</th>
+                            <th width="120px">Horas Extras | S/D/F</th>
                             <th width="120px">Servicio Extra</th>
                             <th width="100px">Fecha Pago</th>
                         </tr>
@@ -264,12 +280,13 @@
     <!-- Tabla de Totales -->
     <table class="totals-table">
         <tr>
-            <td width="110px"><strong>Total</strong></td>
-            <td width="110px">&nbsp;</td>
-            <td width="183px">&nbsp;</td>
-            <td width="183px">&nbsp;</td>
+            <td width="95px"><strong>Total</strong></td>
+            <td width="93px">&nbsp;</td>
+            <td width="107px">&nbsp;</td>
+            <td width="157px">&nbsp;</td>
+            <td width="158px">&nbsp;</td>
             <td>{{ $totalServicioExtra }}</td>
-            <td width="153px">&nbsp;</td>
+            <td width="133px">&nbsp;</td>
         </tr>
     </table>
 </div>

@@ -33,37 +33,40 @@
 
     <!-- Tabla de operadores -->
     <div v-for="operador in operadores" :key="operador.operador.id" class="box box-custom-enod">
-    <div class="box-header with-border">
-        <div class="row">
+      <div class="box-header with-border">
+          <div class="row">
             <button class="btn btn-box-tool pull-right col-md-1" @click="operador.collapsed = !operador.collapsed">
                 <i v-if="operador.collapsed" class="fas fa-plus"></i>
                 <i v-else class="fas fa-minus"></i>
             </button>
-        </div>
-        <div class="container-fluid">
+          </div>
+          <div class="container-fluid">
             <div class="row">
-                <h3 class="box-title col-md-10" style="cursor: pointer; white-space: nowrap;">
-                    <strong>{{ operador.operador.name }}</strong>
-                </h3>
-                <!-- Checkbox para seleccionar todos -->
-                <div class="col-md-2 text-center">
-                  <input
-                      class="form-check-input"
-                      type="checkbox" 
-                      v-model="operador.selectAll" 
-                      @change="toggleSelectAll(operador)" 
-                  /><b style="margin-left: 5px;">Pagar Todos</b>
-                </div>
+              <h3 class="box-title col-md-10" style="cursor: pointer; white-space: nowrap;">
+                  <strong>{{ operador.operador.name }}</strong>
+              </h3>
+              <!-- Checkbox a la derecha -->
+              <div class="col-md-1 text-center">
+                <input
+                    class="form-check-input"
+                    type="checkbox" 
+                    v-model="operador.selectAll" 
+                    @change="toggleSelectAll(operador)" 
+                />
+              </div>
+              <div class="col-md-1">
+                
+              </div>
             </div>
+          </div>
         </div>
-    </div>
 
     <div class="box-body" v-show="!operador.collapsed">
         <div class="table-responsive">
             <table class="table table-hover table-striped table-condensed table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center col-md-1">Fecha</th>
+                        <th class="text-center col-md-2">Fecha</th>
                         <th class="text-center col-md-2">Responsabilidad</th>
                         <th class="text-center col-md-1">Entrada</th>
                         <th class="text-center col-md-1">Salida</th>
@@ -85,11 +88,15 @@
                             <input 
                                 type="checkbox" 
                                 v-model="detalle.selected"
-                                @change="checkIfAllSelected(operador)" 
+                                @change="handleSelectionChange(detalle, operador)" 
                             />
                         </td>
                         <td class="text-center">
-                          <input type="checkbox" v-model="detalle.no_pagar" />
+                            <input 
+                                type="checkbox" 
+                                v-model="detalle.no_pagar"
+                                @change="handleNoPagarChange(detalle, operador)" 
+                            />
                         </td>
                     </tr>
                 </tbody>
@@ -332,8 +339,25 @@ guardarPagos() {
         });
     },
 
+    toggleSelectAll(operador) {
+        operador.detalles.forEach(detalle => {
+            detalle.selected = operador.selectAll;
+            detalle.no_pagar = false; // Desmarcar "No Pagar" si se seleccionan todos
+        });
+    },
+    handleSelectionChange(detalle, operador) {
+        if (detalle.selected) {
+            detalle.no_pagar = false; // Desmarcar "No Pagar" si se selecciona
+            operador.selectAll = false; // Desmarcar "Pagar Todos"
+        }
+    },
+    handleNoPagarChange(detalle, operador) {
+        if (detalle.no_pagar) {
+            detalle.selected = false; // Desmarcar seleccionado si se elige "No Pagar"
+            operador.selectAll = false; // Desmarcar "Pagar Todos"
+        }
+    },
     checkIfAllSelected(operador) {
-        // Revisar si todos los detalles están seleccionados para actualizar selectAll
         operador.selectAll = operador.detalles.every(detalle => detalle.selected);
     }
   }

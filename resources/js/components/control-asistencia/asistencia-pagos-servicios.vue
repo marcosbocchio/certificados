@@ -67,8 +67,8 @@
                     <thead>
                         <tr>
                             <th class="text-center col-md-2">Fecha</th>
-                            <th class="text-center col-md-2">Entrada</th>
-                            <th class="text-center col-md-2">Salida</th>
+                            <th class="text-center col-md-2">Responsabilidad</th>
+                            <th class="text-center col-md-2">Tecnica</th>
                             <th class="text-center col-md-2">Contratista</th>
                             <th class="text-center col-md-2">Parte</th>
                             <th class="text-center col-md-1"></th>
@@ -78,20 +78,24 @@
                     <tbody>
                         <tr v-for="detalle in operador.detalles" :key="detalle.fecha">
                             <td class="text-center">{{ detalle.fecha }}</td>
-                            <td class="text-center">{{ detalle.entrada }}</td>
-                            <td class="text-center">{{ detalle.salida }}</td>
+                            <td class="text-center">{{ detalle.ayudante_sn }}</td>
+                            <td class="text-center">'-'</td>
                             <td class="text-center">{{ detalle.contratista.nombre_fantasia ||'-' }} </td>
                             <td class="text-center">{{ detalle.parte || '-' }}</td>
                             <td class="text-center">
-                                <input 
-                                    type="checkbox" 
-                                    v-model="detalle.selected" 
-                                    @change="checkSelectAll(operador)"
-                                />
-                            </td>
-                            <td class="text-center">
-                                <input type="checkbox" v-model="detalle.no_pagar" />
-                            </td>
+                            <input 
+                                type="checkbox" 
+                                v-model="detalle.selected"
+                                @change="handleSelectionChange(detalle, operador)" 
+                            />
+                        </td>
+                        <td class="text-center">
+                            <input 
+                                type="checkbox" 
+                                v-model="detalle.no_pagar"
+                                @change="handleNoPagarChange(detalle, operador)" 
+                            />
+                        </td>
                         </tr>
                     </tbody>
                 </table>
@@ -209,6 +213,7 @@
                 }
                 result[operadorId].detalles.push({
                   fecha: item.fecha,
+                  ayudante_sn: detalle.ayudante_sn === 0 ? 'Ayudante' : 'Operador',
                   id: detalle.asistencia_horas_id,
                   entrada: detalle.entrada || '-',  // Usar '-' si entrada es null
                   salida: detalle.salida || '-',   // Usar '-' si salida es null
@@ -240,11 +245,34 @@
     });
   },
   
-  // Verifica si todos los detalles están seleccionados, y ajusta el selectAll
-  checkSelectAll(operador) {
-    const allSelected = operador.detalles.every(detalle => detalle.selected);
-    operador.selectAll = allSelected;
-  },
+  toggleSelectAll(operador) {
+        // Aplicar el valor de selectAll a cada detalle
+        operador.detalles.forEach(detalle => {
+            detalle.selected = operador.selectAll;
+        });
+    },
+
+    toggleSelectAll(operador) {
+        operador.detalles.forEach(detalle => {
+            detalle.selected = operador.selectAll;
+            detalle.no_pagar = false; // Desmarcar "No Pagar" si se seleccionan todos
+        });
+    },
+    handleSelectionChange(detalle, operador) {
+        if (detalle.selected) {
+            detalle.no_pagar = false; // Desmarcar "No Pagar" si se selecciona
+            operador.selectAll = false; // Desmarcar "Pagar Todos"
+        }
+    },
+    handleNoPagarChange(detalle, operador) {
+        if (detalle.no_pagar) {
+            detalle.selected = false; // Desmarcar seleccionado si se elige "No Pagar"
+            operador.selectAll = false; // Desmarcar "Pagar Todos"
+        }
+    },
+    checkIfAllSelected(operador) {
+        operador.selectAll = operador.detalles.every(detalle => detalle.selected);
+    },
   guardarPagos() {
     // Log de los datos seleccionados para pagar
     const datosPagos = this.operadores.flatMap(operador =>
