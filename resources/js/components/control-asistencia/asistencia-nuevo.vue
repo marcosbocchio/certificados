@@ -72,6 +72,18 @@
             <input id="parte" type="text" v-model="parte_selected" class="form-control">
           </div>
         </div>
+        <div class="col-md-3" v-if="contratista_selected">
+          <div class="form-group">
+            <label for="metodoEnsayos">Técnica</label>
+            <v-select v-model="metodoEnsayo_selected" :options="metodo_ensayos" label="metodo">
+              <!-- Custom slot para mostrar metodo y descripcion -->
+              <template slot="option" slot-scope="option">
+                <span class="upSelect">{{ option.metodo }}</span> <br>
+                <span class="downSelect">{{ option.descripcion }}</span>
+              </template>
+            </v-select>
+          </div>
+        </div>
         <!-- Hora Extra Checkbox -->
         <div class="col-md-3">
           <div class="form-group" style="margin-top: 30px;">
@@ -103,17 +115,18 @@
               <th class="col-md-1 text-center">Salida</th>
               <th class="col-md-2 text-center">cliente</th>
               <th class="col-md-2 text-center">Parte</th>
-              <th class="col-md-2 text-center">
+              <th class="col-md-1 text-center" v-if="detalles.some(detalle => detalle.contratista)">Técnica</th>
+              <th class="col-md-1 text-center">
                 <!-- Mostrar el texto y columna de acuerdo a los estados -->
                 <span v-if="mostrarSDFCheckboxCol">Sab. Dom. Fer.</span>
                 <span v-else-if="mostrarHoraExtraCol">Horas Extras</span>
               </th>
-              <th style="text-align: right" colspan="2">Acciones</th>
+              <th class="col-md-1 text-center" colspan="2">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
-              <td>{{ detalle.operador.name }}</td>
+              <td class="text-center">{{ detalle.operador.name }}</td>
               <td>
                 <select v-model="detalle.ayudante_sn" class="form-control">
                   <option value="1">Operador</option>
@@ -136,9 +149,17 @@
               </td>
               <td>
                 <input 
-                  type="text" 
+                  type="text"
                   v-model="detalle.parte"
-                  class="form-control"
+                  class="form-control text-center"
+                />
+              </td>
+              <td :class="{ 'hidden': !detalles.some(detalle => detalle.contratista) }">
+                <input 
+                  type="text" 
+                  v-model="detalle.metodo_ensayo.metodo"
+                  class="form-control text-center"
+                  :disabled="!detalle.contratista"
                 />
               </td>
               <td class="text-center">
@@ -150,13 +171,11 @@
                   <input type="checkbox" v-model="detalle.hora_extra_sn">
                 </label>
               </td>
-              <td style="width: 10px;margin-right: 10px">
+              <td class="col-md-1 text-center" style="width: 10px;margin-right: 10px">
                 <i :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'" 
                   @click="abrirObservacionModal(index)"
-                  style="cursor: pointer;"></i>
-              </td>
-              <td>
-                <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
+                  style="cursor: pointer;width: 10px;margin-right: 10px"></i>
+                <i style="cursor: pointer;width: 10px;margin-right: 10px" class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
               </td>
             </tr>
           </tbody>
@@ -228,7 +247,11 @@ export default {
     fechas_por_frente: {
       type: Object,
       required: true
-    }
+    },
+    metodo_ensayos:{
+      type: Array,
+      required: true
+    },
   },
   data() {
     return {
@@ -246,6 +269,7 @@ export default {
       hora_extra_sn: false,
       sdf_sn:false,
       horas_calculadas:'',
+      metodoEnsayo_selected: '',
       feriados: [],
     };
   },
@@ -528,7 +552,8 @@ export default {
       parte: this.parte_selected,
       ayudante_sn: this.operador_selected.habilitado_arn_sn,
       hora_extra_sn: this.hora_extra_sn ? 1 : 0, // Convertir true/false a 1/0
-      s_d_f_sn: this.sdf_sn ? 1 : 0, // Convertir true/false a 1/0
+      s_d_f_sn: this.sdf_sn ? 1 : 0,
+      metodo_ensayo: this.metodoEnsayo_selected,
       observacion : this.observaciones || '',
     };
 
@@ -538,6 +563,7 @@ export default {
     this.entrada_selected = moment('08:00', 'HH:mm').toDate();
     this.salida_selected = moment('16:00', 'HH:mm').toDate();
     this.contratista_selected = '';
+    this.metodoEnsayo_selected = '',
     this.parte_selected = '';
     this.observaciones = '';
 
@@ -769,7 +795,9 @@ async obtenerFeriados() {
 .modal-content {
   border-radius: 0.5rem;
 }
-
+.hidden {
+  display: none;
+}
 .modal-body {
   padding: 1rem;
 }

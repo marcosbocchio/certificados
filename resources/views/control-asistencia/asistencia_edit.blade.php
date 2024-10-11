@@ -8,6 +8,7 @@
    :frentes_opciones="{{$frente_sn}}"
    :operarios_opciones="{{$operarios}}"
    :contratistas_opciones="{{$contratistas}}"
+   :metodo_ensayos="{{ json_encode($metodoEnsayos) }}"
    ></asistencia-edit>
 </div>
 @endsection

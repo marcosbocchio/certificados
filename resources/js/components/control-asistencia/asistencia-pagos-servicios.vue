@@ -79,7 +79,7 @@
                         <tr v-for="detalle in operador.detalles" :key="detalle.fecha">
                             <td class="text-center">{{ detalle.fecha }}</td>
                             <td class="text-center">{{ detalle.ayudante_sn }}</td>
-                            <td class="text-center">-</td>
+                            <td class="text-center">{{ detalle.metodo_ensayo.metodo  ||'-'}}</td>
                             <td class="text-center">{{ detalle.contratista.nombre_fantasia ||'-' }} </td>
                             <td class="text-center">{{ detalle.parte || '-' }}</td>
                             <td class="text-center">
@@ -205,7 +205,7 @@
               if (operadorId !== null) { // Asegúrate de que el operadorId no sea nulo
                 if (!result[operadorId]) {
                   result[operadorId] = {
-                    operador: detalle.operador, 
+                    operador: detalle.operador,
                     detalles: [],
                     selectAll: false,
                     collapsed: false // Inicializar como colapsado
@@ -215,6 +215,7 @@
                   fecha: item.fecha,
                   ayudante_sn: detalle.ayudante_sn === 0 ? 'Ayudante' : 'Operador',
                   id: detalle.asistencia_horas_id,
+                  metodo_ensayo:detalle.metodo_ensayo || '-',
                   entrada: detalle.entrada || '-',  // Usar '-' si entrada es null
                   salida: detalle.salida || '-',   // Usar '-' si salida es null
                   contratista: detalle.contratista || '-', // Usar '-' si no hay contratista

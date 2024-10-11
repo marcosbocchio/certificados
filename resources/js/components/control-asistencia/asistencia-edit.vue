@@ -66,7 +66,18 @@
             <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
           </div>
         </div>
-
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="metodoEnsayos">Técnica</label>
+            <v-select v-model="metodoEnsayo_selected" :options="metodo_ensayos" label="metodo">
+              <!-- Custom slot para mostrar metodo y descripcion -->
+              <template slot="option" slot-scope="option">
+                <span class="upSelect">{{ option.metodo }}</span> <br>
+                <span class="downSelect">{{ option.descripcion }}</span>
+              </template>
+            </v-select>
+          </div>
+        </div>
         <!-- Hora Extra Checkbox -->
         <div class="col-md-3">
           <div class="form-group" style="margin-top: 30px;">
@@ -98,12 +109,13 @@
               <th class="col-md-1 text-center">Salida</th>
               <th class="col-md-2 text-center">cliente</th>
               <th class="col-md-2 text-center">Parte</th>
+              <th class="col-md-1 text-center" v-if="detalles.some(detalle => detalle.contratista)">Técnica</th>
               <th class="col-md-2 text-center">
                 <!-- Mostrar el texto y columna de acuerdo a los estados -->
                 <span v-if="mostrarSDFCheckboxCol">Sab. Dom. Fer.</span>
                 <span v-else-if="mostrarHoraExtraCol">Horas Extras</span>
               </th>
-              <th style="text-align: right" colspan="2">Acciones</th>
+              <th class="col-md-1 text-center" colspan="2">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -136,6 +148,22 @@
                   class="form-control"
                 />
               </td>
+              <td :class="{ 'hidden': !detalles.some(detalle => detalle.contratista) }">
+                <input 
+                  type="text" 
+                  v-if="detalle.metodo_ensayo" 
+                  v-model="detalle.metodo_ensayo.metodo"
+                  class="form-control text-center"
+                  disabled
+                />
+                <input 
+                  type="text" 
+                  v-else  
+                  class="form-control text-center"
+                  disabled
+                  placeholder="-"
+                />
+              </td>
               <td class="text-center">
                 <!-- Mostrar solo una opción dependiendo del estado -->
                 <label v-if="mostrarSDFCheckboxCol">
@@ -145,13 +173,11 @@
                   <input type="checkbox" v-model="detalle.hora_extra_sn">
                 </label>
               </td>
-              <td style="width: 10px;margin-right: 10px">
-                <i :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'" 
+              <td class="col-md-1 text-center">
+                <i  :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'" 
                   @click="abrirObservacionModal(index)"
-                  style="cursor: pointer;"></i>
-              </td>
-              <td>
-                <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
+                  style="cursor: pointer;width: 10px;margin-right: 10px"></i>
+                <i style="cursor: pointer;width: 10px;margin-right: 10px" class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
               </td>
             </tr>
           </tbody>
@@ -223,7 +249,11 @@ export default {
     contratistas_opciones: {
       type: Array,
       required: true
-    }
+    },
+    metodo_ensayos:{
+      type: Array,
+      required: true
+    },
   },
   mounted() {
     this.cargarDatos();
@@ -246,6 +276,7 @@ export default {
       hora_extra_sn: false,
       sdf_sn:false,
       horas_calculadas:'',
+      metodoEnsayo_selected: '',
       feriados: [],
     };
   },
@@ -583,6 +614,7 @@ async guardarObservacion() {
       hora_extra_sn: this.hora_extra_sn ? 1 : 0, // Convertir true/false a 1/0
       s_d_f_sn: this.sdf_sn ? 1 : 0, // Convertir true/false a 1/0
       observacion : this.observaciones || '',
+      metodo_ensayo: this.metodoEnsayo_selected,
     };
 
     // Agregar nuevoDetalle a la lista de detalles
@@ -592,6 +624,7 @@ async guardarObservacion() {
     this.salida_selected = moment('16:00', 'HH:mm').toDate();
     this.contratista_selected = '';
     this.parte_selected = '';
+    this.metodoEnsayo_selected = '',
     this.observaciones = '';
 
   },
@@ -606,6 +639,7 @@ async guardarObservacion() {
         }));
         this.fecha = response.data.fecha;
         this.frente_selected = response.data.frente;
+        console.log(this.detalles);
         this.obtenerFeriados();
       })
       .catch(error => {
@@ -739,6 +773,9 @@ async obtenerFeriados() {
 .v-select.disabled, .date-picker.disabled {
   background-color: #6c757d; /* Gris claro, ajusta según tu tema */
   cursor: not-allowed;
+}
+.hidden {
+  display: none;
 }
 /* Agrega tus propios estilos para mantener la estética de la página */
 </style>

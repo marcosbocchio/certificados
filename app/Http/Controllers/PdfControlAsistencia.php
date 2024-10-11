@@ -328,8 +328,6 @@ public function contarDiasHabil($diasDelMes)
                 'fecha' => $fechaAsistencia->toDateString(),
                 'entrada' => $asistencia['entrada'],
                 'salida' => $asistencia['salida'],
-                'pago_e_sdf' => $asistencia['pago_e_sdf'],
-                'pago_servicio_extra' => $asistencia['pago_servicio_extra'],
                 'contratista_id' => $asistencia['contratista_id'],
                 'horas_trabajadas' => $horasTrabajadas,
                 'hora_extras' => $horasExtras,
@@ -339,6 +337,8 @@ public function contarDiasHabil($diasDelMes)
                 'hora_extra_sn' =>$asistencia['hora_extra_sn'],
                 's_d_f_sn' => $asistencia['s_d_f_sn'],
                 'ayudante_sn' => $asistencia['ayudante_sn'],
+                'pago_e_sdf' =>$asistencia['pago_e_sdf'],
+                'pago_servicio_extra' => $asistencia['pago_servicio_extra'],
                 'no_pagar' => $asistencia['no_pagar'],
             ];
         }

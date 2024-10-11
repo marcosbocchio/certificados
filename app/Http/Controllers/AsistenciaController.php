@@ -9,6 +9,7 @@ use App\AsistenciaDetalle;
 use App\Frentes;
 use App\FrenteOperador;
 use App\User;
+use App\MetodoEnsayos;
 use App\Clientes;
 use App\Contratistas;
 use App\OtOperarios;
@@ -58,30 +59,46 @@ class AsistenciaController extends Controller
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
         $header_descripcion = "Carga";
-    
+
+        // Obtener frentes asociados al usuario
         $user_frente = FrenteOperador::where('user_id', $user->id)->pluck('frente_id');
 
+        // Obtener frentes con control de horas extras
         $frente_sn = Frentes::whereIn('id', $user_frente)
             ->where('controla_hs_extras_sn', 1)
             ->get();
 
+        // Obtener todos los contratistas
         $contratistas = Clientes::all();
-    
-        // Obtener los user_id únicos de la tabla ot_operarios
+
+        // Obtener todos los operarios habilitados
         $operarios = User::whereNull('cliente_id')
                 ->where('habilitado_sn', 1)
                 ->orderBy('name', 'asc')
                 ->get();
-    
-        // Obtener las fechas existentes de asistencia_horas agrupadas por frente_id
+
+        // Obtener las fechas de asistencia agrupadas por frente_id
         $fechasPorFrente = AsistenciaHora::select('frente_id', 'fecha')
             ->get()
             ->groupBy('frente_id')
             ->map(function ($group) {
                 return $group->pluck('fecha')->toArray();
             });
-    
-        return view('control-asistencia.asistencia-nuevo', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'fechasPorFrente'));
+
+        // Obtener todos los datos de la tabla MetodoEnsayos
+        $metodoEnsayos = MetodoEnsayos::all();
+
+        // Retornar los datos a la vista, incluyendo MetodoEnsayos
+        return view('control-asistencia.asistencia-nuevo', compact(
+            'user', 
+            'header_titulo', 
+            'header_descripcion', 
+            'frente_sn', 
+            'operarios', 
+            'contratistas', 
+            'fechasPorFrente', 
+            'metodoEnsayos' // Incluimos MetodoEnsayos en la vista
+        ));
     }
 
     public function copia($id)
@@ -119,12 +136,14 @@ class AsistenciaController extends Controller
             ->where('controla_hs_extras_sn', 1)
             ->get();
             $contratistas = Clientes::all();
+        // Obtener todos los datos de la tabla MetodoEnsayos
+        $metodoEnsayos = MetodoEnsayos::all();
         $operarios = User::whereNull('cliente_id')
                 ->where('habilitado_sn', 1)
                 ->orderBy('name', 'asc')
                 ->get();
 
-        return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id'));
+        return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id','metodoEnsayos'));
     }
 
     public function pagos()
@@ -151,7 +170,7 @@ class AsistenciaController extends Controller
         \Log::info('Datos recibidos:', $request->all());
     
         // Filtrar asistencia por frente_id
-        $query = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista'])
+        $query = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista','detalles.metodoEnsayo'])
             ->where('frente_id', $request->frente_id);
     
         // Si se proporciona una fecha, filtrar por fecha también
@@ -202,6 +221,9 @@ class AsistenciaController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+
+
 
     public function controlarUser($id_user, $fecha)
     {
@@ -258,7 +280,7 @@ class AsistenciaController extends Controller
     public function getAsistencia($id)
     {
 
-        $asistencia = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista'])->findOrFail($id);
+        $asistencia = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista','detalles.metodoEnsayo'])->findOrFail($id);
 
         return response()->json($asistencia);
     }
@@ -282,6 +304,7 @@ class AsistenciaController extends Controller
             $asistenciaDetalle->parte = $detalle['parte'];
             $asistenciaDetalle->observaciones = $detalle['observaciones'] ?? null;
             $asistenciaDetalle->hora_extra_sn = $detalle['hora_extra_sn'];
+            $asistenciaDetalle->tecnica_id = $detalle['metodo_ensayo']['id'];
             $asistenciaDetalle->s_d_f_sn = $detalle['s_d_f_sn'];
             $asistenciaDetalle->save();
         }
@@ -308,6 +331,7 @@ class AsistenciaController extends Controller
                 'parte' => $detalle['parte'],
                 'observaciones' => $detalle['observaciones'] ?? null,
                 'hora_extra_sn' => $detalle['hora_extra_sn'],
+                'tecnica_id' =>$detalle['metodo_ensayo']['id'],
                 's_d_f_sn' => $detalle['s_d_f_sn'],
             ]);
             $nuevoDetalle->save();
@@ -341,6 +365,7 @@ class AsistenciaController extends Controller
                 'parte' => $request->parte,
                 'observaciones' => $request->observaciones ?? null,
                 'hora_extra_sn' => $request->hora_extra_sn,
+                'tecnica_id' =>$detalle->metodo_ensayo,
                 's_d_f_sn' => $request->s_d_f_sn,
             ]);
 

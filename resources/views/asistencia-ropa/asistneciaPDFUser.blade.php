@@ -191,7 +191,7 @@
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
                             <td>
-                                @if (!is_null($asistencia['no_pagar']))
+                                @if ($asistencia['no_pagar'] == 1)
                                     Cancelado
                                 @else
                                     {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}
@@ -219,7 +219,7 @@
                             </td>
                             <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
                             <td>
-                                @if (!is_null($asistencia['no_pagar']))
+                            @if ($asistencia['no_pagar'] == 1)
                                     Cancelado
                                 @else
                                     {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}
