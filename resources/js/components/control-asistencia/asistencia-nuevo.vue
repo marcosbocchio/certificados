@@ -155,12 +155,18 @@
                 />
               </td>
               <td :class="{ 'hidden': !detalles.some(detalle => detalle.contratista) }">
-                <input 
-                  type="text" 
-                  v-model="detalle.metodo_ensayo.metodo"
-                  class="form-control text-center"
-                  disabled
-                />
+                <v-select
+                  v-model="detalle.metodo_ensayo"
+                  :options="metodo_ensayos"
+                  label="metodo"
+                  :reduce="option => option"
+                >
+                  <!-- Template para customizar la opción en el dropdown -->
+                  <template #option="option">
+                    <span class="upSelect">{{ option.metodo }}</span><br>
+                    <span class="downSelect">{{ option.descripcion }}</span>
+                  </template>
+                </v-select>
               </td>
               <td class="text-center">
                 <!-- Mostrar solo una opción dependiendo del estado -->

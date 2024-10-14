@@ -72,7 +72,7 @@
                         <th class="text-center col-md-1">Salida</th>
                         <th class="text-center col-md-2">Hora Extra</th>
                         <th class="text-center col-md-2">SDF</th>
-                        <th class="text-center col-md-1"></th>
+                        <th class="text-center col-md-1">Pagar</th>
                         <td class="text-center col-md-1"><b>No Pagar</b></td>
                     </tr>
                 </thead>

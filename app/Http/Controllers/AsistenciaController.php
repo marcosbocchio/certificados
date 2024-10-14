@@ -151,7 +151,8 @@ class AsistenciaController extends Controller
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
         $header_descripcion = "Pagos Horas Extras | S/D/F";
-        $frentes = Frentes::all(); // Obtener todos los frentes
+        $frentes = Frentes::where('controla_hs_extras_sn', 1)->get();
+        log::info($frentes);
         
         return view('control-asistencia.asistencia-pagos', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
     }
@@ -160,7 +161,7 @@ class AsistenciaController extends Controller
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
         $header_descripcion = "Pagos Servicios";
-        $frentes = Frentes::all(); // Obtener todos los frentes
+        $frentes = Frentes::where('controla_hs_extras_sn', 1)->get(); 
         
         return view('control-asistencia.asistencia-pagos-servicios', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
     }

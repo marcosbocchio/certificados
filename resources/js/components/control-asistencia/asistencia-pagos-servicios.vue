@@ -68,10 +68,10 @@
                         <tr>
                             <th class="text-center col-md-2">Fecha</th>
                             <th class="text-center col-md-2">Responsabilidad</th>
-                            <th class="text-center col-md-2">Tecnica</th>
-                            <th class="text-center col-md-2">Contratista</th>
+                            <th class="text-center col-md-1">Tecnica</th>
+                            <th class="text-center col-md-3">Cliente</th>
                             <th class="text-center col-md-2">Parte</th>
-                            <th class="text-center col-md-1"></th>
+                            <th class="text-center col-md-1">Pagar</th>
                             <td class="text-center col-md-1"><b>No Pagar</b></td>
                         </tr>
                     </thead>

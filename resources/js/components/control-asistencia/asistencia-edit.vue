@@ -149,19 +149,35 @@
                 />
               </td>
               <td :class="{ 'hidden': !detalles.some(detalle => detalle.contratista) }">
-                <input 
-                  type="text" 
-                  v-if="detalle.metodo_ensayo" 
-                  v-model="detalle.metodo_ensayo.metodo"
-                  class="form-control text-center"
-                  disabled
-                />
-                <input 
-                  type="text" 
-                  v-else  
-                  class="form-control text-center"
-                  disabled
-                />
+                <!-- Si detalle.metodo_ensayo existe, muestra el v-select -->
+                <v-select
+                  v-if="detalle.metodo_ensayo"
+                  v-model="detalle.metodo_ensayo"
+                  :options="metodo_ensayos"
+                  label="metodo"
+                  :reduce="option => option"
+                >
+                  <!-- Template para customizar la opción en el dropdown -->
+                  <template #option="option">
+                    <span class="upSelect">{{ option.metodo }}</span><br>
+                    <span class="downSelect">{{ option.descripcion }}</span>
+                  </template>
+                </v-select>
+
+                <!-- Si detalle.metodo_ensayo no existe, muestra un input vacío -->
+                <v-select
+                v-else
+                  v-model="detalle.metodo_ensayo"
+                  :options="metodo_ensayos"
+                  label="metodo"
+                  :reduce="option => option"
+                >
+                  <!-- Template para customizar la opción en el dropdown -->
+                  <template #option="option">
+                    <span class="upSelect">{{ option.metodo }}</span><br>
+                    <span class="downSelect">{{ option.descripcion }}</span>
+                  </template>
+                </v-select>
               </td>
               <td class="text-center">
                 <!-- Mostrar solo una opción dependiendo del estado -->
