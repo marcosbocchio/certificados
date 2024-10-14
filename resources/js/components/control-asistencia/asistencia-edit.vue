@@ -66,7 +66,7 @@
             <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" v-if="contratista_selected">
           <div class="form-group">
             <label for="metodoEnsayos">Técnica</label>
             <v-select v-model="metodoEnsayo_selected" :options="metodo_ensayos" label="metodo">

@@ -193,7 +193,6 @@
             fecha: this.fecha || null,
           }
         });
-        console.log('a', response.data);
         const asistenciaAgrupada = response.data.reduce((result, item) => {
           item.detalles.forEach(detalle => {
             if (
