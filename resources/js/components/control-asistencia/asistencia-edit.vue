@@ -161,7 +161,6 @@
                   v-else  
                   class="form-control text-center"
                   disabled
-                  placeholder="-"
                 />
               </td>
               <td class="text-center">

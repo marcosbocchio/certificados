@@ -159,7 +159,7 @@
                   type="text" 
                   v-model="detalle.metodo_ensayo.metodo"
                   class="form-control text-center"
-                  :disabled="!detalle.contratista"
+                  disabled
                 />
               </td>
               <td class="text-center">
