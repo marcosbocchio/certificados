@@ -223,6 +223,7 @@
                   selected: false,
                   no_pagar: false,
                 });
+                console.log('------', result);
               }
             }
           });

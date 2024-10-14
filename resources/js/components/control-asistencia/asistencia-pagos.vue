@@ -244,6 +244,7 @@ export default {
                           selected: false,
                           no_pagar:false,
                         });
+                        console.log('------', result);
                     }
                 });
                 return result;
