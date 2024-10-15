@@ -165,7 +165,7 @@ footer {
         <td>
             @foreach ($procesoInfo->where('proceso_soldadores', 'GMAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                    <p>{{ $dato->soldadorz ?? '' }}<br>{{ $dato->soldadorp ?? '' }}</p>
                 @else
                     <p>&nbsp;</p>
                 @endif
@@ -174,7 +174,7 @@ footer {
         <td>
             @foreach ($procesoInfo->where('proceso_soldadores', 'GTAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                <p style="font-size: 6px;">
+                <p style="font-size: 7px;">
                     {{ $dato->soldadorz ?? '' }}<br>
                     {{ $dato->soldadorp ?? '' }}
                 </p>
@@ -186,7 +186,7 @@ footer {
         <td>
             @foreach ($procesoInfo->where('proceso_soldadores', 'SAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                    <p>{{ $dato->soldadorz ?? '' }}<br>{{ $dato->soldadorp ?? '' }}</p>
                 @else
                     <p>&nbsp;</p>
                 @endif
@@ -195,7 +195,7 @@ footer {
         <td>
             @foreach ($procesoInfo->where('proceso_soldadores', 'SMAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                    <p>{{ $dato->soldadorz ?? '' }}<br>{{ $dato->soldadorp ?? '' }}</p>
                 @else
                     <p>&nbsp;</p>
                 @endif
@@ -204,7 +204,7 @@ footer {
         <td id="resaltar-borde">
             @foreach ($procesoInfo->where('proceso_soldadores', 'FCAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                    <p>{{ $dato->soldadorz ?? '' }}<br>{{ $dato->soldadorp ?? '' }}</p>
                 @else
                     <p>&nbsp;</p>
                 @endif
