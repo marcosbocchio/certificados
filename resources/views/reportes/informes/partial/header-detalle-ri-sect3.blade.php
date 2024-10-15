@@ -48,7 +48,7 @@
                 @endif
             </td>
             <td>
-                @if($contratista)
+                @if($contratista && $contratista->nombre !== 'ENOD')
                     <span>{{ $contratista->nombre }}</span>
                 @endif
             </td>
