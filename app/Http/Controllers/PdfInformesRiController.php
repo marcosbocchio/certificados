@@ -52,6 +52,7 @@ class PdfInformesRiController extends Controller
         $informe_ri = InformesRi::where('informe_id',$informe->id)->firstOrFail();
         $planta = Plantas::where('id',$informe->planta_id)->first();
         $ot = Ots::findOrFail($informe->ot_id);
+
         $cliente = Clientes::findOrFail($ot->cliente_id);
 
         $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
@@ -75,6 +76,7 @@ class PdfInformesRiController extends Controller
         $evaluador = User::find($informe->firma);
         $firma = (new \App\Http\Controllers\UserController)->getFirma($informe->firma,$metodo_ensayo->id);
         $contratista = Contratistas::find($ot->contratista_id);
+
         $observaciones = $informe->observaciones;
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
         $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
@@ -113,6 +115,9 @@ class PdfInformesRiController extends Controller
           if($blade == 'informeRiPlantaAESA'){
             $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicionAESA(?)',array($informe_ri->id));
             $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
+            if ($contratista && $contratista->nombre === 'ENOD') {
+              $ot->logo_contratista_sn = 1;
+            }
           }else{
             $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
             $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
