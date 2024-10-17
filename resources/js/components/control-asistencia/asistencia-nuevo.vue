@@ -405,9 +405,14 @@ export default {
 
     // Comparamos los minutos trabajados con los minutos laborales
     if (minutosTrabajadosTotales > minutosLaboralesTotales) {
-      detalle.hora_extra_sn = true; // Marca el checkbox de horas extras
+      // Verifica si detalle.contratista es null o vacío antes de marcar hora_extra_sn como true
+      if (detalle.contratista === null || detalle.contratista === '') {
+        detalle.hora_extra_sn = true; // Marca el checkbox de horas extras si no hay contratista
+      } else {
+        detalle.hora_extra_sn = false; // Desmarca el checkbox si hay un contratista
+      }
     } else {
-      detalle.hora_extra_sn = false; // Desmarca el checkbox
+      detalle.hora_extra_sn = false; // Desmarca el checkbox si no hay horas extra
     }
 
   } else {
