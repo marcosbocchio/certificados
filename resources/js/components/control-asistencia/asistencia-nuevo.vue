@@ -171,10 +171,12 @@
               <td class="text-center">
                 <!-- Mostrar solo una opción dependiendo del estado -->
                 <label v-if="mostrarSDFCheckboxCol">
-                  <input type="checkbox" v-model="detalle.s_d_f_sn">
+                  <input type="checkbox" v-model="detalle.s_d_f_sn" :disabled="detalle.contratista != null">
                 </label>
                 <label v-else-if="mostrarHoraExtraCol">
-                  <input type="checkbox" v-model="detalle.hora_extra_sn">
+                  <label>
+                    <input type="checkbox" v-model="detalle.hora_extra_sn" :disabled="detalle.contratista != null">
+                </label>
                 </label>
               </td>
               <td class="col-md-1 text-center" style="width: 10px;margin-right: 10px">
@@ -269,7 +271,7 @@ export default {
       operador_selected: '',
       entrada_selected: moment('08:00', 'HH:mm').toDate(),
       salida_selected: moment('16:00', 'HH:mm').toDate(),
-      contratista_selected: '',
+      contratista_selected: null,
       parte_selected: '',
       isLoading: false,
       hora_extra_sn: false,
@@ -281,26 +283,32 @@ export default {
   },
   computed: {
     mostrarHoraExtra() {
-        const fechaSeleccionada = new Date(this.fecha);
-        const diaSemana = fechaSeleccionada.getDay();
+    const fechaSeleccionada = new Date(this.fecha);
+    const diaSemana = fechaSeleccionada.getDay();
 
-        // Verificamos si el checkbox SDF debería mostrarse
-        if (this.mostrarSDFCheckboxCol) {
-            return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
-        }
+    // Verificamos si el checkbox SDF debería mostrarse
+    if (this.mostrarSDFCheckboxCol) {
+        return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
+    }
 
-        // Verificamos si es día de semana (Lunes a Viernes, es decir, 1 a 5)
-        const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
+    // Verificamos si es día de semana (Lunes a Viernes, es decir, 1 a 5)
+    const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
 
-        // Si las horas calculadas son mayores que las horas diarias laborables y es día de semana
-        if (this.horas_calculadas > this.frente_selected.horas_diarias_laborables && esDiaDeSemana) {
-            this.hora_extra_sn = true; // Marca el checkbox como true
-            return true; // Mostrar el checkbox de hora extra
-        } else {
-            this.hora_extra_sn = false;
-            return false; // No mostrar el checkbox de hora extra
-        }
-    },
+    // Verificamos si un contratista está seleccionado
+    if (this.contratista_selected != null) {
+        this.hora_extra_sn = false; // Desactiva el checkbox de hora extra
+        return false; // No mostrar el checkbox de hora extra
+    }
+
+    // Si las horas calculadas son mayores que las horas diarias laborables y es día de semana
+    if (this.horas_calculadas > this.frente_selected.horas_diarias_laborables && esDiaDeSemana) {
+        this.hora_extra_sn = true; // Marca el checkbox como true
+        return true; // Mostrar el checkbox de hora extra
+    } else {
+        this.hora_extra_sn = false;
+        return false; // No mostrar el checkbox de hora extra
+    }
+},
     
     mostrarHoraExtraCol() {
         const fechaSeleccionada = new Date(this.fecha);
@@ -321,19 +329,25 @@ export default {
     },
     
     mostrarSDFCheckbox() {
-        const fechaSeleccionada = new Date(this.fecha);
-        const diaSemana = fechaSeleccionada.getDay();
+    const fechaSeleccionada = new Date(this.fecha);
+    const diaSemana = fechaSeleccionada.getDay();
+    
+    const esSabadoODomingo = diaSemana === 5 || diaSemana === 6;
 
-        const esSabadoODomingo = diaSemana === 5 || diaSemana === 6;
 
-        if (esSabadoODomingo || this.esFeriado()) {
-            this.sdf_sn = true;
-            return true;
-        } else {
-            this.sdf_sn = false;
-            return false;
-        }
-    },
+    if (this.contratista_selected != null) {
+        this.sdf_sn = false; 
+        return false; 
+    }
+
+    if (esSabadoODomingo || this.esFeriado()) {
+        this.sdf_sn = true;
+        return true;
+    } else {
+        this.sdf_sn = false;
+        return false;
+    }
+},
 
     mostrarSDFCheckboxCol() {
         const fechaSeleccionada = new Date(this.fecha);
@@ -568,7 +582,7 @@ export default {
     this.operador_selected = '';
     this.entrada_selected = moment('08:00', 'HH:mm').toDate();
     this.salida_selected = moment('16:00', 'HH:mm').toDate();
-    this.contratista_selected = '';
+    this.contratista_selected = null;
     this.metodoEnsayo_selected = '',
     this.parte_selected = '';
     this.observaciones = '';

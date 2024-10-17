@@ -174,7 +174,7 @@ footer {
         <td>
             @foreach ($procesoInfo->where('proceso_soldadores', 'GTAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                <p style="font-size: 7px;">
+                <p style="font-size: 6.5px;">
                     {{ $dato->soldadorz ?? '' }}<br>
                     {{ $dato->soldadorp ?? '' }}
                 </p>
