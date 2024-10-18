@@ -39,11 +39,11 @@
               </div>
               <div class="form-group col-md-3">
                 <label>Planta *</label>
-                <v-select v-model="detalle.planta" :options="opcionesPlanta"></v-select>
+                <v-select v-model="detalle.planta" :options="opcionesPlanta" multiple :max="2"></v-select>
               </div>
               <div class="form-group col-md-3">
                 <label for="equipo_linea">Equipo/Linea *</label>
-                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="18">
+                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="60">
               </div>
 
               <div class="clearfix"></div>
@@ -65,8 +65,8 @@
                 </v-select>
               </div>
               <div class="form-group col-md-3">
-                <label>inspector *</label>
-                <v-select v-model="detalle.inspector_secl" :options="inspectores_op" label="name"></v-select>
+                <label>Inspector *</label>
+                <v-select v-model="detalle.inspector_secl" :options="inspectores_op" label="name" multiple :max="2"></v-select>
               </div>
               <div class="clearfix"></div>
               <div class="form-group col-md-3 boton-centrado">
@@ -95,12 +95,18 @@
                     <tr v-for="(detalle, index) in detalles" :key="index">
                       <td>{{ detalle.tecnica }}</td>
                       <td>{{ detalle.cantidad }}</td>
-                      <td>{{ detalle.planta ? detalle.planta.label : '' }}</td>
+                      <td>
+                        {{ detalle.planta[0]?.value }}{{ detalle.planta[1] ? ' / ' + detalle.planta[1].value : '' }}
+                      </td>
                       <td>{{ detalle.equipo_linea }}</td>
                       <td>{{ detalle.horario }}</td>
                       <td>{{ detalle.n_informe }}</td>
-                      <td>{{ obtenerLabelOperador(detalle.operadores[0]) }} / {{ obtenerLabelOperador(detalle.operadores[1]) }}</td>
-                      <td>{{ detalle.inspector_secl ? detalle.inspector_secl.name : '-' }}</td>
+                      <td>
+                        {{ detalle.operadores[0]?.label }}{{ detalle.operadores[1] ? ' / ' + detalle.operadores[1].label : '' }}
+                      </td>
+                      <td>
+                        {{ detalle.inspector_secl[0]?.name }}{{ detalle.inspector_secl[1] ? ' / ' + detalle.inspector_secl[1].name : '' }}
+                      </td>
                       <td>
                         <a @click="quitarDetalle(index)"><app-icon img="minus-circle" color="black"></app-icon></a>
                       </td>
@@ -251,11 +257,11 @@ export default {
       detalle: {
         tecnica: '',
         cantidad: 0,
-        planta: '',
+        planta: [],
         equipo_linea: '',
         horario: '',
         n_informe: '',
-        inspector_secl:'',
+        inspector_secl:[],
         operadores: []
       },
       opcionesTecnica: ['CR', 'ADM', 'LP', 'PM', 'PMI', 'RG', 'US', 'US-AT', 'US-N2', 'US-PHA', 'DU', 'RM', 'TT'],
@@ -314,17 +320,18 @@ export default {
     
     const operador1 = this.obtenerNombreOperador(operador1Id);
     const operador2 = this.obtenerNombreOperador(operador2Id);
-    const inspector = this.obtenerNombreInspector(detalle.inspector_id);
+    const inspector1 = this.obtenerNombreInspector(detalle.inspector_id_1);
+    const inspector2 = this.obtenerNombreInspector(detalle.inspector_id_2);
 
   // Crear un nuevo objeto para el detalle con los nombres actualizados
   const nuevoDetalle = {
     tecnica: detalle.tecnica,
     cantidad: detalle.cantidad,
-    planta: { label: detalle.planta },
+    planta: [{ value: detalle.planta_1 },{ value: detalle.planta_2 }],
     equipo_linea: detalle.equipo,
     horario: detalle.horario,
     n_informe: detalle.informe_nro,
-    inspector_secl: { name: inspector.name, id:inspector.id },
+    inspector_secl: [inspector1,inspector2],
     operadores: [operador1, operador2]
   };
 
@@ -351,27 +358,46 @@ export default {
       }
     },
     validarDetalle() {
+  // Validación para la técnica
   if (!this.detalle.tecnica) {
     this.mostrarToast('Por favor, completa el campo "Técnica".', 'error');
     return false;
   }
+
+  // Validación para la cantidad
   if (this.detalle.cantidad <= 0) {
     this.mostrarToast('La cantidad debe ser mayor que cero.', 'error');
     return false;
   }
-  if (!this.detalle.planta) {
-    this.mostrarToast('Por favor, selecciona una planta.', 'error');
+
+  // Validación para las plantas
+  if (!this.detalle.planta || this.detalle.planta.length === 0) {
+    this.mostrarToast('Por favor, selecciona al menos una planta.', 'error');
+    return false;
+  } else if (this.detalle.planta.length > 2) {
+    this.mostrarToast('No puedes seleccionar más de dos plantas.', 'error');
     return false;
   }
-  if (this.detalle.operadores.length === 0) {
-    this.mostrarToast('Por favor, selecciona al menos un operador.', 'error');
+
+  // Validación para los inspectores
+  if (!this.detalle.inspector_secl || this.detalle.inspector_secl.length === 0) {
+    this.mostrarToast('Por favor, selecciona al menos un inspector.', 'error');
+    return false;
+  } else if (this.detalle.inspector_secl.length > 2) {
+    this.mostrarToast('No puedes seleccionar más de dos inspectores.', 'error');
     return false;
   }
-  if (this.detalle.operadores.length > 2) {
+
+  // Validación para los operadores
+  if (!this.detalle.operadores || this.detalle.operadores.length === 0) {
+    this.mostrarToast('Debes seleccionar al menos un operador.', 'error');
+    return false;
+  } else if (this.detalle.operadores.length > 2) {
     this.mostrarToast('No puedes seleccionar más de dos operadores.', 'error');
     return false;
   }
-  return true;
+
+  return true; // Si no hay errores, retornar true
 },
     quitarDetalle(index) {
       this.detalles.splice(index, 1);
