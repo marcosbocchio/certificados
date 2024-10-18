@@ -363,6 +363,10 @@ export default {
     this.mostrarToast('Por favor, completa el campo "Técnica".', 'error');
     return false;
   }
+  if (!this.detalle.n_informe) {
+    this.mostrarToast('Por favor, completa el campo "N° Informe".', 'error');
+    return false;
+  }
 
   // Validación para la cantidad
   if (this.detalle.cantidad <= 0) {
