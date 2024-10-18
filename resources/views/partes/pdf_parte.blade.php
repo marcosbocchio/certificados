@@ -103,7 +103,7 @@
         </table>
     </header>
     <main>
-        @php $filasPorTabla = 14; @endphp
+        @php $filasPorTabla = 10; @endphp
 
         @for ($i = 0; $i < count($detalles); $i += $filasPorTabla)
             <!-- Inicio de la tabla -->
