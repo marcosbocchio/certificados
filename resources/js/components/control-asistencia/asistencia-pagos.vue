@@ -66,7 +66,7 @@
             <table class="table table-hover table-striped table-condensed table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center col-md-1">frente</th>
+                        <th class="text-center col-md-1">Frente</th>
                         <th class="text-center col-md-2">Fecha</th>
                         <th class="text-center col-md-2">Responsabilidad</th>
                         <th class="text-center col-md-1">Entrada</th>
