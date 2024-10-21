@@ -66,18 +66,20 @@
             <table class="table table-hover table-striped table-condensed table-bordered">
                 <thead>
                     <tr>
+                        <th class="text-center col-md-1">frente</th>
                         <th class="text-center col-md-2">Fecha</th>
                         <th class="text-center col-md-2">Responsabilidad</th>
                         <th class="text-center col-md-1">Entrada</th>
                         <th class="text-center col-md-1">Salida</th>
-                        <th class="text-center col-md-2">Hora Extra</th>
+                        <th class="text-center col-md-1">Hora Extra</th>
                         <th class="text-center col-md-2">SDF</th>
                         <th class="text-center col-md-1">Pagar</th>
                         <td class="text-center col-md-1"><b>No Pagar</b></td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="detalle in operador.detalles" :key="detalle.fecha">
+                    <tr v-for="detalle in operador.detalles" :key="detalle.id">
+                        <td class="text-center">{{ detalle.frente }}</td>
                         <td class="text-center">{{ detalle.fecha }}</td>
                         <td class="text-center">{{ detalle.ayudante_sn }}</td>
                         <td class="text-center">{{ detalle.entrada }}</td>
@@ -185,6 +187,7 @@ export default {
     // Obtener feriados al montar el componente con el año actual
     const yearActual = new Date().getFullYear();
     this.obtenerFeriados(yearActual);
+    this.fetchAsistencia();
   },
   watch: {
     // Escuchar los cambios en la selección de fecha y actualizar feriados si cambia el año
@@ -197,65 +200,67 @@ export default {
   },
   methods: {
     async fetchAsistencia() {
-    if (this.frente_selected) {
-        try {
-            this.isLoading = true;
-            const response = await axios.get('/api/asistencia_pagos', {
-                params: {
-                    frente_id: this.frente_selected.id,
-                    fecha: this.fecha || null,
+    try {
+        this.isLoading = true;
+
+        // Preparar los parámetros solo si están disponibles
+        const params = {};
+        if (this.frente_selected) {
+            params.frente_id = this.frente_selected.id;
+        }
+        if (this.fecha) {
+            params.fecha = this.fecha;
+        }
+
+        // Hacer la solicitud
+        const response = await axios.get('/api/asistencia_pagos', { params });
+        console.log(response.data);
+
+        const asistenciaAgrupada = response.data.reduce((result, item) => {
+            item.detalles.forEach(detalle => {
+                if (
+                    (detalle.s_d_f_sn === 1 || detalle.hora_extra_sn === 1) &&
+                    detalle.pago_e_sdf === null &&
+                    detalle.no_pagar === null
+                ) {
+                    const operadorId = detalle.operador.id;
+                    if (!result[operadorId]) {
+                        result[operadorId] = {
+                            operador: detalle.operador,
+                            detalles: [],
+                            selectAll: false,
+                            collapsed: false
+                        };
+                    }
+                    result[operadorId].detalles.push({
+                        fecha: item.fecha,
+                        frente:item.frente.codigo,
+                        ayudante_sn: detalle.ayudante_sn === 0 ? 'Ayudante' : 'Operador',
+                        id: detalle.asistencia_horas_id,
+                        tipo_dia: this.determinarTipoDeDia(item.fecha), // Determinar tipo de día
+                        entrada: detalle.entrada || '-',
+                        salida: detalle.salida || '-',
+                        hora_extra_sn: detalle.hora_extra_sn === 1 ? 'Pagar' : 'No Pagar',
+                        s_d_f_sn: detalle.s_d_f_sn === 1 
+                                            ? (this.determinarTipoDeDia(item.fecha) === 'Sábado' 
+                                                ? 'Pagar Sábado' 
+                                                : (this.determinarTipoDeDia(item.fecha) === 'Domingo o Feriado' 
+                                                    ? 'Pagar D/F' 
+                                                    : 'No Pagar')) 
+                                            : 'No Pagar',
+                        selected: false,
+                        no_pagar: false,
+                    });
                 }
             });
-            console.log(response.data);
+            return result;
+        }, {});
 
-            const asistenciaAgrupada = response.data.reduce((result, item) => {
-                item.detalles.forEach(detalle => {
-                    if (
-                        (detalle.s_d_f_sn === 1 || detalle.hora_extra_sn === 1) &&
-                        detalle.pago_e_sdf === null &&
-                        detalle.no_pagar === null
-                    ) {
-                        const operadorId = detalle.operador.id;
-                        if (!result[operadorId]) {
-                            result[operadorId] = {
-                                operador: detalle.operador,
-                                detalles: [],
-                                selectAll: false,
-                                collapsed: false
-                            };
-                        }
-                        result[operadorId].detalles.push({
-                          fecha: item.fecha,
-                          ayudante_sn: detalle.ayudante_sn === 0 ? 'Ayudante' : 'Operador',
-                          id: detalle.asistencia_horas_id,
-                          tipo_dia: this.determinarTipoDeDia(item.fecha), // Determinar tipo de día
-                          entrada: detalle.entrada || '-',
-                          salida: detalle.salida || '-',
-                          hora_extra_sn: detalle.hora_extra_sn === 1 ? 'Pagar' : 'No Pagar',
-
-                          // Comprobación simplificada para 'Domingo o Feriado'
-                          s_d_f_sn: detalle.s_d_f_sn === 1 
-                                              ? (this.determinarTipoDeDia(item.fecha) === 'Sábado' 
-                                                  ? 'Pagar Sábado' 
-                                                  : (this.determinarTipoDeDia(item.fecha) === 'Domingo o Feriado' 
-                                                      ? 'Pagar D/F' 
-                                                      : 'No Pagar')) 
-                                              : 'No Pagar',
-                          selected: false,
-                          no_pagar:false,
-                        });
-                        console.log('------', result);
-                    }
-                });
-                return result;
-            }, {});
-
-            this.operadores = Object.values(asistenciaAgrupada);
-        } catch (error) {
-            console.error('Error al obtener la asistencia:', error);
-        } finally {
-            this.isLoading = false;
-        }
+        this.operadores = Object.values(asistenciaAgrupada);
+    } catch (error) {
+        console.error('Error al obtener la asistencia:', error);
+    } finally {
+        this.isLoading = false;
     }
 },
 async obtenerFeriados(year) {

@@ -170,11 +170,15 @@ class AsistenciaController extends Controller
     {
         \Log::info('Datos recibidos:', $request->all());
     
-        // Filtrar asistencia por frente_id
-        $query = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista','detalles.metodoEnsayo'])
-            ->where('frente_id', $request->frente_id);
+        // Iniciar la query sin filtros
+        $query = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista','detalles.metodoEnsayo']);
     
-        // Si se proporciona una fecha, filtrar por fecha también
+        // Aplicar filtro de frente_id si está presente
+        if ($request->filled('frente_id')) {
+            $query->where('frente_id', $request->frente_id);
+        }
+    
+        // Aplicar filtro de fecha si está presente
         if ($request->filled('fecha')) {
             $query->where('fecha', 'like', $request->fecha . '%'); // Coincide con mes y año
         }

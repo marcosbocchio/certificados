@@ -66,6 +66,7 @@
                 <table class="table table-hover table-striped table-condensed table-bordered">
                     <thead>
                         <tr>
+                            <th class="text-center col-md-1">frente</th>
                             <th class="text-center col-md-2">Fecha</th>
                             <th class="text-center col-md-2">Responsabilidad</th>
                             <th class="text-center col-md-1">Tecnica</th>
@@ -76,11 +77,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="detalle in operador.detalles" :key="detalle.fecha">
+                        <tr v-for="detalle in operador.detalles" :key="detalle.id">
+                            <td class="text-center">{{ detalle.frente }}</td>
                             <td class="text-center">{{ detalle.fecha }}</td>
                             <td class="text-center">{{ detalle.ayudante_sn }}</td>
                             <td class="text-center">{{ detalle.metodo_ensayo.metodo  ||'-'}}</td>
-                            <td class="text-center">{{ detalle.contratista.nombre_fantasia ||'-' }} </td>
+                            <td class="text-center">{{ detalle.contratista ||'-' }} </td>
                             <td class="text-center">{{ detalle.parte || '-' }}</td>
                             <td class="text-center">
                             <input 
@@ -178,65 +180,72 @@
         fechaSeleccionada: ''  // Fecha seleccionada en el modal
       };
     },
+    mounted() {
+    this.fetchAsistencia();
+  },
     watch: {
       frente_selected: 'fetchAsistencia',
       fecha: 'fetchAsistencia'
     },
     methods: {
       async fetchAsistencia() {
-    if (this.frente_selected) {
-      try {
-        this.isLoading = true;
-        const response = await axios.get('/api/asistencia_pagos', {
-          params: {
-            frente_id: this.frente_selected.id,
-            fecha: this.fecha || null,
-          }
-        });
-        const asistenciaAgrupada = response.data.reduce((result, item) => {
-          item.detalles.forEach(detalle => {
-            if (
-              detalle.contratista_id !== null &&  // Verifica que contratista_id no sea nulo
-              detalle.pago_servicio_extra === null &&  // Verifica que pago_servicio_extra sea nulo
-              detalle.no_pagar === null  // Verifica que no_pagar sea nulo
-            ) {
-              const operadorId = detalle.operador ? detalle.operador.id : null; // Verifica si operador existe
-              if (operadorId !== null) { // Asegúrate de que el operadorId no sea nulo
-                if (!result[operadorId]) {
-                  result[operadorId] = {
-                    operador: detalle.operador,
-                    detalles: [],
-                    selectAll: false,
-                    collapsed: false // Inicializar como colapsado
-                  };
-                }
-                result[operadorId].detalles.push({
-                  fecha: item.fecha,
-                  ayudante_sn: detalle.ayudante_sn === 0 ? 'Ayudante' : 'Operador',
-                  id: detalle.asistencia_horas_id,
-                  metodo_ensayo:detalle.metodo_ensayo || '-',
-                  entrada: detalle.entrada || '-',  // Usar '-' si entrada es null
-                  salida: detalle.salida || '-',   // Usar '-' si salida es null
-                  contratista: detalle.contratista || '-', // Usar '-' si no hay contratista
-                  parte: detalle.parte || '-',  // Usar '-' si parte es null
-                  selected: false,
-                  no_pagar: false,
-                });
-                console.log('------', result);
-              }
-            }
-          });
-          return result;
-        }, {});
-  
-        this.operadores = Object.values(asistenciaAgrupada);
-      } catch (error) {
-        console.error('Error al obtener la asistencia:', error);
-      } finally {
-        this.isLoading = false;
+  try {
+    this.isLoading = true;
+    
+    // Realiza la solicitud al controlador, pasando los filtros disponibles
+    const response = await axios.get('/api/asistencia_pagos', {
+      params: {
+        frente_id: this.frente_selected ? this.frente_selected.id : null,  // Si frente_selected es null, lo pasamos igual
+        fecha: this.fecha || null,  // Si fecha no está definida, pasamos null
       }
-    }
-  },
+    });
+
+    // Procesa la respuesta
+    const asistenciaAgrupada = response.data.reduce((result, item) => {
+      item.detalles.forEach(detalle => {
+        if (
+          detalle.contratista_id !== null &&  
+          detalle.pago_servicio_extra === null &&  
+          detalle.no_pagar === null
+        ) {
+          const operadorId = detalle.operador ? detalle.operador.id : null;
+          if (operadorId !== null) {
+            if (!result[operadorId]) {
+              result[operadorId] = {
+                operador: detalle.operador,
+                detalles: [],
+                selectAll: false,
+                collapsed: false
+              };
+            }
+            result[operadorId].detalles.push({
+              fecha: item.fecha,
+              frente:item.frente.codigo,
+              ayudante_sn: detalle.ayudante_sn === 0 ? 'Ayudante' : 'Operador',
+              id: detalle.asistencia_horas_id,
+              metodo_ensayo: detalle.metodo_ensayo || '-',
+              entrada: detalle.entrada || '-',
+              salida: detalle.salida || '-',
+              contratista: detalle.contratista ? detalle.contratista.nombre : '-',
+              parte: detalle.parte || '-',
+              selected: false,
+              no_pagar: false,
+            });
+          }
+        }
+      });
+      return result;
+    }, {});
+
+    // Convierte el objeto a un array de operadores
+    this.operadores = Object.values(asistenciaAgrupada);
+
+  } catch (error) {
+    console.error('Error al obtener la asistencia:', error);
+  } finally {
+    this.isLoading = false;
+  }
+},
   cerrarPopup() {
       this.mostrarPopup = false; // Cerrar popup sin confirmar
     },
