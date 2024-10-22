@@ -92,16 +92,16 @@
                       <td>{{ detalle.tecnica }}</td>
                       <td>{{ detalle.cantidad }}</td>
                       <td>
-                        {{ detalle.planta[0]?.label }}{{ detalle.planta[1] ? ' / ' + detalle.planta[1].label : '' }}
+                        {{ detalle.planta[0]?.label || '' }}{{ detalle.planta[1]?.label ? ' / ' + detalle.planta[1].label : '' }}
                       </td>
                       <td>{{ detalle.equipo_linea }}</td>
                       <td>{{ detalle.horario }}</td>
                       <td>{{ detalle.n_informe }}</td>
                       <td>
-                        {{ detalle.operadores[0]?.label }}{{ detalle.operadores[1] ? ' / ' + detalle.operadores[1].label : '' }}
+                        {{ detalle.operadores[0]?.label || '' }}{{ detalle.operadores[1]?.label ? ' / ' + detalle.operadores[1].label : '' }}
                       </td>
                       <td>
-                        {{ detalle.inspector_secl[0]?.name }}{{ detalle.inspector_secl[1] ? ' / ' + detalle.inspector_secl[1].name : '' }}
+                        {{ detalle.inspector_secl[0]?.name || '' }}{{ detalle.inspector_secl[1]?.name ? ' / ' + detalle.inspector_secl[1].name : '' }}
                       </td>
                       <td>
                         <a @click="quitarDetalle(index)"><app-icon img="minus-circle" color="black"></app-icon></a>

@@ -327,7 +327,10 @@ export default {
   const nuevoDetalle = {
     tecnica: detalle.tecnica,
     cantidad: detalle.cantidad,
-    planta: [{ value: detalle.planta_1 },{ value: detalle.planta_2 }],
+    planta: [
+  { value: detalle.planta_1 },
+  ...(detalle.planta_2 ? [{ value: detalle.planta_2 }] : [])
+],
     equipo_linea: detalle.equipo,
     horario: detalle.horario,
     n_informe: detalle.informe_nro,
@@ -427,7 +430,7 @@ export default {
       return operadorEncontrado;
     } else {
       // Devolver un mensaje indicando que el operador no se encontró
-      return 'Operador no encontrado';
+      return null;
     }
   },
     obtenerNombreInspector(id) {
@@ -440,7 +443,7 @@ export default {
       return inspectorEncontrado;
     } else {
       // Devolver un mensaje indicando que el operador no se encontró
-      return 'inspector no encontrado';
+      return null;
     }
   },
   storeSection() {
