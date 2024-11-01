@@ -522,6 +522,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/actualizar-epp-stock', 'AsignacionRopaController@actualizarAsignacionStock');
     Route::post('/buscar-asignaciones-epp', 'AsignacionRopaController@buscarAsignacionesEPP');
 
+    Route::post('/documentaciones/generar-zip-doc', 'DocumentacionesController@generarZip');
 
     //reporte-placas
 

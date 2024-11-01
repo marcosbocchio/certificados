@@ -19,6 +19,7 @@ use App\InternoFuenteDocumentaciones;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
+use ZipArchive;
 
 
 class DocumentacionesController extends Controller
@@ -91,6 +92,31 @@ class DocumentacionesController extends Controller
 
         return $documentaciones;
     }
+
+    public function generarZip(Request $request)
+{
+    $registros = $request->input('registros');
+    $zipFileName = 'archivos_seleccionados.zip';
+    $tempFile = tempnam(sys_get_temp_dir(), $zipFileName);
+    $zip = new ZipArchive;
+
+    if ($zip->open($tempFile, ZipArchive::CREATE) === TRUE) {
+        foreach ($registros as $registro) {
+            $tipo = $registro['tipo'];
+            $path = $registro['path'];
+            $fileName = basename($path);
+
+            if (Storage::exists($path)) {
+                $fileContent = Storage::get($path);
+                $zip->addFromString("$tipo/$fileName", $fileContent);
+            }
+        }
+        $zip->close();
+    }
+
+    // Cambiar a BinaryFileResponse para usar deleteFileAfterSend
+    return response()->download($tempFile, $zipFileName)->deleteFileAfterSend(true);
+}
 
     public function callView()
     {
