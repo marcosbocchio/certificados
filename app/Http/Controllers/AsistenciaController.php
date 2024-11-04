@@ -168,7 +168,7 @@ class AsistenciaController extends Controller
 
     public function getAsistenciaPagos(Request $request)
     {
-        \Log::info('Datos recibidos:', $request->all());
+      
     
         // Iniciar la query sin filtros
         $query = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista','detalles.metodoEnsayo']);
@@ -192,7 +192,6 @@ class AsistenciaController extends Controller
                 return strtolower($detalle->operador->nombre); // Asume que el nombre del operador está en 'nombre'
             })->values(); // reindexar el array de detalles
         });
-    
         return response()->json($asistencia);
     }
 

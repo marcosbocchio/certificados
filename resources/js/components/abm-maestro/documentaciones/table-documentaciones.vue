@@ -84,16 +84,20 @@ export default {
       this.selectedRegistros = event.target.checked ? this.registros : [];
     },
     async generateZip() {
-      if (!this.selectedRegistros.length) return;
+    if (!this.selectedRegistros.length) return;
 
-      this.isLoading = true;
-      try {
-        const pathsByType = this.selectedRegistros.map(reg => ({
-          tipo: reg.tipo,
-          path: reg.path,
+    this.isLoading = true;
+    try {
+        // Mapear los registros seleccionados para obtener solo tipo y path
+        const registros = this.selectedRegistros.map(registro => ({
+            tipo: registro.tipo,
+            path: registro.path
         }));
 
-        const response = await axios.post("/documentaciones/generar-zip-doc", { registros: pathsByType }, { responseType: 'blob' });
+        // Enviar los datos al backend para generar el ZIP
+        const response = await axios.post("/documentaciones/generar-zip-doc", { registros }, { responseType: 'blob' });
+        
+        // Crear el archivo ZIP y descargarlo
         const blob = new Blob([response.data], { type: 'application/zip' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -102,12 +106,12 @@ export default {
         document.body.appendChild(link);
         link.click();
         URL.revokeObjectURL(url);
-      } catch (error) {
+    } catch (error) {
         console.error("Error generando el ZIP:", error);
-      } finally {
+    } finally {
         this.isLoading = false;
-      }
     }
+}
   }
 };
 </script>

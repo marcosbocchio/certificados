@@ -82,7 +82,7 @@
                             <td class="text-center">{{ detalle.fecha }}</td>
                             <td class="text-center">{{ detalle.ayudante_sn }}</td>
                             <td class="text-center">{{ detalle.metodo_ensayo.metodo  ||'-'}}</td>
-                            <td class="text-center">{{ detalle.contratista ||'-' }} </td>
+                            <td class="text-center">{{ detalle.contratista}} </td>
                             <td class="text-center">{{ detalle.parte || '-' }}</td>
                             <td class="text-center">
                             <input 
@@ -226,7 +226,7 @@
               metodo_ensayo: detalle.metodo_ensayo || '-',
               entrada: detalle.entrada || '-',
               salida: detalle.salida || '-',
-              contratista: detalle.contratista ? detalle.contratista.nombre : '-',
+              contratista: detalle.contratista ? detalle.contratista.nombre_fantasia : '-',
               parte: detalle.parte || '-',
               selected: false,
               no_pagar: false,
@@ -234,6 +234,7 @@
           }
         }
       });
+      console.log(result);
       return result;
     }, {});
 
