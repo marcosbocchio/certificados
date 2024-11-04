@@ -1,6 +1,9 @@
 <template>
   <div class="box box-custom-enod top-buffer">
     <div class="box-body">
+      <div style="padding: 5px;">
+          <button @click="generateZip" :disabled="!selectedRegistros.length" class="btn btn-enod">Descargar</button>
+      </div>
       <loading :active.sync="isLoading" :loader="'bars'" :color="'red'"></loading>
       <div class="table-responsive">
         <table class="table table-hover table-striped table-condensed">
@@ -47,7 +50,6 @@
         </table>
       </div>
     </div>
-    <button @click="generateZip" :disabled="!selectedRegistros.length" class="btn btn-primary">Descargar ZIP</button>
   </div>
 </template>
 

@@ -95,7 +95,6 @@ class DocumentacionesController extends Controller
     
     public function generarZipDoc(Request $request)
     {
-        // Validación de los registros recibidos en la solicitud
         $request->validate([
             'registros' => 'required|array',
             'registros.*.tipo' => 'required|string',
@@ -103,34 +102,35 @@ class DocumentacionesController extends Controller
         ]);
     
         $zip = new ZipArchive();
-        $zipFileName = 'archivos_seleccionados.zip';
-        $zipFilePath = storage_path('app/public/' . $zipFileName);
+        // Formatear la fecha y hora
+        $timestamp = now()->format('Ymd_His'); // Ejemplo: 20241104_143401
+        $zipFileName = 'archivos_' . $timestamp . '.zip'; // Nombre del archivo con fecha y hora
+        $zipFilePath = public_path($zipFileName);
     
-        // Intento de crear el archivo ZIP
         if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
             return response()->json(['message' => 'No se pudo crear el archivo ZIP'], 500);
         }
     
-        foreach ($request->registros as $registro) {
-            // Construcción de la ruta completa del archivo
-            $filePath = storage_path('app/' . $registro['path']); // Asegúrate de que esta ruta coincide con donde están tus archivos en storage
+        $filesAdded = false;
     
-            // Validación de la existencia del archivo antes de agregarlo
+        foreach ($request->registros as $registro) {
+            $filePath = public_path($registro['path']); 
+    
             if (file_exists($filePath)) {
-                // Añadir el archivo al ZIP en una subcarpeta nombrada por tipo
                 $zip->addFile($filePath, $registro['tipo'] . '/' . basename($filePath));
+                $filesAdded = true; 
             } else {
-                // Log en caso de que un archivo no se encuentre
                 \Log::warning("El archivo {$filePath} no existe y no fue agregado al ZIP.");
             }
         }
     
-        // Cerrar el archivo ZIP después de añadir los archivos
-        if (!$zip->close()) {
-            return response()->json(['message' => 'No se pudo cerrar el archivo ZIP correctamente'], 500);
+        if (!$filesAdded) {
+            $zip->close();
+            return response()->json(['message' => 'No se agregaron archivos al ZIP'], 400);
         }
     
-        // Descargar el archivo ZIP y eliminarlo después de la descarga
+        $zip->close();
+    
         return response()->download($zipFilePath)->deleteFileAfterSend(true);
     }
     
