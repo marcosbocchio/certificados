@@ -23,7 +23,7 @@
             <tr v-for="registro in registros" :key="registro.id">
               <td><input type="checkbox" :value="registro" v-model="selectedRegistros" /></td>
               <td>{{ registro.tipo }}</td>
-              <td>{{ registro }}</td>
+              <td>{{ registro.descripcion }}</td>
               <td v-if="registro.metodo_ensayo.id">{{ registro.metodo_ensayo['metodo'] }}</td>
               <td v-else-if="registro.interno_equipo.length > 0">{{ registro.interno_equipo[0].equipo.metodo_ensayos['metodo'] }}</td>
               <td v-else>&nbsp;</td>
