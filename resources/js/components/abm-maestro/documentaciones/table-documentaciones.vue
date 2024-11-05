@@ -23,7 +23,7 @@
             <tr v-for="registro in registros" :key="registro.id">
               <td><input type="checkbox" :value="registro" v-model="selectedRegistros" /></td>
               <td>{{ registro.tipo }}</td>
-              <td>{{ registro.descripcion }}</td>
+              <td>{{ registro }}</td>
               <td v-if="registro.metodo_ensayo.id">{{ registro.metodo_ensayo['metodo'] }}</td>
               <td v-else-if="registro.interno_equipo.length > 0">{{ registro.interno_equipo[0].equipo.metodo_ensayos['metodo'] }}</td>
               <td v-else>&nbsp;</td>
@@ -90,11 +90,9 @@ export default {
 
     this.isLoading = true;
     try {
+    console.log(this.selectedRegistros);
         // Mapear los registros seleccionados para obtener solo tipo y path
-        const registros = this.selectedRegistros.map(registro => ({
-            tipo: registro.tipo,
-            path: registro.path
-        }));
+        const registros = this.selectedRegistros
 
         // Enviar los datos al backend para generar el ZIP
         const response = await axios.post("/documentaciones/generar-zip-doc", { registros }, { responseType: 'blob' });

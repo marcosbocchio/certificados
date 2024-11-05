@@ -95,17 +95,24 @@ class DocumentacionesController extends Controller
     
     public function generarZipDoc(Request $request)
     {
+        \Log::debug($request);
         $request->validate([
             'registros' => 'required|array',
             'registros.*.tipo' => 'required|string',
             'registros.*.path' => 'required|string',
+            'registros.*.titulo' => 'required|string', // Asegura que 'titulo' esté presente en los registros
         ]);
     
         $zip = new ZipArchive();
         // Formatear la fecha y hora
         $timestamp = now()->format('Ymd_His'); // Ejemplo: 20241104_143401
-        $zipFileName = 'archivos_' . $timestamp . '.zip'; // Nombre del archivo con fecha y hora
-        $zipFilePath = public_path($zipFileName);
+        $zipFileName = 'archivos_' . $timestamp . '.zip';
+        $zipFilePath = public_path('documentos-zip-abm/' . $zipFileName);
+    
+        // Asegurarse de que la carpeta existe
+        if (!is_dir(public_path('documentos-zip-abm'))) {
+            mkdir(public_path('documentos-zip-abm'), 0777, true);
+        }
     
         if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
             return response()->json(['message' => 'No se pudo crear el archivo ZIP'], 500);
@@ -114,14 +121,24 @@ class DocumentacionesController extends Controller
         $filesAdded = false;
     
         foreach ($request->registros as $registro) {
-            $filePath = public_path($registro['path']); 
-    
-            if (file_exists($filePath)) {
-                $zip->addFile($filePath, $registro['tipo'] . '/' . basename($filePath));
-                $filesAdded = true; 
-            } else {
+            $filePath = public_path($registro['path']);
+            if (!file_exists($filePath)) {
                 \Log::warning("El archivo {$filePath} no existe y no fue agregado al ZIP.");
+                continue;
             }
+    
+            // Extraer la extensión del archivo desde el path
+            $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+    
+            // Determinar la carpeta en el ZIP según el tipo y subcarpeta correspondiente
+            $zipFolderPath = $this->getZipFolderPath($registro);
+    
+            // Nombre del archivo en el ZIP con extensión
+            $fileNameInZip = $registro['titulo'] . '.' . $extension;
+    
+            // Agregar el archivo al ZIP con la ruta adecuada y nombre legible
+            $zip->addFile($filePath, $zipFolderPath . '/' . $fileNameInZip);
+            $filesAdded = true;
         }
     
         if (!$filesAdded) {
@@ -133,6 +150,43 @@ class DocumentacionesController extends Controller
     
         return response()->download($zipFilePath)->deleteFileAfterSend(true);
     }
+    
+
+/**
+ * Obtiene la ruta de la carpeta en el ZIP según el tipo y las subcarpetas necesarias.
+ */
+private function getZipFolderPath($registro)
+{
+    switch ($registro['tipo']) {
+        case 'INSTITUCIONAL':
+        case 'OT':
+            return $registro['tipo']; // Solo el tipo como carpeta principal
+        case 'PROCEDIMIENTO GENERAL':
+            return isset($registro['metodo_ensayo']['metodo']) 
+                ? $registro['tipo'] . '/' . $registro['metodo_ensayo']['metodo'] 
+                : $registro['tipo'];
+        case 'USUARIO':
+            return isset($registro['usuario'][0]['name']) 
+                ? $registro['tipo'] . '/' . $registro['usuario'][0]['name'] 
+                : $registro['tipo'];
+        case 'EQUIPO':
+            return isset($registro['equipo']['codigo']) 
+                ? $registro['tipo'] . '/' . $registro['equipo']['codigo'] 
+                : $registro['tipo'];
+        case 'FUENTE':
+            return isset($registro['interno_fuente']['nro_serie']) 
+                ? $registro['tipo'] . '/' . $registro['interno_fuente']['nro_serie'] 
+                : $registro['tipo'];
+        case 'VEHICULO':
+            return isset($registro['vehiculo']['nro_interno']) 
+                ? $registro['tipo'] . '/' . $registro['vehiculo']['nro_interno'] 
+                : $registro['tipo'];
+        default:
+            return $registro['tipo']; // En caso de tipo no especificado, solo el tipo como carpeta
+    }
+}
+
+    
     
 
     public function callView()
