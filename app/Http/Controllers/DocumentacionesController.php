@@ -165,8 +165,8 @@ private function getZipFolderPath($registro)
                 : $registro['tipo'];
 
         case 'EQUIPO':
-            return isset($registro['interno_equipo'][0]['equipo']['codigo']) 
-                ? $registro['tipo'] . '/' . $registro['interno_equipo'][0]['equipo']['codigo'] 
+            return isset($registro['interno_equipo'][0]['nro_interno']) 
+                ? $registro['tipo'] . '/' . $registro['interno_equipo'][0]['nro_interno'] 
                 : $registro['tipo'];
 
         case 'FUENTE':
