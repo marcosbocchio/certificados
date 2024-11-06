@@ -51,6 +51,11 @@ main {
     border-collapse: collapse;   
 }
 
+.alta-baja-col {
+    width: 50px;
+    font-size: 10px;
+}
+
 .bordered-td {
     border-color: #000000;
     border-style: solid;
@@ -118,11 +123,9 @@ text-decoration: underline;
             <th style="font-size: 10px;width: 30px;">FILM</th> 
 
             @for ($x = 1 ; $x <=6 ; $x++)
-                    
-                <th style="font-size: 10px;" >ALTA</th>  
-                <th style="font-size: 10px;" >BAJA</th>   
-
-            @endfor                                       
+                <th class="alta-baja-col" >ALTA</th>  
+                <th class="alta-baja-col" >BAJA</th>   
+            @endfor                                      
 
         </tr>
     </thead>
@@ -159,7 +162,7 @@ text-decoration: underline;
 
         @endforeach
             {{ $cantFilasTotal = count($operadores) }}
-            {{ $filasPage = 41}}
+            {{ $filasPage = 39}}
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
 
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
