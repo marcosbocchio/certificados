@@ -169,13 +169,15 @@ class InformesDzController extends Controller
 
 
       public function saveReferencia($detalle){
+
+        log::debug($detalle);
         if (($detalle['path1']) ||
             ($detalle['path2']) ||
             ($detalle['path3']) ||
             ($detalle['path4'])){
 
               $detalle_dz_referencia                     = new DetallesDzReferencias;
-              $detalle_dz_referencia->descripcion        = $detalle['observaciones'];
+              $detalle_dz_referencia->descripcion = $detalle['observaciones'] ?? null;
               $detalle_dz_referencia->path1              = $detalle['path1'];
               $detalle_dz_referencia->path2              = $detalle['path2'];
               $detalle_dz_referencia->path3              = $detalle['path3'];
@@ -286,7 +288,7 @@ class InformesDzController extends Controller
                                           detalles_dz_referencias.path4 as path4')
                                 ->orderBy('detalles_dz.id','asc')
                                 ->get();
-
+        log::debug($informe_detalles);
         $this->addObjectSoldador($informe_detalles);
         $this->addObjectDiametro($informe_detalles);
         $this->addObjectEspesor($informe_detalles);

@@ -794,6 +794,7 @@ data() {return {
                  toastr.error('El campo material base es obligatorio');
                  return ;
             }
+        
         this.TablaDz.push({
             elemento : this.elemento,
             numero_plano_iso: this.numeroPlanoIsom,
@@ -803,12 +804,13 @@ data() {return {
             material_base_der: this.material_base_der,
             material_base_izq: this.material_base_izq,
             soldadura: this.soldadura,
+            observacion: this.observaciones,
             path1:null,
             path2:null,
             path3:null,
             path4:null
             });
-
+            console.log(this.TablaDz);
     },
     removeDetalle(index) {
 
