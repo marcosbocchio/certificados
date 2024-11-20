@@ -112,60 +112,68 @@ class InformesDzController extends Controller
 
       }
 
-    public function saveDetalle($request,$informeDz){
-        foreach ($request->detalles as $detalle){
-            $referencia_id = $this->saveReferencia($detalle);
-            $diametro = $detalle['diametro'];
-            $espesor = $detalle['espesor'];
-          $soldador = $detalle['soldador'];
-          $detalleDz  = new DetallesDz;
-          $detalleDz->informe_dz_id = $informeDz->id;
-          $detalleDz->elemento = $detalle['elemento'];
-          $detalleDz->numero_plano_iso = $detalle['numero_plano_iso'];
-          $detalleDz->soldador_id = $soldador['soldadores_id'];
-          $detalleDz->material_base_der = $detalle['material_base_der'];
-          $detalleDz->soldadura = $detalle['soldadura'];
-          $detalleDz->material_base_izq = $detalle['material_base_izq'];
-          $detalleDz->detalle_dz_referencia_id = $referencia_id;
+      public function saveDetalle($request, $informeDz)
+      {
 
-          $detalleDz->espesor_especifico = null;
-          $detalleDz->diametro_especifico = null;
-          if (($diametro['diametro'] =='CHAPA') || ($diametro['diametro'] =='VARIOS')){
-
-            $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro'])
-                                                ->first();
-
-            $detalleDz->diametro_espesor_id = $diametro_espesor['id'];
-
-
-          }else{
-
-              if (!isset($diametro['id'])){
-
-                  $detalleDz->diametro_especifico = $diametro['diametro'];
+          foreach ($request->detalles as $detalle) {
+              $referencia_id = $this->saveReferencia($detalle);
+              $diametro = $detalle['diametro'];
+              $espesor = $detalle['espesor'];
+              $soldador = $detalle['soldador'];
+      
+              $detalleDz = new DetallesDz;
+              $detalleDz->informe_dz_id = $informeDz->id;
+              $detalleDz->elemento = $detalle['elemento'];
+              $detalleDz->numero_plano_iso = $detalle['numero_plano_iso'];
+              $detalleDz->soldador_id = $soldador['soldadores_id'];
+              $detalleDz->material_base_der = $detalle['material_base_der'];
+              $detalleDz->soldadura = $detalle['soldadura'];
+              $detalleDz->material_base_izq = $detalle['material_base_izq'];
+              $detalleDz->detalle_dz_referencia_id = $referencia_id;
+      
+              $detalleDz->espesor_especifico = null;
+              $detalleDz->diametro_especifico = null;
+      
+              // Lógica para manejar diámetros específicos o predefinidos
+              if (($diametro['diametro'] == 'CHAPA') || ($diametro['diametro'] == 'VARIOS')) {
+                  $diametro_espesor = DiametrosEspesor::where('diametro', $diametro['diametro'])->first();
+                    log::info($diametro_espesor);
+                  if ($diametro_espesor) {
+                      $detalleDz->diametro_espesor_id = $diametro_espesor['id'];
+                  } else {
+                      $detalleDz->diametro_espesor_id = null; // Por si no se encuentra un registro
+                  }
+      
+                  // Nueva lógica para manejar espesores sin ID
+                  if (!isset($espesor['id'])) {
+                      $detalleDz->espesor_especifico = isset($espesor['espesor']) ? $espesor['espesor'] : $espesor;
+                  }
+              } else {
+                  if (!isset($diametro['id'])) {
+                      $detalleDz->diametro_especifico = $diametro['diametro'];
+                  }
+      
+                  if (!isset($espesor['id'])) {
+                      $detalleDz->espesor_especifico = isset($espesor['espesor']) ? $espesor['espesor'] : $espesor;
+      
+                      $diametro_espesor = DiametrosEspesor::where('diametro', $diametro['diametro'])->first();
+                  } else {
+                      $diametro_espesor = DiametrosEspesor::where('diametro', $diametro['diametro'])
+                                                          ->where('espesor', $espesor['espesor'])
+                                                          ->first();
+                  }
+      
+                  if ($diametro_espesor) {
+                      $detalleDz->diametro_espesor_id = $diametro_espesor['id'];
+                  } else {
+                      $detalleDz->diametro_espesor_id = null; // Manejo en caso de no encontrar coincidencia
+                  }
               }
-
-              if(!isset($espesor['id'])){
-
-                  // Esta linea la pongo por un problema con vue que cuando edito un espesor no me lo convierte en objeto.
-                  $detalleDz->espesor_especifico = isset($espesor['espesor']) ? $espesor['espesor'] : $espesor ;
-
-                  $diametro_espesor = DiametrosEspesor::where('diametro',$diametro['diametro'])
-                                                        ->first();
-              }else {
-                  $diametro_espesor = DiametrosEspesor::where('diametro',$diametro['diametro'])
-                                                      ->where('espesor',$espesor['espesor'])
-                                                      ->first();
-              }
-
-              $detalleDz->diametro_espesor_id = $diametro_espesor['id'];
-
+      
+              $detalleDz->save();
           }
-
-          $detalleDz->save();
-        }
-
       }
+      
 
 
       public function saveReferencia($detalle){

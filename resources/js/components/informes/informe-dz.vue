@@ -366,6 +366,7 @@
                                                 <td>{{ item.numero_plano_iso }}</td>
                                                 <td>{{ item.diametro_especifico ? item.diametro_especifico : item.diametro.diametro }}</td>
                                                 <td>{{ item.espesor_especifico ? item.espesor_especifico : (item.espesor ? item.espesor.espesor : item.diametro.espesor) }}</td>
+
                                                 <td>{{ item.soldador.codigo}}</td>
                                                 <td>{{ item.material_base_izq}}</td>
                                                 <td>{{ item.soldadura}}</td>
