@@ -289,16 +289,23 @@
                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-group" >
-                                <label>Espesor *</label>
-                                <v-select v-model="espesor" label="espesor" :options="espesores" taggable :disabled="isChapa">
-                                    <template slot="option" slot-scope="option">
-                                        <span class="upSelect">{{ option.espesor }} </span> <br>
-                                        <span class="downSelect"> {{ option.cuadrante }} </span>
-                                    </template>
-                                </v-select>
-                            </div>
-                        </div>
+    <div class="form-group">
+        <label>Espesor *</label>
+        <v-select 
+            v-model="espesor" 
+            label="espesor" 
+            :options="espesores" 
+            taggable 
+            :disabled="isChapa"
+            @input="cambioEspesor">
+            <template slot="option" slot-scope="option">
+                <span class="upSelect">{{ option.espesor }} </span> <br>
+                <span class="downSelect"> {{ option.cuadrante }} </span>
+            </template>
+        </v-select>
+    </div>
+</div>
+
                         <div class="clearfix"></div>
                         <div class="col-md-3">
 
@@ -674,6 +681,19 @@ data() {return {
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
             }
 
+        },
+        cambioEspesor() {
+            // Si espesor tiene un id definido, no hacemos nada
+            if (this.espesor && this.espesor.id !== undefined) {
+                return;
+            }
+
+            // Si no tiene id, validamos el valor del campo espesor
+            const match = this.espesor?.espesor?.match(/^[+]?([0-9]+[.])?[0-9]+$/);
+            if (!match) {
+                // Si no es válido, lo restablecemos a 0
+                this.espesor.espesor = 0;
+            }
         },
     async getSoldadores(){
             axios.defaults.baseURL = this.url ;
