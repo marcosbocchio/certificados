@@ -60,16 +60,6 @@
                         <i class="fa fa-pencil"></i>
                       </button>
                     </td>
-                    <td width="10px">
-                      <button 
-                        class="btn btn-default btn-sm" 
-                        @click="copiar(item)" 
-                        title="Copiar"
-                        :disabled="!puedeCopiar(item)"
-                      >
-                        <i class="fa fa-copy"></i>
-                      </button>
-                    </td>
                   </tr>
                 </tbody>
               </table>

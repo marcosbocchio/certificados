@@ -72,7 +72,18 @@
                         <div class="col-md-3">
                             <div class="form-group size-pqr-eps">
                                 <label for="procedimientos_soldadura">EPS / WPS *</label>
-                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>
+                                <v-select 
+                                    v-model="ot_tipo_soldadura" 
+                                    label="eps" 
+                                    :options="ot_obra_tipo_soldaduras" 
+                                    id="procedimientos_soldadura">
+                                    
+                                    <!-- Personalizando la visualización de las opciones -->
+                                    <template #option="option">
+                                        <span class="upSelect">{{ option.eps }}</span> <br>
+                                        <span class="downSelect">{{ option.descripcion }}</span>
+                                    </template>
+                                </v-select>
                             </div>
                         </div>
 
@@ -278,16 +289,23 @@
                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-group" >
-                                <label>Espesor *</label>
-                                <v-select v-model="espesor" label="espesor" :options="espesores" taggable :disabled="isChapa">
-                                    <template slot="option" slot-scope="option">
-                                        <span class="upSelect">{{ option.espesor }} </span> <br>
-                                        <span class="downSelect"> {{ option.cuadrante }} </span>
-                                    </template>
-                                </v-select>
-                            </div>
-                        </div>
+    <div class="form-group">
+        <label>Espesor *</label>
+        <v-select 
+            v-model="espesor" 
+            label="espesor" 
+            :options="espesores" 
+            taggable 
+            :disabled="isChapa"
+            @input="cambioEspesor">
+            <template slot="option" slot-scope="option">
+                <span class="upSelect">{{ option.espesor }} </span> <br>
+                <span class="downSelect"> {{ option.cuadrante }} </span>
+            </template>
+        </v-select>
+    </div>
+</div>
+
                         <div class="clearfix"></div>
                         <div class="col-md-3">
 
@@ -355,6 +373,7 @@
                                                 <td>{{ item.numero_plano_iso }}</td>
                                                 <td>{{ item.diametro_especifico ? item.diametro_especifico : item.diametro.diametro }}</td>
                                                 <td>{{ item.espesor_especifico ? item.espesor_especifico : (item.espesor ? item.espesor.espesor : item.diametro.espesor) }}</td>
+
                                                 <td>{{ item.soldador.codigo}}</td>
                                                 <td>{{ item.material_base_izq}}</td>
                                                 <td>{{ item.soldadura}}</td>
@@ -663,6 +682,19 @@ data() {return {
             }
 
         },
+        cambioEspesor() {
+            // Si espesor tiene un id definido, no hacemos nada
+            if (this.espesor && this.espesor.id !== undefined) {
+                return;
+            }
+
+            // Si no tiene id, validamos el valor del campo espesor
+            const match = this.espesor?.espesor?.match(/^[+]?([0-9]+[.])?[0-9]+$/);
+            if (!match) {
+                // Si no es válido, lo restablecemos a 0
+                this.espesor.espesor = 0;
+            }
+        },
     async getSoldadores(){
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
@@ -783,6 +815,7 @@ data() {return {
                  toastr.error('El campo material base es obligatorio');
                  return ;
             }
+        
         this.TablaDz.push({
             elemento : this.elemento,
             numero_plano_iso: this.numeroPlanoIsom,
@@ -792,12 +825,13 @@ data() {return {
             material_base_der: this.material_base_der,
             material_base_izq: this.material_base_izq,
             soldadura: this.soldadura,
+            observacion: this.observaciones,
             path1:null,
             path2:null,
             path3:null,
             path4:null
             });
-
+            console.log(this.TablaDz);
     },
     removeDetalle(index) {
 

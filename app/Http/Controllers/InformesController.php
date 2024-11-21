@@ -286,7 +286,7 @@ class InformesController extends Controller
         $informe->material2_tipo = $request->material2 ? $request->material2_tipo : null;
         $informe->fecha = date('Y-m-d',strtotime($request->fecha));
         $informe->km = $request->pk;
-        $informe->ot_tipo_soldadura_id = $request->ot_tipo_soldadura ? $request->ot_tipo_soldadura['id'] : null;
+        $informe->ot_tipo_soldadura_id =$request->ot_tipo_soldadura['id'];
         $informe->componente = $request->componente;
         $informe->linea = $request->linea;
         $informe->plano_isom = $request->plano_isom;

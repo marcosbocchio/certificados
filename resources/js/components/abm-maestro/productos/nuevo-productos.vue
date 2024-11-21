@@ -12,9 +12,14 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="checkbox" id="checkbox1" v-model="Registro.visible_ot" style="margin-top: 15px;">
-                                    <label for="checkbox1" style="margin-left:5px;">VISIBLE OT</label>
-                                    <input style="margin-left:20px;" type="checkbox" id="checkbox2" v-model="Registro.stockeable_sn" :disabled="altaRemito">
-                                    <label style="margin-left:5px;" for="checkbox2" >STOKEABLE</label>
+                                    <label for="checkbox1" style="margin-left: 5px;">VISIBLE OT</label>
+
+                                    <input style="margin-left: 20px;" type="checkbox" id="checkbox2" v-model="Registro.stockeable_sn" :disabled="altaRemito">
+                                    <label style="margin-left: 5px;" for="checkbox2">STOKEABLE</label>
+                                    
+                                    <!-- Nuevo checkbox agregado -->
+                                    <input style="margin-left: 20px;" type="checkbox" id="checkbox3" v-model="Registro.relacionado_a_placas_sn">
+                                    <label style="margin-left: 5px;" for="checkbox3">RELACIONADO A PLACAS</label>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -27,6 +32,12 @@
                                 <div class="form-group">
                                     <label for="name">Descripción</label>
                                     <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="Registro.descripcion" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="codigo">Metros Totales</label>
+                                    <input autocomplete="off" v-model="Registro.metros" type="number" name="metros" class="form-control" min="0" step="0.01">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -56,6 +67,7 @@ export default {
 
         Registro : {
             'codigo'  : '',
+            'metros'  : '',
             'descripcion' : '',
             'visible_ot'  : false,
             'stokeable_sn':false,
@@ -80,9 +92,11 @@ export default {
         openModal : function(origen){
             this.Registro = {
                     'codigo'  : '',
+                    'metros'  : '',
                     'descripcion' : '',
                     'visible_ot'  : false,
                     'stockeable_sn':false,
+                    'relacionado_a_placas_sn':false,
                     },
             this.altaRemito = (origen == 'remito') ? true : false
             this.Registro.stockeable_sn = this.altaRemito

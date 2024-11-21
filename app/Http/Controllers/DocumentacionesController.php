@@ -19,6 +19,7 @@ use App\InternoFuenteDocumentaciones;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
+use ZipArchive;
 
 
 class DocumentacionesController extends Controller
@@ -91,6 +92,100 @@ class DocumentacionesController extends Controller
 
         return $documentaciones;
     }
+    
+    public function generarZipDoc(Request $request)
+{
+    $request->validate([
+        'registros' => 'required|array',
+        'registros.*.tipo' => 'required|string',
+        'registros.*.path' => 'required|string',
+        'registros.*.titulo' => 'required|string',
+    ]);
+
+    $zip = new ZipArchive();
+    $timestamp = now()->format('Ymd_His');
+    $zipFileName = 'archivos_' . $timestamp . '.zip';
+    $zipFilePath = public_path('documentos-zip-abm/' . $zipFileName);
+
+    if (!is_dir(public_path('documentos-zip-abm'))) {
+        mkdir(public_path('documentos-zip-abm'), 0777, true);
+    }
+
+    if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
+        return response()->json(['message' => 'No se pudo crear el archivo ZIP'], 500);
+    }
+
+    $filesAdded = false;
+
+    foreach ($request->registros as $registro) {
+        $filePath = public_path($registro['path']);
+        if (!file_exists($filePath)) {
+            \Log::warning("El archivo {$filePath} no existe y no fue agregado al ZIP.");
+            continue;
+        }
+
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+        $zipFolderPath = $this->getZipFolderPath($registro);
+        $fileNameInZip = $registro['titulo'] . '.' . $extension;
+
+        // Agregar el archivo al ZIP
+        $zip->addFile($filePath, $zipFolderPath . '/' . $fileNameInZip);
+        $filesAdded = true;
+    }
+
+    if (!$filesAdded) {
+        $zip->close();
+        return response()->json(['message' => 'No se agregaron archivos al ZIP'], 400);
+    }
+
+    $zip->close();
+
+    return response()->download($zipFilePath)->deleteFileAfterSend(true);
+}
+
+private function getZipFolderPath($registro)
+{
+    Log::info('_________________________________________________');
+    Log::debug($registro);
+    Log::info('_________________________________________________');
+
+    switch ($registro['tipo']) {
+        case 'INSTITUCIONAL':
+        case 'OT':
+            return $registro['tipo'];
+
+        case 'PROCEDIMIENTO GENERAL':
+            return isset($registro['metodo_ensayo']['metodo']) 
+                ? $registro['tipo'] . '/' . $registro['metodo_ensayo']['metodo'] 
+                : $registro['tipo'];
+
+        case 'USUARIO':
+            return isset($registro['usuario'][0]['name']) 
+                ? $registro['tipo'] . '/' . $registro['usuario'][0]['name'] 
+                : $registro['tipo'];
+
+        case 'EQUIPO':
+            return isset($registro['interno_equipo'][0]['nro_interno']) 
+                ? $registro['tipo'] . '/' . $registro['interno_equipo'][0]['nro_interno'] 
+                : $registro['tipo'];
+
+        case 'FUENTE':
+            return isset($registro['interno_fuente'][0]['nro_serie']) 
+                ? $registro['tipo'] . '/' . $registro['interno_fuente'][0]['nro_serie'] 
+                : $registro['tipo'];
+
+        case 'VEHICULO':
+            return isset($registro['vehiculo'][0]['nro_interno']) 
+                ? $registro['tipo'] . '/' . $registro['vehiculo'][0]['nro_interno'] 
+                : $registro['tipo'];
+
+        default:
+            return $registro['tipo'];
+    }
+}
+
+    
+    
 
     public function callView()
     {

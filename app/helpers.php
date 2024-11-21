@@ -92,6 +92,7 @@ function FormatearNumeroInforme(int $numero,$metodo){
 
   return $metodo . sprintf("%04d",$numero) ;
 
+  
 }
 
 function FormatearNumeroConCeros(int $numero,$ceros){

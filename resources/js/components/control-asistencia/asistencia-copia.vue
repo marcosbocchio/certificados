@@ -88,6 +88,7 @@
           <thead>
             <tr>
               <th>Operador</th>
+              <th>Responsabilidad</th>
               <th>Entrada</th>
               <th>Salida</th>
               <th>Contratista</th>
@@ -98,6 +99,12 @@
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
               <td>{{ detalle.operador.name }}</td>
+              <td>
+                <select v-model="detalle.ayudante_sn">
+                  <option value="1">Operador</option>
+                  <option value="0">Ayudante</option>
+                </select>
+              </td>
               <td>{{ detalle.entrada }}</td>
               <td>{{ detalle.salida }}</td>
               <td>{{ detalle.contratista ? detalle.contratista.nombre : '-' }}</td>
@@ -187,15 +194,6 @@ export default {
         this.fechas_bloqueadas = [];
       }
     },
-    bloquearFechas(date) {
-      return this.fechas_bloqueadas.includes(moment(date).format('YYYY-MM-DD'));
-    },
-    filtrarOperarios() {
-      if (this.frente_selected && this.frente_selected.id === 2) {
-        return this.operarios_opciones.filter(operario => operario.local_neuquen_sn === 1);
-      }
-      return this.operarios_opciones;
-    },
     async verificarParte() {
     try {
       const response = await axios.post('/api/asistencia-comprobar-parte', {
@@ -211,6 +209,15 @@ export default {
       return false; // Indica que ocurrió un error en la verificación
     }
   },
+    bloquearFechas(date) {
+      return this.fechas_bloqueadas.includes(moment(date).format('YYYY-MM-DD'));
+    },
+    filtrarOperarios() {
+      if (this.frente_selected && this.frente_selected.id === 2) {
+        return this.operarios_opciones.filter(operario => operario.local_neuquen_sn === 1);
+      }
+      return this.operarios_opciones;
+    },
     async agregarDetalle() {
       const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
   
@@ -234,8 +241,7 @@ export default {
         toastr.error('Parte obligatorio');
         return;
       }
-      // Verificar si el parte es válido
-    if (this.parte_selected) {
+      if (this.parte_selected) {
         const parteValido = await this.verificarParte();
         if (!parteValido) {
           return;
@@ -246,7 +252,8 @@ export default {
         entrada: moment(this.entrada_selected).format('HH:mm'),
         salida: moment(this.salida_selected).format('HH:mm'),
         contratista: this.contratista_selected,
-        parte: this.parte_selected
+        parte: this.parte_selected,
+        ayudante_sn: this.operador_selected.habilitado_arn_sn,
       };
       this.detalles.push(nuevoDetalle);
       this.operador_selected = '';
@@ -266,9 +273,7 @@ export default {
       }));
     })
     .catch(error => {
-      console.error('Error cargando los datos de asistencia:', error);
-      toastr.error('Error cargando los datos de asistencia. Ver la consola para más detalles.');
-    })
+      console.error('Error cargando los datos de asistencia:', error);    })
     .finally(() => {
       this.isLoading = false; // Deactivate loading indicator
     });
@@ -277,6 +282,18 @@ export default {
       this.detalles.splice(index, 1);
     },
     confirmar() {
+      if (!this.frente_selected) {
+        toastr.error('Debe seleccionar un frente');
+        return;
+      }
+      if (!this.fecha) {
+        toastr.error('Debe seleccionar una fecha');
+        return;
+      }
+      if (this.detalles.length === 0) {
+        toastr.error('Debe agregar al menos un detalle');
+        return;
+      }
   this.isLoading = true; // Enable loading before the request
   axios.post('/api/guardar_asistencia', {
     frente_id: this.frente_selected.id,

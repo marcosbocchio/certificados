@@ -165,7 +165,7 @@ footer {
         <td>
             @foreach ($procesoInfo->where('proceso_soldadores', 'GMAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                    <p>{{ $dato->soldadorz ?? '' }}<br>{{ $dato->soldadorp ?? '' }}</p>
                 @else
                     <p>&nbsp;</p>
                 @endif
@@ -174,7 +174,10 @@ footer {
         <td>
             @foreach ($procesoInfo->where('proceso_soldadores', 'GTAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                <p style="font-size: 6.5px;">
+                    {{ $dato->soldadorz ?? '' }}<br>
+                    {{ $dato->soldadorp ?? '' }}
+                </p>
                 @else
                     <p>&nbsp;</p>
                 @endif
@@ -183,7 +186,7 @@ footer {
         <td>
             @foreach ($procesoInfo->where('proceso_soldadores', 'SAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                    <p>{{ $dato->soldadorz ?? '' }}<br>{{ $dato->soldadorp ?? '' }}</p>
                 @else
                     <p>&nbsp;</p>
                 @endif
@@ -192,7 +195,7 @@ footer {
         <td>
             @foreach ($procesoInfo->where('proceso_soldadores', 'SMAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                    <p>{{ $dato->soldadorz ?? '' }}<br>{{ $dato->soldadorp ?? '' }}</p>
                 @else
                     <p>&nbsp;</p>
                 @endif
@@ -201,7 +204,7 @@ footer {
         <td id="resaltar-borde">
             @foreach ($procesoInfo->where('proceso_soldadores', 'FCAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                    <p>{{ $dato->soldadorz ?? '' }} {{ $dato->soldadorp ?? '' }}</p>
+                    <p>{{ $dato->soldadorz ?? '' }}<br>{{ $dato->soldadorp ?? '' }}</p>
                 @else
                     <p>&nbsp;</p>
                 @endif
@@ -365,7 +368,13 @@ footer {
                         <table class="tablamain" >
                             <tbody>
                                 <tr class="gris">
-                                    <td style="width: 43mm;" >Evaluador AESA</td>
+                                <td style="width: 43mm;">
+                                    @if($contratista->nombre === 'ENOD')
+                                        Evaluador ENOD
+                                    @else
+                                        Evaluador AESA
+                                    @endif
+                                </td>
                                     <td style="width: 40mm;" >Inspector de AESA</td>
                                     <td style="width: 50mm;" >Inspector del Cliente</td>
                                     <td style="width: 48mm;" >Inspector Autorizado</td>
@@ -504,7 +513,13 @@ footer {
     <table class="tablamain" >
         <tbody>
             <tr class="gris">
-                <td style="width: 43mm;" >Evaluador AESA</td>
+            <td style="width: 43mm;">
+                @if($contratista->nombre === 'ENOD')
+                    Evaluador ENOD
+                @else
+                    Evaluador AESA
+                @endif
+            </td>
                 <td style="width: 40mm;" >Inspector de AESA</td>
                 <td style="width: 50mm;" >Inspector del Cliente</td>
                 <td style="width: 48mm;" >Inspector Autorizado</td>

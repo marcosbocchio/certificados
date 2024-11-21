@@ -103,7 +103,7 @@
         </table>
     </header>
     <main>
-        @php $filasPorTabla = 14; @endphp
+        @php $filasPorTabla = 10; @endphp
 
         @for ($i = 0; $i < count($detalles); $i += $filasPorTabla)
             <!-- Inicio de la tabla -->
@@ -121,34 +121,37 @@
                 </tr>
                 <!-- Bucle para las filas de la tabla actual -->
                 @for ($j = $i; $j < $i + $filasPorTabla; $j++)
-                    <tr>
-                        <!-- Celdas con datos o en blanco si no hay detalles -->
-                        @if ($j < count($detalles))
-                            <td>{{ $detalles[$j]->tecnica}}</td>
-                            <td>{{ $detalles[$j]->cantidad}}</td>
-                            <td>{{ $detalles[$j]->planta}}</td>
-                            <td>{{ $detalles[$j]->equipo}}</td>
-                            <td>
-                                {{ $detalles[$j]->operador1name ? $detalles[$j]->operador1name : '-' }} / 
-                                {{ $detalles[$j]->operador2name ? $detalles[$j]->operador2name : '-' }}
-                            </td>
-                            <td>{{ $detalles[$j]->horario}}</td>
-                            <td>{{ $detalles[$j]->informe_nro}}</td>
-                            <td>{{ $detalles[$j]->inspector_name}}</td>
-                            <td>&nbsp;</td>
-                        @else
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                        @endif
-                    </tr>
-                @endfor
+    <tr>
+        <!-- Celdas con datos o en blanco si no hay detalles -->
+        @if ($j < count($detalles))
+            <td>{{ $detalles[$j]->tecnica }}</td>
+            <td>{{ $detalles[$j]->cantidad }}</td>
+            <td>{{ $detalles[$j]->planta_1 }} / {{ $detalles[$j]->planta_2 ?? '-' }}</td> <!-- Mostrar ambas plantas -->
+            <td>{!! $dividirTexto($detalles[$j]->equipo) !!}</td> <!-- Utiliza la función aquí -->
+            <td>
+                {{ $detalles[$j]->operador1name ?? '-' }} / 
+                {{ $detalles[$j]->operador2name ?? '-' }}
+            </td>
+            <td>{{ $detalles[$j]->horario }}</td>
+            <td>{{ $detalles[$j]->informe_nro }}</td>
+            <td>
+                {{ $detalles[$j]->inspector1_name ?? '-' }} / 
+                {{ $detalles[$j]->inspector2_name ?? '-' }}
+            </td>
+            <td>&nbsp;</td>
+        @else
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        @endif
+    </tr>
+@endfor
             </table>
             <footer>
                 <table class="combined-table">

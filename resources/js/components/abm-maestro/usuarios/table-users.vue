@@ -20,7 +20,6 @@
                 <div v-if="registro.cliente">
                 {{ registro.cliente.nombre_fantasia }}
                 </div>         
-                
               </td>
               <td width="10px">
                 <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_usuarios_edita')"><span class="fa fa-edit"></span></button>

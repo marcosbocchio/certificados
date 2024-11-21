@@ -376,6 +376,10 @@ Vue.component('stock-edit', EditStock);
 /* Asistencia */
 import Asistencia from './components/control-asistencia/asistencia-table.vue';
 Vue.component('asistencia-table', Asistencia);
+import AsistenciaPagos from './components/control-asistencia/asistencia-pagos.vue';
+Vue.component('asistencia-pagos', AsistenciaPagos);
+import AsistenciaPagosServicios from './components/control-asistencia/asistencia-pagos-servicios.vue';
+Vue.component('asistencia-pagos-servicios', AsistenciaPagosServicios);
 
 import AsistenciaNuevo from './components/control-asistencia/asistencia-nuevo.vue';
 Vue.component('asistencia-nuevo', AsistenciaNuevo);

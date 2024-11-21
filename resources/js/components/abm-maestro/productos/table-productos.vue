@@ -1,5 +1,6 @@
 <template>
-  <div class="box box-custom-enod top-buffer">
+  <div v-if="(registros.length || loading)">
+    <div class="box box-custom-enod top-buffer">
     <div class="box-body">
       <div class="table-responsive">
         <table class="table table-hover table-striped table-condensed">
@@ -36,42 +37,19 @@
             </tr>
           </tbody>
         </table>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
       </div>
     </div>
     <div v-if="loading" class="overlay">
        <loading-spin></loading-spin>
     </div>
    </div>
+  </div>
   </template>
   
   <script>
     export default {
-  
       data() {return {  
-  
       }},
-  
       props : {
         registros : {
           type : Array,
@@ -83,39 +61,10 @@
           type : Boolean,
           required : true
         },    
-  
-  
-  
-  
-  
-  
-  
-  
-      },
-  
+      }, 
       methods: {
       updateValue: function (registro) {
          this.$emit('editar', registro);
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
       }
     }
     }

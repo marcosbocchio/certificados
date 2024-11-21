@@ -9,6 +9,8 @@ use App\AsistenciaDetalle;
 use App\Frentes;
 use App\FrenteOperador;
 use App\User;
+use App\MetodoEnsayos;
+use App\Clientes;
 use App\Contratistas;
 use App\OtOperarios;
 use App\OperadorControl;
@@ -57,28 +59,46 @@ class AsistenciaController extends Controller
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
         $header_descripcion = "Carga";
-    
+
+        // Obtener frentes asociados al usuario
         $user_frente = FrenteOperador::where('user_id', $user->id)->pluck('frente_id');
+
+        // Obtener frentes con control de horas extras
         $frente_sn = Frentes::whereIn('id', $user_frente)
             ->where('controla_hs_extras_sn', 1)
             ->get();
-        $contratistas = Contratistas::all();
-    
-        // Obtener los user_id únicos de la tabla ot_operarios
+
+        // Obtener todos los contratistas
+        $contratistas = Clientes::all();
+
+        // Obtener todos los operarios habilitados
         $operarios = User::whereNull('cliente_id')
                 ->where('habilitado_sn', 1)
                 ->orderBy('name', 'asc')
                 ->get();
-    
-        // Obtener las fechas existentes de asistencia_horas agrupadas por frente_id
+
+        // Obtener las fechas de asistencia agrupadas por frente_id
         $fechasPorFrente = AsistenciaHora::select('frente_id', 'fecha')
             ->get()
             ->groupBy('frente_id')
             ->map(function ($group) {
                 return $group->pluck('fecha')->toArray();
             });
-    
-        return view('control-asistencia.asistencia-nuevo', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'fechasPorFrente'));
+
+        // Obtener todos los datos de la tabla MetodoEnsayos
+        $metodoEnsayos = MetodoEnsayos::all();
+
+        // Retornar los datos a la vista, incluyendo MetodoEnsayos
+        return view('control-asistencia.asistencia-nuevo', compact(
+            'user', 
+            'header_titulo', 
+            'header_descripcion', 
+            'frente_sn', 
+            'operarios', 
+            'contratistas', 
+            'fechasPorFrente', 
+            'metodoEnsayos' // Incluimos MetodoEnsayos en la vista
+        ));
     }
 
     public function copia($id)
@@ -115,14 +135,133 @@ class AsistenciaController extends Controller
         $frente_sn = Frentes::whereIn('id', $user_frente)
             ->where('controla_hs_extras_sn', 1)
             ->get();
-        $contratistas = Contratistas::all();
+            $contratistas = Clientes::all();
+        // Obtener todos los datos de la tabla MetodoEnsayos
+        $metodoEnsayos = MetodoEnsayos::all();
         $operarios = User::whereNull('cliente_id')
                 ->where('habilitado_sn', 1)
                 ->orderBy('name', 'asc')
                 ->get();
-        $contratistas = Contratistas::all();
 
-        return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id'));
+        return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id','metodoEnsayos'));
+    }
+
+    public function pagos()
+    {
+        $user = auth()->user();
+        $header_titulo = "Control Asistencia";
+        $header_descripcion = "Pagos Horas Extras | S/D/F";
+        $frentes = Frentes::where('controla_hs_extras_sn', 1)->get();
+        log::info($frentes);
+        
+        return view('control-asistencia.asistencia-pagos', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
+    }
+    public function pagosServicios()
+    {
+        $user = auth()->user();
+        $header_titulo = "Control Asistencia";
+        $header_descripcion = "Pagos Servicios";
+        $frentes = Frentes::where('controla_hs_extras_sn', 1)->get(); 
+        
+        return view('control-asistencia.asistencia-pagos-servicios', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
+    }
+
+    public function getAsistenciaPagos(Request $request)
+    {
+      
+    
+        // Iniciar la query sin filtros
+        $query = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista','detalles.metodoEnsayo']);
+    
+        // Aplicar filtro de frente_id si está presente
+        if ($request->filled('frente_id')) {
+            $query->where('frente_id', $request->frente_id);
+        }
+    
+        // Aplicar filtro de fecha si está presente
+        if ($request->filled('fecha')) {
+            $query->where('fecha', 'like', $request->fecha . '%'); // Coincide con mes y año
+        }
+    
+        // Obtener los registros
+        $asistencia = $query->get();
+    
+        // Ordenar los detalles por nombre de operador
+        $asistencia->each(function($asistenciaHora) {
+            $asistenciaHora->detalles = $asistenciaHora->detalles->sortBy(function($detalle) {
+                return strtolower($detalle->operador->nombre); // Asume que el nombre del operador está en 'nombre'
+            })->values(); // reindexar el array de detalles
+        });
+        return response()->json($asistencia);
+    }
+
+    public function guardarPagosExtras(Request $request)
+    {
+        $datosPagos = $request->input('datosPagos');
+        log::info($datosPagos);
+        foreach ($datosPagos as $pago) {
+            // Actualizar el pago_e_sdf y no_pagar en la tabla asistencia_detalle
+            AsistenciaDetalle::where('asistencia_horas_id', $pago['asistencia_horas_id'])
+                ->where('operador_id', $pago['operador_id'])
+                ->update([
+                    'pago_e_sdf' => $pago['pago_e_sdf'],
+                    'no_pagar' => $pago['no_pagar']
+                ]);
+        }
+    
+        return response()->json(['success' => true]);
+    }
+    public function guardarPagosExtrasServicos(Request $request)
+    {
+        $datosPagos = $request->input('datosPagos');
+
+        foreach ($datosPagos as $pago) {
+            // Actualizar el pago_e_sdf en la tabla asistencia_detalle
+            AsistenciaDetalle::where('asistencia_horas_id', $pago['asistencia_horas_id'])
+                ->where('operador_id', $pago['operador_id'])
+                ->update(['pago_servicio_extra' => $pago['pago_servicio_extra'],
+            'no_pagar' => $pago['no_pagar']]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+
+
+
+    public function controlarUser($id_user, $fecha)
+    {
+
+        $mes = $fecha;  // Directamente asignamos $fecha a $mes porque ya tiene el formato correcto
+    
+        // Buscar en la base de datos usando operador_id y mes
+        $operadorControl = OperadorControl::where('operador_id', $id_user)
+            ->where('mes', $mes)  // Comparamos directamente con el campo mes
+            ->first();
+    
+
+    
+        if ($operadorControl) {
+            // Crear la respuesta en una variable
+            $response = [
+                'fecha_pago_s1' => $operadorControl->fecha_pago_s1,
+                'fecha_pago_s2' => $operadorControl->fecha_pago_s2,
+                'fecha_pago_s3' => $operadorControl->fecha_pago_s3,
+                'fecha_pago_s4' => $operadorControl->fecha_pago_s4,
+                'fecha_pago_s5' => $operadorControl->fecha_pago_s5,
+                'fecha_pago_mes' => $operadorControl->fecha_pago_mes,
+            ];
+    
+            // Registrar la respuesta en el log
+
+    
+            // Devolver la respuesta como JSON
+            return response()->json($response);
+        }
+    
+
+
+        return response()->json(['message' => 'No se encontraron registros.'], 404);
     }
 
     public function getPaginatedAsistencia(Request $request)
@@ -144,16 +283,14 @@ class AsistenciaController extends Controller
     
     public function getAsistencia($id)
     {
-        
 
-        $asistencia = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista'])->findOrFail($id);
+        $asistencia = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista','detalles.metodoEnsayo'])->findOrFail($id);
 
         return response()->json($asistencia);
     }
 
     public function guardarAsistencia(Request $request)
     {
-        
 
         $asistenciaHora = new AsistenciaHora;
         $asistenciaHora->frente_id = $request->frente_id;
@@ -169,6 +306,10 @@ class AsistenciaController extends Controller
             $asistenciaDetalle->salida = $detalle['salida'];
             $asistenciaDetalle->contratista_id = $detalle['contratista']['id'];
             $asistenciaDetalle->parte = $detalle['parte'];
+            $asistenciaDetalle->observaciones = $detalle['observaciones'] ?? null;
+            $asistenciaDetalle->hora_extra_sn = $detalle['hora_extra_sn'];
+            $asistenciaDetalle->tecnica_id = $detalle['metodo_ensayo']['id'];
+            $asistenciaDetalle->s_d_f_sn = $detalle['s_d_f_sn'];
             $asistenciaDetalle->save();
         }
 
@@ -178,7 +319,6 @@ class AsistenciaController extends Controller
     public function updateAsistencia(Request $request, $id)
     {
         $asistenciaHora = AsistenciaHora::findOrFail($id);
-        
         AsistenciaDetalle::where('asistencia_horas_id', $id)->delete();
         $asistenciaHora->fecha = $request->fecha;
         $asistenciaHora->frente_id = $request->frente_id;
@@ -193,11 +333,50 @@ class AsistenciaController extends Controller
                 'salida' => $detalle['salida'],
                 'contratista_id' => $detalle['contratista']['id'],
                 'parte' => $detalle['parte'],
+                'observaciones' => $detalle['observaciones'] ?? null,
+                'hora_extra_sn' => $detalle['hora_extra_sn'],
+                'tecnica_id' =>$detalle['metodo_ensayo']['id'],
+                's_d_f_sn' => $detalle['s_d_f_sn'],
             ]);
             $nuevoDetalle->save();
         }
 
         return response()->json(['message' => 'Asistencia actualizada con éxito!', 'data' => $asistenciaHora]);
+    }
+
+    public function updateDetalleAsistencia(Request $request, $id)
+    {
+        // Buscar si ya existe un detalle con asistencia_horas_id y operador_id
+        $detalleExistente = AsistenciaDetalle::where('asistencia_horas_id', $id)
+            ->where('operador_id', $request->operador_id)
+            ->first();
+        log::info($detalleExistente);
+        if ($detalleExistente) {
+            // Si el detalle existe, actualizar la observación
+            $detalleExistente->observaciones = $request->observaciones;
+            $detalleExistente->save();
+
+            return response()->json(['message' => 'Observación actualizada con éxito!', 'data' => $detalleExistente]);
+        } else {
+            // Si no existe, creamos un nuevo registro en AsistenciaDetalle
+            $nuevoDetalle = new AsistenciaDetalle([
+                'asistencia_horas_id' => $id,
+                'operador_id' => $request->operador_id,
+                'ayudante_sn' => $request->ayudante_sn,
+                'entrada' => $request->entrada,
+                'salida' => $request->salida,
+                'contratista_id' => $request->contratista_id,
+                'parte' => $request->parte,
+                'observaciones' => $request->observaciones ?? null,
+                'hora_extra_sn' => $request->hora_extra_sn,
+                'tecnica_id' =>$detalle->metodo_ensayo,
+                's_d_f_sn' => $request->s_d_f_sn,
+            ]);
+
+            $nuevoDetalle->save();
+
+            return response()->json(['message' => 'Nuevo detalle creado con éxito!', 'data' => $nuevoDetalle]);
+        }
     }
 
     public function getAsistenciaAgrupadaPorOperador(Request $request)
@@ -293,7 +472,6 @@ class AsistenciaController extends Controller
                 }
             }
         }
-        
         // Ordenar los operadores alfabéticamente por nombre
         usort($resumenOperarios, function ($a, $b) {
             return strcmp($a['operador']['name'], $b['operador']['name']);
@@ -337,6 +515,7 @@ class AsistenciaController extends Controller
             return 'desconocido'; // No se puede determinar la responsabilidad
         }
     }
+
     public function controlarParte(Request $request)
     {
         // Validar que el parámetro 'num' esté presente
@@ -392,17 +571,17 @@ class AsistenciaController extends Controller
                 }
 
                 // Contar feriados
-                if ($this->esFeriado($fecha, $diasDelMes['feriadosArray']) && $detalle->contratista_id === null) {
+                if ($this->esFeriado($fecha, $diasDelMes['feriadosArray'])) {
                     $resumenOperarios[$operadorId]['feriados']++;
                 }
 
                 // Contar sábados
-                if ($fecha->isSaturday() && $detalle->contratista_id === null) {
+                if ($fecha->isSaturday()) {
                     $resumenOperarios[$operadorId]['sabados']++;
                 }
 
                 // Contar domingos
-                if ($fecha->isSunday() && $detalle->contratista_id === null) {
+                if ($fecha->isSunday()) {
                     $resumenOperarios[$operadorId]['domingos']++;
                 }
 
@@ -448,10 +627,10 @@ class AsistenciaController extends Controller
 
         $totalDias = Carbon::createFromDate($year, $month)->daysInMonth;
         $inicioMes = Carbon::create($year, $month, 1);
-        $inicioSemana = $inicioMes->copy()->startOfWeek(Carbon::SATURDAY);
+        $inicioSemana = $inicioMes->copy()->startOfWeek(Carbon::FRIDAY);
 
         $finMes = Carbon::create($year, $month, $totalDias);
-        $finSemana = $finMes->copy()->endOfWeek(Carbon::FRIDAY);
+        $finSemana = $finMes->copy()->endOfWeek(Carbon::THURSDAY);
 
         for ($fecha = $inicioSemana; $fecha->lte($finSemana); $fecha->addDay()) {
             $diaDeLaSemana = $fecha->dayOfWeek;
@@ -468,8 +647,8 @@ class AsistenciaController extends Controller
                 $diasHabiles++;
             }
 
-            $semanaInicio = $fecha->copy()->startOfWeek(Carbon::SATURDAY);
-            $semanaFin = $fecha->copy()->endOfWeek(Carbon::FRIDAY);
+            $semanaInicio = $fecha->copy()->startOfWeek(Carbon::FRIDAY);
+            $semanaFin = $fecha->copy()->endOfWeek(Carbon::THURSDAY);
 
             if (!isset($semanas[$semanaInicio->weekOfYear])) {
                 $semanas[$semanaInicio->weekOfYear] = [
@@ -479,7 +658,8 @@ class AsistenciaController extends Controller
             }
         }
 
-        return [
+        // Log the result before returning
+        $resultado = [
             'diasHabiles' => $diasHabiles,
             'sabados' => $sabados,
             'domingos' => $domingos,
@@ -487,9 +667,14 @@ class AsistenciaController extends Controller
             'feriadosArray' => $feriadosArray,
             'semanas' => array_values($semanas)
         ];
+
+        // Log the output for debugging
+        Log::info('Resultado de calcularDiasDelMes', $resultado);
+
+        return $resultado;
     }
 
-    private function getFeriados($year)
+    function getFeriados($year)
     {
         $path = public_path('feriados/feriados.json');
         if (!File::exists($path)) {
@@ -514,7 +699,7 @@ class AsistenciaController extends Controller
     }
 
 
-    private function esFeriado($fecha, $feriados)
+     function esFeriado($fecha, $feriados)
     {
         return in_array($fecha->toDateString(), $feriados);
     }
@@ -588,5 +773,46 @@ class AsistenciaController extends Controller
         }
 
         return response()->json(['success' => 'Pagos guardados con éxito']);
+    }
+
+    public function getDatosAsistencia(Request $request)
+    {
+        // Obtener frente_id y fecha desde los parámetros de la URL
+        $frenteId = $request->input('frente_id');
+        $fecha = $request->input('fecha');
+    
+        // Buscar todas las filas en AsistenciaHora que coincidan con el frente y la fecha (año-mes)
+        $asistenciaHoras = AsistenciaHora::where('frente_id', $frenteId)
+                                        ->where('fecha', 'like', $fecha . '%') // Buscar por año-mes
+                                        ->get();
+    
+        // Obtener los IDs de AsistenciaHora para buscar en AsistenciaDetalle
+        $asistenciaHorasIds = $asistenciaHoras->pluck('id'); // Lista de IDs
+    
+        // Buscar en AsistenciaDetalle con esos IDs, cargar la relación con User y AsistenciaHora
+        $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
+                                              ->with(['operador', 'asistenciaHora'])  // Incluir relaciones
+                                              ->get()
+                                              ->groupBy(function($detalle) {
+                                                  // Agrupar por el nombre del operador en lugar del ID
+                                                  return $detalle->operador->name;
+                                              })
+                                              ->map(function($detalles) {
+                                                  // Verificar si todos los ayudante_sn son 0 o si alguno es 1
+                                                  $ayudanteSnFlag = $detalles->every(function($detalle) {
+                                                      return $detalle->ayudante_sn === 0;
+                                                  }) ? 'ayudante' : 'operador';
+    
+                                                  // Modificar cada grupo de detalles para incluir 'fechaAsignacion' y 'ayudante_sn'
+                                                  return $detalles->map(function($detalle) use ($ayudanteSnFlag) {
+                                                      return [
+                                                          'detalle' => $detalle,  // Todos los detalles del registro
+                                                          'fechaAsignacion' => $detalle->asistenciaHora->fecha,  // Fecha de AsistenciaHora
+                                                          'ayudante_sn' => $ayudanteSnFlag  // Ayudante u operador según los valores
+                                                      ];
+                                                  });
+                                              });
+    
+        return response()->json($detallesAgrupados);
     }
 }

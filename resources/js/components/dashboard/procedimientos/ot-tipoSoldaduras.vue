@@ -17,9 +17,14 @@
                         <div class="col-md-3">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group" >
+                                    <div class="form-group">
                                         <label for="tipo_soldaduras">Tipo Sol.</label>
-                                        <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras"></v-select>
+                                        <v-select v-model="tipo_soldadura" :options="tipo_soldaduras" label="codigo">
+                                            <template slot="option" slot-scope="option">
+                                                <span class="upSelect">{{ option.codigo }}</span> <br>
+                                                <span class="downSelect">{{ option.descripcion }}</span>
+                                            </template>
+                                        </v-select>
                                     </div>
                                 </div>
 

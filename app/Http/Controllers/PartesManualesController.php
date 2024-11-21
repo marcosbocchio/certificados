@@ -151,14 +151,6 @@ class PartesManualesController extends Controller
         {
              $user_id = $userId = Auth::id();
         }
-        // Validación de datos recibidos
-        $validatedData = $request->validate([
-            'ordenTrabajo' => 'required|integer',
-            'fecha' => 'required|date',
-            'ot_obra' => 'required|string',
-            'detalles' => 'required|array',
-            'selectedInformes' => 'array',
-        ]);
         Log::info('Detalles recibidos: ' . json_encode($request->detalles));
         try {
             \DB::beginTransaction();
@@ -170,18 +162,19 @@ class PartesManualesController extends Controller
 
             
             foreach ($request->detalles as $detalle) {
-                log::info('_______asd');
-                log::info($detalle['inspector_secl']['id']);
+            log::debug($detalle);
                 ParteManualDetalle::create([
                     'parte_manual_id' => $parteManual->id,
                     'tecnica' => $detalle['tecnica'],
                     'cantidad' => $detalle['cantidad'],
-                    'planta' => $detalle['planta']['label'], 
+                    'planta_1' => $detalle['planta'][0]['value'], // Primera planta
+                    'planta_2' => $detalle['planta'][1]['value'] ?? null, // Segunda planta opcional
                     'equipo' => $detalle['equipo_linea'],
-                    'operador1' => $detalle['operadores'][0]['value'] ?? null,
-                    'operador2' => $detalle['operadores'][1]['value'] ?? null,
+                    'operador1' => $detalle['operadores'][0]['value'], // Primer operador
+                    'operador2' => $detalle['operadores'][1]['value'] ?? null, // Segundo operador opcional
                     'horario' => $detalle['horario'],
-                    'inspector_id' => $detalle['inspector_secl']['id'],
+                    'inspector_id_1' => $detalle['inspector_secl'][0]['id'], // Primer inspector
+                    'inspector_id_2' => $detalle['inspector_secl'][1]['id'] ?? null, // Segundo inspector opcional
                     'informe_nro' => $detalle['n_informe'],
                 ]);
             }
@@ -240,12 +233,14 @@ class PartesManualesController extends Controller
                 $parteManual->detalles()->create([
                     'tecnica' => $detalle['tecnica'],
                     'cantidad' => $detalle['cantidad'],
-                    'planta' => $detalle['planta']['label'], 
+                    'planta_1' => $detalle['planta'][0]['value'], // Primera planta
+                    'planta_2' => $detalle['planta'][1]['value'] ?? null, // Segunda planta opcional
                     'equipo' => $detalle['equipo_linea'],
-                    'operador1' => $detalle['operadores'][0]['value'] ?? null,
-                    'operador2' => $detalle['operadores'][1]['value'] ?? null,
+                    'operador1' => $detalle['operadores'][0]['value'], // Primer operador
+                    'operador2' => $detalle['operadores'][1]['value'] ?? null, // Segundo operador opcional
                     'horario' => $detalle['horario'],
-                    'inspector_id' => $detalle['inspector_secl']['id'],
+                    'inspector_id_1' => $detalle['inspector_secl'][0]['id'], // Primer inspector
+                    'inspector_id_2' => $detalle['inspector_secl'][1]['id'] ?? null, // Segundo inspector opcional
                     'informe_nro' => $detalle['n_informe'],
                 ]);
             }

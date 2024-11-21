@@ -113,7 +113,7 @@
 
                     <div class="col-md-3">
                         <div class="form-group size-pqr-eps" >
-                            <label for="procedimientos_soldadura">EPS / WPS</label>
+                            <label for="procedimientos_soldadura">EPS / WPS *</label>
                             <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>
                         </div>
                     </div>
@@ -577,7 +577,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group" >
-                                    <label for="diametro_us_pa" title="Diametro">ø</label>
+                                    <label for="diametro_us_pa" title="Diametro">ø *</label>
                                     <v-select v-model="diametro_us_pa" label="diametro" :options="diametros" taggable id="diametro_us_pa"></v-select>
                                 </div>
                             </div>
@@ -1512,181 +1512,181 @@ export default {
 
             if (this.tecnica.codigo !='ME' && !this.zapata){
 
-                 toastr.error('El campo zapata es obligatorio');
+                 toastr.error('El campo Zapata es obligatorio');
                  return ;
             }
 
             if(this.zapata.length  > 20){
 
-                toastr.error('El campo zapata no debe contener más de 20 caracteres');
+                toastr.error('El campo Zapata no debe contener más de 20 caracteres');
                 return ;
              }
 
             if (!this.palpador){
 
-                 toastr.error('El campo palpador es obligatorio');
+                 toastr.error('El campo Palpador es obligatorio');
                  return ;
             }
 
             if (!this.frecuencia){
 
-                 toastr.error('El campo frecuencia es obligatorio');
+                 toastr.error('El campo Frecuencia es obligatorio');
                  return ;
             }
 
             if(this.frecuencia  > 999 ){
 
-                toastr.error('El campo frecuencia no debe ser mayor a 999');
+                toastr.error('El campo Frecuencia no debe ser mayor a 999');
                 return ;
              }
 
             if (!this.angulo_apertura){
 
-                 toastr.error('El campo angulo apertura es obligatorio');
+                 toastr.error('El campo Angulo Apertura es obligatorio');
                  return ;
             }
 
             if(this.angulo_apertura.length  > 7){
 
-                toastr.error('El campo angulo apertura no debe contener más de 7 caracteres');
+                toastr.error('El campo Angulo Apertura no debe contener más de 7 caracteres');
                 return ;
              }
 
             if (!this.rango){
 
-                 toastr.error('El campo rango es obligatorio');
+                 toastr.error('El campo Rango es obligatorio');
                  return ;
             }
 
             if(this.rango.length  > 7){
 
-                toastr.error('El campo rango no debe contener más de 7 caracteres');
+                toastr.error('El campo Rango no debe contener más de 7 caracteres');
                 return ;
              }
 
             if (!this.posicion){
 
-                 toastr.error('El campo posicion es obligatorio');
+                 toastr.error('El campo Posición es obligatorio');
                  return ;
             }
 
             if(this.posicion.length  > 3){
 
-                toastr.error('El campo posicion no debe contener más de 3 caracteres');
+                toastr.error('El campo Posición no debe contener más de 3 caracteres');
                 return ;
              }
 
             if (this.tecnica.codigo !='ME' && !this.curva_elevacion){
 
-                 toastr.error('El campo curva elevacion es obligatorio');
+                 toastr.error('El campo Curva Elevación es obligatorio');
                  return ;
             }
 
             if(this.tecnica.codigo !='ME' && this.curva_elevacion.length  > 3){
 
-                toastr.error('El campo curva elevacion no debe contener más de 3 caracteres');
+                toastr.error('El campo Curva Elevación no debe contener más de 3 caracteres');
                 return ;
              }
 
             if (!this.block_calibracion){
 
-                 toastr.error('El campo block calibracion es obligatorio');
+                 toastr.error('El campo Block Calibración es obligatorio');
                  return ;
             }
 
             if (this.tecnica.codigo !='ME' && !this.block_sensibilidad){
 
-                 toastr.error('El campo block sensibilidad es obligatorio');
+                 toastr.error('El campo Block Sensibilidad es obligatorio');
                  return ;
             }
 
             if(this.tecnica.codigo !='ME' && this.block_sensibilidad  > 999){
 
-                toastr.error('El campo block sensibilidad no debe ser mayor a 999');
+                toastr.error('El campo Block Sensibilidad no debe ser mayor a 999');
                 return ;
              }
 
             if (this.tecnica.codigo !='ME' && !this.tipo_reflector){
 
-                 toastr.error('El campo tipo reflector es obligatorio');
+                 toastr.error('El campo Tipo Reflector es obligatorio');
                  return ;
             }
 
             if(this.tecnica.codigo !='ME' && this.tipo_reflector.length  > 1){
 
-                toastr.error('El campo tipo reflector no debe contener más de 1 caracteres');
+                toastr.error('El campo Tipo Reflector no debe contener más de 1 caracteres');
                 return ;
              }
 
             if (this.tecnica.codigo !='ME' && !this.reflector_referencia){
 
-                 toastr.error('El campo reflector referencia es obligatorio');
+                 toastr.error('El campo Reflector Referencia es obligatorio');
                  return ;
             }
 
             if(this.tecnica.codigo !='ME' && this.reflector_referencia  > 99.9){
 
-                toastr.error('El campo reflector referencia no debe ser mayor a 99.9');
+                toastr.error('El campo Reflector Referencia no debe ser mayor a 99.9');
                 return ;
              }
 
             if (this.tecnica.codigo !='ME' && !this.ganancia_referencia){
 
-                 toastr.error('El campo ganancia referencia es obligatorio');
+                 toastr.error('El campo Ganancia Referencia es obligatorio');
                  return ;
             }
 
             if(this.tecnica.codigo !='ME' && this.ganancia_referencia  > 999){
 
-                toastr.error('El campo ganancia referencia no debe ser mayor a 999');
+                toastr.error('El campo Ganancia Referencia no debe ser mayor a 999');
                 return ;
              }
 
              if (this.tecnica.codigo !='ME' && !this.nivel_registro){
 
-                 toastr.error('El campo nivel registro es obligatorio');
+                 toastr.error('El campo Nivel Registro es obligatorio');
                  return ;
             }
 
             if(this.tecnica.codigo !='ME' && this.nivel_registro  > 999){
 
-                toastr.error('El campo nivel registro no debe ser mayor a 999');
+                toastr.error('El campo Nivel Registro no debe ser mayor a 999');
                 return ;
              }
 
             if (this.tecnica.codigo !='ME' && !this.correccion_transferencia){
 
-                 toastr.error('El campo correccion transferencia es obligatorio');
+                 toastr.error('El campo Corrección Transferencia es obligatorio');
                  return ;
             }
 
             if(this.tecnica.codigo !='ME' && this.correccion_transferencia  > 999){
 
-                toastr.error('El campo correccion_transferencia no debe ser mayor a 999');
+                toastr.error('El campo Corrección Transferencia no debe ser mayor a 999');
                 return ;
              }
 
             if (this.tecnica.codigo !='ME' && !this.adicional_barrido){
 
-                 toastr.error('El campo adicional barrido es obligatorio');
+                 toastr.error('El campo Adicional Barrido es obligatorio');
                  return ;
             }
 
             if(this.tecnica.codigo !='ME' && this.adicional_barrido  > 999){
 
-                toastr.error('El campo adicional barrido no debe ser mayor a 999');
+                toastr.error('El campo Adicional Barrido no debe ser mayor a 999');
                 return ;
              }
 
             if (this.tecnica.codigo !='ME' && !this.amplificacion_total){
 
-                 toastr.error('El campo amplificacion total es obligatorio');
+                 toastr.error('El campo Amplificación Total es obligatorio');
                  return ;
             }
 
             if(this.tecnica.codigo !='ME' && this.amplificacion_total  > 999){
 
-                toastr.error('El campo amplificacion total no debe ser mayor a 999');
+                toastr.error('El campo Amplificación Total no debe ser mayor a 999');
                 return ;
              }
 
@@ -1718,68 +1718,71 @@ export default {
          addTabla_us_pa : function () {
 
             if (!this.elemento_us_pa) {
-                toastr.error('El campo elemento es obligatorio');
+                toastr.error('El campo Elemento es obligatorio');
                 return;
             }
 
             if (this.elemento_us_pa.length > 30) {
-                toastr.error('El campo elemento no debe contener más de 30 caracteres');
+                toastr.error('El campo Elemento no debe contener más de 30 caracteres');
                 return;
             }
 
             if (this.diametro_us_pa && this.diametro_us_pa.length > 10) {
-                toastr.error('El campo diametro no debe contener más de 10 caracteres');
+                toastr.error('El campo Diametro no debe contener más de 10 caracteres');
                 return;
             }
-
+            if (!this.diametro_us_pa.diametro) {
+                toastr.error('El campo Diametro es obligatorio');
+                return;
+            }
             if (!this.nro_indicacion_us_pa) {
-                toastr.error('El campo nivel registro es obligatorio');
+                toastr.error('El campo N° Indicación es obligatorio');
                 return;
             }
 
             if (!this.barrido_us_pa) {
-                toastr.error('El campo barrido es obligatorio');
+                toastr.error('El campo Barrido es obligatorio');
                 return;
             }
 
             if (this.nivel_nro_indicacion_us_paregistro > 9999) {
-                toastr.error('El campo nivel nro indicacion no debe ser mayor a 9999');
+                toastr.error('El campo N° Indicación no debe ser mayor a 9999');
                 return;
             }
 
             if (!this.posicion_examen_us_pa) {
-                toastr.error('El campo posicion examen es obligatorio');
+                toastr.error('El campo Posición Examen es obligatorio');
                 return;
             }
 
             if (this.posicion_examen_us_pa.length > 7) {
-                toastr.error('El campo posicion examen no debe contener más de 7 caracteres');
+                toastr.error('El campo Posición Examen no debe contener más de 7 caracteres');
                 return;
             }
 
             if (!this.angulo_incidencia_us_pa) {
-                toastr.error('El campo angulo incidencia es obligatorio');
+                toastr.error('El campo Ángulo Incidencia es obligatorio');
                 return;
             }
 
             if (this.angulo_incidencia_us_pa.length > 10) {
-                toastr.error('El campo angulo incidencia no debe contener más de 10 caracteres');
+                toastr.error('El campo Ángulo Incidencia no debe contener más de 10 caracteres');
                 return;
             }
 
             if (!this.camino_sonico_us_pa) {
-                toastr.error('El campo camino sonico es obligatorio');
+                toastr.error('El campo Camino Sónico es obligatorio');
                 return;
             }
 
             if (this.camino_sonico_us_pa.length > 7) {
-                toastr.error('El campo camino sonico no debe contener más de 6 caracteres');
+                toastr.error('El campo Camino Sónico no debe contener más de 6 caracteres');
                 return;
             }
 
             // Validación de decimales para camino_sonico_us_pa
             if (!this.validarDecimales(this.camino_sonico_us_pa)) {
-                toastr.error('El campo camino sonico no debe tener más de 2 decimales');
+                toastr.error('El campo Camino Sónico no debe tener más de 2 decimales');
                 return;
             }
 
@@ -1837,29 +1840,29 @@ export default {
             }
 
             if (this.longitud_us_pa > 9999) {
-                toastr.error('El campo longitud no debe ser mayor a 9999');
+                toastr.error('El campo Longitud no debe ser mayor a 9999');
                 return;
             }
 
             // Validación de decimales para longitud_us_pa
             if (!this.validarDecimales(this.longitud_us_pa)) {
-                toastr.error('El campo longitud no debe tener más de 2 decimales');
+                toastr.error('El campo Longitud no debe tener más de 2 decimales');
                 return;
             }
 
             if (!this.nivel_registro_us_pa) {
-                toastr.error('El campo nivel registro es obligatorio');
+                toastr.error('El campo Nivel Registro es obligatorio');
                 return;
             }
 
             if (this.nivel_registro_us_pa.length > 6) {
-                toastr.error('El campo nivel registro no debe contener más de 6 caracteres');
+                toastr.error('El campo Nivel Registro no debe contener más de 6 caracteres');
                 return;
             }
 
             // Validación de decimales para nivel_registro_us_pa
             if (!this.validarDecimales(this.nivel_registro_us_pa)) {
-                toastr.error('El campo nivel registro no debe tener más de 2 decimales');
+                toastr.error('El campo Nivel Registro no debe tener más de 2 decimales');
                 return;
             }
 
@@ -1979,12 +1982,12 @@ processExcelData(data, filas, columnas) {
             this.cantidad_generatrices_me = 50;
             
             if (!this.elemento_me) {
-                toastr.error('El campo elemento es obligatorio');
+                toastr.error('El campo Elemento es obligatorio');
                 return ;
             }
 
             if(this.elemento_me.length  > 30) {
-                toastr.error('El campo elemento no debe contener más de 30 caracteres');
+                toastr.error('El campo Elemento no debe contener más de 30 caracteres');
                 return ;
              }
 

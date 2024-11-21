@@ -36,16 +36,7 @@
                 </div>
               </div>
             </li>
-            <!-- Select para Remitos -->
-            <li class="list-group-item pointer">
-              <span class="titulo-li">Remitos</span>
-              <v-select
-                v-model="selectedRemitos"
-                :options="remitos"
-                label="formatted"
-                multiple
-              ></v-select>
-            </li>
+
             <!-- Select para OTs -->
             <li class="list-group-item pointer">
               <span class="titulo-li">OTs</span>
@@ -117,12 +108,18 @@
                   <tr>
                     <th class="col-md-1">Cantidad</th>
                     <th class="col-md-2">Producto</th>
+                    <th class="col-md-2">Metros Totales</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="producto in productos" :key="producto.producto_id">
                     <td>{{ producto.cantidad }}</td>
                     <td>{{ producto.descripcion }}</td>
+                    <td>{{ producto.cantidad * producto.metros }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><strong>Total:</strong></td>
+                    <td><strong>{{ total }}</strong></td>
                   </tr>
                 </tbody>
               </table>
@@ -153,7 +150,7 @@
                   <tr>
                     <th class="col-md-1">Cantidad</th>
                     <th class="col-md-2">Medida Placa</th>
-                    <th class="col-md-2">Total cm</th>
+                    <th class="col-md-2">Total M</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -270,7 +267,7 @@ export default {
             "0"
           )}`,
         }));
-        this.remitos = remitosFormatted;
+        this.selectedRemitos = remitosFormatted;
       } catch (error) {
         console.error("Error loading remitos:", error);
       }
@@ -339,9 +336,18 @@ export default {
     },
     // Calcular el total cm² de una placa
     calculateTotalCm(detalle) {
-      const dimensiones = this.extractDimensions(detalle.cm_agrupacion);
-      return dimensiones ? detalle.placas_total * dimensiones : 0;
-    },
+  // Extraer dimensiones en centímetros
+  const dimensionesCm = this.extractDimensions(detalle.cm_agrupacion);
+
+  // Convertir dimensiones a metros (dividir por 100)
+  const dimensionesMetros = dimensionesCm ? dimensionesCm / 100 : 0;
+
+  // Calcular el total en metros
+  const totalMetros = detalle.placas_total * dimensionesMetros;
+
+  // Mostrar el total con hasta 2 decimales
+  return totalMetros.toFixed(2);
+},
     // Extraer dimensiones de una cadena de formato "ancho x alto"
     extractDimensions(dimensionString) {
   const parts = dimensionString.split('x').map(part => part.trim()); // Divide la cadena y elimina espacios
@@ -354,8 +360,17 @@ export default {
   },
   computed: {
     calculateGrandTotal() {
-      return this.detallesPlacas.reduce((total, detalle) => {
-        return total + this.calculateTotalCm(detalle);
+    const total = this.detallesPlacas.reduce((total, detalle) => {
+      // Asegúrate de que el resultado sea un número sumando al total
+      return total + parseFloat(this.calculateTotalCm(detalle));
+    }, 0);
+
+    // Limitar el resultado a 2 decimales
+    return total.toFixed(2);
+  },
+  total() {
+      return this.productos.reduce((sum, producto) => {
+        return sum + producto.cantidad * producto.metros;
       }, 0);
     }
   },

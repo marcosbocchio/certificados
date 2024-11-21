@@ -35,14 +35,35 @@
                                  </div>
 
                                     <div v-if="isGasoducto">
-                                 <div class="col-md-3">
-                                        <div class="form-group" >
-                                            <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
-                                            <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!pk || !tipo_soldadura" @change="cambioReparacion_sn()" style="float:right">
-                                            <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
-                                            <v-select v-model="tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || !pk )"></v-select>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
+                                                
+                                                <!-- Checkbox para "R" -->
+                                                <input type="checkbox" id="reparacion_sn" 
+                                                    v-model="reparacion_sn" 
+                                                    :disabled="!pk || !tipo_soldadura" 
+                                                    @change="cambioReparacion_sn()" 
+                                                    style="float:right">
+                                                <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
+                                                
+                                                <!-- v-select con opciones personalizadas -->
+                                                <v-select 
+                                                    v-model="tipo_soldadura" 
+                                                    label="codigo" 
+                                                    :options="ot_tipo_soldaduras_filter_R" 
+                                                    id="ot_obra_tipo_soldaduras" 
+                                                    @input="cambioOtTipoSoldadura" 
+                                                    :disabled="(!isGasoducto || !obra || !pk)">
+                                                    
+                                                    <!-- Template para mostrar codigo y descripcion -->
+                                                    <template #option="option">
+                                                        <span class="upSelect">{{ option.codigo }}</span> <br>
+                                                        <span class="downSelect">{{ option.descripcion }}</span>
+                                                    </template>
+                                                </v-select>
+                                            </div>
                                         </div>
-                                 </div>
                                     </div>
                                     <div v-else>
                                     <div class="col-md-6">
@@ -1314,7 +1335,8 @@ import { eventSetReferencia } from '../event-bus';
                         map.set(item.id, true);
                             result.push({
                             id: item.id,
-                            codigo: item.codigo
+                            codigo: item.codigo,
+                            descripcion: item.descripcion
                         });
                     }
                 }

@@ -26,6 +26,7 @@ class ProductoRequest extends FormRequest
      
             return [
                 'codigo' => 'required|Max:15',
+                'metros' => 'required|Max:15',
                 'descripcion'  =>'nullable|Max:100',
                 'unidad_medida' => 'required',
             ];

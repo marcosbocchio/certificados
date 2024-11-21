@@ -39,11 +39,11 @@
               </div>
               <div class="form-group col-md-3">
                 <label>Planta *</label>
-                <v-select v-model="detalle.planta" :options="opcionesPlanta"></v-select>
+                <v-select v-model="detalle.planta" :options="opcionesPlanta" multiple :max="2"></v-select>
               </div>
               <div class="form-group col-md-3">
                 <label for="equipo_linea">Equipo/Linea *</label>
-                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="18">
+                <input type="text" v-model="detalle.equipo_linea" class="form-control" maxlength="60">
               </div>
 
               <div class="clearfix"></div>
@@ -61,8 +61,8 @@
                 <v-select v-model="detalle.operadores" :options="opcionesOperadores" multiple :max="2"></v-select>
               </div>
               <div class="form-group col-md-3">
-                <label>inspector *</label>
-                <v-select v-model="detalle.inspector_secl" :options="inspectores_op" label="name"></v-select>
+                <label>Inspector *</label>
+                <v-select v-model="detalle.inspector_secl" :options="inspectores_op" label="name" multiple :max="2"></v-select>
               </div>
               <div class="clearfix"></div>
               <div class="form-group col-md-3 boton-centrado">
@@ -91,12 +91,18 @@
                     <tr v-for="(detalle, index) in detalles" :key="index">
                       <td>{{ detalle.tecnica }}</td>
                       <td>{{ detalle.cantidad }}</td>
-                      <td>{{ detalle.planta.label }}</td>
+                      <td>
+                        {{ detalle.planta[0]?.label || '' }}{{ detalle.planta[1]?.label ? ' / ' + detalle.planta[1].label : '' }}
+                      </td>
                       <td>{{ detalle.equipo_linea }}</td>
                       <td>{{ detalle.horario }}</td>
                       <td>{{ detalle.n_informe }}</td>
-                      <td>{{ obtenerLabelOperador(detalle.operadores[0]) }} / {{ obtenerLabelOperador(detalle.operadores[1]) }}</td>
-                      <td>{{ detalle.inspector_secl.name }}</td>
+                      <td>
+                        {{ detalle.operadores[0]?.label || '' }}{{ detalle.operadores[1]?.label ? ' / ' + detalle.operadores[1].label : '' }}
+                      </td>
+                      <td>
+                        {{ detalle.inspector_secl[0]?.name || '' }}{{ detalle.inspector_secl[1]?.name ? ' / ' + detalle.inspector_secl[1].name : '' }}
+                      </td>
                       <td>
                         <a @click="quitarDetalle(index)"><app-icon img="minus-circle" color="black"></app-icon></a>
                       </td>
@@ -249,12 +255,24 @@ export default {
     const errores = [];
     if (!this.detalle.tecnica) errores.push('Por favor, selecciona una técnica.');
     if (this.detalle.cantidad <= 0) errores.push('La cantidad debe ser mayor que cero.');
-    if (!this.detalle.planta) errores.push('Por favor, selecciona una planta.');
+    if (!this.detalle.planta || this.detalle.planta.length === 0) {
+      errores.push('Por favor, selecciona al menos una planta.');
+    } else if (this.detalle.planta.length > 2) {
+      errores.push('No puedes seleccionar más de dos plantas.');
+    }
     if (!this.detalle.equipo_linea) errores.push('Por favor, ingresa el equipo o línea.');
     if (!this.detalle.horario) errores.push('Por favor, selecciona un horario.');
     if (!this.detalle.n_informe) errores.push('Por favor, ingresa el número de informe.');
-    if (!this.detalle.inspector_secl) errores.push('Por favor, ingresa un inspector.');
-    if (this.detalle.operadores.length > 2) errores.push('No puedes seleccionar más de dos operadores.');
+    if (!this.detalle.inspector_secl || this.detalle.inspector_secl.length === 0) {
+      errores.push('Por favor, selecciona al menos un inspector.');
+    } else if (this.detalle.inspector_secl.length > 2) {
+      errores.push('No puedes seleccionar más de dos inspectores.');
+    }
+    if (this.detalle.operadores.length === 0) {
+      errores.push('Debes seleccionar al menos un operador.');
+    } else if (this.detalle.operadores.length > 2) {
+      errores.push('No puedes seleccionar más de dos operadores.');
+    }
 
     errores.forEach(error => toastr.error(error));
     return errores.length === 0;
@@ -308,23 +326,22 @@ export default {
 
       axios.post('/api/partes-manuales', data)
       .then(response => {
-        this.isSaving = true;
-        window.open('/pdf-partemanual/' + response.data.id, '_blank');
-        window.location.href = '/partes/ot/' + this.ot_id;
-        this.mostrarToast('Datos guardados exitosamente', 'success');
-      })
-      .catch(error => {
+    this.isSaving = false; // Establece en false después de guardar
+    window.open('/pdf-partemanual/' + response.data.id, '_blank');
+    window.location.href = '/partes/ot/' + this.ot_id;
+    this.mostrarToast('Datos guardados exitosamente', 'success');
+})
+.catch(error => {
+    this.isSaving = false; // Establece en false también en caso de error
     if (error.response && error.response.status === 422) {
-        const errors = error.response.data.errors; // Asegúrate de que el backend envía un objeto 'errors'
+        const errors = error.response.data.errors;
         console.error('Errores de validación:', errors);
-        this.isSaving = false;
         Object.keys(errors).forEach(key => {
             errors[key].forEach(message => {
                 toastr.error(message, key, { timeOut: 5000 });
             });
         });
     } else {
-        // Manejar otros tipos de errores
         console.error('Error inesperado:', error.message);
         toastr.error(error.message, 'Error inesperado', { timeOut: 5000 });
     }

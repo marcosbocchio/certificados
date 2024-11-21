@@ -26,11 +26,16 @@ class ProductosController extends Controller
     {
         return  Productos::with('unidadMedidas')->orderBy('descripcion','ASC')->get();
     }
-
-    public function paginate(Request $request){
-
-        return  Productos::with('unidadMedidas')->orderBy('codigo','ASC')->paginate(10);
-
+    public function paginate(Request $request)
+    {
+        $filtro = $request->input('search');
+        $stockeable = $request->input('stockeable_sn');
+        $relacionado = $request->input('relacionado_a_placas_sn');
+    
+        return Productos::with('unidadMedidas')
+                        ->filtro($filtro, $stockeable, $relacionado)  // Pasa los nuevos parámetros al scopeFiltro
+                        ->orderBy('codigo', 'ASC')
+                        ->paginate(10);
     }
 
     public function getProductoStockeable(){
@@ -139,9 +144,11 @@ class ProductosController extends Controller
 
         $producto->codigo = $request['codigo'];
         $producto->descripcion = $request['descripcion'];
+        $producto->metros = $request['metros'];
         $producto->unidades_medida_id = $request['unidad_medida']['id'];
         $producto->visible_ot = $request->visible_ot;
         $producto->stockeable_sn = $request->stockeable_sn;
+        $producto->relacionado_a_placas_sn = $request->relacionado_a_placas_sn;
         $producto->save();
 
     }
