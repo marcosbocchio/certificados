@@ -124,7 +124,7 @@ footer {
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
                 <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
                 <td id="resaltar-borde" style="width: 8mm;"><p class="vertical-text" >Posición</p></td>
-                <td><p style="margin: 0mm -6mm;" class="vertical-text">GMAW</p></td>
+                <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW / SMAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
@@ -428,7 +428,7 @@ footer {
                             <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
                             <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
                             <td id="resaltar-borde" style="width: 8mm;"><p class="vertical-text" >Posición</p></td>
-                            <td><p style="margin: 0mm -6mm;" class="vertical-text">GMAW</p></td>
+                            <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW / SMAW</p></td>
                             <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW</p></td>
                             <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
                             <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
