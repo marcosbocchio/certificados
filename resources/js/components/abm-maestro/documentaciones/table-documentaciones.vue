@@ -16,7 +16,7 @@
               <th class="col-md-1">Método</th>
               <th class="col-md-2">Usuario</th>
               <th class="col-md-1">INT. Nº</th>
-              <th class="col-md-2">Fecha De Caducidad</th>
+              <th class="col-md-2">Caducidad</th>
               <th >&nbsp;</th>
             </tr>
           </thead>
