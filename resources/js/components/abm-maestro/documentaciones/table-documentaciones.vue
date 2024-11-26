@@ -16,6 +16,7 @@
               <th class="col-md-1">Método</th>
               <th class="col-md-2">Usuario</th>
               <th class="col-md-1">INT. Nº</th>
+              <th class="col-md-2">Fecha De Caducidad</th>
               <th >&nbsp;</th>
             </tr>
           </thead>
@@ -41,6 +42,7 @@
             <td v-else-if="registro.tipo == 'FUENTE' && registro.interno_fuente[0]">{{ registro.interno_fuente[0]['nro_serie']}}</td>
             <td  v-else-if="registro.tipo == 'VEHICULO' && registro.vehiculo[0]">{{ registro.vehiculo[0]['nro_interno']}}</td>
             <td  v-else>&nbsp;</td>
+            <td>{{ formatFecha(registro.fecha_caducidad) }}</td>
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('M_documentaciones_edita')"><span class="fa fa-edit"></span></button>
             </td>
