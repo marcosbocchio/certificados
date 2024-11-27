@@ -638,7 +638,7 @@ async guardarObservacion() {
   }).then(response => {
     this.isLoading = false; // Finaliza el estado de carga
     toastr.success('Detalles actualizados con éxito');
-    window.location.href = '/area/enod/asistencia';
+    window.location.href = '/area/enod/asistencia/horas';
   }).catch(error => {
     this.isLoading = false; // Finaliza el estado de carga
     toastr.error('Error al actualizar los detalles');
