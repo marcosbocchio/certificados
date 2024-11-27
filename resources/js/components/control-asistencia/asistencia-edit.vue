@@ -392,6 +392,10 @@ async guardarObservacion() {
       toastr.error('Debe seleccionar un operador');
       return;
     }
+    if (!this.contratista_selected) {
+      toastr.error('Debe seleccionar un cliente');
+      return;
+    }
     if (!this.entrada_selected) {
       toastr.error('Debe seleccionar horario de entrada');
       return;
