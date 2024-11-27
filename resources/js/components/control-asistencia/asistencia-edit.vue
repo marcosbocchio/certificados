@@ -61,13 +61,13 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="contratista">cliente</label>
+            <label for="contratista">cliente *</label>
             <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre_fantasia" id="contratista"></v-select>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="parte">Parte</label>
+            <label for="parte">Parte *</label>
             <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
           </div>
         </div>
