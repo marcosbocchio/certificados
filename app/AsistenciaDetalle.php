@@ -24,6 +24,10 @@ class AsistenciaDetalle extends Model
     {
         return $this->belongsTo(User::class, 'operador_id');
     }
+    public function ayudante()
+    {
+        return $this->belongsTo(User::class, 'ayudante_id');
+    }
 
     // Relación con Clientes
     public function contratista()

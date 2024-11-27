@@ -26,11 +26,11 @@ class AsistenciaController extends Controller
         $this->middleware(['role_or_permission:Sistemas|A_asistencia_acceder'], ['only' => ['callViewTotalStock', 'getAsistencia','callView']]);
     }
 
-    public function callView()
+    public function callViewServicios()
     {
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
-        $header_descripcion = ".";
+        $header_descripcion = "Servicios Extras";
         
         // Obtener los frente_id únicos de AsistenciaHora
         $frenteIds = AsistenciaHora::distinct()->pluck('frente_id');
@@ -42,7 +42,25 @@ class AsistenciaController extends Controller
         $frentes = Frentes::whereIn('id', $frenteIds)->get();
         
         // Pasar los datos a la vista
-        return view('control-asistencia.asistencia-table', compact('user', 'header_titulo', 'header_descripcion', 'frentes','user_frente'));
+        return view('control-asistencia.asistencia-table-servicios', compact('user', 'header_titulo', 'header_descripcion', 'frentes','user_frente'));
+    }
+    public function callViewHoras()
+    {
+        $user = auth()->user();
+        $header_titulo = "Control Asistencia";
+        $header_descripcion = "Horas Extras";
+        
+        // Obtener los frente_id únicos de AsistenciaHora
+        $frenteIds = AsistenciaHora::distinct()->pluck('frente_id');
+        
+        // Obtener los frentes correspondientes
+        $user_frente = FrenteOperador::where('user_id',$user->id)->get();
+
+
+        $frentes = Frentes::whereIn('id', $frenteIds)->get();
+        
+        // Pasar los datos a la vista
+        return view('control-asistencia.asistencia-table-horas', compact('user', 'header_titulo', 'header_descripcion', 'frentes','user_frente'));
     }
 
     public function resumenView()
@@ -100,7 +118,52 @@ class AsistenciaController extends Controller
             'metodoEnsayos' // Incluimos MetodoEnsayos en la vista
         ));
     }
+    public function nuevoHoras()
+    {
+        $user = auth()->user();
+        $header_titulo = "Control Asistencia";
+        $header_descripcion = "Carga";
 
+        // Obtener frentes asociados al usuario
+        $user_frente = FrenteOperador::where('user_id', $user->id)->pluck('frente_id');
+
+        // Obtener frentes con control de horas extras
+        $frente_sn = Frentes::whereIn('id', $user_frente)
+            ->where('controla_hs_extras_sn', 1)
+            ->get();
+
+        // Obtener todos los contratistas
+        $contratistas = Clientes::all();
+
+        // Obtener todos los operarios habilitados
+        $operarios = User::whereNull('cliente_id')
+                ->where('habilitado_sn', 1)
+                ->orderBy('name', 'asc')
+                ->get();
+
+        // Obtener las fechas de asistencia agrupadas por frente_id
+        $fechasPorFrente = AsistenciaHora::select('frente_id', 'fecha')
+            ->get()
+            ->groupBy('frente_id')
+            ->map(function ($group) {
+                return $group->pluck('fecha')->toArray();
+            });
+
+        // Obtener todos los datos de la tabla MetodoEnsayos
+        $metodoEnsayos = MetodoEnsayos::all();
+
+        // Retornar los datos a la vista, incluyendo MetodoEnsayos
+        return view('control-asistencia.asistencia-nuevo-horas', compact(
+            'user', 
+            'header_titulo', 
+            'header_descripcion', 
+            'frente_sn', 
+            'operarios', 
+            'contratistas', 
+            'fechasPorFrente', 
+            'metodoEnsayos' // Incluimos MetodoEnsayos en la vista
+        ));
+    }
     public function copia($id)
     {
         $user = auth()->user();
@@ -126,7 +189,7 @@ class AsistenciaController extends Controller
         return view('control-asistencia.asistencia-copia', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id','fechasPorFrente'));
     }
 
-    public function edit($id)
+    public function editServico($id)
     {
         $user = auth()->user();
         $header_titulo = "Control Asistencia";
@@ -145,7 +208,26 @@ class AsistenciaController extends Controller
 
         return view('control-asistencia.asistencia_edit', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id','metodoEnsayos'));
     }
+    public function editHoras($id)
+    {
+        $user = auth()->user();
+        $header_titulo = "Control Asistencia";
+        $header_descripcion = "Edit";
+        $user_frente = FrenteOperador::where('user_id', $user->id)->pluck('frente_id');
+        $frente_sn = Frentes::whereIn('id', $user_frente)
+            ->where('controla_hs_extras_sn', 1)
+            ->get();
+            $contratistas = Clientes::all();
+        // Obtener todos los datos de la tabla MetodoEnsayos
+        $metodoEnsayos = MetodoEnsayos::all();
+        $operarios = User::whereNull('cliente_id')
+                ->where('habilitado_sn', 1)
+                ->orderBy('name', 'asc')
+                ->get();
 
+        return view('control-asistencia.asistencia_edithoras', compact('user', 'header_titulo', 'header_descripcion', 'frente_sn', 'operarios', 'contratistas', 'id','metodoEnsayos'));
+    }
+    
     public function pagos()
     {
         $user = auth()->user();
@@ -264,27 +346,64 @@ class AsistenciaController extends Controller
         return response()->json(['message' => 'No se encontraron registros.'], 404);
     }
 
-    public function getPaginatedAsistencia(Request $request)
+    public function getPaginatedAsistenciaContratista(Request $request)
     {
-        $query = AsistenciaHora::with('frente');
+        $query = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista', 'detalles.metodoEnsayo']);
     
+        // Filtro por frente
         if ($request->has('frente_id') && $request->frente_id) {
             $query->where('frente_id', $request->frente_id);
         }
     
+        // Filtro por fecha
         if ($request->has('date') && $request->date) {
             [$year, $month] = explode('-', $request->date);
             $query->whereMonth('fecha', $month)->whereYear('fecha', $year);
         }
     
+        // Filtro por detalle.contratista_id != null
+        $query->whereHas('detalles', function ($q) {
+            $q->whereNotNull('contratista_id');
+        });
+    
+        // Ordenar y paginar
         $asistencia = $query->orderBy('fecha', 'desc')->paginate(10);
+    
         return response()->json($asistencia);
     }
+
+    public function getPaginatedAsistenciaHoras(Request $request)
+    {
+        $query = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista', 'detalles.metodoEnsayo']);
+
+        // Filtro por frente
+        if ($request->has('frente_id') && $request->frente_id) {
+            $query->where('frente_id', $request->frente_id);
+        }
+
+        // Filtro por fecha
+        if ($request->has('date') && $request->date) {
+            [$year, $month] = explode('-', $request->date);
+            $query->whereMonth('fecha', $month)->whereYear('fecha', $year);
+        }
+
+        // Filtro por detalle.contratista_id == null
+        $query->whereHas('detalles', function ($q) {
+            $q->whereNull('contratista_id');
+        });
+
+        // Ordenar y paginar
+        $asistencia = $query->orderBy('fecha', 'desc')->paginate(10);
+
+        return response()->json($asistencia);
+    }
+
+    
     
     public function getAsistencia($id)
     {
 
-        $asistencia = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista','detalles.metodoEnsayo'])->findOrFail($id);
+        $asistencia = AsistenciaHora::with(['frente', 'detalles.operador','detalles.ayudante', 'detalles.contratista','detalles.metodoEnsayo'])->findOrFail($id);
 
         return response()->json($asistencia);
     }
@@ -301,6 +420,7 @@ class AsistenciaController extends Controller
             $asistenciaDetalle = new AsistenciaDetalle;
             $asistenciaDetalle->asistencia_horas_id = $asistenciaHora->id;
             $asistenciaDetalle->operador_id = $detalle['operador']['id'];
+            $asistenciaDetalle->ayudante_id = $detalle['ayudante']['id'];
             $asistenciaDetalle->ayudante_sn = $detalle['ayudante_sn'];
             $asistenciaDetalle->entrada = $detalle['entrada'];
             $asistenciaDetalle->salida = $detalle['salida'];
@@ -328,6 +448,7 @@ class AsistenciaController extends Controller
             $nuevoDetalle = new AsistenciaDetalle([
                 'asistencia_horas_id' => $asistenciaHora->id,
                 'operador_id' => $detalle['operador']['id'],
+                'ayudante_id' => $detalle['ayudante']['id'],
                 'ayudante_sn' => $detalle['ayudante_sn'],
                 'entrada' => $detalle['entrada'],
                 'salida' => $detalle['salida'],
@@ -362,6 +483,7 @@ class AsistenciaController extends Controller
             $nuevoDetalle = new AsistenciaDetalle([
                 'asistencia_horas_id' => $id,
                 'operador_id' => $request->operador_id,
+                'ayudante_id'=> $request->ayudante_id,
                 'ayudante_sn' => $request->ayudante_sn,
                 'entrada' => $request->entrada,
                 'salida' => $request->salida,
@@ -369,7 +491,7 @@ class AsistenciaController extends Controller
                 'parte' => $request->parte,
                 'observaciones' => $request->observaciones ?? null,
                 'hora_extra_sn' => $request->hora_extra_sn,
-                'tecnica_id' =>$detalle->metodo_ensayo,
+                'tecnica_id' =>$request->metodo_ensayo,
                 's_d_f_sn' => $request->s_d_f_sn,
             ]);
 

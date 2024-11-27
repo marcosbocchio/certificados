@@ -497,7 +497,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/guardar_asistencia', 'AsistenciaController@guardarAsistencia');
     Route::post('/asistencia-comprobar-parte', 'AsistenciaController@controlarParte');
     Route::get('/asistencia-comprobar-user/{id_user}/{fecha}', 'AsistenciaController@controlarUser');
-    Route::get('/area/enod/asistencia', 'AsistenciaController@getPaginatedAsistencia')->name('api.asistencia.paginated');
+    Route::get('/area/enod/asistencia/servicios', 'AsistenciaController@getPaginatedAsistenciaContratista')->name('api.asistencia.paginatedservicios');
+    Route::get('/area/enod/asistencia/horas', 'AsistenciaController@getPaginatedAsistenciaHoras')->name('api.asistencia.paginatedhoras');
     Route::get('/asistencia/{id}', 'AsistenciaController@getAsistencia');
     Route::get('/asistencia/getferiados/{year}', 'AsistenciaController@getFeriados');
     Route::post('/asistencia/{id}/update', 'AsistenciaController@updateAsistencia')->name('asistencia.update');

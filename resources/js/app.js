@@ -374,8 +374,10 @@ import EditStock from './components/stock/stock-edit.vue';
 Vue.component('stock-edit', EditStock);
 
 /* Asistencia */
-import Asistencia from './components/control-asistencia/asistencia-table.vue';
-Vue.component('asistencia-table', Asistencia);
+import AsistenciaServicios from './components/control-asistencia/asistencia-table-servicios.vue';
+Vue.component('asistencia-table-servicios', AsistenciaServicios);
+import AsistenciaHoras from './components/control-asistencia/asistencia-table-horas.vue';
+Vue.component('asistencia-table-horas', AsistenciaHoras);
 import AsistenciaPagos from './components/control-asistencia/asistencia-pagos.vue';
 Vue.component('asistencia-pagos', AsistenciaPagos);
 import AsistenciaPagosServicios from './components/control-asistencia/asistencia-pagos-servicios.vue';
@@ -384,8 +386,13 @@ Vue.component('asistencia-pagos-servicios', AsistenciaPagosServicios);
 import AsistenciaNuevo from './components/control-asistencia/asistencia-nuevo.vue';
 Vue.component('asistencia-nuevo', AsistenciaNuevo);
 
+import AsistenciaNuevoHoras from './components/control-asistencia/asistencia-nuevo-horas.vue';
+Vue.component('asistencia-nuevo-horas', AsistenciaNuevoHoras);
+
 import AsistenciaEdit from './components/control-asistencia/asistencia-edit.vue';
 Vue.component('asistencia-edit', AsistenciaEdit);
+import AsistenciaEditHoras from './components/control-asistencia/asistencia-edit-horas.vue';
+Vue.component('asistencia-edit-horas', AsistenciaEditHoras);
 
 import AsistenciaResumen from './components/control-asistencia/asistencia-resumen.vue';
 Vue.component('asistencia-resumen', AsistenciaResumen);

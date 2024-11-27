@@ -34,45 +34,50 @@
           </div>
         </div>
         <div class="col-md-3">
-  <div class="form-group">
-    <label for="entrada">Entrada *</label>
-    <div class="bootstrap-timepicker">
-      <div class="input-group">
-        <div class="input-group-addon">
-          <i class="fa fa-clock-o"></i>
+          <div class="form-group">
+            <label for="operador">ayudante</label>
+            <v-select v-model="operador_ayudante" :options="operarios_opciones" label="name" id="ayudante"></v-select>
+          </div>
         </div>
-        <timeselector v-model="entrada_selected"></timeselector>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="col-md-3">
-  <div class="form-group">
-    <label for="salida">Salida *</label>
-    <div class="bootstrap-timepicker">
-      <div class="input-group">
-        <div class="input-group-addon">
-          <i class="fa fa-clock-o"></i>
-        </div>
-        <timeselector v-model="salida_selected"></timeselector>
-      </div>
-    </div>
-  </div>
-</div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="contratista">cliente</label>
+            <label for="entrada">Entrada *</label>
+            <div class="bootstrap-timepicker">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+                <timeselector v-model="entrada_selected"></timeselector>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="salida">Salida *</label>
+            <div class="bootstrap-timepicker">
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+                <timeselector v-model="salida_selected"></timeselector>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="contratista">cliente *</label>
             <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre_fantasia" id="contratista"></v-select>
           </div>
         </div>
-        <div class="clearfix"></div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="parte">Parte</label>
+            <label for="parte">Parte *</label>
             <input id="parte" type="text" v-model="parte_selected" class="form-control">
           </div>
         </div>
-        <div class="col-md-3" v-if="contratista_selected">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="metodoEnsayos">Técnica</label>
             <v-select v-model="metodoEnsayo_selected" :options="metodo_ensayos" label="metodo">
@@ -82,17 +87,6 @@
                 <span class="downSelect">{{ option.descripcion }}</span>
               </template>
             </v-select>
-          </div>
-        </div>
-        <!-- Hora Extra Checkbox -->
-        <div class="col-md-3">
-          <div class="form-group" style="margin-top: 30px;">
-            <label v-if="mostrarHoraExtra">
-              <input type="checkbox" v-model="hora_extra_sn"> Pagar Hora Extra
-          </label>
-          <label v-if="mostrarSDFCheckbox">
-              <input type="checkbox" v-model="sdf_sn"> Pagar Sab. / Dom. / Feriado
-          </label>
           </div>
         </div>
         <div class="col-md-3">
@@ -110,29 +104,19 @@
           <thead>
             <tr>
               <th class="col-md-2 text-center">Operador</th>
-              <th class="col-md-1 text-center">Responsabilidad</th>
+              <th class="col-md-1 text-center">Ayudante</th>
               <th class="col-md-1 text-center">Entrada</th>
               <th class="col-md-1 text-center">Salida</th>
               <th class="col-md-2 text-center">cliente</th>
               <th class="col-md-2 text-center">Parte</th>
               <th class="col-md-1 text-center" v-if="detalles.some(detalle => detalle.contratista)">Técnica</th>
-              <th class="col-md-1 text-center">
-                <!-- Mostrar el texto y columna de acuerdo a los estados -->
-                <span v-if="mostrarSDFCheckboxCol">Sab. Dom. Fer.</span>
-                <span v-else-if="mostrarHoraExtraCol">Horas Extras</span>
-              </th>
-              <th class="col-md-1 text-center" colspan="2">Acciones</th>
+              <th class="col-md-1 text-center" colspan="1">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
               <td class="text-center">{{ detalle.operador.name }}</td>
-              <td>
-                <select v-model="detalle.ayudante_sn" class="form-control">
-                  <option value="1">Operador</option>
-                  <option value="0">Ayudante</option>
-                </select>
-              </td>
+                <td class="text-center">{{ detalle.ayudante.name }}</td>
               <td>
                 <input type="time" v-model="detalle.entrada" class="form-control" @change="calcularHorasExtrasDetall(detalle, index)" />
               </td>
@@ -154,7 +138,7 @@
                   class="form-control text-center"
                 />
               </td>
-              <td :class="{ 'hidden': !detalles.some(detalle => detalle.contratista) }">
+              <td class="text-center">
                 <v-select
                   v-model="detalle.metodo_ensayo"
                   :options="metodo_ensayos"
@@ -167,17 +151,6 @@
                     <span class="downSelect">{{ option.descripcion }}</span>
                   </template>
                 </v-select>
-              </td>
-              <td class="text-center">
-                <!-- Mostrar solo una opción dependiendo del estado -->
-                <label v-if="mostrarSDFCheckboxCol">
-                  <input type="checkbox" v-model="detalle.s_d_f_sn" :disabled="detalle.contratista != null">
-                </label>
-                <label v-else-if="mostrarHoraExtraCol">
-                  <label>
-                    <input type="checkbox" v-model="detalle.hora_extra_sn" :disabled="detalle.contratista != null">
-                </label>
-                </label>
               </td>
               <td class="col-md-1 text-center" style="width: 10px;margin-right: 10px">
                 <i :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'" 
@@ -269,6 +242,7 @@ export default {
       frente_selected: '',
       fechas_bloqueadas: [],
       operador_selected: '',
+      operador_ayudante: '',
       entrada_selected: moment('08:00', 'HH:mm').toDate(),
       salida_selected: moment('16:00', 'HH:mm').toDate(),
       contratista_selected: null,
@@ -281,87 +255,7 @@ export default {
       feriados: [],
     };
   },
-  computed: {
-    mostrarHoraExtra() {
-    const fechaSeleccionada = new Date(this.fecha);
-    const diaSemana = fechaSeleccionada.getDay();
 
-    // Verificamos si el checkbox SDF debería mostrarse
-    if (this.mostrarSDFCheckboxCol) {
-        return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
-    }
-
-    // Verificamos si es día de semana (Lunes a Viernes, es decir, 1 a 5)
-    const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
-
-    // Verificamos si un contratista está seleccionado
-    if (this.contratista_selected != null) {
-        this.hora_extra_sn = false; // Desactiva el checkbox de hora extra
-        return false; // No mostrar el checkbox de hora extra
-    }
-
-    // Si las horas calculadas son mayores que las horas diarias laborables y es día de semana
-    if (this.horas_calculadas > this.frente_selected.horas_diarias_laborables && esDiaDeSemana) {
-        this.hora_extra_sn = true; // Marca el checkbox como true
-        return true; // Mostrar el checkbox de hora extra
-    } else {
-        this.hora_extra_sn = false;
-        return false; // No mostrar el checkbox de hora extra
-    }
-},
-    
-    mostrarHoraExtraCol() {
-        const fechaSeleccionada = new Date(this.fecha);
-        const diaSemana = fechaSeleccionada.getDay();
-
-        // Verificamos si el checkbox SDF debería mostrarse
-        if (this.mostrarSDFCheckboxCol) {
-            return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
-        }
-
-        const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
-
-        if (esDiaDeSemana) {
-            return true; // Mostrar el checkbox
-        } else {
-            return false; // No mostrar el checkbox
-        }
-    },
-    
-    mostrarSDFCheckbox() {
-    const fechaSeleccionada = new Date(this.fecha);
-    const diaSemana = fechaSeleccionada.getDay();
-    
-    const esSabadoODomingo = diaSemana === 5 || diaSemana === 6;
-
-
-    if (this.contratista_selected != null) {
-        this.sdf_sn = false; 
-        return false; 
-    }
-
-    if (esSabadoODomingo || this.esFeriado()) {
-        this.sdf_sn = true;
-        return true;
-    } else {
-        this.sdf_sn = false;
-        return false;
-    }
-},
-
-    mostrarSDFCheckboxCol() {
-        const fechaSeleccionada = new Date(this.fecha);
-        const diaSemana = fechaSeleccionada.getDay();
-
-        const esSabadoODomingo = diaSemana === 5 || diaSemana === 6;
-
-        if (esSabadoODomingo || this.esFeriado()) {
-            return true; // Mostrar el checkbox
-        } else {
-            return false; // No mostrar el checkbox
-        }
-    },
-},
   methods: {
     
     abrirObservacionModal(index) {
@@ -369,57 +263,6 @@ export default {
       this.observacionTexto = this.detalles[index].observaciones || ''; // Cargar la observación si existe
       $('#observacionModal').modal('show'); // Mostrar el modal (usando jQuery)
     },
-    calcularHorasExtrasDetall(detalle, index) {
-  const entrada = detalle.entrada;
-  const salida = detalle.salida;
-  const horasLaborales = this.frente_selected.horas_diarias_laborables; // Dará valores como 8.0
-
-  console.log('entro en calcularHorasExtrasDetall');
-
-  if (entrada && salida) {
-    // Convertimos entrada y salida a arrays de horas y minutos
-    const [entradaHoras, entradaMinutos] = entrada.split(':').map(Number);
-    const [salidaHoras, salidaMinutos] = salida.split(':').map(Number);
-
-    // Creamos objetos Date para entrada y salida
-    const entradaDate = new Date();
-    entradaDate.setHours(entradaHoras, entradaMinutos, 0, 0);
-
-    const salidaDate = new Date();
-    salidaDate.setHours(salidaHoras, salidaMinutos, 0, 0);
-
-    // Calculamos la diferencia total en minutos entre entrada y salida
-    const diferenciaMinutos = (salidaDate - entradaDate) / (1000 * 60); // Diferencia en minutos totales
-
-    // Calculamos las horas y minutos trabajados
-    const horasTrabajadas = Math.floor(diferenciaMinutos / 60); // Horas completas trabajadas
-    const minutosTrabajados = diferenciaMinutos % 60; // Minutos restantes
-
-    // Convertimos las horas laborales estándar a minutos
-    const minutosLaboralesTotales = horasLaborales * 60; // Por ejemplo, 8.0 horas * 60 = 480 minutos
-
-    // Calculamos los minutos trabajados totales
-    const minutosTrabajadosTotales = (horasTrabajadas * 60) + minutosTrabajados;
-
-    console.log(minutosTrabajadosTotales, minutosLaboralesTotales);
-
-    // Comparamos los minutos trabajados con los minutos laborales
-    if (minutosTrabajadosTotales > minutosLaboralesTotales) {
-      // Verifica si detalle.contratista es null o vacío antes de marcar hora_extra_sn como true
-      if (detalle.contratista === null || detalle.contratista === '') {
-        detalle.hora_extra_sn = true; // Marca el checkbox de horas extras si no hay contratista
-      } else {
-        detalle.hora_extra_sn = false; // Desmarca el checkbox si hay un contratista
-      }
-    } else {
-      detalle.hora_extra_sn = false; // Desmarca el checkbox si no hay horas extra
-    }
-
-  } else {
-    // Si faltan datos de entrada o salida, desmarcamos las horas extras
-    detalle.hora_extra_sn = false;
-  }
-},
     guardarObservacion() {
       if (this.observacionIndex !== null) {
         this.$set(this.detalles[this.observacionIndex], 'observaciones', this.observacionTexto);
@@ -504,22 +347,23 @@ export default {
       toastr.error('Debe seleccionar horario de salida');
       return;
     }
-    if (this.contratista_selected && !this.parte_selected) {
-      toastr.error('Parte obligatorio');
+    if (!this.contratista_selected) {
+      toastr.error('Debe seleccionar un cliente');
       return;
     }
-    if(!this.mostrarSDFCheckboxCol){
-      this.sdf_sn = false;
+    if (this.contratista_selected && !this.parte_selected) {
+      toastr.error('Debe ingresar un parte');
+      return;
     }
      // Verificar si la fecha ya está bloqueada para este operador
-  const fecha_operador = await this.verificarUser(this.operador_selected.id, this.fecha);
-  const fechaSeleccionada = moment(this.fecha);
+    const fecha_operador = await this.verificarUser(this.operador_selected.id, this.fecha);
+    const fechaSeleccionada = moment(this.fecha);
 
-  // Comprobar si el mes está cerrado
-  if (fecha_operador.fecha_pago_mes != null) {
-    toastr.error('El operador tiene el mes cerrado');
-    return;
-  }
+    // Comprobar si el mes está cerrado
+    if (fecha_operador.fecha_pago_mes != null) {
+      toastr.error('El operador tiene el mes cerrado');
+      return;
+    }
 
   // Definir las semanas del mes
   const inicioMes = fechaSeleccionada.clone().startOf('month');
@@ -564,11 +408,12 @@ export default {
     // Calcular los valores para nuevoDetalle
     const nuevoDetalle = {
       operador: this.operador_selected,
+      ayudante: this.operador_ayudante,
       entrada: moment(this.entrada_selected).format('HH:mm'),
       salida: moment(this.salida_selected).format('HH:mm'),
       contratista: this.contratista_selected,
       parte: this.parte_selected,
-      ayudante_sn: this.operador_selected.habilitado_arn_sn,
+      ayudante_sn: this.operador_ayudante ? 1 : 0,
       hora_extra_sn: this.hora_extra_sn ? 1 : 0, // Convertir true/false a 1/0
       s_d_f_sn: this.sdf_sn ? 1 : 0,
       metodo_ensayo: this.metodoEnsayo_selected,
@@ -578,6 +423,7 @@ export default {
     // Agregar nuevoDetalle a la lista de detalles
     this.detalles.push(nuevoDetalle);
     this.operador_selected = '';
+    this.operador_ayudante = '';
     this.entrada_selected = moment('08:00', 'HH:mm').toDate();
     this.salida_selected = moment('16:00', 'HH:mm').toDate();
     this.contratista_selected = null;
@@ -634,7 +480,7 @@ export default {
       })
       .then(response => {
         toastr.success('Guardado exitosamente:', response);
-        window.location.href = '/area/enod/asistencia';
+        window.location.href = '/area/enod/asistencia/servicios';
       })
       .catch(error => {
         toastr.error('Error al guardar:', error);
@@ -658,100 +504,16 @@ export default {
   }
 },
 
-calcularDiferencia(horaInicio, horaFin) {
-  const inicio = this.convertirATiempo(horaInicio); // { hours, minutes, seconds }
-  const fin = this.convertirATiempo(horaFin); // { hours, minutes, seconds }
-
-  if (!inicio || !fin) {
-    console.error('No se pudieron obtener las horas correctamente.');
-    return null;
-  }
-
-  // Convertir ambas horas a segundos totales para mayor precisión
-  const segundosInicio = inicio.hours * 3600 + inicio.minutes * 60 + inicio.seconds;
-  const segundosFin = fin.hours * 3600 + fin.minutes * 60 + fin.seconds;
-
-  // Calcular diferencia en segundos
-  let diferenciaSegundos = segundosFin - segundosInicio;
-
-  // Si la diferencia es negativa (fin es antes que inicio), ajustamos para el siguiente día
-  if (diferenciaSegundos < 0) {
-    diferenciaSegundos += 24 * 3600; // Añadir un día en segundos
-  }
-
-  // Convertir de nuevo a horas, minutos y segundos
-  const horasDiferencia = Math.floor(diferenciaSegundos / 3600);
-  const minutosDiferencia = Math.floor((diferenciaSegundos % 3600) / 60);
-  const segundosDiferencia = diferenciaSegundos % 60;
-
-  // Convertir los minutos a decimales y sumarlos a las horas
-  const horasConDecimales = horasDiferencia + (minutosDiferencia / 60);
-
-  // Redondear los segundos para evitar errores en la representación
-  const horasTotales = Math.round(horasConDecimales * 100) / 100;
-
-  this.horas_calculadas = horasTotales;
-
-  return { horas: horasTotales, minutos: minutosDiferencia, segundos: segundosDiferencia };
-},
-async obtenerFeriados() {
-    const year = new Date(this.fecha).getFullYear(); // Obtenemos el año de la fecha seleccionada
-    try {
-      const response = await axios.get(`/api/asistencia/getferiados/${year}`);
-      this.feriados = response.data;
-      console.log(this.feriados);
-    } catch (error) {
-      console.error("Error al obtener los feriados:", error);
-    }
-  },
-  esFeriado() {
-  const fechaSeleccionada = new Date(this.fecha + 'T00:00:00'); // Establecer la hora a medianoche
-  console.log('Fecha seleccionada:', fechaSeleccionada);
-
-  const dia = fechaSeleccionada.getDate();
-  const mes = fechaSeleccionada.getMonth() + 1;
-  const anio = fechaSeleccionada.getFullYear();
-
-  const fechaFormateada = `${anio}-${('0' + mes).slice(-2)}-${('0' + dia).slice(-2)}`;
-  const feriado = this.feriados.includes(fechaFormateada);
-
-  console.log('Fecha formateada:', fechaFormateada, 'Es feriado:', feriado);
-  return feriado;
-},
   },
   watch: {
     frente_selected: 'actualizarFechasBloqueadas',
     
     fecha(newFecha, oldFecha) {
       if (newFecha !== oldFecha) {
-        this.obtenerFeriados();
         this.detalles = []; 
       }
     },
-    entrada_selected(newVal) {
 
-    if (this.salida_selected) {
-      // Si ya hay una salida seleccionada, calcular la diferencia
-      this.calcularDiferencia(this.entrada_selected, this.salida_selected);
-    }
-  },
-  salida_selected(newVal) {
-
-    if (this.entrada_selected) {
-      // Si ya hay una entrada seleccionada, calcular la diferencia
-      this.calcularDiferencia(this.entrada_selected, this.salida_selected);
-    }
-  },
-  mostrarHoraExtra(newVal) {
-    if (!newVal) {
-      this.hora_extra_sn = false; 
-    }
-  },
-  mostrarSDFCheckbox(newVal) {
-    if (!newVal) {
-      this.sdf_sn = false; 
-    }
-  },
 }
 }
 </script>

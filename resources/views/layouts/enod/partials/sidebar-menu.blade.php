@@ -180,7 +180,10 @@
           </a>
           <ul class="treeview-menu">
             @can('A_asistencia_acceder')
-              <li><a href="{{ route('asistencia') }}">Carga</a></li>
+              <li><a href="{{ route('asistencia-horas') }}">Carga Horas</a></li>
+            @endcan
+            @can('A_asistencia_acceder')
+              <li><a href="{{ route('asistencia-servicios') }}">Carga Servicios</a></li>
             @endcan
             @can('A_resumen_view')
               <li><a href="{{ route('asistencia-resumen') }}">Resumen</a></li>

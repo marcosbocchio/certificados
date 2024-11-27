@@ -95,12 +95,15 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/imprimir-stock/{id}', 'PdfStockController@imprimir')->name('imprimir.stock');
       Route::get('/imprimir-todo-stock', 'PdfStockController@imprimirTodoStock')->name('imprimir.todo.stock');
       
-      Route::get('/area/enod/asistencia', 'AsistenciaController@callView')->name('asistencia');
+      Route::get('/area/enod/asistencia/servicios', 'AsistenciaController@callViewServicios')->name('asistencia-servicios');
+      Route::get('/area/enod/asistencia/horas', 'AsistenciaController@callViewHoras')->name('asistencia-horas');
       Route::get('/area/enod/asistencia-pagos', 'AsistenciaController@pagos')->name('asistencia-pagos');
       Route::get('/area/enod/asistencia-pagos-servicios', 'AsistenciaController@pagosServicios')->name('asistencia-pagos-servicios');
       Route::get('/area/enod/asistencia-nuevo', 'AsistenciaController@nuevo')->name('asistencia-nuevo');
+      Route::get('/area/enod/asistencia-nuevo-horas', 'AsistenciaController@nuevoHoras')->name('asistencia-nuevo-horas');
       Route::get('/area/enod/asistencia-resumen', 'AsistenciaController@resumenView')->name('asistencia-resumen');
-      Route::get('/asistencia/edit/{id}', 'AsistenciaController@edit')->name('asistencia.edit');
+      Route::get('/asistencia/edit/servicio/{id}', 'AsistenciaController@editServico')->name('asistencia.editservico');
+      Route::get('/asistencia/edit/horas/{id}', 'AsistenciaController@editHoras')->name('asistencia.edithoras');
       Route::get('/asistencia/copia/{id}', 'AsistenciaController@copia')->name('asistencia.copia');
       Route::get('/area/enod/asistencia-pdf', 'PdfControlAsistencia@imprimirAsistenciaResumen')->name('asistencia-pdf');
       Route::get('/area/enod/asistencia-pdf-user/{operadorId}/{frenteId}/{selectedDate}', 'PdfControlAsistencia@pdfUsuario');
