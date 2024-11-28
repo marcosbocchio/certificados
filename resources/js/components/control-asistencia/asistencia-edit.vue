@@ -363,20 +363,30 @@ export default {
     },
 
     async verificarTodosLosPartes() {
-      for (let detalle of this.detalles) {
-        if (detalle.contratista && detalle.parte) {
-          const parteValido = await this.verificarParte(detalle.parte);
-          if (!parteValido) {
-            toastr.error(`Parte "${detalle.parte}" del operador "${detalle.operador.name}" es inválido`);
-            return false; // Detener si algún parte no es válido
-          }
-        } else if (detalle.contratista && !detalle.parte) {
-          toastr.error(`Parte requerido para el operador "${detalle.operador.name}"`);
-          return false; // Detener si falta algún parte
-        }
+  for (let detalle of this.detalles) {
+    // Verificar si falta el contratista
+    if (!detalle.contratista) {
+      toastr.error(`Cliente requerido para el operador "${detalle.operador.name}"`);
+      return false; // Detener si no tiene cliente
+    }
+
+    // Verificar si tiene parte y contratista
+    if (detalle.contratista && detalle.parte) {
+      const parteValido = await this.verificarParte(detalle.parte);
+      if (!parteValido) {
+        toastr.error(`Parte "${detalle.parte}" del operador "${detalle.operador.name}" es inválido`);
+        return false; // Detener si algún parte no es válido
       }
-      return true; // Todos los partes son válidos
-    },
+    }
+
+    // Verificar si tiene contratista pero falta parte
+    if (detalle.contratista && !detalle.parte) {
+      toastr.error(`Parte requerido para el operador "${detalle.operador.name}"`);
+      return false; // Detener si falta algún parte
+    }
+  }
+  return true; // Todos los partes y clientes son válidos
+},
   async verificarUser(user_id, fecha) {
   try {
     // Formatea la fecha al estilo "MM-YYYY"
@@ -540,8 +550,8 @@ export default {
       return this.operarios_opciones;
     },
     async confirmar() {
- // Verificar todos los partes antes de guardar
- const todosValidos = await this.verificarTodosLosPartes();
+      // Verificar todos los partes antes de guardar
+      const todosValidos = await this.verificarTodosLosPartes();
       if (!todosValidos) {
         this.isLoading = false;
         return; // Si hay partes no válidos, detenemos la ejecución

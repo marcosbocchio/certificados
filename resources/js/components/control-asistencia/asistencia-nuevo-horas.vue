@@ -114,11 +114,11 @@
               <td class="text-center">
                 <!-- Mostrar solo una opción dependiendo del estado -->
                 <label v-if="mostrarSDFCheckboxCol">
-                  <input type="checkbox" v-model="detalle.s_d_f_sn" :disabled="detalle.contratista != null">
+                  <input type="checkbox" v-model="detalle.s_d_f_sn">
                 </label>
                 <label v-else-if="mostrarHoraExtraCol">
                   <label>
-                    <input type="checkbox" v-model="detalle.hora_extra_sn" :disabled="detalle.contratista != null">
+                    <input type="checkbox" v-model="detalle.hora_extra_sn">
                 </label>
                 </label>
               </td>
