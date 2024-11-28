@@ -404,6 +404,7 @@ export default {
   async agregarDetalle() {
     // Verificar si el operador ya está en la lista de detalles
     const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
+    const existeAyudante = this.detalles.some(detalle => detalle.operador.id === this.operador_ayudante.id);
     const existeOperadorAyudante = this.operador_selected && this.operador_ayudante
     ? this.operador_selected.id === this.operador_ayudante.id
     : false;
@@ -411,6 +412,10 @@ export default {
     // Si el operador ya está en la lista, mostrar un toastr.error
     if (existeOperador) {
       toastr.error('Operador ya seleccionado');
+      return;
+    }
+    if (existeAyudante) {
+      toastr.error('Ayduante seleccionado como operador');
       return;
     }
 
