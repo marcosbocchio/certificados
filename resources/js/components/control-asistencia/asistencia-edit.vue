@@ -280,46 +280,58 @@ export default {
       $('#observacionModal').modal('show'); // Mostrar el modal (usando jQuery)
     },
     
-async guardarObservacion() {
-    if (this.observacionIndex !== null) {
-        // Actualiza el estado local
-        this.$set(this.detalles[this.observacionIndex], 'observaciones', this.observacionTexto);
+    async guardarObservacion() {
+    if (this.observacionIndex === null) {
+        toastr.error('No se ha seleccionado ningún detalle para guardar la observación.');
+        return;
+    }
 
-        // Obtenemos el ID de la asistencia y el ID del operador
-        const asistenciaId = this.asistenciaId;  // Este debe ser pasado o definido previamente en el componente
-        const operadorId = this.detalles[this.observacionIndex].operador.id;
+    // Validación de existencia del detalle seleccionado
+    const detalleSeleccionado = this.detalles[this.observacionIndex];
+    if (!detalleSeleccionado) {
+        toastr.error('El detalle seleccionado no es válido.');
+        return;
+    }
 
-        console.log(this.detalles[this.observacionIndex].metodo_ensayo.id);
-        console.log(this.detalles[this.observacionIndex].ayudante.id);
-        // Crear un objeto con los datos necesarios
+    try {
+        // Actualiza localmente la observación
+        this.$set(detalleSeleccionado, 'observaciones', this.observacionTexto);
+
+        // Prepara los datos para enviar
         const detalleData = {
-          operador_id: operadorId,
-          ayudante_id: this.detalles[this.observacionIndex].ayudante.id || null,
-          metodo_ensayo:this.detalles[this.observacionIndex].metodo_ensayo.id || null,
-          ayudante_sn: this.detalles[this.observacionIndex].ayudante_sn,  // Se asume que ya es un valor adecuado (true/false o 1/0)
-          entrada: this.detalles[this.observacionIndex].entrada || '',   // Si `entrada` es null o undefined, se asigna un string vacío
-          salida: this.detalles[this.observacionIndex].salida || '',     // Si `salida` es null o undefined, se asigna un string vacío
-          contratista_id: this.detalles[this.observacionIndex].contratista ? this.detalles[this.observacionIndex].contratista.id : null,  // Asigna null si contratista es null
-          parte: this.detalles[this.observacionIndex].parte || null,     // Asigna null si `parte` es null o undefined
-          observaciones: this.observacionTexto,                          // Observación que se va a guardar
-          hora_extra_sn: this.detalles[this.observacionIndex].hora_extra_sn ? 1 : 0,  // Si `hora_extra_sn` es true, asigna 1, si no, 0
-          s_d_f_sn: this.detalles[this.observacionIndex].s_d_f_sn ? 1 : 0  // Si `s_d_f_sn` es true, asigna 1, si no, 0
-      };
+            operador_id: detalleSeleccionado.operador?.id || null,
+            ayudante_id: detalleSeleccionado.ayudante?.id || null,
+            metodo_ensayo: detalleSeleccionado.metodo_ensayo?.id || null,
+            ayudante_sn: !!detalleSeleccionado.ayudante_sn, // Convierte a boolean
+            entrada: detalleSeleccionado.entrada || '',
+            salida: detalleSeleccionado.salida || '',
+            contratista_id: detalleSeleccionado.contratista?.id || null,
+            parte: detalleSeleccionado.parte || null,
+            observaciones: this.observacionTexto || '',
+            hora_extra_sn: detalleSeleccionado.hora_extra_sn ? 1 : 0,
+            s_d_f_sn: detalleSeleccionado.s_d_f_sn ? 1 : 0
+        };
 
-        try {
-            // Hacer la solicitud PATCH para buscar o crear el detalle
-            await axios.patch(`/api/asistencia-detalle/${asistenciaId}/guardar-observacion`, detalleData);
+        console.log('Datos a guardar:', detalleData);
 
-            // Mostrar un mensaje de éxito
-            toastr.success('Observación actualizada con éxito!');
-
-        } catch (error) {
-            // Manejo de errores
-            toastr.error('Error al guardar la observación');
+        // Realiza la solicitud PATCH
+        const asistenciaId = this.asistenciaId; // Se asume que ya está definido en el componente
+        if (!asistenciaId) {
+            toastr.error('ID de asistencia no definido.');
+            return;
         }
 
-        // Ocultar el modal después de guardar
+        await axios.patch(`/api/asistencia-detalle/${asistenciaId}/guardar-observacion`, detalleData);
+
+        // Mensaje de éxito
+        toastr.success('Observación actualizada con éxito!');
+        
+        // Cierra el modal
         $('#observacionModal').modal('hide');
+    } catch (error) {
+        // Manejo de errores
+        console.error('Error al guardar la observación:', error);
+        toastr.error('Error al guardar la observación.');
     }
 },
     ocultarModal() {
