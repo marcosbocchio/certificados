@@ -10,7 +10,7 @@ class AsistenciaDetalle extends Model
     protected $fillable = [
         'asistencia_horas_id', 'ayudante_sn', 'operador_id', 
         'entrada', 'salida', 'contratista_id', 'parte', 'observaciones',
-        'hora_extra_sn', 's_d_f_sn', 'no_pagar', 'tecnica_id'
+        'hora_extra_sn', 's_d_f_sn', 'no_pagar', 'tecnica_id','ayudante_id'
     ];
 
     // Relación con AsistenciaHora

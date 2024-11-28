@@ -340,7 +340,7 @@ export default {
     ? this.operador_selected.id === this.operador_ayudante.id
     : false;
 
-    // Si el operador ya está en la lista, mostrar un toastr.error
+    // Si el operador ya está en la lista, mostrar un toastr.error  
     if (existeOperador) {
       toastr.error('Operador ya seleccionado');
       return;

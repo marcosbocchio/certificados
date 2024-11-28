@@ -5,7 +5,7 @@
       <div class="box-body row">
         <div class="col-md-3">
           <div class="form-group">
-            <label for="frente">Frente ----*</label>
+            <label for="frente">Frente*</label>
             <v-select v-model="frente_selected" :options="frentes_opciones" label="codigo" id="frente" @input="actualizarFechasBloqueadas"></v-select>
           </div>
         </div>
@@ -227,6 +227,10 @@ export default {
   },
   computed: {
     mostrarHoraExtra() {
+    if (!this.frente_selected) {
+        return false; // Si no hay un frente seleccionado, no mostrar el checkbox de hora extra
+    }
+
     const fechaSeleccionada = new Date(this.fecha);
     const diaSemana = fechaSeleccionada.getDay();
 
@@ -314,55 +318,59 @@ export default {
       $('#observacionModal').modal('show'); // Mostrar el modal (usando jQuery)
     },
     calcularHorasExtrasDetall(detalle, index) {
-  const entrada = detalle.entrada;
-  const salida = detalle.salida;
-  const horasLaborales = this.frente_selected.horas_diarias_laborables; // Dará valores como 8.0
-
-  console.log('entro en calcularHorasExtrasDetall');
-
-  if (entrada && salida) {
-    // Convertimos entrada y salida a arrays de horas y minutos
-    const [entradaHoras, entradaMinutos] = entrada.split(':').map(Number);
-    const [salidaHoras, salidaMinutos] = salida.split(':').map(Number);
-
-    // Creamos objetos Date para entrada y salida
-    const entradaDate = new Date();
-    entradaDate.setHours(entradaHoras, entradaMinutos, 0, 0);
-
-    const salidaDate = new Date();
-    salidaDate.setHours(salidaHoras, salidaMinutos, 0, 0);
-
-    // Calculamos la diferencia total en minutos entre entrada y salida
-    const diferenciaMinutos = (salidaDate - entradaDate) / (1000 * 60); // Diferencia en minutos totales
-
-    // Calculamos las horas y minutos trabajados
-    const horasTrabajadas = Math.floor(diferenciaMinutos / 60); // Horas completas trabajadas
-    const minutosTrabajados = diferenciaMinutos % 60; // Minutos restantes
-
-    // Convertimos las horas laborales estándar a minutos
-    const minutosLaboralesTotales = horasLaborales * 60; // Por ejemplo, 8.0 horas * 60 = 480 minutos
-
-    // Calculamos los minutos trabajados totales
-    const minutosTrabajadosTotales = (horasTrabajadas * 60) + minutosTrabajados;
-
-    console.log(minutosTrabajadosTotales, minutosLaboralesTotales);
-
-    // Comparamos los minutos trabajados con los minutos laborales
-    if (minutosTrabajadosTotales > minutosLaboralesTotales) {
-      // Verifica si detalle.contratista es null o vacío antes de marcar hora_extra_sn como true
-      if (detalle.contratista === null || detalle.contratista === '') {
-        detalle.hora_extra_sn = true; // Marca el checkbox de horas extras si no hay contratista
-      } else {
-        detalle.hora_extra_sn = false; // Desmarca el checkbox si hay un contratista
-      }
-    } else {
-      detalle.hora_extra_sn = false; // Desmarca el checkbox si no hay horas extra
+      if (!this.frente_selected) {
+        detalle.hora_extra_sn = false; // Si no hay un frente seleccionado, no marcar horas extras
+        return;
     }
+    const entrada = detalle.entrada;
+    const salida = detalle.salida;
+    const horasLaborales = this.frente_selected.horas_diarias_laborables; // Dará valores como 8.0
 
-  } else {
-    // Si faltan datos de entrada o salida, desmarcamos las horas extras
-    detalle.hora_extra_sn = false;
-  }
+    console.log('entro en calcularHorasExtrasDetall');
+
+    if (entrada && salida) {
+    // Convertimos entrada y salida a arrays de horas y minutos
+      const [entradaHoras, entradaMinutos] = entrada.split(':').map(Number);
+      const [salidaHoras, salidaMinutos] = salida.split(':').map(Number);
+
+      // Creamos objetos Date para entrada y salida
+      const entradaDate = new Date();
+      entradaDate.setHours(entradaHoras, entradaMinutos, 0, 0);
+
+      const salidaDate = new Date();
+      salidaDate.setHours(salidaHoras, salidaMinutos, 0, 0);
+
+      // Calculamos la diferencia total en minutos entre entrada y salida
+      const diferenciaMinutos = (salidaDate - entradaDate) / (1000 * 60); // Diferencia en minutos totales
+
+      // Calculamos las horas y minutos trabajados
+      const horasTrabajadas = Math.floor(diferenciaMinutos / 60); // Horas completas trabajadas
+      const minutosTrabajados = diferenciaMinutos % 60; // Minutos restantes
+
+      // Convertimos las horas laborales estándar a minutos
+      const minutosLaboralesTotales = horasLaborales * 60; // Por ejemplo, 8.0 horas * 60 = 480 minutos
+
+      // Calculamos los minutos trabajados totales
+      const minutosTrabajadosTotales = (horasTrabajadas * 60) + minutosTrabajados;
+
+      console.log(minutosTrabajadosTotales, minutosLaboralesTotales);
+
+      // Comparamos los minutos trabajados con los minutos laborales
+      if (minutosTrabajadosTotales > minutosLaboralesTotales) {
+        // Verifica si detalle.contratista es null o vacío antes de marcar hora_extra_sn como true
+        if (detalle.contratista === null || detalle.contratista === '') {
+          detalle.hora_extra_sn = true; // Marca el checkbox de horas extras si no hay contratista
+        } else {
+          detalle.hora_extra_sn = false; // Desmarca el checkbox si hay un contratista
+        }
+      } else {
+        detalle.hora_extra_sn = false; // Desmarca el checkbox si no hay horas extra
+      }
+
+    } else {
+      // Si faltan datos de entrada o salida, desmarcamos las horas extras
+      detalle.hora_extra_sn = false;
+    }
 },
     guardarObservacion() {
       if (this.observacionIndex !== null) {

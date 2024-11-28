@@ -29,8 +29,8 @@ class AsistenciaController extends Controller
     public function callViewServicios()
     {
         $user = auth()->user();
-        $header_titulo = "Control Asistencia";
-        $header_descripcion = "Servicios Extras";
+        $header_titulo = "Servicios Extras";
+        $header_descripcion = ".";
         
         // Obtener los frente_id únicos de AsistenciaHora
         $frenteIds = AsistenciaHora::distinct()->pluck('frente_id');
@@ -47,8 +47,8 @@ class AsistenciaController extends Controller
     public function callViewHoras()
     {
         $user = auth()->user();
-        $header_titulo = "Control Asistencia";
-        $header_descripcion = "Horas Extras";
+        $header_titulo = "Horas Extras";
+        $header_descripcion = ".";
         
         // Obtener los frente_id únicos de AsistenciaHora
         $frenteIds = AsistenciaHora::distinct()->pluck('frente_id');
@@ -75,7 +75,7 @@ class AsistenciaController extends Controller
     public function nuevo()
     {
         $user = auth()->user();
-        $header_titulo = "Control Asistencia";
+        $header_titulo = "Servicios Extras";
         $header_descripcion = "Carga";
 
         // Obtener frentes asociados al usuario
@@ -96,13 +96,20 @@ class AsistenciaController extends Controller
                 ->get();
 
         // Obtener las fechas de asistencia agrupadas por frente_id
-        $fechasPorFrente = AsistenciaHora::select('frente_id', 'fecha')
-            ->get()
-            ->groupBy('frente_id')
-            ->map(function ($group) {
-                return $group->pluck('fecha')->toArray();
-            });
-
+        $fechasPorFrente = AsistenciaHora::with(['detalles' => function ($query) {
+            $query->whereNotNull('contratista_id'); // Solo detalles válidos
+        }])
+        ->get()
+        ->filter(function ($asistenciaHora) {
+            // Solo incluir asistencias con al menos un detalle válido
+            return $asistenciaHora->detalles->isNotEmpty();
+        })
+        ->groupBy('frente_id')
+        ->map(function ($group) {
+            // Agrupar y extraer las fechas
+            return $group->pluck('fecha')->toArray();
+        });
+        log::debug($fechasPorFrente);
         // Obtener todos los datos de la tabla MetodoEnsayos
         $metodoEnsayos = MetodoEnsayos::all();
 
@@ -121,7 +128,7 @@ class AsistenciaController extends Controller
     public function nuevoHoras()
     {
         $user = auth()->user();
-        $header_titulo = "Control Asistencia";
+        $header_titulo = "Horas Extras";
         $header_descripcion = "Carga";
 
         // Obtener frentes asociados al usuario
@@ -142,13 +149,20 @@ class AsistenciaController extends Controller
                 ->get();
 
         // Obtener las fechas de asistencia agrupadas por frente_id
-        $fechasPorFrente = AsistenciaHora::select('frente_id', 'fecha')
-            ->get()
-            ->groupBy('frente_id')
-            ->map(function ($group) {
-                return $group->pluck('fecha')->toArray();
-            });
-
+        $fechasPorFrente = AsistenciaHora::with(['detalles' => function ($query) {
+            $query->whereNull('contratista_id'); // Filtrar detalles donde contratista_id sea null
+        }])
+        ->get()
+        ->filter(function ($asistenciaHora) {
+            // Solo incluir las asistencias con detalles válidos (donde contratista_id es null)
+            return $asistenciaHora->detalles->isNotEmpty();
+        })
+        ->groupBy('frente_id')
+        ->map(function ($group) {
+            // Agrupar y extraer fechas
+            return $group->pluck('fecha')->toArray();
+        });
+        log::debug($fechasPorFrente);
         // Obtener todos los datos de la tabla MetodoEnsayos
         $metodoEnsayos = MetodoEnsayos::all();
 
@@ -192,7 +206,7 @@ class AsistenciaController extends Controller
     public function editServico($id)
     {
         $user = auth()->user();
-        $header_titulo = "Control Asistencia";
+        $header_titulo = "Servicios Extras";
         $header_descripcion = "Edit";
         $user_frente = FrenteOperador::where('user_id', $user->id)->pluck('frente_id');
         $frente_sn = Frentes::whereIn('id', $user_frente)
@@ -211,7 +225,7 @@ class AsistenciaController extends Controller
     public function editHoras($id)
     {
         $user = auth()->user();
-        $header_titulo = "Control Asistencia";
+        $header_titulo = "Horas Extras";
         $header_descripcion = "Edit";
         $user_frente = FrenteOperador::where('user_id', $user->id)->pluck('frente_id');
         $frente_sn = Frentes::whereIn('id', $user_frente)
@@ -443,7 +457,7 @@ class AsistenciaController extends Controller
         $asistenciaHora->fecha = $request->fecha;
         $asistenciaHora->frente_id = $request->frente_id;
         $asistenciaHora->save();
-
+        log::debug($request);
         foreach ($request->detalles as $detalle) {
             $nuevoDetalle = new AsistenciaDetalle([
                 'asistencia_horas_id' => $asistenciaHora->id,

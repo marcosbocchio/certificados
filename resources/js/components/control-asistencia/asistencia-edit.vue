@@ -478,7 +478,7 @@ async guardarObservacion() {
       salida: moment(this.salida_selected).format('HH:mm'),
       contratista: this.contratista_selected,
       parte: this.parte_selected,
-      ayudante_sn: this.operador_ayudante ? 1 : 0,
+      ayudante_sn: this.hora_extra_sn ? 1 : 0,
       hora_extra_sn: this.hora_extra_sn ? 1 : 0, // Convertir true/false a 1/0
       s_d_f_sn: this.sdf_sn ? 1 : 0,
       metodo_ensayo: this.metodoEnsayo_selected,
