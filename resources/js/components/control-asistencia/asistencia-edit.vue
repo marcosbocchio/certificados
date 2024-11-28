@@ -511,7 +511,7 @@ export default {
       metodo_ensayo: this.metodoEnsayo_selected,
       observacion : this.observaciones || '',
     };
-
+    console.log(this.detalles);
     this.detalles.push(nuevoDetalle);
     this.operador_selected = '';
     this.operador_ayudante = '';

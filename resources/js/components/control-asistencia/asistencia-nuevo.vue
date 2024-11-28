@@ -116,7 +116,8 @@
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
               <td class="text-center">{{ detalle.operador.name }}</td>
-                <td class="text-center">{{ detalle.ayudante.name }}</td>
+              <td v-if="detalle.ayudante && detalle.ayudante.name">{{ detalle.ayudante.name }}</td>
+              <td v-else>-</td>
               <td>
                 <input type="time" v-model="detalle.entrada" class="form-control" @change="calcularHorasExtrasDetall(detalle, index)" />
               </td>
