@@ -224,6 +224,10 @@ export default {
   },
   computed: {
     mostrarHoraExtra() {
+    if (!this.frente_selected) {
+        return false; // Si no hay un frente seleccionado, no mostrar el checkbox de hora extra
+    }
+
     const fechaSeleccionada = new Date(this.fecha);
     const diaSemana = fechaSeleccionada.getDay();
 
@@ -336,6 +340,10 @@ if (!newVal) {
       $('#observacionModal').modal('show'); // Mostrar el modal (usando jQuery)
     },
     calcularHorasExtrasDetall(detalle, index) {
+      if (!this.frente_selected) {
+        detalle.hora_extra_sn = false; // Si no hay un frente seleccionado, no marcar horas extras
+        return;
+    }
   const entrada = detalle.entrada;
   const salida = detalle.salida;
   const horasLaborales = this.frente_selected.horas_diarias_laborables; // Dará valores como 8.0
