@@ -20,7 +20,7 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.24.4",
         "sass-loader": "^7.3.1",
-        "vue": "^2.6.11",
+        "vue": "^3.0.0",
         "vue-template-compiler": "^2.6.11",
         "xlsx": "^0.16.9"
     },
