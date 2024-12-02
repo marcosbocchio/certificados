@@ -264,32 +264,57 @@ class AsistenciaController extends Controller
 
     public function getAsistenciaPagos(Request $request)
     {
-      
-    
-        // Iniciar la query sin filtros
-        $query = AsistenciaHora::with(['frente', 'detalles.operador', 'detalles.contratista','detalles.metodoEnsayo']);
-    
-        // Aplicar filtro de frente_id si está presente
+        // Construir la consulta base
+        $query = AsistenciaHora::query();
+        
+        // Aplicar filtros condicionales
         if ($request->filled('frente_id')) {
             $query->where('frente_id', $request->frente_id);
         }
-    
-        // Aplicar filtro de fecha si está presente
+        
         if ($request->filled('fecha')) {
-            $query->where('fecha', 'like', $request->fecha . '%'); // Coincide con mes y año
+            $query->where('fecha', 'like', $request->fecha . '%');
         }
-    
-        // Obtener los registros
-        $asistencia = $query->get();
-    
-        // Ordenar los detalles por nombre de operador
-        $asistencia->each(function($asistenciaHora) {
-            $asistenciaHora->detalles = $asistenciaHora->detalles->sortBy(function($detalle) {
-                return strtolower($detalle->operador->nombre); // Asume que el nombre del operador está en 'nombre'
-            })->values(); // reindexar el array de detalles
+        
+        // Obtener las AsistenciaHora con sus detalles
+        $asistenciaHoras = $query->with('frente','detalles.operador', 'detalles.ayudante', 'detalles.contratista', 'detalles.metodoEnsayo')
+            ->get();
+        
+        // Transformar los resultados para incluir campos adicionales
+        $resultados = $asistenciaHoras->flatMap(function ($asistenciaHora) {
+            // Filtrar detalles donde 'contratista' no sea null
+            return $asistenciaHora->detalles->filter(function ($detalle) {
+                return $detalle->contratista !== null;  // Excluir si 'contratista' es null
+            })->map(function ($detalle) use ($asistenciaHora) {
+                return [
+                    'id' => $detalle->id,
+                    'asistencia_horas_id' => $detalle->asistencia_horas_id,
+                    'ayudante' => $detalle->ayudante,
+                    'operador' => $detalle->operador,
+                    'entrada' => $detalle->entrada,
+                    'salida' => $detalle->salida,
+                    'contratista' => $detalle->contratista, // Solo se incluye si no es null
+                    'parte' => $detalle->parte,
+                    'observaciones' => $detalle->observaciones,
+                    'hora_extra_sn' => $detalle->hora_extra_sn,
+                    's_d_f_sn' => $detalle->s_d_f_sn,
+                    'no_pagar' => $detalle->no_pagar,
+                    'metodoEnsayo' => $detalle->metodoEnsayo,
+                    'ayudante_id' => $detalle->ayudante_id,
+                    // Campos adicionales
+                    'fecha_asistencia' => $asistenciaHora->fecha,
+                    'id_asistencia' => $asistenciaHora->id,
+                    'frente' => $asistenciaHora->frente,
+                ];
+            });
         });
-        return response()->json($asistencia);
+        
+        return response()->json($resultados);
     }
+    
+    
+
+    
 
     public function guardarPagosExtras(Request $request)
     {
