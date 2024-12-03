@@ -207,7 +207,7 @@ export default {
 
           const fechaA = new Date(a.fecha_asistencia);
           const fechaB = new Date(b.fecha_asistencia);
-          return fechaB - fechaA;  // Ordenar por fecha de más reciente a más antiguo
+          return fechaA - fechaB;  // Ordenar por fecha de más reciente a más antiguo
         });
       } catch (error) {
         console.error('Error al obtener la asistencia:', error);
