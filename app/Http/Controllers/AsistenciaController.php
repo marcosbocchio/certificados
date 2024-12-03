@@ -262,58 +262,55 @@ class AsistenciaController extends Controller
         return view('control-asistencia.asistencia-pagos-servicios', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
     }
 
-    public function getAsistenciaPagos(Request $request)
-    {
-        // Construir la consulta base
-        $query = AsistenciaHora::query();
-        
-        // Aplicar filtros condicionales
-        if ($request->filled('frente_id')) {
-            $query->where('frente_id', $request->frente_id);
-        }
-        
-        if ($request->filled('fecha')) {
-            $query->where('fecha', 'like', $request->fecha . '%');
-        }
-        
-        // Obtener las AsistenciaHora con sus detalles
-        $asistenciaHoras = $query->with('frente','detalles.operador', 'detalles.ayudante', 'detalles.contratista', 'detalles.metodoEnsayo')
-            ->get();
-        
-        // Transformar los resultados para incluir campos adicionales
-        $resultados = $asistenciaHoras->flatMap(function ($asistenciaHora) {
-            // Filtrar detalles donde 'contratista' no sea null
-            return $asistenciaHora->detalles->filter(function ($detalle) {
-                return $detalle->contratista !== null;  // Excluir si 'contratista' es null
-            })->map(function ($detalle) use ($asistenciaHora) {
-                return [
-                    'id' => $detalle->id,
-                    'asistencia_horas_id' => $detalle->asistencia_horas_id,
-                    'ayudante' => $detalle->ayudante,
-                    'operador' => $detalle->operador,
-                    'entrada' => $detalle->entrada,
-                    'salida' => $detalle->salida,
-                    'contratista' => $detalle->contratista, // Solo se incluye si no es null
-                    'parte' => $detalle->parte,
-                    'observaciones' => $detalle->observaciones,
-                    'hora_extra_sn' => $detalle->hora_extra_sn,
-                    's_d_f_sn' => $detalle->s_d_f_sn,
-                    'no_pagar' => $detalle->no_pagar,
-                    'metodoEnsayo' => $detalle->metodoEnsayo,
-                    'ayudante_id' => $detalle->ayudante_id,
-                    // Campos adicionales
-                    'fecha_asistencia' => $asistenciaHora->fecha,
-                    'id_asistencia' => $asistenciaHora->id,
-                    'frente' => $asistenciaHora->frente,
-                ];
-            });
-        });
-        
-        return response()->json($resultados);
+public function getAsistenciaPagos(Request $request)
+{
+    // Construir la consulta base
+    $query = AsistenciaHora::query();
+    
+    // Aplicar filtros condicionales
+    if ($request->filled('frente_id')) {
+        $query->where('frente_id', $request->frente_id);
     }
     
+    if ($request->filled('fecha')) {
+        $query->where('fecha', 'like', $request->fecha . '%');
+    }
     
-
+    // Obtener las AsistenciaHora con sus detalles
+    $asistenciaHoras = $query->with('frente','detalles.operador', 'detalles.ayudante', 'detalles.contratista', 'detalles.metodoEnsayo')
+        ->get();
+    
+    // Transformar los resultados para incluir campos adicionales
+    $resultados = $asistenciaHoras->flatMap(function ($asistenciaHora) {
+        // Filtrar detalles donde 'contratista' no sea null y 'pago_servicio_extra' sea null
+        return $asistenciaHora->detalles->filter(function ($detalle) {
+            return $detalle->contratista !== null && $detalle->pago_servicio_extra === null;
+        })->map(function ($detalle) use ($asistenciaHora) {
+            return [
+                'id' => $detalle->id,
+                'asistencia_horas_id' => $detalle->asistencia_horas_id,
+                'ayudante' => $detalle->ayudante,
+                'operador' => $detalle->operador,
+                'entrada' => $detalle->entrada,
+                'salida' => $detalle->salida,
+                'contratista' => $detalle->contratista, // Solo se incluye si no es null
+                'parte' => $detalle->parte,
+                'observaciones' => $detalle->observaciones,
+                'hora_extra_sn' => $detalle->hora_extra_sn,
+                's_d_f_sn' => $detalle->s_d_f_sn,
+                'no_pagar' => $detalle->no_pagar,
+                'metodoEnsayo' => $detalle->metodoEnsayo,
+                'ayudante_id' => $detalle->ayudante_id,
+                // Campos adicionales
+                'fecha_asistencia' => $asistenciaHora->fecha,
+                'id_asistencia' => $asistenciaHora->id,
+                'frente' => $asistenciaHora->frente,
+            ];
+        });
+    });
+    
+    return response()->json($resultados);
+}
     
 
     public function guardarPagosExtras(Request $request)
@@ -332,18 +329,25 @@ class AsistenciaController extends Controller
     
         return response()->json(['success' => true]);
     }
+
+
     public function guardarPagosExtrasServicos(Request $request)
     {
+        // Log para inspeccionar los datos
         $datosPagos = $request->input('datosPagos');
-
+        log::info($datosPagos);  // Agrega esto para inspeccionar los datos
+    
+        // Actualizar los pagos
         foreach ($datosPagos as $pago) {
-            // Actualizar el pago_e_sdf en la tabla asistencia_detalle
+            // Actualizar el pago_servicio_extra y no_pagar en la tabla asistencia_detalle
             AsistenciaDetalle::where('asistencia_horas_id', $pago['asistencia_horas_id'])
                 ->where('operador_id', $pago['operador_id'])
-                ->update(['pago_servicio_extra' => $pago['pago_servicio_extra'],
-            'no_pagar' => $pago['no_pagar']]);
+                ->update([
+                    'pago_servicio_extra' => $pago['pago_servicio_extra'],  // Pago extra basado en la fecha seleccionada o null
+                    'no_pagar' => $pago['no_pagar']  // Estado de no pagar (1 o 0)
+                ]);
         }
-
+    
         return response()->json(['success' => true]);
     }
 

@@ -51,6 +51,7 @@
               <tr>
                 <th class="text-center">Frente</th>
                 <th class="text-center">Fecha</th>
+                <th class="text-center">Operador</th>
                 <th class="text-center">Ayudante</th>
                 <th class="text-center">Técnica</th>
                 <th class="text-center">Cliente</th>
@@ -69,6 +70,7 @@
               <tr v-for="detalle in asistencia" :key="detalle.id">
                 <td class="text-center">{{ detalle.frente?.codigo }}</td>
                 <td class="text-center">{{ detalle.fecha_asistencia }}</td>
+                <td class="text-left">{{ detalle.operador?.name || '-' }}</td>
                 <td class="text-center">{{ detalle.ayudante?.name || '-' }}</td>
                 <td class="text-center">{{ detalle.metodoEnsayo?.metodo || '-' }}</td>
                 <td class="text-center">{{ detalle.contratista?.nombre_fantasia || '-' }}</td>
@@ -90,6 +92,40 @@
               </tr>
             </tbody>
           </table>
+          <button @click="mostrarPopup = true" class="btn btn-primary">Pagar</button>
+
+          <!-- Pop-up de Selección de Fecha -->
+          <div v-if="mostrarPopup" class="modal show" tabindex="-1" role="dialog" style="display: block;">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Seleccionar Fecha de Pago</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="fecha-select">Fecha</label>
+                    <date-picker
+                      v-model="fechaSeleccionada"
+                      value-type="YYYY-MM-DD"
+                      format="DD-MM-YYYY"
+                      placeholder="Seleccionar fecha">
+                    </date-picker>
+                  </div>
+                </div>
+                <div class="modal-footer row">
+                  <div class="col-md-4" style="text-align: left;">
+                    <button type="button" class="btn btn-secondary" @click="cerrarPopup">Cerrar</button>
+                  </div>
+                  <div class="col-md-4">
+                    <!-- Espacio vacío entre los botones -->
+                  </div>
+                  <div class="col-md-4">
+                    <button type="button" class="btn btn-enod" @click="guardarPagosExtras">Confirmar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -109,6 +145,7 @@ import 'vue2-datepicker/index.css';
 import axios from 'axios';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import { toastrInfo,toastrDefault } from '../toastrConfig';
 
 export default {
   components: {
@@ -126,6 +163,8 @@ export default {
       frente_selected: null,
       fecha: '',
       asistencia: [],
+      mostrarPopup: false,  // Estado del modal
+      fechaSeleccionada: '',
       selectAll: false,  
       isLoading: false  
     };
@@ -176,7 +215,46 @@ export default {
         this.isLoading = false;
       }
     },
+    cerrarPopup() {
+      this.mostrarPopup = false; // Cerrar popup sin confirmar
+    },
+    guardarPagosExtras() {
+  // Log para verificar la estructura de los datos
+  console.log("asistencia", this.asistencia.filter(operador => operador.selected || operador.no_pagar));
 
+  // Crear los datos de pagos sin utilizar detalles, usando directamente la propiedad 'selected' y 'no_pagar'
+  const datosPagos = this.asistencia
+    .filter(operador => operador.selected || operador.no_pagar)  // Solo operadores seleccionados o con 'no_pagar'
+    .map(operador => ({
+      asistencia_horas_id: operador.asistencia_horas_id,  // Usamos 'id_asistencia' directamente del operador
+      operador_id: operador.operador.id,  // 'operador' parece tener una propiedad 'id'
+      pago_servicio_extra: operador.no_pagar ? null : this.fechaSeleccionada,  // Si no es para pagar, se deja null
+      no_pagar: operador.no_pagar ? 1 : 0  // Pasamos el estado de no pagar
+    }));
+
+  // Realiza una llamada a la API para guardar los pagos
+  axios.post('/api/guardar_pagos_servicios', { datosPagos })
+    .then(response => {
+      if (response.data.success) {
+        // Muestra un mensaje de éxito
+        toastr.success('Pagos guardados exitosamente');
+
+        // Llama a fetchAsistencia() para actualizar los datos
+        this.fetchAsistencia();
+
+        // Cerrar el popup después de guardar
+        this.mostrarPopup = false;
+      } else {
+        // Muestra un mensaje de error si la respuesta no es exitosa
+        toastr.error('Error en los pagos');
+      }
+    })
+    .catch(error => {
+      // Muestra un mensaje de error en caso de falla en la llamada a la API
+      console.error('Error al guardar los pagos:', error);
+      toastr.error('Error al guardar los pagos: ' + error.message);
+    });
+},
     // Manejar cambio en el checkbox "Pagar"
     handleSelectionChange(detalle) {
       if (detalle.selected) {
