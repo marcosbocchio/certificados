@@ -26,12 +26,12 @@ class PdfControlAsistencia extends Controller
         $year = $request->input('year');
         $month = $request->input('month');
         $frenteId = $request->input('frent_id');
-    
+        $modo = $request->input('modo');
         // Obtén los días del mes
         $diasDelMes = $this->getDiasDelMes($year, $month);
         $diashabiles_mes = $this->contarDiasHabil($diasDelMes);
         // Obtén los detalles agrupados de la asistencia
-        $detallesAgrupados = $this->getDatosAsistencia($frenteId, $year, $month);
+        $detallesAgrupados = $this->getDatosAsistencia($frenteId, $year, $month, $modo);
     
         // Establecer nombre del frente (esto debe cambiarse según tu lógica)
         $frente = Frentes::find($frenteId); // Cambia esto por el nombre real del frente que deseas mostrar
@@ -44,18 +44,86 @@ class PdfControlAsistencia extends Controller
             'frente' => $frente,
             'diasDelMes' => $diasDelMes,
             'diashabiles_mes' => $diashabiles_mes,
+            'modo' => $modo,
             'fecha' => now()->toDateString(),
-            'obtenerValorDetalle' => function($detalle, $parametro) {
-            return $this->obtenerValorDetalle($detalle, $parametro);
+            'obtenerValorDetalle' => function ($detalle, $parametro) {
+                return $this->obtenerValorDetalle($detalle, $parametro);
             },
-            'contarParametros' => function($detalle, $parametro, $tipo) {
+            'contarParametros' => function ($detalle, $parametro, $tipo) {
                 return $this->contarParametros($detalle, $parametro, $tipo);
-            }, // Fecha actual
+            },
+            'contarHoras' => function ($dias) use ($frente) {
+                return $this->contarHoras($dias, $frente); // Pasa $frente a la función contarHoras
+            },
+            'obtenerResponsabilidad' => function ($detalles) {
+                return $this->obtenerResponsabilidad($detalles); // Llama a la nueva función
+            },
         ])->setPaper('a3', 'landscape');
-    
+        
         // Mostrar el PDF en el navegador
         return $pdf->stream('asistencia-usuario.pdf');
+        
     }
+
+    public function contarHoras($dias, $frente)
+    {
+        $totalHorasExtras = 0;
+        $horasLaborables = $frente->horas_diarias_laborables; // Usa el valor de horas laborales de $frente
+    
+        foreach ($dias as $dia) {
+            if (isset($dia['detalle']) && isset($dia['detalle']['entrada']) && isset($dia['detalle']['salida'])) {
+                $entrada = $this->convertirHoraADate($dia['detalle']['entrada']);
+                $salida = $this->convertirHoraADate($dia['detalle']['salida']);
+    
+                // Calcular la diferencia entre las horas de entrada y salida
+                $intervalo = $salida->diff($entrada);
+                $horasTrabajadas = $intervalo->h + ($intervalo->i / 60); // Obtener la diferencia en horas (y minutos convertidos a fracción de hora)
+    
+                // Calcular las horas extras trabajadas
+                if ($horasTrabajadas > $horasLaborables) {
+                    $totalHorasExtras += $horasTrabajadas - $horasLaborables;
+                }
+            }
+        }
+    
+        // Devolver el resultado formateado
+        return $this->formatearHorasExtras($totalHorasExtras);
+    }
+
+public function convertirHoraADate($hora)
+{
+    // Convertir una cadena "HH:mm:ss" a un objeto Date en PHP
+    $horaParts = explode(":", $hora);
+    $hora = (int)$horaParts[0];
+    $minutos = (int)$horaParts[1];
+    $segundos = isset($horaParts[2]) ? (int)$horaParts[2] : 0;
+
+    $date = new \DateTime();
+    $date->setTime($hora, $minutos, $segundos);
+    
+    return $date;
+}
+
+public function formatearHorasExtras($horasExtras)
+{
+    // Convertir un número decimal de horas extras a formato "HH:MM"
+    $horas = floor($horasExtras);
+    $minutos = round(($horasExtras - $horas) * 60);
+
+    return sprintf("%02d:%02d", $horas, $minutos);
+}
+
+public function obtenerResponsabilidad($detalles)
+{
+    // Verificar si todos los detalles tienen ayudante_sn igual a 1
+    $esAyudante = collect($detalles)->every(function ($detalle) {
+        return $detalle['ayudante_sn'] === 1;
+    });
+
+    // Si todos tienen ayudante_sn igual a 1, devolver 'ayudante'; de lo contrario, 'operador'
+    return $esAyudante ? 'ayudante' : 'operador';
+}
+
    protected function obtenerValorDetalle($detalle, $parametro)
 {
     // Verificar si contratista_id tiene valor
@@ -66,13 +134,22 @@ class PdfControlAsistencia extends Controller
         }
     }
 
-    // Si contratista_id es null, verificar dia_semana_sn
     if ($parametro['dia_semana_sn'] === 1) {
-        // Si es día de semana, miramos hora_extra_sn
-        if (isset($detalle['hora_extra_sn']) && $detalle['hora_extra_sn'] === 1) {
-            return '1'; // Mostrar 1 si tiene horas extra
+        // Convertimos las horas de entrada y salida a objetos DateTime
+        $entrada = DateTime::createFromFormat('H:i:s', $detalle['entrada']);
+        $salida = DateTime::createFromFormat('H:i:s', $detalle['salida']);
+
+        // Calculamos la diferencia
+        if ($entrada && $salida) {
+            $intervalo = $entrada->diff($salida);
+
+            // Formateamos la diferencia a horas y minutos
+            $horasTrabajadas = $intervalo->format('%H:%I');
+
+            return $horasTrabajadas; // Retornar horas trabajadas
         }
-        return '0'; // Mostrar '0' si no tiene horas extra
+
+        return '0'; // En caso de error o datos faltantes
     }
 
     // Si es fin de semana o feriado, miramos s_d_f_sn
@@ -89,130 +166,149 @@ class PdfControlAsistencia extends Controller
 protected function contarParametros($detalle, $parametro, $tipo)
 {
     return collect($detalle)->reduce(function ($contador, $dia) use ($parametro, $tipo) {
-        if ($dia && array_key_exists('parametros', $dia)) {
-            $parametros = $dia['parametros']; // Accedemos a dia['parametros']
+        // Si $dia es null o no contiene 'detalle', lo ignoramos
+        if ($dia === null || !is_array($dia) || !array_key_exists('detalle', $dia)) {
+            return $contador;
+        }
 
-            // Para sumar horas extra (Hs. Ex)
-            if ($tipo === 'sumar' && $parametro === 'hora_extra_sn' && $dia['detalle'][$parametro] == 1) {
-                return $contador + 1; // Sumar solo los casos donde hora_extra_sn es 1
-            }
+        $detalleDia = $dia['detalle']; // Detalle del día actual
 
-            // Para contar contratistas (Sv. Ex)
-            if ($tipo === 'conteo' && $parametro === 'contratista_id' && $dia['detalle'][$parametro] !== null) {
-                return $contador + 1; // Contar solo si contratista_id no es null
-            }
+        // Logs para depuración
+        Log::info('Procesando día', [
+            'parametro' => $parametro,
+            'tipo' => $tipo,
+        ]);
 
-            // Para contar Sábados
-            if ($tipo === 'sumar' && $parametro === 'sabado' && 
-                $parametros['sabado_sn'] == 1 && 
-                $dia['detalle']['s_d_f_sn'] == 1 &&
-                $dia['detalle']['contratista_id'] === null) { // Verificación del contratista_id
-                return $contador + 1; // Contamos como sábado
-            }
-
-            // Para contar Domingos y Feriados juntos
-            if ($tipo === 'sumar' && $parametro === 'domingo_feriado' && 
-                $dia['detalle']['s_d_f_sn'] == 1 &&
-                $dia['detalle']['contratista_id'] === null) { // Verificación del contratista_id
-                if ($parametros['domingo_sn'] == 1 || $parametros['feriado_sn'] == 1) {
-                    return $contador + 1; // Contamos como domingo o feriado
-                }
+        // Contar contratistas
+        if ($tipo === 'conteo' && $parametro === 'contratista_id') {
+            if (!empty($detalleDia['contratista_id'])) {
+                return $contador + 1;
             }
         }
+
+        // Contar sábados
+        if ($tipo === 'sumar' && $parametro === 'sabado') {
+            if (!empty($dia['sabado_sn']) && $dia['sabado_sn'] == 1 &&
+                !empty($detalleDia['s_d_f_sn']) && $detalleDia['s_d_f_sn'] == 1 &&
+                empty($detalleDia['contratista_id'])) {
+                return $contador + 1;
+            }
+        }
+
+        // Contar domingos y feriados juntos
+        if ($tipo === 'sumar' && $parametro === 'domingo_feriado') {
+            if (!empty($detalleDia['s_d_f_sn']) && $detalleDia['s_d_f_sn'] == 1 &&
+                empty($detalleDia['contratista_id']) &&
+                (!empty($dia['domingo_sn']) || !empty($dia['feriado_sn']))) {
+                return $contador + 1;
+            }
+        }
+
         return $contador;
     }, 0);
 }
 
-public function getDatosAsistencia($frenteId, $year, $month)
+
+
+public function getDatosAsistencia($frenteId, $year, $month, $modo)
 {
-    // Crear la fecha en formato 'YYYY-MM'
     $fecha = sprintf('%04d-%02d', $year, $month);
 
-    // Buscar todas las filas en AsistenciaHora que coincidan con el frente y la fecha (año-mes)
     $asistenciaHoras = AsistenciaHora::where('frente_id', $frenteId)
-                                    ->where('fecha', 'like', $fecha . '%') // Buscar por año-mes
-                                    ->get();
+        ->where('fecha', 'like', $fecha . '%')
+        ->get();
 
-    // Obtener los IDs de AsistenciaHora para buscar en AsistenciaDetalle
-    $asistenciaHorasIds = $asistenciaHoras->pluck('id'); // Lista de IDs
+    $asistenciaHorasIds = $asistenciaHoras->pluck('id');
 
-    // Buscar en AsistenciaDetalle con esos IDs, cargar la relación con User y AsistenciaHora
     $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
-                                          ->with(['operador', 'asistenciaHora'])  // Incluir relaciones
-                                          ->get()
-                                          ->groupBy(function($detalle) {
-                                              // Agrupar por el nombre del operador en lugar del ID
-                                              return $detalle->operador->name;
-                                          })
-                                          ->map(function($detalles) {
-                                              // Verificar si todos los ayudante_sn son 0 o si alguno es 1
-                                              $ayudanteSnFlag = $detalles->every(function($detalle) {
-                                                  return $detalle->ayudante_sn === 0;
-                                              }) ? 'ayudante' : 'operador';
+        ->when($modo === 'Horas', function ($query) {
+            return $query->whereNull('contratista_id');
+        })
+        ->when($modo === 'Servicios', function ($query) {
+            return $query->whereNotNull('contratista_id');
+        })
+        ->with(['operador', 'asistenciaHora', 'ayudante'])
+        ->get()
+        ->flatMap(function ($detalle) use ($modo) {
+            $resultados = [];
+        
+            $resultados[] = [
+                'detalle' => $detalle,
+                'fechaAsignacion' => $detalle->asistenciaHora->fecha,
+                'tipo' => 'operador',
+                'id' => $detalle->operador_id,
+                'name' => $detalle->operador->name,
+                'ayudante_sn' => $modo === 'Horas' ? $detalle->ayudante_sn : 1
+            ];
+        
+            if ($detalle->ayudante_id) {
+                $resultados[] = [
+                    'detalle' => $detalle,
+                    'fechaAsignacion' => $detalle->asistenciaHora->fecha,
+                    'tipo' => 'ayudante',
+                    'id' => $detalle->ayudante_id,
+                    'name' => $detalle->ayudante->name,
+                    'ayudante_sn' => $modo === 'Horas' ? $detalle->ayudante_sn : 0
+                ];
+            }
+        
+            return $resultados;
+        })
+        ->groupBy('name')
+        ->map(function ($detalles) use ($modo) {
+            return [
+                'dias' => $detalles,
+                'responsabilidadPorDia' => $detalles->mapWithKeys(function ($detalle) {
+                    return [
+                        $detalle['fechaAsignacion'] => $detalle['ayudante_sn'] === 0 ? 'ayudante' : 'operador'
+                    ];
+                }),
+            ];
+        });
 
-                                              // Modificar cada grupo de detalles para incluir 'fechaAsignacion' y 'ayudante_sn'
-                                              return $detalles->map(function($detalle) use ($ayudanteSnFlag) {
-                                                  return [
-                                                      'detalle' => $detalle,  // Todos los detalles del registro
-                                                      'fechaAsignacion' => $detalle->asistenciaHora->fecha,  // Fecha de AsistenciaHora
-                                                      'ayudante_sn' => $ayudanteSnFlag  // Ayudante u operador según los valores
-                                                  ];
-                                              });
-                                          });
-
-    // Obtener los días del mes
-    $diasDelMes = $this->getDiasDelMes($year, $month);
-
-    // Formato de la fecha
+    $diasDelMes = collect($this->getDiasDelMes($year, $month));
     $formattedDate = sprintf('%04d-%02d', $year, $month);
 
-    // Inicializar un array para almacenar los datos reorganizados
     $asistenciaReorganizada = [];
 
-    // Iterar sobre cada operador en los detalles agrupados
-    foreach ($detallesAgrupados as $operador => $asistencias) {
-        // Inicializar una matriz para cada operador que contenga los días del mes
-        $asistenciaReorganizada[$operador] = [];
+    foreach ($detallesAgrupados as $operador => $data) {
+        $asistenciaReorganizada[$operador] = [
+            'dias' => [],
+        ];
 
         foreach ($diasDelMes as $dia) {
-            // Convertir el día en el formato de fecha
-            $fechaDelDia = sprintf('%s-%02d', $formattedDate, $dia['dia']); // Usa dia['dia']
+            $fechaDelDia = sprintf('%s-%02d', $formattedDate, $dia['dia']);
 
-            // Buscar si hay una entrada con la fecha que coincide con ese día
-            $detalleDelDia = array_filter($asistencias->toArray(), function ($asistencia) use ($fechaDelDia) {
+            $detalleDelDia = array_filter($data['dias']->toArray(), function ($asistencia) use ($fechaDelDia) {
                 return $asistencia['fechaAsignacion'] === $fechaDelDia;
             });
 
-            // Si existe un detalle para ese día, lo guardamos junto con los parámetros; de lo contrario, devolvemos null
-            if (!empty($detalleDelDia)) {
-                // Tomar el primer resultado que coincida
-                $detalleDelDia = reset($detalleDelDia);
+            // Asignar datos del día si existen detalles
+            $detalle = !empty($detalleDelDia) ? reset($detalleDelDia) : null;
 
-                $asistenciaReorganizada[$operador][] = [
-                    'detalle' => $detalleDelDia['detalle'],
-                    'parametros' => [
-                        'dia_semana_sn' => $dia['dia_semana_sn'],
-                        'sabado_sn' => $dia['sabado_sn'],
-                        'domingo_sn' => $dia['domingo_sn'],
-                        'feriado_sn' => $dia['feriado_sn']
-                    ]
-                ];
-            } else {
-                // Si no hay coincidencia, devolvemos null
-                $asistenciaReorganizada[$operador][] = null; // Si no hay coincidencia, devolvemos null
+            // Añadir las características del día al detalle
+            if ($detalle) {
+                $detalle['dia_semana_sn'] = $dia['dia_semana_sn'];
+                $detalle['sabado_sn'] = $dia['sabado_sn'];
+                $detalle['domingo_sn'] = $dia['domingo_sn'];
+                $detalle['feriado_sn'] = $dia['feriado_sn'];
             }
+
+            $asistenciaReorganizada[$operador]['dias'][] = $detalle;
         }
+
+        $responsabilidad = $data['responsabilidadPorDia']->values()->contains('operador') 
+            ? 'operador' 
+            : 'ayudante';
+
+        $asistenciaReorganizada[$operador]['responsabilidad'] = $responsabilidad;
     }
 
-    // Ordenar alfabéticamente por el nombre de los operadores
     ksort($asistenciaReorganizada);
 
-    // Log de los datos reorganizados por operador y día
-    Log::info('Datos reorganizados por operador y día:', $asistenciaReorganizada);
-
-    // Devolver los detalles reorganizados
-    return $asistenciaReorganizada; // Devuelve los datos reorganizados
+    return $asistenciaReorganizada;
 }
+
 public function formatearDia($dia)
 {
     $year = date('Y'); // Año actual
@@ -244,9 +340,6 @@ public function getDiasDelMes($year, $month)
             'feriado_sn' => $esFeriado ? 1 : 0 // 1 si es feriado, 0 si no
         ];
     }
-
-
-    Log::info('Datos del mes:', $diasDelMes);
 
     // Retornamos los datos
     return $diasDelMes;
@@ -381,7 +474,6 @@ public function contarDiasHabil($diasDelMes)
         }
 
         // Opcional: Verificar el resultado
-        Log::info(json_encode($diasDelMes) . '-----------------------------');
         // Generar PDF
         $pdf = PDF::loadView('asistencia-ropa.asistneciaPDFUser', [
             'resultado' => $resultado,
@@ -470,103 +562,6 @@ public function contarDiasHabil($diasDelMes)
         }
 
         return $resultado;
-    }
-    public function getAsistenciaAgrupadaPorOperador($year, $month, $frenteId)
-    {
-        $diasDelMes = $this->calcularDiasDelMes($year, $month);
-    
-        $asistenciaHoras = AsistenciaHora::with(['detalles.operador'])
-            ->whereYear('fecha', $year)
-            ->whereMonth('fecha', $month)
-            ->where('frente_id', $frenteId)
-            ->get();
-    
-        if ($asistenciaHoras->isEmpty()) {
-            return response()->json([
-                'diasDelMes' => $diasDelMes,
-                'message' => 'No se encontraron datos para la fecha y frente seleccionados.'
-            ], 404);
-        }
-    
-        $horasDiariasLaborables = Frentes::find($frenteId)->horas_diarias_laborables;
-        $resumenOperarios = $this->calcularHorasTrabajadas($asistenciaHoras, $diasDelMes, $horasDiariasLaborables);
-    
-        $mes = Carbon::createFromFormat('Y-m', "$year-$month")->format('m-Y');
-        $operadorControl = OperadorControl::where('frente_id', $frenteId)
-            ->where('mes', $mes)
-            ->get()
-            ->keyBy('operador_id');
-    
-        foreach ($resumenOperarios as &$operador) {
-            $operadorId = $operador['operador']['id'];
-            $responsabilidad = $this->obtenerResponsabilidad($operadorId, $month);
-            $operador['ayudante_sn'] = $responsabilidad;
-    
-            if (isset($operadorControl[$operadorId])) {
-                $control = $operadorControl[$operadorId];
-                if ($control->pago_mes_sn) {
-                    $operador['diasHabiles'] = $control->dias_habiles_trabajados;
-                    $operador['sabados'] = $control->sabados_trabajados;
-                    $operador['domingos'] = $control->domingos_trabajados;
-                    $operador['feriados'] = $control->feriados_trabajados;
-                    $operador['horasExtras'] = $control->horas_extras_trabajadas;
-                    $operador['serviciosExtrasS1'] = $control->servicios_extras_s1;
-                    $operador['serviciosExtrasS2'] = $control->servicios_extras_s2;
-                    $operador['serviciosExtrasS3'] = $control->servicios_extras_s3;
-                    $operador['serviciosExtrasS4'] = $control->servicios_extras_s4;
-                    $operador['serviciosExtrasS5'] = $control->servicios_extras_s5;
-                    $operador['pagosExtMensual'] = true;
-                    $operador['pagoS1'] = true;
-                    $operador['pagoS2'] = true;
-                    $operador['pagoS3'] = true;
-                    $operador['pagoS4'] = true;
-                    $operador['pagoS5'] = true;
-                    
-                    // Formatear fechas sin hora
-                    $operador['fecha_pago_s1'] = $control->fecha_pago_s1 ? Carbon::parse($control->fecha_pago_s1)->format('d-m-Y') : null;
-                    $operador['fecha_pago_s2'] = $control->fecha_pago_s2 ? Carbon::parse($control->fecha_pago_s2)->format('d-m-Y') : null;
-                    $operador['fecha_pago_s3'] = $control->fecha_pago_s3 ? Carbon::parse($control->fecha_pago_s3)->format('d-m-Y') : null;
-                    $operador['fecha_pago_s4'] = $control->fecha_pago_s4 ? Carbon::parse($control->fecha_pago_s4)->format('d-m-Y') : null;
-                    $operador['fecha_pago_s5'] = $control->fecha_pago_s5 ? Carbon::parse($control->fecha_pago_s5)->format('d-m-Y') : null;
-                    $operador['fecha_pago_mes'] = $control->fecha_pago_mes ? Carbon::parse($control->fecha_pago_mes)->format('d-m-Y') : null;
-                } else {
-                    if ($control->servicios_extras_s1 !== null) {
-                        $operador['serviciosExtrasS1'] = $control->servicios_extras_s1;
-                        $operador['pagoS1'] = true;
-                        $operador['fecha_pago_s1'] = $control->fecha_pago_s1 ? Carbon::parse($control->fecha_pago_s1)->format('d-m-Y') : null;
-                    }
-                    if ($control->servicios_extras_s2 !== null) {
-                        $operador['serviciosExtrasS2'] = $control->servicios_extras_s2;
-                        $operador['pagoS2'] = true;
-                        $operador['fecha_pago_s2'] = $control->fecha_pago_s2 ? Carbon::parse($control->fecha_pago_s2)->format('d-m-Y') : null;
-                    }
-                    if ($control->servicios_extras_s3 !== null) {
-                        $operador['serviciosExtrasS3'] = $control->servicios_extras_s3;
-                        $operador['pagoS3'] = true;
-                        $operador['fecha_pago_s3'] = $control->fecha_pago_s3 ? Carbon::parse($control->fecha_pago_s3)->format('d-m-Y') : null;
-                    }
-                    if ($control->servicios_extras_s4 !== null) {
-                        $operador['serviciosExtrasS4'] = $control->servicios_extras_s4;
-                        $operador['pagoS4'] = true;
-                        $operador['fecha_pago_s4'] = $control->fecha_pago_s4 ? Carbon::parse($control->fecha_pago_s4)->format('d-m-Y') : null;
-                    }
-                    if ($control->servicios_extras_s5 !== null) {
-                        $operador['serviciosExtrasS5'] = $control->servicios_extras_s5;
-                        $operador['pagoS5'] = true;
-                        $operador['fecha_pago_s5'] = $control->fecha_pago_s5 ? Carbon::parse($control->fecha_pago_s5)->format('d-m-Y') : null;
-                    }
-                }
-            }
-        }
-    
-        usort($resumenOperarios, function ($a, $b) {
-            return strcmp($a['operador']['name'], $b['operador']['name']);
-        });
-    
-        return response()->json([
-            'diasDelMes' => $diasDelMes,
-            'asistencias' => $resumenOperarios
-        ]);
     }
 
     public function calcularDiasDelMes($year, $month)
@@ -690,38 +685,6 @@ public function contarDiasHabil($diasDelMes)
         }
 
         return array_values($resumenOperarios);
-    }
-    public function obtenerResponsabilidad($operadorId, $month)
-    {
-        $hayUno = false;
-        $todosSonCero = true;
-    
-        // Obtener los detalles de asistencia para el operador y el mes dado
-        $detalles = AsistenciaDetalle::where('operador_id', $operadorId)
-            ->whereMonth('created_at', $month)
-            ->get();
-    
-        // Iterar sobre cada elemento del array de detalles
-        foreach ($detalles as $detalle) {
-            // Verificar si la propiedad 'ayudante_sn' existe y es numérica
-            if (isset($detalle->ayudante_sn)) {
-                // Si 'ayudante_sn' no es null, verificar su valor
-                if ($detalle->ayudante_sn === 1) {
-                    $hayUno = true; // Hay al menos un 1
-                } elseif ($detalle->ayudante_sn !== 0) {
-                    $todosSonCero = false; // Hay algún valor distinto de 0
-                }
-            }
-        }
-    
-        // Determinar el texto basado en los contadores
-        if ($hayUno) {
-            return 'operador'; // Hay al menos un 1
-        } elseif ($todosSonCero) {
-            return 'ayudante'; // Todos son 0 o 'ayudante_sn' es null
-        } else {
-            return 'desconocido'; // No se puede determinar la responsabilidad
-        }
     }
 
     private function esFeriado($fecha, $feriados)

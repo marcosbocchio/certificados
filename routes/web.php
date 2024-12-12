@@ -102,6 +102,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/asistencia-nuevo', 'AsistenciaController@nuevo')->name('asistencia-nuevo');
       Route::get('/area/enod/asistencia-nuevo-horas', 'AsistenciaController@nuevoHoras')->name('asistencia-nuevo-horas');
       Route::get('/area/enod/asistencia-resumen', 'AsistenciaController@resumenView')->name('asistencia-resumen');
+      Route::get('/area/enod/asistencia-resumen-servicios', 'AsistenciaController@resumenViewServicio')->name('asistencia-resumen-servicio');
       Route::get('/asistencia/edit/servicio/{id}', 'AsistenciaController@editServico')->name('asistencia.editservico');
       Route::get('/asistencia/edit/horas/{id}', 'AsistenciaController@editHoras')->name('asistencia.edithoras');
       Route::get('/asistencia/copia/{id}', 'AsistenciaController@copia')->name('asistencia.copia');

@@ -397,6 +397,9 @@ Vue.component('asistencia-edit-horas', AsistenciaEditHoras);
 import AsistenciaResumen from './components/control-asistencia/asistencia-resumen.vue';
 Vue.component('asistencia-resumen', AsistenciaResumen);
 
+import AsistenciaResumenServicios from './components/control-asistencia/asistencia-resumen-servicios.vue';
+Vue.component('asistencia-resumen-servicios', AsistenciaResumenServicios);
+
 import AsistenciaCopia from './components/control-asistencia/asistencia-copia.vue';
 Vue.component('asistencia-copia', AsistenciaCopia);
 

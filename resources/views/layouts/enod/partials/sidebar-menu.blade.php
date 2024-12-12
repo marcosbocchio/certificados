@@ -186,7 +186,10 @@
               <li><a href="{{ route('asistencia-servicios') }}">Carga Servicios Extras</a></li>
             @endcan
             @can('A_resumen_view')
-              <li><a href="{{ route('asistencia-resumen') }}">Resumen</a></li>
+              <li><a href="{{ route('asistencia-resumen') }}">Resumen Horas Extras</a></li>
+            @endcan
+            @can('A_resumen_view')
+              <li><a href="{{ route('asistencia-resumen-servicio') }}">Resumen Servicios Extras</a></li>
             @endcan
             @can('A_asistencia_acceder')
               <li><a href="{{ route('asistencia-pagos') }}">Pagar Horas Extras</a></li>
@@ -305,24 +308,23 @@
         @endcan
 
         @can('QR')
-
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-qrcode"></i> <span>QR CODE</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @can('QR_interno_equipos')
+                <li><a href="{{ route('qr-interno-equipos') }}">Interno equipos</a></li>
+            @endcan
+            @can('QR_interno_equipos')
+              <li><a href="{{ route('qr-vehiculos') }}">Vehiculos</a></li>
+            @endcan
+          </ul>
+        </li>
         @endcan
-          <li class="treeview">
-            <a href="#">
-              <i class="glyphicon glyphicon-qrcode"></i> <span>QR CODE</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              @can('QR_interno_equipos')
-                  <li><a href="{{ route('qr-interno-equipos') }}">Interno equipos</a></li>
-              @endcan
-              @can('QR_interno_equipos')
-                <li><a href="{{ route('qr-vehiculos') }}">Vehiculos</a></li>
-              @endcan
-            </ul>
-          </li>
 
         @can('CURSOS')
           <li class="treeview">

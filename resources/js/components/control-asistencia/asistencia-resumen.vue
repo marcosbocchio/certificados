@@ -49,7 +49,6 @@
               {{ dia.dia }}
             </th>
             <th>E</th>
-            <th>SE</th>
             <th>S</th>
             <th>D/F</th>
         </tr>
@@ -70,8 +69,7 @@
                 <span v-else>0</span>
             </td>
             <!-- Calcular y mostrar las nuevas columnas -->
-            <td>{{ contarParametros(detalle.dias, 'hora_extra_sn', 'sumar') }}</td> 
-            <td>{{ contarParametros(detalle.dias, 'contratista_id', 'conteo') }}</td>
+            <td>{{ contarHoras(detalle.dias) }}</td> 
             <td>{{ contarParametros(detalle.dias, 'sabado', 'sumar') }}</td>
             <td>{{ contarParametros(detalle.dias, 'domingo_feriado', 'sumar') }}</td>
         </tr>
@@ -142,7 +140,69 @@ methods: {
   tieneParteODetalle(detalle, dia) {
     return detalle.some(item => item.fechaAsignacion === this.formatearDia(dia));
   },
+  calcularDiferenciaHoras(dia) {
+    // Obtener entrada y salida como cadenas en formato "hh:mm:ss"
+    const entrada = dia.detalle.entrada; // Ejemplo: "08:00:00"
+    const salida = dia.detalle.salida; // Ejemplo: "17:00:00"
 
+    // Convertimos las horas, minutos y segundos a valores numéricos
+    const [entradaHoras, entradaMinutos, entradaSegundos] = entrada.split(':').map(Number);
+    const [salidaHoras, salidaMinutos, salidaSegundos] = salida.split(':').map(Number);
+
+    // Convertimos ambos tiempos a minutos
+    const minutosEntrada = entradaHoras * 60 + entradaMinutos + entradaSegundos / 60;
+    const minutosSalida = salidaHoras * 60 + salidaMinutos + salidaSegundos / 60;
+
+    // Calculamos la diferencia en minutos
+    const diferenciaMinutos = minutosSalida - minutosEntrada;
+
+    // Convertimos la diferencia a horas y minutos
+    const horasTrabajadas = Math.floor(diferenciaMinutos / 60);
+    const minutosTrabajados = Math.floor(diferenciaMinutos % 60);
+
+    // Devolvemos las horas trabajadas en formato "horas:minutos"
+    return `${horasTrabajadas}:${minutosTrabajados.toString().padStart(2, '0')}`;
+},
+contarHoras(dias) {
+      let totalHorasExtras = 0;
+
+      dias.forEach(dia => {
+        if (dia && dia.detalle && dia.detalle.entrada && dia.detalle.salida) {
+          const entrada = this.convertirHoraADate(dia.detalle.entrada);
+          const salida = this.convertirHoraADate(dia.detalle.salida);
+
+          // Calcular la diferencia en horas
+          const horasTrabajadas = (salida - entrada) / (1000 * 60 * 60);
+
+          // Calcular las horas extras trabajadas
+          const horasLaborables = this.frente_selected.horas_diarias_laborables;
+          if (horasTrabajadas > horasLaborables) {
+            totalHorasExtras += horasTrabajadas - horasLaborables;
+          }
+        }
+      });
+
+      // Actualizar acumulación global (opcional)
+      this.acumulacionHorasExtras = totalHorasExtras;
+
+      // Formatear las horas extras como "HH:MM"
+      return this.formatearHorasExtras(totalHorasExtras);
+    },
+
+    convertirHoraADate(hora) {
+      // Convertir una cadena "HH:mm:ss" a un objeto Date
+      const [h, m, s] = hora.split(":").map(Number);
+      const date = new Date();
+      date.setHours(h, m, s || 0, 0);
+      return date;
+    },
+
+    formatearHorasExtras(horasExtras) {
+      // Convertir un número decimal a formato "HH:MM"
+      const horas = Math.floor(horasExtras);
+      const minutos = Math.round((horasExtras - horas) * 60);
+      return `${horas}:${minutos.toString().padStart(2, "0")}`;
+    },
   // Este método devuelve el valor correspondiente al día
   obtenerValorDetalle(detalle, parametro) {
     // Depuración para ver los datos que llegan al método
@@ -154,15 +214,28 @@ methods: {
     }
 
     // 2. Si contratista_id es null, verificar dia_semana_sn
-    if (parametro.dia_semana_sn === 1) {
-        // Si es día de semana, miramos hora_extra_sn
-        if (detalle.hora_extra_sn === 1) {
-            console.log('Mostrando horas extra:', '1');
-            return '1'; // Mostrar 1 si tiene horas extra
-        }
-        console.log('Mostrando 0 por día de semana sin horas extra');
-        return '0'; // Mostrar '0' si no tiene horas extra
-    }
+if (parametro.dia_semana_sn === 1) {
+    // Convertimos las horas de entrada y salida a objetos Date
+    const [entradaHoras, entradaMinutos, entradaSegundos] = detalle.entrada.split(':').map(Number);
+    const [salidaHoras, salidaMinutos, salidaSegundos] = detalle.salida.split(':').map(Number);
+
+    // Creamos fechas ficticias para calcular la diferencia
+    const entrada = new Date(0, 0, 0, entradaHoras, entradaMinutos, entradaSegundos);
+    const salida = new Date(0, 0, 0, salidaHoras, salidaMinutos, salidaSegundos);
+
+    // Calculamos la diferencia en milisegundos
+    const diferenciaMs = salida - entrada;
+
+    // Convertimos la diferencia a horas y minutos
+    const horas = Math.floor(diferenciaMs / (1000 * 60 * 60));
+    const minutos = Math.floor((diferenciaMs % (1000 * 60 * 60)) / (1000 * 60));
+
+    const horasTrabajadas = `${horas}:${minutos.toString().padStart(2, '0')}`;
+
+    console.log('Horas trabajadas:', horasTrabajadas);
+ 
+    return horasTrabajadas;
+}
 
     // 3. Si es fin de semana o feriado, miramos s_d_f_sn
     if (parametro.dia_semana_sn === 0) {
@@ -225,7 +298,6 @@ methods: {
   // Log de los datos antes de retornar
   console.log('Datos del mes:', diasDelMes);
   console.log('Total de días hábiles:', this.diasHabiles);
-
   // Retornamos solo los días del mes como antes
   return diasDelMes;
 },
@@ -356,7 +428,11 @@ contarParametros(detalle, parametro, tipo) {
 
             // Para contar horas extra
             if (tipo === 'sumar' && parametro === 'hora_extra_sn' && dia.detalle[parametro] === 1) {
-                return contador + 1; // Sumar solo los casos donde hora_extra_sn es 1
+              const diferenciaHoras = this.calcularDiferenciaHoras(dia);
+              
+                if (diferenciaHoras > 0) {
+                    return contador + diferenciaHoras; // Solo sumamos si la diferencia es positiva
+                } // Sumar solo los casos donde hora_extra_sn es 1
             }
 
             // Para contar contratistas
@@ -367,7 +443,7 @@ contarParametros(detalle, parametro, tipo) {
             // Contar solo sábados
             if (tipo === 'sumar' && parametro === 'sabado') {
                 if (parametros.sabado_sn === 1 && dia.detalle.s_d_f_sn === 1 && dia.detalle.contratista_id === null) {
-                  console.log(dia.detalle.contratista_id,'aaaaaaaaaaaaaaaaaaaaaaa');
+                  
                     return contador + 1; // Contamos como sábado
                 }
             }
@@ -393,19 +469,19 @@ formatDateToMonthYear(date) {
     };
   },
   exportarTodoPDF() {
-    const { year, month } = this.formatDateToMonthYear(this.selectedDate);
-    const frent_id = this.frente_selected.id;
+  const { year, month } = this.formatDateToMonthYear(this.selectedDate);
+  const frent_id = this.frente_selected.id;
+  const modo = 'Horas'; // Nuevo parámetro
 
-    const url = `/area/enod/asistencia-pdf?year=${year}&month=${month}&frent_id=${frent_id}`;
+  const url = `/area/enod/asistencia-pdf?year=${year}&month=${month}&frent_id=${frent_id}&modo=${modo}`;
 
-    // Abre la URL en una nueva ventana
-    window.open(url, '_blank');
-  },
+  // Abre la URL en una nueva ventana
+  window.open(url, '_blank');
+},
   pdfusuario(operadorId) {
     console.log(operadorId);
         // Construir la URL con los parámetros
         const url = `/area/enod/asistencia-pdf-user/${operadorId}/${this.frente_selected.id}/${this.selectedDate}`;
-
         // Abrir el PDF en una nueva pestaña
         window.open(url, '_blank');
     }
