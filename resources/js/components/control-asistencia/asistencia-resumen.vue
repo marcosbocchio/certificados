@@ -164,30 +164,35 @@ methods: {
     return `${horasTrabajadas}:${minutosTrabajados.toString().padStart(2, '0')}`;
 },
 contarHoras(dias) {
-      let totalHorasExtras = 0;
+  let totalHorasExtras = 0;
 
-      dias.forEach(dia => {
-        if (dia && dia.detalle && dia.detalle.entrada && dia.detalle.salida) {
-          const entrada = this.convertirHoraADate(dia.detalle.entrada);
-          const salida = this.convertirHoraADate(dia.detalle.salida);
+  console.log(dias); // Log para verificar los datos de entrada
 
-          // Calcular la diferencia en horas
-          const horasTrabajadas = (salida - entrada) / (1000 * 60 * 60);
+  dias.forEach(dia => {
+    // Verificar si el día es válido y si "dia_semana_sn" es igual a 1
+    if (dia && dia.parametro && dia.parametro.dia_semana_sn === 1) {
+      if (dia.detalle && dia.detalle.entrada && dia.detalle.salida) {
+        const entrada = this.convertirHoraADate(dia.detalle.entrada);
+        const salida = this.convertirHoraADate(dia.detalle.salida);
 
-          // Calcular las horas extras trabajadas
-          const horasLaborables = this.frente_selected.horas_diarias_laborables;
-          if (horasTrabajadas > horasLaborables) {
-            totalHorasExtras += horasTrabajadas - horasLaborables;
-          }
+        // Calcular la diferencia en horas
+        const horasTrabajadas = (salida - entrada) / (1000 * 60 * 60);
+
+        // Calcular las horas extras trabajadas
+        const horasLaborables = this.frente_selected.horas_diarias_laborables;
+        if (horasTrabajadas > horasLaborables) {
+          totalHorasExtras += horasTrabajadas - horasLaborables;
         }
-      });
+      }
+    }
+  });
 
-      // Actualizar acumulación global (opcional)
-      this.acumulacionHorasExtras = totalHorasExtras;
+  // Actualizar acumulación global (opcional)
+  this.acumulacionHorasExtras = totalHorasExtras;
 
-      // Formatear las horas extras como "HH:MM"
-      return this.formatearHorasExtras(totalHorasExtras);
-    },
+  // Formatear las horas extras como "HH:MM"
+  return this.formatearHorasExtras(totalHorasExtras);
+},
 
     convertirHoraADate(hora) {
       // Convertir una cadena "HH:mm:ss" a un objeto Date

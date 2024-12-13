@@ -292,7 +292,7 @@ class PartesManualesController extends Controller
                                     ->whereNull('informes.parte_id')
                                     ->whereDate('informes.fecha', '=', $fechaSeleccionada) // Modificado para coincidir exactamente con la fecha
                                     ->get();
-
+        log::info($informesSinParte);
         return response()->json($informesSinParte);
     }
 
