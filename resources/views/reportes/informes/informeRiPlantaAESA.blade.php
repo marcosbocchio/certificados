@@ -514,12 +514,12 @@ footer {
         <tbody>
             <tr class="gris">
             <td style="width: 43mm;">
-                @if($contratista->nombre === 'ENOD')
-                    Evaluador ENOD
-                @else
-                    Evaluador AESA
-                @endif
-            </td>
+    @if(isset($contratista) && $contratista->nombre === 'ENOD')
+        Evaluador ENOD
+    @else
+        Evaluador AESA
+    @endif
+</td>
                 <td style="width: 40mm;" >Inspector de AESA</td>
                 <td style="width: 50mm;" >Inspector del Cliente</td>
                 <td style="width: 48mm;" >Inspector Autorizado</td>
