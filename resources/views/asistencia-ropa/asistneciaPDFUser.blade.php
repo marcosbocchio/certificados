@@ -159,7 +159,6 @@
             <tbody>
                 @foreach($resultado as $dia => $asistencias)
                     @foreach($asistencias as $index => $asistencia)
-                    @php 
                         @if($asistencia['contratista_id'] === null)
                             @php
                                 $esFeriado = $asistencia['feriado_sn'] ? 'highlight' : '';
