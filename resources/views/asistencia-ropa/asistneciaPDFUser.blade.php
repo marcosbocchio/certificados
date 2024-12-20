@@ -152,35 +152,38 @@
                     <th width="70px">Fecha</th>
                     <th width="70px">Responsabilidad</th>
                     <th width="120px">Hora Entrada</th>
-                    <th width="120px">Horas Salida</th>
+                    <th width="120px">Hora Salida</th>
                     <th width="100px">Fecha Pago</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($resultado as $dia => $asistencias)
-                    @foreach($asistencias as $index => $asistencia)
-                        @if($asistencia['contratista_id'] === null)
-                            @php
-                                $esFeriado = $asistencia['feriado_sn'] ? 'highlight' : '';
-                                $totalServicioExtraNull += $asistencia['servicio_extra'] ? 1 : 0;
-                                $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
-                            @endphp
-                            <tr>
-                                <td>{{ $dia }}</td>
-                                <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
-                                <td>{{ $asistencia['ayudante_sn'] === 1 ? 'Operador' : 'Ayudante' }}</td>
-                                <td>{{ $asistencia['entrada'] }}</td>
-                                <td>{{ $asistencia['salida'] }}</td>
-                                <td>
-                                    @if ($asistencia['no_pagar'] == 1)
-                                        Cancelado
-                                    @else
-                                        {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}
-                                    @endif
-                                </td>
-                            </tr>
-                        @endif
-                    @endforeach
+                @foreach($resultado as $asistencia)
+                    @if($asistencia['contratista_id'] === null)
+                        @php
+                            // Determina si es un feriado para destacar la fila
+                            $esFeriado = $asistencia['s_d_f_sn'] ? 'highlight' : '';
+                            
+                            // Obtiene la fecha de pago usando la función definida
+                            $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
+
+                            // Determina la responsabilidad según el valor de 'ayudante_sn'
+                            $responsabilidad = $asistencia['ayudante_sn'] === 1 ? 'Ayudante' : 'Operador';
+                        @endphp
+                        <tr>
+                            <td>{{ date('l', strtotime($asistencia['fecha'])) }}</td> <!-- Día en texto -->
+                            <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
+                            <td>{{ $responsabilidad }}</td>
+                            <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['entrada'])->format('H:i') }}</td>
+                            <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['salida'])->format('H:i') }}</td>
+                            <td>
+                                @if ($asistencia['no_pagar'] == 1)
+                                    Cancelado
+                                @else
+                                    {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? $fechaPago }}
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>
@@ -191,50 +194,43 @@
     <div class="content">
         <h3>Servicios Extras</h3>
         <table class="content-table">
-            <thead>
+    <thead>
+        <tr>
+            <th width="70px">Día</th>
+            <th width="70px">Fecha</th>
+            <th width="70px">Ayudante</th>
+            <th width="120px">Hora Entrada</th>
+            <th width="120px">Hora Salida</th>
+            <th width="120px">Cliente</th>
+            <th width="100px">Parte</th>
+            <th width="100px">Técnica</th>
+            <th width="100px">Fecha Pago</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($resultado as $asistencia)
+            @if($asistencia['contratista_id'] !== null)
+                @php
+                    $esFeriado = $asistencia['s_d_f_sn'] ? 'highlight' : '';
+                    $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
+                            $responsabilidad = $asistencia['ayudante_sn'] === 1 ? 'Ayudante' : 'Operador';;
+                @endphp
                 <tr>
-                    <th width="70px">Día</th>
-                    <th width="70px">Fecha</th>
-                    <th width="70px">Ayudante</th>
-                    <th width="120px">Hora Entrada</th>
-                    <th width="120px">Hora Salida</th>
-                    <th width="120px">cliente</th>
-                    <th width="100px">Parte</th>
-                    <th width="100px">Tencnica</th>
-                    <th width="100px">Fecha Pago</th>
+                    <td>{{ \Carbon\Carbon::parse($asistencia['fecha'])->format('l') }}</td>
+                    <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
+                    <td>{{ $responsabilidad }}</td>
+                    <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['entrada'])->format('H:i') }}</td>
+                    <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['salida'])->format('H:i') }}</td>
+                    <td>{{ $asistencia['contratista']['nombre_fantasia'] }}</td>
+                    <td>{{ $asistencia['parte'] }}</td>
+                    <td>{{ $asistencia['metodoEnsayo']['metodo'] ?? '-' }}</td>
+                    <td>{{ $fechaPago }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach($resultado as $dia => $asistencias)
-                    @foreach($asistencias as $index => $asistencia)
-                        @if($asistencia['contratista_id'] !== null)
-                            @php
-                                $esFeriado = $asistencia['feriado_sn'] ? 'highlight' : '';
-                                $totalServicioExtraNotNull += $asistencia['servicio_extra'] ? 1 : 0;
-                                $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
-                            @endphp
-                            <tr>
-                                <td>{{ $dia }}</td>
-                                <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
-                                <td>{{ $asistencia['ayudante']}}</td>
-                                <td>{{ $asistencia['entrada'] }}</td>
-                                <td>{{ $asistencia['salida'] }}</td>
-                                <td>{{ $asistencia['contratista'] }}</td>
-                                <td>{{ $asistencia['servicio_extra'] ? $asistencia['parte'] : '-' }}</td>   
-                                <td>{{ $asistencia['metodo_ensayo']  ?? '-' }}</td>
-                                <td>
-                                    @if ($asistencia['no_pagar'] == 1)
-                                        Cancelado
-                                    @else
-                                        {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}
-                                    @endif
-                                </td>
-                            </tr>
-                        @endif
-                    @endforeach
-                @endforeach
-            </tbody>
-        </table>
+            @endif
+        @endforeach
+    </tbody>
+</table>
+
     </div>
 
     <script type="text/php">

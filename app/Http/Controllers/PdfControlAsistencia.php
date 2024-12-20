@@ -395,51 +395,6 @@ public function contarDiasHabil($diasDelMes)
             'Sunday' => 'Domingo',
         ];
 
-        // Agrupar las asistencias por día de la semana
-        $resultado = [];
-        foreach ($combinacion as $asistencia) {
-            $fechaAsistencia = Carbon::parse($asistencia['fecha']);
-            $horasTrabajadas = $this->calcularHorasTrabajadass($asistencia['entrada'], $asistencia['salida']);
-            $feriadoSn = $this->esFeriado($fechaAsistencia, $feriados);
-        
-            // Obtener el día de la semana 
-            $diaSemana = $fechaAsistencia->format('l');
-            $diaSemanaEspanol = $diasEnEspanol[$diaSemana];
-        
-            // Calcular horasExtras basado en la presencia del contratista_id
-            if ($asistencia['contratista_id'] !== null) {
-                $horasExtras = 0; // Si hay contratista, no se consideran horas extras
-            } else {
-                $horasExtras = max(0, $horasTrabajadas - $horasDiariasLaborables);
-            }
-            
-            // Si el frenteId es 2 y es un día laborable, establecer horas_trabajadas y hora_extras a 0
-            if ($frenteId == 2 && in_array($diaSemanaEspanol, ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'])) {
-                $horasTrabajadas = '-';
-                $horasExtras = '-';
-            }
-
-            $resultado[$diaSemanaEspanol][] = [
-                'fecha' => $fechaAsistencia->toDateString(),
-                'entrada' => $asistencia['entrada'],
-                'salida' => $asistencia['salida'],
-                'contratista_id' => $asistencia['contratista_id'],
-                'horas_trabajadas' => $horasTrabajadas,
-                'ayudante' => $asistencia['ayudante']['name'] ?? null,
-                'metodo_ensayo' => $asistencia['metodoEnsayo']['metodo'] ?? null,
-                'hora_extras' => $horasExtras,
-                'servicio_extra' => $asistencia['contratista_id'] ? 1 : 0,
-                'feriado_sn' => $feriadoSn,
-                'contratista' => $asistencia['contratista']['nombre_fantasia'] ?? null,
-                'parte' => $asistencia['parte'],
-                'hora_extra_sn' =>$asistencia['hora_extra_sn'],
-                's_d_f_sn' => $asistencia['s_d_f_sn'],
-                'ayudante_sn' => $asistencia['ayudante_sn'],
-                'pago_e_sdf' =>$asistencia['pago_e_sdf'],
-                'pago_servicio_extra' => $asistencia['pago_servicio_extra'],
-                'no_pagar' => $asistencia['no_pagar'],
-            ];
-        }
 
 
         $fechasOperador = OperadorControl::where('frente_id', $frenteId)
@@ -468,11 +423,11 @@ public function contarDiasHabil($diasDelMes)
                     break;
             }
         }
-
+        log::info($combinacion);
         // Opcional: Verificar el resultado
         // Generar PDF
         $pdf = PDF::loadView('asistencia-ropa.asistneciaPDFUser', [
-            'resultado' => $resultado,
+            'resultado' => $combinacion,
             'selectedMonth' => $selectedMonth,
             'selectedYear' => $selectedYear,
             'frente' => $frente,
