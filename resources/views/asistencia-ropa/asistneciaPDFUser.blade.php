@@ -184,7 +184,7 @@
                 @endforeach
             </tbody>
         </table>
-        <p><strong>Total Servicio Extra:</strong> {{ $totalServicioExtraNull }}</p>
+        
     </div>
 
     <!-- Tabla para contratista_id !== null -->

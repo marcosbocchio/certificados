@@ -184,7 +184,7 @@ export default {
     async fetchAsistencia() {
       this.isLoading = true; // Activar el loading
       try {
-        const response = await axios.get('/api/asistencia_pagos', {
+        const response = await axios.get('/api/asistencia_pagos_servicios', {
           params: {
             frente_id: this.frente_selected?.id || null,
             fecha: this.fecha || null
