@@ -52,34 +52,36 @@
         </tr>
     </thead>
     <tbody>
-        <!-- Iteramos sobre cada operador -->
-        <tr v-for="(detalle, operador) in asistenciaDatos" :key="operador">
-            <!-- Columna del operador principal -->
-            <td>
-                <a href="#" @click.prevent="pdfusuario(detalle.operador.id)">
-                    {{ detalle.operador.name }}
-                </a>
-            </td>
+    <!-- Iteramos sobre cada operador -->
+    <tr v-for="(detalle, operador) in asistenciaDatos" :key="operador">
+        <!-- Columna del operador principal -->
+        <td>
+            <a href="#" @click.prevent="pdfusuario(detalle.operador_id)">
+                {{ operador }}
+            </a>
+        </td>
 
-            <!-- Columna de Responsabilidad -->
-            <td>
-                {{ detalle.ayudante_sn === 0 ? 'Operador' : 'Ayudante' }}
-            </td>
+        <!-- Columna de Responsabilidad -->
+        <td>
+          <span>
+  {{ detalle.ayudante_sn === 1 ? 'Operador' : 'Ayudante' }}
+</span>
 
-            <!-- Iteramos sobre los días -->
-            <td v-for="(dia, index) in detalle.dias" :key="index">
-                <!-- Parte del operador -->
-                <div>
-                    {{ dia.asistencia ? (dia.asistencia.parte || '-') : '-' }}
-                </div>
-            </td>
+        </td>
 
-            <!-- Columna para mostrar la suma de contratistas -->
-            <td>
-                {{ contarContratistasPorFila(detalle.dias) }}
-            </td>
-        </tr>
-    </tbody>
+        <!-- Iteramos sobre los días -->
+        <td v-for="(dia, index) in detalle.dias" :key="index">
+            <!-- Parte del operador -->
+            <div>
+                {{ dia && dia.detalle ? (dia.detalle.parte || '-') : '-' }}
+            </div>
+        </td>
+        <td>
+          {{contarContratistasPorFila(detalle.dias)}}
+        </td>
+    </tr>
+</tbody>
+
 </table>
       </div>
     </div>
@@ -182,7 +184,8 @@ methods: {
     return '0'; // Por defecto mostramos '-'
 },
 contarContratistasPorFila(dias) {
-    return dias.filter(dia => dia.asistencia?.contratista?.id).length;
+    console.log(dias);
+    return dias.filter(dia => dia?.detalle?.contratista_id != null).length;
   },
   // Método para formatear el día como una fecha correcta
   formatearDia(dia) {
@@ -257,83 +260,97 @@ esFeriado(fecha) {
 },
 
 async getDatos() {
-    if (!this.frente_selected || !this.selectedDate) {
-        console.log("Por favor, seleccione un frente y una fecha antes de continuar.");
-        this.asistenciaDatos = [];
-        return;
+    // Verificar que se haya seleccionado un mes antes de continuar
+    if (!this.selectedDate) {
+        console.log("Por favor, seleccione un mes y año antes de continuar.");
+        this.asistenciaDatos = {}; // Limpiar la tabla si no hay mes
+        this.isLoading = false; // Finalizar la carga
+        return; // Salir si no hay mes seleccionado
     }
 
-    this.isLoading = true;
+    this.isLoading = true; // Indicar que la carga ha comenzado
 
-    const diasDelMes = await this.getDiasDelMes(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1);
+    console.log("Frente:", this.frente_selected);
+    console.log("Fecha:", this.selectedDate);
+
     const formattedDate = this.selectedDate.getFullYear() + '-' + ('0' + (this.selectedDate.getMonth() + 1)).slice(-2);
+    console.log("Fecha formateada:", formattedDate);
 
     try {
-        const response = await axios.get('/api/asistencia_pagos', {
+        // Esperar a que getDiasDelMes termine
+        const diasDelMes = await this.getDiasDelMes(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1);
+        console.log("Días del mes:", diasDelMes);
+
+        const response = await axios.get('/api/asistencia-operadores-datos-servicios', {
             params: {
                 frente_id: this.frente_selected.id,
                 fecha: formattedDate
             }
         });
 
-        console.log("Datos recibidos de la API:", response.data);
+        console.log("Respuesta de la API:", response.data);
 
-        const agrupados = {};
+        // Inicializar un objeto para almacenar los datos reorganizados
+        let asistenciaReorganizada = {};
 
-        response.data.forEach(item => {
-            const operadorId = item.operador.id;
+        // Iterar sobre cada operador en la respuesta
+        for (let operador in response.data) {
+            // Obtener los datos de ayudante_sn y operador_id (presente en todas las fechas del operador)
+            const operadorData = response.data[operador][0]; // Obtener el primer dato para estos valores
+            const ayudante_sn = operadorData?.ayudante_sn || null;
+            const operador_id = operadorData?.detalle?.operador_id || null;
 
-            // Procesar operador como principal
-            if (!agrupados[operadorId]) {
-                agrupados[operadorId] = {
-                    operador: { id: operadorId, name: item.operador.name },
-                    dias: diasDelMes.map(dia => ({ ...dia, asistencia: null })),
-                    ayudante_sn: 0 // Marcamos como operador
-                };
-            }
+            // Inicializar una matriz para cada operador que contenga los días del mes
+            asistenciaReorganizada[operador] = {
+                // Agregar los datos adicionales (ayudante_sn y operador_id)
+                ayudante_sn: ayudante_sn,
+                operador_id: operador_id,
+                dias: diasDelMes.map(dia => {
+                    // Convertir el día en el formato de fecha
+                    let fechaDelDia = `${formattedDate}-${('0' + dia.dia).slice(-2)}`; // Usa dia.dia ya que el objeto tiene varias propiedades
 
-            const fechaAsistencia = new Date(item.fecha_asistencia);
-            const diaMes = fechaAsistencia.getDate();
-            const diaCorrespondiente = agrupados[operadorId].dias.find(d => d.dia === diaMes);
-            if (diaCorrespondiente) {
-                diaCorrespondiente.asistencia = item;
-            }
+                    // Buscar si hay una entrada con la fecha que coincide con ese día
+                    let detalleDelDia = response.data[operador].find(asistencia => asistencia.fechaAsignacion === fechaDelDia);
 
-            // Procesar ayudante
-            if (item.ayudante) {
-                const ayudanteId = `ayudante-${item.ayudante.id}`; // Identificar como ayudante
+                    // Si existe un detalle para ese día, lo guardamos junto con los parámetros; de lo contrario, devolvemos null
+                    return detalleDelDia
+                        ? {
+                            detalle: detalleDelDia.detalle,
+                            parametros: {
+                                dia_semana_sn: dia.dia_semana_sn,
+                                sabado_sn: dia.sabado_sn,
+                                domingo_sn: dia.domingo_sn,
+                                feriado_sn: dia.feriado_sn
+                            }
+                          }
+                        : null; // Si no hay coincidencia, devolvemos null
+                })
+            };
+        }
 
-                if (!agrupados[ayudanteId]) {
-                    agrupados[ayudanteId] = {
-                        operador: { id: item.ayudante.id, name: item.ayudante.name },
-                        dias: diasDelMes.map(dia => ({ ...dia, asistencia: null })),
-                        ayudante_sn: 1 // Marcamos como ayudante
-                    };
-                }
+        // Ordenar los operadores alfabéticamente
+        const operadoresOrdenados = Object.keys(asistenciaReorganizada).sort();
 
-                const diaAyudante = agrupados[ayudanteId].dias.find(d => d.dia === diaMes);
-                if (diaAyudante) {
-                    diaAyudante.asistencia = item;
-                }
-            }
+        // Crear un nuevo objeto con los operadores ordenados
+        const asistenciaReorganizadaOrdenada = {};
+        operadoresOrdenados.forEach(operador => {
+            asistenciaReorganizadaOrdenada[operador] = asistenciaReorganizada[operador];
         });
 
-        // Convertimos el objeto en un arreglo para la vista
-        this.asistenciaDatos = Object.values(agrupados);
+        console.log("Datos reorganizados por operador (ordenados):", asistenciaReorganizadaOrdenada);
 
-        // Ordenar alfabéticamente por nombre
-        this.asistenciaDatos.sort((a, b) => a.operador.name.localeCompare(b.operador.name));
+        // Asignar los datos obtenidos
+        this.asistenciaDatos = asistenciaReorganizadaOrdenada;
+        this.diasDelMes = diasDelMes;
 
-        console.log("Resultado final agrupado y ordenado:", this.asistenciaDatos);
     } catch (error) {
-        console.error("Error al obtener los datos de la API:", error);
-        this.asistenciaDatos = [];
+        console.error("Error al llamar a la API:", error);
+        this.asistenciaDatos = {}; // Limpiar la tabla en caso de error
     } finally {
+        // Finalizar la carga independientemente de si hubo error o no
         this.isLoading = false;
     }
-}
-,
-
+},
 contarParametros(detalle, parametro, tipo) {
     return detalle.reduce((contador, dia) => {
         if (dia && dia.parametros) {

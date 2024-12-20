@@ -507,10 +507,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/feriados', 'AsistenciaController@getFeriados');
     Route::get('/asistencia-operadores', 'AsistenciaController@getAsistenciaAgrupadaPorOperador');
     Route::get('asistencia-operadores-datos', 'AsistenciaController@getDatosAsistencia');
+    Route::get('asistencia-operadores-datos-servicios', 'AsistenciaController@getDatosAsistenciaServicios');
     Route::post('/guardar-pagos', 'AsistenciaController@guardarPagos');
     Route::get('/calcular-dias-del-mes/{year}/{month}', 'AsistenciaController@calcularDiasDelMes');
 
     Route::get('/asistencia_pagos', 'AsistenciaController@getAsistenciaPagos');
+    Route::get('/asistencia_pagos_servicios', 'AsistenciaController@getAsistenciaPagosServicios');
     Route::post('/guardar_pagos', 'AsistenciaController@guardarPagosExtras');
     Route::post('/guardar_pagos_servicios', 'AsistenciaController@guardarPagosExtrasServicos');
 

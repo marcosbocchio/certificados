@@ -71,24 +71,29 @@ class PdfControlAsistencia extends Controller
         $horasLaborables = $frente->horas_diarias_laborables; // Usa el valor de horas laborales de $frente
     
         foreach ($dias as $dia) {
-            if (isset($dia['detalle']) && isset($dia['detalle']['entrada']) && isset($dia['detalle']['salida'])) {
-                $entrada = $this->convertirHoraADate($dia['detalle']['entrada']);
-                $salida = $this->convertirHoraADate($dia['detalle']['salida']);
-    
-                // Calcular la diferencia entre las horas de entrada y salida
-                $intervalo = $salida->diff($entrada);
-                $horasTrabajadas = $intervalo->h + ($intervalo->i / 60); // Obtener la diferencia en horas (y minutos convertidos a fracción de hora)
-    
-                // Calcular las horas extras trabajadas
-                if ($horasTrabajadas > $horasLaborables) {
-                    $totalHorasExtras += $horasTrabajadas - $horasLaborables;
+            // Verificar si el día debe ser considerado (basado en dia_semana_sn)
+            if (isset($dia['dia_semana_sn']) && $dia['dia_semana_sn'] == 1) {
+                // Verificar si el detalle tiene entrada y salida
+                if (isset($dia['detalle']) && isset($dia['detalle']['entrada']) && isset($dia['detalle']['salida'])) {
+                    
+                    $entrada = $this->convertirHoraADate($dia['detalle']['entrada']);
+                    $salida = $this->convertirHoraADate($dia['detalle']['salida']);
+        
+                    // Calcular la diferencia entre las horas de entrada y salida
+                    $intervalo = $salida->diff($entrada);
+                    $horasTrabajadas = $intervalo->h + ($intervalo->i / 60); // Obtener la diferencia en horas (y minutos convertidos a fracción de hora)
+        
+                    // Calcular las horas extras trabajadas
+                    if ($horasTrabajadas > $horasLaborables) {
+                        $totalHorasExtras += $horasTrabajadas - $horasLaborables;
+                    }
                 }
             }
         }
-    
         // Devolver el resultado formateado
         return $this->formatearHorasExtras($totalHorasExtras);
     }
+    
 
 public function convertirHoraADate($hora)
 {
@@ -174,10 +179,7 @@ protected function contarParametros($detalle, $parametro, $tipo)
         $detalleDia = $dia['detalle']; // Detalle del día actual
 
         // Logs para depuración
-        Log::info('Procesando día', [
-            'parametro' => $parametro,
-            'tipo' => $tipo,
-        ]);
+
 
         // Contar contratistas
         if ($tipo === 'conteo' && $parametro === 'contratista_id') {
@@ -416,16 +418,19 @@ public function contarDiasHabil($diasDelMes)
                 $horasTrabajadas = '-';
                 $horasExtras = '-';
             }
-        
+
             $resultado[$diaSemanaEspanol][] = [
                 'fecha' => $fechaAsistencia->toDateString(),
                 'entrada' => $asistencia['entrada'],
                 'salida' => $asistencia['salida'],
                 'contratista_id' => $asistencia['contratista_id'],
                 'horas_trabajadas' => $horasTrabajadas,
+                'ayudante' => $asistencia['ayudante']['name'] ?? null,
+                'metodo_ensayo' => $asistencia['metodoEnsayo']['metodo'] ?? null,
                 'hora_extras' => $horasExtras,
                 'servicio_extra' => $asistencia['contratista_id'] ? 1 : 0,
                 'feriado_sn' => $feriadoSn,
+                'contratista' => $asistencia['contratista']['nombre_fantasia'] ?? null,
                 'parte' => $asistencia['parte'],
                 'hora_extra_sn' =>$asistencia['hora_extra_sn'],
                 's_d_f_sn' => $asistencia['s_d_f_sn'],
@@ -435,15 +440,6 @@ public function contarDiasHabil($diasDelMes)
                 'no_pagar' => $asistencia['no_pagar'],
             ];
         }
-    
-        // Ordenar días de la semana en español
-        $ordenDiasSemana = [
-            'Domingo', 'Sábado', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'
-        ];
-
-        uksort($resultado, function($a, $b) use ($ordenDiasSemana) {
-            return array_search($a, $ordenDiasSemana) - array_search($b, $ordenDiasSemana);
-        });
 
 
         $fechasOperador = OperadorControl::where('frente_id', $frenteId)
@@ -522,10 +518,14 @@ public function contarDiasHabil($diasDelMes)
 
     private function obtenerAsistenciaDetalles($asistenciaHorasIds, $operadorId)
     {
-        return AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
+        $asistencias = AsistenciaDetalle::with('ayudante','metodoEnsayo','contratista') // Carga la relación 'ayudante'
+            ->whereIn('asistencia_horas_id', $asistenciaHorasIds)
             ->where('operador_id', $operadorId)
             ->get();
+
+        return $asistencias;
     }
+    
 
     private function combinarAsistenciasYDetalles($asistenciaHoras, $asistenciaDetalles)
     {
@@ -541,7 +541,7 @@ public function contarDiasHabil($diasDelMes)
                 // Obtener el nombre del operador
                 $operador = User::find($detalleRelacion->operador_id);
                 $name = $operador ? $operador->name : 'N/A';
-
+                
                 // Crear un objeto plano con todos los datos
                 $resultado[] = [
                     'id' => $asistencia->id,
@@ -549,7 +549,10 @@ public function contarDiasHabil($diasDelMes)
                     'name' => $name,
                     'entrada' => $detalleRelacion->entrada,
                     'salida' => $detalleRelacion->salida,
+                    'contratista' => $detalleRelacion->contratista,
                     'pago_e_sdf' => $detalleRelacion->pago_e_sdf,
+                    'ayudante' => $detalleRelacion->ayudante,
+                    'metodoEnsayo'=> $detalleRelacion->metodoEnsayo,
                     'pago_servicio_extra' => $detalleRelacion->pago_servicio_extra,
                     'contratista_id' => $detalleRelacion->contratista_id,
                     'parte' => $detalleRelacion->parte,

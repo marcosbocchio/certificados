@@ -216,46 +216,45 @@ export default {
         const response = await axios.get('/api/asistencia_pagos', { params });
         console.log(response.data);
 
+        // Agrupar asistencia por operador
         const asistenciaAgrupada = response.data.reduce((result, item) => {
-            item.detalles.forEach(detalle => {
-                if (
-                    (detalle.s_d_f_sn === 1 || detalle.hora_extra_sn === 1) &&
-                    detalle.pago_e_sdf === null &&
-                    detalle.no_pagar === null
-                ) {
-                    const operadorId = detalle.operador.id;
-                    if (!result[operadorId]) {
-                        result[operadorId] = {
-                            operador: detalle.operador,
-                            detalles: [],
-                            selectAll: false,
-                            collapsed: false
-                        };
-                    }
-                    result[operadorId].detalles.push({
-                        fecha: item.fecha,
-                        frente:item.frente.codigo,
-                        ayudante_sn: detalle.ayudante_sn === 0 ? 'Ayudante' : 'Operador',
-                        id: detalle.asistencia_horas_id,
-                        tipo_dia: this.determinarTipoDeDia(item.fecha), // Determinar tipo de día
-                        entrada: detalle.entrada || '-',
-                        salida: detalle.salida || '-',
-                        hora_extra_sn: detalle.hora_extra_sn === 1 ? 'Pagar' : 'No Pagar',
-                        s_d_f_sn: detalle.s_d_f_sn === 1 
-                                            ? (this.determinarTipoDeDia(item.fecha) === 'Sábado' 
-                                                ? 'Pagar Sábado' 
-                                                : (this.determinarTipoDeDia(item.fecha) === 'Domingo o Feriado' 
-                                                    ? 'Pagar D/F' 
-                                                    : 'No Pagar')) 
-                                            : 'No Pagar',
-                        selected: false,
-                        no_pagar: false,
-                    });
-                }
+            const operadorId = item.operador.id;
+
+            // Crear una nueva entrada para el operador si no existe
+            if (!result[operadorId]) {
+                result[operadorId] = {
+                    operador: item.operador,
+                    detalles: [],
+                    selectAll: false,
+                    collapsed: false,
+                };
+            }
+
+            // Agregar detalle al operador existente
+            result[operadorId].detalles.push({
+                fecha: item.fecha_asistencia,
+                frente: item.frente.codigo,
+                ayudante_sn: item.ayudante === 0 ? 'Ayudante' : 'Operador',
+                id: item.id_asistencia,
+                tipo_dia: this.determinarTipoDeDia(item.fecha_asistencia), // Determinar tipo de día
+                entrada: item.entrada || '-',
+                salida: item.salida || '-',
+                hora_extra_sn: item.hora_extra_sn === 1 ? 'Pagar' : 'No Pagar',
+                s_d_f_sn: item.s_d_f_sn === 1
+                    ? (this.determinarTipoDeDia(item.fecha_asistencia) === 'Sábado'
+                        ? 'Pagar Sábado'
+                        : (this.determinarTipoDeDia(item.fecha_asistencia) === 'Domingo o Feriado'
+                            ? 'Pagar D/F'
+                            : 'No Pagar'))
+                    : 'No Pagar',
+                selected: false,
+                no_pagar: item.no_pagar === 1,
             });
+
             return result;
         }, {});
 
+        console.log('-------------', asistenciaAgrupada);
         this.operadores = Object.values(asistenciaAgrupada);
     } catch (error) {
         console.error('Error al obtener la asistencia:', error);

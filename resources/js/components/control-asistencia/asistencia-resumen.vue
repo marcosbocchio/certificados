@@ -166,11 +166,9 @@ methods: {
 contarHoras(dias) {
   let totalHorasExtras = 0;
 
-  console.log(dias); // Log para verificar los datos de entrada
-
   dias.forEach(dia => {
-    // Verificar si el día es válido y si "dia_semana_sn" es igual a 1
-    if (dia && dia.parametro && dia.parametro.dia_semana_sn === 1) {
+    // Verificar si el día debe ser considerado (basado en dia.parametros.dia_semana_sn)
+    if (dia && dia.parametros && dia.parametros.dia_semana_sn === 1) {
       if (dia.detalle && dia.detalle.entrada && dia.detalle.salida) {
         const entrada = this.convertirHoraADate(dia.detalle.entrada);
         const salida = this.convertirHoraADate(dia.detalle.salida);
@@ -192,7 +190,8 @@ contarHoras(dias) {
 
   // Formatear las horas extras como "HH:MM"
   return this.formatearHorasExtras(totalHorasExtras);
-},
+}
+,
 
     convertirHoraADate(hora) {
       // Convertir una cadena "HH:mm:ss" a un objeto Date
@@ -357,13 +356,6 @@ async getDatos() {
         });
 
         console.log("Respuesta de la API:", response.data);
-
-        // Comprobar si hay datos en la respuesta
-        if (response.data.length === 0) {
-            console.log("No se encontraron datos para la consulta");
-            this.asistenciaDatos = {}; // Limpiar la tabla
-            return; // Salir si no hay datos
-        }
 
         // Inicializar un objeto para almacenar los datos reorganizados
         let asistenciaReorganizada = {};

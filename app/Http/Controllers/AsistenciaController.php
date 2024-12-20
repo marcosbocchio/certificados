@@ -292,7 +292,55 @@ public function getAsistenciaPagos(Request $request)
     $resultados = $asistenciaHoras->flatMap(function ($asistenciaHora) {
         // Filtrar detalles donde 'contratista' no sea null y 'pago_servicio_extra' sea null
         return $asistenciaHora->detalles->filter(function ($detalle) {
-            return $detalle->contratista !== null && $detalle->pago_servicio_extra === null && $detalle->no_pagar !== 1;
+            return $detalle->contratista === null && $detalle->pago_e_sdf === null && $detalle->no_pagar !== 1;
+        })->map(function ($detalle) use ($asistenciaHora) {
+            return [
+                'id' => $detalle->id,
+                'asistencia_horas_id' => $detalle->asistencia_horas_id,
+                'ayudante' => $detalle->ayudante_sn,
+                'operador' => $detalle->operador,
+                'entrada' => $detalle->entrada,
+                'salida' => $detalle->salida,
+                'contratista' => $detalle->contratista,
+                'parte' => $detalle->parte,
+                'observaciones' => $detalle->observaciones,
+                'hora_extra_sn' => $detalle->hora_extra_sn,
+                's_d_f_sn' => $detalle->s_d_f_sn,
+                'no_pagar' => $detalle->no_pagar,
+                'metodoEnsayo' => $detalle->metodoEnsayo,
+                'ayudante_id' => $detalle->ayudante_id,
+                'fecha_asistencia' => $asistenciaHora->fecha,
+                'id_asistencia' => $asistenciaHora->id,
+                'frente' => $asistenciaHora->frente,
+            ];
+        });
+    });
+    
+    return response()->json($resultados);
+}
+public function getAsistenciaPagosServicios(Request $request)
+{
+    // Construir la consulta base
+    $query = AsistenciaHora::query();
+    
+    // Aplicar filtros condicionales
+    if ($request->filled('frente_id')) {
+        $query->where('frente_id', $request->frente_id);
+    }
+    
+    if ($request->filled('fecha')) {
+        $query->where('fecha', 'like', $request->fecha . '%');
+    }
+    
+    // Obtener las AsistenciaHora con sus detalles
+    $asistenciaHoras = $query->with('frente','detalles.operador', 'detalles.ayudante', 'detalles.contratista', 'detalles.metodoEnsayo')
+        ->get();
+    
+    // Transformar los resultados para incluir campos adicionales
+    $resultados = $asistenciaHoras->flatMap(function ($asistenciaHora) {
+        // Filtrar detalles donde 'contratista' no sea null y 'pago_servicio_extra' sea null
+        return $asistenciaHora->detalles->filter(function ($detalle) {
+            return $detalle->contratista !== null && $detalle->pago_e_sdf === null && $detalle->no_pagar !== 1;
         })->map(function ($detalle) use ($asistenciaHora) {
             return [
                 'id' => $detalle->id,
@@ -301,7 +349,7 @@ public function getAsistenciaPagos(Request $request)
                 'operador' => $detalle->operador,
                 'entrada' => $detalle->entrada,
                 'salida' => $detalle->salida,
-                'contratista' => $detalle->contratista, // Solo se incluye si no es null
+                'contratista' => $detalle->contratista,
                 'parte' => $detalle->parte,
                 'observaciones' => $detalle->observaciones,
                 'hora_extra_sn' => $detalle->hora_extra_sn,
@@ -309,7 +357,6 @@ public function getAsistenciaPagos(Request $request)
                 'no_pagar' => $detalle->no_pagar,
                 'metodoEnsayo' => $detalle->metodoEnsayo,
                 'ayudante_id' => $detalle->ayudante_id,
-                // Campos adicionales
                 'fecha_asistencia' => $asistenciaHora->fecha,
                 'id_asistencia' => $asistenciaHora->id,
                 'frente' => $asistenciaHora->frente,
@@ -986,6 +1033,66 @@ public function getAsistenciaPagos(Request $request)
                                                       'detalle' => $detalle,  // Todos los detalles del registro
                                                       'fechaAsignacion' => $detalle->asistenciaHora->fecha,  // Fecha de AsistenciaHora
                                                       'ayudante_sn' => $ayudanteSnFlag  // Ayudante u operador según los valores
+                                                  ];
+                                              });
+                                          });
+
+    return response()->json($detallesAgrupados);
+}
+public function getDatosAsistenciaServicios(Request $request)
+{
+    // Obtener frente_id y fecha desde los parámetros de la URL
+    $frenteId = $request->input('frente_id');
+    $fecha = $request->input('fecha');
+
+    // Buscar todas las filas en AsistenciaHora que coincidan con el frente y la fecha (año-mes)
+    $asistenciaHoras = AsistenciaHora::where('frente_id', $frenteId)
+                                     ->where('fecha', 'like', $fecha . '%') // Buscar por año-mes
+                                     ->get();
+
+    // Obtener los IDs de AsistenciaHora para buscar en AsistenciaDetalle
+    $asistenciaHorasIds = $asistenciaHoras->pluck('id'); // Lista de IDs
+
+    // Buscar en AsistenciaDetalle con esos IDs, cargar la relación con User y AsistenciaHora
+    $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
+                                          ->with(['operador', 'asistenciaHora'])  // Incluir relaciones
+                                          ->get()
+                                          ->filter(function ($detalle) {
+                                              return $detalle->contratista_id !== null;
+                                          })
+                                          ->flatMap(function ($detalle) {
+                                              // Crear dos entradas: una para operador y otra para ayudante si existen ambos
+                                              $result = [];
+
+                                              // Agregar como operador
+                                              $result[] = [
+                                                  'id' => $detalle->operador_id,
+                                                  'name' => $detalle->operador->name ?? null,
+                                                  'detalle' => $detalle,
+                                                  'fechaAsignacion' => $detalle->asistenciaHora->fecha,
+                                                  'ayudante_sn' => 1, // Marcado como operador
+                                              ];
+
+                                              // Si tiene ayudante_id, agregar como ayudante
+                                              if ($detalle->ayudante_id) {
+                                                  $result[] = [
+                                                      'id' => $detalle->ayudante_id,
+                                                      'name' => $detalle->ayudante->name ?? null,
+                                                      'detalle' => $detalle,
+                                                      'fechaAsignacion' => $detalle->asistenciaHora->fecha,
+                                                      'ayudante_sn' => 0, // Marcado como ayudante
+                                                  ];
+                                              }
+
+                                              return $result;
+                                          })
+                                          ->groupBy('name') // Agrupar por nombre
+                                          ->map(function ($items) {
+                                              return $items->map(function ($item) {
+                                                  return [
+                                                      'detalle' => $item['detalle'],
+                                                      'fechaAsignacion' => $item['fechaAsignacion'],
+                                                      'ayudante_sn' => $item['ayudante_sn']
                                                   ];
                                               });
                                           });
