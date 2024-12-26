@@ -292,7 +292,7 @@ public function getAsistenciaPagos(Request $request)
     $resultados = $asistenciaHoras->flatMap(function ($asistenciaHora) {
         // Filtrar detalles donde 'contratista' no sea null y 'pago_servicio_extra' sea null
         return $asistenciaHora->detalles->filter(function ($detalle) {
-            return $detalle->contratista === null && $detalle->pago_e_sdf === null && $detalle->no_pagar !== 1;
+            return $detalle->contratista === null && $detalle->pago_e_sdf === null && $detalle->no_pagar !== 1 && ($detalle->hora_extra_sn === 1 || $detalle->s_d_f_sn === 1);
         })->map(function ($detalle) use ($asistenciaHora) {
             return [
                 'id' => $detalle->id,
@@ -1055,7 +1055,7 @@ public function getDatosAsistenciaServicios(Request $request)
 
     // Buscar en AsistenciaDetalle con esos IDs, cargar la relación con User y AsistenciaHora
     $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
-                                          ->with(['operador', 'asistenciaHora'])  // Incluir relaciones
+                                          ->with(['operador', 'ayudante', 'asistenciaHora'])  // Incluir relaciones
                                           ->get()
                                           ->filter(function ($detalle) {
                                               return $detalle->contratista_id !== null;
@@ -1086,13 +1086,18 @@ public function getDatosAsistenciaServicios(Request $request)
 
                                               return $result;
                                           })
-                                          ->groupBy('name') // Agrupar por nombre
+                                          // Agrupar primero por 'id' para que cada entrada sea única para operador y ayudante
+                                          ->groupBy(function ($item) {
+                                              // Crear una clave única usando id y ayudante_sn
+                                              return $item['id'] . '-' . $item['ayudante_sn'];
+                                          })
                                           ->map(function ($items) {
                                               return $items->map(function ($item) {
                                                   return [
                                                       'detalle' => $item['detalle'],
                                                       'fechaAsignacion' => $item['fechaAsignacion'],
-                                                      'ayudante_sn' => $item['ayudante_sn']
+                                                      'ayudante_sn' => $item['ayudante_sn'],
+                                                      'name' => $item['name'] // Agregar el nombre del operador/ayudante
                                                   ];
                                               });
                                           });

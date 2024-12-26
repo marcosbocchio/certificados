@@ -63,12 +63,15 @@
               <td>{{ detalle.ayudante_sn }}</td>
             <!-- Recorremos los días y mostramos el valor correspondiente -->
             <td v-for="(dia, index) in detalle.dias" :key="index">
-                <span v-if="dia">
-                    {{ obtenerValorDetalle(dia.detalle, diasDelMes[index]) }}
-                </span>
-                <span v-else>0</span>
-            </td>
-            <!-- Calcular y mostrar las nuevas columnas -->
+              <span 
+                  v-if="dia" 
+                  :class="{ 'subrayado': dia.detalle.hora_extra_sn === 1 }"
+              >
+                  {{ obtenerValorDetalle(dia.detalle, diasDelMes[index]) }}
+              </span>
+              <span v-else>0</span>
+          </td>
+                      <!-- Calcular y mostrar las nuevas columnas -->
             <td>{{ contarHoras(detalle.dias) }}</td> 
             <td>{{ contarParametros(detalle.dias, 'sabado', 'sumar') }}</td>
             <td>{{ contarParametros(detalle.dias, 'domingo_feriado', 'sumar') }}</td>
@@ -169,7 +172,7 @@ contarHoras(dias) {
   dias.forEach(dia => {
     // Verificar si el día debe ser considerado (basado en dia.parametros.dia_semana_sn)
     if (dia && dia.parametros && dia.parametros.dia_semana_sn === 1) {
-      if (dia.detalle && dia.detalle.entrada && dia.detalle.salida) {
+      if (dia.detalle && dia.detalle.entrada && dia.detalle.salida && dia.detalle.hora_extra_sn === 1) {
         const entrada = this.convertirHoraADate(dia.detalle.entrada);
         const salida = this.convertirHoraADate(dia.detalle.salida);
 
@@ -543,7 +546,9 @@ formatDateToMonthYear(date) {
   z-index: 1050;
   background-color: rgba(0, 0, 0, 0.5);
 }
-
+.subrayado {
+    text-decoration: underline;
+}
 .modal-content {
   background-color: white;
   padding: 20px;

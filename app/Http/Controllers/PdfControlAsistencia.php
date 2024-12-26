@@ -73,15 +73,20 @@ class PdfControlAsistencia extends Controller
         foreach ($dias as $dia) {
             // Verificar si el día debe ser considerado (basado en dia_semana_sn)
             if (isset($dia['dia_semana_sn']) && $dia['dia_semana_sn'] == 1) {
-                // Verificar si el detalle tiene entrada y salida
-                if (isset($dia['detalle']) && isset($dia['detalle']['entrada']) && isset($dia['detalle']['salida'])) {
-                    
+                // Verificar si el detalle tiene entrada, salida y condiciones adicionales
+                if (
+                    isset($dia['detalle']) && 
+                    isset($dia['detalle']['entrada']) && 
+                    isset($dia['detalle']['salida']) &&
+                    (isset($dia['detalle']['hora_extra_sn']) && $dia['detalle']['hora_extra_sn'] === 1 || 
+                     isset($dia['detalle']['s_d_f_sn']) && $dia['detalle']['s_d_f_sn'] === 1)
+                ) {
                     $entrada = $this->convertirHoraADate($dia['detalle']['entrada']);
                     $salida = $this->convertirHoraADate($dia['detalle']['salida']);
         
                     // Calcular la diferencia entre las horas de entrada y salida
                     $intervalo = $salida->diff($entrada);
-                    $horasTrabajadas = $intervalo->h + ($intervalo->i / 60); // Obtener la diferencia en horas (y minutos convertidos a fracción de hora)
+                    $horasTrabajadas = $intervalo->h + ($intervalo->i / 60); // Diferencia en horas (y minutos como fracción)
         
                     // Calcular las horas extras trabajadas
                     if ($horasTrabajadas > $horasLaborables) {
@@ -233,17 +238,21 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
         ->get()
         ->flatMap(function ($detalle) use ($modo) {
             $resultados = [];
-        
-            $resultados[] = [
-                'detalle' => $detalle,
-                'fechaAsignacion' => $detalle->asistenciaHora->fecha,
-                'tipo' => 'operador',
-                'id' => $detalle->operador_id,
-                'name' => $detalle->operador->name,
-                'ayudante_sn' => $modo === 'Horas' ? $detalle->ayudante_sn : 1
-            ];
-        
-            if ($detalle->ayudante_id) {
+
+            // Operador
+            if ($detalle->operador) {
+                $resultados[] = [
+                    'detalle' => $detalle,
+                    'fechaAsignacion' => $detalle->asistenciaHora->fecha,
+                    'tipo' => 'operador',
+                    'id' => $detalle->operador_id,
+                    'name' => $detalle->operador->name,
+                    'ayudante_sn' => $modo === 'Horas' ? $detalle->ayudante_sn : 1
+                ];
+            }
+
+            // Ayudante
+            if ($detalle->ayudante) {
                 $resultados[] = [
                     'detalle' => $detalle,
                     'fechaAsignacion' => $detalle->asistenciaHora->fecha,
@@ -253,11 +262,13 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
                     'ayudante_sn' => $modo === 'Horas' ? $detalle->ayudante_sn : 0
                 ];
             }
-        
+
             return $resultados;
         })
-        ->groupBy('name')
-        ->map(function ($detalles) use ($modo) {
+        ->groupBy(function ($detalle) {
+            return $detalle['name'] . '-' . $detalle['tipo']; // Agrupa por ID y Tipo
+        })
+        ->map(function ($detalles) {
             return [
                 'dias' => $detalles,
                 'responsabilidadPorDia' => $detalles->mapWithKeys(function ($detalle) {
@@ -268,48 +279,51 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
             ];
         });
 
+    // Obtener los días del mes
     $diasDelMes = collect($this->getDiasDelMes($year, $month));
     $formattedDate = sprintf('%04d-%02d', $year, $month);
 
+    // Reorganizar datos en la estructura final
     $asistenciaReorganizada = [];
 
-    foreach ($detallesAgrupados as $operador => $data) {
-        $asistenciaReorganizada[$operador] = [
+    foreach ($detallesAgrupados as $clave => $data) {
+        $asistenciaReorganizada[$clave] = [
             'dias' => [],
         ];
 
         foreach ($diasDelMes as $dia) {
             $fechaDelDia = sprintf('%s-%02d', $formattedDate, $dia['dia']);
 
-            $detalleDelDia = array_filter($data['dias']->toArray(), function ($asistencia) use ($fechaDelDia) {
-                return $asistencia['fechaAsignacion'] === $fechaDelDia;
-            });
+            $detalleDelDia = collect($data['dias'])->firstWhere('fechaAsignacion', $fechaDelDia);
 
-            // Asignar datos del día si existen detalles
-            $detalle = !empty($detalleDelDia) ? reset($detalleDelDia) : null;
-
-            // Añadir las características del día al detalle
-            if ($detalle) {
-                $detalle['dia_semana_sn'] = $dia['dia_semana_sn'];
-                $detalle['sabado_sn'] = $dia['sabado_sn'];
-                $detalle['domingo_sn'] = $dia['domingo_sn'];
-                $detalle['feriado_sn'] = $dia['feriado_sn'];
+            // Asignar características del día al detalle
+            if ($detalleDelDia) {
+                $detalleDelDia['dia_semana_sn'] = $dia['dia_semana_sn'];
+                $detalleDelDia['sabado_sn'] = $dia['sabado_sn'];
+                $detalleDelDia['domingo_sn'] = $dia['domingo_sn'];
+                $detalleDelDia['feriado_sn'] = $dia['feriado_sn'];
+                $detalleDelDia['name'] = $detalleDelDia['name']; // Añade el nombre del operador/ayudante
             }
 
-            $asistenciaReorganizada[$operador]['dias'][] = $detalle;
+            $asistenciaReorganizada[$clave]['dias'][] = $detalleDelDia ?: null;
         }
 
-        $responsabilidad = $data['responsabilidadPorDia']->values()->contains('operador') 
-            ? 'operador' 
+        // Determinar responsabilidad principal
+        $responsabilidad = $data['responsabilidadPorDia']->values()->contains('operador')
+            ? 'operador'
             : 'ayudante';
 
-        $asistenciaReorganizada[$operador]['responsabilidad'] = $responsabilidad;
+        $asistenciaReorganizada[$clave]['responsabilidad'] = $responsabilidad;
     }
 
+    log::debug($asistenciaReorganizada);
     ksort($asistenciaReorganizada);
 
     return $asistenciaReorganizada;
 }
+
+
+
 
 public function formatearDia($dia)
 {

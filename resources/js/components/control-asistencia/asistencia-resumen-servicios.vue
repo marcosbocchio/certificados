@@ -57,7 +57,7 @@
         <!-- Columna del operador principal -->
         <td>
             <a href="#" @click.prevent="pdfusuario(detalle.operador_id)">
-                {{ operador }}
+                {{ detalle.name }}
             </a>
         </td>
 
@@ -299,12 +299,14 @@ async getDatos() {
             const operadorData = response.data[operador][0]; // Obtener el primer dato para estos valores
             const ayudante_sn = operadorData?.ayudante_sn || null;
             const operador_id = operadorData?.detalle?.operador_id || null;
+            const name = operadorData?.name || null;
 
             // Inicializar una matriz para cada operador que contenga los días del mes
             asistenciaReorganizada[operador] = {
                 // Agregar los datos adicionales (ayudante_sn y operador_id)
                 ayudante_sn: ayudante_sn,
                 operador_id: operador_id,
+                name:name,
                 dias: diasDelMes.map(dia => {
                     // Convertir el día en el formato de fecha
                     let fechaDelDia = `${formattedDate}-${('0' + dia.dia).slice(-2)}`; // Usa dia.dia ya que el objeto tiene varias propiedades
