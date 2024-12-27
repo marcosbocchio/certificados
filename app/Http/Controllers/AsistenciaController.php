@@ -1068,6 +1068,7 @@ public function getDatosAsistenciaServicios(Request $request)
                                               $result[] = [
                                                   'id' => $detalle->operador_id,
                                                   'name' => $detalle->operador->name ?? null,
+                                                  'ot_id' => $detalle->operador->id ?? null,
                                                   'detalle' => $detalle,
                                                   'fechaAsignacion' => $detalle->asistenciaHora->fecha,
                                                   'ayudante_sn' => 1, // Marcado como operador
@@ -1078,6 +1079,7 @@ public function getDatosAsistenciaServicios(Request $request)
                                                   $result[] = [
                                                       'id' => $detalle->ayudante_id,
                                                       'name' => $detalle->ayudante->name ?? null,
+                                                      'ot_id' => $detalle->ayudante->id ?? null,
                                                       'detalle' => $detalle,
                                                       'fechaAsignacion' => $detalle->asistenciaHora->fecha,
                                                       'ayudante_sn' => 0, // Marcado como ayudante
@@ -1097,6 +1099,7 @@ public function getDatosAsistenciaServicios(Request $request)
                                                       'detalle' => $item['detalle'],
                                                       'fechaAsignacion' => $item['fechaAsignacion'],
                                                       'ayudante_sn' => $item['ayudante_sn'],
+                                                      'ot_id' => $item['ot_id'],
                                                       'name' => $item['name'] // Agregar el nombre del operador/ayudante
                                                   ];
                                               });

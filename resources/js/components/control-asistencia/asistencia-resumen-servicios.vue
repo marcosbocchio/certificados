@@ -298,7 +298,7 @@ async getDatos() {
             // Obtener los datos de ayudante_sn y operador_id (presente en todas las fechas del operador)
             const operadorData = response.data[operador][0]; // Obtener el primer dato para estos valores
             const ayudante_sn = operadorData?.ayudante_sn || null;
-            const operador_id = operadorData?.detalle?.operador_id || null;
+            const operador_id = operadorData?.ot_id || null;
             const name = operadorData?.name || null;
 
             // Inicializar una matriz para cada operador que contenga los días del mes
