@@ -170,7 +170,10 @@
                             $responsabilidad = $asistencia['ayudante_sn'] === 1 ? 'Ayudante' : 'Operador';
                         @endphp
                         <tr>
-                            <td>{{ date('l', strtotime($asistencia['fecha'])) }}</td> <!-- Día en texto -->
+                        <td>
+    {{ $diasEnEspanol[\Carbon\Carbon::parse($asistencia['fecha'])->format('l')] ?? \Carbon\Carbon::parse($asistencia['fecha'])->format('l') }}
+</td>
+
                             <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
                             <td>{{ $responsabilidad }}</td>
                             <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['entrada'])->format('H:i') }}</td>
@@ -214,9 +217,13 @@
                     $esFeriado = $asistencia['s_d_f_sn'] ? 'highlight' : '';
                     $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
                             $responsabilidad = $asistencia['ayudante_sn'] === 1 ? 'Ayudante' : 'Operador';;
+                           
                 @endphp
                 <tr>
-                    <td>{{ \Carbon\Carbon::parse($asistencia['fecha'])->format('l') }}</td>
+                <td>
+    {{ $diasEnEspanol[\Carbon\Carbon::parse($asistencia['fecha'])->format('l')] ?? \Carbon\Carbon::parse($asistencia['fecha'])->format('l') }}
+</td>
+
                     <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
                     <td>{{ $asistencia['ayudante_sn'] === 1 ? 'operador' : 'ayudante' }}</td>
                     <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['entrada'])->format('H:i') }}</td>

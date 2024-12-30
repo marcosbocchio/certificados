@@ -451,6 +451,7 @@ public function contarDiasHabil($diasDelMes)
             'diasDelMes' => $diasDelMes,
             'fecha' => $fecha->toDateString(),
             'operador' => User::find($operadorId), 
+            'diasEnEspanol' => $diasEnEspanol,
         ])->setPaper('a4', 'landscape');
 
         return $pdf->stream('asistencia-usuario.pdf');
