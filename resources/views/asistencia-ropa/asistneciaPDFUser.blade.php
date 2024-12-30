@@ -165,7 +165,6 @@
                             
                             // Obtiene la fecha de pago usando la función definida
                             $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
-dd($asistencia);
                         @endphp
                         <tr>
                         <td>
@@ -173,7 +172,7 @@ dd($asistencia);
 </td>
 
                             <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
-                            <td>{{ $asistencia['ayudante_sn'] === 1 ? 'operador' : 'ayudante' }}</td>
+                            <td>{{ $asistencia['ayudante_sn'] === 1 ? 'ayudante' : 'operador' }}</td>
                             <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['entrada'])->format('H:i') }}</td>
                             <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['salida'])->format('H:i') }}</td>
                             <td>
