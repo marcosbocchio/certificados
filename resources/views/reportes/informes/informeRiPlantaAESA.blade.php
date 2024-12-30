@@ -124,7 +124,7 @@ footer {
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
                 <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
                 <td id="resaltar-borde" style="width: 8mm;"><p class="vertical-text" >Posición</p></td>
-                <td><p style="margin: 0mm -6mm;" class="vertical-text">GMAW</p></td>
+                <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW / SMAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
@@ -174,7 +174,7 @@ footer {
         <td>
             @foreach ($procesoInfo->where('proceso_soldadores', 'GTAW') as $dato)
                 @if ($dato->soldadorz || $dato->soldadorp)
-                <p style="font-size: 6.5px;">
+                <p>
                     {{ $dato->soldadorz ?? '' }}<br>
                     {{ $dato->soldadorp ?? '' }}
                 </p>
@@ -428,7 +428,7 @@ footer {
                             <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
                             <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
                             <td id="resaltar-borde" style="width: 8mm;"><p class="vertical-text" >Posición</p></td>
-                            <td><p style="margin: 0mm -6mm;" class="vertical-text">GMAW</p></td>
+                            <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW / SMAW</p></td>
                             <td><p style="margin: 0mm -6mm;" class="vertical-text">GTAW</p></td>
                             <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
                             <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
@@ -514,12 +514,12 @@ footer {
         <tbody>
             <tr class="gris">
             <td style="width: 43mm;">
-                @if($contratista->nombre === 'ENOD')
-                    Evaluador ENOD
-                @else
-                    Evaluador AESA
-                @endif
-            </td>
+    @if(isset($contratista) && $contratista->nombre === 'ENOD')
+        Evaluador ENOD
+    @else
+        Evaluador AESA
+    @endif
+</td>
                 <td style="width: 40mm;" >Inspector de AESA</td>
                 <td style="width: 50mm;" >Inspector del Cliente</td>
                 <td style="width: 48mm;" >Inspector Autorizado</td>
