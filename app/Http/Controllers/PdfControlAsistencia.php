@@ -35,7 +35,15 @@ class PdfControlAsistencia extends Controller
     
         // Establecer nombre del frente (esto debe cambiarse según tu lógica)
         $frente = Frentes::find($frenteId); // Cambia esto por el nombre real del frente que deseas mostrar
-    
+        $diasEnEspanol = [
+            'Monday' => 'Lunes',
+            'Tuesday' => 'Martes',
+            'Wednesday' => 'Miércoles',
+            'Thursday' => 'Jueves',
+            'Friday' => 'Viernes',
+            'Saturday' => 'Sábado',
+            'Sunday' => 'Domingo',
+        ];
         // Generar PDF
         $pdf = PDF::loadView('asistencia-ropa.asistenciaPDF', [
             'asistenciaDatos' => $detallesAgrupados, // Asegúrate de que esto tenga el formato correcto
@@ -45,6 +53,7 @@ class PdfControlAsistencia extends Controller
             'diasDelMes' => $diasDelMes,
             'diashabiles_mes' => $diashabiles_mes,
             'modo' => $modo,
+            'diasEnEspanol' => $diasEnEspanol,
             'fecha' => now()->toDateString(),
             'obtenerValorDetalle' => function ($detalle, $parametro) {
                 return $this->obtenerValorDetalle($detalle, $parametro);
