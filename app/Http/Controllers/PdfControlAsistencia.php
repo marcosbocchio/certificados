@@ -164,7 +164,7 @@ public function obtenerResponsabilidad($detalles)
 
     // Si es fin de semana o feriado, miramos s_d_f_sn
     if ($parametro['dia_semana_sn'] === 0) {
-        if (isset($detalle['s_d_f_sn']) && $detalle['s_d_f_sn'] === 1) {
+        if ($detalle) {
             return '1'; // Mostrar el ícono si tiene S/D/F
         }
         return '0'; // Mostrar '0' si no tiene S/D/F

@@ -141,7 +141,8 @@
                         <td style="padding: 5px;">{{ $detalle['responsabilidad'] }}</td>
                         @foreach ($diasDelMes as $index => $dia)
                         <td style="padding: 1px;" 
-                            class="{{ isset($detalle['dias'][$index]['detalle']['hora_extra_sn']) && $detalle['dias'][$index]['detalle']['hora_extra_sn'] === 1 ? 'underline' : '' }}">
+                        class="{{ ($detalle['dias'][$index]['detalle']['hora_extra_sn'] === 1 || $detalle['dias'][$index]['detalle']['s_d_f_sn'] === 1) ? 'underline' : '' }}"
+                        >
                             @if (isset($detalle['dias'][$index]) && $detalle['dias'][$index] !== null)
                                 @php
                                     $valores = $obtenerValorDetalle($detalle['dias'][$index]['detalle'], $dia);
