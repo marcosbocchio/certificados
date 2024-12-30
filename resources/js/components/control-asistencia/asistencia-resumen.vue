@@ -37,8 +37,8 @@
         <table class="table table-hover table-striped table-condensed">
     <thead>
         <tr>
-            <th>Operador</th>
-            <th>Responsabilidad</th>
+            <th style="text-align: left;" >Operador</th>
+            <th style="text-align: left;" >Responsabilidad</th>
             <th v-for="dia in diasDelMes" :key="dia.dia" 
                 :class="{
                   'domingo': dia.domingo_sn,
@@ -55,17 +55,17 @@
     </thead>
     <tbody>
         <tr v-for="(detalle, operador) in asistenciaDatos" :key="operador">
-            <td>
+            <td style="text-align: left;">
                 <a href="#" @click.prevent="pdfusuario(detalle.operador_id)">
                   {{ operador }} 
                 </a>
               </td>
-              <td>{{ detalle.ayudante_sn }}</td>
+              <td style="text-align: left;">{{ detalle.ayudante_sn }}</td>
             <!-- Recorremos los días y mostramos el valor correspondiente -->
             <td v-for="(dia, index) in detalle.dias" :key="index">
               <span 
                   v-if="dia" 
-                  :class="{ 'subrayado': dia.detalle.hora_extra_sn === 1 }"
+                  :class="{ 'subrayado': dia.detalle.hora_extra_sn === 1 || dia.detalle.s_d_f_sn === 1 }"
               >
                   {{ obtenerValorDetalle(dia.detalle, diasDelMes[index]) }}
               </span>
@@ -246,7 +246,7 @@ if (parametro.dia_semana_sn === 1) {
 
     // 3. Si es fin de semana o feriado, miramos s_d_f_sn
     if (parametro.dia_semana_sn === 0) {
-        if (detalle.s_d_f_sn === 1) {
+        if (detalle) {
             console.log('Mostrando "sab" (sábado, domingo o feriado)');
             return '1'; // Mostrar el ícono si tiene S/D/F
         }

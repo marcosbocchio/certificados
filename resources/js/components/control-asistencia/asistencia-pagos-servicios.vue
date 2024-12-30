@@ -70,7 +70,7 @@
               <tr v-for="detalle in asistencia" :key="detalle.id">
                 <td class="text-center">{{ detalle.frente?.codigo }}</td>
                 <td class="text-center">{{ detalle.fecha_asistencia }}</td>
-                <td class="text-left">{{ detalle.operador?.name || '-' }}</td>
+                <td class="text-center">{{ detalle.operador?.name || '-' }}</td>
                 <td class="text-center">{{ detalle.ayudante?.name || '-' }}</td>
                 <td class="text-center">{{ detalle.metodoEnsayo?.metodo || '-' }}</td>
                 <td class="text-center">{{ detalle.contratista?.nombre_fantasia || '-' }}</td>

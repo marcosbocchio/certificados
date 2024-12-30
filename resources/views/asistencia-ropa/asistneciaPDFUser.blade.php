@@ -198,7 +198,7 @@
         <tr>
             <th width="70px">Día</th>
             <th width="70px">Fecha</th>
-            <th width="70px">Ayudante</th>
+            <th width="70px">Responsabilidad</th>
             <th width="120px">Hora Entrada</th>
             <th width="120px">Hora Salida</th>
             <th width="120px">Cliente</th>
@@ -218,7 +218,7 @@
                 <tr>
                     <td>{{ \Carbon\Carbon::parse($asistencia['fecha'])->format('l') }}</td>
                     <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
-                    <td>{{ $responsabilidad }}</td>
+                    <td>{{ $asistencia['ayudante_sn'] === 1 ? 'operador' : 'ayudante' }}</td>
                     <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['entrada'])->format('H:i') }}</td>
                     <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['salida'])->format('H:i') }}</td>
                     <td>{{ $asistencia['contratista']['nombre_fantasia'] }}</td>

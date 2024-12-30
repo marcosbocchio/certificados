@@ -226,11 +226,14 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
         ->get();
 
     $asistenciaHorasIds = $asistenciaHoras->pluck('id');
-
     $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
-        ->when($modo === 'Horas', function ($query) {
-            return $query->whereNull('contratista_id');
-        })
+    ->when($modo === 'Horas', function ($query) {
+        return $query->where(function ($query) {
+            $query->whereNull('contratista_id')
+                  ->orWhere('hora_extra_sn', 1)
+                  ->orWhere('s_d_f_sn', 1);
+        });
+    })
         ->when($modo === 'Servicios', function ($query) {
             return $query->whereNotNull('contratista_id');
         })
@@ -487,13 +490,28 @@ public function contarDiasHabil($diasDelMes)
 
     private function obtenerAsistenciaDetalles($asistenciaHorasIds, $operadorId)
     {
-        $asistencias = AsistenciaDetalle::with('ayudante','metodoEnsayo','contratista') // Carga la relación 'ayudante'
+        $asistencias = AsistenciaDetalle::with('ayudante', 'metodoEnsayo', 'contratista') // Carga las relaciones necesarias
             ->whereIn('asistencia_horas_id', $asistenciaHorasIds)
-            ->where('operador_id', $operadorId)
+            ->where(function ($query) use ($operadorId) {
+                $query->where('operador_id', $operadorId)
+                      ->orWhere('ayudante_id', $operadorId);
+            })
             ->get();
-
-        return $asistencias;
+    
+        // Crear un nuevo conjunto de resultados modificados
+        $resultados = $asistencias->map(function ($asistencia) use ($operadorId) {
+            $asistenciaClone = clone $asistencia; // Clonamos el objeto para no modificar directamente el original
+            if ($asistenciaClone->operador_id == $operadorId) {
+                $asistenciaClone->ayudante_sn = 1; // Proviene de operador_id
+            } elseif ($asistenciaClone->ayudante_id == $operadorId) {
+                $asistenciaClone->ayudante_sn = 0; // Proviene de ayudante_id
+            }
+            return $asistenciaClone;
+        });
+    
+        return $resultados;
     }
+    
     
 
     private function combinarAsistenciasYDetalles($asistenciaHoras, $asistenciaDetalles)

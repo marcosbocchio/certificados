@@ -240,7 +240,7 @@ export default {
     }
 
     // Verificamos si es día de semana (Lunes a Viernes, es decir, 1 a 5)
-    const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
+    const esDiaDeSemana = diaSemana >= 0 && diaSemana <= 5;
 
     // Verificamos si un contratista está seleccionado
     if (this.contratista_selected != null) {

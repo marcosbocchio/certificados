@@ -116,8 +116,8 @@
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
               <td class="text-center">{{ detalle.operador.name }}</td>
-              <td v-if="detalle.ayudante && detalle.ayudante.name">{{ detalle.ayudante.name }}</td>
-              <td v-else>-</td>
+              <td class="text-center" v-if="detalle.ayudante && detalle.ayudante.name">{{ detalle.ayudante.name }}</td>
+              <td class="text-center" v-else>-</td>
               <td>
                 <input type="time" v-model="detalle.entrada" class="form-control" @change="calcularHorasExtrasDetall(detalle, index)" />
               </td>
@@ -430,7 +430,7 @@ export default {
       salida: moment(this.salida_selected).format('HH:mm'),
       contratista: this.contratista_selected,
       parte: this.parte_selected,
-      ayudante_sn: this.operador_ayudante ? 1 : 0,
+      ayudante_sn: 1,
       hora_extra_sn: this.hora_extra_sn ? 1 : 0, // Convertir true/false a 1/0
       s_d_f_sn: this.sdf_sn ? 1 : 0,
       metodo_ensayo: this.metodoEnsayo_selected,

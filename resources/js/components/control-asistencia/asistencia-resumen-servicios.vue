@@ -37,8 +37,8 @@
         <table class="table table-hover table-striped table-condensed">
     <thead>
         <tr>
-            <th>Operador</th>
-            <th>Responsabilidad</th> <!-- Nueva columna para Responsabilidad -->
+          <th style="text-align: left;">Operador</th>
+          <th style="text-align: left;">Responsabilidad</th> <!-- Nueva columna para Responsabilidad -->
             <th v-for="dia in diasDelMes" :key="dia.dia" 
                 :class="{
                   'domingo': dia.domingo_sn,
@@ -55,14 +55,14 @@
     <!-- Iteramos sobre cada operador -->
     <tr v-for="(detalle, operador) in asistenciaDatos" :key="operador">
         <!-- Columna del operador principal -->
-        <td>
+        <td style="text-align: left;">
             <a href="#" @click.prevent="pdfusuario(detalle.operador_id)">
                 {{ detalle.name }}
             </a>
         </td>
 
         <!-- Columna de Responsabilidad -->
-        <td>
+        <td style="text-align: left;">
           <span>
   {{ detalle.ayudante_sn === 1 ? 'Operador' : 'Ayudante' }}
 </span>

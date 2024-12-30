@@ -66,7 +66,7 @@ class AsistenciaController extends Controller
     public function resumenView()
     {
         $user = auth()->user();
-        $header_titulo = "Control Asistencia";
+        $header_titulo = "Horas Extras";
         $header_descripcion = "Resumen";
         $frente_sn = Frentes::where('controla_hs_extras_sn', 1)->get();
         return view('control-asistencia.asistencia-resumen', compact('user', 'header_titulo', 'header_descripcion','frente_sn'));
@@ -74,7 +74,7 @@ class AsistenciaController extends Controller
     public function resumenViewServicio()
     {
         $user = auth()->user();
-        $header_titulo = "Control Asistencia";
+        $header_titulo = "Servicios Extras";
         $header_descripcion = "Resumen";
         $frente_sn = Frentes::where('controla_hs_extras_sn', 1)->get();
         return view('control-asistencia.asistencia-resumen-servicios', compact('user', 'header_titulo', 'header_descripcion','frente_sn'));
@@ -253,8 +253,8 @@ class AsistenciaController extends Controller
     public function pagos()
     {
         $user = auth()->user();
-        $header_titulo = "Control Asistencia";
-        $header_descripcion = "Pagos Horas Extras | S/D/F";
+        $header_titulo = "Horas Extras | S/D/F";
+        $header_descripcion = "Pagos";
         $frentes = Frentes::where('controla_hs_extras_sn', 1)->get();
         log::info($frentes);
         
@@ -263,8 +263,8 @@ class AsistenciaController extends Controller
     public function pagosServicios()
     {
         $user = auth()->user();
-        $header_titulo = "Control Asistencia";
-        $header_descripcion = "Pagos Servicios";
+        $header_titulo = " Servicios Extras";
+        $header_descripcion = "Pagos";
         $frentes = Frentes::where('controla_hs_extras_sn', 1)->get(); 
         
         return view('control-asistencia.asistencia-pagos-servicios', compact('user', 'header_titulo', 'header_descripcion', 'frentes'));
