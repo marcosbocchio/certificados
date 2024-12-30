@@ -340,7 +340,7 @@ public function getAsistenciaPagosServicios(Request $request)
     $resultados = $asistenciaHoras->flatMap(function ($asistenciaHora) {
         // Filtrar detalles donde 'contratista' no sea null y 'pago_servicio_extra' sea null
         return $asistenciaHora->detalles->filter(function ($detalle) {
-            return $detalle->contratista !== null && $detalle->pago_e_sdf === null && $detalle->no_pagar !== 1;
+            return $detalle->contratista !== null && $detalle->pago_e_sdf === null && $detalle->pago_servicio_extra === null && $detalle->no_pagar !== 1;
         })->map(function ($detalle) use ($asistenciaHora) {
             return [
                 'id' => $detalle->id,

@@ -165,9 +165,6 @@
                             
                             // Obtiene la fecha de pago usando la función definida
                             $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
-
-                            // Determina la responsabilidad según el valor de 'ayudante_sn'
-                            $responsabilidad = $asistencia['ayudante_sn'] === 1 ? 'Ayudante' : 'Operador';
                         @endphp
                         <tr>
                         <td>
@@ -175,7 +172,7 @@
 </td>
 
                             <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
-                            <td>{{ $responsabilidad }}</td>
+                            <td>{{ $asistencia['ayudante_sn'] === 1 ? 'operador' : 'ayudante' }}</td>
                             <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['entrada'])->format('H:i') }}</td>
                             <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['salida'])->format('H:i') }}</td>
                             <td>
@@ -231,7 +228,13 @@
                     <td>{{ $asistencia['contratista']['nombre_fantasia'] }}</td>
                     <td>{{ $asistencia['parte'] }}</td>
                     <td>{{ $asistencia['metodoEnsayo']['metodo'] ?? '-' }}</td>
-                    <td>{{ $fechaPago }}</td>
+                    <td>
+                                @if ($asistencia['no_pagar'] == 1)
+                                    Cancelado
+                                @else
+                                    {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? $fechaPago }}
+                                @endif
+                    </td>
                 </tr>
             @endif
         @endforeach
