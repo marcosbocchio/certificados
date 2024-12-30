@@ -165,6 +165,7 @@
                             
                             // Obtiene la fecha de pago usando la función definida
                             $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
+dd($asistencia);
                         @endphp
                         <tr>
                         <td>
