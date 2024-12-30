@@ -510,13 +510,16 @@ public function contarDiasHabil($diasDelMes)
     
         // Crear un nuevo conjunto de resultados modificados
         $resultados = $asistencias->map(function ($asistencia) use ($operadorId) {
-            $asistenciaClone = clone $asistencia; // Clonamos el objeto para no modificar directamente el original
-            if ($asistenciaClone->operador_id == $operadorId) {
-                $asistenciaClone->ayudante_sn = 1; // Proviene de operador_id
-            } elseif ($asistenciaClone->ayudante_id == $operadorId) {
-                $asistenciaClone->ayudante_sn = 0; // Proviene de ayudante_id
+            if ($asistencia->contratista_id !== null) {
+                $asistenciaClone = clone $asistencia; // Clonamos el objeto para no modificar directamente el original
+                if ($asistenciaClone->operador_id == $operadorId) {
+                    $asistenciaClone->ayudante_sn = 1; // Proviene de operador_id
+                } elseif ($asistenciaClone->ayudante_id == $operadorId) {
+                    $asistenciaClone->ayudante_sn = 0; // Proviene de ayudante_id
+                }
+                return $asistenciaClone;
             }
-            return $asistenciaClone;
+            return $asistencia; // Retornamos el objeto original si no cumple la condición
         });
     
         return $resultados;
