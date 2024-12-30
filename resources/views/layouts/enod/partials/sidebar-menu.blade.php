@@ -170,7 +170,16 @@
         </li>
       @endcan
        
-      @can('A_asistencia_acceder')
+      @can('ASISTENCIA'){{-- Nueva opción de menú agregada --}}
+        <li class="treeview">
+          <a href="#">
+          <i class="fas fa-calendar-alt"></i> <span>ASISTENCIAS</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @can('A_asistencia_acceder')
               <li><a href="{{ route('asistencia-horas') }}">Carga Horas Extras</a></li>
             @endcan
             @can('A_asistencia_acceder')
