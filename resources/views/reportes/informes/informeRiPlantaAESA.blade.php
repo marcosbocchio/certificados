@@ -525,7 +525,8 @@ footer {
                 <td style="width: 48mm;" >Inspector Autorizado</td>
             </tr>
             <tr id="firmas">
-                <td id="left"><p>Firma:</p></td>
+            
+                <td id="left"><p>Firma:<img  src="{{ public_path($firma)}}" alt="" style="height:42px;max-width: 120px; margin-top: 5px;"></p></td>
                 <td id="left"><p>Firma:</p></td>
                 <td id="left"><p>Firma:</p></td>
                 <td id="left"><p>Firma:</p></td>
