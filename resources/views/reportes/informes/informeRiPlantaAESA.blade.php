@@ -528,7 +528,7 @@ footer {
             <td id="left">
                 <p>Firma:
                     @if($firma)
-                        <img src="{{ public_path($firma) }}" alt="" style="height:42px; max-width:120px; margin-top:5px;">
+                        <img src="{{ public_path($firma) }}" alt="" style="height:40px; margin-top:5px;">
                     @endif
                 </p>
             </td>
