@@ -514,19 +514,24 @@ footer {
         <tbody>
             <tr class="gris">
             <td style="width: 43mm;">
-    @if(isset($contratista) && $contratista->nombre === 'ENOD')
-        Evaluador ENOD
-    @else
-        Evaluador AESA
-    @endif
-</td>
+            @if(isset($contratista) && $contratista->nombre === 'ENOD')
+                Evaluador ENOD
+            @else
+                Evaluador AESA
+            @endif
+        </td>
                 <td style="width: 40mm;" >Inspector de AESA</td>
                 <td style="width: 50mm;" >Inspector del Cliente</td>
                 <td style="width: 48mm;" >Inspector Autorizado</td>
             </tr>
             <tr id="firmas">
-            
-                <td id="left"><p>Firma:<img  src="{{ public_path($firma)}}" alt="" style="height:42px;max-width: 120px; margin-top: 5px;"></p></td>
+            <td id="left">
+                <p>Firma:
+                    @if($firma)
+                        <img src="{{ public_path($firma) }}" alt="" style="height:42px; max-width:120px; margin-top:5px;">
+                    @endif
+                </p>
+            </td>
                 <td id="left"><p>Firma:</p></td>
                 <td id="left"><p>Firma:</p></td>
                 <td id="left"><p>Firma:</p></td>
