@@ -380,7 +380,13 @@ footer {
                                     <td style="width: 48mm;" >Inspector Autorizado</td>
                                 </tr>
                                 <tr id="firmas">
-                                    <td id="left"><p>Firma:</p></td>
+                                <td id="left">
+                <p>Firma:
+                    @if($firma)
+                        <img src="{{ public_path($firma) }}" alt="" style="height:40px; margin-top:5px;">
+                    @endif
+                </p>
+            </td>
                                     <td id="left"><p>Firma:</p></td>
                                     <td id="left"><p>Firma:</p></td>
                                     <td id="left"><p>Firma:</p></td>
