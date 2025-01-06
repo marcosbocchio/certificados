@@ -479,20 +479,20 @@ footer{
                         </td>
                     </tr>
                     <tr>
-                        <td id="bordernone" style="height:40px; text-align:left;">
+                        <td id="bordernone" style="text-align:left;">
                             <p>Firma:
                                 @if($firma)
-                                    <img src="{{ public_path($firma) }}" alt="Firma" style="height:30px; max-width:100%; margin-top:5px;">
+                                    <img src="{{ public_path($firma) }}" alt="" style="height:40px;">
                                 @endif
                             </p>
                         </td>
                     </tr>
                     <tr>
                         <td id="bordernone" style="text-align:left;">
-                            <table style="width: 100%;">
+                        <table style="width: 100%;">
                                 <tbody>
                                     <tr>
-                                        <td id="bordernone">Fecha</td>
+                                        <td style="text-align:left;" id="bordernone">Fecha</td>
                                         <td id="bordernone">&nbsp;</td>
                                     </tr>
                                 </tbody>
@@ -520,7 +520,7 @@ footer{
                             <table style="width: 100%;">
                                 <tbody>
                                     <tr>
-                                        <td id="bordernone">Fecha</td>
+                                        <td style="text-align:left;" id="bordernone">Fecha</td>
                                         <td id="bordernone">&nbsp;</td>
                                     </tr>
                                 </tbody>
@@ -548,7 +548,7 @@ footer{
                             <table style="width: 100%;">
                                 <tbody>
                                     <tr>
-                                        <td id="bordernone">Fecha</td>
+                                        <td  style="text-align:left;"id="bordernone">Fecha</td>
                                         <td id="bordernone">&nbsp;</td>
                                     </tr>
                                 </tbody>
@@ -576,7 +576,7 @@ footer{
                             <table style="width: 100%;">
                                 <tbody>
                                     <tr>
-                                        <td id="bordernone">Fecha</td>
+                                        <td style="text-align:left;" id="bordernone">Fecha</td>
                                         <td id="bordernone">&nbsp;</td>
                                     </tr>
                                 </tbody>
