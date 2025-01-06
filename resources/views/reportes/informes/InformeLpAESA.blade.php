@@ -480,7 +480,7 @@ footer{
                             <td id="bordernone">
                                 <p>Firma:
                                     @if($firma)
-                                        <img src="{{ public_path($firma) }}" alt="" style="height:40px; margin-top:5px;">
+                                        <img src="{{ public_path($firma) }}" alt="" style="height:40px;">
                                     @endif
                                 </p>
                             </td>
@@ -507,7 +507,7 @@ footer{
                             <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Inspector AESA / Manufacture </td>
                         </tr>
                         <tr>
-                            <td  id="bordernone" style="text-align:left; height:40px; margin-top:5px;" >Firma:</td>
+                            <td  id="bordernone" style="text-align:left; height:40px;" >Firma:</td>
                         </tr>
                         <tr>
                             <td id="bordernone" style="text-align:left">
@@ -531,7 +531,7 @@ footer{
                             <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Inspector Cliente / Coustomer </td>
                         </tr>
                         <tr>
-                            <td  id="bordernone" style="text-align:left; height:40px; margin-top:5px;">Firma:</td>
+                            <td  id="bordernone" style="text-align:left; height:40px;">Firma:</td>
                         </tr>
                         <tr>
                             <td id="bordernone" style="text-align:left">
@@ -555,7 +555,7 @@ footer{
                             <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Insp. Autorizado / AI </td>
                         </tr>
                         <tr>
-                            <td  id="bordernone" style="text-align:left; height:40px; margin-top:5px;">Firma:</td>
+                            <td  id="bordernone" style="text-align:left; height:40px;">Firma:</td>
                         </tr>
                         <tr>
                             <td id="bordernone" style="text-align:left">
