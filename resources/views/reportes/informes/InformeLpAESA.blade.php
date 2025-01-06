@@ -470,7 +470,7 @@ footer{
 <table class="tablamain">
 <tbody>
     <tr>
-        <td style="height:10mm; width: 30mm; vertical-align: top;">
+        <td style="height:12mm; width: 30mm; vertical-align: top;">
             <table style="width: 100%;">
                 <tbody>
                     <tr>
@@ -479,7 +479,7 @@ footer{
                         </td>
                     </tr>
                     <tr>
-                        <td id="bordernone" style="text-align:left;">
+                        <td id="bordernone" style="height:40px; text-align:left;">
                             <p>Firma:
                                 @if($firma)
                                     <img src="{{ public_path($firma) }}" alt="" style="height:40px;">
@@ -489,7 +489,7 @@ footer{
                     </tr>
                     <tr>
                         <td id="bordernone" style="text-align:left;">
-                        <table style="width: 100%;">
+                            <table style="width: 100%;">
                                 <tbody>
                                     <tr>
                                         <td style="text-align:left;" id="bordernone">Fecha</td>
