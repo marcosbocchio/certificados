@@ -476,13 +476,15 @@ footer{
                         <tr>
                             <td style="text-align:left;width: 30mm;padding-bottom:5mm"   id="bordernone">Evaluador / Evaluated by </td>
                         </tr>
-                        <td>
-                            <p>Firma:
-                                @if($firma)
-                                    <img src="{{ public_path($firma) }}" alt="" style="height:40px; margin-top:5px;">
-                                @endif
-                            </p>
-                        </td>
+                        <tr>
+                            <td id="bordernone">
+                                <p>Firma:
+                                    @if($firma)
+                                        <img src="{{ public_path($firma) }}" alt="" style="height:40px; margin-top:5px;">
+                                    @endif
+                                </p>
+                            </td>
+                        </tr>
                         <tr>
                             <td id="bordernone" style="text-align:left">
                                 <table>
