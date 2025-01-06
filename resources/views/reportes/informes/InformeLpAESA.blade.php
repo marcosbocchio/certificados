@@ -478,11 +478,11 @@ footer{
                         </tr>
                         <tr>
                             <td id="bordernone">
-                                <p>Firma:
-                                </p>
+                                <p >Firma:
                                     @if($firma)
-                                        <img src="{{ public_path($firma) }}" alt="" style="height:40px;">
+                                        <img src="{{ public_path($firma) }}" alt="" style="height:40px; margin-top:5px;">
                                     @endif
+                                </p>
                             </td>
                         </tr>
                         <tr>
@@ -507,7 +507,7 @@ footer{
                             <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Inspector AESA / Manufacture </td>
                         </tr>
                         <tr>
-                            <td  id="bordernone" style="text-align:left; height:45px;" >Firma:</td>
+                            <td  id="bordernone" style="text-align:left">Firma:</td>
                         </tr>
                         <tr>
                             <td id="bordernone" style="text-align:left">
@@ -531,7 +531,7 @@ footer{
                             <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Inspector Cliente / Coustomer </td>
                         </tr>
                         <tr>
-                            <td  id="bordernone" style="text-align:left; height:45px;">Firma:</td>
+                            <td  id="bordernone" style="text-align:left">Firma:</td>
                         </tr>
                         <tr>
                             <td id="bordernone" style="text-align:left">
@@ -555,7 +555,7 @@ footer{
                             <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Insp. Autorizado / AI </td>
                         </tr>
                         <tr>
-                            <td  id="bordernone" style="text-align:left; height:45px;">Firma:</td>
+                            <td  id="bordernone" style="text-align:left">Firma:</td>
                         </tr>
                         <tr>
                             <td id="bordernone" style="text-align:left">
