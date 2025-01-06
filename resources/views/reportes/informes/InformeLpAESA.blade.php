@@ -482,7 +482,7 @@ footer{
                             @endif
                         </td>
                         @if($firma)
-                            <td style="width: 30mm; vertical-align: top;" id="bordernone">
+                            <td style="width: 35mm; vertical-align: top;" id="bordernone">
                                 / Evaluated by
                             </td>
                         @endif
