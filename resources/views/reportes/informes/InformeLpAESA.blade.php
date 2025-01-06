@@ -470,7 +470,7 @@ footer{
 <table class="tablamain">
 <tbody>
     <tr>
-        <td style="height:12mm; width: 30mm; vertical-align: top;">
+        <td style="height:30mm; width: 40mm; vertical-align: top;">
             <table style="width: 100%;">
                 <tbody>
                     <tr>
@@ -502,7 +502,7 @@ footer{
                 </tbody>
             </table>
         </td>
-        <td style="height:10mm; width: 40mm; vertical-align: top;">
+        <td style="height:30mm; width: 40mm; vertical-align: top;">
             <table style="width: 100%;">
                 <tbody>
                     <tr>
@@ -530,7 +530,7 @@ footer{
                 </tbody>
             </table>
         </td>
-        <td style="height:10mm; width: 40mm; vertical-align: top;">
+        <td style="height:30mm; width: 40mm; vertical-align: top;">
             <table style="width: 100%;">
                 <tbody>
                     <tr>
@@ -558,7 +558,7 @@ footer{
                 </tbody>
             </table>
         </td>
-        <td style="height:10mm; width: 40mm; vertical-align: top;">
+        <td style="height:30mm; width: 40mm; vertical-align: top;">
             <table style="width: 100%;">
                 <tbody>
                     <tr>
