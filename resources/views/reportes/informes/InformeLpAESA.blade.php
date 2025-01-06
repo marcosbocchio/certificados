@@ -478,7 +478,7 @@ footer{
                             Evaluador / Evaluated by
                         </td>
                         @if($firma)
-                            <td id="bordernone" style="width: 1mm;">
+                            <td id="bordernone">
                                     
                             </td>
                         @endif
