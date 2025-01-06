@@ -474,29 +474,18 @@ footer{
             <table style="width: 100%;">
                 <tbody>
                     <tr>
-                        <td style="text-align:left;width: 10mm;" id="bordernone">
-                            @if($firma)
-                            Evaluador 
-                            @else
+                        <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
                             Evaluador / Evaluated by
-                            @endif
                         </td>
-                        @if($firma)
-                            <td style="width: 35mm; vertical-align: top;" id="bordernone">
-                                / Evaluated by
-                            </td>
-                        @endif
                     </tr>
                     <tr>
                         <td id="bordernone" style="height:40px; text-align:left;">
                             <p>Firma:
-                            </p>            
+                                </p>
+                                @if($firma)
+                                    <img src="{{ public_path($firma) }}" alt="" style="height:30px;">
+                                @endif
                         </td>
-                        @if($firma)
-                            <td id="bordernone">
-                                <img src="{{ public_path($firma) }}" alt="" style="height:40px;">
-                            </td>
-                        @endif
                     </tr>
                     <tr>
                         <td id="bordernone" style="text-align:left;">
