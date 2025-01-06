@@ -478,7 +478,7 @@ footer{
                             Evaluador / Evaluated by
                         </td>
                         @if($firma)
-                            <td>
+                            <td id="bordernone" style="width: 1mm;">
                                     
                             </td>
                         @endif
@@ -489,7 +489,7 @@ footer{
                             </p>            
                         </td>
                         @if($firma)
-                            <td>
+                            <td id="bordernone">
                                 <img src="{{ public_path($firma) }}" alt="" style="height:40px;">
                             </td>
                         @endif
