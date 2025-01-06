@@ -475,11 +475,11 @@ footer{
                 <tbody>
                     <tr>
                         <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
-                            Evaluador / Evaluated by
+                            Evaluador
                         </td>
                         @if($firma)
                             <td id="bordernone">
-                                    
+                                / Evaluated by
                             </td>
                         @endif
                     </tr>
