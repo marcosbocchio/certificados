@@ -480,7 +480,7 @@ footer{
                             <td id="bordernone">
                                 <p>Firma:
                                     @if($firma)
-                                        <img src="{{ public_path($firma) }}" alt="" style="height:40px;">
+                                        <img src="{{ public_path($firma) }}" alt="" style="height:35px;">
                                     @endif
                                 </p>
                             </td>
