@@ -491,8 +491,7 @@ footer{
                             <table style="width: 100%;">
                                 <tbody>
                                     <tr>
-                                        <td style="text-align:left;" id="bordernone">Fecha</td>
-                                        <td id="bordernone" style="text-align:left;"><p>{{ $fecha }}</p></td>
+                                        <td style="text-align:left;" id="bordernone">Fecha: {{ $fecha }}</td>
                                     </tr>
                                 </tbody>
                             </table>
