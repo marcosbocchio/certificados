@@ -369,7 +369,7 @@ footer {
                             <tbody>
                                 <tr class="gris">
                                 <td style="width: 43mm;">
-                                    @if($contratista->nombre === 'ENOD')
+                                    @if(isset($contratista) && $contratista->nombre === 'ENOD')
                                         Evaluador ENOD
                                     @else
                                         Evaluador AESA

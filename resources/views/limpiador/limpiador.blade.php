@@ -5,7 +5,7 @@
  <div id="app">
 
     <div>
-        <categoria-edit></categoria-edit>
+        <limpiar></limpiar>
     </div>
 
  </div>

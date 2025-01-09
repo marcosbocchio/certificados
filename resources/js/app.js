@@ -413,7 +413,10 @@ import AsignacionOperador from './components/asignaciones/asignacion-operador.vu
 Vue.component('asignacion-operador', AsignacionOperador);
 import AsignacionOperadorManual from './components/asignaciones/asignacion-operador-manual.vue';
 Vue.component('asignacion-operador-manual', AsignacionOperadorManual);
+/* limpieza */
 
+import Limpieza from './components/limpiar/limpiarl.vue';
+Vue.component('limpiar', Limpieza);
 /* modal confirmacion */
 
 Vue.component('confirmar-modal', require('./components/confirmar-modal').default);
