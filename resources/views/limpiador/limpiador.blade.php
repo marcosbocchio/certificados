@@ -5,7 +5,8 @@
  <div id="app">
 
     <div>
-        <limpiar></limpiar>
+        <limpiar>
+        </limpiar>
     </div>
 
  </div>

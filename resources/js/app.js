@@ -415,7 +415,7 @@ import AsignacionOperadorManual from './components/asignaciones/asignacion-opera
 Vue.component('asignacion-operador-manual', AsignacionOperadorManual);
 /* limpieza */
 
-import Limpieza from './components/limpiar/limpiarl.vue';
+import Limpieza from './components/limpiar/limpiar.vue';
 Vue.component('limpiar', Limpieza);
 /* modal confirmacion */
 

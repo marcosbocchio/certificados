@@ -1,11 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Documentaciones;
 
 class LimpiadorController extends Controller
 {
+    public function callView()
+    {
+        $user = auth()->user();
+        $header_titulo = "GESTIONAR ARCHIVOS";
+        $header_descripcion = " ";    
+        // Pasar los datos a la vista
+        return view('limpiador.limpiador', compact('user', 'header_titulo', 'header_descripcion'));
+    }
+    
+
     public function getDocumentaciones()
     {
         // Obtener todos los registros en la base de datos
@@ -13,16 +24,16 @@ class LimpiadorController extends Controller
             // Extraer la parte después de "documentaciones/"
             return str_replace('storage/documentaciones/', '', $path);
         });
-    
+
         // Buscar archivos existentes en el almacenamiento
         $archivosEnStorage = collect(Storage::files('documentaciones'))->map(function ($file) {
             return basename($file);
         });
-    
+
         // Identificar archivos existentes y sobrantes
         $encontrados = $documentaciones->intersect($archivosEnStorage);
         $sobrantes = $archivosEnStorage->diff($documentaciones);
-    
+
         return response()->json([
             'encontrados' => $encontrados,
             'sobrantes' => $sobrantes,
@@ -31,15 +42,16 @@ class LimpiadorController extends Controller
             'total_sobrantes' => $sobrantes->count(),
         ]);
     }
-    
+
     public function borrarDocumentaciones(Request $request)
     {
         $paths = $request->input('paths', []);
-    
+
         foreach ($paths as $path) {
             Storage::delete("documentaciones/{$path}");
         }
-    
+
         return response()->json(['status' => 'success', 'message' => 'Archivos borrados correctamente.']);
     }
+
 }

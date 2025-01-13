@@ -515,6 +515,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/asistencia_pagos_servicios', 'AsistenciaController@getAsistenciaPagosServicios');
     Route::post('/guardar_pagos', 'AsistenciaController@guardarPagosExtras');
     Route::post('/guardar_pagos_servicios', 'AsistenciaController@guardarPagosExtrasServicos');
+    //limpiar
+    Route::get('/documentaciones', 'AsistenciaController@getDocumentaciones');
+    Route::post('/documentaciones/borrar', 'AsistenciaController@borrarDocumentaciones');
 
     // Asignacion
     Route::get('/obtener-detalles-remito/{remito_id}', 'AsignacionRopaController@obtenerDetallesRemito');

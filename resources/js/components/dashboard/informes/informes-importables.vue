@@ -166,7 +166,7 @@ components: {
                 'ot_id' : this.otdata.id,
                 'fecha':new Date(),
                 'numero': '',
-                'obra' : this.Registro.obra,
+                'obra': this.Registro.obra || 'N/A',
                 'planta': this.Registro.planta,
                 'prefijo'  : '',
                 'observaciones':'',
@@ -267,7 +267,7 @@ components: {
         },
 
         setObra : function(value){
-
+            console.log('el valaaaaaaaue es',value)
             this.Registro.obra = value;
         },
         setPlanta : function(value){
