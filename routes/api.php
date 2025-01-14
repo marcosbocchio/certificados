@@ -519,6 +519,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/documentaciones/limpiar/paths', 'LimpiadorController@getDocumentacionesPaths');
     Route::get('/documentaciones/limpiar/storage', 'LimpiadorController@getArchivosEnStorage');
     Route::get('/documentaciones/limpiar/comparar', 'LimpiadorController@compararArchivos');
+    Route::post('/documentaciones/limpiar/eliminar', 'LimpiadorController@eliminarSobrantes');
 
     // Asignacion
     Route::get('/obtener-detalles-remito/{remito_id}', 'AsignacionRopaController@obtenerDetallesRemito');

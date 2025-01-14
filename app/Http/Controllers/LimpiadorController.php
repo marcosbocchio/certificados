@@ -75,6 +75,29 @@ public function compararArchivos()
         'total_sobrantes' => $sobrantes->count(),
     ]);
 }
+public function eliminarSobrantes(Request $request)
+{
+    $sobrantes = $request->input('sobrantes', []);
 
+    try {
+        foreach ($sobrantes as $archivo) {
+            $path = public_path("storage/documentaciones/{$archivo}");
+            if (file_exists($path)) {
+                unlink($path); // Eliminar el archivo
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Archivos sobrantes eliminados correctamente.',
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Ocurrió un error al eliminar los archivos sobrantes.',
+            'error' => $e->getMessage(),
+        ]);
+    }
+}
 
 }
