@@ -8,12 +8,29 @@
             <p>Archivos sobrantes en storage: {{ totalSobrantes }}</p>
         </div>
 
-        <button @click="prepararParaBorrar" class="btn btn-danger">Preparar para borrar</button>
+        <button @click="recuperarPaths" class="btn btn-primary">Recuperar Paths</button>
+        <button @click="verArchivosEnStorage" class="btn btn-info">Ver Archivos en Storage</button>
+        <button @click="compararArchivos" class="btn btn-warning">Comparar Archivos</button>
+
+
+        <div v-if="archivosEnStorage.length > 0">
+            <h4>Archivos en Storage:</h4>
+            <ul>
+                <li v-for="(archivo, index) in archivosEnStorage" :key="index">{{ archivo }}</li>
+            </ul>
+        </div>
 
         <div v-if="sobrantes.length > 0">
             <h4>Archivos sobrantes:</h4>
             <ul>
                 <li v-for="(archivo, index) in sobrantes" :key="index">{{ archivo }}</li>
+            </ul>
+        </div>
+
+        <div v-if="encontrados.length > 0">
+            <h4>Archivos encontrados:</h4>
+            <ul>
+                <li v-for="(archivo, index) in encontrados" :key="index">{{ archivo }}</li>
             </ul>
         </div>
     </div>
@@ -34,44 +51,83 @@ export default {
             totalRegistros: 0,
             totalEncontrados: 0,
             totalSobrantes: 0,
+            documentaciones: [],
+            archivosEnStorage: [],
             sobrantes: [],
+            encontrados: [],
         };
     },
     methods: {
-        async prepararParaBorrar() {
+        async recuperarPaths() {
             this.isLoading = true;
             try {
-                const response = await axios.get('/api/documentaciones');
-                const { total_registros, total_encontrados, total_sobrantes, sobrantes } = response.data;
+                const response = await axios.get('/api/documentaciones/limpiar/paths');
+                const { documentaciones, total_registros } = response.data;
 
+                this.documentaciones = documentaciones;
                 this.totalRegistros = total_registros;
-                this.totalEncontrados = total_encontrados;
-                this.totalSobrantes = total_sobrantes;
-                this.sobrantes = sobrantes;
 
-                toastrDefault('Archivos listos para borrar.', 'Información');
+                toastrDefault('Paths recuperados correctamente.', 'Información');
             } catch (error) {
-                toastrWarning('Ocurrió un error al preparar los archivos para borrar.', 'Error');
+                toastrWarning('Ocurrió un error al recuperar los paths.', 'Error');
             } finally {
                 this.isLoading = false;
             }
         },
-        async borrarArchivos() {
-            this.isLoading = true;
-            try {
-                const response = await axios.post('/api/documentaciones/borrar', {
-                    paths: this.sobrantes,
-                });
 
-                toastrDefault(response.data.message, 'Éxito');
-                this.sobrantes = [];
-                this.totalSobrantes = 0;
-            } catch (error) {
-                toastrWarning('Ocurrió un error al borrar los archivos.', 'Error');
-            } finally {
-                this.isLoading = false;
-            }
-        },
+        async verArchivosEnStorage() {
+    this.isLoading = true;
+    try {
+        const response = await axios.get('/api/documentaciones/limpiar/storage');
+        const { archivosEnStorage, total_archivos_storage } = response.data;
+
+        this.archivosEnStorage = archivosEnStorage || [];
+        this.totalEncontrados = total_archivos_storage || 0;
+
+        toastrDefault('Archivos en storage recuperados correctamente.', 'Información');
+    } catch (error) {
+        toastrWarning('Ocurrió un error al recuperar los archivos en storage.', 'Error');
+        console.error('Error al obtener archivos en storage:', error);
+    } finally {
+        this.isLoading = false;
+    }
+}
+,
+
+async compararArchivos() {
+    this.isLoading = true;
+    try {
+        // Validar que se hayan recuperado previamente los datos
+        if (this.documentaciones.length === 0) {
+            toastrWarning('Primero recupera los paths desde la base de datos.', 'Advertencia');
+            return;
+        }
+        if (this.archivosEnStorage.length === 0) {
+            toastrWarning('Primero recupera los archivos desde el storage.', 'Advertencia');
+            return;
+        }
+
+        // Convertir los paths en un conjunto para una búsqueda más rápida
+        const pathsSet = new Set(this.documentaciones); // Paths desde la base de datos
+
+        // Filtrar los archivos que están en el storage pero no en la base de datos
+        const sobrantes = this.archivosEnStorage.filter(
+            (archivo) => !pathsSet.has(archivo) // Archivos sobrantes
+        );
+
+        // Actualizar los resultados
+        this.sobrantes = sobrantes;
+        this.totalSobrantes = sobrantes.length;
+
+        toastrDefault('Comparación realizada correctamente. Archivos sobrantes identificados.', 'Información');
+    } catch (error) {
+        toastrWarning('Ocurrió un error al realizar la comparación.', 'Error');
+        console.error('Error al comparar archivos:', error);
+    } finally {
+        this.isLoading = false;
+    }
+},
+
     },
 };
 </script>

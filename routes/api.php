@@ -516,8 +516,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/guardar_pagos', 'AsistenciaController@guardarPagosExtras');
     Route::post('/guardar_pagos_servicios', 'AsistenciaController@guardarPagosExtrasServicos');
     //limpiar
-    Route::get('/documentaciones', 'AsistenciaController@getDocumentaciones');
-    Route::post('/documentaciones/borrar', 'AsistenciaController@borrarDocumentaciones');
+    Route::get('/documentaciones/limpiar/paths', 'LimpiadorController@getDocumentacionesPaths');
+    Route::get('/documentaciones/limpiar/storage', 'LimpiadorController@getArchivosEnStorage');
+    Route::get('/documentaciones/limpiar/comparar', 'LimpiadorController@compararArchivos');
 
     // Asignacion
     Route::get('/obtener-detalles-remito/{remito_id}', 'AsignacionRopaController@obtenerDetallesRemito');
