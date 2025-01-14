@@ -44,7 +44,7 @@
                     <li v-for="(archivo, index) in sobrantes" :key="index">
                         <span>{{ archivo }}</span>
                         <a
-                            :href="`/storage/${archivo}`"
+                            :href="`/storage/documentaciones/${archivo}`"
                             target="_blank"
                             class="btn btn-link btn-sm"
                         >
