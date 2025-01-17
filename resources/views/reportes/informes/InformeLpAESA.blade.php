@@ -225,6 +225,17 @@ footer{
             </tr>
         </tbody>
     </table>
+@else
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td style="width:40mm"><b>Inf PT°:</b></td>
+                <td style="width:37mm">LP{{sprintf("%04d", $informe->numero)}}</td>
+                <td style="width:41mm"><b>Fecha / date:</b></td>
+                <td style="width:45mm">{{ $fecha }}</td>
+            </tr>
+        </tbody>
+    </table>
 @endif
 <table class="tablamain">
     <tbody>
@@ -277,11 +288,11 @@ footer{
             </td>
             <td style="height: 7mm;">
                                     @if ($informe->espesor_chapa)
-                                        <b>{{ $informe->espesor_chapa }}</b>
+                                        <b>{{ $informe->espesor_chapa }} mm</b>
                                     @elseif($informe->espesor_especifico)
-                                        <b>{{ $informe->espesor_especifico }}</b>
+                                        <b>{{ $informe->espesor_especifico }} mm</b>
                                     @else
-                                        <b>{{ $diametro_espesor->espesor }}</b>
+                                        <b>{{ $diametro_espesor->espesor }} mm</b>
                                     @endif
             </td>
         </tr>
