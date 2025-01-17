@@ -266,10 +266,10 @@ components: {
 
         },
 
-        setObra : function(value){
-
-            this.Registro.obra = value;
-        },
+        setObra: function(value) {
+    console.log('el valaaaaaaaue es', value);
+    this.Registro.obra = value || 'N/A';  // Si value es null o falsy, asigna 'N/A'
+},
         setPlanta : function(value){
 
             console.log('el value es',value)

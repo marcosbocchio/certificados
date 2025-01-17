@@ -29,6 +29,12 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
+            <label for="operador">ayudante</label>
+            <v-select v-model="operador_ayudante" :options="operarios_opciones" label="name" id="ayudante"></v-select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
             <label for="entrada">Entrada *</label>
             <div class="bootstrap-timepicker">
               <div class="input-group">
@@ -55,18 +61,17 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="contratista">cliente</label>
+            <label for="contratista">cliente *</label>
             <v-select v-model="contratista_selected" :options="contratistas_opciones" label="nombre_fantasia" id="contratista"></v-select>
           </div>
         </div>
-        <div class="clearfix"></div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="parte">Parte</label>
+            <label for="parte">Parte *</label>
             <input id="parte" type="text" v-model="parte_selected" class="form-control" placeholder="Parte">
           </div>
         </div>
-        <div class="col-md-3" v-if="contratista_selected">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="metodoEnsayos">Técnica</label>
             <v-select v-model="metodoEnsayo_selected" :options="metodo_ensayos" label="metodo">
@@ -76,17 +81,6 @@
                 <span class="downSelect">{{ option.descripcion }}</span>
               </template>
             </v-select>
-          </div>
-        </div>
-        <!-- Hora Extra Checkbox -->
-        <div class="col-md-3">
-          <div class="form-group" style="margin-top: 30px;">
-            <label v-if="mostrarHoraExtra">
-              <input type="checkbox" v-model="hora_extra_sn"> Pagar Hora Extra
-            </label>
-            <label v-if="mostrarSDFCheckbox">
-              <input type="checkbox" v-model="sdf_sn"> Pagar Sab. / Dom. / Feriado
-            </label>
           </div>
         </div>
         <div class="col-md-3">
@@ -104,29 +98,20 @@
           <thead>
             <tr>
               <th class="col-md-2 text-center">Operador</th>
-              <th class="col-md-1 text-center">Responsabilidad</th>
+              <th class="col-md-1 text-center">Ayudante</th>
               <th class="col-md-1 text-center">Entrada</th>
               <th class="col-md-1 text-center">Salida</th>
               <th class="col-md-2 text-center">cliente</th>
               <th class="col-md-2 text-center">Parte</th>
-              <th class="col-md-1 text-center" v-if="detalles.some(detalle => detalle.contratista)">Técnica</th>
-              <th class="col-md-2 text-center">
-                <!-- Mostrar el texto y columna de acuerdo a los estados -->
-                <span v-if="mostrarSDFCheckboxCol">Sab. Dom. Fer.</span>
-                <span v-else-if="mostrarHoraExtraCol">Horas Extras</span>
-              </th>
+              <th class="col-md-1 text-center">Técnica</th>
               <th class="col-md-1 text-center" colspan="2">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(detalle, index) in detalles" :key="index">
-              <td>{{ detalle.operador.name }}</td>
-              <td>
-                <select v-model="detalle.ayudante_sn" class="form-control">
-                  <option value="1">Operador</option>
-                  <option value="0">Ayudante</option>
-                </select>
-              </td>
+              <td class="text-center" >{{ detalle.operador.name }}</td>
+              <td class="text-center"  v-if="detalle.ayudante && detalle.ayudante.name">{{ detalle.ayudante.name }}</td>
+              <td class="text-center"  v-else>-</td>
               <td>
                 <input type="time" v-model="detalle.entrada" class="form-control" @change="calcularHorasExtrasDetall(detalle, index)" />
               </td>
@@ -148,7 +133,7 @@
                   class="form-control"
                 />
               </td>
-              <td :class="{ 'hidden': !detalles.some(detalle => detalle.contratista) }">
+              <td class="text-center">
                 <!-- Si detalle.metodo_ensayo existe, muestra el v-select -->
                 <v-select
                   v-if="detalle.metodo_ensayo"
@@ -178,15 +163,6 @@
                     <span class="downSelect">{{ option.descripcion }}</span>
                   </template>
                 </v-select>
-              </td>
-              <td class="text-center">
-                <!-- Mostrar solo una opción dependiendo del estado -->
-                <label v-if="mostrarSDFCheckboxCol">
-                  <input type="checkbox" v-model="detalle.s_d_f_sn" :disabled="detalle.contratista != null">
-                </label>
-                <label v-else-if="mostrarHoraExtraCol">
-                  <input type="checkbox" v-model="detalle.hora_extra_sn" :disabled="detalle.contratista != null">
-                </label>
               </td>
               <td class="col-md-1 text-center">
                 <i  :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'" 
@@ -282,6 +258,7 @@ export default {
       frente_selected: '',
       observacionTexto: '',
       operador_selected: '',
+      operador_ayudante: '',
       entrada_selected: moment('08:00', 'HH:mm').toDate(),
       salida_selected: moment('16:00', 'HH:mm').toDate(),
       observacionTexto: '',
@@ -295,208 +272,66 @@ export default {
       feriados: [],
     };
   },
-  computed: {
-    mostrarHoraExtra() {
-    const fechaSeleccionada = new Date(this.fecha);
-    const diaSemana = fechaSeleccionada.getDay();
-
-    // Verificamos si el checkbox SDF debería mostrarse
-    if (this.mostrarSDFCheckboxCol) {
-        return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
-    }
-
-    // Verificamos si es día de semana (Lunes a Viernes, es decir, 1 a 5)
-    const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
-
-    // Verificamos si un contratista está seleccionado
-    if (this.contratista_selected != null) {
-        this.hora_extra_sn = false; // Desactiva el checkbox de hora extra
-        return false; // No mostrar el checkbox de hora extra
-    }
-
-    // Si las horas calculadas son mayores que las horas diarias laborables y es día de semana
-    if (this.horas_calculadas > this.frente_selected.horas_diarias_laborables && esDiaDeSemana) {
-        this.hora_extra_sn = true; // Marca el checkbox como true
-        return true; // Mostrar el checkbox de hora extra
-    } else {
-        this.hora_extra_sn = false;
-        return false; // No mostrar el checkbox de hora extra
-    }
-},
-    
-    mostrarHoraExtraCol() {
-        const fechaSeleccionada = new Date(this.fecha);
-        const diaSemana = fechaSeleccionada.getDay();
-
-        // Verificamos si el checkbox SDF debería mostrarse
-        if (this.mostrarSDFCheckboxCol) {
-            return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
-        }
-
-        const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
-
-        if (esDiaDeSemana) {
-            return true; // Mostrar el checkbox
-        } else {
-            return false; // No mostrar el checkbox
-        }
-    },
-    
-    mostrarSDFCheckbox() {
-    const fechaSeleccionada = new Date(this.fecha);
-    const diaSemana = fechaSeleccionada.getDay();
-    
-    const esSabadoODomingo = diaSemana === 5 || diaSemana === 6;
-
-
-    if (this.contratista_selected != null) {
-        this.sdf_sn = false; 
-        return false; 
-    }
-
-    if (esSabadoODomingo || this.esFeriado()) {
-        this.sdf_sn = true;
-        return true;
-    } else {
-        this.sdf_sn = false;
-        return false;
-    }
-},
-
-    mostrarSDFCheckboxCol() {
-        const fechaSeleccionada = new Date(this.fecha);
-        const diaSemana = fechaSeleccionada.getDay();
-
-        const esSabadoODomingo = diaSemana === 5 || diaSemana === 6;
-
-        if (esSabadoODomingo || this.esFeriado()) {
-            return true; // Mostrar el checkbox
-        } else {
-            return false; // No mostrar el checkbox
-        }
-    },
-},
-watch: {
-  entrada_selected(newVal) {
-
-if (this.salida_selected) {
-  // Si ya hay una salida seleccionada, calcular la diferencia
-  this.calcularDiferencia(this.entrada_selected, this.salida_selected);
-}
-},
-salida_selected(newVal) {
-
-if (this.entrada_selected) {
-  // Si ya hay una entrada seleccionada, calcular la diferencia
-  this.calcularDiferencia(this.entrada_selected, this.salida_selected);
-}
-},
-mostrarHoraExtra(newVal) {
-if (!newVal) {
-  this.hora_extra_sn = false; 
-}
-},
-mostrarSDFCheckbox(newVal) {
-if (!newVal) {
-  this.sdf_sn = false; 
-}
-},
-},
+  
   methods: {
     abrirObservacionModal(index) {
       this.observacionIndex = index;
       this.observacionTexto = this.detalles[index].observaciones || ''; // Cargar la observación si existe
       $('#observacionModal').modal('show'); // Mostrar el modal (usando jQuery)
     },
-    calcularHorasExtrasDetall(detalle, index) {
-  const entrada = detalle.entrada;
-  const salida = detalle.salida;
-  const horasLaborales = this.frente_selected.horas_diarias_laborables; // Dará valores como 8.0
-
-  console.log('entro en calcularHorasExtrasDetall');
-
-  if (entrada && salida) {
-    // Convertimos entrada y salida a arrays de horas y minutos
-    const [entradaHoras, entradaMinutos] = entrada.split(':').map(Number);
-    const [salidaHoras, salidaMinutos] = salida.split(':').map(Number);
-
-    // Creamos objetos Date para entrada y salida
-    const entradaDate = new Date();
-    entradaDate.setHours(entradaHoras, entradaMinutos, 0, 0);
-
-    const salidaDate = new Date();
-    salidaDate.setHours(salidaHoras, salidaMinutos, 0, 0);
-
-    // Calculamos la diferencia total en minutos entre entrada y salida
-    const diferenciaMinutos = (salidaDate - entradaDate) / (1000 * 60); // Diferencia en minutos totales
-
-    // Calculamos las horas y minutos trabajados
-    const horasTrabajadas = Math.floor(diferenciaMinutos / 60); // Horas completas trabajadas
-    const minutosTrabajados = diferenciaMinutos % 60; // Minutos restantes
-
-    // Convertimos las horas laborales estándar a minutos
-    const minutosLaboralesTotales = horasLaborales * 60; // Por ejemplo, 8.0 horas * 60 = 480 minutos
-
-    // Calculamos los minutos trabajados totales
-    const minutosTrabajadosTotales = (horasTrabajadas * 60) + minutosTrabajados;
-
-    console.log(minutosTrabajadosTotales, minutosLaboralesTotales);
-
-    // Comparamos los minutos trabajados con los minutos laborales
-    if (minutosTrabajadosTotales > minutosLaboralesTotales) {
-      // Verifica si detalle.contratista es null o vacío antes de marcar hora_extra_sn como true
-      if (detalle.contratista === null || detalle.contratista === '') {
-        detalle.hora_extra_sn = true; // Marca el checkbox de horas extras si no hay contratista
-      } else {
-        detalle.hora_extra_sn = false; // Desmarca el checkbox si hay un contratista
-      }
-    } else {
-      detalle.hora_extra_sn = false; // Desmarca el checkbox si no hay horas extra
+    
+    async guardarObservacion() {
+    if (this.observacionIndex === null) {
+        toastr.error('No se ha seleccionado ningún detalle para guardar la observación.');
+        return;
     }
 
-  } else {
-    // Si faltan datos de entrada o salida, desmarcamos las horas extras
-    detalle.hora_extra_sn = false;
-  }
-},
-async guardarObservacion() {
-    if (this.observacionIndex !== null) {
-        // Actualiza el estado local
-        this.$set(this.detalles[this.observacionIndex], 'observaciones', this.observacionTexto);
+    // Validación de existencia del detalle seleccionado
+    const detalleSeleccionado = this.detalles[this.observacionIndex];
+    if (!detalleSeleccionado) {
+        toastr.error('El detalle seleccionado no es válido.');
+        return;
+    }
 
-        // Obtenemos el ID de la asistencia y el ID del operador
-        const asistenciaId = this.asistenciaId;  // Este debe ser pasado o definido previamente en el componente
-        const operadorId = this.detalles[this.observacionIndex].operador.id;
+    try {
+        // Actualiza localmente la observación
+        this.$set(detalleSeleccionado, 'observaciones', this.observacionTexto);
 
-        console.log(asistenciaId);
-        console.log(operadorId);
-        // Crear un objeto con los datos necesarios
+        // Prepara los datos para enviar
         const detalleData = {
-    operador_id: operadorId,
-    ayudante_sn: this.detalles[this.observacionIndex].ayudante_sn,  // Se asume que ya es un valor adecuado (true/false o 1/0)
-    entrada: this.detalles[this.observacionIndex].entrada || '',   // Si `entrada` es null o undefined, se asigna un string vacío
-    salida: this.detalles[this.observacionIndex].salida || '',     // Si `salida` es null o undefined, se asigna un string vacío
-    contratista_id: this.detalles[this.observacionIndex].contratista ? this.detalles[this.observacionIndex].contratista.id : null,  // Asigna null si contratista es null
-    parte: this.detalles[this.observacionIndex].parte || null,     // Asigna null si `parte` es null o undefined
-    observaciones: this.observacionTexto,                          // Observación que se va a guardar
-    hora_extra_sn: this.detalles[this.observacionIndex].hora_extra_sn ? 1 : 0,  // Si `hora_extra_sn` es true, asigna 1, si no, 0
-    s_d_f_sn: this.detalles[this.observacionIndex].s_d_f_sn ? 1 : 0  // Si `s_d_f_sn` es true, asigna 1, si no, 0
-};
+            operador_id: detalleSeleccionado.operador?.id || null,
+            ayudante_id: detalleSeleccionado.ayudante?.id || null,
+            metodo_ensayo: detalleSeleccionado.metodo_ensayo?.id || null,
+            ayudante_sn: !!detalleSeleccionado.ayudante_sn, // Convierte a boolean
+            entrada: detalleSeleccionado.entrada || '',
+            salida: detalleSeleccionado.salida || '',
+            contratista_id: detalleSeleccionado.contratista?.id || null,
+            parte: detalleSeleccionado.parte || null,
+            observaciones: this.observacionTexto || '',
+            hora_extra_sn: detalleSeleccionado.hora_extra_sn ? 1 : 0,
+            s_d_f_sn: detalleSeleccionado.s_d_f_sn ? 1 : 0
+        };
 
-        try {
-            // Hacer la solicitud PATCH para buscar o crear el detalle
-            await axios.patch(`/api/asistencia-detalle/${asistenciaId}/guardar-observacion`, detalleData);
+        console.log('Datos a guardar:', detalleData);
 
-            // Mostrar un mensaje de éxito
-            toastr.success('Observación actualizada con éxito!');
-
-        } catch (error) {
-            // Manejo de errores
-            toastr.error('Error al guardar la observación');
+        // Realiza la solicitud PATCH
+        const asistenciaId = this.asistenciaId; // Se asume que ya está definido en el componente
+        if (!asistenciaId) {
+            toastr.error('ID de asistencia no definido.');
+            return;
         }
 
-        // Ocultar el modal después de guardar
+        await axios.patch(`/api/asistencia-detalle/${asistenciaId}/guardar-observacion`, detalleData);
+
+        // Mensaje de éxito
+        toastr.success('Observación actualizada con éxito!');
+        
+        // Cierra el modal
         $('#observacionModal').modal('hide');
+    } catch (error) {
+        // Manejo de errores
+        console.error('Error al guardar la observación:', error);
+        toastr.error('Error al guardar la observación.');
     }
 },
     ocultarModal() {
@@ -528,20 +363,30 @@ async guardarObservacion() {
     },
 
     async verificarTodosLosPartes() {
-      for (let detalle of this.detalles) {
-        if (detalle.contratista && detalle.parte) {
-          const parteValido = await this.verificarParte(detalle.parte);
-          if (!parteValido) {
-            toastr.error(`Parte "${detalle.parte}" del operador "${detalle.operador.name}" es inválido`);
-            return false; // Detener si algún parte no es válido
-          }
-        } else if (detalle.contratista && !detalle.parte) {
-          toastr.error(`Parte requerido para el operador "${detalle.operador.name}"`);
-          return false; // Detener si falta algún parte
-        }
+  for (let detalle of this.detalles) {
+    // Verificar si falta el contratista
+    if (!detalle.contratista) {
+      toastr.error(`Cliente requerido para el operador "${detalle.operador.name}"`);
+      return false; // Detener si no tiene cliente
+    }
+
+    // Verificar si tiene parte y contratista
+    if (detalle.contratista && detalle.parte) {
+      const parteValido = await this.verificarParte(detalle.parte);
+      if (!parteValido) {
+        toastr.error(`Parte "${detalle.parte}" del operador "${detalle.operador.name}" es inválido`);
+        return false; // Detener si algún parte no es válido
       }
-      return true; // Todos los partes son válidos
-    },
+    }
+
+    // Verificar si tiene contratista pero falta parte
+    if (detalle.contratista && !detalle.parte) {
+      toastr.error(`Parte requerido para el operador "${detalle.operador.name}"`);
+      return false; // Detener si falta algún parte
+    }
+  }
+  return true; // Todos los partes y clientes son válidos
+},
   async verificarUser(user_id, fecha) {
   try {
     // Formatea la fecha al estilo "MM-YYYY"
@@ -559,14 +404,31 @@ async guardarObservacion() {
   async agregarDetalle() {
     // Verificar si el operador ya está en la lista de detalles
     const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
-    
+    const existeAyudante = this.detalles.some(detalle => detalle.operador.id === this.operador_ayudante.id);
+    const existeOperadorAyudante = this.operador_selected && this.operador_ayudante
+    ? this.operador_selected.id === this.operador_ayudante.id
+    : false;
+
     // Si el operador ya está en la lista, mostrar un toastr.error
     if (existeOperador) {
       toastr.error('Operador ya seleccionado');
       return;
     }
+    if (existeAyudante) {
+      toastr.error('Ayduante seleccionado como operador');
+      return;
+    }
+
+    if (existeOperadorAyudante) {
+      toastr.error('Ayudante seleccionado como operador');
+      return;
+    }
     if (!this.operador_selected) {
       toastr.error('Debe seleccionar un operador');
+      return;
+    }
+    if (!this.contratista_selected) {
+      toastr.error('Debe seleccionar un cliente');
       return;
     }
     if (!this.entrada_selected) {
@@ -638,25 +500,26 @@ async guardarObservacion() {
     // Calcular los valores para nuevoDetalle
     const nuevoDetalle = {
       operador: this.operador_selected,
+      ayudante: this.operador_ayudante,
       entrada: moment(this.entrada_selected).format('HH:mm'),
       salida: moment(this.salida_selected).format('HH:mm'),
       contratista: this.contratista_selected,
       parte: this.parte_selected,
-      ayudante_sn: this.operador_selected.habilitado_arn_sn,
+      ayudante_sn: 1,
       hora_extra_sn: this.hora_extra_sn ? 1 : 0, // Convertir true/false a 1/0
-      s_d_f_sn: this.sdf_sn ? 1 : 0, // Convertir true/false a 1/0
-      observacion : this.observaciones || '',
+      s_d_f_sn: this.sdf_sn ? 1 : 0,
       metodo_ensayo: this.metodoEnsayo_selected,
+      observacion : this.observaciones || '',
     };
-
-    // Agregar nuevoDetalle a la lista de detalles
+    console.log(this.detalles);
     this.detalles.push(nuevoDetalle);
     this.operador_selected = '';
+    this.operador_ayudante = '';
     this.entrada_selected = moment('08:00', 'HH:mm').toDate();
     this.salida_selected = moment('16:00', 'HH:mm').toDate();
     this.contratista_selected = null;
-    this.parte_selected = '';
     this.metodoEnsayo_selected = '',
+    this.parte_selected = '';
     this.observaciones = '';
 
   },
@@ -692,8 +555,8 @@ async guardarObservacion() {
       return this.operarios_opciones;
     },
     async confirmar() {
- // Verificar todos los partes antes de guardar
- const todosValidos = await this.verificarTodosLosPartes();
+      // Verificar todos los partes antes de guardar
+      const todosValidos = await this.verificarTodosLosPartes();
       if (!todosValidos) {
         this.isLoading = false;
         return; // Si hay partes no válidos, detenemos la ejecución
@@ -708,7 +571,7 @@ async guardarObservacion() {
   }).then(response => {
     this.isLoading = false; // Finaliza el estado de carga
     toastr.success('Detalles actualizados con éxito');
-    window.location.href = '/area/enod/asistencia';
+    window.location.href = '/area/enod/asistencia/servicios';
   }).catch(error => {
     this.isLoading = false; // Finaliza el estado de carga
     toastr.error('Error al actualizar los detalles');

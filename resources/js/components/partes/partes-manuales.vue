@@ -203,6 +203,7 @@ export default {
     this.editMode = this.ot ? true : false;
     if (this.fecha) {
       this.cargarInformesSinParte();
+      console.log(this.informesSinParte);
     }
   },
   watch: {
@@ -356,25 +357,29 @@ export default {
       toastr.warning(mensaje);
     }
   },
-    cargarInformesSinParte() {
-      axios.get(`/api/informes-sin-parte?ot_id=${this.ot_id}&hasta=${this.fecha}`)
-        .then(response => {
-          this.informesSinParte = response.data.map(informe => ({
-            ...informe,
-            selected: false
-          }));
-        })
-        .catch(error => {
-          if (error.response && error.response.data && error.response.data.message) {
-            this.mostrarToast('Error al cargar los informes sin parte: ' + error.response.data.message, 'error');
-          } else if (error.request) {
-            this.mostrarToast('No se recibió respuesta al cargar los informes sin parte', 'error');
-          } else {
-            this.mostrarToast('Error al cargar los informes sin parte: ' + error.message, 'error');
-          }
-          console.log(error.config);
-        });
-    },
+  cargarInformesSinParte() {
+  axios.get(`/api/informes-sin-parte?ot_id=${this.ot_id}&hasta=${this.fecha}`)
+    .then(response => {
+      this.informesSinParte = response.data.map(informe => ({
+        ...informe,
+        selected: false
+      }));
+      
+      // Agregar log para verificar los datos asignados
+      console.log("Datos cargados en informesSinParte:", this.informesSinParte);
+    })
+    .catch(error => {
+      if (error.response && error.response.data && error.response.data.message) {
+        this.mostrarToast('Error al cargar los informes sin parte: ' + error.response.data.message, 'error');
+      } else if (error.request) {
+        this.mostrarToast('No se recibió respuesta al cargar los informes sin parte', 'error');
+      } else {
+        this.mostrarToast('Error al cargar los informes sin parte: ' + error.message, 'error');
+      }
+      console.log(error.config);
+    });
+}
+,
   }
 }
 </script>

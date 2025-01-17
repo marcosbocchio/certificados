@@ -497,7 +497,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/guardar_asistencia', 'AsistenciaController@guardarAsistencia');
     Route::post('/asistencia-comprobar-parte', 'AsistenciaController@controlarParte');
     Route::get('/asistencia-comprobar-user/{id_user}/{fecha}', 'AsistenciaController@controlarUser');
-    Route::get('/area/enod/asistencia', 'AsistenciaController@getPaginatedAsistencia')->name('api.asistencia.paginated');
+    Route::get('/area/enod/asistencia/servicios', 'AsistenciaController@getPaginatedAsistenciaContratista')->name('api.asistencia.paginatedservicios');
+    Route::get('/area/enod/asistencia/horas', 'AsistenciaController@getPaginatedAsistenciaHoras')->name('api.asistencia.paginatedhoras');
     Route::get('/asistencia/{id}', 'AsistenciaController@getAsistencia');
     Route::get('/asistencia/getferiados/{year}', 'AsistenciaController@getFeriados');
     Route::post('/asistencia/{id}/update', 'AsistenciaController@updateAsistencia')->name('asistencia.update');
@@ -506,12 +507,20 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/feriados', 'AsistenciaController@getFeriados');
     Route::get('/asistencia-operadores', 'AsistenciaController@getAsistenciaAgrupadaPorOperador');
     Route::get('asistencia-operadores-datos', 'AsistenciaController@getDatosAsistencia');
+    Route::get('asistencia-operadores-datos-servicios', 'AsistenciaController@getDatosAsistenciaServicios');
     Route::post('/guardar-pagos', 'AsistenciaController@guardarPagos');
     Route::get('/calcular-dias-del-mes/{year}/{month}', 'AsistenciaController@calcularDiasDelMes');
 
     Route::get('/asistencia_pagos', 'AsistenciaController@getAsistenciaPagos');
+    Route::get('/asistencia_pagos_servicios', 'AsistenciaController@getAsistenciaPagosServicios');
     Route::post('/guardar_pagos', 'AsistenciaController@guardarPagosExtras');
     Route::post('/guardar_pagos_servicios', 'AsistenciaController@guardarPagosExtrasServicos');
+    //limpiar
+    Route::get('/documentaciones/limpiar/paths', 'LimpiadorController@getDocumentacionesPaths');
+    Route::get('/documentaciones/limpiar/storage', 'LimpiadorController@getArchivosEnStorage');
+    Route::get('/documentaciones/limpiar/comparar', 'LimpiadorController@compararArchivos');
+    Route::post('/documentaciones/limpiar/eliminar', 'LimpiadorController@eliminarSobrantes');
+
     // Asignacion
     Route::get('/obtener-detalles-remito/{remito_id}', 'AsignacionRopaController@obtenerDetallesRemito');
     Route::get('/asignaciones-ropa/{operador_id}', 'AsignacionRopaController@getAsignaciones');

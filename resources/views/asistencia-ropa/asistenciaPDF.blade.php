@@ -19,6 +19,9 @@
             max-width: 180px;
             max-height: 60px;
         }
+        .underline {
+            text-decoration: underline;
+        }
         .title {
             font-size: 18px;
             font-weight: bold;
@@ -86,7 +89,7 @@
             <td class="logo">
                 <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
             </td>
-            <td class="title">CONTROL ASISTENCIA</td>
+            <td class="title">CONTROL ASISTENCIA {{$modo}} </td>
             <td class="date"><b>FECHA:{{$fecha}}</b></td>
         </tr>
     </table>
@@ -101,10 +104,12 @@
 </header>
 
 @foreach ($asistenciaDatosCollection->chunk(25) as $asistenciaChunk) <!-- Dividir en grupos de 25 filas -->
-    <table class="table">
+
+<table class="table">
         <thead>
             <tr>
                 <th>Operador</th>
+                <th>Responsabilidad</th>
                 @foreach ($diasDelMes as $dia)
                     <th 
                         class="
@@ -117,23 +122,31 @@
                         {{ $dia['dia'] }}
                     </th>
                 @endforeach
+                @if ($modo === 'Horas')
                 <th>E</th>
-                <th>SE</th>
+                @endif
+                @if ($modo === 'Servicios')
+                    <th>SE</th>
+                @endif
+                @if ($modo === 'Horas')
                 <th>S</th>
                 <th>D/F</th>
+                @endif
             </tr>
         </thead>
         <tbody>
-            @foreach ($asistenciaChunk as $operador => $detalle)
-                <tr>
-                    <td style="padding: 5px;">{{ $operador }}</td>
-                    @foreach ($diasDelMes as $index => $dia)
-                        <td style="padding: 1px;">
-                            @if (isset($detalle[$index]))
+                @foreach ($asistenciaChunk as $operador => $detalle)
+                    <tr>
+                    <td style="padding: 5px;">{{ explode('-', $operador)[0] }}</td>
+                        <td style="padding: 5px;">{{ $detalle['responsabilidad'] }}</td>
+                        @foreach ($diasDelMes as $index => $dia)
+                        <td style="padding: 1px;" 
+                        class="{{ ($detalle['dias'][$index]['detalle']['hora_extra_sn'] === 1 || $detalle['dias'][$index]['detalle']['s_d_f_sn'] === 1) ? 'underline' : '' }}"
+                        >
+                            @if (isset($detalle['dias'][$index]) && $detalle['dias'][$index] !== null)
                                 @php
-                                    $valores = $obtenerValorDetalle($detalle[$index]['detalle'], $dia);
+                                    $valores = $obtenerValorDetalle($detalle['dias'][$index]['detalle'], $dia);
                                 @endphp
-                                
                                 @if (is_array($valores))
                                     @foreach ($valores as $valor)
                                         {{ trim($valor) }}<br>
@@ -146,10 +159,18 @@
                             @endif
                         </td>
                     @endforeach
-                    <td>{{ $contarParametros($detalle, 'hora_extra_sn', 'sumar') }}</td>
-                    <td>{{ $contarParametros($detalle, 'contratista_id', 'conteo') }}</td>
-                    <td>{{ $contarParametros($detalle, 'sabado', 'sumar') }}</td>
-                    <td>{{ $contarParametros($detalle, 'domingo_feriado', 'sumar') }}</td>
+                    @if ($modo === 'Horas')
+                        <td>
+                            {{ $contarHoras($detalle['dias']) }}
+                        </td>
+                    @endif
+                    @if ($modo === 'Servicios')
+                    <td>{{ $contarParametros($detalle['dias'], 'contratista_id', 'conteo') }}</td>
+                    @endif
+                    @if ($modo === 'Horas')
+                    <td>{{ $contarParametros($detalle['dias'], 'sabado', 'sumar') }}</td>
+                    <td>{{ $contarParametros($detalle['dias'], 'domingo_feriado', 'sumar') }}</td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>

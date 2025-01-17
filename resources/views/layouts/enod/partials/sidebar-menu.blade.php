@@ -180,16 +180,22 @@
           </a>
           <ul class="treeview-menu">
             @can('A_asistencia_acceder')
-              <li><a href="{{ route('asistencia') }}">Carga</a></li>
+              <li><a href="{{ route('asistencia-horas') }}">Carga Horas Extras</a></li>
+            @endcan
+            @can('A_asistencia_acceder')
+              <li><a href="{{ route('asistencia-servicios') }}">Carga Servicios Extras</a></li>
             @endcan
             @can('A_resumen_view')
-              <li><a href="{{ route('asistencia-resumen') }}">Resumen</a></li>
+              <li><a href="{{ route('asistencia-resumen') }}">Resumen Horas Extras</a></li>
+            @endcan
+            @can('A_resumen_view')
+              <li><a href="{{ route('asistencia-resumen-servicio') }}">Resumen Servicios Extras</a></li>
             @endcan
             @can('A_asistencia_acceder')
               <li><a href="{{ route('asistencia-pagos') }}">Pagar Horas Extras</a></li>
             @endcan
             @can('A_asistencia_acceder')
-              <li><a href="{{ route('asistencia-pagos-servicios') }}">Pagar Servicios</a></li>
+              <li><a href="{{ route('asistencia-pagos-servicios') }}">Pagar Servicios Extras</a></li>
             @endcan
           </ul>
         </li>

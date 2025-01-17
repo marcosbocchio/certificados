@@ -374,8 +374,10 @@ import EditStock from './components/stock/stock-edit.vue';
 Vue.component('stock-edit', EditStock);
 
 /* Asistencia */
-import Asistencia from './components/control-asistencia/asistencia-table.vue';
-Vue.component('asistencia-table', Asistencia);
+import AsistenciaServicios from './components/control-asistencia/asistencia-table-servicios.vue';
+Vue.component('asistencia-table-servicios', AsistenciaServicios);
+import AsistenciaHoras from './components/control-asistencia/asistencia-table-horas.vue';
+Vue.component('asistencia-table-horas', AsistenciaHoras);
 import AsistenciaPagos from './components/control-asistencia/asistencia-pagos.vue';
 Vue.component('asistencia-pagos', AsistenciaPagos);
 import AsistenciaPagosServicios from './components/control-asistencia/asistencia-pagos-servicios.vue';
@@ -384,11 +386,19 @@ Vue.component('asistencia-pagos-servicios', AsistenciaPagosServicios);
 import AsistenciaNuevo from './components/control-asistencia/asistencia-nuevo.vue';
 Vue.component('asistencia-nuevo', AsistenciaNuevo);
 
+import AsistenciaNuevoHoras from './components/control-asistencia/asistencia-nuevo-horas.vue';
+Vue.component('asistencia-nuevo-horas', AsistenciaNuevoHoras);
+
 import AsistenciaEdit from './components/control-asistencia/asistencia-edit.vue';
 Vue.component('asistencia-edit', AsistenciaEdit);
+import AsistenciaEditHoras from './components/control-asistencia/asistencia-edit-horas.vue';
+Vue.component('asistencia-edit-horas', AsistenciaEditHoras);
 
 import AsistenciaResumen from './components/control-asistencia/asistencia-resumen.vue';
 Vue.component('asistencia-resumen', AsistenciaResumen);
+
+import AsistenciaResumenServicios from './components/control-asistencia/asistencia-resumen-servicios.vue';
+Vue.component('asistencia-resumen-servicios', AsistenciaResumenServicios);
 
 import AsistenciaCopia from './components/control-asistencia/asistencia-copia.vue';
 Vue.component('asistencia-copia', AsistenciaCopia);
@@ -403,7 +413,10 @@ import AsignacionOperador from './components/asignaciones/asignacion-operador.vu
 Vue.component('asignacion-operador', AsignacionOperador);
 import AsignacionOperadorManual from './components/asignaciones/asignacion-operador-manual.vue';
 Vue.component('asignacion-operador-manual', AsignacionOperadorManual);
+/* limpieza */
 
+import Limpieza from './components/limpiar/limpiar.vue';
+Vue.component('limpiar', Limpieza);
 /* modal confirmacion */
 
 Vue.component('confirmar-modal', require('./components/confirmar-modal').default);

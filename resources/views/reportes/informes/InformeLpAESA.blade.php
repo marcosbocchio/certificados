@@ -225,6 +225,17 @@ footer{
             </tr>
         </tbody>
     </table>
+@else
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td style="width:40mm"><b>Inf PT°:</b></td>
+                <td style="width:37mm">LP{{sprintf("%04d", $informe->numero)}}</td>
+                <td style="width:41mm"><b>Fecha / date:</b></td>
+                <td style="width:45mm">{{ $fecha }}</td>
+            </tr>
+        </tbody>
+    </table>
 @endif
 <table class="tablamain">
     <tbody>
@@ -277,11 +288,11 @@ footer{
             </td>
             <td style="height: 7mm;">
                                     @if ($informe->espesor_chapa)
-                                        <b>{{ $informe->espesor_chapa }}</b>
+                                        <b>{{ $informe->espesor_chapa }} mm</b>
                                     @elseif($informe->espesor_especifico)
-                                        <b>{{ $informe->espesor_especifico }}</b>
+                                        <b>{{ $informe->espesor_especifico }} mm</b>
                                     @else
-                                        <b>{{ $diametro_espesor->espesor }}</b>
+                                        <b>{{ $diametro_espesor->espesor }} mm</b>
                                     @endif
             </td>
         </tr>
@@ -468,106 +479,125 @@ footer{
     </tbody>
 </table>
 <table class="tablamain">
-    <tbody>
-        <tr>
-            <td style="height:10mm;">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td style="text-align:left;width: 30mm;padding-bottom:5mm"   id="bordernone">Evaluador / Evaluated by </td>
-                        </tr>
-                        <tr>
-                            <td  id="bordernone" style="text-align:left">Firma:</td>
-                        </tr>
-                        <tr>
-                            <td id="bordernone" style="text-align:left">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td  id="bordernone">Fecha</td>
-                                            <td  id="bordernone">&nbsp;</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Inspector AESA / Manufacture </td>
-                        </tr>
-                        <tr>
-                            <td  id="bordernone" style="text-align:left">Firma:</td>
-                        </tr>
-                        <tr>
-                            <td id="bordernone" style="text-align:left">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td  id="bordernone">Fecha</td>
-                                            <td  id="bordernone">&nbsp;</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Inspector Cliente / Coustomer </td>
-                        </tr>
-                        <tr>
-                            <td  id="bordernone" style="text-align:left">Firma:</td>
-                        </tr>
-                        <tr>
-                            <td id="bordernone" style="text-align:left">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td  id="bordernone">Fecha</td>
-                                            <td  id="bordernone">&nbsp;</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td style="width: 40mm;text-align:left;padding-bottom:5mm"   id="bordernone">Insp. Autorizado / AI </td>
-                        </tr>
-                        <tr>
-                            <td  id="bordernone" style="text-align:left">Firma:</td>
-                        </tr>
-                        <tr>
-                            <td id="bordernone" style="text-align:left">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td  id="bordernone">Fecha</td>
-                                            <td  id="bordernone">&nbsp;</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-    </tbody>
+<tbody>
+    <tr>
+        <td style="height:30mm; width: 40mm; vertical-align: top;">
+            <table style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
+                            Evaluador / Evaluated by
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="bordernone" style="height:40px; text-align:left;">
+                            Firma:
+                                @if($firma)
+                                    <img src="{{ public_path($firma) }}" alt="" style="height:40px;">
+                                @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="bordernone" style="text-align:left;">
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:left;" id="bordernone">Fecha: {{ $fecha }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td style="height:30mm; width: 40mm; vertical-align: top;">
+            <table style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
+                            Inspector AESA / Manufacture
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="bordernone" style="height:40px; text-align:left;">
+                            Firma:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="bordernone" style="text-align:left;">
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:left;" id="bordernone">Fecha</td>
+                                        <td id="bordernone">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td style="height:30mm; width: 40mm; vertical-align: top;">
+            <table style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
+                            Inspector Cliente / Customer
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="bordernone" style="height:40px; text-align:left;">
+                            Firma:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="bordernone" style="text-align:left;">
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td  style="text-align:left;"id="bordernone">Fecha</td>
+                                        <td id="bordernone">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td style="height:30mm; width: 40mm; vertical-align: top;">
+            <table style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
+                            Insp. Autorizado / AI
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="bordernone" style="height:40px; text-align:left;">
+                            Firma:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="bordernone" style="text-align:left;">
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:left;" id="bordernone">Fecha</td>
+                                        <td id="bordernone">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</tbody>
+
 </table>
 </main>
 <script type="text/php">

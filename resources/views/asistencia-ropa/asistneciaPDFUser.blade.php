@@ -126,183 +126,132 @@
     </header>
 
     <!-- Attendance Details -->
-    <div class="content">
     @php
-        // Declaramos la función obtenerFechaPago
         function obtenerFechaPago($fechaAsistencia, $semanas) {
             foreach ($semanas as $semana) {
                 if ($fechaAsistencia >= $semana['inicio'] && $fechaAsistencia <= $semana['fin']) {
-                    return $semana['fecha_pago'] ?? '-'; // Retorna la fecha de pago o '-' si no está disponible
+                    return $semana['fecha_pago'] ?? '-';
                 }
             }
-            return '-'; // Si no coincide con ninguna semana
+            return '-';
         }
 
         $rowCount = 0;
-        $rowsPerPage = 8; // Número de filas por página
-        $totalHorasTrabajadas = 0;
-        $totalHorasExtras = 0;
-        $totalServicioExtra = 0;
+        $rowsPerPage = 8;
+        $totalServicioExtraNull = 0;
+        $totalServicioExtraNotNull = 0;
     @endphp
 
-    <table class="content-table">
-        <thead>
-            <tr>
-                <th width="70px">Día</th>
-                <th width="70px">Fecha</th>
-                <th width="70px">Responsabilidad</th>
-                <th width="120px">Horas Trabajadas</th>
-                <th width="120px">Horas Extras | S/D/F</th>
-                <th width="120px">Servicio Extra</th>
-                <th width="100px">Fecha Pago</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($resultado as $dia => $asistencias)
-                @foreach($asistencias as $index => $asistencia)
-                    @php
-                        $esFeriado = $asistencia['feriado_sn'] ? 'highlight' : '';
-                        $horasExtras = $asistencia['hora_extras'];
-                        $servicioExtra = $asistencia['servicio_extra'] ?? '-';
-                        $totalServicioExtra += $asistencia['servicio_extra'] ? 1 : 0;
-
-                        // Obtenemos la fecha de pago usando la función
-                        $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
-                        $fechaPago = date('Y-m-d', strtotime($asistencia['fecha']));
-                    @endphp
-                    @if($index === 0) <!-- Mostrar el día solo en la primera fila de ese día -->
+    <!-- Tabla para contratista_id === null -->
+    <div class="content">
+        <h3>Horas Extras</h3>
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th width="70px">Día</th>
+                    <th width="70px">Fecha</th>
+                    <th width="70px">Responsabilidad</th>
+                    <th width="120px">Hora Entrada</th>
+                    <th width="120px">Hora Salida</th>
+                    <th width="100px">Fecha Pago</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($resultado as $asistencia)
+                    @if($asistencia['contratista_id'] === null)
+                        @php
+                            // Determina si es un feriado para destacar la fila
+                            $esFeriado = $asistencia['s_d_f_sn'] ? 'highlight' : '';
+                            
+                            // Obtiene la fecha de pago usando la función definida
+                            $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
+                        @endphp
                         <tr>
-                            <td>{{ $dia }}</td>
+                        <td>
+    {{ $diasEnEspanol[\Carbon\Carbon::parse($asistencia['fecha'])->format('l')] ?? \Carbon\Carbon::parse($asistencia['fecha'])->format('l') }}
+</td>
+
                             <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
-                            <td>
-                                {{ $asistencia['ayudante_sn'] === 1 ? 'Operador' : ($asistencia['ayudante_sn'] === 0 ? 'Ayudante' : '') }}
-                            </td>
-                            <td>{{ $asistencia['horas_trabajadas'] }}</td>
-                            <td style="text-align: center;">
-                            @if($asistencia['servicio_extra'] === 0)
-                                    @if($asistencia['hora_extra_sn'] || $asistencia['s_d_f_sn'])
-                                        <p>Si</p>
-                                    @else
-                                        <p>No</p>
-                                    @endif
-                                @elseif($asistencia['servicio_extra'] === 1)
-                                    <p>No</p>
-                                @endif
-                            </td>
-                            <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
+                            <td>{{ $asistencia['ayudante_sn'] === 0 ? 'ayudante' : 'operador' }}</td>
+                            <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['entrada'])->format('H:i') }}</td>
+                            <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['salida'])->format('H:i') }}</td>
                             <td>
                                 @if ($asistencia['no_pagar'] == 1)
                                     Cancelado
                                 @else
-                                    {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}
-                                @endif
-                            </td> 
-                        </tr>
-                    @else
-                        <tr>
-                            <td class="empty-cell"></td>
-                            <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
-                            <td>
-                                {{ $asistencia['ayudante_sn'] === 1 ? 'Operador' : ($asistencia['ayudante_sn'] === 0 ? 'Ayudante' : '') }}
-                            </td>
-                            <td>{{ $asistencia['horas_trabajadas'] }}</td>
-                            <td style="text-align: center;">
-                            @if($asistencia['servicio_extra'] === 0)
-                                @if($asistencia['hora_extra_sn'] || $asistencia['s_d_f_sn'])
-                                    <p>Si</p>
-                                @else
-                                    <p>No</p>
-                                @endif
-                            @elseif($asistencia['servicio_extra'] === 1)
-                                <p>No</p>
-                            @endif
-                            </td>
-                            <td>{{ $asistencia['servicio_extra'] != '-' ? $asistencia['parte'] ?? '-' : '-' }}</td>
-                            <td>
-                            @if ($asistencia['no_pagar'] == 1)
-                                    Cancelado
-                                @else
-                                    {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? '-' }}
+                                    {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? $fechaPago }}
                                 @endif
                             </td>
                         </tr>
-                    @endif
-
-                    @php $rowCount++; @endphp
-
-                    @if($rowCount % $rowsPerPage === 0) <!-- Dividir tabla cada 14 filas -->
-                        </tbody>
-                    </table>
-                    
-                    <!-- Repetir el encabezado -->
-                    <div style="page-break-before: always;"></div> <!-- Opcional: para forzar una nueva página -->
-                    <header>
-                        <table class="header-table">
-                            <tr>
-                                <td class="logo">
-                                    <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
-                                </td>
-                                <td class="title">CONTROL ASISTENCIA</td>
-                                <td class="date"><b>FECHA:</b> {{ $fecha }}</td>
-                            </tr>
-                        </table>
-                        <div class="separator"></div>
-                        <div class="content">
-                        <table class="info-table">
-                        <tr>
-                            <td width="303px"><strong>Operador:</strong> {{ $operador->name }}</td>
-                            <td width="230px"><strong>Frente:</strong> {{ $frente->codigo }}</td>
-                            <td width="230px"><strong>Mes y Año:</strong> {{ $selectedMonth }} / {{ $selectedYear }}</td>
-                            <td><strong>Días Hábiles del Mes:</strong> {{ $diasDelMes['diasHabiles'] }}</td>
-                        </tr>
-                        </table>
-                        </div>
-                    </header>
-                    <table class="content-table">
-                        <thead>
-                        <tr>
-                            <th width="70px">Día</th>
-                            <th width="70px">Fecha</th>
-                            <th width="70px">Responsabilidad</th>
-                            <th width="120px">Horas Trabajadas</th>
-                            <th width="120px">Horas Extras | S/D/F</th>
-                            <th width="120px">Servicio Extra</th>
-                            <th width="100px">Fecha Pago</th>
-                        </tr>
-                        </thead>
-                        <tbody>
                     @endif
                 @endforeach
-            @endforeach
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        
+    </div>
 
-    <!-- Tabla de Totales -->
-    <table class="totals-table">
+    <!-- Tabla para contratista_id !== null -->
+    <div class="content">
+        <h3>Servicios Extras</h3>
+        <table class="content-table">
+    <thead>
         <tr>
-            <td width="95px"><strong>Total</strong></td>
-            <td width="93px">&nbsp;</td>
-            <td width="107px">&nbsp;</td>
-            <td width="157px">&nbsp;</td>
-            <td width="158px">&nbsp;</td>
-            <td>{{ $totalServicioExtra }}</td>
-            <td width="133px">&nbsp;</td>
+            <th width="70px">Día</th>
+            <th width="70px">Fecha</th>
+            <th width="70px">Responsabilidad</th>
+            <th width="120px">Hora Entrada</th>
+            <th width="120px">Hora Salida</th>
+            <th width="120px">Cliente</th>
+            <th width="100px">Parte</th>
+            <th width="100px">Técnica</th>
+            <th width="100px">Fecha Pago</th>
         </tr>
-    </table>
-</div>
+    </thead>
+    <tbody>
+        @foreach($resultado as $asistencia)
+            @if($asistencia['contratista_id'] !== null)
+                @php
+                    $esFeriado = $asistencia['s_d_f_sn'] ? 'highlight' : '';
+                    $fechaPago = obtenerFechaPago($asistencia['fecha'], $diasDelMes['semanas']);
+                            $responsabilidad = $asistencia['ayudante_sn'] === 1 ? 'Ayudante' : 'Operador';;
+                           
+                @endphp
+                <tr>
+                <td>
+    {{ $diasEnEspanol[\Carbon\Carbon::parse($asistencia['fecha'])->format('l')] ?? \Carbon\Carbon::parse($asistencia['fecha'])->format('l') }}
+</td>
+
+                    <td class="{{ $esFeriado }}">{{ $asistencia['fecha'] }}</td>
+                    <td>{{ $asistencia['ayudante_sn'] === 1 ? 'operador' : 'ayudante' }}</td>
+                    <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['entrada'])->format('H:i') }}</td>
+                    <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $asistencia['salida'])->format('H:i') }}</td>
+                    <td>{{ $asistencia['contratista']['nombre_fantasia'] }}</td>
+                    <td>{{ $asistencia['parte'] }}</td>
+                    <td>{{ $asistencia['metodoEnsayo']['metodo'] ?? '-' }}</td>
+                    <td>
+                                @if ($asistencia['no_pagar'] == 1)
+                                    Cancelado
+                                @else
+                                    {{ $asistencia['pago_e_sdf'] ?? $asistencia['pago_servicio_extra'] ?? $fechaPago }}
+                                @endif
+                    </td>
+                </tr>
+            @endif
+        @endforeach
+    </tbody>
+</table>
+
+    </div>
 
     <script type="text/php">
-        if ( isset($pdf) ) {
+        if (isset($pdf)) {
             $x = 755;
             $y = 55;
             $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
             $size = 8;
             $color = array(0,0,0);
-            $word_space = 0.0;  //  default
-            $char_space = 0.0;  //  default
-            $angle = 0.0;   //  default
-            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+            $pdf->page_text($x, $y, $text, $font, $size, $color);
         }
     </script>
 </body>
