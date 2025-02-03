@@ -13,6 +13,12 @@ class LocalidadesRepository extends BaseRepository
     return new Localidades;
   }
 
+
+  public function getAll()
+  {
+      return $this->getModel()->all(); // Devuelve todas las localidades
+  }
+
   public function getLocalidades($id){
 
     $Localidades = $this->getModel();
