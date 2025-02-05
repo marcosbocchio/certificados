@@ -130,15 +130,14 @@
         <tr>
             <td>{{$tipo_pelicula->fabricante}} {{$tipo_pelicula->codigo}}</td>
             <td>
-                @php
-                    $codigoFuente = $interno_fuente->fuente->codigo;
-                    $partesCodigo = explode(' - ', $codigoFuente);
-                    $codigoDeseado = $partesCodigo[0];
-                @endphp
-                    @if ($codigoDeseado)
-                        {{$codigoDeseado}}
-                    @endif
-                
+            @php
+                $codigoFuente = optional($interno_fuente->fuente)->codigo;
+                $codigoDeseado = $codigoFuente ? explode(' - ', $codigoFuente)[0] : null;
+            @endphp
+
+            @if ($codigoDeseado)
+                <td>{{ $codigoDeseado }}</td>
+            @endif               
             </td>
             <td>{{$actividad}}</td>
             <td>
