@@ -131,22 +131,22 @@
             <td>{{$tipo_pelicula->fabricante}} {{$tipo_pelicula->codigo}}</td>
             <td>
             @php
-                $codigoFuente = optional($interno_fuente->fuente)->codigo;
+                $codigoFuente = isset($interno_fuente->fuente) ? $interno_fuente->fuente->codigo : null;
                 $codigoDeseado = $codigoFuente ? explode(' - ', $codigoFuente)[0] : null;
             @endphp
 
             @if ($codigoDeseado)
                 <td>{{ $codigoDeseado }}</td>
-            @endif               
+            @endif
             </td>
             <td>{{$actividad}}</td>
             <td>
                 
-                    @if ($interno_fuente)
-                        {{$interno_fuente->foco}} mm
-                    @else
-                        {{$interno_equipo->foco}} mm
-                    @endif
+            @if (isset($interno_fuente) && isset($interno_fuente->foco))
+                {{ $interno_fuente->foco }} mm
+            @elseif (isset($interno_equipo) && isset($interno_equipo->foco))
+                {{ $interno_equipo->foco }} mm
+            @endif
                 
             </td>
             <td>
