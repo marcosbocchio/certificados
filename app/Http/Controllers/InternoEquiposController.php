@@ -12,6 +12,7 @@ use \stdClass;
 use Illuminate\Support\Facades\Log;
 use App\Frentes;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Carbon;
 
 class InternoEquiposController extends Controller
 {
@@ -25,33 +26,34 @@ class InternoEquiposController extends Controller
 
 
     }
-    public function paginate(Request $request){
-
+    public function paginate(Request $request)
+    {
         $filtro = $request->search;
+        
+        // Convertir a null si está vacío
+        $activo_sn = $request->has('activo_sn') && $request->activo_sn !== '' ? $request->activo_sn : null;
+    
         $interno_equipos = InternoEquipos::with('equipo.metodoEnsayos')
-                                          ->with('equipo.tipoEquipamiento')                                          
-                                          ->with('internoFuente.fuente')
-                                          ->with('frente')
-                                          ->selectRaw('interno_equipos.*' )
-                                          ->orderby('nro_interno','ASC')
-                                          ->Filtro($filtro)
-                                          ->paginate(10);
-        foreach ( $interno_equipos as $interno_equipo) {
-
-          if($interno_equipo->internoFuente){
-
-            $interno_fuente = $interno_equipo->internoFuente;
-            $fuente = $interno_fuente->fuente;
-            $curie_actual = curie($interno_fuente->id);
-            $interno_fuente->curie_actual = $curie_actual;
-
-          }
-
+                                         ->with('equipo.tipoEquipamiento')                                          
+                                         ->with('internoFuente.fuente')
+                                         ->with('frente')
+                                         ->selectRaw('interno_equipos.*')
+                                         ->orderby('nro_interno', 'ASC')
+                                         ->Filtro($filtro, $activo_sn) // PASAMOS EL PARAMETRO
+                                         ->paginate(10);
+    
+        foreach ($interno_equipos as $interno_equipo) {
+            if ($interno_equipo->internoFuente) {
+                $interno_fuente = $interno_equipo->internoFuente;
+                $fuente = $interno_fuente->fuente;
+                $curie_actual = curie($interno_fuente->id);
+                $interno_fuente->curie_actual = $curie_actual;
+            }
         }
-
+    
         return $interno_equipos;
-
-      }
+    }
+    
 
     public function callView()
       {
@@ -190,25 +192,35 @@ class InternoEquiposController extends Controller
           }
       }
 
-      public function saveInternoEquipo($request,$interno_equipo){
-        $interno_equipo->nro_serie = $request['nro_serie'];
-        $interno_equipo->nro_interno = $request['nro_interno'];
-        $interno_equipo->foco = $request['foco'];
-        $interno_equipo->voltaje = $request['voltaje'];
-        $interno_equipo->amperaje = $request['amperaje'];
-        $interno_equipo->probeta = $request['probeta'];
-        $interno_equipo->dureza_calibracion = $request['dureza_calibracion'];
-        $interno_equipo->activo_sn = $request['activo_sn'];
-        $interno_equipo->equipo_id = $request['equipo']['id'];
-        $interno_equipo->interno_fuente_id = $request['interno_fuente']['id'];
-
-        if($request->isMethod('post')){
-            $frente = Frentes::where('centro_distribucion_sn',1)->first();
-            $interno_equipo->frente_id = $frente->id;
-        }
-
-        $interno_equipo->save();
-
+      public function saveInternoEquipo($request, $interno_equipo)
+      {
+          $interno_equipo->nro_serie = $request['nro_serie'];
+          $interno_equipo->nro_interno = $request['nro_interno'];
+          $interno_equipo->foco = $request['foco'];
+          $interno_equipo->voltaje = $request['voltaje'];
+          $interno_equipo->amperaje = $request['amperaje'];
+          $interno_equipo->probeta = $request['probeta'];
+          $interno_equipo->dureza_calibracion = $request['dureza_calibracion'];
+          $interno_equipo->activo_sn = $request['activo_sn'];
+          $interno_equipo->equipo_id = $request['equipo']['id'];
+          $interno_equipo->interno_fuente_id = $request['interno_fuente']['id'];
+      
+          Log::info($request['activo_sn']);
+      
+          if ($request['activo_sn'] != 1) {
+            $fechaActual = Carbon::now()->format('Y-m-d');
+            Log::info("Fecha actual: " . $fechaActual);
+            $interno_equipo->fecha_anul = $fechaActual; // Guardar la fecha en la base de datos
+          }else{
+            $interno_equipo->fecha_anul = null;
+          }
+      
+          if ($request->isMethod('post')) {
+              $frente = Frentes::where('centro_distribucion_sn', 1)->first();
+              $interno_equipo->frente_id = $frente->id;
+          }
+      
+          $interno_equipo->save();
       }
 
     /**

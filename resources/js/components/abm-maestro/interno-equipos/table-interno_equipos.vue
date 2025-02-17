@@ -14,11 +14,12 @@
             <th>Fuente</th>
             <th>Actividad</th>
             <th>Ubicación</th>
+            <th>Baja</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="registro in registros" :key="registro.id">
+          <tr v-for="registro in registros" :key="registro.id" :class="{'fila-roja': registro.activo_sn != 1}">
             <td>{{ registro.nro_interno }}</td>
             <td v-if="registro.equipo.tipo_equipamiento">
                 {{ registro.equipo.tipo_equipamiento.codigo }}
@@ -27,13 +28,14 @@
             <td>{{ registro.equipo.codigo }}</td>
             <td>{{ registro.equipo.metodo_ensayos.metodo }}</td>
             <th>
-                <button class="btn btn-xs" title="Historial de fuentes" v-on:click.prevent="TrazabilidadFuente(registro)"><span class="fa fa-table"></span></button>
+                <button class="btn btn-xs" style="color: black !important;margin-top: 3px;" title="Historial de fuentes" v-on:click.prevent="TrazabilidadFuente(registro)"><span class="fa fa-table"></span></button>
             </th>
             <td v-if="registro.interno_fuente" >{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>
             <td v-else >&nbsp;</td>
             <td v-if="registro.interno_fuente">{{ registro.interno_fuente.curie_actual }}&nbsp; Ci</td>
             <td v-else></td>
             <td>{{ registro.frente.codigo }}</td>
+            <td>{{ formatearFecha(registro.fecha_anul) }}</td>
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_interno_equipos_edita')"><span class="fa fa-edit"></span></button>
             </td>
@@ -83,7 +85,12 @@ import {mapState} from 'vuex';
     },
 
     methods: {
+      formatearFecha(fecha) {
+        if (!fecha) return ''; // Manejo de valores nulos o indefinidos
 
+        let partes = fecha.split(' ')[0].split('-'); // Divide "YYYY-MM-DD"
+        return `${partes[2]}/${partes[1]}/${partes[0]}`; // Reordena a "DD/MM/YYYY"
+    },
     updateValue: function (registro) {
 
        this.$emit('editar', registro);
@@ -98,3 +105,9 @@ import {mapState} from 'vuex';
   }
   }
 </script>
+<style>
+.fila-roja {
+  background-color: #dc3545 !important; /* Rojo Bootstrap */
+  color: white; /* Texto blanco para contraste */
+}
+</style>

@@ -193,6 +193,7 @@ export default {
             storeRegistro: function(){
 
                 axios.defaults.baseURL = this.url ;
+                console.log('aaaaaaaaa', this.Registro, 'aaaaaaaa', this.equipo);
                 var urlRegistros = 'interno_equipos/' + this.selectRegistro.id;
                 axios.put(urlRegistros, {
 

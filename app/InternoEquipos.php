@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class InternoEquipos extends Model
 {
     protected $table='interno_equipos';
-
+    protected $fillable = [
+      'nro_serie', 'nro_interno', 'foco', 'voltaje', 'amperaje', 
+      'probeta', 'dureza_calibracion', 'activo_sn', 'equipo_id', 
+      'interno_fuente_id', 'frente_id', 'fecha_anul'
+  ];
     public function equipo(){
 
         return $this->belongsTo('App\Equipos','equipo_id','id');
@@ -32,28 +36,29 @@ class InternoEquipos extends Model
         return $this->belongsTo('App\Frentes','frente_id','id');
     }
 
-    public function scopeFiltro($query, $filtro='') {
-
+    public function scopeFiltro($query, $filtro = '', $activo_sn = null) {
       if (trim($filtro) != '') {
-
-            $query->WhereRaw("interno_equipos.nro_interno LIKE '%" . $filtro . "%'")
-
-                ->orWhereHas('equipo', function ($q) use($filtro) {
-                    $q->WhereRaw("equipos.codigo LIKE '%" . $filtro . "%'");
+          $query->where(function ($q) use ($filtro) {
+              $q->whereRaw("interno_equipos.nro_interno LIKE ?", ["%{$filtro}%"])
+                ->orWhereHas('equipo', function ($q) use ($filtro) {
+                    $q->whereRaw("equipos.codigo LIKE ?", ["%{$filtro}%"]);
                 })
-
-                ->orWhereHas('equipo.metodoEnsayos', function ($q) use($filtro) {
-                  $q->WhereRaw("metodo_ensayos.metodo = '" .  $filtro ."'" );
+                ->orWhereHas('equipo.metodoEnsayos', function ($q) use ($filtro) {
+                    $q->whereRaw("metodo_ensayos.metodo = ?", [$filtro]);
                 })
-
-                ->orWhereHas('equipo.tipoEquipamiento', function ($q) use($filtro) {
-                  $q->WhereRaw("tipos_equipamiento.codigo LIKE '%" . $filtro . "%'");
-                })                
-
-                ->orWhereHas('frente', function ($q) use($filtro) {
-                    $q->WhereRaw("frentes.codigo  LIKE '%" . $filtro . "%'");
-                  });
+                ->orWhereHas('equipo.tipoEquipamiento', function ($q) use ($filtro) {
+                    $q->whereRaw("tipos_equipamiento.codigo LIKE ?", ["%{$filtro}%"]);
+                })
+                ->orWhereHas('frente', function ($q) use ($filtro) {
+                    $q->whereRaw("frentes.codigo LIKE ?", ["%{$filtro}%"]);
+                });
+          });
       }
-    }
+  
+      // Si se envió el filtro de activos (y no es nulo), aplicarlo
+      if (!is_null($activo_sn)) {
+          $query->where('activo_sn', $activo_sn);
+      }
+  }
 
 }

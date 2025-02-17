@@ -29,9 +29,13 @@
             </div>
         </div>
 
-        <!-- Campo de búsqueda adicional si el modelo no es 'productos' -->
-        <div v-show="inputSearch.includes(modelo)">
-            <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
+        <div v-show="modelo === 'interno_equipos'">
+          <div class="col-md-8 col-xs-10 d-flex align-items-center text-right">
+                <label>
+                    <input type="checkbox" v-model="filterActivos" @change="getResults"> Mostrar activos
+                </label>
+            </div>
+            <div class="col-md-3 col-xs-9 p-0">
                 <div class="input-group">
                     <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
                     <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;">
@@ -40,6 +44,17 @@
                 </div>
             </div>
         </div>
+        <!-- Campo de búsqueda adicional si el modelo no es 'productos' -->
+        <div v-show="inputSearch.includes(modelo) && modelo !== 'productos' && modelo !== 'interno_equipos'">
+    <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
+        <div class="input-group">
+            <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
+            <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;">
+                <i class="fa fa-search"></i>
+            </span>
+        </div>
+    </div>
+</div>
     </div>
 
     <div class="clearfix"></div>
@@ -145,22 +160,28 @@
 
             },
 
-            getResults : function(page = 1){
+            getResults(page = 1) {
+        this.loading = true;
+        axios.defaults.baseURL = this.url;
 
-                this.loading = true;
-                axios.defaults.baseURL = this.url ;
-                console.log('modelo',this.modelo)
-                var urlRegistros = this.modelo + '/paginate' + '?page='+ page + '&search=' + this.search;
-                if (this.modelo === 'productos') {
-                  urlRegistros += `&stockeable_sn=${this.filterStockeable ? 1 : ''}&relacionado_a_placas_sn=${this.filterRelacionPlacas ? 1 : ''}`;
-                }
-                axios.get(urlRegistros).then(response =>{
-                     this.registros = response.data
-                     console.log(this.registros)
-                }).finally(() =>
-                    this.loading = false,
-                    )
-              },
+        let urlRegistros = `${this.modelo}/paginate?page=${page}&search=${this.search}`;
+
+        // Filtros específicos según el modelo
+        if (this.modelo === 'productos') {
+            urlRegistros += `&stockeable_sn=${this.filterStockeable ? 1 : ''}&relacionado_a_placas_sn=${this.filterRelacionPlacas ? 1 : ''}`;
+        }
+
+        if (this.modelo === 'interno_equipos') {
+            urlRegistros += `&activo_sn=${this.filterActivos ? 1 : ''}`;
+        }
+
+        axios.get(urlRegistros)
+            .then(response => {
+                this.registros = response.data;
+                console.log(this.registros);
+            })
+            .finally(() => this.loading = false);
+    },
 
             editRegistro : function(item){
 

@@ -94,10 +94,14 @@
                                </tbody>
                            </table>
                        </div>
-                       <pagination :data="remitos" @pagination-change-page="getResults">
-                           <span slot="prev-nav">&lt; Previous</span>
-                           <span slot="next-nav">Next &gt;</span>
-                       </pagination>
+                       <pagination 
+                            :data="remitos" 
+                            @pagination-change-page="getResults"
+                            :limit="4">
+                            <span slot="prev-nav">&lt; Previous</span>
+                            <span slot="next-nav">Next &gt;</span>
+                        </pagination>
+
                    </div>
                </div>
            </div>
