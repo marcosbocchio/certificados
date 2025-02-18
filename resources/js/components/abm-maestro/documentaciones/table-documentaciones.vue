@@ -12,45 +12,73 @@
               <th><input type="checkbox" @change="toggleAll($event)" /></th>
               <th class="col-md-1">Tipo</th>
               <th class="col-md-2">Título</th>
-              <th class="col-md-4">Descripción</th>
+              <th class="col-md-3">Descripción</th>
               <th class="col-md-1">Método</th>
               <th class="col-md-2">Usuario</th>
               <th class="col-md-1">INT. Nº</th>
-              <th class="col-md-2">Caducidad</th>
+              <th class="col-md-1">Caducidad</th>
+              <th class="col-md-2">Baja Equipo</th>
               <th >&nbsp;</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="registro in registros" :key="registro.id">
+            <tr v-for="registro in registros" :key="registro.id"
+                :class="{
+                    'table-danger': registro.interno_equipo && registro.interno_equipo[0] && registro.interno_equipo[0].activo_sn === 0
+                }">
               <td><input type="checkbox" :value="registro" v-model="selectedRegistros" /></td>
+
+              <!-- Tipo de documento -->
               <td v-if="registro.tipo == 'USUARIO'">USUARIOS</td>          
-            <td v-if="registro.tipo == 'OT'" >OT</td>          
-            <td v-if="registro.tipo == 'INSTITUCIONAL'">INSTITUCIONAL</td>    
-            <td v-if="registro.tipo == 'PROCEDIMIENTO GENERAL'">PROCEDIMIENTO GENERAL</td>    
-            <td v-if="registro.tipo == 'EQUIPO'">EQUIPO</td>
-            <td v-if="registro.tipo == 'FUENTE'">FUENTE</td>
-            <td v-if="registro.tipo == 'VEHICULO'">VEHICULO</td>   
-            <td>{{ registro.titulo}}</td>
-            <td>{{ registro.descripcion }}</td>
-            <td v-if="registro.metodo_ensayo.id">{{ registro.metodo_ensayo['metodo']}}</td>
-            <td v-else-if="registro.interno_equipo.length > 0">{{ registro.interno_equipo[0].equipo.metodo_ensayos['metodo']}}</td>
-            <td v-else>&nbsp;</td>
-            <td v-if="registro.usuario[0]">{{ registro.usuario[0]['name']}}</td>
-            <td v-else-if="registro.tipo == 'EQUIPO' && registro.user_interno_equipo[0]">{{registro.user_interno_equipo[0]['name'] }}</td>
-            <td  v-else>&nbsp;</td>
-            <td v-if="registro.tipo == 'EQUIPO' && registro.interno_equipo[0]">{{ registro.interno_equipo[0]['nro_interno']}}</td>
-            <td v-else-if="registro.tipo == 'FUENTE' && registro.interno_fuente[0]">{{ registro.interno_fuente[0]['nro_serie']}}</td>
-            <td  v-else-if="registro.tipo == 'VEHICULO' && registro.vehiculo[0]">{{ registro.vehiculo[0]['nro_interno']}}</td>
-            <td  v-else>&nbsp;</td>
-            <td>{{ formatFecha(registro.fecha_caducidad) }}</td>
-            <td width="10px">
-              <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('M_documentaciones_edita')"><span class="fa fa-edit"></span></button>
-            </td>
-            <td width="10px">
-              <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.titulo)" :disabled="!$can('M_documentaciones_edita')"><span class="fa fa-trash"></span></button>
-            </td>
+              <td v-if="registro.tipo == 'OT'">OT</td>          
+              <td v-if="registro.tipo == 'INSTITUCIONAL'">INSTITUCIONAL</td>    
+              <td v-if="registro.tipo == 'PROCEDIMIENTO GENERAL'">PROCEDIMIENTO GENERAL</td>    
+              <td v-if="registro.tipo == 'EQUIPO'">EQUIPO</td>
+              <td v-if="registro.tipo == 'FUENTE'">FUENTE</td>
+              <td v-if="registro.tipo == 'VEHICULO'">VEHICULO</td>
+
+              <!-- Título y Descripción -->
+              <td>{{ registro.titulo }}</td>
+              <td>{{ registro.descripcion }}</td>
+
+              <!-- Método de Ensayo -->
+              <td v-if="registro.metodo_ensayo && registro.metodo_ensayo.id">{{ registro.metodo_ensayo.metodo }}</td>
+              <td v-else-if="registro.interno_equipo.length > 0">{{ registro.interno_equipo[0].equipo.metodo_ensayos.metodo }}</td>
+              <td v-else>&nbsp;</td>
+
+              <!-- Usuario -->
+              <td v-if="registro.usuario && registro.usuario[0]">{{ registro.usuario[0].name }}</td>
+              <td v-else-if="registro.tipo == 'EQUIPO' && registro.user_interno_equipo[0]">{{ registro.user_interno_equipo[0].name }}</td>
+              <td v-else>&nbsp;</td>
+
+              <!-- Número de Interno -->
+              <td v-if="registro.tipo == 'EQUIPO' && registro.interno_equipo && registro.interno_equipo[0]">{{ registro.interno_equipo[0].nro_interno }}</td>
+              <td v-else-if="registro.tipo == 'FUENTE' && registro.interno_fuente && registro.interno_fuente[0]">{{ registro.interno_fuente[0].nro_serie }}</td>
+              <td v-else-if="registro.tipo == 'VEHICULO' && registro.vehiculo && registro.vehiculo[0]">{{ registro.vehiculo[0].nro_interno }}</td>
+              <td v-else>&nbsp;</td>
+
+              <!-- Fecha de Caducidad -->
+              <td>{{ formatFecha(registro.fecha_caducidad) }}</td>
+              <td>
+                {{ registro.interno_equipo[0] ? formatFecha(registro.interno_equipo[0].fecha_anul) : '' }}
+              </td>
+
+              <!-- Botón de Editar -->
+              <td width="10px">
+                <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('M_documentaciones_edita')">
+                  <span class="fa fa-edit"></span>
+                </button>
+              </td>
+
+              <!-- Botón de Eliminar -->
+              <td width="10px">
+                <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.titulo)" :disabled="!$can('M_documentaciones_edita')">
+                  <span class="fa fa-trash"></span>
+                </button>
+              </td>
             </tr>
           </tbody>
+
         </table>
       </div>
     </div>
@@ -87,6 +115,7 @@ export default {
       return date.toLocaleDateString("es-ES");
     },
     toggleAll(event) {
+      console.log(this.registros);
       this.selectedRegistros = event.target.checked ? this.registros : [];
     },
     async generateZip() {
@@ -131,5 +160,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.table-danger{
+  background-color: #dc3545 !important; /* Rojo Bootstrap */
+  color: white; /* Texto blanco para contraste */
 }
 </style>

@@ -46,15 +46,15 @@
         </div>
         <!-- Campo de búsqueda adicional si el modelo no es 'productos' -->
         <div v-show="inputSearch.includes(modelo) && modelo !== 'productos' && modelo !== 'interno_equipos'">
-    <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
-        <div class="input-group">
-            <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
-            <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;">
-                <i class="fa fa-search"></i>
-            </span>
+            <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
+                <div class="input-group">
+                    <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
+                    <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     </div>
 
     <div class="clearfix"></div>

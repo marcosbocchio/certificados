@@ -363,8 +363,8 @@ private function getZipFolderPath($registro)
                                         ->where('documentaciones.visible_sn', 1)
                                         ->whereRaw("date(documentaciones.fecha_caducidad) > curdate()")
                                         ->get();
-    
         $queries = DB::getQueryLog();
+        log::info($documentacion);
         foreach($queries as $i => $query) {
             Log::debug("Query $i: " . json_encode($query));
         }
