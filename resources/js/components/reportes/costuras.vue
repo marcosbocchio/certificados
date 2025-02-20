@@ -242,22 +242,46 @@ export default {
 
 methods : {
 
-   async Buscar(page = 1) {
-
+    async Buscar(page = 1) {
     this.$store.commit('loading', true);
     this.TablaCosturas = {};
 
-   try {
-       let url = 'costuras/ot/' + this.ot.id  + '/pk/' + (this.pk ? this.pk : 'null' ) + '/plano/' + (this.plano ? this.plano : 'null') + '/costura/' + (this.costura ? this.costura : 'null') + '/rechazados/' + this.rechazados + '/reparaciones/' + this.reparaciones + '/soldador/' + (this.soldador ? this.soldador.id : 0 ) + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/componente/' + (this.componente !='' ? this.componente.componente.replace('/','--') : 'null') + '?page='+ page + '&api_token=' + Laravel.user.api_token;
-       let res = await axios.get(url);
-       this.TablaCosturas = res.data;
+    try {
+        let url = 'costuras/ot/' + this.ot.id  + 
+                  '/pk/' + (this.pk ? this.pk : 'null' ) + 
+                  '/plano/' + (this.plano ? this.plano : 'null') + 
+                  '/costura/' + (this.costura ? this.costura : 'null') + 
+                  '/rechazados/' + this.rechazados + 
+                  '/reparaciones/' + this.reparaciones + 
+                  '/soldador/' + (this.soldador ? this.soldador.id : 0 ) + 
+                  '/obra/' + (this.obra !== '' ? this.obra.obra.replace('/','--') : 'null') + 
+                  '/componente/' + (this.componente !== '' ? this.componente.componente.replace('/','--') : 'null') + 
+                  '?page=' + page + '&api_token=' + Laravel.user.api_token;
 
-   }catch(error){
+        let res = await axios.get(url);
+        this.TablaCosturas = res.data;
 
-   }finally  {this.$store.commit('loading', false);}
+    } catch (error) {
+        console.error("Error en la búsqueda de costuras:", error);
 
+        if (error.response) {
+            // El servidor respondió con un estado fuera del rango 2xx
+            let status = error.response.status;
+            let message = error.response.data.message || "Error desconocido en el servidor.";
 
-   },
+            toastr.error(`Error ${status}: ${message}`, "Error de Servidor");
+        } else if (error.request) {
+            // No se recibió respuesta del servidor
+            toastr.error("No se recibió respuesta del servidor. Verifica tu conexión.", "Error de Red");
+        } else {
+            // Error al configurar la solicitud
+            toastr.error("Ocurrió un error inesperado al procesar la solicitud.", "Error");
+        }
+
+    } finally {
+        this.$store.commit('loading', false);
+    }
+},
    clienteProp: async function () {
 
    },

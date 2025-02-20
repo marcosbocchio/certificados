@@ -224,20 +224,43 @@ export default {
 
 methods : {
 
-   async Buscar(page = 1) {
-   this.$store.commit('loading', true);
-   this.TablaElementos = {};
+    async Buscar(page = 1) {
+    this.$store.commit('loading', true);
+    this.TablaElementos = {};
 
-   try {
-       let url = 'elementos/ot/' + this.ot.id + '/plano/' + (this.plano ? this.plano.replace('/','--') : 'null') + '/elemento/' + (this.elemento ? this.elemento.replace('/','--') : 'null') + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/componente/' + (this.componenteSeleccionado !='' ? this.componenteSeleccionado.replace('/','--'): 'null') + '?page=' + page + '&api_token=' + Laravel.user.api_token;
-       let res = await axios.get(url);
-       this.TablaElementos = res.data;
-       
-   } catch (error) {
-       // Manejo de errores
-   } finally {
-       this.$store.commit('loading', false);
-   }
+    console.log("Elemento:", this.elemento);
+    console.log("Plano:", this.plano);
+    console.log("ComponenteSeleccionado:", this.componenteSeleccionado);
+
+    try {
+        let url = 'elementos/ot/' + this.ot.id + 
+                  '/plano/' + (this.plano ? this.plano.replace('/','--') : 'null') + 
+                  '/elemento/' + (this.elemento ? this.elemento.replace('/','--') : 'null') + 
+                  '/obra/' + (this.obra && this.obra.obra ? this.obra.obra.replace('/','--') : 'null') + 
+                  '/componente/' + 
+                  ((this.componenteSeleccionado && this.componenteSeleccionado.componente) 
+                    ? this.componenteSeleccionado.componente.replace('/','--') 
+                    : 'null') + 
+                  '?page=' + page + '&api_token=' + Laravel.user.api_token;
+
+        console.log('Request URL:', url); // Log para la URL de la solicitud
+
+        let res = await axios.get(url);
+        this.TablaElementos = res.data;
+
+    } catch (error) {
+        console.error('Error en la búsqueda:', error);
+        
+        if (error.response) {
+            console.error('Detalles del error:', error.response.data);
+        } else if (error.request) {
+            console.error('No se recibió respuesta del servidor:', error.request);
+        } else {
+            console.error('Error al configurar la solicitud:', error.message);
+        }
+    } finally {
+        this.$store.commit('loading', false);
+    }
 },
 setInformeCookie(nroInformeFormateado) {
     var now = new Date();
