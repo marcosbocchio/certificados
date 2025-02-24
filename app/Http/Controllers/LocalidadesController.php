@@ -11,9 +11,9 @@ class LocalidadesController extends Controller
 {   
     Protected $localidades;
 
-    public function __construct(LocalidadesRepository $localidadesRepository)
+    public function __construct(LocalidadesRepository $LocalidadesRepository)
     {
-      $this->localidades = $localidadesRepository;
+      $this->localidades = $LocalidadesRepository;
     }
     /**
      * Display a listing of the resource.
