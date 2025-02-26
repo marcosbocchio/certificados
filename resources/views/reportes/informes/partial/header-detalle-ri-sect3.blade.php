@@ -120,12 +120,12 @@
 <table class="tablamain">
     <tbody>
         <tr class="gris">
-            <td style="width: 37mm;" >Pelicula (marca / clase)</td>
+            <td style="width: 37.5mm;" >Pelicula (marca / clase)</td>
             <td style="width: 15mm;" >fuente / Kv</td>
-            <td style="width: 17mm;" >Actv. [Ci]/mAm</td>
+            <td style="width: 17.5mm;" >Actv. [Ci]/mAm</td>
             <td style="width: 13mm;" >Tamaño Focal</td>
-            <td style="width: 41mm;" >Plantillas de PB</td>
-            <td style="width: 57mm;" >Tecnica Empleada</td>
+            <td style="width: 41.5mm;" >Plantillas de PB</td>
+            <td style="width: 42.5mm;" colspan="2" >Tecnica Empleada</td>
         </tr>
         <tr>
             <td>{{$tipo_pelicula->fabricante}} {{$tipo_pelicula->codigo}}</td>

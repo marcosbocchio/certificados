@@ -334,107 +334,105 @@ export default {
     return false; // Asume que el usuario no existe si hay un error.
   }
 },
-  async agregarDetalle() {
-    // Verificar si el operador ya está en la lista de detalles
-    const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
-    const existeOperadorAyudante = this.operador_selected && this.operador_ayudante
-    ? this.operador_selected.id === this.operador_ayudante.id
-    : false;
+async agregarDetalle() {
+    // Verificar si ya existe el operador con el mismo cliente y la misma técnica
+    const existeMismoClienteMismaTecnica = this.detalles.some(detalle => 
+        detalle.operador.id === this.operador_selected.id &&
+        detalle.contratista.id === this.contratista_selected.id &&
+        detalle.metodo_ensayo === this.metodoEnsayo_selected
+    );
 
-    // Si el operador ya está en la lista, mostrar un toastr.error  
-    if (existeOperador) {
-      toastr.error('Operador ya seleccionado');
-      return;
+    // Si el operador ya está con el mismo cliente y técnica, no permitir agregar
+    if (existeMismoClienteMismaTecnica) {
+        toastr.error('El operador ya está registrado con el mismo cliente y técnica');
+        return;
     }
 
-    if (existeOperadorAyudante) {
-      toastr.error('Ayudante seleccionado como operador');
-      return;
-    }
-
+    // Verificaciones previas
     if (!this.operador_selected) {
-      toastr.error('Debe seleccionar un operador');
-      return;
+        toastr.error('Debe seleccionar un operador');
+        return;
     }
     if (!this.entrada_selected) {
-      toastr.error('Debe seleccionar horario de entrada');
-      return;
+        toastr.error('Debe seleccionar horario de entrada');
+        return;
     }
     if (!this.salida_selected) {
-      toastr.error('Debe seleccionar horario de salida');
-      return;
+        toastr.error('Debe seleccionar horario de salida');
+        return;
     }
     if (!this.contratista_selected) {
-      toastr.error('Debe seleccionar un cliente');
-      return;
+        toastr.error('Debe seleccionar un cliente');
+        return;
     }
     if (this.contratista_selected && !this.parte_selected) {
-      toastr.error('Debe ingresar un parte');
-      return;
+        toastr.error('Debe ingresar un parte');
+        return;
     }
-     // Verificar si la fecha ya está bloqueada para este operador
+
+    // Verificar si la fecha ya está bloqueada para este operador
     const fecha_operador = await this.verificarUser(this.operador_selected.id, this.fecha);
     const fechaSeleccionada = moment(this.fecha);
 
     // Comprobar si el mes está cerrado
     if (fecha_operador.fecha_pago_mes != null) {
-      toastr.error('El operador tiene el mes cerrado');
-      return;
+        toastr.error('El operador tiene el mes cerrado');
+        return;
     }
 
-  // Definir las semanas del mes
-  const inicioMes = fechaSeleccionada.clone().startOf('month');
-  const semanas = [
-    { inicio: inicioMes.clone(), fin: inicioMes.clone().add(1, 'weeks').subtract(1, 'days') }, // Semana 1
-    { inicio: inicioMes.clone().add(1, 'weeks'), fin: inicioMes.clone().add(2, 'weeks').subtract(1, 'days') }, // Semana 2
-    { inicio: inicioMes.clone().add(2, 'weeks'), fin: inicioMes.clone().add(3, 'weeks').subtract(1, 'days') }, // Semana 3
-    { inicio: inicioMes.clone().add(3, 'weeks'), fin: inicioMes.clone().add(4, 'weeks').subtract(1, 'days') }, // Semana 4
-    { inicio: inicioMes.clone().add(4, 'weeks'), fin: inicioMes.clone().endOf('month') } // Semana 5 (si existe)
-  ];
+    // Definir las semanas del mes
+    const inicioMes = fechaSeleccionada.clone().startOf('month');
+    const semanas = [
+        { inicio: inicioMes.clone(), fin: inicioMes.clone().add(1, 'weeks').subtract(1, 'days') }, // Semana 1
+        { inicio: inicioMes.clone().add(1, 'weeks'), fin: inicioMes.clone().add(2, 'weeks').subtract(1, 'days') }, // Semana 2
+        { inicio: inicioMes.clone().add(2, 'weeks'), fin: inicioMes.clone().add(3, 'weeks').subtract(1, 'days') }, // Semana 3
+        { inicio: inicioMes.clone().add(3, 'weeks'), fin: inicioMes.clone().add(4, 'weeks').subtract(1, 'days') }, // Semana 4
+        { inicio: inicioMes.clone().add(4, 'weeks'), fin: inicioMes.clone().endOf('month') } // Semana 5 (si existe)
+    ];
 
-  // Verificar cada semana
-  if (fecha_operador.fecha_pago_s1 != null && fechaSeleccionada.isBetween(semanas[0].inicio, semanas[0].fin, null, '[]')) {
-    toastr.error('El operador tiene la semana 1 cerrada');
-    return;
-  }
-  if (fecha_operador.fecha_pago_s2 != null && fechaSeleccionada.isBetween(semanas[1].inicio, semanas[1].fin, null, '[]')) {
-    toastr.error('El operador tiene la semana 2 cerrada');
-    return;
-  }
-  if (fecha_operador.fecha_pago_s3 != null && fechaSeleccionada.isBetween(semanas[2].inicio, semanas[2].fin, null, '[]')) {
-    toastr.error('El operador tiene la semana 3 cerrada');
-    return;
-  }
-  if (fecha_operador.fecha_pago_s4 != null && fechaSeleccionada.isBetween(semanas[3].inicio, semanas[3].fin, null, '[]')) {
-    toastr.error('El operador tiene la semana 4 cerrada');
-    return;
-  }
-  if (fecha_operador.fecha_pago_s5 != null && fechaSeleccionada.isBetween(semanas[4].inicio, semanas[4].fin, null, '[]')) {
-    toastr.error('El operador tiene la semana 5 cerrada');
-    return;
-  }
-
-  if (this.parte_selected) {
-    const parteValido = await this.verificarParte(this.parte_selected);
-    if (!parteValido) {
-      console.error(`Parte "${this.parte_selected}" inexistente`);
-      return; // Si el parte no es válido, detenemos la ejecución
+    // Verificar cada semana
+    if (fecha_operador.fecha_pago_s1 != null && fechaSeleccionada.isBetween(semanas[0].inicio, semanas[0].fin, null, '[]')) {
+        toastr.error('El operador tiene la semana 1 cerrada');
+        return;
     }
-  }
+    if (fecha_operador.fecha_pago_s2 != null && fechaSeleccionada.isBetween(semanas[1].inicio, semanas[1].fin, null, '[]')) {
+        toastr.error('El operador tiene la semana 2 cerrada');
+        return;
+    }
+    if (fecha_operador.fecha_pago_s3 != null && fechaSeleccionada.isBetween(semanas[2].inicio, semanas[2].fin, null, '[]')) {
+        toastr.error('El operador tiene la semana 3 cerrada');
+        return;
+    }
+    if (fecha_operador.fecha_pago_s4 != null && fechaSeleccionada.isBetween(semanas[3].inicio, semanas[3].fin, null, '[]')) {
+        toastr.error('El operador tiene la semana 4 cerrada');
+        return;
+    }
+    if (fecha_operador.fecha_pago_s5 != null && fechaSeleccionada.isBetween(semanas[4].inicio, semanas[4].fin, null, '[]')) {
+        toastr.error('El operador tiene la semana 5 cerrada');
+        return;
+    }
+
+    if (this.parte_selected) {
+        const parteValido = await this.verificarParte(this.parte_selected);
+        if (!parteValido) {
+            console.error(`Parte "${this.parte_selected}" inexistente`);
+            return;
+        }
+    }
 
     // Calcular los valores para nuevoDetalle
     const nuevoDetalle = {
-      operador: this.operador_selected,
-      ayudante: this.operador_ayudante,
-      entrada: moment(this.entrada_selected).format('HH:mm'),
-      salida: moment(this.salida_selected).format('HH:mm'),
-      contratista: this.contratista_selected,
-      parte: this.parte_selected,
-      ayudante_sn: 1,
-      hora_extra_sn: this.hora_extra_sn ? 1 : 0, // Convertir true/false a 1/0
-      s_d_f_sn: this.sdf_sn ? 1 : 0,
-      metodo_ensayo: this.metodoEnsayo_selected,
-      observacion : this.observaciones || '',
+        operador: this.operador_selected,
+        ayudante: this.operador_ayudante,
+        entrada: moment(this.entrada_selected).format('HH:mm'),
+        salida: moment(this.salida_selected).format('HH:mm'),
+        contratista: this.contratista_selected,
+        parte: this.parte_selected,
+        ayudante_sn: 1,
+        hora_extra_sn: this.hora_extra_sn ? 1 : 0, // Convertir true/false a 1/0
+        s_d_f_sn: this.sdf_sn ? 1 : 0,
+        metodo_ensayo: this.metodoEnsayo_selected,
+        observacion: this.observaciones || '',
     };
 
     // Agregar nuevoDetalle a la lista de detalles
@@ -444,12 +442,14 @@ export default {
     this.entrada_selected = moment('08:00', 'HH:mm').toDate();
     this.salida_selected = moment('16:00', 'HH:mm').toDate();
     this.contratista_selected = null;
-    this.metodoEnsayo_selected = '',
+    this.metodoEnsayo_selected = '';
     this.parte_selected = '';
     this.observaciones = '';
 
     console.log(this.detalles);
-  },
+}
+
+,
     eliminarDetalle(index) {
       this.detalles.splice(index, 1);
     },
