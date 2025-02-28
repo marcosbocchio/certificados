@@ -385,6 +385,7 @@ export default {
     actualizarFechasBloqueadas() {
       if (this.frente_selected && this.fechas_por_frente[this.frente_selected.id]) {
         this.fechas_bloqueadas = this.fechas_por_frente[this.frente_selected.id];
+        this.fecha = '';
         this.sdf_sn = false;
       } else {
         this.fechas_bloqueadas = [];
