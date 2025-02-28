@@ -143,7 +143,9 @@
                         <td style="padding: 1px;" 
                         class="{{ ($detalle['dias'][$index]['detalle']['hora_extra_sn'] === 1 || $detalle['dias'][$index]['detalle']['s_d_f_sn'] === 1) ? 'underline' : '' }}"
                         >
-                            @if (isset($detalle['dias'][$index]) && $detalle['dias'][$index] !== null)
+                        @if (isset($detalle['dias'][$index]['merged_parte']))
+                                {{ $detalle['dias'][$index]['merged_parte'] }}
+                            @else
                                 @php
                                     $valores = $obtenerValorDetalle($detalle['dias'][$index]['detalle'], $dia);
                                 @endphp
@@ -154,6 +156,7 @@
                                 @else
                                     {{ $valores }}
                                 @endif
+                            @endif
                             @else
                                 0
                             @endif

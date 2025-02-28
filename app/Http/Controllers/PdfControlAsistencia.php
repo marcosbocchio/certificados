@@ -32,7 +32,7 @@ class PdfControlAsistencia extends Controller
         $diashabiles_mes = $this->contarDiasHabil($diasDelMes);
         // Obtén los detalles agrupados de la asistencia
         $detallesAgrupados = $this->getDatosAsistencia($frenteId, $year, $month, $modo);
-    
+        log::info($detallesAgrupados);
         // Establecer nombre del frente (esto debe cambiarse según tu lógica)
         $frente = Frentes::find($frenteId); // Cambia esto por el nombre real del frente que deseas mostrar
         $diasEnEspanol = [
@@ -236,13 +236,13 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
 
     $asistenciaHorasIds = $asistenciaHoras->pluck('id');
     $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
-    ->when($modo === 'Horas', function ($query) {
-        return $query->where(function ($query) {
-            $query->whereNull('contratista_id')
-                  ->orWhere('hora_extra_sn', 1)
-                  ->orWhere('s_d_f_sn', 1);
-        });
-    })
+        ->when($modo === 'Horas', function ($query) {
+            return $query->where(function ($query) {
+                $query->whereNull('contratista_id')
+                      ->orWhere('hora_extra_sn', 1)
+                      ->orWhere('s_d_f_sn', 1);
+            });
+        })
         ->when($modo === 'Servicios', function ($query) {
             return $query->whereNotNull('contratista_id');
         })
@@ -278,16 +278,18 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
             return $resultados;
         })
         ->groupBy(function ($detalle) {
-            return $detalle['name'] . '-' . $detalle['tipo']; // Agrupa por ID y Tipo
+            return $detalle['name'] . '-' . $detalle['tipo']; // Agrupa por nombre y tipo
         })
         ->map(function ($detalles) {
+            // Se agrupa por fecha para calcular la responsabilidad de cada día
+            $responsabilidadPorDia = $detalles->groupBy('fechaAsignacion')->map(function ($detallesDelDia) {
+                return $detallesDelDia->contains(function ($detalle) {
+                    return $detalle['ayudante_sn'] !== 0;
+                }) ? 'operador' : 'ayudante';
+            });
             return [
                 'dias' => $detalles,
-                'responsabilidadPorDia' => $detalles->mapWithKeys(function ($detalle) {
-                    return [
-                        $detalle['fechaAsignacion'] => $detalle['ayudante_sn'] === 0 ? 'ayudante' : 'operador'
-                    ];
-                }),
+                'responsabilidadPorDia' => $responsabilidadPorDia,
             ];
         });
 
@@ -295,7 +297,6 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
     $diasDelMes = collect($this->getDiasDelMes($year, $month));
     $formattedDate = sprintf('%04d-%02d', $year, $month);
 
-    // Reorganizar datos en la estructura final
     $asistenciaReorganizada = [];
 
     foreach ($detallesAgrupados as $clave => $data) {
@@ -306,22 +307,42 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
         foreach ($diasDelMes as $dia) {
             $fechaDelDia = sprintf('%s-%02d', $formattedDate, $dia['dia']);
 
-            $detalleDelDia = collect($data['dias'])->firstWhere('fechaAsignacion', $fechaDelDia);
+            // Obtener TODOS los detalles correspondientes a la fecha
+            $detallesDelDia = collect($data['dias'])->where('fechaAsignacion', $fechaDelDia)->values();
 
-            // Asignar características del día al detalle
-            if ($detalleDelDia) {
-                $detalleDelDia['dia_semana_sn'] = $dia['dia_semana_sn'];
-                $detalleDelDia['sabado_sn'] = $dia['sabado_sn'];
-                $detalleDelDia['domingo_sn'] = $dia['domingo_sn'];
-                $detalleDelDia['feriado_sn'] = $dia['feriado_sn'];
-                $detalleDelDia['name'] = $detalleDelDia['name']; // Añade el nombre del operador/ayudante
+            if ($detallesDelDia->isNotEmpty()) {
+                // Recopilar los valores únicos de 'parte' de cada registro.
+                // Se asume que el campo 'parte' está en el objeto $detalle->parte
+                $uniquePartes = $detallesDelDia->reduce(function ($carry, $detalleItem) {
+                    $parte = $detalleItem['detalle']->parte ?? null;
+                    if ($parte !== null && !in_array($parte, $carry)) {
+                        $carry[] = $parte;
+                    }
+                    return $carry;
+                }, []);
+
+                // Fusionar los valores con el separador " | "
+                $mergedParte = implode(' | ', $uniquePartes);
+
+                // Usamos el primer registro como base y le agregamos el valor combinado
+                $baseDetalle = $detallesDelDia->first();
+                $baseDetalle['merged_parte'] = $mergedParte;
+
+                // Asignar los atributos del día al registro base
+                $baseDetalle['dia_semana_sn'] = $dia['dia_semana_sn'];
+                $baseDetalle['sabado_sn'] = $dia['sabado_sn'];
+                $baseDetalle['domingo_sn'] = $dia['domingo_sn'];
+                $baseDetalle['feriado_sn'] = $dia['feriado_sn'];
+
+                // Se guarda el único registro con los 'parte' fusionados
+                $asistenciaReorganizada[$clave]['dias'][] = $baseDetalle;
+            } else {
+                $asistenciaReorganizada[$clave]['dias'][] = null;
             }
-
-            $asistenciaReorganizada[$clave]['dias'][] = $detalleDelDia ?: null;
         }
 
-        // Determinar responsabilidad principal
-        $responsabilidad = $data['responsabilidadPorDia']->values()->contains('operador')
+        // Determinar la responsabilidad principal a partir de la información agrupada
+        $responsabilidad = collect($data['responsabilidadPorDia'])->contains('operador')
             ? 'operador'
             : 'ayudante';
 
@@ -333,6 +354,8 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
 
     return $asistenciaReorganizada;
 }
+
+
 
 
 
