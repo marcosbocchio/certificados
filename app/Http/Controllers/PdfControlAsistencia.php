@@ -192,13 +192,11 @@ protected function contarParametros($detalle, $parametro, $tipo)
 
         $detalleDia = $dia['detalle']; // Detalle del día actual
 
-        // Logs para depuración
-
-
-        // Contar contratistas
+        // Contar contratistas: sumar las partes_totales en lugar de 1
         if ($tipo === 'conteo' && $parametro === 'contratista_id') {
             if (!empty($detalleDia['contratista_id'])) {
-                return $contador + 1;
+                // Suma el total de partes; si no está definido, suma 1
+                return $contador + ($dia['partes_totales'] ?? 1);
             }
         }
 
@@ -223,6 +221,7 @@ protected function contarParametros($detalle, $parametro, $tipo)
         return $contador;
     }, 0);
 }
+
 
 
 
@@ -281,7 +280,7 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
             return $detalle['name'] . '-' . $detalle['tipo']; // Agrupa por nombre y tipo
         })
         ->map(function ($detalles) {
-            // Se agrupa por fecha para calcular la responsabilidad de cada día
+            // Agrupamos por fecha para calcular la responsabilidad de cada día
             $responsabilidadPorDia = $detalles->groupBy('fechaAsignacion')->map(function ($detallesDelDia) {
                 return $detallesDelDia->contains(function ($detalle) {
                     return $detalle['ayudante_sn'] !== 0;
@@ -297,6 +296,7 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
     $diasDelMes = collect($this->getDiasDelMes($year, $month));
     $formattedDate = sprintf('%04d-%02d', $year, $month);
 
+    // Reorganizar datos en la estructura final
     $asistenciaReorganizada = [];
 
     foreach ($detallesAgrupados as $clave => $data) {
@@ -311,8 +311,7 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
             $detallesDelDia = collect($data['dias'])->where('fechaAsignacion', $fechaDelDia)->values();
 
             if ($detallesDelDia->isNotEmpty()) {
-                // Recopilar los valores únicos de 'parte' de cada registro.
-                // Se asume que el campo 'parte' está en el objeto $detalle->parte
+                // Recopilar los valores únicos de 'parte'
                 $uniquePartes = $detallesDelDia->reduce(function ($carry, $detalleItem) {
                     $parte = $detalleItem['detalle']->parte ?? null;
                     if ($parte !== null && !in_array($parte, $carry)) {
@@ -327,21 +326,23 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
                 // Usamos el primer registro como base y le agregamos el valor combinado
                 $baseDetalle = $detallesDelDia->first();
                 $baseDetalle['merged_parte'] = $mergedParte;
+                // Agregamos el total de detalles para el día
+                $baseDetalle['partes_totales'] = $detallesDelDia->count();
 
-                // Asignar los atributos del día al registro base
+                // Asignar atributos del día
                 $baseDetalle['dia_semana_sn'] = $dia['dia_semana_sn'];
                 $baseDetalle['sabado_sn'] = $dia['sabado_sn'];
                 $baseDetalle['domingo_sn'] = $dia['domingo_sn'];
                 $baseDetalle['feriado_sn'] = $dia['feriado_sn'];
 
-                // Se guarda el único registro con los 'parte' fusionados
+                // Guardamos el registro único para ese día
                 $asistenciaReorganizada[$clave]['dias'][] = $baseDetalle;
             } else {
                 $asistenciaReorganizada[$clave]['dias'][] = null;
             }
         }
 
-        // Determinar la responsabilidad principal a partir de la información agrupada
+        // Determinar responsabilidad principal: si en alguno de los días figura 'operador', se asigna como tal
         $responsabilidad = collect($data['responsabilidadPorDia'])->contains('operador')
             ? 'operador'
             : 'ayudante';
