@@ -135,48 +135,48 @@
             </tr>
         </thead>
         <tbody>
-                @foreach ($asistenciaChunk as $operador => $detalle)
-                    <tr>
-                    <td style="padding: 5px;">{{ explode('-', $operador)[0] }}</td>
-                        <td style="padding: 5px;">{{ $detalle['responsabilidad'] }}</td>
-                        @foreach ($diasDelMes as $index => $dia)
-                        <td style="padding: 1px;" 
-                        class="{{ ($detalle['dias'][$index]['detalle']['hora_extra_sn'] === 1 || $detalle['dias'][$index]['detalle']['s_d_f_sn'] === 1) ? 'underline' : '' }}"
-                        >
+    @foreach ($asistenciaChunk as $operador => $detalle)
+        <tr>
+            <td style="padding: 5px;">{{ explode('-', $operador)[0] }}</td>
+            <td style="padding: 5px;">{{ $detalle['responsabilidad'] }}</td>
+            @foreach ($diasDelMes as $index => $dia)
+                <td style="padding: 1px;" class="{{ ($detalle['dias'][$index]['detalle']['hora_extra_sn'] === 1 || $detalle['dias'][$index]['detalle']['s_d_f_sn'] === 1) ? 'underline' : '' }}">
+                    @if (isset($detalle['dias'][$index]) && $detalle['dias'][$index] !== null)
                         @if (isset($detalle['dias'][$index]['merged_parte']))
-                                {{ $detalle['dias'][$index]['merged_parte'] }}
+                            {{ $detalle['dias'][$index]['merged_parte'] }}
+                        @else
+                            @php
+                                $valores = $obtenerValorDetalle($detalle['dias'][$index]['detalle'], $dia);
+                            @endphp
+                            @if (is_array($valores))
+                                @foreach ($valores as $valor)
+                                    {{ trim($valor) }}<br>
+                                @endforeach
                             @else
-                                @php
-                                    $valores = $obtenerValorDetalle($detalle['dias'][$index]['detalle'], $dia);
-                                @endphp
-                                @if (is_array($valores))
-                                    @foreach ($valores as $valor)
-                                        {{ trim($valor) }}<br>
-                                    @endforeach
-                                @else
-                                    {{ $valores }}
-                                @endif
+                                {{ $valores }}
                             @endif
-                            @else
-                                0
-                            @endif
-                        </td>
-                    @endforeach
-                    @if ($modo === 'Horas')
-                        <td>
-                            {{ $contarHoras($detalle['dias']) }}
-                        </td>
+                        @endif
+                    @else
+                        0
                     @endif
-                    @if ($modo === 'Servicios')
-                    <td>{{ $contarParametros($detalle['dias'], 'contratista_id', 'conteo') }}</td>
-                    @endif
-                    @if ($modo === 'Horas')
-                    <td>{{ $contarParametros($detalle['dias'], 'sabado', 'sumar') }}</td>
-                    <td>{{ $contarParametros($detalle['dias'], 'domingo_feriado', 'sumar') }}</td>
-                    @endif
-                </tr>
+                </td>
             @endforeach
-        </tbody>
+            @if ($modo === 'Horas')
+                <td>
+                    {{ $contarHoras($detalle['dias']) }}
+                </td>
+            @endif
+            @if ($modo === 'Servicios')
+                <td>{{ $contarParametros($detalle['dias'], 'contratista_id', 'conteo') }}</td>
+            @endif
+            @if ($modo === 'Horas')
+                <td>{{ $contarParametros($detalle['dias'], 'sabado', 'sumar') }}</td>
+                <td>{{ $contarParametros($detalle['dias'], 'domingo_feriado', 'sumar') }}</td>
+            @endif
+        </tr>
+    @endforeach
+</tbody>
+
     </table>
 
     <!-- Salto de página después de cada grupo de 25 filas, excepto el último -->
