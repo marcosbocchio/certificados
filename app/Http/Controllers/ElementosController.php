@@ -16,7 +16,7 @@ class ElementosController extends Controller
     public function __construct()
     {
 
-          $this->middleware(['role_or_permission:Sistemas|R_costuras'],['only' => ['callView']]);
+          $this->middleware(['role_or_permission:Sistemas|R_elementos'],['only' => ['callView']]);
 
     }
 
