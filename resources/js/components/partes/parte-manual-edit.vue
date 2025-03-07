@@ -45,6 +45,7 @@
                     type="number"
                     v-model.number="tempCantidad"
                     class="form-control"
+                    max="9999"
                     :disabled="detalle.cantidad.length >= 2"
                   />
                     <button
@@ -328,11 +329,15 @@ export default {
     return operador ? operador.label : '-';
   },
   agregarCantidad() {
-      if (this.tempCantidad && this.tempCantidad > 0 && this.detalle.cantidad.length < 2) {
+    if (this.tempCantidad && this.tempCantidad > 0 && this.tempCantidad <= 9999 && this.detalle.cantidad.length < 2) {
         this.detalle.cantidad.push(this.tempCantidad);
         this.tempCantidad = null;
-      }
-    },
+    } else if (this.tempCantidad && this.tempCantidad > 9999) {
+        // Mostrar un mensaje de error si la cantidad supera los 4 dígitos
+        toastr.error('No se pueden agregar números de más de 4 dígitos.');
+        this.tempCantidad = null;  // Limpiar el campo de entrada
+    }
+},
     removerCantidad(index) {
       this.detalle.cantidad.splice(index, 1);
     },
