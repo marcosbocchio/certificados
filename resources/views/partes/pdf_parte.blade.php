@@ -124,22 +124,42 @@
     <tr>
         <!-- Celdas con datos o en blanco si no hay detalles -->
         @if ($j < count($detalles))
-            <td>{{ $detalles[$j]->tecnica }}</td>
-            <td>{{ $detalles[$j]->cantidad }}</td>
-            <td>{{ $detalles[$j]->planta_1 }} / {{ $detalles[$j]->planta_2 ?? '-' }}</td> <!-- Mostrar ambas plantas -->
-            <td>{!! $dividirTexto($detalles[$j]->equipo) !!}</td> <!-- Utiliza la función aquí -->
-            <td>
-                {{ $detalles[$j]->operador1name ?? '-' }} / 
-                {{ $detalles[$j]->operador2name ?? '-' }}
-            </td>
-            <td>{{ $detalles[$j]->horario }}</td>
-            <td>{{ $detalles[$j]->informe_nro }}</td>
-            <td>
-                {{ $detalles[$j]->inspector1_name ?? '-' }} / 
-                {{ $detalles[$j]->inspector2_name ?? '-' }}
-            </td>
-            <td>&nbsp;</td>
-        @else
+    <td>
+        {{ $detalles[$j]->tecnica_1 }}
+        @if(!empty($detalles[$j]->tecnica_2)) 
+            / {{ $detalles[$j]->tecnica_2 }} 
+        @endif
+    </td>
+    <td>
+        {{ $detalles[$j]->cantidad_1 }}
+        @if(!empty($detalles[$j]->cantidad_2)) 
+            / {{ $detalles[$j]->cantidad_2 }} 
+        @endif
+    </td>
+    <td>
+        {{ $detalles[$j]->planta_1 }}
+        @if(!empty($detalles[$j]->planta_2)) 
+            / {{ $detalles[$j]->planta_2 }} 
+        @endif
+    </td>
+    <td>{!! $dividirTexto($detalles[$j]->equipo) !!}</td>
+    <td>
+        {{ $detalles[$j]->operador1name ?? '-' }}
+        @if(!empty($detalles[$j]->operador2name)) 
+            / {{ $detalles[$j]->operador2name }} 
+        @endif
+    </td>
+    <td>{{ $detalles[$j]->horario }}</td>
+    <td>{{ $detalles[$j]->informe_nro }}</td>
+    <td>
+        {{ $detalles[$j]->inspector1_name ?? '-' }}
+        @if(!empty($detalles[$j]->inspector2_name)) 
+            / {{ $detalles[$j]->inspector2_name }} 
+        @endif
+    </td>
+    <td>&nbsp;</td>
+@else
+
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>

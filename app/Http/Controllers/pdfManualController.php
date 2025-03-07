@@ -8,6 +8,7 @@ use PDF;
 use App\Ots;
 use App\Clientes;
 use App\User;
+use Illuminate\Support\Facades\Log;
 
 class PdfManualController extends Controller
 {
@@ -36,10 +37,10 @@ class PdfManualController extends Controller
     
         // Asignar nombres a cada detalle
         foreach ($parteManual->detalles as $detalle) {
-            $detalle->operador1name = $operadores1[$detalle->operador1]->name ?? '-';
-            $detalle->operador2name = $operadores2[$detalle->operador2]->name ?? '-';
-            $detalle->inspector1_name = $inspectores1[$detalle->inspector_id_1]->name ?? '-';
-            $detalle->inspector2_name = $inspectores2[$detalle->inspector_id_2]->name ?? '-';
+            $detalle->operador1name = $operadores1[$detalle->operador1]->name ?? null;
+            $detalle->operador2name = $operadores2[$detalle->operador2]->name ?? null;
+            $detalle->inspector1_name = $inspectores1[$detalle->inspector_id_1]->name ?? null;
+            $detalle->inspector2_name = $inspectores2[$detalle->inspector_id_2]->name ?? null;
         }
     
         // Preparar los datos para la vista del PDF
@@ -50,7 +51,7 @@ class PdfManualController extends Controller
             'ot' => $ot,
             'dividirTexto' => [$this, 'dividirTexto'], // Pasar la función de dividir texto
         ];
-        
+        log::info($parteManual->detalles);
         // Cargar la vista del PDF y pasarle los datos
         $pdf = PDF::loadView('partes.pdf_parte', $datos);
         $pdf->setPaper('A4', 'landscape');

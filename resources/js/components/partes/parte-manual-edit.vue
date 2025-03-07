@@ -30,12 +30,41 @@
           <div class="box-body">
             <div class="form-row">
               <div class="form-group col-md-3">
-                <label for="tecnica">Técnica *</label>
-                <v-select v-model="detalle.tecnica" :options="opcionesTecnica"></v-select>
+                <label>Técnica *</label>
+                <v-select
+                  v-model="detalle.tecnica"
+                  :options="opcionesTecnica"
+                  multiple
+                  :max="2"
+                ></v-select>
               </div>
               <div class="form-group col-md-3">
-                <label for="cantidad">Cantidad *</label>
-                <input type="number" v-model="detalle.cantidad" class="form-control" min="0">
+                <label>Cantidad *</label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    v-model.number="tempCantidad"
+                    class="form-control"
+                    :disabled="detalle.cantidad.length >= 2"
+                  />
+                    <button
+                      type="button"
+                      class=" btn"
+                      @click="agregarCantidad"
+                      :disabled="!tempCantidad || detalle.cantidad.length >= 2"
+                    >
+                      <span class="fa fa-plus-circle" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div v-if="detalle.cantidad.length" class="mt-2">
+                  <small v-for="(c, index) in detalle.cantidad"
+                      :key="index"
+                      class="tag-cantidad"
+                      @click="removerCantidad(index)"
+                      title="Haga clic para eliminar">
+                      {{ c }}
+                  </small>
+                </div>
               </div>
               <div class="form-group col-md-3">
                 <label>Planta *</label>
@@ -92,26 +121,33 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(detalle, index) in detalles" :key="index">
-                      <td>{{ detalle.tecnica }}</td>
-                      <td>{{ detalle.cantidad }}</td>
-                      <td>
-                        {{ detalle.planta[0]?.value }}{{ detalle.planta[1] ? ' / ' + detalle.planta[1].value : '' }}
-                      </td>
-                      <td>{{ detalle.equipo_linea }}</td>
-                      <td>{{ detalle.horario }}</td>
-                      <td>{{ detalle.n_informe }}</td>
-                      <td>
-                        {{ detalle.operadores[0]?.label }}{{ detalle.operadores[1] ? ' / ' + detalle.operadores[1].label : '' }}
-                      </td>
-                      <td>
-                        {{ detalle.inspector_secl[0]?.name }}{{ detalle.inspector_secl[1] ? ' / ' + detalle.inspector_secl[1].name : '' }}
-                      </td>
-                      <td>
-                        <a @click="quitarDetalle(index)"><app-icon img="minus-circle" color="black"></app-icon></a>
-                      </td>
-                    </tr>
-                  </tbody>
+                <tr v-for="(detalle, index) in detalles" :key="index">
+                  <td>
+                    {{ detalle?.tecnica1 }}{{ detalle.tecnica2 ? ' / ' + detalle.tecnica2 : '' }}
+                  </td>
+                  <td>
+                    {{ detalle?.cantidad1 }}{{ detalle.cantidad2 ? ' / ' + detalle.cantidad2 : '' }}
+                  </td>
+                  <td>
+                    {{ detalle.planta[0]?.value }}{{ detalle.planta[1] ? ' / ' + detalle.planta[1].value : '' }}
+                  </td>
+                  <td>{{ detalle.equipo_linea }}</td>
+                  <td>{{ detalle.horario }}</td>
+                  <td>{{ detalle.n_informe }}</td>
+                  <td>
+                    {{ detalle.operadores[0]?.label }}{{ detalle.operadores[1] ? ' / ' + detalle.operadores[1]?.label : '' }}
+                  </td>
+                  <td>
+                    {{ detalle.inspector_secl[0]?.name }}{{ detalle.inspector_secl[1] ? ' / ' + detalle.inspector_secl[1]?.name : '' }}
+                  </td>
+                  <td>
+                    <a @click="quitarDetalle(index)">
+                      <app-icon img="minus-circle" color="black"></app-icon>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+
                 </table>
               </div>
             </div>
@@ -241,6 +277,7 @@ export default {
       proyecto: this.proyecto_data,
       ordenTrabajo: this.ot_data.numero,
       informesConParte:[],
+      tempCantidad: null,
       informesSinParte: [],
       detalles: [],
       opcionesPlanta: this.plantas_data.map(planta => ({ label: planta.codigo, value: planta.codigo })),
@@ -255,14 +292,14 @@ export default {
     ],
       isSaving: false,
       detalle: {
-        tecnica: '',
-        cantidad: 0,
+        tecnica: [],
+        cantidad: [],
         planta: [],
-        equipo_linea: '',
-        horario: '',
-        n_informe: '',
-        inspector_secl:[],
-        operadores: []
+        equipo_linea: "",
+        horario: "",
+        n_informe: "",
+        operadores: [],
+        inspector_secl: []
       },
       opcionesTecnica: ['CR', 'ADM', 'LP', 'PM', 'PMI', 'RG', 'US', 'US-AT', 'US-N2', 'US-PHA', 'DU', 'RM', 'TT'],
     };
@@ -290,6 +327,15 @@ export default {
     obtenerLabelOperador(operador) {
     return operador ? operador.label : '-';
   },
+  agregarCantidad() {
+      if (this.tempCantidad && this.tempCantidad > 0 && this.detalle.cantidad.length < 2) {
+        this.detalle.cantidad.push(this.tempCantidad);
+        this.tempCantidad = null;
+      }
+    },
+    removerCantidad(index) {
+      this.detalle.cantidad.splice(index, 1);
+    },
     buscarNombreOperador(idOperador) {
     const operador = this.opcionesOperadores.find(operador => operador.id === idOperador);
     return operador ? operador.nombre : '';
@@ -306,42 +352,71 @@ export default {
       }
     },
     agregarDetalle() {
-      if (this.validarDetalle()) {
-        this.detalles.push({ ...this.detalle });
-        console.log('detalles:', this.detalle);
-        this.resetDetalle();
-      }
-    },
+  if (!this.validarDetalle()) {
+    return;
+  }
+  // Convertir los arrays en propiedades individuales que usa la tabla
+  const nuevoDetalle = {
+    tecnica1: this.detalle.tecnica[0] || '',
+    tecnica2: this.detalle.tecnica[1] || '',
+    cantidad1: this.detalle.cantidad[0] || '',
+    cantidad2: this.detalle.cantidad[1] || '',
+    planta: this.detalle.planta,
+    equipo_linea: this.detalle.equipo_linea,
+    horario: this.detalle.horario,
+    n_informe: this.detalle.n_informe,
+    operadores: this.detalle.operadores,
+    inspector_secl: this.detalle.inspector_secl
+  };
+
+  this.detalles.push(nuevoDetalle);
+  this.resetDetalle();
+},
+resetDetalle() {
+  this.detalle = {
+    tecnica: [],
+    cantidad: [],
+    planta: [],
+    equipo_linea: "",
+    horario: "",
+    n_informe: "",
+    operadores: [],
+    inspector_secl: []
+  };
+  this.tempCantidad = null;
+}
+,
     pushDetalles() {
-    // Recorrer el array detalles_data
-    this.detalles_data.forEach(detalle => {
+  this.detalles_data.forEach(detalle => {
     const operador1Id = parseInt(detalle.operador1, 10);
     const operador2Id = parseInt(detalle.operador2, 10);
-    
+
     const operador1 = this.obtenerNombreOperador(operador1Id);
     const operador2 = this.obtenerNombreOperador(operador2Id);
     const inspector1 = this.obtenerNombreInspector(detalle.inspector_id_1);
-    const inspector2 = this.obtenerNombreInspector(detalle.inspector_id_2);
+    const inspector2 = detalle.inspector_id_2 ? this.obtenerNombreInspector(detalle.inspector_id_2) : null;
 
-  // Crear un nuevo objeto para el detalle con los nombres actualizados
-  const nuevoDetalle = {
-    tecnica: detalle.tecnica,
-    cantidad: detalle.cantidad,
-    planta: [
-  { value: detalle.planta_1 },
-  ...(detalle.planta_2 ? [{ value: detalle.planta_2 }] : [])
-],
-    equipo_linea: detalle.equipo,
+    const nuevoDetalle = {
+      tecnica1: detalle.tecnica_1 || '',
+      tecnica2: detalle.tecnica_2 || '',
+      cantidad1: detalle.cantidad_1 || '',
+      cantidad2: detalle.cantidad_2 || '',
+      planta: [
+        { value: detalle.planta_1 },
+        ...(detalle.planta_2 ? [{ value: detalle.planta_2 }] : [])
+      ],
+      equipo_linea: detalle.equipo,
     horario: detalle.horario,
     n_informe: detalle.informe_nro,
     inspector_secl: [inspector1,inspector2],
     operadores: [operador1, operador2]
-  };
+    };
 
-  console.log('__',nuevoDetalle,'__');
-  this.detalles.push(nuevoDetalle);
-});
-  },
+    console.log('__', nuevoDetalle, '__');
+    this.detalles.push(nuevoDetalle);
+  });
+}
+,
     actualizarNumeroInforme(informe) {
       if (informe.selected) {
         const numeroFormateado = this.formatearNumero(informe.metodo, informe.numero);
@@ -361,64 +436,53 @@ export default {
       }
     },
     validarDetalle() {
-  // Validación para la técnica
-  if (!this.detalle.tecnica) {
-    this.mostrarToast('Por favor, completa el campo "Técnica".', 'error');
-    return false;
-  }
-  if (!this.detalle.n_informe) {
-    this.mostrarToast('Por favor, completa el campo "N° Informe".', 'error');
-    return false;
-  }
-
-  // Validación para la cantidad
-  if (this.detalle.cantidad <= 0) {
-    this.mostrarToast('La cantidad debe ser mayor que cero.', 'error');
-    return false;
-  }
-
-  // Validación para las plantas
-  if (!this.detalle.planta || this.detalle.planta.length === 0) {
-    this.mostrarToast('Por favor, selecciona al menos una planta.', 'error');
-    return false;
-  } else if (this.detalle.planta.length > 2) {
-    this.mostrarToast('No puedes seleccionar más de dos plantas.', 'error');
-    return false;
-  }
-
-  // Validación para los inspectores
-  if (!this.detalle.inspector_secl || this.detalle.inspector_secl.length === 0) {
-    this.mostrarToast('Por favor, selecciona al menos un inspector.', 'error');
-    return false;
-  } else if (this.detalle.inspector_secl.length > 2) {
-    this.mostrarToast('No puedes seleccionar más de dos inspectores.', 'error');
-    return false;
-  }
-
-  // Validación para los operadores
-  if (!this.detalle.operadores || this.detalle.operadores.length === 0) {
-    this.mostrarToast('Debes seleccionar al menos un operador.', 'error');
-    return false;
-  } else if (this.detalle.operadores.length > 2) {
-    this.mostrarToast('No puedes seleccionar más de dos operadores.', 'error');
-    return false;
-  }
-
-  return true; // Si no hay errores, retornar true
-},
+      const errores = [];
+      if (!this.detalle.tecnica || this.detalle.tecnica.length === 0) {
+        errores.push("Por favor, selecciona al menos una técnica.");
+      } else if (this.detalle.tecnica.length > 2) {
+        errores.push("No puedes seleccionar más de dos técnicas.");
+      }
+      if (!this.detalle.cantidad || this.detalle.cantidad.length === 0) {
+        errores.push("Por favor, ingresa al menos una cantidad.");
+      } else if (this.detalle.cantidad.length > 2) {
+        errores.push("No puedes ingresar más de dos cantidades.");
+      } else {
+        this.detalle.cantidad.forEach(c => {
+          let num = parseFloat(c);
+          if (isNaN(num) || num <= 0) {
+            errores.push("Cada cantidad debe ser un número mayor que cero.");
+          }
+        });
+      }
+      if (!this.detalle.planta || this.detalle.planta.length === 0) {
+        errores.push("Por favor, selecciona al menos una planta.");
+      } else if (this.detalle.planta.length > 2) {
+        errores.push("No puedes seleccionar más de dos plantas.");
+      }
+      if (!this.detalle.equipo_linea)
+        errores.push("Por favor, ingresa el equipo o línea.");
+      if (!this.detalle.horario)
+        errores.push("Por favor, selecciona un horario.");
+      if (!this.detalle.n_informe)
+        errores.push("Por favor, ingresa el número de informe.");
+      if (
+        !this.detalle.inspector_secl ||
+        this.detalle.inspector_secl.length === 0
+      ) {
+        errores.push("Por favor, selecciona al menos un inspector.");
+      } else if (this.detalle.inspector_secl.length > 2) {
+        errores.push("No puedes seleccionar más de dos inspectores.");
+      }
+      if (this.detalle.operadores.length === 0) {
+        errores.push("Debes seleccionar al menos un operador.");
+      } else if (this.detalle.operadores.length > 2) {
+        errores.push("No puedes seleccionar más de dos operadores.");
+      }
+      errores.forEach(error => toastr.error(error));
+      return errores.length === 0;
+    },
     quitarDetalle(index) {
       this.detalles.splice(index, 1);
-    },
-    resetDetalle() {
-      this.detalle = {
-        tecnica: '',
-        cantidad: '',
-        planta: '',
-        equipo_linea: '',
-        horario: '',
-        n_informe: '',
-        operadores: []
-      };
     },
     obtenerNombreOperador(id) {
     // Buscar el operador en opcionesOperadores
@@ -459,7 +523,7 @@ export default {
         selectedInformes: this.informesSinParte.filter(informe => informe.selected).map(informe => informe.id),
         deselectedInformes: this.informesConParte.filter(informe => !informe.selected).map(informe => informe.id)  // Nueva línea
     };
-
+    console.log(this.detalles);
     axios.put(`/api/partes-manuales/${this.parte_manual_data.id}`, data)
         .then(response => {
             console.log('Datos actualizados exitosamente', response);

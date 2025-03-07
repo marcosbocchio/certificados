@@ -144,44 +144,46 @@ class PartesManualesController extends Controller
 
     public function store(Request $request)
     {
-
-        $user_id = null;
-
-        if (Auth::check())
-        {
-             $user_id = $userId = Auth::id();
-        }
-        Log::info('Detalles recibidos: ' . json_encode($request->detalles));
+        $user_id = Auth::check() ? Auth::id() : null;
+    
+        \Log::info('Detalles recibidos: ' . json_encode($request->detalles));
         try {
             \DB::beginTransaction();
+    
             $parteManual = ParteManual::create([
-                'ot_id' => $request->ot_id,
-                'usuario_alta_id' => $user_id,
-                'fecha' => $request->fecha,
+                'ot_id'             => $request->ot_id,
+                'usuario_alta_id'   => $user_id,
+                'fecha'             => $request->fecha,
             ]);
-
-            
+    
             foreach ($request->detalles as $detalle) {
-            log::debug($detalle);
+                \Log::debug($detalle);
                 ParteManualDetalle::create([
                     'parte_manual_id' => $parteManual->id,
-                    'tecnica' => $detalle['tecnica'],
-                    'cantidad' => $detalle['cantidad'],
-                    'planta_1' => $detalle['planta'][0]['value'], // Primera planta
-                    'planta_2' => $detalle['planta'][1]['value'] ?? null, // Segunda planta opcional
-                    'equipo' => $detalle['equipo_linea'],
-                    'operador1' => $detalle['operadores'][0]['value'], // Primer operador
-                    'operador2' => $detalle['operadores'][1]['value'] ?? null, // Segundo operador opcional
-                    'horario' => $detalle['horario'],
-                    'inspector_id_1' => $detalle['inspector_secl'][0]['id'], // Primer inspector
-                    'inspector_id_2' => $detalle['inspector_secl'][1]['id'] ?? null, // Segundo inspector opcional
-                    'informe_nro' => $detalle['n_informe'],
+                    // Asignamos el primer valor a tecnica_1 y el segundo (si existe) a tecnica_2
+                    'tecnica_1'       => isset($detalle['tecnica'][0]) ? $detalle['tecnica'][0] : null,
+                    'tecnica_2'       => isset($detalle['tecnica'][1]) ? $detalle['tecnica'][1] : null,
+                    // De igual forma para las cantidades
+                    'cantidad_1'      => isset($detalle['cantidad'][0]) ? $detalle['cantidad'][0] : null,
+                    'cantidad_2'      => isset($detalle['cantidad'][1]) ? $detalle['cantidad'][1] : null,
+                    // Para las plantas, accedemos al campo "value" de cada objeto
+                    'planta_1'        => isset($detalle['planta'][0]['value']) ? $detalle['planta'][0]['value'] : null,
+                    'planta_2'        => isset($detalle['planta'][1]['value']) ? $detalle['planta'][1]['value'] : null,
+                    'equipo'          => $detalle['equipo_linea'],
+                    // Operadores: primer y segundo (si existen)
+                    'operador1'       => isset($detalle['operadores'][0]['value']) ? $detalle['operadores'][0]['value'] : null,
+                    'operador2'       => isset($detalle['operadores'][1]['value']) ? $detalle['operadores'][1]['value'] : null,
+                    'horario'         => $detalle['horario'],
+                    // Inspectores: usamos el campo "id"
+                    'inspector_id_1'  => isset($detalle['inspector_secl'][0]['id']) ? $detalle['inspector_secl'][0]['id'] : null,
+                    'inspector_id_2'  => isset($detalle['inspector_secl'][1]['id']) ? $detalle['inspector_secl'][1]['id'] : null,
+                    'informe_nro'     => $detalle['n_informe'],
                 ]);
             }
-
-            // Asociar los informes seleccionados
-            if (!empty($validatedData['selectedInformes'])) {
-                foreach ($validatedData['selectedInformes'] as $informeId) {
+    
+            // Procesamos los informes seleccionados (si existen)
+            if (!empty($request->selectedInformes)) {
+                foreach ($request->selectedInformes as $informeId) {
                     $informe = Informe::find($informeId);
                     if ($informe) {
                         $informe->parte_id = $parteManual->id;
@@ -190,29 +192,31 @@ class PartesManualesController extends Controller
                     }
                 }
             }
-
+    
             \DB::commit();
-            return response()->json(['message' => 'Parte manual y detalles guardados exitosamente, informes asociados.', 'id' => $parteManual->id], 200);
+            return response()->json([
+                'message' => 'Parte manual y detalles guardados exitosamente, informes asociados.',
+                'id'      => $parteManual->id
+            ], 200);
         } catch (\Exception $e) {
             \DB::rollBack();
-            \Log::error('Error al guardar los datos: ' . $e->getMessage() . ' en el archivo ' . $e->getFile() . ' en la línea ' . $e->getLine());
+            \Log::error('Error al guardar los datos: ' . $e->getMessage() . ' en ' . $e->getFile() . ' en la línea ' . $e->getLine());
             \Log::debug("Stack Trace: " . $e->getTraceAsString());
             \Log::debug("Request data: ", $request->all());
             return response()->json(['message' => 'Error al guardar: ' . $e->getMessage()], 500);
         }
     }
+      
     
     public function update(Request $request, $id)
     {
         $user_id = null;
-
-        if (Auth::check())
-        {
-             $user_id = $userId = Auth::id();
+    
+        if (Auth::check()) {
+             $user_id = Auth::id();
         }
     
         try {
-            
             \DB::beginTransaction();
     
             // Obtener el parte manual existente por su ID
@@ -220,30 +224,35 @@ class PartesManualesController extends Controller
     
             // Actualizar el parte manual con los datos proporcionados en la solicitud
             $parteManual->update([
-                'ot_id' => $request->ot,
+                'ot_id'           => $request->ot,
                 'usuario_alta_id' => $user_id,
-                'fecha' => $request->fecha,
+                'fecha'           => $request->fecha,
             ]);
     
             // Eliminar todos los detalles de parte manual asociados al parte manual que se está actualizando
             $parteManual->detalles()->delete();
-    
+            
             // Iterar sobre los nuevos detalles proporcionados en la solicitud y crear registros de detalles de parte manual
             foreach ($request->detalles as $detalle) {
+                log::info($detalle);
                 $parteManual->detalles()->create([
-                    'tecnica' => $detalle['tecnica'],
-                    'cantidad' => $detalle['cantidad'],
-                    'planta_1' => $detalle['planta'][0]['value'], // Primera planta
-                    'planta_2' => $detalle['planta'][1]['value'] ?? null, // Segunda planta opcional
-                    'equipo' => $detalle['equipo_linea'],
-                    'operador1' => $detalle['operadores'][0]['value'], // Primer operador
-                    'operador2' => $detalle['operadores'][1]['value'] ?? null, // Segundo operador opcional
-                    'horario' => $detalle['horario'],
-                    'inspector_id_1' => $detalle['inspector_secl'][0]['id'], // Primer inspector
-                    'inspector_id_2' => $detalle['inspector_secl'][1]['id'] ?? null, // Segundo inspector opcional
-                    'informe_nro' => $detalle['n_informe'],
+                    'tecnica_1'       => isset($detalle['tecnica1']) ? $detalle['tecnica1'] : null,
+                    'tecnica_2'       => isset($detalle['tecnica2']) ? $detalle['tecnica2'] : null,
+                    'cantidad_1'      => isset($detalle['cantidad1']) ? $detalle['cantidad1'] : null,
+                    'cantidad_2'      => isset($detalle['cantidad2']) ? $detalle['cantidad2'] : null,
+                    'planta_1'        => isset($detalle['planta'][0]['value']) ? $detalle['planta'][0]['value'] : null,
+                    'planta_2'        => isset($detalle['planta'][1]['value']) ? $detalle['planta'][1]['value'] : null,
+                    'equipo'          => isset($detalle['equipo_linea']) ? $detalle['equipo_linea'] : null,
+                    'operador1'       => isset($detalle['operadores'][0]['value']) ? $detalle['operadores'][0]['value'] : null,
+                    'operador2'       => isset($detalle['operadores'][1]['value']) ? $detalle['operadores'][1]['value'] : null,
+                    'horario'         => isset($detalle['horario']) ? $detalle['horario'] : null,
+                    'inspector_id_1'  => isset($detalle['inspector_secl'][0]['id']) ? $detalle['inspector_secl'][0]['id'] : null,
+                    'inspector_id_2'  => isset($detalle['inspector_secl'][1]['id']) ? $detalle['inspector_secl'][1]['id'] : null,
+                    'informe_nro'     => isset($detalle['n_informe']) ? $detalle['n_informe'] : null,
                 ]);
             }
+            
+            
     
             // Asociar los informes seleccionados, si los hay, al parte manual actualizado
             if (!empty($request->selectedInformes)) {
@@ -256,9 +265,9 @@ class PartesManualesController extends Controller
                     }
                 }
             }
-            log::info($request->selectedInformes);
-
-             // Desasociar los informes deseleccionados
+            \Log::info($request->selectedInformes);
+    
+            // Desasociar los informes deseleccionados
             if (!empty($request->deselectedInformes)) {
                 foreach ($request->deselectedInformes as $informeId) {
                     $informe = Informe::find($informeId);
@@ -269,7 +278,7 @@ class PartesManualesController extends Controller
                     }
                 }
             }
-            log::info($request->deselectedInformes);
+            \Log::info($request->deselectedInformes);
             \DB::commit();
             return response()->json(['message' => 'Parte manual actualizado exitosamente.'], 200);
         } catch (\Exception $e) {
@@ -278,6 +287,7 @@ class PartesManualesController extends Controller
             return response()->json(['message' => 'Error al actualizar el parte manual: ' . $e->getMessage()], 500);
         }
     }
+    
 
     public function getInformesSinParte(Request $request) {
         $fechaSeleccionada = $request->query('hasta');
