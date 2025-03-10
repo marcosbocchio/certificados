@@ -45,7 +45,7 @@
                   :max="2"
                 ></v-select>
               </div>
-              <!-- Cantidad: dos inputs fijos, se integran en detalle.cantidad -->
+              <!-- Cantidad: dos inputs fijos, integrados en detalle.cantidad -->
               <div class="form-group col-md-3">
                 <div class="row">
                   <div class="col-md-6">
@@ -55,6 +55,7 @@
                       v-model.number="cantidad1"
                       class="form-control"
                       max="9999"
+                      min="1"
                     />
                   </div>
                   <div class="col-md-6">
@@ -64,6 +65,8 @@
                       v-model.number="cantidad2"
                       class="form-control"
                       max="9999"
+                      min="1"
+                      :disabled="detalle.tecnica.length < 2"
                     />
                   </div>
                 </div>
@@ -125,7 +128,7 @@
                 </button>
               </div>
             </div>
-
+            
             <div class="form-row">
               <div class="col-md-12">
                 <table class="table table-striped">
@@ -301,6 +304,7 @@ export default {
     };
   },
   computed: {
+    // Mapear los dos inputs fijos a detalle.cantidad
     cantidad1: {
       get() {
         return this.detalle.cantidad[0] || "";
@@ -389,7 +393,7 @@ export default {
         }
       }
       
-      // Si se ingresó cantidad 2, se valida
+      // Validación de cantidad 2, si se ingresa
       if (this.detalle.cantidad[1]) {
         let num = parseFloat(this.detalle.cantidad[1]);
         if (isNaN(num) || num <= 0) {
@@ -400,7 +404,7 @@ export default {
         }
       }
       
-      // Nueva condición: si hay más de una técnica, cantidad 2 es obligatoria
+      // Nueva condición: si hay más de una técnica, la cantidad 2 es obligatoria.
       if (this.detalle.tecnica.length > 1 && (!this.detalle.cantidad[1] || this.detalle.cantidad[1] === "")) {
         errores.push("Para más de una técnica, la cantidad 2 es obligatoria.");
       }

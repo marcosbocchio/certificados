@@ -55,6 +55,7 @@
                       v-model.number="cantidad1"
                       class="form-control"
                       max="9999"
+                      min="1"
                     />
                   </div>
                   <div class="col-md-6">
@@ -64,6 +65,8 @@
                       v-model.number="cantidad2"
                       class="form-control"
                       max="9999"
+                      min="1"
+                      :disabled="detalle.tecnica.length < 2"
                     />
                   </div>
                 </div>
