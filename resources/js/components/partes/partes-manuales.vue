@@ -45,34 +45,27 @@
                   :max="2"
                 ></v-select>
               </div>
-              <!-- Cantidad: input de número con botón de agregar y tags removibles -->
+              <!-- Cantidad: dos inputs fijos, se integran en detalle.cantidad -->
               <div class="form-group col-md-3">
-                <label>Cantidad *</label>
-                <div class="input-group">
-                  <input
-                    type="number"
-                    v-model.number="tempCantidad"
-                    class="form-control"
-                    max="9999"
-                    :disabled="detalle.cantidad.length >= 2"
-                  />
-                    <button
-                      type="button"
-                      class=" btn"
-                      @click="agregarCantidad"
-                      :disabled="!tempCantidad || detalle.cantidad.length >= 2"
-                    >
-                      <span class="fa fa-plus-circle" aria-hidden="true"></span>
-                    </button>
-                </div>
-                <div v-if="detalle.cantidad.length" class="mt-2">
-                  <small v-for="(c, index) in detalle.cantidad"
-                      :key="index"
-                      class="tag-cantidad"
-                      @click="removerCantidad(index)"
-                      title="Haga clic para eliminar">
-                      {{ c }}
-                  </small>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Cantidad 1*</label>
+                    <input
+                      type="number"
+                      v-model.number="cantidad1"
+                      class="form-control"
+                      max="9999"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label>Cantidad 2</label>
+                    <input
+                      type="number"
+                      v-model.number="cantidad2"
+                      class="form-control"
+                      max="9999"
+                    />
+                  </div>
                 </div>
               </div>
               <!-- Planta (múltiple con máximo 2) -->
@@ -154,16 +147,19 @@
                       <td>{{ detalle.tecnica.join(" / ") }}</td>
                       <td>{{ detalle.cantidad.join(" / ") }}</td>
                       <td>
-                        {{ detalle.planta[0]?.label || "" }}{{ detalle.planta[1]?.label ? " / " + detalle.planta[1].label : "" }}
+                        {{ detalle.planta[0]?.label || "" }}
+                        {{ detalle.planta[1]?.label ? " / " + detalle.planta[1].label : "" }}
                       </td>
                       <td>{{ detalle.equipo_linea }}</td>
                       <td>{{ detalle.horario }}</td>
                       <td>{{ detalle.n_informe }}</td>
                       <td>
-                        {{ detalle.operadores[0]?.label || "" }}{{ detalle.operadores[1]?.label ? " / " + detalle.operadores[1].label : "" }}
+                        {{ detalle.operadores[0]?.label || "" }}
+                        {{ detalle.operadores[1]?.label ? " / " + detalle.operadores[1].label : "" }}
                       </td>
                       <td>
-                        {{ detalle.inspector_secl[0]?.name || "" }}{{ detalle.inspector_secl[1]?.name ? " / " + detalle.inspector_secl[1].name : "" }}
+                        {{ detalle.inspector_secl[0]?.name || "" }}
+                        {{ detalle.inspector_secl[1]?.name ? " / " + detalle.inspector_secl[1].name : "" }}
                       </td>
                       <td>
                         <a @click="quitarDetalle(index)">
@@ -198,7 +194,11 @@
               <tbody>
                 <tr v-for="(informe, index) in informesSinParte" :key="informe.id">
                   <td>
-                    <input type="checkbox" v-model="informe.selected" @click="actualizarNumeroInforme(informe)" />
+                    <input
+                      type="checkbox"
+                      v-model="informe.selected"
+                      @click="actualizarNumeroInforme(informe)"
+                    />
                   </td>
                   <td>{{ informe.metodo }}</td>
                   <td>{{ formatearNumero(informe.metodo, informe.numero) }}</td>
@@ -272,7 +272,7 @@ export default {
       })),
       ot: this.ot,
       isSaving: false,
-      tempCantidad: null,
+      // Se mantiene detalle.cantidad como array para la lógica existente
       detalle: {
         tecnica: [],
         cantidad: [],
@@ -299,6 +299,24 @@ export default {
         "TT"
       ]
     };
+  },
+  computed: {
+    cantidad1: {
+      get() {
+        return this.detalle.cantidad[0] || "";
+      },
+      set(value) {
+        this.$set(this.detalle.cantidad, 0, value);
+      }
+    },
+    cantidad2: {
+      get() {
+        return this.detalle.cantidad[1] || "";
+      },
+      set(value) {
+        this.$set(this.detalle.cantidad, 1, value);
+      }
+    }
   },
   mounted() {
     this.editMode = this.ot ? true : false;
@@ -340,20 +358,6 @@ export default {
         ? operadorEncontrado.nombre
         : "Operador no encontrado";
     },
-    agregarCantidad() {
-    if (this.tempCantidad && this.tempCantidad > 0 && this.tempCantidad <= 9999 && this.detalle.cantidad.length < 2) {
-        this.detalle.cantidad.push(this.tempCantidad);
-        this.tempCantidad = null;
-    } else if (this.tempCantidad && this.tempCantidad > 9999) {
-        // Mostrar un mensaje de error si la cantidad supera los 4 dígitos
-        toastr.error('No se pueden agregar números de más de 4 dígitos.');
-        this.tempCantidad = null;  // Limpiar el campo de entrada
-    }
-}
-,
-    removerCantidad(index) {
-      this.detalle.cantidad.splice(index, 1);
-    },
     agregarDetalle() {
       if (!this.validarDetalle()) {
         return;
@@ -364,47 +368,76 @@ export default {
     },
     validarDetalle() {
       const errores = [];
+      
+      // Validación de técnica
       if (!this.detalle.tecnica || this.detalle.tecnica.length === 0) {
         errores.push("Por favor, selecciona al menos una técnica.");
       } else if (this.detalle.tecnica.length > 2) {
         errores.push("No puedes seleccionar más de dos técnicas.");
       }
-      if (!this.detalle.cantidad || this.detalle.cantidad.length === 0) {
-        errores.push("Por favor, ingresa al menos una cantidad.");
-      } else if (this.detalle.cantidad.length > 2) {
-        errores.push("No puedes ingresar más de dos cantidades.");
+      
+      // Validación de cantidad 1 (obligatoria)
+      if (!this.detalle.cantidad || this.detalle.cantidad.length === 0 || !this.detalle.cantidad[0]) {
+        errores.push("Por favor, ingresa la cantidad 1.");
       } else {
-        this.detalle.cantidad.forEach(c => {
-          let num = parseFloat(c);
-          if (isNaN(num) || num <= 0) {
-            errores.push("Cada cantidad debe ser un número mayor que cero.");
-          }
-        });
+        let num = parseFloat(this.detalle.cantidad[0]);
+        if (isNaN(num) || num <= 0) {
+          errores.push("La cantidad 1 debe ser un número mayor que cero.");
+        }
+        if (num > 9999) {
+          errores.push("La cantidad 1 no puede ser mayor que 9999.");
+        }
       }
+      
+      // Si se ingresó cantidad 2, se valida
+      if (this.detalle.cantidad[1]) {
+        let num = parseFloat(this.detalle.cantidad[1]);
+        if (isNaN(num) || num <= 0) {
+          errores.push("La cantidad 2, si se ingresa, debe ser un número mayor que cero.");
+        }
+        if (num > 9999) {
+          errores.push("La cantidad 2 no puede ser mayor que 9999.");
+        }
+      }
+      
+      // Nueva condición: si hay más de una técnica, cantidad 2 es obligatoria
+      if (this.detalle.tecnica.length > 1 && (!this.detalle.cantidad[1] || this.detalle.cantidad[1] === "")) {
+        errores.push("Para más de una técnica, la cantidad 2 es obligatoria.");
+      }
+      
+      // Validación de planta
       if (!this.detalle.planta || this.detalle.planta.length === 0) {
         errores.push("Por favor, selecciona al menos una planta.");
       } else if (this.detalle.planta.length > 2) {
         errores.push("No puedes seleccionar más de dos plantas.");
       }
+      
+      // Validación de equipo/linea
       if (!this.detalle.equipo_linea)
         errores.push("Por favor, ingresa el equipo o línea.");
+      
+      // Validación de horario
       if (!this.detalle.horario)
         errores.push("Por favor, selecciona un horario.");
+      
+      // Validación de número de informe
       if (!this.detalle.n_informe)
         errores.push("Por favor, ingresa el número de informe.");
-      if (
-        !this.detalle.inspector_secl ||
-        this.detalle.inspector_secl.length === 0
-      ) {
+      
+      // Validación de inspectores
+      if (!this.detalle.inspector_secl || this.detalle.inspector_secl.length === 0) {
         errores.push("Por favor, selecciona al menos un inspector.");
       } else if (this.detalle.inspector_secl.length > 2) {
         errores.push("No puedes seleccionar más de dos inspectores.");
       }
+      
+      // Validación de operadores
       if (this.detalle.operadores.length === 0) {
         errores.push("Debes seleccionar al menos un operador.");
       } else if (this.detalle.operadores.length > 2) {
         errores.push("No puedes seleccionar más de dos operadores.");
       }
+      
       errores.forEach(error => toastr.error(error));
       return errores.length === 0;
     },
@@ -443,9 +476,12 @@ export default {
         operadores: [],
         inspector_secl: []
       };
-      this.tempCantidad = null;
     },
     storeSection() {
+      if (!this.fecha) {
+        toastr.error("Debe ingresar una fecha");
+        return;
+      }
       const data = {
         fecha: this.fecha,
         ot_id: this.ot_id,
@@ -517,7 +553,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .boton-centrado {
   display: flex;
   align-items: center;

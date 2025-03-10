@@ -6,7 +6,13 @@
           <div class="box-body">
             <div class="form-group col-md-3">
               <label>Fecha *</label>
-              <date-picker v-model="fecha" value-type="YYYY-MM-DD" :disabled-date="disabledDate" format="DD-MM-YYYY" placeholder="DD-MM-YYYY"></date-picker>
+              <date-picker
+                v-model="fecha"
+                value-type="YYYY-MM-DD"
+                :disabled-date="disabledDate"
+                format="DD-MM-YYYY"
+                placeholder="DD-MM-YYYY"
+              ></date-picker>
             </div>
             <div class="form-group col-md-3">
               <label>Cliente *</label>
@@ -29,6 +35,7 @@
           </div>
           <div class="box-body">
             <div class="form-row">
+              <!-- Técnica: input único múltiple -->
               <div class="form-group col-md-3">
                 <label>Técnica *</label>
                 <v-select
@@ -38,38 +45,38 @@
                   :max="2"
                 ></v-select>
               </div>
+              <!-- Se reemplaza la sección de Cantidad por dos inputs fijos -->
               <div class="form-group col-md-3">
-                <label>Cantidad *</label>
-                <div class="input-group">
-                  <input
-                    type="number"
-                    v-model.number="tempCantidad"
-                    class="form-control"
-                    max="9999"
-                    :disabled="detalle.cantidad.length >= 2"
-                  />
-                    <button
-                      type="button"
-                      class=" btn"
-                      @click="agregarCantidad"
-                      :disabled="!tempCantidad || detalle.cantidad.length >= 2"
-                    >
-                      <span class="fa fa-plus-circle" aria-hidden="true"></span>
-                    </button>
-                </div>
-                <div v-if="detalle.cantidad.length" class="mt-2">
-                  <small v-for="(c, index) in detalle.cantidad"
-                      :key="index"
-                      class="tag-cantidad"
-                      @click="removerCantidad(index)"
-                      title="Haga clic para eliminar">
-                      {{ c }}
-                  </small>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Cantidad 1*</label>
+                    <input
+                      type="number"
+                      v-model.number="cantidad1"
+                      class="form-control"
+                      max="9999"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label>Cantidad 2</label>
+                    <input
+                      type="number"
+                      v-model.number="cantidad2"
+                      class="form-control"
+                      max="9999"
+                    />
+                  </div>
                 </div>
               </div>
+              <!-- Planta (múltiple con máximo 2) -->
               <div class="form-group col-md-3">
                 <label>Planta *</label>
-                <v-select v-model="detalle.planta" :options="opcionesPlanta" multiple :max="2"></v-select>
+                <v-select
+                  v-model="detalle.planta"
+                  :options="opcionesPlanta"
+                  multiple
+                  :max="2"
+                ></v-select>
               </div>
               <div class="form-group col-md-3">
                 <label for="equipo_linea">Equipo/Linea *</label>
@@ -80,7 +87,12 @@
 
               <div class="form-group col-md-3">
                 <label for="horario">Horario *</label>
-                <v-select v-model="detalle.horario" :options="opcionesHorarios" label="label" :reduce="horario => horario.value"></v-select>
+                <v-select
+                  v-model="detalle.horario"
+                  :options="opcionesHorarios"
+                  label="label"
+                  :reduce="horario => horario.value"
+                ></v-select>
               </div>
               <div class="form-group col-md-3">
                 <label for="n_informe">N° Informe *</label>
@@ -88,7 +100,8 @@
               </div>
               <div class="form-group col-md-3">
                 <label>Operadores *</label>
-                <v-select v-model="detalle.operadores"
+                <v-select
+                  v-model="detalle.operadores"
                   :options="opcionesOperadores"
                   multiple
                   :max="2">
@@ -96,12 +109,19 @@
               </div>
               <div class="form-group col-md-3">
                 <label>Inspector *</label>
-                <v-select v-model="detalle.inspector_secl" :options="inspectores_op" label="name" multiple :max="2"></v-select>
+                <v-select
+                  v-model="detalle.inspector_secl"
+                  :options="inspectores_op"
+                  label="name"
+                  multiple
+                  :max="2"></v-select>
               </div>
               <div class="clearfix"></div>
               <div class="form-group col-md-3 boton-centrado">
                 <label></label>
-                <button type="button" @click="agregarDetalle"><span class="fa fa-plus-circle"></span></button>
+                <button type="button" @click="agregarDetalle">
+                  <span class="fa fa-plus-circle"></span>
+                </button>
               </div>
             </div>
             
@@ -122,33 +142,32 @@
                     </tr>
                   </thead>
                   <tbody>
-                <tr v-for="(detalle, index) in detalles" :key="index">
-                  <td>
-                    {{ detalle?.tecnica1 }}{{ detalle.tecnica2 ? ' / ' + detalle.tecnica2 : '' }}
-                  </td>
-                  <td>
-                    {{ detalle?.cantidad1 }}{{ detalle.cantidad2 ? ' / ' + detalle.cantidad2 : '' }}
-                  </td>
-                  <td>
-                    {{ detalle.planta[0]?.value }}{{ detalle.planta[1] ? ' / ' + detalle.planta[1].value : '' }}
-                  </td>
-                  <td>{{ detalle.equipo_linea }}</td>
-                  <td>{{ detalle.horario }}</td>
-                  <td>{{ detalle.n_informe }}</td>
-                  <td>
-                    {{ detalle.operadores[0]?.label }}{{ detalle.operadores[1] ? ' / ' + detalle.operadores[1]?.label : '' }}
-                  </td>
-                  <td>
-                    {{ detalle.inspector_secl[0]?.name }}{{ detalle.inspector_secl[1] ? ' / ' + detalle.inspector_secl[1]?.name : '' }}
-                  </td>
-                  <td>
-                    <a @click="quitarDetalle(index)">
-                      <app-icon img="minus-circle" color="black"></app-icon>
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-
+                    <tr v-for="(detalle, index) in detalles" :key="index">
+                      <td>
+                        {{ detalle?.tecnica1 }}{{ detalle.tecnica2 ? ' / ' + detalle.tecnica2 : '' }}
+                      </td>
+                      <td>
+                        {{ detalle?.cantidad1 }}{{ detalle.cantidad2 ? ' / ' + detalle.cantidad2 : '' }}
+                      </td>
+                      <td>
+                        {{ detalle.planta[0]?.value }}{{ detalle.planta[1] ? ' / ' + detalle.planta[1].value : '' }}
+                      </td>
+                      <td>{{ detalle.equipo_linea }}</td>
+                      <td>{{ detalle.horario }}</td>
+                      <td>{{ detalle.n_informe }}</td>
+                      <td>
+                        {{ detalle.operadores[0]?.label }}{{ detalle.operadores[1] ? ' / ' + detalle.operadores[1]?.label : '' }}
+                      </td>
+                      <td>
+                        {{ detalle.inspector_secl[0]?.name }}{{ detalle.inspector_secl[1] ? ' / ' + detalle.inspector_secl[1]?.name : '' }}
+                      </td>
+                      <td>
+                        <a @click="quitarDetalle(index)">
+                          <app-icon img="minus-circle" color="black"></app-icon>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -174,7 +193,9 @@
               </thead>
               <tbody>
                 <tr v-for="(informe, index) in informesConParte" :key="informe.id">
-                  <td><input type="checkbox" v-model="informe.selected" @click="actualizarNumeroInforme(informe)" /></td>
+                  <td>
+                    <input type="checkbox" v-model="informe.selected" @click="actualizarNumeroInforme(informe)" />
+                  </td>
                   <td>{{ informe.metodo }}</td>
                   <td>{{ formatearNumero(informe.metodo, informe.numero) }}</td>
                   <td>{{ informe.obra }}</td>
@@ -183,7 +204,9 @@
                   <td>{{ informe.solicitante }}</td>
                 </tr>
                 <tr v-for="(informe, index) in informesSinParte" :key="informe.id">
-                  <td><input type="checkbox" v-model="informe.selected" @click="actualizarNumeroInforme(informe)" /></td>
+                  <td>
+                    <input type="checkbox" v-model="informe.selected" @click="actualizarNumeroInforme(informe)" />
+                  </td>
                   <td>{{ informe.metodo }}</td>
                   <td>{{ formatearNumero(informe.metodo, informe.numero) }}</td>
                   <td>{{ informe.obra }}</td>
@@ -195,80 +218,40 @@
             </table>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary" :disabled="isSaving" ref="saveButton">Guardar</button>
+        <button type="submit" class="btn btn-primary" :disabled="isSaving" ref="saveButton">
+          Guardar
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
-import axios from 'axios';
-import { Toast } from 'bootstrap';
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
+import axios from "axios";
+import { Toast } from "bootstrap";
 
 export default {
   name: "ParteManualComponent",
   props: {
-  // Objeto parteManual
-  parte_manual_data: {
-    type: Object,
-    required: true
+    parte_manual_data: { type: Object, required: true },
+    fecha_data: { type: String, required: true },
+    ot_data: { type: Object, required: true },
+    cliente_data: { type: Object, required: true },
+    cliente_nombre_data: { type: String, required: true },
+    proyecto_data: { type: String, required: true },
+    orden_de_trabajo_data: { type: String, required: true },
+    detalles_data: { type: Array, required: true },
+    plantas_data: { type: Array, required: true },
+    inspectores_op: { type: Array, required: true },
+    operadores_data: { type: Array, required: true }
   },
-  // Fecha como string
-  fecha_data: {
-    type: String,
-    required: true
-  },
-  // Objeto ot
-  ot_data: {
-    type: Object,
-    required: true
-  },
-  // Objeto cliente
-  cliente_data: {
-    type: Object,
-    required: true
-  },
-  // Nombre del cliente como string
-  cliente_nombre_data: {
-    type: String,
-    required: true
-  },
-  // Proyecto como string
-  proyecto_data: {
-    type: String,
-    required: true
-  },
-  // Número de orden de trabajo como string
-  orden_de_trabajo_data: {
-    type: String,
-    required: true
-  },
-  // Detalles como array de objetos
-  detalles_data: {
-    type: Array,
-    required: true
-  },
-  // Plantas como array de objetos
-  plantas_data: {
-    type: Array,
-    required: true
-  },
-  inspectores_op:{
-    type: Array,
-    required: true
-  },
-  operadores_data:{
-  type: Array,
-  required: true
-}
-},
   components: {
     DatePicker,
-    'v-select': vSelect
+    "v-select": vSelect
   },
   data() {
     return {
@@ -277,21 +260,21 @@ export default {
       cliente: this.cliente_nombre_data,
       proyecto: this.proyecto_data,
       ordenTrabajo: this.ot_data.numero,
-      informesConParte:[],
-      tempCantidad: null,
+      informesConParte: [],
       informesSinParte: [],
       detalles: [],
       opcionesPlanta: this.plantas_data.map(planta => ({ label: planta.codigo, value: planta.codigo })),
-      opcionesOperadores: this.operadores_data.map(operador => ({ label: operador.nombre, value: operador.id})),
+      opcionesOperadores: this.operadores_data.map(operador => ({ label: operador.nombre, value: operador.id })),
       inspectores_op: this.inspectores_op.map(inspector => ({ label: inspector.name, value: inspector.id })),
       ot: this.ot_data,
       opcionesHorarios: [
-      { value: 'A', label: 'LUNES A VIERNES 7 - A 16.30 HS' },
-      { value: 'B', label: 'LUNES A VIERNES 7 - A 19HS' },
-      { value: 'C', label: 'SAB. - DOM. - FERIADOS - 7 A 19 HS' },
-      { value: 'D', label: 'LUNES A DOM. - HORARIO NOCTURNO' }
-    ],
+        { value: 'A', label: 'LUNES A VIERNES 7 - A 16.30 HS' },
+        { value: 'B', label: 'LUNES A VIERNES 7 - A 19HS' },
+        { value: 'C', label: 'SAB. - DOM. - FERIADOS - 7 A 19 HS' },
+        { value: 'D', label: 'LUNES A DOM. - HORARIO NOCTURNO' }
+      ],
       isSaving: false,
+      // Se mantiene la estructura de detalle con un array para cantidad
       detalle: {
         tecnica: [],
         cantidad: [],
@@ -302,8 +285,27 @@ export default {
         operadores: [],
         inspector_secl: []
       },
-      opcionesTecnica: ['CR', 'ADM', 'LP', 'PM', 'PMI', 'RG', 'US', 'US-AT', 'US-N2', 'US-PHA', 'DU', 'RM', 'TT'],
+      opcionesTecnica: ['CR', 'ADM', 'LP', 'PM', 'PMI', 'RG', 'US', 'US-AT', 'US-N2', 'US-PHA', 'DU', 'RM', 'TT']
     };
+  },
+  computed: {
+    // Propiedades computadas para mapear los dos inputs fijos a detalle.cantidad
+    cantidad1: {
+      get() {
+        return this.detalle.cantidad[0] || "";
+      },
+      set(value) {
+        this.$set(this.detalle.cantidad, 0, value);
+      }
+    },
+    cantidad2: {
+      get() {
+        return this.detalle.cantidad[1] || "";
+      },
+      set(value) {
+        this.$set(this.detalle.cantidad, 1, value);
+      }
+    }
   },
   mounted() {
     this.editMode = this.ot ? true : false;
@@ -319,109 +321,70 @@ export default {
       if (newValue) {
         this.cargarInformesSinParte();
       }
-    },
+    }
   },
   methods: {
     disabledDate(time) {
       return time.getTime() > Date.now();
     },
     obtenerLabelOperador(operador) {
-    return operador ? operador.label : '-';
-  },
-  agregarCantidad() {
-    if (this.tempCantidad && this.tempCantidad > 0 && this.tempCantidad <= 9999 && this.detalle.cantidad.length < 2) {
-        this.detalle.cantidad.push(this.tempCantidad);
-        this.tempCantidad = null;
-    } else if (this.tempCantidad && this.tempCantidad > 9999) {
-        // Mostrar un mensaje de error si la cantidad supera los 4 dígitos
-        toastr.error('No se pueden agregar números de más de 4 dígitos.');
-        this.tempCantidad = null;  // Limpiar el campo de entrada
-    }
-},
-    removerCantidad(index) {
-      this.detalle.cantidad.splice(index, 1);
-    },
-    buscarNombreOperador(idOperador) {
-    const operador = this.opcionesOperadores.find(operador => operador.id === idOperador);
-    return operador ? operador.nombre : '';
-    },
-    formatearNumero(metodo, numero) {
-      const numeroFormateado = numero.toString().padStart(4, '0');
-      return `${metodo}${numeroFormateado}`;
-    },
-    saveOrUpdate() {
-      if (this.editMode) {
-        this.updateSection();
-      } else {
-        this.storeSection();
-      }
+      return operador ? operador.label : '-';
     },
     agregarDetalle() {
-  if (!this.validarDetalle()) {
-    return;
-  }
-  // Convertir los arrays en propiedades individuales que usa la tabla
-  const nuevoDetalle = {
-    tecnica1: this.detalle.tecnica[0] || '',
-    tecnica2: this.detalle.tecnica[1] || '',
-    cantidad1: this.detalle.cantidad[0] || '',
-    cantidad2: this.detalle.cantidad[1] || '',
-    planta: this.detalle.planta,
-    equipo_linea: this.detalle.equipo_linea,
-    horario: this.detalle.horario,
-    n_informe: this.detalle.n_informe,
-    operadores: this.detalle.operadores,
-    inspector_secl: this.detalle.inspector_secl
-  };
-
-  this.detalles.push(nuevoDetalle);
-  this.resetDetalle();
-},
-resetDetalle() {
-  this.detalle = {
-    tecnica: [],
-    cantidad: [],
-    planta: [],
-    equipo_linea: "",
-    horario: "",
-    n_informe: "",
-    operadores: [],
-    inspector_secl: []
-  };
-  this.tempCantidad = null;
-}
-,
+      if (!this.validarDetalle()) {
+        return;
+      }
+      const nuevoDetalle = {
+        tecnica1: this.detalle.tecnica[0] || '',
+        tecnica2: this.detalle.tecnica[1] || '',
+        cantidad1: this.detalle.cantidad[0] || '',
+        cantidad2: this.detalle.cantidad[1] || '',
+        planta: this.detalle.planta,
+        equipo_linea: this.detalle.equipo_linea,
+        horario: this.detalle.horario,
+        n_informe: this.detalle.n_informe,
+        operadores: this.detalle.operadores,
+        inspector_secl: this.detalle.inspector_secl
+      };
+      this.detalles.push(nuevoDetalle);
+      this.resetDetalle();
+    },
+    resetDetalle() {
+      this.detalle = {
+        tecnica: [],
+        cantidad: [],
+        planta: [],
+        equipo_linea: "",
+        horario: "",
+        n_informe: "",
+        operadores: [],
+        inspector_secl: []
+      };
+    },
     pushDetalles() {
-  this.detalles_data.forEach(detalle => {
-    const operador1Id = parseInt(detalle.operador1, 10);
-    const operador2Id = parseInt(detalle.operador2, 10);
-
-    const operador1 = this.obtenerNombreOperador(operador1Id);
-    const operador2 = this.obtenerNombreOperador(operador2Id);
-    const inspector1 = this.obtenerNombreInspector(detalle.inspector_id_1);
-    const inspector2 = detalle.inspector_id_2 ? this.obtenerNombreInspector(detalle.inspector_id_2) : null;
-
-    const nuevoDetalle = {
-      tecnica1: detalle.tecnica_1 || '',
-      tecnica2: detalle.tecnica_2 || '',
-      cantidad1: detalle.cantidad_1 || '',
-      cantidad2: detalle.cantidad_2 || '',
-      planta: [
-        { value: detalle.planta_1 },
-        ...(detalle.planta_2 ? [{ value: detalle.planta_2 }] : [])
-      ],
-      equipo_linea: detalle.equipo,
-    horario: detalle.horario,
-    n_informe: detalle.informe_nro,
-    inspector_secl: [inspector1,inspector2],
-    operadores: [operador1, operador2]
-    };
-
-    console.log('__', nuevoDetalle, '__');
-    this.detalles.push(nuevoDetalle);
-  });
-}
-,
+      this.detalles_data.forEach(detalle => {
+        const operador1 = this.obtenerNombreOperador(parseInt(detalle.operador1, 10));
+        const operador2 = this.obtenerNombreOperador(parseInt(detalle.operador2, 10));
+        const inspector1 = this.obtenerNombreInspector(detalle.inspector_id_1);
+        const inspector2 = detalle.inspector_id_2 ? this.obtenerNombreInspector(detalle.inspector_id_2) : null;
+        const nuevoDetalle = {
+          tecnica1: detalle.tecnica_1 || '',
+          tecnica2: detalle.tecnica_2 || '',
+          cantidad1: detalle.cantidad_1 || '',
+          cantidad2: detalle.cantidad_2 || '',
+          planta: [
+            { value: detalle.planta_1 },
+            ...(detalle.planta_2 ? [{ value: detalle.planta_2 }] : [])
+          ],
+          equipo_linea: detalle.equipo,
+          horario: detalle.horario,
+          n_informe: detalle.informe_nro,
+          inspector_secl: [inspector1, inspector2],
+          operadores: [operador1, operador2]
+        };
+        this.detalles.push(nuevoDetalle);
+      });
+    },
     actualizarNumeroInforme(informe) {
       if (informe.selected) {
         const numeroFormateado = this.formatearNumero(informe.metodo, informe.numero);
@@ -447,17 +410,29 @@ resetDetalle() {
       } else if (this.detalle.tecnica.length > 2) {
         errores.push("No puedes seleccionar más de dos técnicas.");
       }
-      if (!this.detalle.cantidad || this.detalle.cantidad.length === 0) {
-        errores.push("Por favor, ingresa al menos una cantidad.");
-      } else if (this.detalle.cantidad.length > 2) {
-        errores.push("No puedes ingresar más de dos cantidades.");
+      if (!this.detalle.cantidad || this.detalle.cantidad.length === 0 || !this.detalle.cantidad[0]) {
+        errores.push("Por favor, ingresa la cantidad 1.");
       } else {
-        this.detalle.cantidad.forEach(c => {
-          let num = parseFloat(c);
-          if (isNaN(num) || num <= 0) {
-            errores.push("Cada cantidad debe ser un número mayor que cero.");
-          }
-        });
+        let num = parseFloat(this.detalle.cantidad[0]);
+        if (isNaN(num) || num <= 0) {
+          errores.push("La cantidad 1 debe ser un número mayor que cero.");
+        }
+        if (num > 9999) {
+          errores.push("La cantidad 1 no puede ser mayor que 9999.");
+        }
+      }
+      if (this.detalle.cantidad[1]) {
+        let num = parseFloat(this.detalle.cantidad[1]);
+        if (isNaN(num) || num <= 0) {
+          errores.push("La cantidad 2, si se ingresa, debe ser un número mayor que cero.");
+        }
+        if (num > 9999) {
+          errores.push("La cantidad 2 no puede ser mayor que 9999.");
+        }
+      }
+      // Nueva condición: si hay más de una técnica, cantidad 2 es obligatoria.
+      if (this.detalle.tecnica.length > 1 && (!this.detalle.cantidad[1] || this.detalle.cantidad[1] === "")) {
+        errores.push("Para más de una técnica, la cantidad 2 es obligatoria.");
       }
       if (!this.detalle.planta || this.detalle.planta.length === 0) {
         errores.push("Por favor, selecciona al menos una planta.");
@@ -470,10 +445,7 @@ resetDetalle() {
         errores.push("Por favor, selecciona un horario.");
       if (!this.detalle.n_informe)
         errores.push("Por favor, ingresa el número de informe.");
-      if (
-        !this.detalle.inspector_secl ||
-        this.detalle.inspector_secl.length === 0
-      ) {
+      if (!this.detalle.inspector_secl || this.detalle.inspector_secl.length === 0) {
         errores.push("Por favor, selecciona al menos un inspector.");
       } else if (this.detalle.inspector_secl.length > 2) {
         errores.push("No puedes seleccionar más de dos inspectores.");
@@ -490,34 +462,16 @@ resetDetalle() {
       this.detalles.splice(index, 1);
     },
     obtenerNombreOperador(id) {
-    // Buscar el operador en opcionesOperadores
-    const operadorEncontrado = this.opcionesOperadores.find(operador => operador.value === id);
-    
-    // Verificar si se encontró el operador
-    if (operadorEncontrado) {
-      // Devolver el nombre del operador
-      return operadorEncontrado;
-    } else {
-      // Devolver un mensaje indicando que el operador no se encontró
-      return null;
-    }
-  },
+      const operadorEncontrado = this.opcionesOperadores.find(operador => operador.value === id);
+      return operadorEncontrado ? operadorEncontrado : null;
+    },
     obtenerNombreInspector(id) {
-    // Buscar el operador en opcionesOperadores
-    const inspectorEncontrado = this.inspectores_op.find(inspector => inspector.id === id);
-    console.log('inspector:',inspectorEncontrado);
-    // Verificar si se encontró el operador
-    if (inspectorEncontrado) {
-      // Devolver el nombre del operador
-      return inspectorEncontrado;
-    } else {
-      // Devolver un mensaje indicando que el operador no se encontró
-      return null;
-    }
-  },
-  storeSection() {
-    this.isSaving = true;
-    const data = {
+      const inspectorEncontrado = this.inspectores_op.find(inspector => inspector.id === id);
+      return inspectorEncontrado ? inspectorEncontrado : null;
+    },
+    storeSection() {
+      this.isSaving = true;
+      const data = {
         fecha: this.fecha,
         ot: this.ot_data.id,
         cliente: this.cliente,
@@ -526,44 +480,44 @@ resetDetalle() {
         detalles: this.detalles,
         ot_obra: this.ot.obra ?? '-',
         selectedInformes: this.informesSinParte.filter(informe => informe.selected).map(informe => informe.id),
-        deselectedInformes: this.informesConParte.filter(informe => !informe.selected).map(informe => informe.id)  // Nueva línea
-    };
-    console.log(this.detalles);
-    axios.put(`/api/partes-manuales/${this.parte_manual_data.id}`, data)
+        deselectedInformes: this.informesConParte.filter(informe => !informe.selected).map(informe => informe.id)
+      };
+      console.log(this.detalles);
+      axios.put(`/api/partes-manuales/${this.parte_manual_data.id}`, data)
         .then(response => {
-            console.log('Datos actualizados exitosamente', response);
-            window.open('/pdf-partemanual/' + this.parte_manual_data.id, '_blank');
-            window.location.href = '/partes/ot/' + this.ot_data.id, '_blank';
+          console.log('Datos actualizados exitosamente', response);
+          window.open('/pdf-partemanual/' + this.parte_manual_data.id, '_blank');
+          window.location.href = '/partes/ot/' + this.ot_data.id, '_blank';
         })
         .catch(error => {
-            console.error('Error al actualizar los datos:', error);
-            this.isSaving = false;
-            let errorMessage = 'Error desconocido';
-            if (error.response && error.response.data && error.response.data.message) {
-                errorMessage = error.response.data.message;
-            } else if (error.message) {
-                errorMessage = error.message;
-            }
-            this.mostrarToast('Error al actualizar: ' + errorMessage, 'error');
+          console.error('Error al actualizar los datos:', error);
+          this.isSaving = false;
+          let errorMessage = 'Error desconocido';
+          if (error.response && error.response.data && error.response.data.message) {
+            errorMessage = error.response.data.message;
+          } else if (error.message) {
+            errorMessage = error.message;
+          }
+          this.mostrarToast('Error al actualizar: ' + errorMessage, 'error');
         });
-},
+    },
     mostrarToast(mensaje, tipo) {
-  if (tipo === 'success') {
-    toastr.success(mensaje);
-  } else if (tipo === 'error') {
-    toastr.error(mensaje);
-  } else if (tipo === 'warning') {
-    toastr.warning(mensaje);
-  }
-},
-cargarInformesSinParte() {
+      if (tipo === 'success') {
+        toastr.success(mensaje);
+      } else if (tipo === 'error') {
+        toastr.error(mensaje);
+      } else if (tipo === 'warning') {
+        toastr.warning(mensaje);
+      }
+    },
+    cargarInformesSinParte() {
       axios.get(`/api/informes-sin-parte?ot_id=${this.ot_data.id}&hasta=${this.fecha}`)
         .then(response => {
           this.informesSinParte = response.data.map(informe => ({
             ...informe,
             selected: false
           }));
-          console.log('noparte',this.informesSinParte); 
+          console.log('noparte', this.informesSinParte);
         })
         .catch(error => {
           if (error.response && error.response.data && error.response.data.message) {
@@ -577,25 +531,25 @@ cargarInformesSinParte() {
         });
     },
     cargarInformesConParte() {
-    const url = `/api/informes-con-parte?parte_id=${this.parte_manual_data.id}&ot_id=${this.ot_data.id}`;
-    axios.get(url)
+      const url = `/api/informes-con-parte?parte_id=${this.parte_manual_data.id}&ot_id=${this.ot_data.id}`;
+      axios.get(url)
         .then(response => {
-            this.informesConParte = response.data.map(informe => ({
-                ...informe,
-                selected: true  // Marcamos todos los informes como seleccionados
-            }));
-            console.log('Informes con parte:', this.informesConParte);
+          this.informesConParte = response.data.map(informe => ({
+            ...informe,
+            selected: true
+          }));
+          console.log('Informes con parte:', this.informesConParte);
         })
         .catch(error => {
-            console.error('Error al cargar los informes con parte:', error);
-            this.mostrarToast('Error al cargar los informes: ' + error.message, 'error');
+          console.error('Error al cargar los informes con parte:', error);
+          this.mostrarToast('Error al cargar los informes: ' + error.message, 'error');
         });
-}
+    }
   }
-}
+};
 </script>
 
-<style>
+<style scoped>
   .boton-centrado {
     display: flex;
     align-items: center;
