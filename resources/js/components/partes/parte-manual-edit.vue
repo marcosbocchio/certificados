@@ -472,6 +472,10 @@ export default {
       const inspectorEncontrado = this.inspectores_op.find(inspector => inspector.id === id);
       return inspectorEncontrado ? inspectorEncontrado : null;
     },
+    formatearNumero(metodo, numero) {
+      const numeroFormateado = numero.toString().padStart(4, '0');
+      return `${metodo}${numeroFormateado}`;
+    },
     storeSection() {
       this.isSaving = true;
       const data = {
