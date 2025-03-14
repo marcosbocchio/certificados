@@ -77,47 +77,82 @@ class TrazabilidadFuenteController extends Controller
         //
     }
 
-    public function saveTrazabilidadFuente($interno_equipo_id,$interno_fuente_id){
-
-        $user_id = null;
-
-        if (Auth::check())
-        {
-             $user_id = $userId = Auth::id();
-        }
-
-        $fecha_actual =  Carbon::now();
-
-        $trazabilidad_fuente_actual = TrazabilidadFuente::where('interno_equipo_id',$interno_equipo_id)->latest()->first();
-
-        if($interno_fuente_id){
-
-                if((!$trazabilidad_fuente_actual) || ($trazabilidad_fuente_actual && $trazabilidad_fuente_actual->interno_fuente_id != $interno_fuente_id) ) {
-
-                    /*  Agrego el nuevo registro de trazabilidad*/
-
-                    $interno_fuente = InternoFuentes::find($interno_fuente_id);
-                    $trazabilidad_fuente = New TrazabilidadFuente;
-                    $trazabilidad_fuente->interno_equipo_id = $interno_equipo_id;
-                    $trazabilidad_fuente->interno_fuente_id = $interno_fuente_id;
-                    $trazabilidad_fuente->fecha_alta =  $fecha_actual;
-                    $trazabilidad_fuente->user_id = $user_id;
-                    $trazabilidad_fuente->curie = $interno_fuente->curie;
-                    $trazabilidad_fuente->save();
-
+    public function saveTrazabilidadFuente($interno_equipo_id, $interno_fuente_id, $activo_sn)
+    {
+        $user_id = Auth::check() ? Auth::id() : null;
+        $fecha_actual = Carbon::now();
+    
+        // Se obtiene el registro de trazabilidad más reciente para este equipo.
+        $trazabilidad_fuente_actual = TrazabilidadFuente::where('interno_equipo_id', $interno_equipo_id)
+                                                          ->latest()
+                                                          ->first();
+    
+        // Caso 1: No existe registro previo, se crea uno nuevo.
+        if (!$trazabilidad_fuente_actual) {
+            $nuevoRegistro = new TrazabilidadFuente;
+            $nuevoRegistro->interno_equipo_id = $interno_equipo_id;
+            $nuevoRegistro->interno_fuente_id = $interno_fuente_id;
+            $nuevoRegistro->fecha_alta = $fecha_actual;
+            // Si el equipo está inactivo, asignamos fecha de baja en el mismo registro.
+            if ($activo_sn != 1) {
+                $nuevoRegistro->fecha_baja = $fecha_actual;
+            }
+            $nuevoRegistro->user_id = $user_id;
+            $interno_fuente = InternoFuentes::find($interno_fuente_id);
+            $nuevoRegistro->curie = $interno_fuente->curie;
+            $nuevoRegistro->save();
+        } else {
+            // Existe un registro previo.
+            if ($trazabilidad_fuente_actual->interno_fuente_id == $interno_fuente_id) {
+                // Caso 2: Se carga el mismo registro.
+                if ($activo_sn != 1) {
+                    // Si el equipo está inactivo y el registro aún no fue cerrado,
+                    // asignamos la fecha de baja.
+                    if (!$trazabilidad_fuente_actual->fecha_baja) {
+                        $trazabilidad_fuente_actual->fecha_baja = $fecha_actual;
+                        $trazabilidad_fuente_actual->save();
+                    }
+                } else {
+                    // Caso 4: El mismo interno_fuente, pero se está reactivando el equipo.
+                    // Si el registro actual ya tiene fecha de baja (se cerró por desactivación),
+                    // se crea un nuevo registro.
+                    if ($trazabilidad_fuente_actual->fecha_baja) {
+                        $nuevoRegistro = new TrazabilidadFuente;
+                        $nuevoRegistro->interno_equipo_id = $interno_equipo_id;
+                        $nuevoRegistro->interno_fuente_id = $interno_fuente_id;
+                        $nuevoRegistro->fecha_alta = $fecha_actual;
+                        $nuevoRegistro->user_id = $user_id;
+                        $interno_fuente = InternoFuentes::find($interno_fuente_id);
+                        $nuevoRegistro->curie = $interno_fuente->curie;
+                        $nuevoRegistro->save();
+                    }
+                    // Si el equipo está activo y el último registro sigue abierto,
+                    // no se realiza ninguna acción.
                 }
-
-          }
-
-
-          if($trazabilidad_fuente_actual && !$trazabilidad_fuente_actual->fecha_baja){
-
-                $trazabilidad_fuente_actual->fecha_baja =  $fecha_actual;
-                $trazabilidad_fuente_actual->save();
-
-          }
-
+            } else {
+                // Caso 3: Se carga un registro diferente.
+                // Primero, se cierra el registro anterior si no lo está.
+                if (!$trazabilidad_fuente_actual->fecha_baja) {
+                    $trazabilidad_fuente_actual->fecha_baja = $fecha_actual;
+                    $trazabilidad_fuente_actual->save();
+                }
+                // Luego, se crea el nuevo registro.
+                $nuevoRegistro = new TrazabilidadFuente;
+                $nuevoRegistro->interno_equipo_id = $interno_equipo_id;
+                $nuevoRegistro->interno_fuente_id = $interno_fuente_id;
+                $nuevoRegistro->fecha_alta = $fecha_actual;
+                // Si el equipo está inactivo, se asigna fecha de baja en el nuevo registro.
+                if ($activo_sn != 1) {
+                    $nuevoRegistro->fecha_baja = $fecha_actual;
+                }
+                $nuevoRegistro->user_id = $user_id;
+                $interno_fuente = InternoFuentes::find($interno_fuente_id);
+                $nuevoRegistro->curie = $interno_fuente->curie;
+                $nuevoRegistro->save();
+            }
+        }
     }
+    
 
     public function getTrazabilidad(Request $request,$interno_equipo_id){
 

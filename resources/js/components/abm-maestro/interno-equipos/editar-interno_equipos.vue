@@ -139,6 +139,7 @@ export default {
          },
          equipo :'',
          interno_fuente :'',
+         old_interno_fuente: '',
          errors:{},
          }
 
@@ -176,6 +177,7 @@ export default {
                     this.equipo = this.selectRegistro.equipo;
                     this.Registro.probeta = this.selectRegistro.probeta;
                     this.Registro.dureza_calibracion = this.selectRegistro.dureza_calibracion;
+                    this.old_interno_fuente = this.selectRegistro.interno_fuente;
                     this.interno_fuente = this.selectRegistro.interno_fuente;
                     $('#editar').modal('show');
                     this.$forceUpdate();
@@ -193,14 +195,14 @@ export default {
             storeRegistro: function(){
 
                 axios.defaults.baseURL = this.url ;
-                console.log('aaaaaaaaa', this.Registro, 'aaaaaaaa', this.equipo);
+                console.log(this.old_interno_fuente);
                 var urlRegistros = 'interno_equipos/' + this.selectRegistro.id;
                 axios.put(urlRegistros, {
 
                 ...this.Registro,
                 'equipo' : this.equipo,
                 'interno_fuente' : this.interno_fuente,
-
+                'old_interno_fuente': this.old_interno_fuente,
                 }).then(response => {
                   this.$emit('update');
                   this.errors=[];

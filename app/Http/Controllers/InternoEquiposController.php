@@ -170,58 +170,63 @@ class InternoEquiposController extends Controller
                                ->first();
     }
 
-    public function update(InternoEquipoRequest $request, $id){
-
+    public function update(InternoEquipoRequest $request, $id)
+    {
         $interno_equipo = InternoEquipos::find($id);
 
         DB::beginTransaction();
         try {
+            // Se actualiza el equipo
+            $this->saveInternoEquipo($request, $interno_equipo);
 
-          $this->saveInternoEquipo($request,$interno_equipo);
+            // Se actualiza la trazabilidad. Se pasa activo_sn para evaluar en el registro.
+            (new \App\Http\Controllers\TrazabilidadFuenteController)
+                ->saveTrazabilidadFuente(
+                    $interno_equipo->id, 
+                    $request['interno_fuente']['id'], 
+                    $request['activo_sn']
+                );
 
-         (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
-
-
-          DB::commit();
-
-          } catch (Exception $e) {
-
+            DB::commit();
+        } catch (Exception $e) {
             DB::rollback();
             throw $e;
+        }
+    }
 
-          }
-      }
+    public function saveInternoEquipo($request, $interno_equipo)
+    {
+        $interno_equipo->nro_serie           = $request['nro_serie'];
+        $interno_equipo->nro_interno         = $request['nro_interno'];
+        $interno_equipo->foco                = $request['foco'];
+        $interno_equipo->voltaje             = $request['voltaje'];
+        $interno_equipo->amperaje            = $request['amperaje'];
+        $interno_equipo->probeta             = $request['probeta'];
+        $interno_equipo->dureza_calibracion  = $request['dureza_calibracion'];
+        $interno_equipo->activo_sn           = $request['activo_sn'];
+        $interno_equipo->equipo_id           = $request['equipo']['id'];
+        $interno_equipo->interno_fuente_id   = $request['interno_fuente']['id'];
 
-      public function saveInternoEquipo($request, $interno_equipo)
-      {
-          $interno_equipo->nro_serie = $request['nro_serie'];
-          $interno_equipo->nro_interno = $request['nro_interno'];
-          $interno_equipo->foco = $request['foco'];
-          $interno_equipo->voltaje = $request['voltaje'];
-          $interno_equipo->amperaje = $request['amperaje'];
-          $interno_equipo->probeta = $request['probeta'];
-          $interno_equipo->dureza_calibracion = $request['dureza_calibracion'];
-          $interno_equipo->activo_sn = $request['activo_sn'];
-          $interno_equipo->equipo_id = $request['equipo']['id'];
-          $interno_equipo->interno_fuente_id = $request['interno_fuente']['id'];
-      
-          Log::info($request['activo_sn']);
-      
-          if ($request['activo_sn'] != 1) {
+        // Se asigna la fecha de anulación si hubo cambio en el interno_fuente
+        // o si el equipo está inactivo.
+        if (
+            ($request['old_interno_fuente']['id'] != $request['interno_fuente']['id'])
+            || ($request['activo_sn'] != 1)
+        ) {
             $fechaActual = Carbon::now()->format('Y-m-d');
-            Log::info("Fecha actual: " . $fechaActual);
-            $interno_equipo->fecha_anul = $fechaActual; // Guardar la fecha en la base de datos
-          }else{
+            $interno_equipo->fecha_anul = $fechaActual;
+        } else {
             $interno_equipo->fecha_anul = null;
-          }
-      
-          if ($request->isMethod('post')) {
-              $frente = Frentes::where('centro_distribucion_sn', 1)->first();
-              $interno_equipo->frente_id = $frente->id;
-          }
-      
-          $interno_equipo->save();
-      }
+        }
+
+        if ($request->isMethod('post')) {
+            $frente = Frentes::where('centro_distribucion_sn', 1)->first();
+            $interno_equipo->frente_id = $frente->id;
+        }
+
+        $interno_equipo->save();
+    }
+
 
     /**
      * Remove the specified resource from storage.

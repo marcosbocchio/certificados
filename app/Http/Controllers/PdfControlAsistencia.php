@@ -351,10 +351,26 @@ public function getDatosAsistencia($frenteId, $year, $month, $modo)
     }
 
     log::debug($asistenciaReorganizada);
-    ksort($asistenciaReorganizada);
+
+    // Orden personalizado: alfabético por nombre y, para el mismo nombre, "operador" antes que "ayudante"
+    uksort($asistenciaReorganizada, function ($claveA, $claveB) {
+        list($nombreA, $tipoA) = explode('-', $claveA);
+        list($nombreB, $tipoB) = explode('-', $claveB);
+
+        $resultado = strcmp($nombreA, $nombreB);
+        if ($resultado === 0) {
+            // Si es el mismo nombre, se define que 'operador' vaya antes que 'ayudante'
+            if ($tipoA === $tipoB) {
+                return 0;
+            }
+            return ($tipoA === 'operador') ? -1 : 1;
+        }
+        return $resultado;
+    });
 
     return $asistenciaReorganizada;
 }
+
 
 
 

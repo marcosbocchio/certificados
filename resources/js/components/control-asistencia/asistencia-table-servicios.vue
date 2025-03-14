@@ -67,6 +67,7 @@
             <pagination
               :data="pagination"
               @pagination-change-page="fetchData"
+              :limit="4"
             >
               <span slot="prev-nav">&lt; Anterior</span>
               <span slot="next-nav">Siguiente &gt;</span>

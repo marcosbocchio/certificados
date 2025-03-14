@@ -1039,73 +1039,74 @@ public function getAsistenciaPagosServicios(Request $request)
 
     return response()->json($detallesAgrupados);
 }
-public function getDatosAsistenciaServicios(Request $request)
-{
-    // Obtener frente_id y fecha desde los parámetros de la URL
-    $frenteId = $request->input('frente_id');
-    $fecha = $request->input('fecha');
+    public function getDatosAsistenciaServicios(Request $request)
+    {
+        // Obtener frente_id y fecha desde los parámetros de la URL
+        $frenteId = $request->input('frente_id');
+        $fecha = $request->input('fecha');
 
-    // Buscar todas las filas en AsistenciaHora que coincidan con el frente y la fecha (año-mes)
-    $asistenciaHoras = AsistenciaHora::where('frente_id', $frenteId)
-                                     ->where('fecha', 'like', $fecha . '%') // Buscar por año-mes
-                                     ->get();
+        // Buscar todas las filas en AsistenciaHora que coincidan con el frente y la fecha (año-mes)
+        $asistenciaHoras = AsistenciaHora::where('frente_id', $frenteId)
+                                        ->where('fecha', 'like', $fecha . '%') // Buscar por año-mes
+                                        ->get();
 
-    // Obtener los IDs de AsistenciaHora para buscar en AsistenciaDetalle
-    $asistenciaHorasIds = $asistenciaHoras->pluck('id'); // Lista de IDs
+        // Obtener los IDs de AsistenciaHora para buscar en AsistenciaDetalle
+        $asistenciaHorasIds = $asistenciaHoras->pluck('id'); // Lista de IDs
 
-    // Buscar en AsistenciaDetalle con esos IDs, cargar la relación con User y AsistenciaHora
-    $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
-                                          ->with(['operador', 'ayudante', 'asistenciaHora'])  // Incluir relaciones
-                                          ->get()
-                                          ->filter(function ($detalle) {
-                                              return $detalle->contratista_id !== null;
-                                          })
-                                          ->flatMap(function ($detalle) {
-                                              // Crear dos entradas: una para operador y otra para ayudante si existen ambos
-                                              $result = [];
+        // Buscar en AsistenciaDetalle con esos IDs, cargar la relación con User y AsistenciaHora
+        $detallesAgrupados = AsistenciaDetalle::whereIn('asistencia_horas_id', $asistenciaHorasIds)
+            ->with(['operador', 'ayudante', 'asistenciaHora'])
+            ->get()
+            ->filter(function ($detalle) {
+                return $detalle->contratista_id !== null;
+            })
+            ->flatMap(function ($detalle) {
+                $result = [];
+                // Agregar entrada para operador
+                $result[] = [
+                    'id' => $detalle->operador_id,
+                    'name' => $detalle->operador->name ?? null,
+                    'ot_id' => $detalle->operador->id ?? null,
+                    'detalle' => $detalle,
+                    'fechaAsignacion' => $detalle->asistenciaHora->fecha,
+                    'ayudante_sn' => 1, // Marcado como operador
+                ];
 
-                                              // Agregar como operador
-                                              $result[] = [
-                                                  'id' => $detalle->operador_id,
-                                                  'name' => $detalle->operador->name ?? null,
-                                                  'ot_id' => $detalle->operador->id ?? null,
-                                                  'detalle' => $detalle,
-                                                  'fechaAsignacion' => $detalle->asistenciaHora->fecha,
-                                                  'ayudante_sn' => 1, // Marcado como operador
-                                              ];
+                // Agregar entrada para ayudante, si existe
+                if ($detalle->ayudante_id) {
+                    $result[] = [
+                        'id' => $detalle->ayudante_id,
+                        'name' => $detalle->ayudante->name ?? null,
+                        'ot_id' => $detalle->ayudante->id ?? null,
+                        'detalle' => $detalle,
+                        'fechaAsignacion' => $detalle->asistenciaHora->fecha,
+                        'ayudante_sn' => 0, // Marcado como ayudante
+                    ];
+                }
+                return $result;
+            })
+            // Agrupar por una clave única compuesta por id y el indicador de rol
+            ->groupBy(function ($item) {
+                return $item['id'] . '-' . $item['ayudante_sn'];
+            })
+            ->map(function ($items) {
+                return $items->map(function ($item) {
+                    return [
+                        'detalle' => $item['detalle'],
+                        'fechaAsignacion' => $item['fechaAsignacion'],
+                        'ayudante_sn' => $item['ayudante_sn'],
+                        'ot_id' => $item['ot_id'],
+                        'name' => $item['name']
+                    ];
+                });
+            })
+            // Ordenar las agrupaciones alfabéticamente por el nombre (usando el primer registro de cada grupo)
+            ->sortBy(function ($group) {
+                return $group->first()['name'];
+            })
+            ->values();
 
-                                              // Si tiene ayudante_id, agregar como ayudante
-                                              if ($detalle->ayudante_id) {
-                                                  $result[] = [
-                                                      'id' => $detalle->ayudante_id,
-                                                      'name' => $detalle->ayudante->name ?? null,
-                                                      'ot_id' => $detalle->ayudante->id ?? null,
-                                                      'detalle' => $detalle,
-                                                      'fechaAsignacion' => $detalle->asistenciaHora->fecha,
-                                                      'ayudante_sn' => 0, // Marcado como ayudante
-                                                  ];
-                                              }
-
-                                              return $result;
-                                          })
-                                          // Agrupar primero por 'id' para que cada entrada sea única para operador y ayudante
-                                          ->groupBy(function ($item) {
-                                              // Crear una clave única usando id y ayudante_sn
-                                              return $item['id'] . '-' . $item['ayudante_sn'];
-                                          })
-                                          ->map(function ($items) {
-                                              return $items->map(function ($item) {
-                                                  return [
-                                                      'detalle' => $item['detalle'],
-                                                      'fechaAsignacion' => $item['fechaAsignacion'],
-                                                      'ayudante_sn' => $item['ayudante_sn'],
-                                                      'ot_id' => $item['ot_id'],
-                                                      'name' => $item['name'] // Agregar el nombre del operador/ayudante
-                                                  ];
-                                              });
-                                          });
-
-    return response()->json($detallesAgrupados);
-}
+        return response()->json($detallesAgrupados);
+    }
 
 }

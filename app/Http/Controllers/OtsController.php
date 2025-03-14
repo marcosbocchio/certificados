@@ -224,6 +224,11 @@ class OtsController extends Controller
     public function getComponentes($ot_id,$obra){
 
         $obra = str_replace('--','/',$obra);
-        return Informe::where('ot_id',$ot_id)->where('obra',$obra)->select('informes.componente')->distinct()->get();
+        return Informe::where('ot_id',$ot_id)
+        ->where('obra',$obra)
+        ->select('informes.componente')
+        ->distinct()
+        ->orderBy('informes.componente','asc')
+        ->get();
     }
 }
