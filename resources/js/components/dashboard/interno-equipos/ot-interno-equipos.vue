@@ -211,7 +211,7 @@ data () { return {
  created : function(){
 
    this.ot_interno_equipos =  JSON.parse(JSON.stringify(this.ot_interno_equipos_data));
-   this.$store.dispatch('loadInternoEquipos',{ 'metodo' : 'null', 'activo_sn' : 'null','tipo_penetrante' : 'null' });
+   this.$store.dispatch('loadInternoEquipos',{ 'metodo' : 'null', 'activo_sn' : '1','tipo_penetrante' : 'null' });
 
  },
 
