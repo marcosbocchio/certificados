@@ -23,7 +23,7 @@ class ElementosController extends Controller
     public function callView($ot_id){
 
         $user = auth()->user();
-        $ot_prop = Ots::with('cliente')->find($ot_id);
+        $ot_prop = Ots::with('cliente')->orderBy('numero', 'asc')->get();
         $header_titulo = "Reporte";
         $header_descripcion ="Seguimiento de elementos / Plano-isométrico";
         return view('elementos.elementos',compact('user','ot_prop','header_titulo','header_descripcion'));

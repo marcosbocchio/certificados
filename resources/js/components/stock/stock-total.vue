@@ -46,8 +46,8 @@
       :data="pagination"
       @pagination-change-page="getResults"
       :limit="4">
-      <span slot="prev-nav">&lt; Anterior</span>
-      <span slot="next-nav">Siguiente &gt;</span>
+      <span slot="prev-nav">&lt; Previous</span>
+      <span slot="next-nav">Next &gt;</span>
     </pagination>
   </div>
 </div>

@@ -210,10 +210,15 @@ class OtsController extends Controller
 
     }
 
-    public function getObras($ot_id){
-
-        return Informe::where('ot_id',$ot_id)->select('informes.obra')->distinct()->get();
+    public function getObras($ot_id)
+    {
+        return Informe::where('ot_id', $ot_id)
+            ->select('informes.obra')
+            ->distinct()
+            ->orderBy('obra', 'asc')
+            ->get();
     }
+    
 
     public function getObrasTipoSoldaduras($ot_id){
 

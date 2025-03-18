@@ -307,6 +307,7 @@ setInformeCookie(nroInformeFormateado) {
        try {
            let res = await axios.get(urlRegistros);
            this.obras = res.data;
+           console.log(this.obras);
        }catch(error){
 
        }finally  {this.$store.commit('loading', false);}
@@ -339,7 +340,7 @@ setInformeCookie(nroInformeFormateado) {
            console.log(res.data)
            this.componentesSeleccionado = res.data;
        } catch (error) {
-           // Manejo de errores
+           console.log(error);
        } finally {
            this.$store.commit('loading', false);
        }

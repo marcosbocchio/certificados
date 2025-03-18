@@ -77,10 +77,34 @@ class TrazabilidadFuenteController extends Controller
         //
     }
 
-    public function saveTrazabilidadFuente($interno_equipo_id, $interno_fuente_id, $activo_sn)
+    public function saveTrazabilidadFuente($interno_equipo_id, $interno_fuente_id, $activo_sn, $old_interno_fuente_id = null)
     {
         $user_id = Auth::check() ? Auth::id() : null;
         $fecha_actual = Carbon::now();
+    
+        // Nuevo Caso: Si el interno_fuente_id es null, se usa el old_interno_fuente_id para cerrar (asignar baja) el registro activo.
+        if (is_null($interno_fuente_id)) {
+            if (!is_null($old_interno_fuente_id)) {
+                // Buscamos el registro activo (sin fecha de baja) para el old_interno_fuente.
+                $registro = TrazabilidadFuente::where('interno_equipo_id', $interno_equipo_id)
+                                ->where('interno_fuente_id', $old_interno_fuente_id)
+                                ->whereNull('fecha_baja')
+                                ->latest()
+                                ->first();
+                if ($registro) {
+                    $registro->fecha_baja = $fecha_actual;
+                    $registro->save();
+                    Log::info("Se asignó fecha de baja para old_interno_fuente_id: {$old_interno_fuente_id} en equipo {$interno_equipo_id}");
+                } else {
+                    Log::warning("No se encontró registro activo para old_interno_fuente_id: {$old_interno_fuente_id} en equipo {$interno_equipo_id}");
+                }
+            } else {
+                Log::warning("No se proporcionó interno_fuente_id ni old_interno_fuente_id para equipo {$interno_equipo_id}");
+            }
+            return; // Finalizamos sin crear nuevos registros.
+        }
+    
+        // Resto de la lógica actual:
     
         // Se obtiene el registro de trazabilidad más reciente para este equipo.
         $trazabilidad_fuente_actual = TrazabilidadFuente::where('interno_equipo_id', $interno_equipo_id)
@@ -126,8 +150,7 @@ class TrazabilidadFuenteController extends Controller
                         $nuevoRegistro->curie = $interno_fuente->curie;
                         $nuevoRegistro->save();
                     }
-                    // Si el equipo está activo y el último registro sigue abierto,
-                    // no se realiza ninguna acción.
+                    // Si el equipo está activo y el último registro sigue abierto, no se realiza acción.
                 }
             } else {
                 // Caso 3: Se carga un registro diferente.

@@ -238,20 +238,17 @@ class ClientesController extends Controller
     }
 
     /* Esta funcion devuelve el cliente de un usuario, si es usuario Enod devuelve todos los clientes */
-    public function getClientesOperador($user_id){
-
-      $user = User::findOrfail($user_id);
-
-      if ($user->cliente_id){
-
-        return Clientes::where('id',$user->cliente_id)->get();
-
-      }else{
-
-        return Clientes::all();
-
-      }
-
+    public function getClientesOperador($user_id)
+    {
+        $user = User::findOrFail($user_id);
+    
+        if ($user->cliente_id) {
+            return Clientes::where('id', $user->cliente_id)
+                ->orderBy('nombre_fantasia', 'asc')
+                ->get();
+        } else {
+            return Clientes::orderBy('nombre_fantasia', 'asc')->get();
+        }
     }
     public function UserClienteOT($ot_id){
         return OtUsuariosClientes::where('ot_id',$ot_id)
