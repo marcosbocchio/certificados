@@ -104,7 +104,7 @@
 
       data () { return {
 
-        inputSearch : ['users','interno_equipos','clientes','equipos','servicios'],
+        inputSearch : ['users','interno_equipos','clientes','equipos','servicios','materiales'],
         fillRegistro: {},
         errors:[],
         registros: {},

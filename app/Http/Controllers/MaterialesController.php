@@ -26,10 +26,23 @@ class MaterialesController extends Controller
 
     }
 
-    public function paginate(Request $request){
-
-      return Materiales::orderBy('codigo','DESC')->paginate(10);
-
+    public function paginate(Request $request)
+    {
+        // Inicia la consulta sobre la tabla materiales
+        $query = Materiales::query();
+    
+        // Si existe un término de búsqueda, aplica el filtro en 'codigo' y 'descripcion'
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('codigo', 'LIKE', "%{$search}%")
+                  ->orWhere('descripcion', 'LIKE', "%{$search}%");
+            });
+        }
+    
+        // Ordena y pagina los resultados
+        $query->orderBy('codigo', 'DESC');
+        return $query->paginate(10);
     }
 
     public function callView(){
