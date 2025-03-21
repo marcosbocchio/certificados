@@ -174,42 +174,41 @@ class InternoEquiposController extends Controller
 
 
     public function update(InternoEquipoRequest $request, $id)
-{
-    $interno_equipo = InternoEquipos::find($id);
-    Log::info('Contenido del request en update', $request->all());
+    {
+        $interno_equipo = InternoEquipos::find($id);
+        Log::info('Contenido del request en update', $request->all());
+        
+        DB::beginTransaction();
+        try {
+            // Se actualiza el equipo
+            $this->saveInternoEquipo($request, $interno_equipo);
     
-    DB::beginTransaction();
-    try {
-        // Se actualiza el equipo
-        $this->saveInternoEquipo($request, $interno_equipo);
-
-        // Se determina qué id usar:
-        // Si 'interno_fuente' no está definido, usamos 'old_interno_fuente'
-        $interno_fuente_id = isset($request['interno_fuente']) && !is_null($request['interno_fuente'])
-            ? $request['interno_fuente']['id']
-            : null;
-        $old_interno_fuente_id = isset($request['old_interno_fuente']) && !is_null($request['old_interno_fuente'])
-            ? $request['old_interno_fuente']['id']
-            : null;
-
-        (new \App\Http\Controllers\TrazabilidadFuenteController)
-            ->saveTrazabilidadFuente(
-                $interno_equipo->id, 
-                $interno_fuente_id, 
-                $request['activo_sn'],
-                $old_interno_fuente_id
-            );
-
-        DB::commit();
-    } catch (Exception $e) {
-        DB::rollback();
-        Log::error('Error al actualizar InternoEquipo', [
-            'equipo_id' => $id, 
-            'error' => $e->getMessage()
-        ]);
-        throw $e;
+            // Determinamos qué id usar:
+            // Si 'interno_fuente' no está definido, usamos 'old_interno_fuente'
+            $interno_fuente_id = isset($request['interno_fuente']) && !is_null($request['interno_fuente'])
+                ? $request['interno_fuente']['id']
+                : null;
+            $old_interno_fuente_id = isset($request['old_interno_fuente']) && !is_null($request['old_interno_fuente'])
+                ? $request['old_interno_fuente']['id']
+                : null;
+    
+            (new \App\Http\Controllers\TrazabilidadFuenteController)
+                ->saveTrazabilidadFuente(
+                    $interno_equipo->id, 
+                    $interno_fuente_id, 
+                    $old_interno_fuente_id
+                );
+    
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::error('Error al actualizar InternoEquipo', [
+                'equipo_id' => $id, 
+                'error' => $e->getMessage()
+            ]);
+            throw $e;
+        }
     }
-}
 
 
     public function saveInternoEquipo($request, $interno_equipo)

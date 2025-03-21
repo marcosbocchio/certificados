@@ -286,11 +286,15 @@ export default {
                      'CantPartes',
                      'CantVehiculos',
                      'CantDocumentaciones',
+                     'contador_loading',
                      'CantCertificados'])
      },
 
      watch: {
-
+      contador_loading(newVal, oldVal) {
+        console.log(`contador_loading cambió: ${oldVal} -> ${newVal}`);
+        this.loading = newVal > 0;
+      },
       ot_id_selected: function (ot_id) {
 
         this.cambiarTituloHeader(ot_id);

@@ -515,6 +515,7 @@ const store = new Vuex.Store({
     iluminaciones: [],
     ejecutor_ensayos: [],
     CantInformes: 0,
+    contador_loading: 0,
     CantOperadores: 0,
     CantRemitos: 0,
     CantSoldadores: 0,
@@ -1071,59 +1072,143 @@ const store = new Vuex.Store({
       })
     },
 
-    loadContarInformes({
-      commit }, ot_id) {
+    loadContarDocumentaciones({ commit }, ot_id) { 
+      commit('incrementarLoading');
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'ot-documentaciones/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros)
+        .then((response) => {
+          commit('ContarDocumentaciones', response.data);
+        })
+        .finally(() => {
+          commit('decrementarLoading');
+        });
+    },
+    
+    loadContarInternoEquipos({ commit }, ot_id) {
+      commit('incrementarLoading');
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'interno_equipos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros)
+        .then((response) => {
+          commit('ContarInternoEquipos', response.data);
+        })
+        .finally(() => {
+          commit('decrementarLoading');
+        });
+    },
+    
+    loadDiasDelMes({ commit }, payload) {
+      commit('DiasDelMes', payload);
+    },
+    
+    loadContarPartes({ commit }, ot_id) {
+      commit('incrementarLoading');
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'partes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros)
+        .then((response) => {
+          commit('ContarPartes', response.data);
+        })
+        .finally(() => {
+          commit('decrementarLoading');
+        });
+    },
+    
+    loadContarCertificados({ commit }, ot_id) {
+      commit('incrementarLoading');
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'certificados/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros)
+        .then((response) => {
+          commit('ContarCertificados', response.data);
+        })
+        .finally(() => {
+          commit('decrementarLoading');
+        });
+    },
+    
+    loadContarInformes({ commit }, ot_id) {
+      commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'informes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then((response) => {
-        commit('ContarInformes', response.data)
-      })
+      axios.get(urlRegistros)
+        .then((response) => {
+          commit('ContarInformes', response.data);
+        })
+        .finally(() => {
+          commit('decrementarLoading');
+        });
     },
-
-    loadContarOperadores({
-      commit }, ot_id) {
+    
+    loadContarOperadores({ commit }, ot_id) {
+      commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
-      var urlRegistros = 'ot_operarios/users/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then((response) => {
-        commit('ContarOperadores', response.data)
-      })
+      const urlRegistros = 'ot_operarios/users/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros)
+        .then((response) => {
+          commit('ContarOperadores', response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          commit('decrementarLoading');
+        });
     },
-
-    loadContarSoldadores({
-      commit }, ot_id) {
+    
+    loadContarSoldadores({ commit }, ot_id) {
+      commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_soldadores/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then((response) => {
-        commit('ContarSoldadores', response.data)
-      })
+      axios.get(urlRegistros)
+        .then((response) => {
+          commit('ContarSoldadores', response.data);
+        })
+        .finally(() => {
+          commit('decrementarLoading');
+        });
     },
-
-    loadContarUsuariosCliente({
-      commit }, ot_id) {
+    
+    loadContarUsuariosCliente({ commit }, ot_id) {
+      commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_usuarios_clientes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then((response) => {
-        commit('ContarUsuariosCliente', response.data)
-      })
+      axios.get(urlRegistros)
+        .then((response) => {
+          commit('ContarUsuariosCliente', response.data);
+        })
+        .finally(() => {
+          commit('decrementarLoading');
+        });
     },
-
-    loadContarProcedimientos({
-      commit }, ot_id) {
+    
+    loadContarProcedimientos({ commit }, ot_id) {
+      commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_procedimientos_propios/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then((response) => {
-        commit('ContarProcedimientos', response.data)
-      })
+      axios.get(urlRegistros)
+        .then((response) => {
+          commit('ContarProcedimientos', response.data);
+        })
+        .finally(() => {
+          commit('decrementarLoading');
+        });
     },
-
-    loadContarVehiculos({
-      commit }, ot_id) {
+    
+    loadContarVehiculos({ commit }, ot_id) {
+      commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'vehiculos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then((response) => {
-        commit('ContarVehiculos', response.data)
-      })
+      axios.get(urlRegistros)
+        .then((response) => {
+          commit('ContarVehiculos', response.data);
+        })
+        .finally(() => {
+          commit('decrementarLoading');
+        });
     },
+    
 
     loadContarDocumentacionesTotal({
       commit }) {
@@ -1133,49 +1218,6 @@ const store = new Vuex.Store({
         commit('ContarDocumentacionesTotal', response.data)
       })
     },
-
-    loadContarDocumentaciones({
-      commit }, ot_id) {
-      axios.defaults.baseURL = store.state.url;
-      var urlRegistros = 'ot-documentaciones/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then((response) => {
-        commit('ContarDocumentaciones', response.data)
-      })
-    },
-
-    loadContarInternoEquipos({
-      commit }, ot_id) {
-      axios.defaults.baseURL = store.state.url;
-      var urlRegistros = 'interno_equipos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then((response) => {
-        commit('ContarInternoEquipos', response.data)
-      })
-    },
-
-    loadDiasDelMes({
-      commit }, payload) {
-
-      commit('DiasDelMes', payload)
-
-    },
-    loadContarPartes({
-      commit }, ot_id) {
-      axios.defaults.baseURL = store.state.url;
-      var urlRegistros = 'partes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then((response) => {
-        commit('ContarPartes', response.data)
-      })
-    },
-
-    loadContarCertificados({
-      commit }, ot_id) {
-      axios.defaults.baseURL = store.state.url;
-      var urlRegistros = 'certificados/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then((response) => {
-        commit('ContarCertificados', response.data)
-      })
-    },
-
     loadServiciosOt({
       commit }, ot_id) {
       axios.defaults.baseURL = store.state.url;
@@ -1236,7 +1278,12 @@ const store = new Vuex.Store({
     loading(state, estado) {
       state.isLoading = estado
     },
-
+    incrementarLoading(state) {
+        state.contador_loading++;
+      },
+    decrementarLoading(state) {
+        state.contador_loading--;
+      },
     getFechaActual(state, fecha) {
       state.fecha = fecha
     },
