@@ -28,8 +28,16 @@
             ></date-picker>
           </div>
         </div>
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-2" style="margin-top: 20px;">
+          <button class="btn btn-enod" @click="exportExcel">Exportar Excel</button>
+        </div>
       </div>
     </div>
+
+
 
     <!-- Loading Overlay -->
     <vue-loading-overlay
@@ -45,6 +53,10 @@
     <!-- Tabla de datos -->
     <div class="box box-custom-enod">
       <div class="box-body">
+
+
+
+
         <div class="table-responsive">
           <table class="table table-hover table-striped table-condensed table-bordered">
             <thead>
@@ -56,7 +68,8 @@
                 <th class="text-center">Técnica</th>
                 <th class="text-center">Cliente</th>
                 <th class="text-center">Parte</th>
-                <th class="text-center">Pagar 
+                <th class="text-center">
+                  Pagar 
                   <input 
                     type="checkbox" 
                     v-model="selectAll" 
@@ -145,7 +158,9 @@ import 'vue2-datepicker/index.css';
 import axios from 'axios';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
-import { toastrInfo,toastrDefault } from '../toastrConfig';
+import { toastrInfo, toastrDefault } from '../toastrConfig';
+// Se importa la librería XLSX para generar el Excel
+import * as XLSX from 'xlsx';
 
 export default {
   components: {
@@ -197,7 +212,7 @@ export default {
           selected: false,  // Inicializa 'selected' en false
           no_pagar: false   // Inicializa 'no_pagar' en false
         }));
-
+        console.log(this.asistencia);
         // Ordena los resultados
         this.asistencia.sort((a, b) => {
           const codigoA = a.frente.codigo.toLowerCase();
@@ -219,42 +234,67 @@ export default {
       this.mostrarPopup = false; // Cerrar popup sin confirmar
     },
     guardarPagosExtras() {
-  // Log para verificar la estructura de los datos
-  console.log("asistencia", this.asistencia.filter(operador => operador.selected || operador.no_pagar));
+      // Log para verificar la estructura de los datos
+      console.log("asistencia", this.asistencia.filter(operador => operador.selected || operador.no_pagar));
 
-  // Crear los datos de pagos sin utilizar detalles, usando directamente la propiedad 'selected' y 'no_pagar'
-  const datosPagos = this.asistencia
-    .filter(operador => operador.selected || operador.no_pagar)  // Solo operadores seleccionados o con 'no_pagar'
-    .map(operador => ({
-      asistencia_horas_id: operador.asistencia_horas_id,  // Usamos 'id_asistencia' directamente del operador
-      operador_id: operador.operador.id,  // 'operador' parece tener una propiedad 'id'
-      pago_servicio_extra: operador.no_pagar ? null : this.fechaSeleccionada,  // Si no es para pagar, se deja null
-      no_pagar: operador.no_pagar ? 1 : 0  // Pasamos el estado de no pagar
-    }));
+      // Crear los datos de pagos sin utilizar detalles, usando directamente la propiedad 'selected' y 'no_pagar'
+      const datosPagos = this.asistencia
+        .filter(operador => operador.selected || operador.no_pagar)  // Solo operadores seleccionados o con 'no_pagar'
+        .map(operador => ({
+          asistencia_horas_id: operador.asistencia_horas_id,  // Usamos 'id_asistencia' directamente del operador
+          operador_id: operador.operador.id,  // 'operador' parece tener una propiedad 'id'
+          pago_servicio_extra: operador.no_pagar ? null : this.fechaSeleccionada,  // Si no es para pagar, se deja null
+          no_pagar: operador.no_pagar ? 1 : 0  // Pasamos el estado de no pagar
+        }));
 
-  // Realiza una llamada a la API para guardar los pagos
-  axios.post('/api/guardar_pagos_servicios', { datosPagos })
-    .then(response => {
-      if (response.data.success) {
-        // Muestra un mensaje de éxito
-        toastr.success('Pagos guardados exitosamente');
+      // Realiza una llamada a la API para guardar los pagos
+      axios.post('/api/guardar_pagos_servicios', { datosPagos })
+        .then(response => {
+          if (response.data.success) {
+            // Muestra un mensaje de éxito
+            toastr.success('Pagos guardados exitosamente');
 
-        // Llama a fetchAsistencia() para actualizar los datos
-        this.fetchAsistencia();
+            // Llama a fetchAsistencia() para actualizar los datos
+            this.fetchAsistencia();
 
-        // Cerrar el popup después de guardar
-        this.mostrarPopup = false;
-      } else {
-        // Muestra un mensaje de error si la respuesta no es exitosa
-        toastr.error('Error en los pagos');
-      }
-    })
-    .catch(error => {
-      // Muestra un mensaje de error en caso de falla en la llamada a la API
-      console.error('Error al guardar los pagos:', error);
-      toastr.error('Error al guardar los pagos: ' + error.message);
-    });
-},
+            // Cerrar el popup después de guardar
+            this.mostrarPopup = false;
+          } else {
+            // Muestra un mensaje de error si la respuesta no es exitosa
+            toastr.error('Error en los pagos');
+          }
+        })
+        .catch(error => {
+          // Muestra un mensaje de error en caso de falla en la llamada a la API
+          console.error('Error al guardar los pagos:', error);
+          toastr.error('Error al guardar los pagos: ' + error.message);
+        });
+    },
+    // Método para exportar a Excel usando los datos de asistencia
+    exportExcel() {
+      // Se arma la data del excel: primer fila de cabecera y luego las filas con los datos
+      const data = [];
+      // Cabecera
+      data.push(['Frente', 'Fecha', 'Operador', 'Ayudante', 'Tecnica', 'Clientes', 'Parte']);
+      // Recorrer cada registro de asistencia
+      this.asistencia.forEach(item => {
+        data.push([
+          item.frente?.codigo || '',
+          item.fecha_asistencia || '',
+          item.operador?.name || '',
+          item.ayudante?.name || '',
+          item.metodoEnsayo?.metodo || '',
+          item.contratista?.nombre_fantasia || '',
+          item.parte || ''
+        ]);
+      });
+      // Crear la hoja y el libro de Excel
+      const worksheet = XLSX.utils.aoa_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Asistencia');
+      // Guardar el archivo con el nombre "asistencia.xlsx"
+      XLSX.writeFile(workbook, 'asistencia.xlsx');
+    },
     // Manejar cambio en el checkbox "Pagar"
     handleSelectionChange(detalle) {
       if (detalle.selected) {

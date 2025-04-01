@@ -1,4 +1,3 @@
-@ -1,2269 +1,2269 @@
 <template>
     <div class="row">
        <div class="col-md-12">
