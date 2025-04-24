@@ -1120,16 +1120,12 @@ export default {
     watch :{
         fecha : function(){
             this.resetInformesSelect();
-            if(this.editmode) {
-              this.getInformesPendientesYEditableParte();
-            }else{
+            if(!this.editmode) {
                 this.getInformesPendientesParte();
             }
         },
         permitir_anteriores_sn: function(){
-            if(this.editmode) {
-                this.getInformesPendientesYEditableParte();
-            }else{
+            if(!this.editmode) {
                 this.getInformesPendientesParte();
             }
         },
@@ -1142,10 +1138,8 @@ export default {
                if (before) {
                   this.resetInformesSelect()
                }
-               if(this.editmode) {
-                    this.getInformesPendientesYEditableParte();
-                }else{
-                    this.getInformesPendientesParte();
+               if(!this.editmode) {
+                this.getInformesPendientesParte();
                 }
             },
             inmediate: true
