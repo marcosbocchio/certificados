@@ -1120,6 +1120,18 @@ export default {
     watch :{
         fecha : function(){
             this.resetInformesSelect();
+            if(this.editmode) {
+              this.getInformesPendientesYEditableParte();
+            }else{
+                this.getInformesPendientesParte();
+            }
+        },
+        permitir_anteriores_sn: function(){
+            if(this.editmode) {
+                this.getInformesPendientesYEditableParte();
+            }else{
+                this.getInformesPendientesParte();
+            }
         },
         TablaResponsables : function(){
             this.RecalcularViaticos();
@@ -1130,6 +1142,11 @@ export default {
                if (before) {
                   this.resetInformesSelect()
                }
+               if(this.editmode) {
+                    this.getInformesPendientesYEditableParte();
+                }else{
+                    this.getInformesPendientesParte();
+                }
             },
             inmediate: true
         },
@@ -1194,7 +1211,7 @@ export default {
 
             }else{
                  this.getServiciosGenerales();
-                 this.getInformesPendientesParte();
+                 // this.getInformesPendientesParte();
 
             }
         },
@@ -1333,12 +1350,17 @@ export default {
 
         getInformesPendientesParte: function(){
             console.log(this.otdata)
+            var fechaFiltrada = this.permitir_anteriores_sn ? null : this.fecha;
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'informes/ot/' + this.otdata.id + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;
-            axios.get(urlRegistros).then(response =>{
-                this.informes = response.data
-                console.log(this.informes)
-            });
+            if (this.fecha) {
+                var urlRegistros = 'informes/ot/' + this.otdata.id + '/obra/' + this.obra + '/fecha/' + fechaFiltrada + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;
+                axios.get(urlRegistros).then(response =>{
+                    this.informes = response.data
+                    console.log(this.informes)
+                });
+            } else {
+                this.informes = [];
+            }
 
         },
 
@@ -1358,95 +1380,67 @@ export default {
         },
 
         getInformesPendientesYEditableParte: function(){
-
+            var fechaFiltrada = this.permitir_anteriores_sn ? null : this.fecha;
              axios.defaults.baseURL = this.url ;
-             var urlRegistros = 'informes/ot/' + this.otdata.id + '/parte/'+ this.parte_data.id + '/pendientes_editables_parte_diario' + '?api_token=' + Laravel.user.api_token;
-             axios.get(urlRegistros).then(response =>{
-             this.informes = response.data
+             if (this.fecha) {
+                var urlRegistros = 'informes/ot/' + this.otdata.id + '/parte/' + this.parte_data.id + '/obra/' + this.obra + '/fecha/' + fechaFiltrada + '/pendientes_editables_parte_diario' + '?api_token=' + Laravel.user.api_token;
+                axios.get(urlRegistros).then(response =>{
+                this.informes = response.data
 
-                // Informes importados
+                    // Informes importados
 
-                this.informes_importados_data.forEach(function(item_data){
-
-
-                    this.informes.forEach(function(item_informe){
-
-                        if((item_data.informe_importado_id == item_informe.id) && (item_informe.importable_sn)){
-
-                                item_informe.informe_sel = true;
-                            }
-                        });
-
-                    }.bind(this));
-
-                    this.informes_importados_data.forEach(function(item){
-
-                        let visible_sn = true;
-                        this.AddMetodoImportados(item.metodo);
-                        if( !item.observaciones_final){
-
-                            visible_sn = false
-
-                        }
-
-                        this.TablaInformesImportados.push({
-
-                            id  : item.informe_importado_id,
-                            metodo             :item.metodo,
-                            numero_formateado  : item.numero_formateado,
-                            observaciones_original: item.observaciones_original,
-                            observaciones_final: item.observaciones_final,
-                            visible : visible_sn,
-                            });
-                        }.bind(this));
-
-                    // Informe Ri
-
-                    this.informes_ri_data.forEach(function(item_data){
+                    this.informes_importados_data.forEach(function(item_data){
 
 
                         this.informes.forEach(function(item_informe){
 
-                            if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+                            if((item_data.informe_importado_id == item_informe.id) && (item_informe.importable_sn)){
 
-                                item_informe.informe_sel = true;
-
-                            }
-
-                            }.bind(this));
-
-                    }.bind(this));
-
-                    this.informes_ri_data.forEach(function(item){
-
-                        let visible_sn = true;
-                        if( !item.costura_final && !item.pulgadas_final && !item.placas_final){
-
-                            visible_sn = false
-
-                        }
-
-                        this.TablaInformesRi.push({
-
-                            numero_formateado  : item.numero_formateado,
-                            costura_original: item.costura_original,
-                            pulgadas_original: item.pulgadas_original,
-                            placas_original : item.placas_original,
-                            id      : item.informe_id,
-                            visible : visible_sn,
-                            costura_final: item.costura_final,
-                            pulgadas_final: item.pulgadas_final,
-                            placas_final : item.placas_final,
-                            cm_original : item.cm_original,
-                            cm_final: item.cm_final,
-                            manual_sn : 0,
+                                    item_informe.informe_sel = true;
+                                }
                             });
 
                         }.bind(this));
 
-                        //informe ri adicionales
+                        this.informes_importados_data.forEach(function(item){
 
-                        this.informes_ri_adicionales_data.forEach(function(item){
+                            let visible_sn = true;
+                            this.AddMetodoImportados(item.metodo);
+                            if( !item.observaciones_final){
+
+                                visible_sn = false
+
+                            }
+
+                            this.TablaInformesImportados.push({
+
+                                id  : item.informe_importado_id,
+                                metodo             :item.metodo,
+                                numero_formateado  : item.numero_formateado,
+                                observaciones_original: item.observaciones_original,
+                                observaciones_final: item.observaciones_final,
+                                visible : visible_sn,
+                                });
+                            }.bind(this));
+
+                        // Informe Ri
+
+                        this.informes_ri_data.forEach(function(item_data){
+
+
+                            this.informes.forEach(function(item_informe){
+
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                    item_informe.informe_sel = true;
+
+                                }
+
+                                }.bind(this));
+
+                        }.bind(this));
+
+                        this.informes_ri_data.forEach(function(item){
 
                             let visible_sn = true;
                             if( !item.costura_final && !item.pulgadas_final && !item.placas_final){
@@ -1457,307 +1451,339 @@ export default {
 
                             this.TablaInformesRi.push({
 
-                                numero_formateado  : 'MANUAL',
+                                numero_formateado  : item.numero_formateado,
                                 costura_original: item.costura_original,
                                 pulgadas_original: item.pulgadas_original,
                                 placas_original : item.placas_original,
+                                id      : item.informe_id,
                                 visible : visible_sn,
                                 costura_final: item.costura_final,
                                 pulgadas_final: item.pulgadas_final,
                                 placas_final : item.placas_final,
                                 cm_original : item.cm_original,
                                 cm_final: item.cm_final,
-                                manual_sn : 1,
-
+                                manual_sn : 0,
                                 });
 
                             }.bind(this));
 
-                        //Informe Pm
+                            //informe ri adicionales
 
-                        this.informes_pm_data.forEach(function(item_data){
+                            this.informes_ri_adicionales_data.forEach(function(item){
 
+                                let visible_sn = true;
+                                if( !item.costura_final && !item.pulgadas_final && !item.placas_final){
 
-                            this.informes.forEach(function(item_informe){
+                                    visible_sn = false
 
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+                                }
 
-                                    item_informe.informe_sel = true;
+                                this.TablaInformesRi.push({
 
-                                    }
-                                });
+                                    numero_formateado  : 'MANUAL',
+                                    costura_original: item.costura_original,
+                                    pulgadas_original: item.pulgadas_original,
+                                    placas_original : item.placas_original,
+                                    visible : visible_sn,
+                                    costura_final: item.costura_final,
+                                    pulgadas_final: item.pulgadas_final,
+                                    placas_final : item.placas_final,
+                                    cm_original : item.cm_original,
+                                    cm_final: item.cm_final,
+                                    manual_sn : 1,
 
-                        }.bind(this));
+                                    });
 
-                        this.informes_pm_data.forEach(function(item){
+                                }.bind(this));
 
-                        let visible_sn = true;
+                            //Informe Pm
 
-                        this.TablaInformesPm.push({
+                            this.informes_pm_data.forEach(function(item_data){
 
-                            numero_formateado  : item.numero_formateado,
-                            id      : item.informe_id,
-                            visible : visible_sn,
-                            componente : item.componente,
-                            diametro_especifico : item.diametro_especifico,
-                            diametro: item.diametro
 
-                            });
-                        }.bind(this));
+                                this.informes.forEach(function(item_informe){
 
-                        //Informe Lp
+                                    if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
-                        this.informes_lp_data.forEach(function(item_data){
+                                        item_informe.informe_sel = true;
 
+                                        }
+                                    });
 
-                            this.informes.forEach(function(item_informe){
+                            }.bind(this));
 
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
-
-                                    item_informe.informe_sel = true;
-
-                                    }
-                                });
-
-                        }.bind(this));
-
-                        this.informes_lp_data.forEach(function(item){
-
-                        let visible_sn = true;
-
-                        this.TablaInformesLp.push({
-
-                            numero_formateado  : item.numero_formateado,
-                            id      : item.informe_id,
-                            visible : visible_sn,
-                            componente : item.componente,
-                            diametro_especifico : item.diametro_especifico,
-                            diametro: item.diametro
-                            });
-                        }.bind(this));
-
-                        //Informe RD
-
-                        this.informes_rd_data.forEach(function(item_data){
-
-
-                            this.informes.forEach(function(item_informe){
-
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
-
-                                    item_informe.informe_sel = true;
-
-                                    }
-                                });
-
-                        }.bind(this));
-
-                        this.informes_rd_data.forEach(function(item){
-
-                        let visible_sn = true;
-
-                        this.TablaInformesRd.push({
-
-                            numero_formateado  : item.numero_formateado,
-                            id      : item.informe_id,
-                            visible : visible_sn,
-                            componente : item.componente,
-                            diametro_especifico : item.diametro_especifico,
-                            diametro: item.diametro
-                            });
-                        }.bind(this));
-
-
-              //Informe CV
-
-                        this.informes_cv_data.forEach(function(item_data){
-
-
-                            this.informes.forEach(function(item_informe){
-
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
-
-                                    item_informe.informe_sel = true;
-
-                                    }
-                                });
-
-                        }.bind(this));
-
-                        this.informes_cv_data.forEach(function(item){
-
-                        let visible_sn = true;
-
-                        this.TablaInformesCv.push({
-
-                            numero_formateado  : item.numero_formateado,
-                            id      : item.informe_id,
-                            visible : visible_sn,
-                            componente : item.componente,
-                            });
-                        }.bind(this));
-
-              //Informe PMI
-
-                        this.informes_pmi_data.forEach(function(item_data){
-
-
-                            this.informes.forEach(function(item_informe){
-
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
-
-                                    item_informe.informe_sel = true;
-
-                                    }
-                                });
-
-                        }.bind(this));
-
-                        this.informes_pmi_data.forEach(function(item){
-
-                        let visible_sn = true;
-
-                        this.TablaInformesPmi.push({
-
-                            numero_formateado  : item.numero_formateado,
-                            id      : item.informe_id,
-                            visible : visible_sn,
-                            componente : item.componente,
-                            });
-                        }.bind(this));
-
-                        //Informe DZ
-
-                        this.informes_dz_data.forEach(function(item_data){
-
-
-                            this.informes.forEach(function(item_informe){
-
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
-
-                                    item_informe.informe_sel = true;
-
-                                    }
-                                });
-
-                        }.bind(this));
-
-                        this.informes_dz_data.forEach(function(item){
-
-                        let visible_sn = true;
-
-                        this.TablaInformesDz.push({
-
-                            numero_formateado  : item.numero_formateado,
-                            id      : item.informe_id,
-                            visible : visible_sn,
-                            componente : item.componente,
-                            });
-                        }.bind(this));
-
-                        //Informe Rg
-
-                        this.informes_rg_data.forEach(function(item_data){
-
-
-                            this.informes.forEach(function(item_informe){
-
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
-
-                                    item_informe.informe_sel = true;
-
-                                    }
-                                });
-
-                        }.bind(this));
-
-                        this.informes_rg_data.forEach(function(item){
-
-                        let visible_sn = true;
-
-                        this.TablaInformesRg.push({
-
-                            numero_formateado  : item.numero_formateado,
-                            id      : item.informe_id,
-                            visible : visible_sn,
-                            componente : item.componente,
-                            });
-                        }.bind(this));
-
-
-                       //Informe Us
-
-                       this.informes_us_data.forEach(function(item_data){
-
-                            this.informes.forEach(function(item_informe){
-
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
-
-                                    item_informe.informe_sel = true;
-                                 }
-                                });
-
-                        }.bind(this));
-
-                        this.informes_us_data.forEach(function(item){
+                            this.informes_pm_data.forEach(function(item){
 
                             let visible_sn = true;
 
-
-                            if( !item.costura_final  &&  !item.pulgadas_final && !item.pieza_final){
-
-                                visible_sn = false
-
-                            }
-
-                            this.TablaInformesUs.push({
+                            this.TablaInformesPm.push({
 
                                 numero_formateado  : item.numero_formateado,
-                                costura_original: item.costura_original,
-                                costura_final: item.costura_final,
-                                pieza_original: item.pieza_original,
-                                pieza_final: item.pieza_final,
-                                pulgadas_final: item.pulgadas_final,
-                                pulgadas_original: item.pulgadas_original,
-                                tecnica     : item.tecnica,
                                 id      : item.informe_id,
                                 visible : visible_sn,
-                                cm_original : item.cm_original,
-                                cm_final: item.cm_final,
+                                componente : item.componente,
+                                diametro_especifico : item.diametro_especifico,
+                                diametro: item.diametro
 
                                 });
+                            }.bind(this));
 
-                        }.bind(this));
+                            //Informe Lp
 
-                        //Informe TT
-
-                        this.informes_tt_data.forEach(function(item_data){
+                            this.informes_lp_data.forEach(function(item_data){
 
 
-                            this.informes.forEach(function(item_informe){
+                                this.informes.forEach(function(item_informe){
 
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+                                    if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
-                                    item_informe.informe_sel = true;
+                                        item_informe.informe_sel = true;
 
+                                        }
+                                    });
+
+                            }.bind(this));
+
+                            this.informes_lp_data.forEach(function(item){
+
+                            let visible_sn = true;
+
+                            this.TablaInformesLp.push({
+
+                                numero_formateado  : item.numero_formateado,
+                                id      : item.informe_id,
+                                visible : visible_sn,
+                                componente : item.componente,
+                                diametro_especifico : item.diametro_especifico,
+                                diametro: item.diametro
+                                });
+                            }.bind(this));
+
+                            //Informe RD
+
+                            this.informes_rd_data.forEach(function(item_data){
+
+
+                                this.informes.forEach(function(item_informe){
+
+                                    if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                        item_informe.informe_sel = true;
+
+                                        }
+                                    });
+
+                            }.bind(this));
+
+                            this.informes_rd_data.forEach(function(item){
+
+                            let visible_sn = true;
+
+                            this.TablaInformesRd.push({
+
+                                numero_formateado  : item.numero_formateado,
+                                id      : item.informe_id,
+                                visible : visible_sn,
+                                componente : item.componente,
+                                diametro_especifico : item.diametro_especifico,
+                                diametro: item.diametro
+                                });
+                            }.bind(this));
+
+
+                //Informe CV
+
+                            this.informes_cv_data.forEach(function(item_data){
+
+
+                                this.informes.forEach(function(item_informe){
+
+                                    if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                        item_informe.informe_sel = true;
+
+                                        }
+                                    });
+
+                            }.bind(this));
+
+                            this.informes_cv_data.forEach(function(item){
+
+                            let visible_sn = true;
+
+                            this.TablaInformesCv.push({
+
+                                numero_formateado  : item.numero_formateado,
+                                id      : item.informe_id,
+                                visible : visible_sn,
+                                componente : item.componente,
+                                });
+                            }.bind(this));
+
+                //Informe PMI
+
+                            this.informes_pmi_data.forEach(function(item_data){
+
+
+                                this.informes.forEach(function(item_informe){
+
+                                    if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                        item_informe.informe_sel = true;
+
+                                        }
+                                    });
+
+                            }.bind(this));
+
+                            this.informes_pmi_data.forEach(function(item){
+
+                            let visible_sn = true;
+
+                            this.TablaInformesPmi.push({
+
+                                numero_formateado  : item.numero_formateado,
+                                id      : item.informe_id,
+                                visible : visible_sn,
+                                componente : item.componente,
+                                });
+                            }.bind(this));
+
+                            //Informe DZ
+
+                            this.informes_dz_data.forEach(function(item_data){
+
+
+                                this.informes.forEach(function(item_informe){
+
+                                    if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                        item_informe.informe_sel = true;
+
+                                        }
+                                    });
+
+                            }.bind(this));
+
+                            this.informes_dz_data.forEach(function(item){
+
+                            let visible_sn = true;
+
+                            this.TablaInformesDz.push({
+
+                                numero_formateado  : item.numero_formateado,
+                                id      : item.informe_id,
+                                visible : visible_sn,
+                                componente : item.componente,
+                                });
+                            }.bind(this));
+
+                            //Informe Rg
+
+                            this.informes_rg_data.forEach(function(item_data){
+
+
+                                this.informes.forEach(function(item_informe){
+
+                                    if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                        item_informe.informe_sel = true;
+
+                                        }
+                                    });
+
+                            }.bind(this));
+
+                            this.informes_rg_data.forEach(function(item){
+
+                            let visible_sn = true;
+
+                            this.TablaInformesRg.push({
+
+                                numero_formateado  : item.numero_formateado,
+                                id      : item.informe_id,
+                                visible : visible_sn,
+                                componente : item.componente,
+                                });
+                            }.bind(this));
+
+
+                        //Informe Us
+
+                        this.informes_us_data.forEach(function(item_data){
+
+                                this.informes.forEach(function(item_informe){
+
+                                    if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                        item_informe.informe_sel = true;
                                     }
+                                    });
+
+                            }.bind(this));
+
+                            this.informes_us_data.forEach(function(item){
+
+                                let visible_sn = true;
+
+
+                                if( !item.costura_final  &&  !item.pulgadas_final && !item.pieza_final){
+
+                                    visible_sn = false
+
+                                }
+
+                                this.TablaInformesUs.push({
+
+                                    numero_formateado  : item.numero_formateado,
+                                    costura_original: item.costura_original,
+                                    costura_final: item.costura_final,
+                                    pieza_original: item.pieza_original,
+                                    pieza_final: item.pieza_final,
+                                    pulgadas_final: item.pulgadas_final,
+                                    pulgadas_original: item.pulgadas_original,
+                                    tecnica     : item.tecnica,
+                                    id      : item.informe_id,
+                                    visible : visible_sn,
+                                    cm_original : item.cm_original,
+                                    cm_final: item.cm_final,
+
+                                    });
+
+                            }.bind(this));
+
+                            //Informe TT
+
+                            this.informes_tt_data.forEach(function(item_data){
+
+
+                                this.informes.forEach(function(item_informe){
+
+                                    if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                        item_informe.informe_sel = true;
+
+                                        }
+                                    });
+
+                            }.bind(this));
+
+                            this.informes_tt_data.forEach(function(item){
+
+                            let visible_sn = true;
+
+                            this.TablaInformesTt.push({
+
+                                numero_formateado  : item.numero_formateado,
+                                id      : item.informe_id,
+                                visible : visible_sn,
+                                componente : item.componente,
                                 });
-
-                        }.bind(this));
-
-                        this.informes_tt_data.forEach(function(item){
-
-                        let visible_sn = true;
-
-                        this.TablaInformesTt.push({
-
-                            numero_formateado  : item.numero_formateado,
-                            id      : item.informe_id,
-                            visible : visible_sn,
-                            componente : item.componente,
-                            });
-                        }.bind(this));
-             });
+                            }.bind(this));
+                });
+            } else {
+                this.informes = [];
+            }
 
          },
 

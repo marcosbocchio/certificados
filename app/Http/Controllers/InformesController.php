@@ -355,17 +355,19 @@ class InformesController extends Controller
          return $informe;
       }
 
-     public function OtInformesPendienteParteDiario($ot_id){
+     public function OtInformesPendienteParteDiario($ot_id,$obra,$fecha){
 
-        $informes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,0));
+        $fechaParam = ($fecha === 'null') ? null : $fecha;
+        $informes = DB::select('CALL InformesPendientesSinParteDiario(?,?,?,?)',array($ot_id,0,$obra,$fechaParam));
         $this->addObjectSolicitadoPor($informes);
         return $informes;
 
      }
 
-     public function OtInformesPendienteEditableParteDiario($ot_id,$parte_id){
+     public function OtInformesPendienteEditableParteDiario($ot_id,$parte_id,$obra,$fecha){
 
-        $informes_pendientes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,$parte_id));
+        $fechaParam = ($fecha === 'null') ? null : $fecha;
+        $informes_pendientes = DB::select('CALL InformesPendientesSinParteDiario(?,?,?,?)',array($ot_id,$parte_id,$obra,$fechaParam));
         $this->addObjectSolicitadoPor($informes_pendientes);
         return $informes_pendientes;
      }

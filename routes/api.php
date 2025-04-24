@@ -243,11 +243,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('informes/{id}/desanular', 'InformesController@desanular');
 
     Route::get(
-        'informes/ot/{ot_id}/pendientes_parte_diario',
+        'informes/ot/{ot_id}/obra/{obra}/fecha/{fecha}/pendientes_parte_diario',
         'InformesController@OtInformesPendienteParteDiario'
     );
     Route::get(
-        'informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario',
+        'informes/ot/{ot_id}/parte/{parte_id}/obra/{obra}/fecha/{fecha}/pendientes_editables_parte_diario',
         'InformesController@OtInformesPendienteEditableParteDiario'
     );
     Route::get(
