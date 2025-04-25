@@ -1343,12 +1343,11 @@ export default {
         },
 
         getInformesPendientesParte: function(){
-            console.log(this.otdata)
             var fechaFiltrada = this.permitir_anteriores_sn ? null : this.fecha;
             axios.defaults.baseURL = this.url ;
             var obraInformes = this.obra
-             if (this.obra && this.obra.obra) {
-                obraInformes = this.obra.obra.replace('/', '--');
+             if (this.obra) {
+                obraInformes = this.obra.replace('/', '--');
             }   
             if (this.fecha) {
                 var urlRegistros = 'informes/ot/' + this.otdata.id + '/obra/' + obraInformes + '/fecha/' + fechaFiltrada + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;
@@ -1381,9 +1380,9 @@ export default {
             var fechaFiltrada = this.permitir_anteriores_sn ? null : this.fecha;
              axios.defaults.baseURL = this.url ;
              var obraInformes = this.obra
-             if (this.obra && this.obra.obra) {
-                obraInformes = this.obra.obra.replace('/', '--');
-            }        
+             if (this.obra) {
+                obraInformes = this.obra.replace('/', '--');
+             }   
              if (this.fecha) {
                 var urlRegistros = 'informes/ot/' + this.otdata.id + '/parte/' + this.parte_data.id + '/obra/' + obraInformes + '/fecha/' + fechaFiltrada + '/pendientes_editables_parte_diario' + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
