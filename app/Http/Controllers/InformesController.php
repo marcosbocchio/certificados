@@ -358,6 +358,7 @@ class InformesController extends Controller
      public function OtInformesPendienteParteDiario($ot_id,$obra,$fecha){
 
         $fechaParam = ($fecha === 'null') ? null : $fecha;
+        $obra = $obra == str_replace('--','/',$obra);
         $informes = DB::select('CALL InformesPendientesSinParteDiario(?,?,?,?)',array($ot_id,0,$obra,$fechaParam));
         $this->addObjectSolicitadoPor($informes);
         return $informes;
@@ -367,6 +368,7 @@ class InformesController extends Controller
      public function OtInformesPendienteEditableParteDiario($ot_id,$parte_id,$obra,$fecha){
 
         $fechaParam = ($fecha === 'null') ? null : $fecha;
+        $obra = $obra == str_replace('--','/',$obra);
         $informes_pendientes = DB::select('CALL InformesPendientesSinParteDiario(?,?,?,?)',array($ot_id,$parte_id,$obra,$fechaParam));
         $this->addObjectSolicitadoPor($informes_pendientes);
         return $informes_pendientes;
