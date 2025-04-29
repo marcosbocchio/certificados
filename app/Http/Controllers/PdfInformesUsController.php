@@ -29,11 +29,53 @@ use App\MetodoEnsayos;
 use App\InformesUsMe;
 use App\Generatrices;
 use App\DetalleUsPaUs;
+use App\ComponenteUsMe;
+use App\PdfEspecial;
+use App\MaterialUs;
+use App\Equipos;
+use App\CategoriasInspeccion;
+use App\ItemsCategoriaInspeccion;
+use App\RespuestasInforme;
 
 
 class PdfInformesUsController extends Controller
 {
-
+    public function getTablaInforme(int $informeId)
+    {
+       
+        $categorias = CategoriasInspeccion::with('items')->get();
+    
+        
+        $respuestas = RespuestasInforme::where('informe_id', $informeId)
+                         ->get()
+                         ->keyBy('item_categoria_id'); 
+    
+   
+        $tabla = $categorias->map(function($cat) use ($respuestas) {
+            return [
+                'id'         => $cat->id,
+                'categoria'  => $cat->nombre,
+                'items'      => $cat->items->map(function($item) use ($respuestas) {
+                    return [
+                        'id'        => $item->id,
+                        'nombre'    => $item->nombre,
+                       
+                        'respuesta' => $respuestas->has($item->id)
+                                       ? $respuestas[$item->id]->respuesta
+                                       : null,
+                    ];
+                })->toArray(),
+            ];
+        });
+    
+        // 4) Si lo vas a usar en un PDF, devolvelo como array:
+        $tabla_informe = $tabla->toArray();
+    
+        // –––– OJO: si querés endpoint JSON:
+        // return response()->json($tabla_informe);
+    
+        return $tabla_informe;
+    }
     public function imprimir($id){
 
         /* header */
@@ -70,7 +112,7 @@ class PdfInformesUsController extends Controller
          $informes_us_me = (new \App\Http\Controllers\InformesUsController)->getTabla_me($informe_us->id);
          $indicaciones_us_pa_actualizado = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
          $indicaciones_us_pa = remplazarSoldadores($indicaciones_us_pa_actualizado);
-         
+         $equipo = Equipos::where('id', $interno_equipo->equipo_id)->first();
          $detalles = DetalleUsPaUs::with('referencia')
                     ->where('informe_us_id',$informe_us->id)
                     ->get();
@@ -84,7 +126,14 @@ class PdfInformesUsController extends Controller
         
         $medicionesAgrupadas = agruparPorAccesorios($informes_us_me);
  
-        $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
+        $componente_us=ComponenteUsMe::where('informe_us_id', $informe_us->id)->first();
+        $pdfEspecial = PdfEspecial::find($componente_us->pdf_especial_id);
+        $materialesUS = MaterialUs::where('componente_us_me_id', $componente_us->id)->get();
+        $calibracion_us = $calibraciones_us->first();
+        $palpadorUS = $calibracion_us->palpador;
+        $equipoPalpador = Equipos::where('id', $palpadorUS->equipo_id)->first();
+        $tablaInforme = $this->getTablaInforme($informe->id);
+        $pdf = PDF::loadView('reportes.informes.informeUsMeTGS_hr',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'planta',
                                                                 'norma_evaluacion',
@@ -113,9 +162,15 @@ class PdfInformesUsController extends Controller
                                                                 'detalles',
                                                                 'informe_solicitado_por',
                                                                 'medicionesAgrupadas',
+                                                                'componente_us',
+                                                                'pdfEspecial',
+                                                                'materialesUS',
+                                                                'equipo',
+                                                                'palpadorUS',
+                                                                'equipoPalpador',
+                                                                'calibracion_us',
+                                                                'tablaInforme'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
-
-
            return $pdf->stream();
 
      }

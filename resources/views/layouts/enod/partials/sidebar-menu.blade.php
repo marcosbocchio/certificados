@@ -53,6 +53,10 @@
                   <li><a href="{{ route('norma-ensayos') }}">Norma ensayos</a></li>
                 @endcan
 
+                @can('M_normas_fabricacion')
+                  <li><a href="{{ route('normas-fabricacion') }}">Normas-Fabricacion</a></li>
+                @endcan
+
                 @can('M_normas_eval')
                   <li><a href="{{ route('norma-evaluaciones') }}">Norma Evaluaciones</a></li>
                 @endcan

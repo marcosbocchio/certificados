@@ -1,0 +1,587 @@
+<template>
+  <div
+    v-if="isOpen"
+    id="modalPopup"
+  >
+    <form @submit.prevent="storeRegistro" method="post">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Encabezado del Modal -->
+            <div class="modal-header">
+              <button type="button" class="close" @click="closeModal" aria-label="Cerrar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">Agregar Detalles</h4>
+            </div>
+  
+            <!-- Cuerpo del Modal con estilos de tu app -->
+            <div class="modal-body">
+              <!-- Box 1: Datos Generales -->
+              <div class="box box-custom-enod">
+                <div class="box-body">
+                  <!-- Primera fila de 4 inputs -->
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="planta">Planta *</label>
+                        <input type="text" id="planta" v-model="planta" class="form-control" disabled>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="area">Área *</label>
+                        <input type="text" id="area" v-model="area" maxlength="20" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="orden">Orden *</label>
+                        <input type="text" id="orden" v-model="orden" class="form-control" disabled>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="tipo">Tipo *</label>
+                        <v-select id="tipo" :options="tipoOptions" v-model="tipo"></v-select>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Segunda fila de 4 inputs -->
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="nEquipo">N° de Equipo *</label>
+                        <input type="text" id="nEquipo" v-model="nEquipo" class="form-control" disabled>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group d-flex">
+                        <label>Modelo *</label>
+                        <v-select
+                          v-model="modelo"
+                          label="codigo"
+                          :options="modeloOptions"
+                          taggable
+                          @new-tag="onNewTagModelo"
+                        >
+                          <template slot="option" slot-scope="option">
+                            <span class="upSelect">{{ option.codigo }}</span><br>
+                            <span class="downSelect">{{ option.descripcion }}</span>
+                          </template>
+                        </v-select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="denominacion">Denominación *</label>
+                        <input type="text" id="denominacion" v-model="denominacion" maxlength="30" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="anio">Año *</label>
+                        <input type="number" id="anio" v-model="anio"  min="0" max="4" class="form-control">
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-3">
+                            <div class="form-group" >
+                                <subir-imagen
+                                    :ruta="ruta_componente_us"
+                                    :max_size="max_size"
+                                    :path_inicial="path3_componente"
+                                    :tipos_archivo_soportados ="tipos_archivo_soportados"
+                                    :mostrar_formatos_soportados="true"
+                                    @path="onPath"
+                                ></subir-imagen>
+                          </div>
+                      </div>
+                  </div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+  
+              <hr>
+  
+              <!-- Box 2: Calibraciones -->
+              <div class="box box-custom-enod">
+                <div class="box-header with-border">
+                  <h3 class="box-title">MATERIAL</h3>
+                </div>
+                <div class="box-body">
+                  <!-- Inputs para detalle -->
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="detalleDescripcion">Descripción</label>
+                        <v-select
+                          v-model="detalle.descripcion"
+                          :options="materialesOpcion"
+                          label="codigo"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="detalleGrado">Grado</label>
+                        <input type="number" id="detalleGrado" v-model="detalle.grado" min="0" max="4" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="detalleEspNominal">Esp. Nominal</label>
+                        <input type="number" id="detalleEspNominal" v-model="detalle.espNominal" min="0" max="4" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label for="detalleEspMinMedido">Esp. Min Medido</label>
+                        <input type="number" id="detalleEspMinMedido" v-model="detalle.espMinMedido" min="0" max="4" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                      <button type="button" @click="addDetalle">
+                        <span class="fa fa-plus-circle"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Tabla de detalles -->
+                  <div class="row" v-if="detallesList.length">
+                    <div class="col-md-12">
+                      <table class="table table-bordered table-hover table-striped table-condensed">
+                        <thead>
+                          <tr>
+                            <th>Descripción</th>
+                            <th>Grado</th>
+                            <th>Esp. Nominal</th>
+                            <th>Esp. Min Medido</th>
+                            <th>Acción</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(item, index) in detallesList" :key="index">
+                            <td>{{ item.descripcion.codigo }}</td>
+                            <td>{{ item.grado }}</td>
+                            <td>{{ item.espNominal }}</td>
+                            <td>{{ item.espMinMedido }}</td>
+                            <td>
+                              <span class="fa fa-minus-circle" @click="removeDetalle(index)"></span> 
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+  
+              <hr>
+  
+              <!-- Box 3: Información Adicional -->
+              <div class="box box-custom-enod">
+                <div class="box-body">
+                  <div class="row">
+                    <!-- Sección: Temperatura -->
+                    <div class="box-header with-border">
+                      <h3 class="box-title">TEMPERATURA</h3>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Diseño Temp</label>
+                        <input type="number" v-model="temp.disenio" min="0" max="4" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Operación Temp</label>
+                        <input type="number" v-model="temp.operacion" min="0" max="4" class="form-control">
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- Sección: Presión -->
+                    <div class="box-header with-border">
+                      <h3 class="box-title">PRESIÓN</h3>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Diseño Presión</label>
+                        <input type="number" v-model="pres.disenio" min="0" max="4" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Operación Presión</label>
+                        <input type="number" v-model="pres.operacion" min="0" max="4" class="form-control">
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- Sección: Datos adicionales -->
+                    <div class="col-md-3">
+                      <div class="form-group d-flex">
+                        <label>Fluido</label>
+                        <v-select
+                          v-model="fluido"
+                          :options="fluidoOptions"
+                          label="codigo"
+                          taggable                  
+                          @new-tag="addFluido"
+                          >
+                            <template slot="option" slot-scope="option">
+                                <span class="upSelect">{{ option.codigo }}</span><br>
+                                <span class="downSelect">{{ option.descripcion }}</span>
+                            </template>
+                          </v-select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Sobreespesor por corrosión</label>
+                        <input type="number" v-model="sobreespesor" min="0" max="4" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Diam. Exterior</label>
+                        <input type="number" v-model="diamExterior" min="0" max="8" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Longitud Total</label>
+                        <input type="number" v-model="longitudTotal" min="0" max="8" class="form-control">
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Trat. Termico</label>
+                        <v-select :options="siNoOptions" v-model="trat_termico"></v-select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Radriografiado</label>
+                        <v-select :options="siNoOptions" v-model="radriografiado"></v-select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Norma Fabricación</label>
+                        <v-select :options="normaFabricacionOptions" label="codigo" v-model="normaFabricacion">
+                          <template slot="option" slot-scope="option">
+                                <span class="upSelect">{{ option.codigo }}</span><br>
+                                <span class="downSelect">{{ option.descripcion }}</span>
+                            </template>
+                        </v-select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Aislación</label>
+                        <v-select :options="siNoOptions" v-model="aislacion" placeholder="Seleccione"></v-select>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-3">
+                      <div class="form-group d-flex">
+                        <label>Tipo</label>
+                        <v-select
+                          v-model="tipo2"
+                          :options="tipo2Options"
+                          label="codigo"
+                          taggable                  
+                          @new-tag="addTipo2"
+                        >
+                        <template slot="option" slot-scope="option">
+                                <span class="upSelect">{{ option.codigo }}</span><br>
+                                <span class="downSelect">{{ option.descripcion }}</span>
+                            </template>
+                      </v-select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Material</label>
+                        <v-select :options="materialOptions" v-model="material" label="codigo" placeholder="Seleccione">
+                          <template slot="option" slot-scope="option">
+                                <span class="upSelect">{{ option.codigo }}</span><br>
+                                <span class="downSelect">{{ option.descripcion }}</span>
+                            </template>
+                        </v-select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Espesor</label>
+                        <input type="text" v-model="espesor" placeholder="Espesor" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.modal-body -->
+            
+            <!-- Pie del Modal -->
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-primary" value="Guardar">
+              <button type="button" class="btn btn-default" @click="closeModal">Cancelar</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </form>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    name: 'ModalPopup',
+    props: {
+      isOpen: {
+        type: Boolean,
+        default: false
+      },
+        plantaProp: {
+        type: Object,
+        default: () => ({})
+      },
+        otdataProp: {
+        type: Object,
+        default: () => ({})
+      },
+        materialesProp: {
+          type: Array,
+          default: () => []
+      },
+        nEquipoProp: {
+        type: String,
+        default: ''
+      }
+    },
+    data() {
+      return {
+        // Sección 1: Datos Generales
+        ruta_componente_us:'componente_us',
+        path3_componente:'',
+        max_size :5000, //KB
+        tipos_archivo_soportados:['jpg','bmp','jpeg','png'],
+        planta: '',
+        area: '',
+        orden: '',
+        tipo: null,
+        tipoOptions: ['Horizontal', 'Linea','Vertical'],
+        nEquipo: '',
+        modelo: '',
+        materialesOpcion:'',
+        modeloOptions: [],
+        denominacion: '',
+        anio: '',
+        // Sección 2: Detalle para la tabla
+        detalle: {
+          descripcion: '',
+          grado: '',
+          espNominal: '',
+          espMinMedido: ''
+        },
+        detallesList: [],
+        // Sección 3: Temperatura / Presión
+        temp: {
+          disenio: '',
+          operacion: ''
+        },
+        pres: {
+          disenio: '',
+          operacion: ''
+        },
+        // Sección 4: Fluido, Sobreespesor, Diam. Exterior y Longitud Total
+        fluido: '',
+        fluidoOptions: [],
+        sobreespesor: '',
+        diamExterior: '',
+        longitudTotal: null,
+        longitudTotalOptions: [],
+        // Sección 5: Radriografiado, Norma Fabricación, Aislación y Tipo
+        radriografiado: null,
+        trat_termico: '',
+        siNoOptions: ['Si', 'No'],
+        normaFabricacion: null,
+        normaFabricacionOptions: [],
+        aislacion: null,
+        tipo2: '',
+        tipo2Options: [],
+        // Sección 6: Material y Espesor
+        material: null,
+        otdata: '',
+        materialOptions: [],
+        espesor: ''
+      }
+    },
+    watch: {
+    // Cada vez que abra el modal, sincronizo los props a mi data interna:
+    isOpen(val) {
+      if (val) {
+        this.planta           = this.plantaProp.nombre_fantasia
+        this.nEquipo          = this.nEquipoProp
+        this.materialesOpcion = this.materialesProp
+        this.orden            = this.otdataProp.numero
+          // Llamadas a la API
+        this.fetchModelos();
+        this.fetchFluidos();
+        this.fetchNormas();
+        this.fetchTipo();
+        console.log(this.modeloOptions);
+      }
+    }
+  },
+    methods: {
+      storeRegistro() {
+        console.log(this.path3_componente);
+        const popupData = {
+          // Sección 1
+          path3_componente: this.path3_componente,
+          planta: this.planta,
+          area: this.area,
+          orden: this.orden,
+          tipo: this.tipo,
+          nEquipo: this.nEquipo,
+          modelo: this.modelo,
+          denominacion: this.denominacion,
+          anio: this.anio,
+          // Sección 2
+          detalles: this.detallesList,
+          // Sección 3
+          temperatura: this.temp,
+          presion: this.pres,
+          // Sección 4
+          fluido: this.fluido,
+          sobreespesor: this.sobreespesor,
+          diamExterior: this.diamExterior,
+          longitudTotal: this.longitudTotal,
+          // Sección 5
+          trat_termico: this.trat_termico,
+          radriografiado: this.radriografiado,
+          normaFabricacion: this.normaFabricacion,
+          aislacion: this.aislacion,
+          tipo2: this.tipo2,
+          // Sección 6
+          material: this.material,
+          espesor: this.espesor
+        }
+        this.$emit('submit', popupData)
+        this.closeModal()
+      },
+      onPath(path) {
+      console.log('⚡ subir-imagen emitió path:', path);
+      this.path3_componente = path;
+    },
+      closeModal() {
+        this.$emit('close')
+      },
+      onNewTagModelo(nuevo) {
+        // 1) agrego la nueva etiqueta al listado de opciones
+        this.modeloOptions.push(nuevo)
+        // 2) lo selecciono automáticamente
+        this.modelo = nuevo
+      },
+      addDetalle() {
+  // Validar si hay algo ingresado
+  if (
+    this.detalle.descripcion ||
+    this.detalle.grado ||
+    this.detalle.espNominal ||
+    this.detalle.espMinMedido
+  ) {
+    // Verificar si ya existe un item con el mismo descripcion.codigo
+    const existe = this.detallesList.some(
+      (item) => item.descripcion?.codigo === this.detalle.descripcion?.codigo
+    );
+
+    if (existe) {
+      toastr.error('Material ya registrado');
+      return;
+    }
+
+    // Agregar el nuevo detalle
+    this.detallesList.push({ ...this.detalle });
+
+    // Limpiar campos
+    this.detalle.descripcion = '';
+    this.detalle.grado = '';
+    this.detalle.espNominal = '';
+    this.detalle.espMinMedido = '';
+  }
+},
+async fetchModelos() {
+  try {
+    const response = await axios.get('/tgs/modelos-us-me');
+    this.modeloOptions = response.data.map(item => item);
+    console.log("asdasd", this.modeloOptions);
+  } catch (error) {
+    console.error('Error al obtener modelos:', error);
+  }
+},
+async fetchFluidos() {
+  try {
+    const response = await axios.get('/tgs/fluidos-us-me');
+    this.fluidoOptions = response.data.map(item => item);
+  } catch (error) {
+    console.error('Error al obtener fluidos:', error);
+  }
+},
+async fetchNormas() {
+  try {
+    const response = await axios.get('/tgs/normas-fabricacion-us-me');
+    this.normaFabricacionOptions = response.data.map(item => item);
+  } catch (error) {
+    console.error('Error al obtener normas:', error);
+  }
+},
+async fetchTipo() {
+  try {
+    const response = await axios.get('/tgs/tipos-us-me');
+    this.materialOptions = response.data.map(item => item);
+  } catch (error) {
+    console.error('Error al obtener tipos:', error);
+  }
+},
+
+      removeDetalle(index) {
+        this.detallesList.splice(index, 1)
+      },
+      addFluido(nuevo) {
+        // 1) agrego la nueva etiqueta al listado de opciones
+        this.fluidoOptions.push(nuevo)
+        // 2) lo selecciono automáticamente
+        this.fluido = nuevo
+      },
+      addFluido(nuevo) {
+        // 1) agrego la nueva etiqueta al listado de opciones
+        this.tipo2Options.push(nuevo)
+        // 2) lo selecciono automáticamente
+        this.tipo2 = nuevo
+      },
+    }
+  }
+  </script>
+  
+  <style scoped>
+  #modalPopup {
+    position: fixed;       /* ocupa toda la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;         /* flex para centrar */
+    align-items: center;   /* centrar vertical */
+    justify-content: center;/* centrar horizontal */
+    background: rgba(0,0,0,0.5); /* overlay oscuro */
+    z-index: 9999;         /* por encima de todo */
+  }
+  /* Opcional: controla el overflow si el modal crece mucho */
+  .modal-dialog {
+    margin: 0;             /* elimina márgenes por defecto */
+  }
+  .modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  </style>
+  

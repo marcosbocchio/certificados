@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/medidas', 'MedidasController@callView')->name('medidas');
       Route::get('/area/enod/medidas', 'MedidasController@callView')->name('medidas');
       Route::get('/area/enod/productos', 'ProductosController@callView')->name('productos');
+      Route::get('/area/enod/normas_fabricaciontos', 'NormasFabricacionController@callView')->name('normas-fabricacion');
       Route::get('/area/enod/norma_ensayos', 'NormaEnsayosController@callView')->name('norma-ensayos');
       Route::get('/area/enod/norma_evaluaciones', 'NormaEvaluacionesController@callView')->name('norma-evaluaciones');
       Route::get('/area/enod/servicios', 'ServiciosController@callView')->name('servicios');
@@ -148,8 +149,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/dosimetria/resumen','DosimetriaResumenController@callView')->name('dosimetria-resumen');
       Route::get('/area/enod/soldadores/estadisticas-soldaduras','EstadisticasSoldadurasController@callView')->name('estadisticas-soldaduras');
       Route::get('/area/enod/dosimetria/historial-operadores','DosimetriaOperadorController@callViewHistorialOperadores')->name('historial-operadores');
-//limpiar
-Route::get('/user/limpiar-server','LimpiadorController@callView')->name('limpiar');
+      //limpiar
+      Route::get('/user/limpiar-server','LimpiadorController@callView')->name('limpiar');
       // reportes
 
       Route::get('/pdf/dosimetria/periodos','PdfDosimetriaPeriodosController@imprimir')->name('pdfDosimetriaPeriodos');
