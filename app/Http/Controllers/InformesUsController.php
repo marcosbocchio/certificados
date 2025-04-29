@@ -306,6 +306,8 @@ class InformesUsController extends Controller
             $informe_us_me->umbral = $detalle_informe_us_me['umbral_me'];
             $informe_us_me->espesor_minimo = $detalle_informe_us_me['espesor_minimo_me'];
             $informe_us_me->elemento = $detalle_informe_us_me['elemento_me'];
+            $informe_us_me->años_ultima_inspeccion = $detalle_informe_us_me['años_ultima_inspeccion_me'];
+            $informe_us_me->espesor_minimo_anterior = $detalle_informe_us_me['espesor_minimo_anterior_me'];
             $informe_us_me->cantidad_posiciones = $detalle_informe_us_me['cantidad_posiciones_me'];
             $informe_us_me->cantidad_generatrices = $detalle_informe_us_me['cantidad_generatrices_me'];
             $informe_us_me->cantidad_generatrices_linea_pdf = $detalle_informe_us_me['cantidad_generatrices_linea_pdf_me'];
@@ -469,6 +471,8 @@ class InformesUsController extends Controller
                                     informes_us_me.diametro as diametro_me,
                                     informes_us_me.elemento as elemento_me,
                                     informes_us_me.umbral as umbral_me,
+                                    informes_us_me.espesor_minimo_anterior as espesor_minimo_anterior_me,
+                                    informes_us_me.años_ultima_inspeccion as años_ultima_inspeccion_me,
                                     informes_us_me.espesor_minimo as espesor_minimo_me')
                                     
                         ->get();
