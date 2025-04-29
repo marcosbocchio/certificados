@@ -65,6 +65,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('metodo_ensayos', 'MetodoEnsayosController');
     Route::get('norma_ensayos/paginate', 'NormaEnsayosController@paginate');
     Route::resource('norma_ensayos', 'NormaEnsayosController');
+    Route::get('normas-fabricacion/paginate', 'NormasFabricacionController@paginate');
+    Route::resource('normas-fabricacion', 'NormasFabricacionController');
     Route::get(
         'norma_evaluaciones/paginate',
         'NormaEvaluacionesController@paginate'
@@ -844,7 +846,25 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('interno_equipos/{id}/documentaciones','QrController@getDocIntEquipos');
     Route::get('interno_fuentes/{id}/documentaciones','QrController@getDocIntEquiposFuente');
 
+    // TGS
+    Route::get('tgs/normas-fabricacion-us-me', 'TgsController@getNormasFabricacion');
+
+    Route::get('tgs/getdatoscomponente/{id}', 'TgsController@getComponenteInforme');
+        
+    Route::get('tgs/modelos-us-me', 'TgsController@getModelos');
+    Route::post('tgs/modelos-us-me', 'TgsController@saveModelo');
+
+    Route::get('tgs/fluidos-us-me', 'TgsController@getFluidos');
+    Route::post('tgs/fluidos-us-me', 'TgsController@saveFluido');
+
+    Route::get('tgs/tipos-us-me', 'TgsController@getTipos');
+    Route::post('tgs/tipos-us-me', 'TgsController@saveTipo');
     
+    Route::get('tgs/tabla-inspeccion', 'TgsController@getTablaInspeccion');
+
+    Route::post('storage/componente_us', 'StorageController@saveComponenteUs')
+        ->name('componente_us');
+
     
 });
 

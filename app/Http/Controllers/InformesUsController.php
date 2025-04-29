@@ -25,6 +25,7 @@ use App\DetalleUsMe;
 use App\Ots;
 use \stdClass;
 use App\User;
+use App\PdfEspecial;
 use App\OtTipoSoldaduras;
 use App\AgenteAcoplamientos;
 use Exception as Exception;
@@ -53,38 +54,83 @@ class InformesUsController extends Controller
                                                  'header_descripcion'));
     }
 
-    public function store(InformeUsRequest $request,$EsRevision = false)
+    public function store(InformeUsRequest $request, $EsRevision = false)
     {
-        $informe  = new Informe;
-        $informeUs  = new InformesUs;
-
+        $informe   = new Informe;
+        $informeUs = new InformesUs;
+    
         DB::beginTransaction();
+    
         try {
+            // 1) informe base
+            $informe = (new \App\Http\Controllers\InformesController())
+                ->saveInforme($request, $informe, $EsRevision);
+    
+            // 2) datos US genéricos
+            $informeUs = $this->saveinformeUs($request, $informe, $informeUs);
+    
+            // 3) calibraciones
+            $this->saveCalibraciones($request, $informeUs);
+    
+            // 4) lógica ME vs PA
+            $tecnica = Tecnicas::find($informe->tecnica_id);
+            if ($tecnica->codigo === 'ME') {
+                $this->saveInforme_us_me($request, $informeUs);
+    
+                // —–––––––––––––––––––––––––––––––––––––––––
+                // 5) tratamos OT y popup como arrays
+                $otData    = $request->input('ot', []);
+                $clienteId = $otData['cliente_id'];
+                $popupData = $request->input('data_popup', []);
+                log::info($popupData);
+                if ($clienteId) {
+                    $pdfMatch = PdfEspecial::where('cliente_id', $clienteId)
+                        ->where('tipo_informe', $popupData['tipo'])
+                        ->first();
+                } else {
+                    $pdfMatch = null;
+                }
 
-          $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe,$EsRevision);
-          $informeUs = $this->saveinformeUs($request,$informe,$informeUs);
-          $tecnica = Tecnicas::find($informe->tecnica_id);
-          $this->saveCalibraciones($request,$informeUs);
-
-          if ($tecnica->codigo == 'ME'){
-
-            $this->saveInforme_us_me($request,$informeUs);
-
-          }else{
-
-            $this->saveDetalle_us_pa_us($request,$informeUs);
-
-          }
-
-          DB::commit();
-
+                log::info($clienteId);
+                log::info($popupData['tipo']);
+                log::info($pdfMatch);
+                if (! empty($pdfMatch)) {
+                    // 6) guardo componente
+                    (new \App\Http\Controllers\TgsController())
+                        ->saveComponente(
+                            $informeUs->id,
+                            $clienteId,
+                            $popupData
+                        );
+                    (new \App\Http\Controllers\TgsController())
+                        ->saveTablaInforme(
+                            $informe->id,
+                            $request->input('tablaInspeccion', [])
+                        );
+                } else {
+                    // 7) fallback
+                    $this->saveDetalle_us_pa_us($request, $informeUs);
+                }
+                // —–––––––––––––––––––––––––––––––––––––––––
+    
+            } else {
+                $this->saveDetalle_us_pa_us($request, $informeUs);
+            }
+    
+            DB::commit();
+    
         } catch (Exception $e) {
-
-          DB::rollback();
-          throw $e;
-
+            DB::rollback();
+    
+            Log::error('Error al guardar InformeUs: '.$e->getMessage(), [
+                'exception'   => $e,
+                'ot_payload'  => $request->input('ot'),
+                'popup_data'  => $request->input('data_popup'),
+            ]);
+    
+            throw $e;
         }
-
+    
         return $informe;
     }
 

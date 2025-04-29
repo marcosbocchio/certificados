@@ -48,7 +48,6 @@ class OtProcedimientosPropiosController extends Controller
     }
 
     public function ProcedimientosPropiosOt($ot_id){
-        Log::debug("es aca");
         $user = Auth::user();
         if ($user->can('ver_no_visible')) {
             $documentaciones = DB::table('documentaciones')

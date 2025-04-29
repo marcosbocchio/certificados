@@ -1,5 +1,15 @@
 <template>
     <div class="row">
+        <ModalPopup
+        :is-open="isModalOpen"
+        :plantaProp="cliente"
+        :nEquipoProp="componente"
+        :materialesProp="materiales"
+        :otdataProp="otdata"
+        :componenteId="informe_usdata"
+        @close="closeModal"
+        @submit="handleModalSubmit"
+    />
        <div class="col-md-12">
            <form @submit.prevent="editmode ? Update() : Store()"  method="post">
                <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra($event)" @set-planta="setPlanta($event)"></informe-header>
@@ -20,9 +30,15 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="form-group" >
-                            <label for="componente">Componente *</label>
-                            <input type="text" v-model="componente" class="form-control" id="componente" maxlength="30">
+                        <div class="form-group">
+                            <label for="componente">
+                                Componente *
+                                <button type="button" @click="openModal" 
+                                :disabled="!componente || tecnica?.codigo !== 'ME'">
+                                <i class="fa fa-list"></i>
+                                </button>
+                            </label>
+                        <input type="text" v-model="componente" class="form-control" id="componente" maxlength="30">
                         </div>
                     </div>
 
@@ -948,6 +964,83 @@
                    </div>
                </div>
                <div class="box box-custom-enod">
+                <div class="box-body">
+                <div class="box-header with-border">
+                    <h3 class="box-title">INSPECCIÓN VISUAL</h3>
+                    <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    </div>
+                </div>
+
+                <div
+                    v-for="categoria in tablaInspeccion"
+                    :key="categoria.id"
+                    class="mb-4"
+                >
+                    <h4 class="text-uppercase font-weight-bold">{{ categoria.categoria }}</h4>
+
+                    <div class="table-responsive">
+                    <table class="table table-condensed table-hover table-striped table-fixed">
+                        <!-- Definís proporción de ancho por columna -->
+                        <colgroup>
+                        <col style="width: 60%;">
+                        <col style="width: 13%;">
+                        <col style="width: 13%;">
+                        <col style="width: 13%;">
+                        </colgroup>
+
+                        <thead>
+                        <tr>
+                            <th class="text-left">Item</th>
+                            <th class="text-center">SI</th>
+                            <th class="text-center">NO</th>
+                            <th class="text-center">N/A</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in categoria.items" :key="item.id">
+                            <td class="align-middle text-left">{{ item.nombre }}</td>
+                            <td class="align-middle text-center">
+                            <button
+                                type="button"
+                                class="btn btn-circle"
+                                :class="item.selected === 'SI' ? 'btn-success' : 'btn-default'"
+                                @click="seleccionarRespuesta(item, 'SI')"
+                            >
+                                SI
+                            </button>
+                            </td>
+                            <td class="align-middle text-center">
+                            <button
+                                type="button"
+                                class="btn btn-circle"
+                                :class="item.selected === 'NO' ? 'btn-success' : 'btn-default'"
+                                @click="seleccionarRespuesta(item, 'NO')"
+                            >
+                                NO
+                            </button>
+                            </td>
+                            <td class="align-middle text-center">
+                            <button
+                                type="button"
+                                class="btn btn-circle"
+                                :class="item.selected === 'N/A' ? 'btn-success' : 'btn-default'"
+                                @click="seleccionarRespuesta(item, 'N/A')"
+                            >
+                                N/A
+                            </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+               <div class="box box-custom-enod">
                     <div class="box-body">
                         <div class="form-group">
                             <label>Observaciones</label>
@@ -964,6 +1057,8 @@
             :loader="'bars'"
             :color="'red'">
         </loading>
+       <!-- Uso del modal -->
+        
     </div>
 </template>
 
@@ -977,6 +1072,7 @@ import { eventSetReferencia } from '../event-bus';
 import { toastrInfo,toastrDefault } from '../toastrConfig';
 import moment from 'moment';
 import Loading from 'vue-loading-overlay';
+import ModalPopup from './pop-up-componente.vue'
 import 'vue-loading-overlay/dist/vue-loading.css';
 import {sprintf} from '../../functions/sprintf.js';
 import * as XLSX from 'xlsx';
@@ -985,6 +1081,7 @@ export default {
 
     components: {
         DatePicker,
+        ModalPopup,
         Loading
 
 
@@ -1229,7 +1326,10 @@ export default {
         index_referencias:'',
         tabla:'',
         inputsData:{},
-
+        //tgs
+        isModalOpen: false,
+        popupData:'',
+        tablaInspeccion: [],
       }
     },
 
@@ -1258,7 +1358,8 @@ export default {
       this.setEdit();
       this.$store.dispatch('loadModelos3d');
       this.getAccesoriosUs();
-      this.getSoldadores()
+      this.getSoldadores();
+      this.getTablaInspeccion();
     },
 
     computed :{
@@ -1310,7 +1411,41 @@ export default {
     },
 
      methods : {
-
+        async getTablaInspeccion() {
+            try {
+            const response = await axios.get('tgs/tabla-inspeccion'); // Ajustá si tu axios tiene baseURL
+            // Recorremos los datos y agregamos el campo "selected" a cada item
+            this.tablaInspeccion = response.data.map(categoria => {
+                return {
+                ...categoria,
+                items: categoria.items.map(item => ({
+                    ...item,
+                    selected: null, // 'SI' | 'NO' | 'N/A'
+                })),
+                };
+            });
+            } catch (error) {
+            console.error('Error al cargar la tabla de inspección', error);
+            }
+        },
+        seleccionarRespuesta(item, respuesta) {
+            item.selected = respuesta;
+        },
+        openModal() {
+            console.log("Abriendo modal");
+        this.isModalOpen = true
+        },
+        // Cierra el popup
+        closeModal() {
+        this.isModalOpen = false
+        },
+        // Recibe y maneja los datos del modal al hacer submit
+        handleModalSubmit(popupData) {
+        this.popupData = popupData;
+        console.log('Datos recibidos del popup:', popupData)
+        // Aquí puedes procesar los datos recibidos según tu lógica
+        this.closeModal()
+        },
         colorLimiteTabla : function(p,g) {
 
           return (p === 1 || g === 1) ? '#bee5eb' : null
@@ -2244,6 +2379,8 @@ processExcelData(data, filas, columnas) {
                 'tabla_me'        :this.Tabla_me,
                 'solicitado_por'    : this.solicitado_por,
                 'TablaModelos3d' :this.TablaModelos3d,
+                'data_popup': this.popupData,
+                'tablaInspeccion': this.tablaInspeccion,
 
         }}
 
@@ -2360,6 +2497,7 @@ processExcelData(data, filas, columnas) {
  .existe {
 
     color: blue ;
+    margin-top: ;
 
   }
 
