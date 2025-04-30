@@ -17,6 +17,7 @@ use App\NormaEvaluaciones;
 use App\NormaEnsayos;
 use App\EstadosSuperficies;
 use App\CalibracionesUs;
+use App\ComponenteUsMe;
 use App\DetalleUsPaUs;
 use App\DetallesUsPaUsReferencias;
 use App\InformesUsMe;
@@ -370,6 +371,7 @@ class InformesUsController extends Controller
         $calibraciones  = $this->getCalibraciones($informe_us->id);
         $tabla_us_pa    = $this->getTabla_us_pa($informe_us->id);
         $tabla_me       = $this->getTabla_me($informe_us->id);
+        $componente     = $this->getComponente($informe_us->id);
 
         if ($informe_material_accesorio == null)
                $informe_material_accesorio = new Materiales();
@@ -410,6 +412,7 @@ class InformesUsController extends Controller
                                                  'calibraciones',
                                                  'tabla_us_pa',
                                                  'tabla_me',
+                                                 'componente',
                                                  'informe_modelos_3d',
                                                  'header_titulo',
                                                  'informe_solicitado_por',
@@ -427,7 +430,21 @@ class InformesUsController extends Controller
         return $calibraciones;
 
     }
+    public function getComponente($informe_us_id){
 
+        $componente =  ComponenteUsMe::
+                             where('informe_us_id',$informe_us_id)
+                            ->with('norma')
+                            ->with('material')
+                            ->with('tipo')
+                            ->with('materiales')
+                            ->with('fluido')
+                            ->with('modelo')
+                            ->first();
+        log::debug($componente);
+        return $componente;
+
+    }
     public function getTabla_us_pa($informe_us_id){
 
         $tabla_us_pa =  DB::table('detalle_us_pa_us')
