@@ -87,6 +87,7 @@ class TgsController extends Controller
         }
         return $componente;
     }
+    
     protected function saveMateriales(int $componenteId, array $detalles)
     {
         foreach ($detalles as $idx => $d) {

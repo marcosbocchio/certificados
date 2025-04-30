@@ -33,6 +33,7 @@ use App\ComponenteUsMe;
 use App\PdfEspecial;
 use App\MaterialUs;
 use App\Equipos;
+use App\NormasFabricacion;
 use App\CategoriasInspeccion;
 use App\ItemsCategoriaInspeccion;
 use App\RespuestasInforme;
@@ -68,13 +69,26 @@ class PdfInformesUsController extends Controller
             ];
         });
     
-        // 4) Si lo vas a usar en un PDF, devolvelo como array:
+
         $tabla_informe = $tabla->toArray();
     
-        // –––– OJO: si querés endpoint JSON:
-        // return response()->json($tabla_informe);
+
     
         return $tabla_informe;
+    }
+    public function getComponente($informe_us_id){
+
+        $componente =  ComponenteUsMe::
+                             where('informe_us_id',$informe_us_id)
+                            ->with('norma')
+                            ->with('material')
+                            ->with('materiales')
+                            ->with('fluido')
+                            ->with('tipo')
+                            ->with('modelo')
+                            ->first();
+        return $componente;
+
     }
     public function imprimir($id){
 
@@ -126,15 +140,38 @@ class PdfInformesUsController extends Controller
         
         $medicionesAgrupadas = agruparPorAccesorios($informes_us_me);
  
-        $componente_us=ComponenteUsMe::where('informe_us_id', $informe_us->id)->first();
-        $pdfEspecial = PdfEspecial::find($componente_us->pdf_especial_id);
-        $materialesUS = MaterialUs::where('componente_us_me_id', $componente_us->id)->get();
-        $calibracion_us = $calibraciones_us->first();
-        $palpadorUS = $calibracion_us->palpador;
-        $equipoPalpador = Equipos::where('id', $palpadorUS->equipo_id)->first();
-        $tablaInforme = $this->getTablaInforme($informe->id);
-        
-        $pdf = PDF::loadView('reportes.informes.informeUsMeTGS_hr',compact('ot','titulo','nro','tipo_reporte','fecha',
+        $componente_us          = ComponenteUsMe::where('informe_us_id', $informe_us->id)->first();
+        if ($componente_us) {
+            // 2a) Si existe, cargo todo lo demás basándome en él
+            $pdfEspecial          = PdfEspecial::find($componente_us->pdf_especial_id);
+            $materialesUS         = MaterialUs::where('componente_us_me_id', $componente_us->id)->get();
+            $materialMinMedido    = $materialesUS->min('espesor_minimo_medido');
+            $calibracion_us       = $calibraciones_us->first();
+            $palpadorUS           = optional($calibracion_us)->palpador;
+            $equipoPalpador       = $palpadorUS ? Equipos::find($palpadorUS->equipo_id) : null;
+            $tablaInforme         = $this->getTablaInforme($informe->id);
+            $componenteEntero     = $this->getComponente($informe_us->id);
+        } else {
+            // 2b) Si no existe, les damos un valor “seguro” para no romper el compact()
+            $pdfEspecial          = null;
+            $materialesUS         = collect();
+            $materialMinMedido    = null;
+            $calibracion_us       = null;
+            $palpadorUS           = null;
+            $equipoPalpador       = null;
+            $tablaInforme         = null;
+            $componenteEntero     = null;
+        }
+    
+        // 3) Elijo la plantilla Blade igual que antes
+        $nombre = optional($pdfEspecial)->informe_especial;
+        $blade  = $nombre 
+                    ? 'reportes.informes.' . $nombre 
+                    : 'reportes.informes.us-v2';
+
+        $pdf = PDF::loadView(
+            $blade,
+            compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'planta',
                                                                 'norma_evaluacion',
@@ -170,7 +207,9 @@ class PdfInformesUsController extends Controller
                                                                 'palpadorUS',
                                                                 'equipoPalpador',
                                                                 'calibracion_us',
-                                                                'tablaInforme'
+                                                                'tablaInforme',
+                                                                'materialMinMedido',
+                                                                'componenteEntero'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
            return $pdf->stream();
 

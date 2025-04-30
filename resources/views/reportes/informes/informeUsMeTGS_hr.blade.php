@@ -78,7 +78,6 @@ footer {
 </style>
 
 <body>
-
 <header>
     <table style="text-align: center;" width="100%">
         <tbody>
@@ -91,6 +90,9 @@ footer {
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px;margin-left:2px;">
                                 </td>
                                 <td style="font-size: 18px; height: 30px;width: 295px; text-align: center;" rowspan="4"><b>{{ $titulo }}</b></td>
+                                <td style="font-size: 10px;" ><b style="margin-left:35px;">
+                                {{ $tipo_reporte}}</b>{{ $nro }}
+                            </td>
                             </tr>
                             <tr>
                                 <td style="font-size: 10px;"><b style="margin-left: 35px;">FECHA: </b>{{ $fecha }}</td>
@@ -191,7 +193,7 @@ footer {
     <tr>
       <td>TIPO</td>
       <td colspan="6" style="background-color: #c3c3c3;">
-        {{ $componente_us->area }}
+        {{ $pdfEspecial->tipo_informe }}
       </td>
     </tr>
 
@@ -203,7 +205,9 @@ footer {
       </td>
       <td>MODELO</td>
       <td colspan="6" style="background-color: #c3c3c3;">
-        {{ $componente_us->modelo_id ?? '-' }}
+        {{ $componenteEntero->modelo
+            ? $componenteEntero->modelo->codigo
+            : '-' }}
       </td>
     </tr>
 
@@ -278,7 +282,7 @@ footer {
     <tr>
       <td>FLUIDO</td>
       <td colspan="3" style="background-color: #c3c3c3;">
-        {{ $componente_us->fluido_id ?? '-' }}
+        {{ $componenteEntero->fluido->codigo ?? '-' }}
       </td>
       <td colspan="4">SOBREESPESOR POR CORROSION</td>
       <td style="background-color: #c3c3c3;">
@@ -310,14 +314,14 @@ footer {
       </td>
       <td colspan="2">NORMA FABRIC.</td>
       <td colspan="2" style="background-color:#c3c3c3;">
-        {{ $componente_us->norma_fabric_id ?? '-' }}
+        {{ $componenteEntero->norma->codigo ?? '-' }}
       </td>
     </tr>
 
     <tr>
       <td>AISLACION</td>
       <td style="background-color: #c3c3c3;">
-        {{ $componente_us->asilacion }}
+        {{ $componente_us->aislacion }}
       </td>
       <td>TIPO</td>
       <td style="background-color: #c3c3c3;">
@@ -325,7 +329,7 @@ footer {
       </td>
       <td colspan="2">MATERIAL</td>
       <td style="background-color: #c3c3c3;">
-        {{ $componente_us->material_id }}
+        {{ $componente_us->material->codigo ?? '-' }}
       </td>
       <td>ESPESOR</td>
       <td style="background-color: #c3c3c3;">
@@ -338,7 +342,7 @@ footer {
 
 
 {{-- Sección Alcance --}}
-<h4 style="margin: 0;"><strong>Alcance:</strong></h4>
+<h4 style="margin: 10px 0px 0px 0px;"><strong>Alcance:</strong></h4>
 <p style="margin: 0;">
   El presente informe está basado en los lineamientos de los “Procedimientos de Integridad” para la
   medición de espesores generados por la aplicación de la norma API RP 581 implementada por TGS.
@@ -436,19 +440,28 @@ footer {
   <table style="width:100%; border-collapse:collapse; font-size:9.5px; border:1px solid black; margin:10px 0;">
     <thead>
       <tr>
-        <th colspan="4" style="text-align:center; padding:6px; background:#c3c3c3; font-size:14px;">
+        <th style="text-align:center; padding:6px; background:#c3c3c3; font-size:14px;">
           <strong>ESQUEMA DE MEDICION</strong>
         </th>
       </tr>
     </thead>
     <tbody>
-        <tr>
-        <img 
-                src="{{ public_path($informe_us->path1_calibracion) }}"
-                alt=""
-                style="width:700px; height:400px; margin:30px 0;"
-            >
-        </tr>
+    <tr>
+      <td style="text-align: center; padding: 10px 100px;border:1px solid black;height: 700px">
+        <img
+          src="{{ public_path($informe_us->path1_calibracion) }}"
+          alt=""
+          style="
+            display: block;
+            max-width: 500px;
+            max-height: 700px;
+            width: auto;
+            height: auto;
+            margin: 0 auto;
+          "
+        >
+      </td>
+    </tr>
     </tbody>
   </table>
 
@@ -547,7 +560,15 @@ footer {
 @endforeach
 
   <div style="page-break-after: always;"></div>
- 
+  <table width="100%">
+      <tbody>
+          <tr>
+              <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
+              INSPECCION VISUAL
+          </td>
+          </tr>
+      </tbody>
+  </table>
   <table
   style="
     width:100%;
@@ -555,6 +576,7 @@ footer {
     border-collapse: collapse;
     table-layout: fixed;
     border: 1px solid black;
+    margin:10px 0px 0px 0px;
   "
 >
 
@@ -571,26 +593,13 @@ footer {
         <td
             rowspan="{{ $filas }}"
             style="
-            width:10%;
+            width:13%;
             border:1px solid black;
             padding:0;
             text-align:center;
-            vertical-align:top;
             "
         >
-            <div
-            style="
-                display: inline-block;
-                transform: rotate(-90deg);
-                transform-origin: top left;
-                font-weight: bold;
-                font-size: {{ $fontSize }};
-                /* ajustar la separación */
-                margin-top: {{ $filas * 2 }}px;
-            "
-            >
-            {{ $categoria['categoria'] }}
-            </div>
+        {{ $categoria['categoria'] }}
         </td>
       <td
         style="width:60%; border:1px solid black; padding:0; text-align:center; font-weight:bold; background:#ccc;"
@@ -598,17 +607,17 @@ footer {
         PRESENTE?
       </td>
       <td
-        style="width:10%; border:1px solid black; padding:0; text-align:center; background:#ccc;"
+        style="width:9%; border:1px solid black; padding:0; text-align:center; background:#ccc;"
       >
         <b>SI</b>
       </td>
       <td
-        style="width:10%; border:1px solid black; padding:0; text-align:center; background:#ccc;"
+        style="width:9%; border:1px solid black; padding:0; text-align:center; background:#ccc;"
       >
         <b>NO</b>
       </td>
       <td
-        style="width:10%; border:1px solid black; padding:0; text-align:center; background:#ccc;"
+        style="width:9%; border:1px solid black; padding:0; text-align:center; background:#ccc;"
       >
         <b>N/A</b>
       </td>
@@ -617,7 +626,7 @@ footer {
       {{-- 2) Filas de cada ítem --}}
       @foreach($categoria['items'] as $item)
         <tr>
-          <td style="border:1px solid black; padding:0; text-align:left;">
+          <td style="border:1px solid black; padding:0px 0px 0px 4px; text-align:left;">
             {{ $item['nombre'] }}
           </td>
           <td style="border:1px solid black; padding:0; text-align:center;">
@@ -645,7 +654,7 @@ footer {
         </tr>
     </tbody>
 </table>
-<table style="width:100%; border-collapse: collapse; font-size:15px; text-align: center; border:1px solid black;">
+<table style="width:100%; border-collapse: collapse; font-size:13px; text-align: center; border:1px solid black;margin:10px 0px 0px 0px">
   <colgroup>
     <col style="width:20%;" />  <!-- Nombre del cálculo -->
     <col style="width:30%;" />  <!-- Fórmula -->
@@ -671,15 +680,27 @@ footer {
         Velocidad de corrosión<br><small>(mm/año)</small>
       </td>
       <td style="border:1px solid black; padding:4px; text-align:left;">
-        (espesor anterior − espesor actual)<br>÷ años entre inspecciones
+        <u>espesor anterior – espesor actual</u><br>
+        años entre inspecciones
       </td>
       <td style="border:1px solid black; padding:4px;"<b>-></b></td>
-      <td style="border:1px solid black; padding:4px;">
-        (2 − 3) ÷ 4
+
+      <td style="border:1px solid black; padding:4px; text-align:center;">
+        <u>
+          {{ $informes_us_me->first()->umbral_me }}
+          – {{ $informes_us_me->first()->espesor_minimo_anterior_me }}
+        </u><br>
+        {{ $informes_us_me->first()->años_ultima_inspeccion_me }}
       </td>
       <td style="border:1px solid black; padding:4px;"><b>-></b></td>
       <td style="border:1px solid black; padding:4px;">
-        −0.25
+        {{ number_format(
+            (
+              $informes_us_me->first()->umbral_me
+              - $informes_us_me->first()->espesor_minimo_anterior_me
+            )
+            / $informes_us_me->first()->años_ultima_inspeccion_me
+          , 2) }}
       </td>
     </tr>
 
@@ -689,11 +710,16 @@ footer {
         Vida remanente<br><small>(años)</small>
       </td>
       <td style="border:1px solid black; padding:4px; text-align:left;">
-        (espesor actual − espesor mínimo requerido)<br>÷ velocidad de corrosión
+        <u>espesor actual - espesor mínimo requerido</u><br>
+        velocidad de corrosión
       </td>
       <td style="border:1px solid black; padding:4px;"><b>-></b></td>
-      <td style="border:1px solid black; padding:4px;">
-        (3 − 1) ÷ 0.5
+      <td style="border:1px solid black; padding:4px; text-align:center;">
+        <u>
+          {{ $informes_us_me->first()->umbral_me }}
+          – {{ $materialMinMedido }}
+        </u><br>
+        {{ $informes_us_me->first()->años_ultima_inspeccion_me }}
       </td>
       <td style="border:1px solid black; padding:4px;"><b>-></b></td>
       <td style="border:1px solid black; padding:4px;">
@@ -705,62 +731,10 @@ footer {
 
 </main>
 
-@include('reportes.partial.nro_pagina')
-
-@if($tecnica->codigo=='US')
-
-    <script type="text/php">
-        if ( isset($pdf) ) {
-            $x = 520;
-            $y = 78;
-            $text = "RG.30 Rev.02";
-            $font = $fontMetrics->get_font("serif", "normal");
-            $size = 8;
-            $color = array(0,0,0);
-            $word_space = 0.0;  //  default
-            $char_space = 0.0;  //  default
-            $angle = 0.0;   //  default
-            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-        }
-    </script>
-    @elseif ($tecnica->codigo=='FMC-TFM')
-
-    <script type="text/php">
-        if ( isset($pdf) ) {
-            $x = 520;
-            $y = 78;
-            $text = "RG.79 Rev.01";
-            $font = $fontMetrics->get_font("serif", "normal");
-            $size = 8;
-            $color = array(0,0,0);
-            $word_space = 0.0;  //  default
-            $char_space = 0.0;  //  default
-            $angle = 0.0;   //  default
-            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-        }
-@elseif ($tecnica->codigo=='PA')
-
-    <script type="text/php">
-        if ( isset($pdf) ) {
-            $x = 520;
-            $y = 78;
-            $text = "RG.79 Rev.01";
-            $font = $fontMetrics->get_font("serif", "normal");
-            $size = 8;
-            $color = array(0,0,0);
-            $word_space = 0.0;  //  default
-            $char_space = 0.0;  //  default
-            $angle = 0.0;   //  default
-            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-        }
-    </script>
-
- @else
-
  <script type="text/php">
     if ( isset($pdf) ) {
         $x = 518;
-        $y = 78;
+        $y = 62;
         $text = "RG.33 Rev.02";
         $font = $fontMetrics->get_font("serif", "normal");
         $size = 8;
@@ -770,9 +744,25 @@ footer {
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
+    if ( isset($pdf) ) {
+        $x = 445;
+        $y = 31;
+        $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
+        $font = $fontMetrics->get_font("serif", "bold");
+        $size = 8;
+        $color = array(0,0,0);
+        $word_space = 0.0;  //  default
+        $char_space = 0.0;  //  default
+        $angle = 0.0;   //  default
+        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+        /* $pdf->line(34,167,561,167,array(0,0,0),1.5); */
+
+    }
+   
 </script>
 
-@endif
+
 
 
 </body>
