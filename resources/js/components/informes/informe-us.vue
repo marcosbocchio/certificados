@@ -34,7 +34,8 @@
                             <label for="componente">
                                 Componente *
                                 <button type="button" @click="openModal" 
-                                :disabled="!componente || tecnica?.codigo !== 'ME'">
+                                v-if="cliente.codigo === '0279' && tecnica?.codigo === 'ME'" 
+                                :disabled="!componente">
                                 <i class="fa fa-list"></i>
                                 </button>
                             </label>
@@ -774,10 +775,31 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group" >
-                                        <label for="espesor_minimo_me" title="espesor_minimo_me">Espesor Mínimo</label>
+                                        <label for="espesor_minimo_me" title="espesor_minimo_me">Espesor Mínimo
+                                            <span v-if="cliente.codigo == '0279'">*</span>
+                                        </label>
                                         <input type="number" v-model="espesor_minimo_me" class="form-control" id="espesor_minimo_me" min="0" step="0.1">
                                     </div>
                                 </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="form-group" >
+                                        <label for="espesor_minimo_anterior_me" title="Espesor minimo anterior">Espesor minimo anterior 
+                                            <span v-if="cliente.codigo == '0279'">*</span>
+                                        </label>
+                                        <input type="number" v-model="espesor_minimo_anterior_me" class="form-control" id="espesor_minimo_anterior_me" min="0" step="0.1">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="form-group" >
+                                        <label for="años_ultima_inspeccion_me" title="Años desde la última inspección">Años desde la última inspección
+                                            <span v-if="cliente.codigo == '0279'">*</span>
+                                        </label>
+                                        <input type="number" v-model="años_ultima_inspeccion_me" class="form-control" id="años_ultima_inspeccion_me" min="0" step="0.1">
+                                    </div>
+                                </div>
+                                
                                 <div class="col-md-3">
                                     <div class="form-group" >
                                         <label for="cantidad_generatrices_linea_pdf_me" title="Cantidad Generatrices por linea en informe">Generatrices por Linea en pdf *</label>
@@ -796,7 +818,9 @@
                                                         <th  class="col-lg-2">Elemento</th>
                                                         <th  class="col-lg-2">Nominal</th>
                                                         <th  class="col-lg-2">Mínimo</th>
-                                                        <th  class="col-lg-1">G.L.P.</th>
+                                                        <th  class="col-lg-2">Mínimo Ant</th>
+                                                        <th  class="col-lg-2">Años Ultima Insp.</th>
+                                                        <th  class="col-lg-1">G.L.P.</th>                                                       
                                                         <th  class="col-lg-2">Importar Excel</th>
                                                         <th  class="col-lg-2">&nbsp;</th>
                                                     </tr>
@@ -806,6 +830,8 @@
                                                         <td>{{ item.elemento_me }}</td>
                                                         <td>{{ item.umbral_me }}</td>
                                                         <td>{{ item.espesor_minimo_me }}</td>
+                                                        <td>{{ item.espesor_minimo_anterior_me }}</td>
+                                                        <td>{{ item.años_ultima_inspeccion_me }}</td>
                                                         <td>
                                                             <div v-if="indexPosTabla_me === k">
                                                                 <input type="number" v-model="item.cantidad_generatrices_linea_pdf_me" min="1" max="30">
@@ -814,6 +840,7 @@
                                                                 {{ item.cantidad_generatrices_linea_pdf_me}}
                                                             </div>
                                                         </td>
+                                                        
                                                         <td>
                                                             <button type="button" @click="triggerFileUpload(k)">
                                                                 <i class="fa fa-file-excel-o"></i>
@@ -963,7 +990,7 @@
                         </div>
                    </div>
                </div>
-               <div class="box box-custom-enod">
+               <div v-if="cliente.codigo === '0279' && tecnica?.codigo === 'ME'" class="box box-custom-enod">
                 <div class="box-body">
                 <div class="box-header with-border">
                     <h3 class="box-title">INSPECCIÓN VISUAL</h3>
@@ -1306,6 +1333,8 @@ export default {
         cantidad_posiciones_me:'',
         cantidad_generatrices_me:'',
         cantidad_generatrices_linea_pdf_me: 15,
+        espesor_minimo_anterior_me:'',
+        años_ultima_inspeccion_me: '',
 
         tecnicas:[],
         estados_superficies:[],
@@ -1530,7 +1559,7 @@ export default {
             var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
             this.cliente = response.data
-
+            console.log(this.cliente.codigo)
             });
         },
         obtenerCodigoSoldadorPorId(id) {
@@ -2119,7 +2148,22 @@ processExcelData(data, filas, columnas) {
                 toastr.error('El campo Elemento es obligatorio');
                 return ;
             }
-
+            if (!this.espesor_minimo_me && this.cliente.codigo == '0279') {
+                toastr.error('El campo espesor mínimo es obligatorio');
+                return ;
+            }  
+            if (!this.espesor_minimo_anterior_me && this.cliente.codigo == '0279') {
+                toastr.error('El campo Espesor minimo anterior es obligatorio');
+                return ;
+            }   
+            if (!this.años_ultima_inspeccion_me && this.cliente.codigo == '0279') {
+                toastr.error('El campo Años última inspección es obligatorio');
+                return ;
+            }        
+            if (!this.elemento_me) {
+                toastr.error('El campo Elemento es obligatorio');
+                return ;
+            }
             if(this.elemento_me.length  > 30) {
                 toastr.error('El campo Elemento no debe contener más de 30 caracteres');
                 return ;
@@ -2134,7 +2178,18 @@ processExcelData(data, filas, columnas) {
                 toastr.error('El campo espesor mínimo no debe ser mayor a 99,9');
                 return ;
              }
-
+             if(this.espesor_minimo_anterior_me && this.espesor_minimo_anterior_me  > 99.9) {
+                toastr.error('El campo Espesor minimo anterior no debe ser mayor a 99,9');
+                return ;
+             }
+             if(this.años_ultima_inspeccion_me && this.años_ultima_inspeccion_me  > 99.9) {
+                toastr.error('El campo Años última inspección no debe ser mayor a 99,9');
+                return ;
+             }
+             if(this.espesor_minimo_me && this.espesor_minimo_me  > 99.9) {
+                toastr.error('El campo espesor mínimo no debe ser mayor a 99,9');
+                return ;
+             }
 
             if(this.diametro_me.length  > 10) {
                 toastr.error('El campo diametro no debe contener más de 10 caracteres');
@@ -2175,6 +2230,8 @@ processExcelData(data, filas, columnas) {
                 cantidad_posiciones_me  :             this.cantidad_posiciones_me,
                 cantidad_generatrices_me:             this.cantidad_generatrices_me,
                 cantidad_generatrices_linea_pdf_me :  this.cantidad_generatrices_linea_pdf_me,
+                espesor_minimo_anterior_me:              this.espesor_minimo_anterior_me,
+                años_ultima_inspeccion_me:               this.años_ultima_inspeccion_me,
                 mediciones :                          mediciones,
             });
             console.log("diametro", this.diametro_me)
