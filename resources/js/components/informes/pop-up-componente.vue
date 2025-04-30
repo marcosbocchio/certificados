@@ -259,8 +259,8 @@
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label>Radriografiado</label>
-                        <v-select :options="siNoOptions" v-model="radriografiado"></v-select>
+                        <label>radiografiado</label>
+                        <v-select :options="siNoOptions" v-model="radiografiado"></v-select>
                       </div>
                     </div>
                     <div class="col-md-3">
@@ -288,8 +288,8 @@
                           v-model="tipo2"
                           :options="tipo2Options"
                           label="codigo"
-                          taggable                  
-                          @new-tag="addTipo2"
+                          taggable     
+                          @new-tag="addTipo2"             
                         >
                         <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.codigo }}</span><br>
@@ -398,8 +398,8 @@
         diamExterior: '',
         longitudTotal: null,
         longitudTotalOptions: [],
-        // Sección 5: Radriografiado, Norma Fabricación, Aislación y Tipo
-        radriografiado: null,
+        // Sección 5: radiografiado, Norma Fabricación, Aislación y Tipo
+        radiografiado: null,
         trat_termico: '',
         siNoOptions: ['Si', 'No'],
         normaFabricacion: null,
@@ -427,11 +427,50 @@
         this.fetchFluidos();
         this.fetchNormas();
         this.fetchTipo();
+        this.fetchMateriales();
         console.log(this.modeloOptions);
       }
     }
   },
     methods: {
+      setForm(item){ 
+        console.log('entra la funcion');
+        var componente = item;
+        console.log(componente);
+        this.area = componente.area;
+        this.tipo = componente.tipo_us;
+        this.modelo = componente.modelo;
+        this.denominacion = componente.denominacion;
+        this.anio = componente.año;
+        this.detallesList = componente.materiales;
+        this.temp.disenio = componente.temp_diseño;
+        this.temp.operacion = componente.temp_operacion;
+        this.pres.disenio = componente.presion_diseño;
+        this.pres.operacion = componente.presion_operacion;
+        this.sobreespesor = componente.sobreespesor_por_corrocion;
+        this.diamExterior = componente.diam_exterior;
+        this.longitudTotal = componente.longitud_total;
+        this.trat_termico = componente.tratamiento_termico;
+        this.espesor = componente.espesor;
+        this.radiografiado = componente.radiografiado;
+        this.normaFabricacion = componente.norma;
+        this.aislacion = componente.aislacion;
+        this.tipo2 = componente.tipo;
+        this.material = componente.material;
+        this.fluido = componente.fluido;
+        this.path3_componente = componente.path3_componente;
+        console.log('cargado');
+        console.log(this.anio);
+
+        this.detallesList = componente.materiales.map(m => {
+          return {
+            descripcion: { codigo: m.descripcion },
+            grado: m.grado,
+            espNominal: m.espesor_nominal,
+            espMinMedido: m.espesor_minimo_medido
+          };
+        });
+      },
       storeRegistro() {
         console.log(this.path3_componente);
         const popupData = {
@@ -457,7 +496,7 @@
           longitudTotal: this.longitudTotal,
           // Sección 5
           trat_termico: this.trat_termico,
-          radriografiado: this.radriografiado,
+          radiografiado: this.radiografiado,
           normaFabricacion: this.normaFabricacion,
           aislacion: this.aislacion,
           tipo2: this.tipo2,
@@ -537,12 +576,21 @@ async fetchNormas() {
 async fetchTipo() {
   try {
     const response = await axios.get('/tgs/tipos-us-me');
+    this.tipo2Options = response.data.map(item => item);
+  } catch (error) {
+    console.error('Error al obtener tipos:', error);
+  }
+},
+async fetchMateriales() {
+  try {
+    const response = await axios.get('/materiales');
+    console.log(response)
+    console.log('response de material')
     this.materialOptions = response.data.map(item => item);
   } catch (error) {
     console.error('Error al obtener tipos:', error);
   }
 },
-
       removeDetalle(index) {
         this.detallesList.splice(index, 1)
       },
@@ -552,7 +600,7 @@ async fetchTipo() {
         // 2) lo selecciono automáticamente
         this.fluido = nuevo
       },
-      addFluido(nuevo) {
+      addTipo2(nuevo) {
         // 1) agrego la nueva etiqueta al listado de opciones
         this.tipo2Options.push(nuevo)
         // 2) lo selecciono automáticamente

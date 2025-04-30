@@ -26,6 +26,10 @@ class ComponenteUsMe extends Model
     
     }
 
+    public function material(){
+        return $this->hasOne('App\Materiales','id','material_id');
+    }
+
     public function norma(){
 
         return $this->hasOne('App\NormasFabricacion','id','norma_fabric_id');
@@ -35,11 +39,5 @@ class ComponenteUsMe extends Model
     public function materiales()
     {
         return $this->hasMany('App\MaterialUs', 'componente_us_me_id', 'id');
-    }
-
-    public function material(){
-
-        return $this->hasOne('App\Materiales','id','material_id');
-    
     }
 }

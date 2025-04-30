@@ -1,12 +1,12 @@
 <template>
     <div class="row">
         <ModalPopup
+        ref="modalPopupRef"
         :is-open="isModalOpen"
         :plantaProp="cliente"
         :nEquipoProp="componente"
         :materialesProp="materiales"
         :otdataProp="otdata"
-        :componenteId="informe_usdata"
         @close="closeModal"
         @submit="handleModalSubmit"
     />
@@ -1221,6 +1221,10 @@ export default {
             type : [ Array ],
             required : false
             },
+        componente_me_data : {
+            type : [ Object ],
+            required : false
+            },
 
         calibraciones_data : {
             type : [ Array ],
@@ -1362,33 +1366,8 @@ export default {
       }
     },
 
-    created : function() {
-      this.$store.commit('loading', true);
-      this.getCliente();
-      this.$store.dispatch('loadMateriales');
-      this.$store.dispatch('loadDiametros');
-      this.getAgenteAcomplamiento();
-      this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });
-      this.$store.dispatch('loadProcedimietosOtMetodo',
-        { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{
-                if(this.procedimientos.length == 0  ){
-                    toastr.options = toastrInfo;
-                    toastr.info('No existe ningún procedimiento para el método de ensayo seleccionado');
-                    toastr.options = toastrDefault;
-                }
-        });
-      this.$store.dispatch('loadNormaEvaluaciones');
-      this.$store.dispatch('loadNormaEnsayos');
-      this.getEstadosSuperficies();
-      this.getPalpadores();
-      this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
-      this.getGeneratrices();
-      this.getUsuariosCliente();
-      this.setEdit();
-      this.$store.dispatch('loadModelos3d');
-      this.getAccesoriosUs();
-      this.getSoldadores();
-      this.getTablaInspeccion();
+    created() {
+        this.init();
     },
 
     computed :{
@@ -1440,6 +1419,35 @@ export default {
     },
 
      methods : {
+        async init() {
+            this.$store.commit('loading', true);
+            await this.getCliente(); // ← esto se espera
+            this.$store.commit('loading', true);
+            this.$store.dispatch('loadMateriales');
+            this.$store.dispatch('loadDiametros');
+            this.getAgenteAcomplamiento();
+            this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });
+            this.$store.dispatch('loadProcedimietosOtMetodo',
+                { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{
+                        if(this.procedimientos.length == 0  ){
+                            toastr.options = toastrInfo;
+                            toastr.info('No existe ningún procedimiento para el método de ensayo seleccionado');
+                            toastr.options = toastrDefault;
+                        }
+                });
+            this.$store.dispatch('loadNormaEvaluaciones');
+            this.$store.dispatch('loadNormaEnsayos');
+            this.getEstadosSuperficies();
+            this.getPalpadores();
+            this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
+            this.getGeneratrices();
+            this.getUsuariosCliente();
+            this.setEdit();
+            this.$store.dispatch('loadModelos3d');
+            this.getAccesoriosUs();
+            this.getSoldadores();
+            this.getTablaInspeccion();
+        },
         async getTablaInspeccion() {
             try {
             const response = await axios.get('tgs/tabla-inspeccion'); // Ajustá si tu axios tiene baseURL
@@ -1482,7 +1490,7 @@ export default {
         },
 
          setEdit : async function(){
-
+            console.log('entra al setEdit');
             if(this.editmode) {
 
                this.fecha   = this.informedata.fecha;
@@ -1527,6 +1535,12 @@ export default {
                this.solicitado_por = this.solicitado_pordata ;
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
+               console.log('hola');
+               console.log(this.cliente);
+               if (this.cliente.codigo == '0279' && this.tecnica.codigo === 'ME'){
+                console.log('entro');
+                this.$refs.modalPopupRef.setForm(this.componente_me_data);
+               }
                await this.getTecnicas();
             } else {
                 await this.getTecnicas();
@@ -1554,12 +1568,12 @@ export default {
                 });
 
          },
-        getCliente : function(){
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
-            axios.get(urlRegistros).then(response =>{
-            this.cliente = response.data
-            console.log(this.cliente.codigo)
+        getCliente: function () {
+            axios.defaults.baseURL = this.url;
+            const urlRegistros = "clientes/" + this.otdata.cliente_id + "?api_token=" + Laravel.user.api_token;
+            return axios.get(urlRegistros).then(response => {
+                this.cliente = response.data;
+                console.log(this.cliente.codigo);
             });
         },
         obtenerCodigoSoldadorPorId(id) {
