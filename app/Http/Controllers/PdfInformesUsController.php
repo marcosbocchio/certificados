@@ -133,6 +133,7 @@ class PdfInformesUsController extends Controller
         $palpadorUS = $calibracion_us->palpador;
         $equipoPalpador = Equipos::where('id', $palpadorUS->equipo_id)->first();
         $tablaInforme = $this->getTablaInforme($informe->id);
+        
         $pdf = PDF::loadView('reportes.informes.informeUsMeTGS_hr',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'planta',

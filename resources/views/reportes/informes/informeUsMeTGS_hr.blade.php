@@ -10,25 +10,17 @@
 
 <style>
 
+    @page {
+            margin: 100px 40px 160px 40px !important;
+    }
 
-@if($tecnica->codigo == 'US' || $tecnica->codigo == 'PA' || $tecnica->codigo=='FMC-TFM')
-        /* reducimos el margin-top a 180px en vez de 260px */
-        @page {
-            margin: 180px 40px 260px 40px !important;
-        }
-    @else
-        @page {
-            margin: 180px 40px 160px 40px !important;
-        }
-    @endif
 
     header {
         position: fixed;
-        top: -180px;    /* misma medida que el margin-top */
+        top: -100px;    /* misma medida que el margin-top */
         left: 0;
         right: 0;
-        /* opcional: fija la altura explícita si quieres */
-        /* height: 180px; */
+        margin: 0px ;
     }
     main {
         margin: 0;
@@ -58,6 +50,30 @@ footer {
         background-color: #9ACD32; /* Color verde para los títulos de los accesorios */
     }
 .page_break { page-break-before: always; }
+
+.my-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: center;
+  }
+  .my-table td,
+  .my-table th {
+    border: 1px solid black;
+    padding: 2px; /* o pon 2px si prefieres un poco de espacio */
+  }
+  /* Columnas 1–10: cambia los % a tu gusto */
+  .my-table col.col-1  { width:  8%; }   /* PLANTA */
+  .my-table col.col-2  { width: 16%; }   /* valor planta */
+  .my-table col.col-3  { width:  8%; }   /* AREA/TIPO/… */
+  .my-table col.col-4  { width: 24%; }   /* valor area/tipo/... */
+  .my-table col.col-5  { width:  8%; }   /* OT N° */
+  .my-table col.col-6  { width: 16%; }   /* valor OT */
+  .my-table col.col-7  { width:  8%; }   /* modelo, año, etc. */
+  .my-table col.col-8  { width: 16%; }   /* valor modelo, año, etc. */
+  .my-table col.col-9  { width:  8%; }   /* unidad, [mm], [°C], etc. */
+  .my-table col.col-10 { width: 16%; }   /* valor unidad o espacio extra */
+
 
 </style>
 
@@ -127,166 +143,200 @@ footer {
     </footer>
 
 <main>
-<h3><b>EQUIPO: {{ $informe->componente }}</b><br>
-PLANTA: {{$planta->nombre?? '-'}}
-</h3>
+<h3><b>EQUIPO: {{ $informe->componente }}</b></h3>
+<h3><b>PLANTA: {{$planta->nombre?? '-'}}</b></h3>
 
 @if ($componente_us->path3_componente)
     <img src="{{ public_path($componente_us->path3_componente) }}"
          alt=""
-         style="width: 700px; height: 270px; margin-top:30px">
+         style="width: 700px; height: 270px; margin:30px 0px 30px 0px">
 @endif
-<h3><b>EJECUTOR DE ENSAYO: {{ $informe->componente }}</b><br>
-DNI: {{$planta->nombre ?? '-'}}
-</h3>
+
+<h3><b>EJECUTOR DE ENSAYO: {{ $ejecutor_ensayo->name }}</b></h3>
+<h3><b>DNI: {{ $ejecutor_ensayo->dni }}</b></h3>
 <div style="page-break-after: always;"></div>
 
 <h3 style="text-align: center;">DATOS DEL EQUIPO</h3>
 
-<table style="width: 100%; border-collapse: collapse; text-align: center;font-size:12px;">
+<table class="my-table">
+<colgroup>
+    <col class="col-1"/>
+    <col class="col-2"/>
+    <col class="col-3"/>
+    <col class="col-4"/>
+    <col class="col-5"/>
+    <col class="col-6"/>
+    <col class="col-7"/>
+    <col class="col-8"/>
+    <col class="col-9"/>
+    <col class="col-10"/>
+  </colgroup>
+
+  <tbody>
     <!-- Bloque planta – area – OT -->
     <tr>
-        <td rowspan="2" style="border:1px solid black;">PLANTA</td>
-        <td rowspan="2" colspan="2" style="border:1px solid black; background-color: #c3c3c3;">{{$planta->nombre ?? '-'}}</td>
-        <td style="border:1px solid black;">AREA</td>
-        <td colspan="3" style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->area}}</td>
-        <td style="border:1px solid black;">OT N°</td>
-        <td colspan="2" style="border:1px solid black; background-color: #c3c3c3;">{{$ot->numero}}</td>
+      <td rowspan="2">PLANTA</td>
+      <td rowspan="2" colspan="2" style="background-color: #c3c3c3;">
+        {{ $planta->nombre ?? '-' }}
+      </td>
+      <td>AREA</td>
+      <td colspan="3" style="background-color: #c3c3c3;">
+        {{ $componente_us->area }}
+      </td>
+      <td>OT N°</td>
+      <td colspan="2" style="background-color: #c3c3c3;">
+        {{ $ot->numero }}
+      </td>
     </tr>
     <tr>
-        <td style="border:1px solid black;">TIPO</td>
-        <td colspan="3" style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->area}}</td>
-        <td style="border:1px solid black;">TIPO</td>
-        <td colspan="3" style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->area}}</td>
+      <td>TIPO</td>
+      <td colspan="6" style="background-color: #c3c3c3;">
+        {{ $componente_us->area }}
+      </td>
     </tr>
 
     <!-- Bloque Nº de equipo -->
     <tr>
-        <td style="border:1px solid black;">N° DE EQUIPO</td>
-        <td colspan="2" style="border:1px solid black; background-color: #c3c3c3;">{{$informe->componente}}</td>
-        <td style="border:1px solid black;">MODELO</td>
-        <td colspan="6" style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->modelo_id ?? '-'}}</td>
+      <td>N° DE EQUIPO</td>
+      <td colspan="2" style="background-color: #c3c3c3;">
+        {{ $informe->componente }}
+      </td>
+      <td>MODELO</td>
+      <td colspan="6" style="background-color: #c3c3c3;">
+        {{ $componente_us->modelo_id ?? '-' }}
+      </td>
     </tr>
 
     <!-- Bloque Denominación -->
     <tr>
-        <td style="border:1px solid black;">DENOMINACION</td>
-        <td colspan="2" style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->denominacion}}</td>
-        <td style="border:1px solid black;">AÑO</td>
-        <td colspan="6" style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->año}}</td>
+      <td>DENOMINACION</td>
+      <td colspan="2" style="background-color: #c3c3c3;">
+        {{ $componente_us->denominacion }}
+      </td>
+      <td>AÑO</td>
+      <td colspan="6" style="background-color: #c3c3c3;">
+        {{ $componente_us->año }}
+      </td>
     </tr>
-    @php
-        $count = $materialesUS->count();
-    @endphp
-    <tbody>
+
+    @php $count = $materialesUS->count(); @endphp
     @foreach($materialesUS as $idx => $mat)
       <tr>
-        {{-- Sólo en la primera fila imprimimos “Material” con rowspan --}}
         @if ($idx === 0)
-          <td rowspan="{{ $count }}" style=" border:1px solid black;">
-            MATERIAL
-          </td>
+          <td rowspan="{{ $count }}">MATERIAL</td>
         @endif
+        <td colspan="2">{{ $mat->descripcion }}</td>
 
-        {{-- Descripción (colspan=2 para imitar tu diseño) --}}
-        <td colspan="2" style=" border:1px solid black;">
-          {{ $mat->descripcion }}
-        </td>
-
-        {{-- Grado --}}
         @if ($idx === 0)
-          <td rowspan="{{ $count }}" style=" border:1px solid black;">
-            GRADO
-          </td>
-        @endif>
-        <td style=" border:1px solid black;">
-          {{ number_format($mat->grado, 2) }}
-        </td>
-
-        {{-- Espesor Nominal --}}
-        @if ($idx === 0)
-          <td rowspan="{{ $count }}" style=" border:1px solid black;">
-            ESP. NOMINAL
-          </td>
+          <td rowspan="{{ $count }}">GRADO</td>
         @endif
-        <td style=" border:1px solid black;">
-          {{ number_format($mat->espesor_nominal, 2) }}
-        </td>
+        <td>{{ number_format($mat->grado, 2) }}</td>
 
-        {{-- Espesor Mínimo Medido --}}
         @if ($idx === 0)
-          <td rowspan="{{ $count }}" style=" border:1px solid black;">
-            ESP. MIN. MEDIDO
-          </td>
+          <td rowspan="{{ $count }}">ESP. NOMINAL</td>
         @endif
-        <td style=" border:1px solid black;">
-          {{ number_format($mat->espesor_minimo_medido, 2) }}
-        </td>
+        <td>{{ number_format($mat->espesor_nominal, 2) }}</td>
 
-        {{-- Unidad --}}
         @if ($idx === 0)
-          <td rowspan="{{ $count }}" style=" border:1px solid black;">
-          [mm]
-          </td>
+          <td rowspan="{{ $count }}">ESP. MIN. MEDIDO</td>
+        @endif
+        <td>{{ number_format($mat->espesor_minimo_medido, 2) }}</td>
+
+        @if ($idx === 0)
+          <td rowspan="{{ $count }}" style="background-color: #c3c3c3;" >[mm]</td>
         @endif
       </tr>
     @endforeach
 
     <!-- Bloque Temperatura / Presión -->
     <tr>
-        <td rowspan="2" style="border:1px solid black;">TEMPERATURA</td>
-        <td style="border:1px solid black;">DISEÑO</td>
-        <td style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->temp_diseño}}</td>
-        <td rowspan="2" style="border:1px solid black;">[°C]</td>
-        <td rowspan="2" colspan="2" style="border:1px solid black;">PRESION</td>
-        <td colspan="2" style="border:1px solid black;">DISEÑO</td>
-        <td style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->presion_diseño}}</td>
-        <td rowspan="2" style="border:1px solid black;">kg/cm²</td>
+      <td rowspan="2">TEMPERATURA</td>
+      <td>DISEÑO</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->temp_diseño }}
+      </td>
+      <td rowspan="2">[°C]</td>
+      <td rowspan="2" colspan="2">PRESION</td>
+      <td colspan="2">DISEÑO</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->presion_diseño }}
+      </td>
+      <td rowspan="2">kg/cm²</td>
     </tr>
     <tr>
-        <td style="border:1px solid black;">OPERACION</td>
-        <td style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->temp_operacion}}</td>
-        <td colspan="2" style="border:1px solid black;">OPERACION</td>
-        <td style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->presion_operacion}}</td>
+      <td>OPERACION</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->temp_operacion }}
+      </td>
+      <td colspan="2">OPERACION</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->presion_operacion }}
+      </td>
     </tr>
 
     <!-- Bloque Fluido -->
     <tr>
-        <td rowspan="3" style="border:1px solid black;">FLUIDO</td>
-        <td rowspan="3" colspan="3" style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->fluido_id ?? '-'}}</td>
-        <td rowspan="3" colspan="4" style="border:1px solid black;">SOBREESPESOR POR CORROSION</td>
-        <td rowspan="3" style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->sobreespesor_por_corrocion}}</td>
-        <td rowspan="3" style="border:1px solid black;">[mm]</td>
-    </tr>
-    <tr></tr><tr></tr>
-    <tr>
-        <td style="border:1px solid black;">DIAM. EXTERIOR</td>
-        <td colspan="2" style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->diam_exterior}}</td>
-        <td style="border:1px solid black;">[mm]</td>
-        <td colspan="4" style="border:1px solid black;">LONGITUD TOTAL</td>
-        <td style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->longitud_total}}</td>
-        <td style="border:1px solid black;">[mm]</td>
+      <td>FLUIDO</td>
+      <td colspan="3" style="background-color: #c3c3c3;">
+        {{ $componente_us->fluido_id ?? '-' }}
+      </td>
+      <td colspan="4">SOBREESPESOR POR CORROSION</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->sobreespesor_por_corrocion }}
+      </td>
+      <td>[mm]</td>
     </tr>
     <tr>
-        <td style="border:1px solid black;">TRAT. TERMICO</td>
-        <td colspan="2" style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->tratamiento_termico}}</td>
-        <td colspan="2" style="border:1px solid black;">RADIOGRAFIADO</td>
-        <td style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->radiografiado}}</td>
-        <td colspan="2" style="border:1px solid black;">NORMA FABRIC.</td>
-        <td colspan="2" style="border:1px solid black; background-color:#c3c3c3;">{{$componente_us->norma_fabric_id ?? '-'}}</td>
+      <td>DIAM. EXTERIOR</td>
+      <td colspan="2" style="background-color: #c3c3c3;">
+        {{ $componente_us->diam_exterior }}
+      </td>
+      <td>[mm]</td>
+      <td colspan="4">LONGITUD TOTAL</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->longitud_total }}
+      </td>
+      <td>[mm]</td>
     </tr>
+
     <tr>
-        <td style="border:1px solid black;">AISLACION</td>
-        <td style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->asilacion}}</td>
-        <td style="border:1px solid black;">TIPO</td>
-        <td style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->tipo_id}}</td>
-        <td colspan="2" style="border:1px solid black;">MATERIAL</td>
-        <td style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->material_id}}</td>
-        <td style="border:1px solid black;">ESPESOR</td>
-        <td style="border:1px solid black; background-color: #c3c3c3;">{{$componente_us->espesor}}</td>
-        <td style="border:1px solid black;">[mm]</td>
+      <td>TRAT. TERMICO</td>
+      <td colspan="2" style="background-color: #c3c3c3;">
+        {{ $componente_us->tratamiento_termico }}
+      </td>
+      <td colspan="2">RADIOGRAFIADO</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->radiografiado }}
+      </td>
+      <td colspan="2">NORMA FABRIC.</td>
+      <td colspan="2" style="background-color:#c3c3c3;">
+        {{ $componente_us->norma_fabric_id ?? '-' }}
+      </td>
     </tr>
+
+    <tr>
+      <td>AISLACION</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->asilacion }}
+      </td>
+      <td>TIPO</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->tipo_id }}
+      </td>
+      <td colspan="2">MATERIAL</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->material_id }}
+      </td>
+      <td>ESPESOR</td>
+      <td style="background-color: #c3c3c3;">
+        {{ $componente_us->espesor }}
+      </td>
+      <td>[mm]</td>
+    </tr>
+  </tbody>
 </table>
+
+
 {{-- Sección Alcance --}}
 <h4 style="margin: 0;"><strong>Alcance:</strong></h4>
 <p style="margin: 0;">
@@ -332,13 +382,6 @@ DNI: {{$planta->nombre ?? '-'}}
                                 </td>
                            </tr>
                            <tr>
-                                <th colspan="4">Ultimo Control</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4">-</td>
-                           </tr>
-
-                           <tr>
                                 <th colspan="4">Tecnica</th>
                            </tr>
                            <tr>
@@ -348,7 +391,7 @@ DNI: {{$planta->nombre ?? '-'}}
                                 <th colspan="4">Velocidad Acustica del acero</th>
                            </tr>
                            <tr>
-                                <td colspan="4">-</td>
+                                <td colspan="4">5290 m/seg</td>
                            </tr>
                         </tbody>
                     </table>
@@ -372,15 +415,6 @@ DNI: {{$planta->nombre ?? '-'}}
                                 <td colspan="4">{{$informe->plano_isom}}
                                 </td>
                             </tr>
-
-                           <tr>
-                                <th colspan="4">Ente regulador</th>
-                           </tr>
-                            <tr>
-                                <td colspan="4">
-                                -
-                                </td>
-                            </tr>
                             <tr >
                                 <th colspan="4">Acoplante</th>
                             </tr>
@@ -398,19 +432,30 @@ DNI: {{$planta->nombre ?? '-'}}
 
     <div style="page-break-after: always;"></div>
 
-    <table style="width:100%; border-collapse:collapse; font-size:9.5px; border:1px solid black; margin: 10px 0px 10px 0px;">
-  <thead>
-    <tr>
-      <th colspan="4" style="text-align:center; padding:6px; background:#c3c3c3; font-size:14px;">
-        <strong>ESQUEMA DE MEDICION</strong>
-      </th>
-    </tr>
-  </thead>
-</table>
-  
+@if(! empty($informe_us->path1_calibracion))
+  <table style="width:100%; border-collapse:collapse; font-size:9.5px; border:1px solid black; margin:10px 0;">
+    <thead>
+      <tr>
+        <th colspan="4" style="text-align:center; padding:6px; background:#c3c3c3; font-size:14px;">
+          <strong>ESQUEMA DE MEDICION</strong>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <img 
+                src="{{ public_path($informe_us->path1_calibracion) }}"
+                alt=""
+                style="width:700px; height:400px; margin:30px 0;"
+            >
+        </tr>
+    </tbody>
+  </table>
+
+
 
   <div style="page-break-after: always;"></div>
-
+@endif
     <table width="100%">
       <tbody>
           <tr>
@@ -422,84 +467,84 @@ DNI: {{$planta->nombre ?? '-'}}
   </table>
 
   @foreach ($medicionesAgrupadas as $nombreObjeto => $datos)
-      <h2 style="font-size: 15px;">{{ strtoupper($nombreObjeto) }}</h2>
+    <h2 style="font-size: 15px;">{{ strtoupper($nombreObjeto) }}</h2>
 
-      @if (count($datos['medicionesTranspuestas'][0]) - 2 <= $datos['cantidad_generatrices_linea_pdf_me'])
-          {{-- Formato agrupado --}}
-          <table class="bordered" style="font-size: 13px; border-collapse: collapse;">
-              <thead>
-                  <tr>
-                      <th style="min-width: 15px;height:20px;">Puntos</th>
-                      @foreach (array_slice($datos['medicionesTranspuestas'][0], 1, -1) as $encabezado)
-                          <th style="min-width: 28px;height:20px;">{{ $encabezado }}</th>
-                      @endforeach
-                  </tr>
-              </thead>
-              <tbody>
-                  @php 
-                  $currentSection = null;
-                  $espesorMinimo = $datos['espesor_minimo_me']; 
-                  @endphp
-                  @foreach (array_slice($datos['medicionesTranspuestas'], 1) as $medicion)
-                      @php $ultimoValor = end($medicion); @endphp
+    @if (count($datos['medicionesTranspuestas'][0]) - 2 <= $datos['cantidad_generatrices_linea_pdf_me'])
+        {{-- Formato agrupado --}}
+        <table class="bordered" style="font-size: 13px; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="min-width: 15px;height:20px;">Puntos</th>
+                    @foreach (array_slice($datos['medicionesTranspuestas'][0], 1, -1) as $encabezado)
+                        <th style="min-width: 28px;height:20px;">{{ $encabezado }}</th>
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody>
+                @php 
+                $currentSection = null;
+                $espesorMinimo = $datos['espesor_minimo_me']; 
+                @endphp
+                @foreach (array_slice($datos['medicionesTranspuestas'], 1) as $medicion)
+                    @php $ultimoValor = end($medicion); @endphp
 
-                      @if ($ultimoValor !== null && $ultimoValor !== $currentSection)
-                          @php $currentSection = $ultimoValor; @endphp
-                          <tr class="title-row">
-                              <td colspan="{{ count($datos['medicionesTranspuestas'][0]) - 1 }}" style="font-size: 14px;height:20px;">{{ $ultimoValor }}</td>
-                          </tr>
-                      @endif
+                    @if ($ultimoValor !== null && $ultimoValor !== $currentSection)
+                        @php $currentSection = $ultimoValor; @endphp
+                        <tr class="title-row">
+                            <td colspan="{{ count($datos['medicionesTranspuestas'][0]) - 1 }}" style="font-size: 14px;height:20px;">{{ $ultimoValor }}</td>
+                        </tr>
+                    @endif
 
-                      <tr>
-                          @foreach (array_slice($medicion, 0, -1) as $key => $valor)
-                          <td style="color: {{ $key >= 2 && is_numeric($valor) && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>                        @endforeach
-                      </tr>
-                  @endforeach
-              </tbody>
-          </table>
-      @else
-          {{-- Formato no agrupado con columnas fijas y divisiones según cantidad_generatrices_linea_pdf_me --}}
-          @php
-              $encabezados = $datos['medicionesTranspuestas'][0];
-              $maxColumnas = $datos['cantidad_generatrices_linea_pdf_me'];
-              $totalColumnas = count($encabezados) - 1; 
-              $inicio = 2; 
-              $espesorMinimo = $datos['espesor_minimo_me']; 
-          @endphp
+                    <tr>
+                        @foreach (array_slice($medicion, 0, -1) as $key => $valor)
+                        <td style="color: {{ $key >= 2 && is_numeric($valor) && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>                        @endforeach
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        {{-- Formato no agrupado con columnas fijas y divisiones según cantidad_generatrices_linea_pdf_me --}}
+        @php
+            $encabezados = $datos['medicionesTranspuestas'][0];
+            $maxColumnas = $datos['cantidad_generatrices_linea_pdf_me'];
+            $totalColumnas = count($encabezados) - 1; 
+            $inicio = 2; 
+            $espesorMinimo = $datos['espesor_minimo_me']; 
+        @endphp
 
-          @while ($inicio < $totalColumnas)
-              @php
-                  $fin = min($inicio + $maxColumnas, $totalColumnas);
-                  $columnasMostrar = array_slice($encabezados, $inicio, $fin - $inicio);
-              @endphp
-              <table class="bordered" style="font-size: 14px; border-collapse: collapse;">
-                  <thead>
-                      <tr>
-                          <th style="min-width: 28px;">Puntos</th>
-                          <th style="min-width: 28px;">Ø</th>
-                          @foreach ($columnasMostrar as $encabezado)
-                              <th style="min-width: 28px;">{{ $encabezado }}</th>
-                          @endforeach
-                      </tr>
-                  </thead>
-                  <tbody>
-                      @foreach ($datos['medicionesTranspuestas'] as $indice => $medicion)
-                          @if ($indice > 0)
-                              <tr>
-                                  <td style="height:20px;">{{ $medicion[0] }}</td>
-                                  <td style="height:20px;">{{ $medicion[1] }}</td>
-                                  @foreach (array_slice($medicion, $inicio, $fin - $inicio) as $key => $valor)
-                                  <td style="color: {{ $key + $inicio >= 2 && is_numeric($valor) && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
-                                  @endforeach
-                              </tr>
-                          @endif
-                      @endforeach
-                  </tbody>
-              </table>
-              @php $inicio = $fin; @endphp
-          @endwhile
-      @endif
-  @endforeach
+        @while ($inicio < $totalColumnas)
+            @php
+                $fin = min($inicio + $maxColumnas, $totalColumnas);
+                $columnasMostrar = array_slice($encabezados, $inicio, $fin - $inicio);
+            @endphp
+            <table class="bordered" style="font-size: 14px; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="min-width: 28px;">Puntos</th>
+                        <th style="min-width: 28px;">Ø</th>
+                        @foreach ($columnasMostrar as $encabezado)
+                            <th style="min-width: 28px;">{{ $encabezado }}</th>
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($datos['medicionesTranspuestas'] as $indice => $medicion)
+                        @if ($indice > 0)
+                            <tr>
+                                <td style="height:20px;">{{ $medicion[0] }}</td>
+                                <td style="height:20px;">{{ $medicion[1] }}</td>
+                                @foreach (array_slice($medicion, $inicio, $fin - $inicio) as $key => $valor)
+                                <td style="color: {{ $key + $inicio >= 2 && is_numeric($valor) && $valor !== 'S/A' && $valor < $espesorMinimo ? 'red' : 'inherit' }}; font-size: 13px;height:20px;">{{ $valor }}</td>
+                                @endforeach
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+            @php $inicio = $fin; @endphp
+        @endwhile
+    @endif
+@endforeach
 
   <div style="page-break-after: always;"></div>
  
@@ -515,32 +560,59 @@ DNI: {{$planta->nombre ?? '-'}}
 
   <tbody>
     @foreach($tablaInforme as $categoria)
-      @php
-        // número total de filas para calcular el rowspan
-        $filas = count($categoria['items']) + 1;
-      @endphp
+        @php
+            // número total de filas para calcular el rowspan
+            $filas    = count($categoria['items']) + 1;
+            $len      = mb_strlen($categoria['categoria']);
+            $fontSize = $len > 15 ? '8px' : ($len > 10 ? '9px' : '10px');
+        @endphp
 
-      {{-- 1) Fila de PRESENTE? con la celda de categoría --}}
-      <tr>
+        <tr>
         <td
-          style="border:1px solid black; padding:0; vertical-align:top; font-weight:bold;"
-          rowspan="{{ $filas }}"
+            rowspan="{{ $filas }}"
+            style="
+            width:10%;
+            border:1px solid black;
+            padding:0;
+            text-align:center;
+            vertical-align:top;
+            "
         >
-          {{ $categoria['categoria'] }}
+            <div
+            style="
+                display: inline-block;
+                transform: rotate(-90deg);
+                transform-origin: top left;
+                font-weight: bold;
+                font-size: {{ $fontSize }};
+                /* ajustar la separación */
+                margin-top: {{ $filas * 2 }}px;
+            "
+            >
+            {{ $categoria['categoria'] }}
+            </div>
         </td>
-        <td style="border:1px solid black; padding:0; text-align:left; font-weight:bold;background:#ccc;">
-          PRESENTE?
-        </td>
-        <td style="border:1px solid black; padding:0; text-align:center;background:#ccc;">
-          <b>SI</b>
-        </td>
-        <td style="border:1px solid black; padding:0; text-align:center;background:#ccc;">
-          <b>NO</b>
-        </td>
-        <td style="border:1px solid black; padding:0; text-align:center;background:#ccc;">
-          <b>N/A</b>
-        </td>
-      </tr>
+      <td
+        style="width:60%; border:1px solid black; padding:0; text-align:center; font-weight:bold; background:#ccc;"
+      >
+        PRESENTE?
+      </td>
+      <td
+        style="width:10%; border:1px solid black; padding:0; text-align:center; background:#ccc;"
+      >
+        <b>SI</b>
+      </td>
+      <td
+        style="width:10%; border:1px solid black; padding:0; text-align:center; background:#ccc;"
+      >
+        <b>NO</b>
+      </td>
+      <td
+        style="width:10%; border:1px solid black; padding:0; text-align:center; background:#ccc;"
+      >
+        <b>N/A</b>
+      </td>
+    </tr>
 
       {{-- 2) Filas de cada ítem --}}
       @foreach($categoria['items'] as $item)
@@ -560,6 +632,74 @@ DNI: {{$planta->nombre ?? '-'}}
         </tr>
       @endforeach
     @endforeach
+  </tbody>
+</table>
+<div style="page-break-after: always;"></div>
+
+<table width="100%">
+      <tbody>
+          <tr>
+            <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
+              FORMULAS
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table style="width:100%; border-collapse: collapse; font-size:15px; text-align: center; border:1px solid black;">
+  <colgroup>
+    <col style="width:20%;" />  <!-- Nombre del cálculo -->
+    <col style="width:30%;" />  <!-- Fórmula -->
+    <col style="width:5%;" />   <!-- Flecha -->
+    <col style="width:20%;" />  <!-- Valores -->
+    <col style="width:5%;" />   <!-- Flecha -->
+    <col style="width:20%;" />  <!-- Resultado -->
+  </colgroup>
+  <thead>
+    <tr>
+      <th style="border:1px solid black; padding:4px;">Cálculo</th>
+      <th style="border:1px solid black; padding:4px;">Fórmula</th>
+      <th style="border:1px solid black; padding:4px;"><b>-></b></th>
+      <th style="border:1px solid black; padding:4px;">Valores</th>
+      <th style="border:1px solid black; padding:4px;"><b>-></b></th>
+      <th style="border:1px solid black; padding:4px;">Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Velocidad de corrosión -->
+    <tr>
+      <td style="border:1px solid black; padding:4px; text-align:left;">
+        Velocidad de corrosión<br><small>(mm/año)</small>
+      </td>
+      <td style="border:1px solid black; padding:4px; text-align:left;">
+        (espesor anterior − espesor actual)<br>÷ años entre inspecciones
+      </td>
+      <td style="border:1px solid black; padding:4px;"<b>-></b></td>
+      <td style="border:1px solid black; padding:4px;">
+        (2 − 3) ÷ 4
+      </td>
+      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+      <td style="border:1px solid black; padding:4px;">
+        −0.25
+      </td>
+    </tr>
+
+    <!-- Vida remanente -->
+    <tr>
+      <td style="border:1px solid black; padding:4px; text-align:left;">
+        Vida remanente<br><small>(años)</small>
+      </td>
+      <td style="border:1px solid black; padding:4px; text-align:left;">
+        (espesor actual − espesor mínimo requerido)<br>÷ velocidad de corrosión
+      </td>
+      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+      <td style="border:1px solid black; padding:4px;">
+        (3 − 1) ÷ 0.5
+      </td>
+      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+      <td style="border:1px solid black; padding:4px;">
+        4
+      </td>
+    </tr>
   </tbody>
 </table>
 
