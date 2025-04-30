@@ -45,7 +45,7 @@ class TgsController extends Controller
             }
             return null;
         };
-    
+    //para fijarme que este
         $modeloId  = $getId($popup['modelo'] ?? null);
         $fluidoId  = $getId($popup['fluido'] ?? null);
         $normaId   = $getId($popup['normaFabricacion'] ?? null);
