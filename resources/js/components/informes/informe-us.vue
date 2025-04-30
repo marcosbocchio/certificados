@@ -1446,7 +1446,7 @@ export default {
             this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
             this.getGeneratrices();
             this.getUsuariosCliente();
-            if (this.cliente.codigo == '0279' && this.tecnicadata.codigo == 'ME'){
+            if (this.cliente.codigo == '0279'){
                 await this.getTablaInspeccion();
             }
             this.setEdit();
