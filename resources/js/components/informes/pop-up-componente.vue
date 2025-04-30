@@ -80,7 +80,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="anio">Año *</label>
-                        <input type="number" id="anio" v-model="anio"  min="0" max="4" class="form-control">
+                        <input type="number" id="anio" v-model="anio"  min="0" max="9999" class="form-control">
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -113,8 +113,14 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="detalleDescripcion">Descripción</label>
+                        <input type="text" id="detalleDescripcion" v-model="detalle.descripcion" maxlength="30" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="detalleMaterial">Material</label>
                         <v-select
-                          v-model="detalle.descripcion"
+                          v-model="detalle.material"
                           :options="materialesOpcion"
                           label="codigo"
                         />
@@ -123,19 +129,19 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="detalleGrado">Grado</label>
-                        <input type="number" id="detalleGrado" v-model="detalle.grado" min="0" max="4" class="form-control">
+                        <input type="number" id="detalleGrado" v-model="detalle.grado" min="0" max="9999" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="detalleEspNominal">Esp. Nominal</label>
-                        <input type="number" id="detalleEspNominal" v-model="detalle.espNominal" min="0" max="4" class="form-control">
+                        <input type="number" id="detalleEspNominal" v-model="detalle.espNominal" min="0" max="9999"  class="form-control">
                       </div>
                     </div>
                     <div class="col-md-2">
                       <div class="form-group">
                         <label for="detalleEspMinMedido">Esp. Min Medido</label>
-                        <input type="number" id="detalleEspMinMedido" v-model="detalle.espMinMedido" min="0" max="4" class="form-control">
+                        <input type="number" id="detalleEspMinMedido" v-model="detalle.espMinMedido" min="0" max="9999" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-1 d-flex align-items-end">
@@ -151,6 +157,7 @@
                         <thead>
                           <tr>
                             <th>Descripción</th>
+                            <th>Material</th>
                             <th>Grado</th>
                             <th>Esp. Nominal</th>
                             <th>Esp. Min Medido</th>
@@ -159,7 +166,8 @@
                         </thead>
                         <tbody>
                           <tr v-for="(item, index) in detallesList" :key="index">
-                            <td>{{ item.descripcion.codigo }}</td>
+                            <td>{{ item.descripcion }}</td>
+                            <td>{{ item.material.codigo }}</td>
                             <td>{{ item.grado }}</td>
                             <td>{{ item.espNominal }}</td>
                             <td>{{ item.espMinMedido }}</td>
@@ -187,13 +195,13 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Diseño Temp</label>
-                        <input type="number" v-model="temp.disenio" min="0" max="4" class="form-control">
+                        <input type="number" v-model="temp.disenio" min="0" max="9999" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Operación Temp</label>
-                        <input type="number" v-model="temp.operacion" min="0" max="4" class="form-control">
+                        <input type="number" v-model="temp.operacion" min="0" max="9999" class="form-control">
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -204,13 +212,13 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Diseño Presión</label>
-                        <input type="number" v-model="pres.disenio" min="0" max="4" class="form-control">
+                        <input type="number" v-model="pres.disenio" min="0" max="9999" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Operación Presión</label>
-                        <input type="number" v-model="pres.operacion" min="0" max="4" class="form-control">
+                        <input type="number" v-model="pres.operacion" min="0" max="9999" class="form-control">
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -235,19 +243,19 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Sobreespesor por corrosión</label>
-                        <input type="number" v-model="sobreespesor" min="0" max="4" class="form-control">
+                        <input type="number" v-model="sobreespesor" min="0" max="9999" step="0.01" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Diam. Exterior</label>
-                        <input type="number" v-model="diamExterior" min="0" max="8" class="form-control">
+                        <input type="number" v-model="diamExterior" min="0" max="99999999" step="0.01" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Longitud Total</label>
-                        <input type="number" v-model="longitudTotal" min="0" max="8" class="form-control">
+                        <input type="number" v-model="longitudTotal" min="0" max="99999999" step="0.01" class="form-control">
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -259,8 +267,8 @@
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label>radiografiado</label>
-                        <v-select :options="siNoOptions" v-model="radiografiado"></v-select>
+                        <label>radiografiado %</label>
+                        <input type="number" v-model="radiografiado" min="1" max="100" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-3">
@@ -312,7 +320,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Espesor</label>
-                        <input type="text" v-model="espesor" placeholder="Espesor" class="form-control">
+                        <input type="text" v-model="espesor" placeholder="Espesor" step="0.01" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -377,6 +385,7 @@
         // Sección 2: Detalle para la tabla
         detalle: {
           descripcion: '',
+          material:'',
           grado: '',
           espNominal: '',
           espMinMedido: ''
@@ -418,7 +427,7 @@
     // Cada vez que abra el modal, sincronizo los props a mi data interna:
     isOpen(val) {
       if (val) {
-        this.planta           = this.plantaProp.nombre_fantasia
+        this.planta           = this.plantaProp.codigo
         this.nEquipo          = this.nEquipoProp
         this.materialesOpcion = this.materialesProp
         this.orden            = this.otdataProp.numero
@@ -464,7 +473,8 @@
 
         this.detallesList = componente.materiales.map(m => {
           return {
-            descripcion: { codigo: m.descripcion },
+            descripcion: m.descripcion,
+            material: { codigo: m.material },
             grado: m.grado,
             espNominal: m.espesor_nominal,
             espMinMedido: m.espesor_minimo_medido
@@ -521,31 +531,57 @@
         this.modelo = nuevo
       },
       addDetalle() {
-  // Validar si hay algo ingresado
+  // 1) Compruebo que haya al menos un campo llenado
   if (
     this.detalle.descripcion ||
-    this.detalle.grado ||
-    this.detalle.espNominal ||
-    this.detalle.espMinMedido
+    this.detalle.grado !== '' ||
+    this.detalle.espNominal !== '' ||
+    this.detalle.espMinMedido !== ''
   ) {
-    // Verificar si ya existe un item con el mismo descripcion.codigo
-    const existe = this.detallesList.some(
-      (item) => item.descripcion?.codigo === this.detalle.descripcion?.codigo
-    );
+    // 2) Validaciones de números y longitud
+    const camposNum = [
+      { key: 'grado', label: 'Grado' },
+      { key: 'espNominal', label: 'Espesor Nominal' },
+      { key: 'espMinMedido', label: 'Espesor Mínimo Medido' }
+    ];
 
+    for (const { key, label } of camposNum) {
+      const val = this.detalle[key];
+
+      // Solo validamos si el campo no está vacío
+      if (val !== '' && val != null) {
+        // 2.1) Debe ser un número
+        if (isNaN(val)) {
+          toastr.error(`${label} debe ser un número`);
+          return;
+        }
+
+        // 2.2) La parte entera no puede tener más de 4 dígitos
+        const entero = Math.trunc(Math.abs(val));
+        if (String(entero).length > 4) {
+          toastr.error(`${label} no puede tener más de 4 dígitos`);
+          return;
+        }
+      }
+    }
+
+    // 3) Verifico duplicados por material.codigo
+    const existe = this.detallesList.some(
+      item => item.material?.codigo === this.detalle.material?.codigo
+    );
     if (existe) {
       toastr.error('Material ya registrado');
       return;
     }
 
-    // Agregar el nuevo detalle
+    // 4) Si todo OK, agrego el detalle
     this.detallesList.push({ ...this.detalle });
 
-    // Limpiar campos
-    this.detalle.descripcion = '';
-    this.detalle.grado = '';
-    this.detalle.espNominal = '';
-    this.detalle.espMinMedido = '';
+    // 5) Limpio el formulario
+    this.detalle.descripcion    = '';
+    this.detalle.grado          = '';
+    this.detalle.espNominal     = '';
+    this.detalle.espMinMedido   = '';
   }
 },
 async fetchModelos() {

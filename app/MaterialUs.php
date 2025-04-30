@@ -10,6 +10,7 @@ class MaterialUs extends Model
     protected $fillable = [
         'componente_us_me_id',
         'descripcion',
+        'material',
         'grado',
         'espesor_nominal',
         'espesor_minimo_medido'

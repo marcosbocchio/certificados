@@ -72,7 +72,7 @@ class TgsController extends Controller
         $componente->diam_exterior              = $popup['diamExterior']     ?? null;
         $componente->longitud_total             = $popup['longitudTotal']    ?? null;
         $componente->tratamiento_termico        = $popup['trat_termico']     ?? null;
-        $componente->radiografiado              = $popup['radriografiado']   ?? null;
+        $componente->radiografiado              = $popup['radiografiado']   ?? null;
         $componente->norma_fabric_id            = $normaId;
         $componente->aislacion                  = $popup['aislacion']        ?? null;
         $componente->tipo_id                    = $tipoId;
@@ -94,7 +94,8 @@ class TgsController extends Controller
             try {
                 MaterialUs::create([
                     'componente_us_me_id'   => $componenteId,
-                    'descripcion'           => $d['descripcion']['codigo'] ?? (string) $d['descripcion'],
+                    'descripcion'           => $d['descripcion'],
+                    'material'              => $d['material']['codigo'] ?? (string) $d['material'],
                     'grado'                 => (float) ($d['grado'] ?? 0),
                     'espesor_nominal'       => (float) ($d['espNominal'] ?? 0),
                     'espesor_minimo_medido' => (float) ($d['espMinMedido'] ?? 0)

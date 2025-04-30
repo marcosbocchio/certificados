@@ -3,7 +3,7 @@
         <ModalPopup
         ref="modalPopupRef"
         :is-open="isModalOpen"
-        :plantaProp="cliente"
+        :plantaProp="planta"
         :nEquipoProp="componente"
         :materialesProp="materiales"
         :otdataProp="otdata"
@@ -2531,7 +2531,8 @@ processExcelData(data, filas, columnas) {
                 'tabla_me'        :this.Tabla_me,
                 'solicitado_por'    : this.solicitado_por,
                 'TablaModelos3d' :this.TablaModelos3d,
-
+                'data_popup': this.popupData,
+                'tablaInspeccion': this.tablaInspeccion,
           }}
 
 

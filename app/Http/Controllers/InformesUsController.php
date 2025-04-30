@@ -29,6 +29,7 @@ use App\User;
 use App\PdfEspecial;
 use App\OtTipoSoldaduras;
 use App\AgenteAcoplamientos;
+use App\RespuestasInforme;
 use Exception as Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -83,7 +84,7 @@ class InformesUsController extends Controller
                 $otData    = $request->input('ot', []);
                 $clienteId = $otData['cliente_id'];
                 $popupData = $request->input('data_popup', []);
-                log::info($popupData);
+
                 if ($clienteId) {
                     $pdfMatch = PdfEspecial::where('cliente_id', $clienteId)
                         ->where('tipo_informe', $popupData['tipo'])
@@ -92,9 +93,6 @@ class InformesUsController extends Controller
                     $pdfMatch = null;
                 }
 
-                log::info($clienteId);
-                log::info($popupData['tipo']);
-                log::info($pdfMatch);
                 if (! empty($pdfMatch)) {
                     // 6) guardo componente
                     (new \App\Http\Controllers\TgsController())
@@ -108,11 +106,7 @@ class InformesUsController extends Controller
                             $informe->id,
                             $request->input('tablaInspeccion', [])
                         );
-                } else {
-                    // 7) fallback
-                    $this->saveDetalle_us_pa_us($request, $informeUs);
                 }
-                // —–––––––––––––––––––––––––––––––––––––––––
     
             } else {
                 $this->saveDetalle_us_pa_us($request, $informeUs);
@@ -162,8 +156,34 @@ class InformesUsController extends Controller
             $this->deleteInforme_us_me($informeUs->id);
 
             if ($tecnica->codigo == 'ME'){
-
                 $this->saveInforme_us_me($request,$informeUs);
+                $otData    = $request->input('ot', []);
+                $clienteId = $otData['cliente_id'];
+                $popupData = $request->input('data_popup', []);
+                if ($clienteId) {
+                    $pdfMatch = PdfEspecial::where('cliente_id', $clienteId)
+                        ->where('tipo_informe', $popupData['tipo'])
+                        ->first();
+                } else {
+                    $pdfMatch = null;
+                }
+                if (! empty($pdfMatch)) {
+                    // 6) guardo componente
+                    ComponenteUsMe::where('informe_us_id', $informeUs->id)->delete();
+                    RespuestasInforme::where('informe_id', $informe->id)->delete();
+                    (new \App\Http\Controllers\TgsController())
+                        ->saveComponente(
+                            $informeUs->id,
+                            $clienteId,
+                            $popupData
+                        );
+                    (new \App\Http\Controllers\TgsController())
+                        ->saveTablaInforme(
+                            $informe->id,
+                            $request->input('tablaInspeccion', [])
+                        );
+                }
+                
             }else{
 
                 $this->saveDetalle_us_pa_us($request,$informeUs);
