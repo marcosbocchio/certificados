@@ -1221,6 +1221,10 @@ export default {
             type : [ Array ],
             required : false
             },
+        inspeccion_visual : {
+            type : [ Array ],
+            required : false
+            },
         componente_me_data : {
             type : [ Object ],
             required : false
@@ -1442,11 +1446,13 @@ export default {
             this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
             this.getGeneratrices();
             this.getUsuariosCliente();
+            if (this.cliente.codigo == '0279' && this.tecnicadata.codigo == 'ME'){
+                await this.getTablaInspeccion();
+            }
             this.setEdit();
             this.$store.dispatch('loadModelos3d');
             this.getAccesoriosUs();
             this.getSoldadores();
-            this.getTablaInspeccion();
         },
         async getTablaInspeccion() {
             try {
@@ -1469,7 +1475,6 @@ export default {
             item.selected = respuesta;
         },
         openModal() {
-            console.log("Abriendo modal");
         this.isModalOpen = true
         },
         // Cierra el popup
@@ -1479,7 +1484,6 @@ export default {
         // Recibe y maneja los datos del modal al hacer submit
         handleModalSubmit(popupData) {
         this.popupData = popupData;
-        console.log('Datos recibidos del popup:', popupData)
         // Aquí puedes procesar los datos recibidos según tu lógica
         this.closeModal()
         },
@@ -1490,7 +1494,6 @@ export default {
         },
 
          setEdit : async function(){
-            console.log('entra al setEdit');
             if(this.editmode) {
 
                this.fecha   = this.informedata.fecha;
@@ -1535,11 +1538,19 @@ export default {
                this.solicitado_por = this.solicitado_pordata ;
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
-               console.log('hola');
-               console.log(this.cliente);
                if (this.cliente.codigo == '0279' && this.tecnica.codigo === 'ME'){
-                console.log('entro');
                 this.$refs.modalPopupRef.setForm(this.componente_me_data);
+                const respuestas = this.inspeccion_visual || [];
+
+                    respuestas.forEach(respuesta => {
+                        for (const categoria of this.tablaInspeccion) {
+                            const item = categoria.items.find(i => i.id === respuesta.item_categoria_id);
+                            if (item) {
+                                item.selected = respuesta.respuesta;
+                                break;
+                            }
+                        }
+                    });
                }
                await this.getTecnicas();
             } else {
@@ -1573,12 +1584,10 @@ export default {
             const urlRegistros = "clientes/" + this.otdata.cliente_id + "?api_token=" + Laravel.user.api_token;
             return axios.get(urlRegistros).then(response => {
                 this.cliente = response.data;
-                console.log(this.cliente.codigo);
             });
         },
         obtenerCodigoSoldadorPorId(id) {
         const soldador = this.opcionesSoldadores.find(s => s.id === id);
-        console.log(soldador);
         return soldador ? soldador.codigo : '-'; //
         },
 
@@ -1586,7 +1595,6 @@ export default {
 
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/' + this.tecnica.id + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
-            console.log(urlRegistros)
             axios.get(urlRegistros).then(response =>{
                 this.numero_inf = response.data
             });
@@ -2150,7 +2158,6 @@ processExcelData(data, filas, columnas) {
 
 
     this.currentPosition = null;
-    console.log('Datos procesados para Tabla_me:', this.Tabla_me);
 }
 ,
         addTabla_me : function () {
@@ -2248,8 +2255,6 @@ processExcelData(data, filas, columnas) {
                 años_ultima_inspeccion_me:               this.años_ultima_inspeccion_me,
                 mediciones :                          mediciones,
             });
-            console.log("diametro", this.diametro_me)
-            console.log("tabla",this.Tabla_me);
 
         },
         agregarPestana(wb, nombre, datos) {
@@ -2259,7 +2264,6 @@ processExcelData(data, filas, columnas) {
             datos.mediciones.forEach((medicion, index) => {
                 // Convertir cada elemento de la medicion en un arreglo para que se inserte verticalmente
                 const datosVerticales = medicion.map(dato => [dato]);
-                console.log(datosVerticales);
                 // Insertar la medicion vertical en la hoja, comenzando en 'B1', 'C1', etc.
                 XLSX.utils.sheet_add_aoa(ws, datosVerticales, { origin: `${columnaActual}${1}` });
 

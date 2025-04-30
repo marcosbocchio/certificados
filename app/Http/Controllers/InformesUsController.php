@@ -18,6 +18,7 @@ use App\NormaEnsayos;
 use App\EstadosSuperficies;
 use App\CalibracionesUs;
 use App\ComponenteUsMe;
+use App\RespuestasInforme;
 use App\DetalleUsPaUs;
 use App\DetallesUsPaUsReferencias;
 use App\InformesUsMe;
@@ -372,6 +373,7 @@ class InformesUsController extends Controller
         $tabla_us_pa    = $this->getTabla_us_pa($informe_us->id);
         $tabla_me       = $this->getTabla_me($informe_us->id);
         $componente     = $this->getComponente($informe_us->id);
+        $inspeccion_visual = $this->getInspeccionVisual($informe->id);
 
         if ($informe_material_accesorio == null)
                $informe_material_accesorio = new Materiales();
@@ -413,6 +415,7 @@ class InformesUsController extends Controller
                                                  'tabla_us_pa',
                                                  'tabla_me',
                                                  'componente',
+                                                 'inspeccion_visual',
                                                  'informe_modelos_3d',
                                                  'header_titulo',
                                                  'informe_solicitado_por',
@@ -443,6 +446,16 @@ class InformesUsController extends Controller
                             ->first();
         log::debug($componente);
         return $componente;
+
+    }
+
+    public function getInspeccionVisual($informe_us_id){
+
+        $inspeccion_visual =  RespuestasInforme::
+                             where('informe_id',$informe_us_id)
+                            ->get();
+        log::debug($inspeccion_visual);
+        return $inspeccion_visual;
 
     }
     public function getTabla_us_pa($informe_us_id){
