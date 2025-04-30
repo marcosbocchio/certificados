@@ -229,7 +229,8 @@ footer {
         @if ($idx === 0)
           <td rowspan="{{ $count }}">MATERIAL</td>
         @endif
-        <td colspan="2">{{ $mat->descripcion }}</td>
+        <td>{{ $mat->descripcion }}</td>
+        <td>{{ $mat->material }}</td>
 
         @if ($idx === 0)
           <td rowspan="{{ $count }}">GRADO</td>

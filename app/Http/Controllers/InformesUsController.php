@@ -30,7 +30,6 @@ use App\User;
 use App\PdfEspecial;
 use App\OtTipoSoldaduras;
 use App\AgenteAcoplamientos;
-use App\RespuestasInforme;
 use Exception as Exception;
 use Illuminate\Support\Facades\Log;
 
