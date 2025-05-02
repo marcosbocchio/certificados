@@ -743,7 +743,7 @@ footer {
   // $espesorMinimo viene de fuera
 
   // 1) Velocidad de corrosión = (espesorMinimo – espMinAnterior) / años
-  $diffVel      = $espesorMinimo - $espMinAnterior;
+  $diffVel      = $espMinAnterior - $espesorMinimo;
   $velocidad    = ($anos > 0) ? ($diffVel / $anos) : 0;
   $velocidad    = max(0, $velocidad);
   $velocidadFmt = number_format($velocidad, 2);
@@ -789,13 +789,13 @@ footer {
       Velocidad de corrosión<br><small>(mm/año)</small>
     </td>
     <td style="border:1px solid black; padding:4px; text-align:left;">
-      <u>espesor mínimo – espesor mínimo anterior</u><br>
+      <u>espesor mínimo anterior - espesor mínimo</u><br>
       años entre inspecciones
     </td>
     <td style="border:1px solid black; padding:4px;"><b>-></b></td>
 
     <td style="border:1px solid black; padding:4px; text-align:center;">
-      <u>{{ $espesorMinimo }} – {{ $espMinAnterior }}</u><br>
+      <u>{{ $espMinAnterior }} - {{ $espesorMinimo }}</u><br>
       {{ $anos }}
     </td>
     <td style="border:1px solid black; padding:4px;"><b>-></b></td>
