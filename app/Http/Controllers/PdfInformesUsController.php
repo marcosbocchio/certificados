@@ -38,6 +38,7 @@ use App\NormasFabricacion;
 use App\CategoriasInspeccion;
 use App\ItemsCategoriaInspeccion;
 use App\RespuestasInforme;
+use Illuminate\Support\Facades\Log;
 
 
 class PdfInformesUsController extends Controller
@@ -140,7 +141,10 @@ class PdfInformesUsController extends Controller
         
         $medicionesAgrupadas = agruparPorAccesorios($informes_us_me);
         $informes_us_me_f = $informes_us_me->first();
-        $espesorMinimo = DetalleUsMe::where('informe_us_me_id', $informes_us_me_f->id)->whereNotNull('generatriz')->min('valor');    
+        log::info($informes_us_me);
+        log::info(json_encode($informes_us_me_f));
+        $espesorMinimo_form = DetalleUsMe::where('informe_us_me_id', $informes_us_me_f->id)->whereNotNull('generatriz')->min('valor');
+        log::info($espesorMinimo_form);
         $componente_us          = ComponenteUsMe::where('informe_us_id', $informe_us->id)->first();
         if ($componente_us) {
             // 2a) Si existe, cargo todo lo demás basándome en él
@@ -211,7 +215,8 @@ class PdfInformesUsController extends Controller
                                                                 'tablaInforme',
                                                                 'materialMinMedido',
                                                                 'componenteEntero',
-                                                                'espesorMinimo'
+                                                                'espesorMinimo_form',
+                                                                'informes_us_me_f'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
            return $pdf->stream();
 

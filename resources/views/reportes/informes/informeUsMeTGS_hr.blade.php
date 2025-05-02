@@ -736,22 +736,21 @@ footer {
 <div style="page-break-after: always;"></div>
 @php
 
-dd($espesorMinimo);
   // Obtengo sólo los datos del informe
   $inf           = $informes_us_me->first();
   $espMinAnterior = $inf->espesor_minimo_anterior_me;
   $anos           = $inf->años_ultima_inspeccion_me;
   $espMinReq      = $inf->espesor_minimo_me;       // para vida remanente
-  // $espesorMinimo viene de fuera
+  // $espesorMinimo_form viene de fuera
 
-  // 1) Velocidad de corrosión = (espesorMinimo – espMinAnterior) / años
-  $diffVel      = $espMinAnterior - $espesorMinimo;
+  // 1) Velocidad de corrosión = (espesorMinimo_form – espMinAnterior) / años
+  $diffVel      = $espMinAnterior - $espesorMinimo_form;
   $velocidad    = ($anos > 0) ? ($diffVel / $anos) : 0;
   $velocidad    = max(0, $velocidad);
   $velocidadFmt = number_format($velocidad, 2);
 
-  // 2) Vida remanente = (espesorMinimo – espMinReq) / velocidad
-  $diffVida    = $espesorMinimo - $espMinReq;
+  // 2) Vida remanente = (espesorMinimo_form – espMinReq) / velocidad
+  $diffVida    = $espesorMinimo_form - $espMinReq;
   $vidaRem     = ($velocidad > 0) ? ($diffVida / $velocidad) : 0;
   $vidaRem     = max(0, $vidaRem);
   $vidaRemFmt  = number_format($vidaRem, 2);
@@ -797,7 +796,7 @@ dd($espesorMinimo);
     <td style="border:1px solid black; padding:4px;"><b>-></b></td>
 
     <td style="border:1px solid black; padding:4px; text-align:center;">
-      <u>{{ $espMinAnterior }} - {{ $espesorMinimo }}</u><br>
+      <u>{{ $espMinAnterior }} - {{ $espesorMinimo_form }}</u><br>
       {{ $anos }}
     </td>
     <td style="border:1px solid black; padding:4px;"><b>-></b></td>
@@ -818,7 +817,7 @@ dd($espesorMinimo);
     <td style="border:1px solid black; padding:4px;"><b>-></b></td>
 
     <td style="border:1px solid black; padding:4px; text-align:center;">
-      <u>{{ $espesorMinimo }} – {{ $espMinReq }}</u><br>
+      <u>{{ $espesorMinimo_form }} – {{ $espMinReq }}</u><br>
       {{ $velocidadFmt }}
     </td>
     <td style="border:1px solid black; padding:4px;"><b>-></b></td>
