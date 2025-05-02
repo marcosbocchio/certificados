@@ -33,6 +33,7 @@ use App\ComponenteUsMe;
 use App\PdfEspecial;
 use App\MaterialUs;
 use App\Equipos;
+use App\DetalleUsMe;
 use App\NormasFabricacion;
 use App\CategoriasInspeccion;
 use App\ItemsCategoriaInspeccion;
@@ -138,7 +139,8 @@ class PdfInformesUsController extends Controller
         $tipo_reporte = "INFORME N°";
         
         $medicionesAgrupadas = agruparPorAccesorios($informes_us_me);
- 
+        $informes_us_me_f = $informes_us_me->first();
+        $espesorMinimo = DetalleUsMe::where('informe_us_me_id', $informes_us_me_f->id)->min('valor');
         $componente_us          = ComponenteUsMe::where('informe_us_id', $informe_us->id)->first();
         if ($componente_us) {
             // 2a) Si existe, cargo todo lo demás basándome en él
@@ -208,7 +210,8 @@ class PdfInformesUsController extends Controller
                                                                 'calibracion_us',
                                                                 'tablaInforme',
                                                                 'materialMinMedido',
-                                                                'componenteEntero'
+                                                                'componenteEntero',
+                                                                'espesorMinimo'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
            return $pdf->stream();
 

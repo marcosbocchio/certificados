@@ -735,30 +735,24 @@ footer {
 </table>
 <div style="page-break-after: always;"></div>
 @php
-  // 1) Obtengo los datos
-  $inf = $informes_us_me->first();
-  $espActual       = $inf->umbral_me;                     // x: espesor medido actual
-  $espAnterior     = $inf->espesor_minimo_anterior_me;    // y: espesor anteriormente mínimo
-  $anos            = $inf->años_ultima_inspeccion_me;     // q: años entre inspecciones
-  $espMinRequerido = $materialMinMedido;                  // material mínimo requerido
+  // Obtengo sólo los datos del informe
+  $inf           = $informes_us_me->first();
+  $espMinAnterior = $inf->espesor_minimo_anterior_me;
+  $anos           = $inf->años_ultima_inspeccion_me;
+  $espMinReq      = $inf->espesor_minimo_me;       // para vida remanente
+  // $espesorMinimo viene de fuera
 
-  // 2) Calculo la diferencia base (x – y)
-  $diff = $espActual - $espAnterior;
-
-  // 3) Velocidad de corrosión (mm/año) = diff / q
-  $velocidad = ($anos > 0) ? ($diff / $anos) : 0;
-  if ($velocidad < 0) {
-      $velocidad = 0;
-  }
+  // 1) Velocidad de corrosión = (espesorMinimo – espMinAnterior) / años
+  $diffVel      = $espesorMinimo - $espMinAnterior;
+  $velocidad    = ($anos > 0) ? ($diffVel / $anos) : 0;
+  $velocidad    = max(0, $velocidad);
   $velocidadFmt = number_format($velocidad, 2);
 
-  // 4) Vida remanente (años) = (espActual – espMinRequerido) / velocidad
-  $diffRem = $espActual - $espMinRequerido;
-  $vidaRem  = ($velocidad > 0) ? ($diffRem / $velocidad) : 0;
-  if ($vidaRem < 0) {
-      $vidaRem = 0;
-  }
-  $vidaRemFmt = number_format($vidaRem, 2);
+  // 2) Vida remanente = (espesorMinimo – espMinReq) / velocidad
+  $diffVida    = $espesorMinimo - $espMinReq;
+  $vidaRem     = ($velocidad > 0) ? ($diffVida / $velocidad) : 0;
+  $vidaRem     = max(0, $vidaRem);
+  $vidaRemFmt  = number_format($vidaRem, 2);
 @endphp
 <table width="100%">
       <tbody>
@@ -788,49 +782,49 @@ footer {
       <th style="border:1px solid black; padding:4px;">Resultado</th>
     </tr>
   </thead>
-    <tbody>
-    <!-- Velocidad de corrosión -->
-    <tr>
-      <td style="border:1px solid black; padding:4px; text-align:left;">
-        Velocidad de corrosión<br><small>(mm/año)</small>
-      </td>
-      <td style="border:1px solid black; padding:4px; text-align:left;">
-        <u>espesor actual – espesor anterior</u><br>
-        años entre inspecciones
-      </td>
-      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+  <tbody>
+  <!-- Velocidad de corrosión -->
+  <tr>
+    <td style="border:1px solid black; padding:4px; text-align:left;">
+      Velocidad de corrosión<br><small>(mm/año)</small>
+    </td>
+    <td style="border:1px solid black; padding:4px; text-align:left;">
+      <u>espesor mínimo – espesor mínimo anterior</u><br>
+      años entre inspecciones
+    </td>
+    <td style="border:1px solid black; padding:4px;"><b>-></b></td>
 
-      <td style="border:1px solid black; padding:4px; text-align:center;">
-        <u>{{ $espActual }} – {{ $espAnterior }}</u><br>
-        {{ $anos }}
-      </td>
-      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
-      <td style="border:1px solid black; padding:4px;">
-        {{ $velocidadFmt }}
-      </td>
-    </tr>
+    <td style="border:1px solid black; padding:4px; text-align:center;">
+      <u>{{ $espesorMinimo }} – {{ $espMinAnterior }}</u><br>
+      {{ $anos }}
+    </td>
+    <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+    <td style="border:1px solid black; padding:4px;">
+      {{ $velocidadFmt }}
+    </td>
+  </tr>
 
-    <!-- Vida remanente -->
-    <tr>
-      <td style="border:1px solid black; padding:4px; text-align:left;">
-        Vida remanente<br><small>(años)</small>
-      </td>
-      <td style="border:1px solid black; padding:4px; text-align:left;">
-        <u>espesor actual – espesor mínimo requerido</u><br>
-        velocidad de corrosión
-      </td>
-      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+  <!-- Vida remanente -->
+  <tr>
+    <td style="border:1px solid black; padding:4px; text-align:left;">
+      Vida remanente<br><small>(años)</small>
+    </td>
+    <td style="border:1px solid black; padding:4px; text-align:left;">
+      <u>espesor mínimo – espesor mínimo requerido</u><br>
+      velocidad de corrosión
+    </td>
+    <td style="border:1px solid black; padding:4px;"><b>-></b></td>
 
-      <td style="border:1px solid black; padding:4px; text-align:center;">
-        <u>{{ $espActual }} – {{ $espMinRequerido }}</u><br>
-        {{ $velocidadFmt }}
-      </td>
-      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
-      <td style="border:1px solid black; padding:4px;">
-        {{ $vidaRemFmt }}
-      </td>
-    </tr>
-  </tbody>
+    <td style="border:1px solid black; padding:4px; text-align:center;">
+      <u>{{ $espesorMinimo }} – {{ $espMinReq }}</u><br>
+      {{ $velocidadFmt }}
+    </td>
+    <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+    <td style="border:1px solid black; padding:4px;">
+      {{ $vidaRemFmt }}
+    </td>
+  </tr>
+</tbody>
 </table>
 
 </main>
