@@ -141,10 +141,10 @@ class PdfInformesUsController extends Controller
         
         $medicionesAgrupadas = agruparPorAccesorios($informes_us_me);
 
+        $componente_us          = ComponenteUsMe::where('informe_us_id', $informe_us->id)->first();
         if ($componente_us) {
             $informes_us_me_f = $informes_us_me->first();
             $espesorMinimo_form = DetalleUsMe::where('informe_us_me_id', $informes_us_me_f->id)->whereNotNull('generatriz')->min('valor');
-            $componente_us          = ComponenteUsMe::where('informe_us_id', $informe_us->id)->first();
             $pdfEspecial          = PdfEspecial::find($componente_us->pdf_especial_id);
             $materialesUS         = MaterialUs::where('componente_us_me_id', $componente_us->id)->get();
             $materialMinMedido    = $materialesUS->min('espesor_minimo_medido');
@@ -162,9 +162,9 @@ class PdfInformesUsController extends Controller
             $palpadorUS           = null;
             $equipoPalpador       = null;
             $tablaInforme         = null;
-            $componente_us     = null;
-            $espesorMinimo_form     = null;
+            $componenteEntero     = null;
             $informes_us_me_f     = null;
+            $espesorMinimo_form     = null;
         }
     
         // 3) Elijo la plantilla Blade igual que antes
