@@ -20,12 +20,6 @@ class ComponenteUsMe extends Model
     
     }
 
-    public function tipo(){
-
-        return $this->hasOne('App\TipoUsMe','id','tipo_id');
-    
-    }
-
     public function material(){
         return $this->hasOne('App\Materiales','id','material_id');
     }
