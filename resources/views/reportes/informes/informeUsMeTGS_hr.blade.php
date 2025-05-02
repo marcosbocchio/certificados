@@ -145,8 +145,8 @@ footer {
     </footer>
 
 <main>
-<h3><b>EQUIPO: {{ $informe->componente }}</b></h3>
-<h3><b>PLANTA: {{$planta->nombre?? '-'}}</b></h3>
+<h3 style="text-align: center" ><b>EQUIPO: </b>{{ $informe->componente }}</h3>
+<h3 style="text-align: center" ><b>PLANTA: </b>{{$planta->nombre?? '-'}}</h3>
 
 @if ($componente_us->path3_componente)
     <img src="{{ public_path($componente_us->path3_componente) }}"
@@ -154,8 +154,9 @@ footer {
          style="width: 700px; height: 270px; margin:30px 0px 30px 0px">
 @endif
 
-<h3><b>EJECUTOR DE ENSAYO: {{ $ejecutor_ensayo->name }}</b></h3>
-<h3><b>DNI: {{ $ejecutor_ensayo->dni }}</b></h3>
+<h3 style="text-align: center" ><b>EJECUTOR DE ENSAYO: </b>{{ $ejecutor_ensayo->name }}</h3>
+<h3 style="text-align: center" ><b>DNI: </b>{{ $ejecutor_ensayo->dni }}</h3>
+
 <div style="page-break-after: always;"></div>
 
 <h3 style="text-align: center;">DATOS DEL EQUIPO</h3>
@@ -560,7 +561,97 @@ footer {
     @endif
 @endforeach
 
-  <div style="page-break-after: always;"></div>
+
+@if( $informe_us->path1_indicacion || $informe_us->path2_indicacion )
+
+<div class="page_break"></div>
+<table width="100%">
+    <tbody>
+        <tr>
+            <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
+           IMAGENES INDICACIONES
+        </td>
+        </tr>
+    </tbody>
+</table>
+<table style="text-align: center;margin-top: 5px;" width="100%" >
+    <tbody>
+        <tr>
+            <td>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; width: 680px;height: 275px;">
+
+                                @if ($informe_us->path1_indicacion)
+                                    <img src="{{ public_path($informe_us->path1_indicacion) }}" alt="" style="width: 700px;height: 270px;">
+                                @endif
+
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; width: 680px;height: 275px;">
+
+                                @if ($informe_us->path2_indicacion)
+                                    <img src="{{ public_path($informe_us->path2_indicacion) }}" alt="" style="width: 700px;height: 270px;">
+                                @endif
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+@endif
+
+@if($informe_us->path3_indicacion || $informe_us->path4_indicacion)
+<div class="page_break"></div>
+<table width="100%">
+    <tbody>
+        <tr>
+            <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
+           IMAGENES INDICACIONES
+        </td>
+        </tr>
+    </tbody>
+</table>
+<table style="text-align: center;margin-top: 5px;" width="100%" >
+    <tbody>
+        <tr>
+            <td>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; width: 680px;height: 275px;">
+
+                                @if ($informe_us->path3_indicacion)
+                                    <img src="{{ public_path($informe_us->path3_indicacion) }}" alt="" style="width: 700px;height: 270px;">
+                                @endif
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; width: 680px;height: 275px;">
+
+                                @if ($informe_us->path4_indicacion)
+                                    <img src="{{ public_path($informe_us->path4_indicacion) }}" alt="" style="width: 700px;height: 270px;">
+                                @endif
+
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+@endif
+<div style="page-break-after: always;"></div>
+
   <table width="100%">
       <tbody>
           <tr>
