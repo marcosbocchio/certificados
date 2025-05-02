@@ -735,6 +735,8 @@ footer {
 </table>
 <div style="page-break-after: always;"></div>
 @php
+
+dd($espesorMinimo);
   // Obtengo sólo los datos del informe
   $inf           = $informes_us_me->first();
   $espMinAnterior = $inf->espesor_minimo_anterior_me;
