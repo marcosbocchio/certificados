@@ -80,7 +80,7 @@ class TgsController extends Controller
         $componente->save();
     
         Log::info("ComponenteUsMe guardado con ID {$componente->id}");
-        if (! empty($popup['detalles']) && is_array($popup['detalles'])) {
+        if (!empty($popup['detalles']) && is_array($popup['detalles'])) {
             $this->saveMateriales($componente->id, $popup['detalles']);
         }
         return $componente;

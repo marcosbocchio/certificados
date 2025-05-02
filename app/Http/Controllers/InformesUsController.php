@@ -93,7 +93,7 @@ class InformesUsController extends Controller
                     $pdfMatch = null;
                 }
 
-                if (! empty($pdfMatch)) {
+                if (!empty($pdfMatch)) {
                     // 6) guardo componente
                     (new \App\Http\Controllers\TgsController())
                         ->saveComponente(

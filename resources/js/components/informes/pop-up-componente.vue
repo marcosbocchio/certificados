@@ -476,6 +476,7 @@
             espMinMedido: m.espesor_minimo_medido
           };
         });
+        this.storeRegistro();
       },
       async storeRegistro() {
         // 1) Si modelo no tiene id, lo creamos
