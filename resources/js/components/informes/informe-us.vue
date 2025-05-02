@@ -1227,7 +1227,8 @@ export default {
             },
         componente_me_data : {
             type : [ Object ],
-            required : false
+            required : false,
+            default: () => null
             },
 
         calibraciones_data : {
