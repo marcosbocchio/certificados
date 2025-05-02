@@ -34,7 +34,7 @@
      :calibraciones_data = "{{ $calibraciones}}"
      :tabla_us_pa_data = "{{ $tabla_us_pa}}"
      :tabla_me_data = "{{ $tabla_me}}"
-     :componente_me_data = "{{ $componente }}"
+     :componente_me_data = "{{ @json($componente) }}"
      :inspeccion_visual = "{{ $inspeccion_visual }}"
      :tablaModelos3d_data="{{$informe_modelos_3d}}"
      :solicitado_pordata = "{{$informe_solicitado_por}}"

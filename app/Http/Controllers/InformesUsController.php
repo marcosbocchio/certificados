@@ -463,7 +463,7 @@ class InformesUsController extends Controller
                             ->with('modelo')
                             ->first();
         log::debug($componente);
-        return $componente ?? (object)[];
+        return $componente;
 
     }
 
