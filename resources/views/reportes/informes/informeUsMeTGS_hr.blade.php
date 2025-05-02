@@ -382,7 +382,7 @@ footer {
                            </tr>
                            <tr>
                                 <td colspan="4">
-                                  {{$calibracion_us->block_calibracion}}
+                                  {{$calibracion_us->block_calibracion ?? '-'}}
                                 </td>
                            </tr>
                            <tr>
@@ -416,7 +416,7 @@ footer {
                                 <th colspan="4" >Rangos</th>
                            </tr>
                            <tr>
-                                <td colspan="4">{{$informe->plano_isom}}
+                                <td colspan="4">{{$calibracion_us->rango?? '-'}}
                                 </td>
                             </tr>
                             <tr >
@@ -734,7 +734,32 @@ footer {
   </tbody>
 </table>
 <div style="page-break-after: always;"></div>
+@php
+  // 1) Obtengo los datos
+  $inf = $informes_us_me->first();
+  $espActual       = $inf->umbral_me;                     // x: espesor medido actual
+  $espAnterior     = $inf->espesor_minimo_anterior_me;    // y: espesor anteriormente mínimo
+  $anos            = $inf->años_ultima_inspeccion_me;     // q: años entre inspecciones
+  $espMinRequerido = $materialMinMedido;                  // material mínimo requerido
 
+  // 2) Calculo la diferencia base (x – y)
+  $diff = $espActual - $espAnterior;
+
+  // 3) Velocidad de corrosión (mm/año) = diff / q
+  $velocidad = ($anos > 0) ? ($diff / $anos) : 0;
+  if ($velocidad < 0) {
+      $velocidad = 0;
+  }
+  $velocidadFmt = number_format($velocidad, 2);
+
+  // 4) Vida remanente (años) = (espActual – espMinRequerido) / velocidad
+  $diffRem = $espActual - $espMinRequerido;
+  $vidaRem  = ($velocidad > 0) ? ($diffRem / $velocidad) : 0;
+  if ($vidaRem < 0) {
+      $vidaRem = 0;
+  }
+  $vidaRemFmt = number_format($vidaRem, 2);
+@endphp
 <table width="100%">
       <tbody>
           <tr>
@@ -763,34 +788,25 @@ footer {
       <th style="border:1px solid black; padding:4px;">Resultado</th>
     </tr>
   </thead>
-  <tbody>
+    <tbody>
     <!-- Velocidad de corrosión -->
     <tr>
       <td style="border:1px solid black; padding:4px; text-align:left;">
         Velocidad de corrosión<br><small>(mm/año)</small>
       </td>
       <td style="border:1px solid black; padding:4px; text-align:left;">
-        <u>espesor anterior – espesor actual</u><br>
+        <u>espesor actual – espesor anterior</u><br>
         años entre inspecciones
       </td>
-      <td style="border:1px solid black; padding:4px;"<b>-></b></td>
+      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
 
       <td style="border:1px solid black; padding:4px; text-align:center;">
-        <u>
-          {{ $informes_us_me->first()->umbral_me }}
-          – {{ $informes_us_me->first()->espesor_minimo_anterior_me }}
-        </u><br>
-        {{ $informes_us_me->first()->años_ultima_inspeccion_me }}
+        <u>{{ $espActual }} – {{ $espAnterior }}</u><br>
+        {{ $anos }}
       </td>
       <td style="border:1px solid black; padding:4px;"><b>-></b></td>
       <td style="border:1px solid black; padding:4px;">
-        {{ number_format(
-            (
-              $informes_us_me->first()->umbral_me
-              - $informes_us_me->first()->espesor_minimo_anterior_me
-            )
-            / $informes_us_me->first()->años_ultima_inspeccion_me
-          , 2) }}
+        {{ $velocidadFmt }}
       </td>
     </tr>
 
@@ -800,20 +816,18 @@ footer {
         Vida remanente<br><small>(años)</small>
       </td>
       <td style="border:1px solid black; padding:4px; text-align:left;">
-        <u>espesor actual - espesor mínimo requerido</u><br>
+        <u>espesor actual – espesor mínimo requerido</u><br>
         velocidad de corrosión
       </td>
       <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+
       <td style="border:1px solid black; padding:4px; text-align:center;">
-        <u>
-          {{ $informes_us_me->first()->umbral_me }}
-          – {{ $materialMinMedido }}
-        </u><br>
-        {{ $informes_us_me->first()->años_ultima_inspeccion_me }}
+        <u>{{ $espActual }} – {{ $espMinRequerido }}</u><br>
+        {{ $velocidadFmt }}
       </td>
       <td style="border:1px solid black; padding:4px;"><b>-></b></td>
       <td style="border:1px solid black; padding:4px;">
-        4
+        {{ $vidaRemFmt }}
       </td>
     </tr>
   </tbody>

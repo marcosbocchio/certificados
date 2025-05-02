@@ -864,7 +864,10 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('storage/componente_us', 'StorageController@saveComponenteUs')
         ->name('componente_us');
-
+        
+    Route::post('tgs-save-modelo/{codigo}', 'TgsController@saveModelo');
+    Route::post('tgs-save-fluido/{codigo}', 'TgsController@saveFluido');
+        
     
 });
 

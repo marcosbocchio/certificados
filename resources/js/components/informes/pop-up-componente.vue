@@ -62,7 +62,6 @@
                           label="codigo"
                           :options="modeloOptions"
                           taggable
-                          @new-tag="onNewTagModelo"
                         >
                           <template slot="option" slot-scope="option">
                             <span class="upSelect">{{ option.codigo }}</span><br>
@@ -231,7 +230,6 @@
                           :options="fluidoOptions"
                           label="codigo"
                           taggable                  
-                          @new-tag="addFluido"
                           >
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.codigo }}</span><br>
@@ -479,8 +477,24 @@
           };
         });
       },
-      storeRegistro() {
-        console.log(this.path3_componente);
+      async storeRegistro() {
+        // 1) Si modelo no tiene id, lo creamos
+        if (!this.modelo.id) {
+          const { data: nuevoModelo } = await axios.post(
+            `/tgs-save-modelo/${this.modelo.codigo}`
+          );
+          this.modelo = nuevoModelo;
+        }
+
+        // 2) Lo mismo para el fluido
+        if (!this.fluido.id) {
+          const { data: nuevoFluido } = await axios.post(
+            `/tgs-save-fluido/${this.fluido.codigo}`
+          );
+          this.fluido = nuevoFluido;
+        }
+
+        // 3) Ya con ambos id garantizados, armo el objeto
         const popupData = {
           // Sección 1
           path3_componente: this.path3_componente,
@@ -511,10 +525,13 @@
           // Sección 6
           material: this.material,
           espesor: this.espesor
-        }
-        this.$emit('submit', popupData)
-        this.closeModal()
+        };
+
+        console.log('Datos listos para enviar:', popupData);
+        this.$emit('submit', popupData);
+        this.closeModal();
       },
+
       onPath(path) {
       console.log('⚡ subir-imagen emitió path:', path);
       this.path3_componente = path;

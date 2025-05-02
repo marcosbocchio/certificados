@@ -173,41 +173,10 @@ class TgsController extends Controller
         return response()->json($tabla);
     }
 
-    // Crear o actualizar un modelo_us_me por código
-    public function saveModelo(Request $request)
-    {
-        $validated = $request->validate([
-            'codigo' => 'required|string|max:50',
-            'descripcion' => 'required|string|max:255',
-        ]);
-
-        $modelo = ModelosUsMe::updateOrCreate(
-            ['codigo' => $validated['codigo']],
-            ['descripcion' => $validated['descripcion']]
-        );
-
-        return response()->json($modelo, 200);
-    }
-
     // Obtener todos los fluidos_us_me
     public function getFluidos()
     {
         return FluidosUsMe::orderBy('codigo')->get();
-    }
-
-    public function saveFluido(Request $request)
-    {
-        $validated = $request->validate([
-            'codigo' => 'required|string|max:50',
-            'descripcion' => 'required|string|max:255',
-        ]);
-
-        $fluido = FluidosUsMe::updateOrCreate(
-            ['codigo' => $validated['codigo']],
-            ['descripcion' => $validated['descripcion']]
-        );
-
-        return response()->json($fluido, 200);
     }
 
     // Obtener todos los tipo_us_me
@@ -230,4 +199,26 @@ class TgsController extends Controller
 
         return response()->json($tipo, 200);
     }
+
+    public function saveModelo($codigo)
+    {
+        // Evitamos duplicados: si ya existe, lo devolvemos
+        $modelo = ModelosUsMe::firstOrCreate(
+            ['codigo' => $codigo],
+            ['descripcion' => $codigo]
+        );
+
+        return response()->json($modelo);
+    }
+
+    public function saveFluido($codigo)
+    {
+        $fluido = FluidosUsMe::firstOrCreate(
+            ['codigo' => $codigo],
+            ['descripcion' => $codigo]
+        );
+
+        return response()->json($fluido);
+    }
+
 }
