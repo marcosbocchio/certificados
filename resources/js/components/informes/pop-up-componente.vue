@@ -442,28 +442,28 @@
         console.log('entra la funcion');
         var componente = item;
         console.log(componente);
-        this.area = componente.area;
-        this.tipo = componente.tipo_us;
-        this.modelo = componente.modelo;
-        this.denominacion = componente.denominacion;
-        this.anio = componente.año;
-        this.detallesList = componente.materiales;
-        this.temp.disenio = componente.temp_diseño;
-        this.temp.operacion = componente.temp_operacion;
-        this.pres.disenio = componente.presion_diseño;
-        this.pres.operacion = componente.presion_operacion;
-        this.sobreespesor = componente.sobreespesor_por_corrocion;
-        this.diamExterior = componente.diam_exterior;
-        this.longitudTotal = componente.longitud_total;
-        this.trat_termico = componente.tratamiento_termico;
-        this.espesor = componente.espesor;
-        this.radiografiado = componente.radiografiado;
-        this.normaFabricacion = componente.norma;
-        this.aislacion = componente.aislacion;
-        this.tipo2 = componente.tipo;
-        this.material = componente.material;
-        this.fluido = componente.fluido;
-        this.path3_componente = componente.path3_componente;
+        this.area = componente.area                           ?? "";
+        this.tipo = componente.tipo_us                        ?? "";
+        this.modelo = componente.modelo                       ?? "";
+        this.denominacion = componente.denominacion           ?? "";
+        this.anio = componente.año                            ?? "";
+        this.detallesList = componente.materiales             ?? "";
+        this.temp.disenio = componente.temp_diseño            ?? "";
+        this.temp.operacion = componente.temp_operacion       ?? "";
+        this.pres.disenio = componente.presion_diseño         ?? "";
+        this.pres.operacion = componente.presion_operacion    ?? "";
+        this.sobreespesor = componente.sobreespesor_por_corrocion ?? "";
+        this.diamExterior = componente.diam_exterior          ?? "";
+        this.longitudTotal = componente.longitud_total        ?? "";
+        this.trat_termico = componente.tratamiento_termico    ?? "";
+        this.espesor = componente.espesor                     ?? "";
+        this.radiografiado = componente.radiografiado         ?? "";
+        this.normaFabricacion = componente.norma              ?? "";
+        this.aislacion = componente.aislacion                 ?? "";
+        this.tipo2 = componente.tipo                          ?? "";
+        this.material = componente.material                   ?? "";
+        this.fluido = componente.fluido                       ?? "";
+        this.path3_componente = componente.path3_componente   ?? "";
         console.log('cargado');
         console.log(this.anio);
 
@@ -494,7 +494,7 @@
           );
           this.fluido = nuevoFluido;
         }
-
+        console.log(this.material);
         // 3) Ya con ambos id garantizados, armo el objeto
         const popupData = {
           // Sección 1
@@ -620,8 +620,6 @@ async fetchNormas() {
 async fetchMateriales() {
   try {
     const response = await axios.get('/materiales');
-    console.log(response)
-    console.log('response de material')
     this.materialOptions = response.data.map(item => item);
   } catch (error) {
     console.error('Error al obtener tipos:', error);

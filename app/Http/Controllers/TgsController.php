@@ -49,7 +49,7 @@ class TgsController extends Controller
         $normaId   = $getId($popup['normaFabricacion'] ?? null);
         // $tipoId    = $getId($popup['tipo2'] ?? null);
         $materialId= $getId($popup['material'] ?? null, 'idtipo_us_me');
-    
+    log::info($popup['material']['id']);
         // 2) Armo y guardo el ComponenteUsMe
         $componente = new ComponenteUsMe();
         $componente->informe_us_id              = $informeUs;
@@ -74,7 +74,7 @@ class TgsController extends Controller
         $componente->norma_fabric_id            = $normaId;
         $componente->aislacion                  = $popup['aislacion']        ?? null;
         $componente->tipo                       = $popup['tipo2']            ?? null;
-        $componente->material_id                = $materialId;
+        $componente->material_id                = $popup['material']['id'];
         $componente->espesor                    = $popup['espesor']          ?? null;
     
         $componente->save();
