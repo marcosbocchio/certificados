@@ -764,7 +764,7 @@ footer {
         </tr>
     </tbody>
 </table>
-<table style="width:100%; border-collapse: collapse; font-size:13px; text-align: center; border:1px solid black;margin:10px 0px 0px 0px">
+<table style="width:100%; border-collapse: collapse; font-size:13px; text-align: center; border:1px solid black;margin:10px 0px 10px 0px">
   <colgroup>
     <col style="width:20%;" />  <!-- Nombre del cálculo -->
     <col style="width:30%;" />  <!-- Fórmula -->
@@ -826,6 +826,23 @@ footer {
     </td>
   </tr>
 </tbody>
+
+<div style="width: 100%;page-break-inside: avoid;">
+    @include('reportes.partial.linea-amarilla')
+        <table width="100%" style="border-collapse: collapse;">
+            <tbody style="padding: 20px;"> 
+                <tr>
+                    <td><strong style="font-size: 13px;">Observaciones</strong></td>
+                </tr>   
+                <tr>           
+                    <td style="font-size: 13px; height:70px; text-align: right;" class="bordered-td">
+                        <span style="display: block; text-align: left; margin: 5px;">{{$observaciones}}</span>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    @include('reportes.partial.linea-amarilla')
+    </div>
 </table>
 
 </main>
