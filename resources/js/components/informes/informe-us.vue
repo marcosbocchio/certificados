@@ -1463,7 +1463,7 @@ export default {
                 ...categoria,
                 items: categoria.items.map(item => ({
                     ...item,
-                    selected: null, // 'SI' | 'NO' | 'N/A'
+                    selected: 'N/A', // 'SI' | 'NO' | 'N/A'
                 })),
                 };
             });

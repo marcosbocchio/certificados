@@ -297,7 +297,6 @@
                           :options="tipo2Options"
                           label="codigo"
                           taggable     
-                          @new-tag="addTipo2"             
                         >
                         <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.codigo }}</span><br>
@@ -415,7 +414,7 @@
         normaFabricacionOptions: [],
         aislacion: null,
         tipo2: '',
-        tipo2Options: [],
+        tipo2Options: ['FRIO', 'CALOR'],
         // Sección 6: Material y Espesor
         material: null,
         otdata: '',
@@ -435,7 +434,6 @@
         this.fetchModelos();
         this.fetchFluidos();
         this.fetchNormas();
-        this.fetchTipo();
         this.fetchMateriales();
         console.log(this.modeloOptions);
       }
@@ -565,19 +563,11 @@
       }
     }
 
-    // 3) Verifico duplicados por material.codigo
-    const existe = this.detallesList.some(
-      item => item.material?.codigo === this.detalle.material?.codigo
-    );
-    if (existe) {
-      toastr.error('Material ya registrado');
-      return;
-    }
-
     // 4) Si todo OK, agrego el detalle
     this.detallesList.push({ ...this.detalle });
 
     // 5) Limpio el formulario
+    this.detalle.material = '';
     this.detalle.descripcion    = '';
     this.detalle.grado          = '';
     this.detalle.espNominal     = '';
@@ -609,14 +599,6 @@ async fetchNormas() {
     console.error('Error al obtener normas:', error);
   }
 },
-async fetchTipo() {
-  try {
-    const response = await axios.get('/tgs/tipos-us-me');
-    this.tipo2Options = response.data.map(item => item);
-  } catch (error) {
-    console.error('Error al obtener tipos:', error);
-  }
-},
 async fetchMateriales() {
   try {
     const response = await axios.get('/materiales');
@@ -635,12 +617,6 @@ async fetchMateriales() {
         this.fluidoOptions.push(nuevo)
         // 2) lo selecciono automáticamente
         this.fluido = nuevo
-      },
-      addTipo2(nuevo) {
-        // 1) agrego la nueva etiqueta al listado de opciones
-        this.tipo2Options.push(nuevo)
-        // 2) lo selecciono automáticamente
-        this.tipo2 = nuevo
       },
     }
   }

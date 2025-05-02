@@ -47,7 +47,7 @@ class TgsController extends Controller
         $modeloId  = $getId($popup['modelo'] ?? null);
         $fluidoId  = $getId($popup['fluido'] ?? null);
         $normaId   = $getId($popup['normaFabricacion'] ?? null);
-        $tipoId    = $getId($popup['tipo2'] ?? null);
+        // $tipoId    = $getId($popup['tipo2'] ?? null);
         $materialId= $getId($popup['material'] ?? null, 'idtipo_us_me');
     
         // 2) Armo y guardo el ComponenteUsMe
@@ -73,7 +73,7 @@ class TgsController extends Controller
         $componente->radiografiado              = $popup['radiografiado']   ?? null;
         $componente->norma_fabric_id            = $normaId;
         $componente->aislacion                  = $popup['aislacion']        ?? null;
-        $componente->tipo_id                    = $tipoId;
+        $componente->tipo                       = $popup['tipo2']            ?? null;
         $componente->material_id                = $materialId;
         $componente->espesor                    = $popup['espesor']          ?? null;
     

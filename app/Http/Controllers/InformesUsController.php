@@ -458,7 +458,6 @@ class InformesUsController extends Controller
                              where('informe_us_id',$informe_us_id)
                             ->with('norma')
                             ->with('material')
-                            ->with('tipo')
                             ->with('materiales')
                             ->with('fluido')
                             ->with('modelo')

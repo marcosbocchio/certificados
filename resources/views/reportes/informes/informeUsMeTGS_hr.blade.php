@@ -131,8 +131,6 @@ footer {
                                 <img src="{{ public_path($firma) }}" alt="" style="width: 175px;height: 85px;">
                             @endif
                         </td>
-                        <td style="font-size: 13px;" colspan="2"  width="33.33%">lorem</td>
-                        <td style="font-size: 13px;" colspan="2" width="33.33%">lorem</td>
                     </tr>
                     <tr>
                         <td style="font-size: 14px; text-align: center;" colspan="2"><em>Evaluador </em></td>
@@ -326,7 +324,7 @@ footer {
       </td>
       <td>TIPO</td>
       <td style="background-color: #c3c3c3;">
-        {{ $componente_us->tipo_id }}
+        {{ $componente_us->tipo }}
       </td>
       <td colspan="2">MATERIAL</td>
       <td style="background-color: #c3c3c3;">

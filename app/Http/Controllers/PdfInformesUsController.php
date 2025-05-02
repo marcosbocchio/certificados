@@ -84,7 +84,6 @@ class PdfInformesUsController extends Controller
                             ->with('material')
                             ->with('materiales')
                             ->with('fluido')
-                            ->with('tipo')
                             ->with('modelo')
                             ->first();
         return $componente;
