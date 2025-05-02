@@ -140,7 +140,7 @@ class PdfInformesUsController extends Controller
         
         $medicionesAgrupadas = agruparPorAccesorios($informes_us_me);
         $informes_us_me_f = $informes_us_me->first();
-        $espesorMinimo = DetalleUsMe::where('informe_us_me_id', $informes_us_me_f->id)->min('valor');
+        $espesorMinimo = DetalleUsMe::where('informe_us_me_id', $informes_us_me_f->id)->whereNotNull('generatriz')->min('valor');    
         $componente_us          = ComponenteUsMe::where('informe_us_id', $informe_us->id)->first();
         if ($componente_us) {
             // 2a) Si existe, cargo todo lo demás basándome en él
