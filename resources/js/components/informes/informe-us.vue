@@ -793,7 +793,9 @@
                                 
                                 <div class="col-md-3">
                                     <div class="form-group" >
-                                        <label for="años_ultima_inspeccion_me" title="Años desde la última inspección">Años desde la última inspección
+                                        <label for="años_ultima_inspeccion_me"
+                                                    class="text-nowrap"
+                                                    title="Años desde la última inspección">Años desde la última inspección
                                             <span v-if="cliente.codigo == '0279'">*</span>
                                         </label>
                                         <input type="number" v-model="años_ultima_inspeccion_me" class="form-control" id="años_ultima_inspeccion_me" min="0" step="0.1">
@@ -821,7 +823,7 @@
                                                         <th  class="col-lg-2">Mínimo Ant</th>
                                                         <th  class="col-lg-2">Años Ultima Insp.</th>
                                                         <th  class="col-lg-1">G.L.P.</th>                                                       
-                                                        <th  class="col-lg-2">Importar Excel</th>
+                                                        <th  class="col-lg-3">Importar Excel</th>
                                                         <th  class="col-lg-2">&nbsp;</th>
                                                     </tr>
                                                 </thead>
@@ -2406,6 +2408,19 @@ processExcelData(data, filas, columnas) {
         Store : function(){
 
             this.errors =[];
+            if (
+                    this.cliente.codigo === '0279' &&
+                    this.tecnica.codigo === 'ME' &&
+                    (this.popupData === null || this.popupData === '')
+                ) {
+                    toastr.error('Detalle componente es obligatorio para TGS');
+                    return;
+                }
+
+            if(this.Tabla_me.length === 0){
+                toastr.error('Registro De Mediciones es obligatorio para TGS');
+                return;
+            }
             var urlRegistros = 'informes_us' ;
             this.$store.commit('loading', true);
             axios({
@@ -2486,6 +2501,19 @@ processExcelData(data, filas, columnas) {
        Update : function() {
 
             this.errors =[];
+            if (
+                    this.cliente.codigo === '0279' &&
+                    this.tecnica.codigo === 'ME' &&
+                    (this.popupData === null || this.popupData === '')
+                ) {
+                    toastr.error('Detalle componente es obligatorio para TGS');
+                    return;
+                }
+
+            if(this.Tabla_me.length === 0){
+                toastr.error('Registro De Mediciones es obligatorio para TGS');
+                return;
+            }
             this.$store.commit('loading', true);
             var urlRegistros = 'informes_us/' + this.informedata.id  ;
             axios({

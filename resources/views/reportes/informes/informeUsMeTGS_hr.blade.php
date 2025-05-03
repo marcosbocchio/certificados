@@ -147,8 +147,10 @@ footer {
 <h3 style="text-align: center" ><b>PLANTA: </b>{{$planta->nombre?? '-'}}</h3>
 
 @if ($componente_us->path3_componente)
-<div style="display: flex; justify-content: center; align-items: center;">
-  <img src="{{ public_path($componente_us->path3_componente) }}" alt="" style="max-width: 500px; max-height: 500px; width: auto; height: auto; margin: 30px 0;">
+<div style="text-align: center; margin: 30px 0;">
+  <img src="{{ public_path($componente_us->path3_componente) }}"
+       alt=""
+       style="max-width: 500px; max-height: 500px; width: auto; height: auto;">
 </div>
 
     

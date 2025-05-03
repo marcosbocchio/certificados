@@ -137,14 +137,14 @@
                         <input type="number" id="detalleEspNominal" v-model="detalle.espNominal" min="0" max="9999"  class="form-control">
                       </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label for="detalleEspMinMedido">Esp. Min Medido</label>
                         <input type="number" id="detalleEspMinMedido" v-model="detalle.espMinMedido" min="0" max="9999" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-1 d-flex align-items-end">
-                      <button type="button" @click="addDetalle">
+                      <button type="button" style="margin-top: 25px;" @click="addDetalle">
                         <span class="fa fa-plus-circle"></span>
                       </button>
                     </div>
@@ -221,7 +221,7 @@
                       </div>
                     </div>
                     <div class="clearfix"></div>
-                    <!-- Sección: Datos adicionales -->
+                    <div class="box-header with-border"></div>
                     <div class="col-md-3">
                       <div class="form-group d-flex">
                         <label>Fluido</label>
@@ -240,7 +240,7 @@
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label>Sobreespesor por corrosión</label>
+                        <label>Sobreespesor</label>
                         <input type="number" v-model="sobreespesor" min="0" max="9999" step="0.01" class="form-control">
                       </div>
                     </div>
@@ -266,7 +266,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>radiografiado %</label>
-                        <input type="number" v-model="radiografiado" min="1" max="100" class="form-control">
+                        <input type="number" v-model="radiografiado" min="1" max="100" step="0.01" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-3">
@@ -372,7 +372,7 @@
         area: '',
         orden: '',
         tipo: null,
-        tipoOptions: ['Horizontal', 'Linea','Vertical'],
+        tipoOptions: ['Horizontal', 'Vertical'],
         nEquipo: '',
         modelo: '',
         materialesOpcion:'',

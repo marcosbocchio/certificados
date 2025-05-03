@@ -92,7 +92,8 @@ class InformesUsController extends Controller
                 } else {
                     $pdfMatch = null;
                 }
-
+                log::debug('-------'.$popupData['tipo']);
+                log::info($pdfMatch);
                 if (!empty($pdfMatch)) {
                     // 6) guardo componente
                     (new \App\Http\Controllers\TgsController())

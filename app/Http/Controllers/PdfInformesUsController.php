@@ -146,6 +146,7 @@ class PdfInformesUsController extends Controller
             $informes_us_me_f = $informes_us_me->first();
             $espesorMinimo_form = DetalleUsMe::where('informe_us_me_id', $informes_us_me_f->id)->whereNotNull('generatriz')->min('valor');
             $pdfEspecial          = PdfEspecial::find($componente_us->pdf_especial_id);
+            log::info($pdfEspecial);
             $materialesUS         = MaterialUs::where('componente_us_me_id', $componente_us->id)->get();
             $materialMinMedido    = $materialesUS->min('espesor_minimo_medido');
             $calibracion_us       = $calibraciones_us->first();

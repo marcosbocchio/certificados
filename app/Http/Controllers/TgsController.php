@@ -49,13 +49,12 @@ class TgsController extends Controller
         $normaId   = $getId($popup['normaFabricacion'] ?? null);
         // $tipoId    = $getId($popup['tipo2'] ?? null);
         $materialId= $getId($popup['material'] ?? null, 'idtipo_us_me');
-        log::info($popup['material']['id']);
         // 2) Armo y guardo el ComponenteUsMe
         $componente = new ComponenteUsMe();
         $componente->informe_us_id              = $informeUs;
         $componente->area                       = $popup['area']              ?? null;
         $componente->orden                      = $popup['orden']             ?? null;
-        $componente->tipo_us                    = $popup['tipo']              ?? null;
+        $componente->tipo_us                    = $popup['tipo']              ;
         $componente->pdf_especial_id            = $pdf->id;
         $componente->modelo_id                  = $modeloId;
         $componente->path3_componente           = $popup['path3_componente'];
