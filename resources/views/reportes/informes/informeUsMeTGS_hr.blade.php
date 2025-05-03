@@ -150,7 +150,7 @@ footer {
     <img src="{{ public_path($componente_us->path3_componente) }}"
          alt=""            
          style="max-width: 500px;
-            max-height: 700px;
+            max-height: 500px;
             width: auto;
             height: auto; margin:30px 0px 30px 0px">
 @endif
