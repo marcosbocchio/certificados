@@ -147,12 +147,11 @@ footer {
 <h3 style="text-align: center" ><b>PLANTA: </b>{{$planta->nombre?? '-'}}</h3>
 
 @if ($componente_us->path3_componente)
-    <img src="{{ public_path($componente_us->path3_componente) }}"
-         alt=""            
-         style="max-width: 500px;
-            max-height: 500px;
-            width: auto;
-            height: auto; margin:30px 0px 30px 0px">
+<div style="display: flex; justify-content: center; align-items: center;">
+  <img src="{{ public_path($componente_us->path3_componente) }}" alt="" style="max-width: 500px; max-height: 500px; width: auto; height: auto; margin: 30px 0;">
+</div>
+
+    
 @endif
 
 <h3 style="text-align: center" ><b>EJECUTOR DE ENSAYO: </b>{{ $ejecutor_ensayo->name }}</h3>
