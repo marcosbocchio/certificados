@@ -54,7 +54,7 @@
                 @endcan
 
                 @can('M_normas_fabricacion')
-                  <li><a href="{{ route('normas-fabricacion') }}">Normas-Fabricacion</a></li>
+                  <li><a href="{{ route('normas-fabricacion') }}">Normas Fabricacion</a></li>
                 @endcan
 
                 @can('M_normas_eval')
