@@ -194,13 +194,13 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Diseño Temp</label>
-                        <input type="number" v-model="temp.disenio" min="0" max="9999" class="form-control">
+                        <input type="number" v-model="temp.disenio" min="0" max="9999" step="0.01" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Operación Temp</label>
-                        <input type="number" v-model="temp.operacion" min="0" max="9999" class="form-control">
+                        <input type="number" v-model="temp.operacion" min="0" max="9999" step="0.01" class="form-control">
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -211,13 +211,13 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Diseño Presión</label>
-                        <input type="number" v-model="pres.disenio" min="0" max="9999" class="form-control">
+                        <input type="number" v-model="pres.disenio" min="0" max="9999" step="0.01" class="form-control">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Operación Presión</label>
-                        <input type="number" v-model="pres.operacion" min="0" max="9999" class="form-control">
+                        <input type="number" v-model="pres.operacion" min="0" max="9999" step="0.01" class="form-control">
                       </div>
                     </div>
                     <div class="clearfix"></div>
