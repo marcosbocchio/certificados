@@ -571,7 +571,7 @@ footer {
     <tbody>
         <tr>
             <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
-           IMAGENES INDICACIONES
+           REGISTRO FOTOGRAFICA
         </td>
         </tr>
     </tbody>
@@ -614,7 +614,7 @@ footer {
     <tbody>
         <tr>
             <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
-           IMAGENES INDICACIONES
+            REGISTRO FOTOGRAFICA
         </td>
         </tr>
     </tbody>

@@ -337,6 +337,7 @@
   </template>
   
   <script>
+  import { toastrInfo,toastrDefault } from '../toastrConfig';
   export default {
     name: 'ModalPopup',
     props: {
@@ -481,14 +482,23 @@
       async storeRegistro() {
         // 1) Si modelo no tiene id, lo creamos
         if (!this.modelo.id) {
+          // Validar que el código exista y no sea sólo espacios
+          if (!this.modelo.codigo || this.modelo.codigo.trim() === "") {
+            toastr.error("Campo modelo obligatorio");
+            return; // cortamos la ejecución si falta el código
+          }
           const { data: nuevoModelo } = await axios.post(
             `/tgs-save-modelo/${this.modelo.codigo}`
           );
           this.modelo = nuevoModelo;
         }
 
-        // 2) Lo mismo para el fluido
         if (!this.fluido.id) {
+          // Validar que el código exista y no sea sólo espacios
+          if (!this.fluido.codigo || this.fluido.codigo.trim() === "") {
+            toastr.error("Campo fluido obligatorio");
+            return;
+          }
           const { data: nuevoFluido } = await axios.post(
             `/tgs-save-fluido/${this.fluido.codigo}`
           );
