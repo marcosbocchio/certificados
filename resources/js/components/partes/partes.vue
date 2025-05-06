@@ -8,10 +8,10 @@
                         <div class="col-md-4s col-lg-3">
                             <div class="form-group">
                                 <label for="fecha">Fecha *</label>
-                                <input type="checkbox" :disabled="this.editmode" id="checkbox_f" v-model="permitir_anteriores_sn" style="float:right">
+                                <input type="checkbox" :disabled="hayInformesSeleccionados" id="checkbox_f" v-model="permitir_anteriores_sn" style="float:right">
                                 <label for="tipo" style="float:right;margin-right: 5px;">Permitir Anteriores</label>
                                 <div>
-                                    <date-picker v-model="fecha" :disabled="this.editmode" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
+                                    <date-picker v-model="fecha" :disabled="hayInformesSeleccionados" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
                                 </div>
                             </div>
                         </div>
@@ -1151,6 +1151,9 @@ export default {
         fecha_mysql : function(){
             return this.fecha ? moment(this.fecha).format('DD/MM/YYYY') : null;
         },
+        hayInformesSeleccionados() {
+            return this.informes.some(inf => inf.informe_sel);
+        }
      },
 
     methods : {

@@ -414,7 +414,7 @@ footer {
                                <th width="100%" colspan="4">Palpador</th>
                            </tr>
                            <tr >
-                               <td colspan="4">{{$equipoPalpador->codigo}}-{{$equipoPalpador->descripcion}}</td>
+                               <td colspan="4">{{$equipoPalpador->codigo ?? '-'}}-{{$equipoPalpador->descripcion ?? '-'}}</td>
                            </tr>
                            <tr>
                                 <th colspan="4" >Rangos</th>
@@ -744,16 +744,16 @@ footer {
   $espMinAnterior = $inf->espesor_minimo_anterior_me;
   $anos           = $inf->años_ultima_inspeccion_me;
   $espMinReq      = $inf->espesor_minimo_me;       // para vida remanente
-  // $espesorMinimo_form viene de fuera
+  // $espesorMinimo_formateado viene de fuera
 
-  // 1) Velocidad de corrosión = (espesorMinimo_form – espMinAnterior) / años
-  $diffVel      = $espMinAnterior - $espesorMinimo_form;
+  // 1) Velocidad de corrosión = (espesorMinimo_formateado – espMinAnterior) / años
+  $diffVel      = $espMinAnterior - $espesorMinimo_formateado;
   $velocidad    = ($anos > 0) ? ($diffVel / $anos) : 0;
   $velocidad    = max(0, $velocidad);
   $velocidadFmt = number_format($velocidad, 2);
 
-  // 2) Vida remanente = (espesorMinimo_form – espMinReq) / velocidad
-  $diffVida    = $espesorMinimo_form - $espMinReq;
+  // 2) Vida remanente = (espesorMinimo_formateado – espMinReq) / velocidad
+  $diffVida    = $espesorMinimo_formateado - $espMinReq;
   $vidaRem     = ($velocidad > 0) ? ($diffVida / $velocidad) : 0;
   $vidaRem     = max(0, $vidaRem);
   $vidaRemFmt  = number_format($vidaRem, 2);
@@ -799,7 +799,7 @@ footer {
     <td style="border:1px solid black; padding:4px;"><b>-></b></td>
 
     <td style="border:1px solid black; padding:4px; text-align:center;">
-      <u>{{ $espMinAnterior }} - {{ $espesorMinimo_form }}</u><br>
+      <u>{{ $espMinAnterior }} - {{ $espesorMinimo_formateado }}</u><br>
       {{ $anos }}
     </td>
     <td style="border:1px solid black; padding:4px;"><b>-></b></td>
@@ -820,7 +820,7 @@ footer {
     <td style="border:1px solid black; padding:4px;"><b>-></b></td>
 
     <td style="border:1px solid black; padding:4px; text-align:center;">
-      <u>{{ $espesorMinimo_form }} – {{ $espMinReq }}</u><br>
+      <u>{{ $espesorMinimo_formateado }} – {{ $espMinReq }}</u><br>
       {{ $velocidadFmt }}
     </td>
     <td style="border:1px solid black; padding:4px;"><b>-></b></td>

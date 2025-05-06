@@ -144,7 +144,19 @@ class PdfInformesUsController extends Controller
         $componente_us          = ComponenteUsMe::where('informe_us_id', $informe_us->id)->first();
         if ($componente_us) {
             $informes_us_me_f = $informes_us_me->first();
-            $espesorMinimo_form = DetalleUsMe::where('informe_us_me_id', $informes_us_me_f->id)->whereNotNull('generatriz')->min('valor');
+
+            $espesorMinimo_form = DetalleUsMe::where('informe_us_me_id', $informes_us_me_f->id)
+                ->whereNotNull('generatriz')
+                ->whereRaw("TRIM(UPPER(generatriz)) NOT IN ('Ø', 'ACCESORIO')")
+                ->selectRaw('MIN(CAST(valor AS DECIMAL(10,2))) as minimo')
+                ->value('minimo');
+
+            $espesorMinimo_form = (float) $espesorMinimo_form;
+
+            $espesorMinimo_formateado = floor($espesorMinimo_form) == $espesorMinimo_form
+                ? number_format($espesorMinimo_form, 0)
+                : number_format($espesorMinimo_form, 2);
+
             $pdfEspecial          = PdfEspecial::find($componente_us->pdf_especial_id);
             log::info($pdfEspecial);
             $materialesUS         = MaterialUs::where('componente_us_me_id', $componente_us->id)->get();
@@ -165,7 +177,7 @@ class PdfInformesUsController extends Controller
             $tablaInforme         = null;
             $componenteEntero     = null;
             $informes_us_me_f     = null;
-            $espesorMinimo_form     = null;
+            $espesorMinimo_formateado     = null;
         }
     
         // 3) Elijo la plantilla Blade igual que antes
@@ -215,7 +227,7 @@ class PdfInformesUsController extends Controller
                                                                 'tablaInforme',
                                                                 'materialMinMedido',
                                                                 'componenteEntero',
-                                                                'espesorMinimo_form',
+                                                                'espesorMinimo_formateado',
                                                                 'informes_us_me_f'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
            return $pdf->stream();

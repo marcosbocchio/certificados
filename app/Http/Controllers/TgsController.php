@@ -28,7 +28,7 @@ class TgsController extends Controller
             Log::error("No hay PdfEspecial para cliente {$clienteId} y tipo {$popup['tipo']}");
             return null;
         }
-    
+        log::info($popup['tipo']);
         // Helper: obtener un posible ID de un campo que puede venir object|array|string|null
         $getId = function($field, $subkey = 'id') {
             if (is_array($field) && array_key_exists($subkey, $field)) {
