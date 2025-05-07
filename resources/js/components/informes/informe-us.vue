@@ -832,8 +832,9 @@
                                                         <td>{{ item.elemento_me }}</td>
                                                         <td>{{ item.umbral_me }}</td>
                                                         <td>{{ item.espesor_minimo_me }}</td>
-                                                        <td>{{ item.espesor_minimo_anterior_me }}</td>
-                                                        <td>{{ item.años_ultima_inspeccion_me }}</td>
+                                                        <td><input type="number" v-model="item.espesor_minimo_anterior_me" min="1" max="30"></td>
+                                                        <td>
+                                                            <input type="number" v-model="item.años_ultima_inspeccion_me" min="1" max="30"></td>
                                                         <td>
                                                             <div v-if="indexPosTabla_me === k">
                                                                 <input type="number" v-model="item.cantidad_generatrices_linea_pdf_me" min="1" max="30">
