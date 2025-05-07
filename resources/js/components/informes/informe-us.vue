@@ -2417,7 +2417,8 @@ processExcelData(data, filas, columnas) {
                     return;
                 }
 
-            if(this.Tabla_me.length === 0){
+            if(this.cliente.codigo === '0279' &&
+                this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0){
                 toastr.error('Registro De Mediciones es obligatorio para TGS');
                 return;
             }
@@ -2510,7 +2511,9 @@ processExcelData(data, filas, columnas) {
                     return;
                 }
 
-            if(this.Tabla_me.length === 0){
+            if(this.cliente.codigo === '0279' &&
+                this.tecnica.codigo === 'ME' && 
+                this.Tabla_me.length === 0){
                 toastr.error('Registro De Mediciones es obligatorio para TGS');
                 return;
             }
