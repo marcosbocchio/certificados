@@ -1260,7 +1260,7 @@ export default {
         solicitado_por:'',
         usuarios_cliente:[],
         obra:'',
-        planta:'',
+        planta:{},
         cliente:'',
         fecha: moment(new Date()).format('YYYY-MM-DD'),
         observaciones:'',
@@ -1502,7 +1502,7 @@ export default {
                this.fecha   = this.informedata.fecha;
                this.numero_inf = this.informedata.numero;
                this.obra = this.informedata.obra;
-               this.planta = this.informedata.planta;
+               this.planta = this.informedata.planta ?? {};
                this.componente = this.informedata.componente;
                this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
                this.linea = this.informedata.linea;
@@ -1541,20 +1541,22 @@ export default {
                this.solicitado_por = this.solicitado_pordata ;
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
-               if (this.cliente.codigo == '0279' && this.tecnica.codigo === 'ME'){
-                this.$refs.modalPopupRef.setForm(this.componente_me_data);
-                const respuestas = this.inspeccion_visual || [];
+               if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME') {
+                    // Llamada segura a setForm
+                    this.$refs.modalPopupRef?.setForm(this.componente_me_data || {});
 
+                    // Mapea respuestas sobre tablaInspeccion
+                    const respuestas = this.inspeccion_visual || [];
                     respuestas.forEach(respuesta => {
                         for (const categoria of this.tablaInspeccion) {
-                            const item = categoria.items.find(i => i.id === respuesta.item_categoria_id);
-                            if (item) {
-                                item.selected = respuesta.respuesta;
-                                break;
-                            }
+                        const item = categoria.items.find(i => i.id === respuesta.item_categoria_id);
+                        if (item) {
+                            item.selected = respuesta.respuesta;
+                            break;
+                        }
                         }
                     });
-               }
+                    }
                await this.getTecnicas();
             } else {
                 await this.getTecnicas();
@@ -2417,7 +2419,8 @@ processExcelData(data, filas, columnas) {
                     return;
                 }
 
-            if(this.Tabla_me.length === 0){
+            if( this.cliente.codigo === '0279' &&
+            this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0){
                 toastr.error('Registro De Mediciones es obligatorio para TGS');
                 return;
             }

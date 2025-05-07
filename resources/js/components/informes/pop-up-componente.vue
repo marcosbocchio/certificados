@@ -439,46 +439,50 @@
     }
   },
     methods: {
-      setForm(item){ 
-        console.log('entra la funcion');
-        var componente = item;
-        console.log(componente);
-        this.area = componente.area                           ?? "";
-        this.tipo = componente.tipo_us                        ?? "";
-        this.modelo = componente.modelo                       ?? "";
-        this.denominacion = componente.denominacion           ?? "";
-        this.anio = componente.año                            ?? "";
-        this.detallesList = componente.materiales             ?? "";
-        this.temp.disenio = componente.temp_diseño            ?? "";
-        this.temp.operacion = componente.temp_operacion       ?? "";
-        this.pres.disenio = componente.presion_diseño         ?? "";
-        this.pres.operacion = componente.presion_operacion    ?? "";
-        this.sobreespesor = componente.sobreespesor_por_corrocion ?? "";
-        this.diamExterior = componente.diam_exterior          ?? "";
-        this.longitudTotal = componente.longitud_total        ?? "";
-        this.trat_termico = componente.tratamiento_termico    ?? "";
-        this.espesor = componente.espesor                     ?? "";
-        this.radiografiado = componente.radiografiado         ?? "";
-        this.normaFabricacion = componente.norma              ?? "";
-        this.aislacion = componente.aislacion                 ?? "";
-        this.tipo2 = componente.tipo                          ?? "";
-        this.material = componente.material                   ?? "";
-        this.fluido = componente.fluido                       ?? "";
-        this.path3_componente = componente.path3_componente   ?? "";
-        console.log('cargado');
-        console.log(this.anio);
+      setForm(item) {
+      // Si no hay datos de componente, no hacer nada
+      if (!item || !Object.keys(item).length) {
+        console.warn('setForm: sin datos de componente, omitiendo');
+        return;
+      }
 
-        this.detallesList = componente.materiales.map(m => {
-          return {
-            descripcion: m.descripcion,
-            material: { codigo: m.material },
-            grado: m.grado,
-            espNominal: m.espesor_nominal,
-            espMinMedido: m.espesor_minimo_medido
-          };
-        });
-        this.storeRegistro();
-      },
+      const componente = item;
+      console.log('entra la función setForm con datos:', componente);
+
+      // Asignaciones solo cuando existe componente
+      this.area              = componente.area                         ?? '';
+      this.tipo              = componente.tipo_us                     ?? '';
+      this.modelo            = componente.modelo                      ?? '';
+      this.denominacion      = componente.denominacion                ?? '';
+      this.anio              = componente.año                          ?? '';
+      this.temp.disenio      = componente.temp_diseño                 ?? '';
+      this.temp.operacion    = componente.temp_operacion              ?? '';
+      this.pres.disenio      = componente.presion_diseño               ?? '';
+      this.pres.operacion    = componente.presion_operacion            ?? '';
+      this.sobreespesor      = componente.sobreespesor_por_corrocion   ?? '';
+      this.diamExterior      = componente.diam_exterior                ?? '';
+      this.longitudTotal     = componente.longitud_total               ?? '';
+      this.trat_termico      = componente.tratamiento_termico          ?? '';
+      this.espesor           = componente.espesor                      ?? '';
+      this.radiografiado     = componente.radiografiado                ?? '';
+      this.normaFabricacion  = componente.norma                        ?? '';
+      this.aislacion         = componente.aislacion                    ?? '';
+      this.tipo2             = componente.tipo                         ?? '';
+      this.material          = componente.material                     ?? '';
+      this.fluido            = componente.fluido                       ?? '';
+      this.path3_componente  = componente.path3_componente             ?? '';
+
+      // Mapear detallesList de forma segura
+      this.detallesList = (componente.materiales || []).map(m => ({
+        descripcion: m.descripcion,
+        material:    { codigo: m.material },
+        grado:       m.grado,
+        espNominal:  m.espesor_nominal,
+        espMinMedido:m.espesor_minimo_medido
+      }));
+
+      console.log('Datos cargados en el formulario');
+    },
       async storeRegistro() {
         // 1) Si modelo no tiene id, lo creamos
         if (!this.modelo.id) {
