@@ -87,13 +87,12 @@ class InformesUsController extends Controller
 
                 if ($clienteId) {
                     $pdfMatch = PdfEspecial::where('cliente_id', $clienteId)
-                        ->where('tipo_informe', $popupData['tipo'])
+                        ->where('tipo_informe', isset($popupData['tipo']) ? $popupData['tipo'] : null)
                         ->first();
                 } else {
                     $pdfMatch = null;
                 }
-                log::debug('-------'.$popupData['tipo']);
-                log::info($pdfMatch);
+
                 if (!empty($pdfMatch)) {
                     // 6) guardo componente
                     (new \App\Http\Controllers\TgsController())
@@ -163,7 +162,7 @@ class InformesUsController extends Controller
                 $popupData = $request->input('data_popup', []);
                 if ($clienteId) {
                     $pdfMatch = PdfEspecial::where('cliente_id', $clienteId)
-                        ->where('tipo_informe', $popupData['tipo'])
+                        ->where('tipo_informe', isset($popupData['tipo']) ? $popupData['tipo'] : null)
                         ->first();
                 } else {
                     $pdfMatch = null;
