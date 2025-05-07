@@ -830,11 +830,18 @@
                                                 <tbody>
                                                     <tr v-for="(item,k) in (Tabla_me)" :key="k" @click="selectPosTabla_me(k)" class="pointer" :class="{selected: indexPosTabla_me === k}" >
                                                         <td>{{ item.elemento_me }}</td>
-                                                        <td>{{ item.umbral_me }}</td>
-                                                        <td>{{ item.espesor_minimo_me }}</td>
-                                                        <td><input type="number" v-model="item.espesor_minimo_anterior_me" min="1" max="30"></td>
                                                         <td>
-                                                            <input type="number" v-model="item.años_ultima_inspeccion_me" min="1" max="30"></td>
+                                                            <input type="number" v-model="item.umbral_me" min="1" max="30" step="0.1">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" v-model="item.espesor_minimo_me" min="1" max="30" step="0.1">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" v-model="item.espesor_minimo_anterior_me" min="1" max="30" step="0.1">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" v-model="item.años_ultima_inspeccion_me" min="1" max="30" step="0.1">
+                                                        </td>
                                                         <td>
                                                             <div v-if="indexPosTabla_me === k">
                                                                 <input type="number" v-model="item.cantidad_generatrices_linea_pdf_me" min="1" max="30">
@@ -1556,6 +1563,7 @@ export default {
                         }
                     });
                }
+               this.popupData = this.componente_me_data;
                await this.getTecnicas();
             } else {
                 await this.getTecnicas();
