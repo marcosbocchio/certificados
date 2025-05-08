@@ -238,17 +238,29 @@ footer {
         @if ($idx === 0)
           <td rowspan="{{ $count }}">GRADO</td>
         @endif
-        <td>{{ number_format($mat->grado, 2) }}</td>
+        <td>
+          {!! $mat->grado != 0
+              ? number_format($mat->grado, 2)
+              : '&nbsp;' !!}
+        </td>
 
         @if ($idx === 0)
           <td rowspan="{{ $count }}">ESP. NOMINAL</td>
         @endif
-        <td>{{ number_format($mat->espesor_nominal, 2) }}</td>
+        <td>
+          {!! $mat->espesor_nominal != 0
+              ? number_format($mat->espesor_nominal, 2)
+              : '&nbsp;' !!}
+        </td>
 
         @if ($idx === 0)
           <td rowspan="{{ $count }}">ESP. MIN. MEDIDO</td>
         @endif
-        <td>{{ number_format($mat->espesor_minimo_medido, 2) }}</td>
+        <td>
+          {!! $mat->espesor_minimo_medido != 0
+              ? number_format($mat->espesor_minimo_medido, 2)
+              : '&nbsp;' !!}
+        </td>
 
         @if ($idx === 0)
           <td rowspan="{{ $count }}" style="background-color: #c3c3c3;" >[mm]</td>
@@ -738,43 +750,50 @@ footer {
 </table>
 <div style="page-break-after: always;"></div>
 @php
-
   // Obtengo sólo los datos del informe
-  $inf           = $informes_us_me->first();
-  $espMinAnterior = $inf->espesor_minimo_anterior_me;
-  $anos           = $inf->años_ultima_inspeccion_me;
-  $espMinReq      = $inf->espesor_minimo_me;       // para vida remanente
+  $inf             = $informes_us_me->first();
+  $espMinAnterior  = $inf->espesor_minimo_anterior_me;
+  $anos            = $inf->años_ultima_inspeccion_me;
+  $espMinReq       = $inf->espesor_minimo_me;
   // $espesorMinimo_formateado viene de fuera
 
-  // 1) Velocidad de corrosión = (espesorMinimo_formateado – espMinAnterior) / años
-  $diffVel      = $espMinAnterior - $espesorMinimo_formateado;
-  $velocidad    = ($anos > 0) ? ($diffVel / $anos) : 0;
-  $velocidad    = max(0, $velocidad);
-  $velocidadFmt = number_format($velocidad, 2);
+  // 1) Velocidad de corrosión
+  $canCalcVel = ($espMinAnterior > 0 && $espesorMinimo_formateado > 0 && $anos > 0);
+  if ($canCalcVel) {
+    $velocidad    = max(0, ($espMinAnterior - $espesorMinimo_formateado) / $anos);
+    $velocidadFmt = number_format($velocidad, 2);
+  } else {
+    $velocidadFmt = 's / n';
+  }
 
-  // 2) Vida remanente = (espesorMinimo_formateado – espMinReq) / velocidad
-  $diffVida    = $espesorMinimo_formateado - $espMinReq;
-  $vidaRem     = ($velocidad > 0) ? ($diffVida / $velocidad) : 0;
-  $vidaRem     = max(0, $vidaRem);
-  $vidaRemFmt  = number_format($vidaRem, 2);
+  // 2) Vida remanente
+  $canCalcVida = ($espesorMinimo_formateado > 0 && $espMinReq > 0 && !empty($velocidad) && $velocidad > 0);
+  if ($canCalcVida) {
+    $vidaRem    = max(0, ($espesorMinimo_formateado - $espMinReq) / $velocidad);
+    $vidaRemFmt = number_format($vidaRem, 2);
+  } else {
+    $vidaRemFmt = 's / n';
+  }
 @endphp
+
 <table width="100%">
-      <tbody>
-          <tr>
-            <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
-              FORMULAS
-            </td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <td style="border:1px solid #000;background:#D8D8D8;text-align:center;">
+        FORMULAS
+      </td>
+    </tr>
+  </tbody>
 </table>
-<table style="width:100%; border-collapse: collapse; font-size:13px; text-align: center; border:1px solid black;margin:10px 0px 10px 0px">
+
+<table style="width:100%; border-collapse:collapse; font-size:13px; text-align:center; border:1px solid black; margin:10px 0;">
   <colgroup>
-    <col style="width:20%;" />  <!-- Nombre del cálculo -->
-    <col style="width:30%;" />  <!-- Fórmula -->
-    <col style="width:5%;" />   <!-- Flecha -->
-    <col style="width:20%;" />  <!-- Valores -->
-    <col style="width:5%;" />   <!-- Flecha -->
-    <col style="width:20%;" />  <!-- Resultado -->
+    <col style="width:20%;" />
+    <col style="width:30%;" />
+    <col style="width:5%;" />
+    <col style="width:20%;" />
+    <col style="width:5%;" />
+    <col style="width:20%;" />
   </colgroup>
   <thead>
     <tr>
@@ -787,48 +806,63 @@ footer {
     </tr>
   </thead>
   <tbody>
-  <!-- Velocidad de corrosión -->
-  <tr>
-    <td style="border:1px solid black; padding:4px; text-align:left;">
-      Velocidad de corrosión<br><small>(mm/año)</small>
-    </td>
-    <td style="border:1px solid black; padding:4px; text-align:left;">
-      <u>espesor mínimo anterior - espesor mínimo</u><br>
-      años entre inspecciones
-    </td>
-    <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+    <!-- Velocidad de corrosión -->
+    <tr>
+      <td style="border:1px solid black; padding:4px; text-align:left;">
+        Velocidad de corrosión<br><small>(mm/año)</small>
+      </td>
+      <td style="border:1px solid black; padding:4px; text-align:left;">
+        <u>espesor mínimo anterior - espesor mínimo</u><br>
+        años entre inspecciones
+      </td>
+      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+      <td style="border:1px solid black; padding:4px; text-align:center;">
+        {!! 
+          // primero, el numerador (subrayado)
+          '<u>'
+            . ($espMinAnterior  > 0 ? $espMinAnterior : '&nbsp;')
+            . ' - '
+            . ($espesorMinimo_formateado > 0 ? $espesorMinimo_formateado : '&nbsp;')
+          . '</u><br>'
+          // luego el divisor
+          . ($anos > 0 ? $anos : '&nbsp;')
+        !!}
+      </td>
+      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+      <td style="border:1px solid black; padding:4px;">
+        {{ $velocidadFmt }}
+      </td>
+    </tr>
 
-    <td style="border:1px solid black; padding:4px; text-align:center;">
-      <u>{{ $espMinAnterior }} - {{ $espesorMinimo_formateado }}</u><br>
-      {{ $anos }}
-    </td>
-    <td style="border:1px solid black; padding:4px;"><b>-></b></td>
-    <td style="border:1px solid black; padding:4px;">
-      {{ $velocidadFmt }}
-    </td>
-  </tr>
+    <!-- Vida remanente -->
+    <tr>
+      <td style="border:1px solid black; padding:4px; text-align:left;">
+        Vida remanente<br><small>(años)</small>
+      </td>
+      <td style="border:1px solid black; padding:4px; text-align:left;">
+        <u>espesor mínimo - espesor mínimo req.</u><br>
+        velocidad de corrosión
+      </td>
+      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+      <td style="border:1px solid black; padding:4px; text-align:center;">
+        {!! 
+          '<u>'
+            . ($espesorMinimo_formateado > 0 ? $espesorMinimo_formateado : '&nbsp;')
+            . ' - '
+            . ($espMinReq > 0 ? $espMinReq : '&nbsp;')
+          . '</u><br>'
+          . (!empty($velocidad) && $velocidad > 0 ? $velocidadFmt : '&nbsp;')
+        !!}
+      </td>
+      <td style="border:1px solid black; padding:4px;"><b>-></b></td>
+      <td style="border:1px solid black; padding:4px;">
+        {{ $vidaRemFmt }}
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <!-- Vida remanente -->
-  <tr>
-    <td style="border:1px solid black; padding:4px; text-align:left;">
-      Vida remanente<br><small>(años)</small>
-    </td>
-    <td style="border:1px solid black; padding:4px; text-align:left;">
-      <u>espesor mínimo – espesor mínimo requerido</u><br>
-      velocidad de corrosión
-    </td>
-    <td style="border:1px solid black; padding:4px;"><b>-></b></td>
 
-    <td style="border:1px solid black; padding:4px; text-align:center;">
-      <u>{{ $espesorMinimo_formateado }} – {{ $espMinReq }}</u><br>
-      {{ $velocidadFmt }}
-    </td>
-    <td style="border:1px solid black; padding:4px;"><b>-></b></td>
-    <td style="border:1px solid black; padding:4px;">
-      {{ $vidaRemFmt }}
-    </td>
-  </tr>
-</tbody>
 
 <div style="width: 100%;page-break-inside: avoid;">
     @include('reportes.partial.linea-amarilla')

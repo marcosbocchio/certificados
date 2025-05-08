@@ -167,9 +167,9 @@
                           <tr v-for="(item, index) in detallesList" :key="index">
                             <td>{{ item.descripcion }}</td>
                             <td>{{ item.material.codigo }}</td>
-                            <td>{{ item.grado }}</td>
-                            <td>{{ item.espNominal }}</td>
-                            <td>{{ item.espMinMedido }}</td>
+                            <td>{{ +item.grado !== 0 ? item.grado : '' }}</td>
+                            <td>{{ +item.espNominal !== 0 ? item.espNominal : '' }}</td>
+                            <td>{{ +item.espMinMedido !== 0 ? item.espMinMedido : '' }}</td>
                             <td>
                               <span class="fa fa-minus-circle" @click="removeDetalle(index)"></span> 
                             </td>
