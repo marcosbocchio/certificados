@@ -750,7 +750,12 @@ footer {
 </table>
 <div style="page-break-after: always;"></div>
 @php
-  // Obtengo sólo los datos del informe
+  // Helper para recortar ceros y punto sobrante
+  $trimZeros = function($n) {
+    return rtrim(rtrim(number_format($n, 2, '.', ''), '0'), '.');
+  };
+
+  // Datos del informe
   $inf             = $informes_us_me->first();
   $espMinAnterior  = $inf->espesor_minimo_anterior_me;
   $anos            = $inf->años_ultima_inspeccion_me;
@@ -761,7 +766,7 @@ footer {
   $canCalcVel = ($espMinAnterior > 0 && $espesorMinimo_formateado > 0 && $anos > 0);
   if ($canCalcVel) {
     $velocidad    = max(0, ($espMinAnterior - $espesorMinimo_formateado) / $anos);
-    $velocidadFmt = number_format($velocidad, 2);
+    $velocidadFmt = $trimZeros($velocidad);
   } else {
     $velocidadFmt = 's / n';
   }
@@ -770,7 +775,7 @@ footer {
   $canCalcVida = ($espesorMinimo_formateado > 0 && $espMinReq > 0 && !empty($velocidad) && $velocidad > 0);
   if ($canCalcVida) {
     $vidaRem    = max(0, ($espesorMinimo_formateado - $espMinReq) / $velocidad);
-    $vidaRemFmt = number_format($vidaRem, 2);
+    $vidaRemFmt = $trimZeros($vidaRem);
   } else {
     $vidaRemFmt = 's / n';
   }
@@ -788,12 +793,8 @@ footer {
 
 <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:center; border:1px solid black; margin:10px 0;">
   <colgroup>
-    <col style="width:20%;" />
-    <col style="width:30%;" />
-    <col style="width:5%;" />
-    <col style="width:20%;" />
-    <col style="width:5%;" />
-    <col style="width:20%;" />
+    <col style="width:20%;" /><col style="width:30%;" /><col style="width:5%;" />
+    <col style="width:20%;" /><col style="width:5%;" /><col style="width:20%;" />
   </colgroup>
   <thead>
     <tr>
@@ -818,14 +819,12 @@ footer {
       <td style="border:1px solid black; padding:4px;"><b>-></b></td>
       <td style="border:1px solid black; padding:4px; text-align:center;">
         {!! 
-          // primero, el numerador (subrayado)
           '<u>'
-            . ($espMinAnterior  > 0 ? $espMinAnterior : '&nbsp;')
+            . ($espMinAnterior  > 0 ? $trimZeros($espMinAnterior) : '&nbsp;')
             . ' - '
-            . ($espesorMinimo_formateado > 0 ? $espesorMinimo_formateado : '&nbsp;')
+            . ($espesorMinimo_formateado > 0 ? $trimZeros($espesorMinimo_formateado) : '&nbsp;')
           . '</u><br>'
-          // luego el divisor
-          . ($anos > 0 ? $anos : '&nbsp;')
+          . ($anos > 0 ? $trimZeros($anos) : '&nbsp;')
         !!}
       </td>
       <td style="border:1px solid black; padding:4px;"><b>-></b></td>
@@ -847,11 +846,11 @@ footer {
       <td style="border:1px solid black; padding:4px; text-align:center;">
         {!! 
           '<u>'
-            . ($espesorMinimo_formateado > 0 ? $espesorMinimo_formateado : '&nbsp;')
+            . ($espesorMinimo_formateado > 0 ? $trimZeros($espesorMinimo_formateado) : '&nbsp;')
             . ' - '
-            . ($espMinReq > 0 ? $espMinReq : '&nbsp;')
+            . ($espMinReq > 0 ? $trimZeros($espMinReq) : '&nbsp;')
           . '</u><br>'
-          . (!empty($velocidad) && $velocidad > 0 ? $velocidadFmt : '&nbsp;')
+          . (!empty($velocidad) && $velocidad > 0 ? $trimZeros($velocidad) : '&nbsp;')
         !!}
       </td>
       <td style="border:1px solid black; padding:4px;"><b>-></b></td>
