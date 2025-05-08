@@ -850,7 +850,7 @@ footer {
             . ' - '
             . ($espMinReq > 0 ? $trimZeros($espMinReq) : '&nbsp;')
           . '</u><br>'
-          . (!empty($velocidad) && $velocidad > 0 ? $trimZeros($velocidad) : '&nbsp;')
+          . (!empty($velocidad) && $velocidad > 0 ? $trimZeros($velocidad) : 's / n')
         !!}
       </td>
       <td style="border:1px solid black; padding:4px;"><b>-></b></td>
