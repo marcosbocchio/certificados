@@ -148,6 +148,7 @@ class PdfInformesUsController extends Controller
             $espesorMinimo_form = DetalleUsMe::where('informe_us_me_id', $informes_us_me_f->id)
                 ->whereNotNull('generatriz')
                 ->whereRaw("TRIM(UPPER(generatriz)) NOT IN ('Ø', 'ACCESORIO')")
+                ->whereRaw("valor REGEXP '^[0-9]+(\\.[0-9]+)?$'")
                 ->selectRaw('MIN(CAST(valor AS DECIMAL(10,2))) as minimo')
                 ->value('minimo');
 
