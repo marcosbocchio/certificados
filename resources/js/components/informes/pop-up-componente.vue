@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label for="anio">Año *</label>
+                        <label for="anio">Año</label>
                         <input type="number" id="anio" v-model="anio"  min="0" max="9999" class="form-control">
                       </div>
                     </div>
