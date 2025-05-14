@@ -1005,7 +1005,7 @@
     tecnica && tecnica.codigo === 'ME' &&
     (
       (popupData && popupData.tipo    !== 'Linea') ||
-      (!popupData && componente_me_data && componente_me_data.tipo_us !== 'Linea')
+      (!popupData.tipo && componente_me_data && componente_me_data.tipo_us !== 'Linea')
     )
   " class="box box-custom-enod">
                 <div class="box-body">
