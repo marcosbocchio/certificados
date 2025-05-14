@@ -1001,8 +1001,8 @@
                    </div>
                </div>
                <div v-if="cliente.codigo === '0279'
-      && tecnica?.codigo === 'ME'
-      && popupData?.tipo !== 'Linea'" class="box box-custom-enod">
+                    && tecnica?.codigo === 'ME'
+                    && popupData?.tipo !== 'Linea' && componente_me_data?.tipo_us !== 'Linea'" class="box box-custom-enod">
                 <div class="box-body">
                 <div class="box-header with-border">
                     <h3 class="box-title">INSPECCIÓN VISUAL</h3>

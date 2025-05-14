@@ -222,13 +222,18 @@ footer {
         {{ $material->codigo ?? $material2->codigo }}
       </td>
       <td>Grado</td>
-      @foreach($materialesUS as $idx => $mat)
-        <td style="background-color: #c3c3c3;">
-          {!! $mat->grado != 0 
-              ? number_format($mat->grado, 2) 
-              : '&nbsp;' !!}
-        </td>
-      @endforeach
+     @if($materialesUS->isNotEmpty())
+        @foreach($materialesUS as $mat)
+          <td style="background-color: #c3c3c3;">
+            {!! $mat->grado != 0 
+                ? number_format($mat->grado, 2) 
+                : '&nbsp;' !!}
+          </td>
+        @endforeach
+      @else
+        {{-- Si no hay nada en materialesUS mostramos un único TD vacío --}}
+        <td style="background-color: #c3c3c3;">&nbsp;</td>
+      @endif
       <td>Fluido</td>
       <td colspan="2"> {{ $componenteEntero->fluido->codigo ?? '-' }}</td>
       <td colspan="2">Espesor min medido</td>
