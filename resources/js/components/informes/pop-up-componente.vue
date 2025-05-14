@@ -445,7 +445,10 @@
         console.warn('setForm: sin datos de componente, omitiendo');
         return;
       }
-
+          if (this.tipo === 'Linea' && this.detallesList.length >= 1) {
+            toastr.error('Solo se permite un material para Linea');
+            return;
+          }
       const componente = item;
       console.log('entra la función setForm con datos:', componente);
 
