@@ -48,13 +48,13 @@
                   </div>
                   <!-- Segunda fila de 4 inputs -->
                   <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3" v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label for="nEquipo">N° de Equipo *</label>
                         <input type="text" id="nEquipo" v-model="nEquipo" class="form-control" disabled>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group d-flex">
                         <label>Modelo *</label>
                         <v-select
@@ -70,13 +70,13 @@
                         </v-select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label for="denominacion">Denominación *</label>
                         <input type="text" id="denominacion" v-model="denominacion" maxlength="30" class="form-control">
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label for="anio">Año</label>
                         <input type="number" id="anio" v-model="anio"  min="0" max="9999" class="form-control">
@@ -109,7 +109,7 @@
                 <div class="box-body">
                   <!-- Inputs para detalle -->
                   <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3" v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label for="detalleDescripcion">Descripción</label>
                         <input type="text" id="detalleDescripcion" v-model="detalle.descripcion" maxlength="30" class="form-control">
@@ -155,7 +155,7 @@
                       <table class="table table-bordered table-hover table-striped table-condensed">
                         <thead>
                           <tr>
-                            <th>Descripción</th>
+                            <th v-if="tipo === 'Horizontal' || tipo === 'Vertical'">Descripción</th>
                             <th>Material</th>
                             <th>Grado</th>
                             <th>Esp. Nominal</th>
@@ -165,7 +165,7 @@
                         </thead>
                         <tbody>
                           <tr v-for="(item, index) in detallesList" :key="index">
-                            <td>{{ item.descripcion }}</td>
+                            <td  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">{{ item.descripcion }}</td>
                             <td>{{ item.material.codigo }}</td>
                             <td>{{ +item.grado !== 0 ? item.grado : '' }}</td>
                             <td>{{ +item.espNominal !== 0 ? item.espNominal : '' }}</td>
@@ -238,38 +238,38 @@
                           </v-select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label>Sobreespesor</label>
                         <input type="number" v-model="sobreespesor" min="0" max="9999" step="0.01" class="form-control">
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label>Diam. Exterior</label>
                         <input type="number" v-model="diamExterior" min="0" max="99999999" step="0.01" class="form-control">
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label>Longitud Total</label>
                         <input type="number" v-model="longitudTotal" min="0" max="99999999" step="0.01" class="form-control">
                       </div>
                     </div>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'"></div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Trat. Termico</label>
                         <v-select :options="siNoOptions" v-model="trat_termico"></v-select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label>radiografiado %</label>
                         <input type="number" v-model="radiografiado" min="1" max="100" step="0.01" class="form-control">
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label>Norma Fabricación</label>
                         <v-select :options="normaFabricacionOptions" label="codigo" v-model="normaFabricacion">
@@ -287,7 +287,7 @@
                       </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="col-md-3">
+                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group d-flex">
                         <label>Tipo</label>
                         <v-select
@@ -303,7 +303,7 @@
                       </v-select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label>Material</label>
                         <v-select :options="materialOptions" v-model="material" label="codigo" placeholder="Seleccione">
@@ -314,7 +314,7 @@
                         </v-select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
                       <div class="form-group">
                         <label>Espesor</label>
                         <input type="text" v-model="espesor" placeholder="Espesor" step="0.01" class="form-control">
@@ -373,7 +373,7 @@
         area: '',
         orden: '',
         tipo: null,
-        tipoOptions: ['Horizontal', 'Vertical'],
+        tipoOptions: ['Horizontal', 'Vertical','Linea'],
         nEquipo: '',
         modelo: '',
         materialesOpcion:'',
@@ -561,84 +561,90 @@
         this.modelo = nuevo
       },
       addDetalle() {
-  // 1) Compruebo que haya al menos un campo llenado
-  if (
-    this.detalle.descripcion ||
-    this.detalle.grado !== '' ||
-    this.detalle.espNominal !== '' ||
-    this.detalle.espMinMedido !== ''
-  ) {
-    // 2) Validaciones de números y longitud
-    const camposNum = [
-      { key: 'grado', label: 'Grado' },
-      { key: 'espNominal', label: 'Espesor Nominal' },
-      { key: 'espMinMedido', label: 'Espesor Mínimo Medido' }
-    ];
+        // 1) Compruebo que haya al menos un campo llenado
+        if (
+          this.detalle.descripcion ||
+          this.detalle.grado !== '' ||
+          this.detalle.espNominal !== '' ||
+          this.detalle.espMinMedido !== ''
+        ) {
+          // 2) Validaciones de números y longitud
+          const camposNum = [
+            { key: 'grado', label: 'Grado' },
+            { key: 'espNominal', label: 'Espesor Nominal' },
+            { key: 'espMinMedido', label: 'Espesor Mínimo Medido' }
+          ];
 
-    for (const { key, label } of camposNum) {
-      const val = this.detalle[key];
+          for (const { key, label } of camposNum) {
+            const val = this.detalle[key];
 
-      // Solo validamos si el campo no está vacío
-      if (val !== '' && val != null) {
-        // 2.1) Debe ser un número
-        if (isNaN(val)) {
-          toastr.error(`${label} debe ser un número`);
-          return;
+            // Solo validamos si el campo no está vacío
+            if (val !== '' && val != null) {
+              // 2.1) Debe ser un número
+              if (isNaN(val)) {
+                toastr.error(`${label} debe ser un número`);
+                return;
+              }
+
+              // 2.2) La parte entera no puede tener más de 4 dígitos
+              const entero = Math.trunc(Math.abs(val));
+              if (String(entero).length > 4) {
+                toastr.error(`${label} no puede tener más de 4 dígitos`);
+                return;
+              }
+            }
+          }
+
+          // 3) Validación extra: si es 'Linea' no permitimos más de un detalle
+          if (this.tipo === 'Linea' && this.detallesList.length >= 1) {
+            toastr.error('Solo se permite un material para Linea');
+            return;
+          }
+
+          // 4) Si todo OK, agrego el detalle
+          this.detallesList.push({ ...this.detalle });
+
+          // 5) Limpio el formulario
+          this.detalle.material     = '';
+          this.detalle.descripcion  = '';
+          this.detalle.grado        = '';
+          this.detalle.espNominal   = '';
+          this.detalle.espMinMedido = '';
         }
-
-        // 2.2) La parte entera no puede tener más de 4 dígitos
-        const entero = Math.trunc(Math.abs(val));
-        if (String(entero).length > 4) {
-          toastr.error(`${label} no puede tener más de 4 dígitos`);
-          return;
+      },
+      async fetchModelos() {
+        try {
+          const response = await axios.get('/tgs/modelos-us-me');
+          this.modeloOptions = response.data.map(item => item);
+          console.log("asdasd", this.modeloOptions);
+        } catch (error) {
+          console.error('Error al obtener modelos:', error);
         }
-      }
-    }
-
-    // 4) Si todo OK, agrego el detalle
-    this.detallesList.push({ ...this.detalle });
-
-    // 5) Limpio el formulario
-    this.detalle.material = '';
-    this.detalle.descripcion    = '';
-    this.detalle.grado          = '';
-    this.detalle.espNominal     = '';
-    this.detalle.espMinMedido   = '';
-  }
-},
-async fetchModelos() {
-  try {
-    const response = await axios.get('/tgs/modelos-us-me');
-    this.modeloOptions = response.data.map(item => item);
-    console.log("asdasd", this.modeloOptions);
-  } catch (error) {
-    console.error('Error al obtener modelos:', error);
-  }
-},
-async fetchFluidos() {
-  try {
-    const response = await axios.get('/tgs/fluidos-us-me');
-    this.fluidoOptions = response.data.map(item => item);
-  } catch (error) {
-    console.error('Error al obtener fluidos:', error);
-  }
-},
-async fetchNormas() {
-  try {
-    const response = await axios.get('/tgs/normas-fabricacion-us-me');
-    this.normaFabricacionOptions = response.data.map(item => item);
-  } catch (error) {
-    console.error('Error al obtener normas:', error);
-  }
-},
-async fetchMateriales() {
-  try {
-    const response = await axios.get('/materiales');
-    this.materialOptions = response.data.map(item => item);
-  } catch (error) {
-    console.error('Error al obtener tipos:', error);
-  }
-},
+      },
+      async fetchFluidos() {
+        try {
+          const response = await axios.get('/tgs/fluidos-us-me');
+          this.fluidoOptions = response.data.map(item => item);
+        } catch (error) {
+          console.error('Error al obtener fluidos:', error);
+        }
+      },
+      async fetchNormas() {
+        try {
+          const response = await axios.get('/tgs/normas-fabricacion-us-me');
+          this.normaFabricacionOptions = response.data.map(item => item);
+        } catch (error) {
+          console.error('Error al obtener normas:', error);
+        }
+      },
+      async fetchMateriales() {
+        try {
+          const response = await axios.get('/materiales');
+          this.materialOptions = response.data.map(item => item);
+        } catch (error) {
+          console.error('Error al obtener tipos:', error);
+        }
+      },
       removeDetalle(index) {
         this.detallesList.splice(index, 1)
       },
