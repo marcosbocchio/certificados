@@ -40,7 +40,8 @@
                                     cliente.codigo === '0279'
                                     && tecnica?.codigo === 'ME'
                                     && tipo_tgs !== null
-                                    && material !== '' "
+                                    && material !== ''
+                                    && planta !== '' "
                                 :disabled="!componente">
                                 <i class="fa fa-list"></i>
                                 </button>
