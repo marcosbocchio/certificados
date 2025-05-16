@@ -1018,7 +1018,7 @@
                     cliente.codigo === '0279' &&
                     tecnica && tecnica.codigo === 'ME' &&
                     (
-                    componente_me_data.tipo_us !== 'Linea' || tipo_tgs !== 'Linea'
+                    componente_me_data?.tipo_us !== 'Linea' || tipo_tgs !== 'Linea'
                     )
                 " class="box box-custom-enod">
                 <div class="box-body">
