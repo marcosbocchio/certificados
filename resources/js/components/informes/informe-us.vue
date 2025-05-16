@@ -1018,11 +1018,7 @@
                     cliente.codigo === '0279' &&
                     tecnica && tecnica.codigo === 'ME' &&
                     (
-                    /* si tiene popupData.tipo, lo usamos: */
-                    (popupData && popupData.tipo !== undefined && popupData.tipo    !== 'Linea') ||
-                    /* si no tiene popupData.tipo, miramos componente_me_data.tipo_us */
-                    ((popupData == null || popupData.tipo === undefined) &&
-                    componente_me_data && componente_me_data.tipo_us !== 'Linea')
+                    componente_me_data.tipo_us !== 'Linea' || tipo_tgs !== 'Linea'
                     )
                 " class="box box-custom-enod">
                 <div class="box-body">
