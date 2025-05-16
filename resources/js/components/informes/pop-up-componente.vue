@@ -39,24 +39,27 @@
                         <input type="text" id="orden" v-model="orden" class="form-control" disabled>
                       </div>
                     </div>
-                    <div class="col-md-3">
-                      <div class="form-group">
-                        <label for="tipo">Tipo *</label>
-                        <v-select id="tipo" :options="tipoOptions" v-model="tipo"></v-select>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Segunda fila de 4 inputs -->
-                  <div class="row">
-                    <div class="col-md-3" v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3" v-if="tipo !== 'Linea'">
                       <div class="form-group">
                         <label for="nEquipo">N° de Equipo *</label>
                         <input type="text" id="nEquipo" v-model="nEquipo" class="form-control" disabled>
                       </div>
                     </div>
-                    <div class="col-md-3" v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="clearfix"></div>
+                    <div class="col-md-3">
+                      <label for="denominacion">Imagen</label>
+                        <subir-imagen
+                          :ruta="ruta_componente_us"
+                          :max_size="max_size"
+                          :path_inicial="path3_componente"
+                          :tipos_archivo_soportados ="tipos_archivo_soportados"
+                          :mostrar_formatos_soportados="true"
+                          @path="onPath"
+                        ></subir-imagen>
+                    </div>
+                    <div class="col-md-3" v-if="tipo !== 'Linea'">
                       <div class="form-group d-flex">
-                        <label>Modelo *</label>
+                        <label>Modelo</label>
                         <v-select
                           v-model="modelo"
                           label="codigo"
@@ -70,31 +73,18 @@
                         </v-select>
                       </div>
                     </div>
-                    <div class="col-md-3" v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3" v-if="tipo !== 'Linea'">
                       <div class="form-group">
-                        <label for="denominacion">Denominación *</label>
+                        <label for="denominacion">Denominación</label>
                         <input type="text" id="denominacion" v-model="denominacion" maxlength="30" class="form-control">
                       </div>
                     </div>
-                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3"  v-if="tipo !== 'Linea'">
                       <div class="form-group">
                         <label for="anio">Año</label>
                         <input type="number" id="anio" v-model="anio"  min="0" max="9999" class="form-control">
                       </div>
                     </div>
-                    <div class="clearfix"></div>
-                    <div class="col-md-3">
-                            <div class="form-group" >
-                                <subir-imagen
-                                    :ruta="ruta_componente_us"
-                                    :max_size="max_size"
-                                    :path_inicial="path3_componente"
-                                    :tipos_archivo_soportados ="tipos_archivo_soportados"
-                                    :mostrar_formatos_soportados="true"
-                                    @path="onPath"
-                                ></subir-imagen>
-                          </div>
-                      </div>
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
@@ -109,7 +99,7 @@
                 <div class="box-body">
                   <!-- Inputs para detalle -->
                   <div class="row">
-                    <div class="col-md-3" v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3" v-if="tipo !== 'Linea'">
                       <div class="form-group">
                         <label for="detalleDescripcion">Descripción</label>
                         <input type="text" id="detalleDescripcion" v-model="detalle.descripcion" maxlength="30" class="form-control">
@@ -134,13 +124,13 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="detalleEspNominal">Esp. Nominal</label>
-                        <input type="number" id="detalleEspNominal" v-model="detalle.espNominal" min="0" max="9999"  class="form-control">
+                        <input type="number" id="detalleEspNominal" v-model="detalle.espNominal" min="0" max="9999"  class="form-control" :disabled="tipo === 'Linea'">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="detalleEspMinMedido">Esp. Min Medido</label>
-                        <input type="number" id="detalleEspMinMedido" v-model="detalle.espMinMedido" min="0" max="9999" class="form-control">
+                        <input type="number" id="detalleEspMinMedido" v-model="detalle.espMinMedido" min="0" max="9999" class="form-control" :disabled="tipo === 'Linea'">
                       </div>
                     </div>
                     <div class="col-md-1 d-flex align-items-end">
@@ -155,7 +145,7 @@
                       <table class="table table-bordered table-hover table-striped table-condensed">
                         <thead>
                           <tr>
-                            <th v-if="tipo === 'Horizontal' || tipo === 'Vertical'">Descripción</th>
+                            <th v-if="tipo !== 'Linea'">Descripción</th>
                             <th>Material</th>
                             <th>Grado</th>
                             <th>Esp. Nominal</th>
@@ -165,7 +155,7 @@
                         </thead>
                         <tbody>
                           <tr v-for="(item, index) in detallesList" :key="index">
-                            <td  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">{{ item.descripcion }}</td>
+                            <td  v-if="tipo !== 'Linea'">{{ item.descripcion }}</td>
                             <td>{{ item.material.codigo }}</td>
                             <td>{{ +item.grado !== 0 ? item.grado : '' }}</td>
                             <td>{{ +item.espNominal !== 0 ? item.espNominal : '' }}</td>
@@ -238,38 +228,38 @@
                           </v-select>
                       </div>
                     </div>
-                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3"  v-if="tipo !== 'Linea'">
                       <div class="form-group">
                         <label>Sobreespesor</label>
                         <input type="number" v-model="sobreespesor" min="0" max="9999" step="0.01" class="form-control">
                       </div>
                     </div>
-                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3"  v-if="tipo !== 'Linea'">
                       <div class="form-group">
                         <label>Diam. Exterior</label>
                         <input type="number" v-model="diamExterior" min="0" max="99999999" step="0.01" class="form-control">
                       </div>
                     </div>
-                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3"  v-if="tipo !== 'Linea'">
                       <div class="form-group">
                         <label>Longitud Total</label>
                         <input type="number" v-model="longitudTotal" min="0" max="99999999" step="0.01" class="form-control">
                       </div>
                     </div>
-                    <div class="clearfix"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'"></div>
+                    <div class="clearfix"  v-if="tipo !== 'Linea'"></div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Trat. Termico</label>
                         <v-select :options="siNoOptions" v-model="trat_termico"></v-select>
                       </div>
                     </div>
-                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3"  v-if="tipo !== 'Linea'">
                       <div class="form-group">
                         <label>radiografiado %</label>
                         <input type="number" v-model="radiografiado" min="1" max="100" step="0.01" class="form-control">
                       </div>
                     </div>
-                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3"  v-if="tipo !== 'Linea'">
                       <div class="form-group">
                         <label>Norma Fabricación</label>
                         <v-select :options="normaFabricacionOptions" label="codigo" v-model="normaFabricacion">
@@ -287,7 +277,7 @@
                       </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3"  v-if="tipo !== 'Linea'">
                       <div class="form-group d-flex">
                         <label>Tipo</label>
                         <v-select
@@ -303,7 +293,7 @@
                       </v-select>
                       </div>
                     </div>
-                    <div class="col-md-3"  v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3"  v-if="tipo !== 'Linea'">
                       <div class="form-group">
                         <label>Material</label>
                         <v-select :options="materialOptions" v-model="material" label="codigo" placeholder="Seleccione">
@@ -314,7 +304,7 @@
                         </v-select>
                       </div>
                     </div>
-                    <div class="col-md-3" v-if="tipo === 'Horizontal' || tipo === 'Vertical'">
+                    <div class="col-md-3" v-if="tipo !== 'Linea'">
                       <div class="form-group">
                         <label>Espesor</label>
                         <input type="text" v-model="espesor" placeholder="Espesor" step="0.01" class="form-control">
@@ -353,11 +343,19 @@
         type: Object,
         default: () => ({})
       },
+        material_selected: {
+        type: Object,
+        default: () => ({})
+      },
         materialesProp: {
           type: Array,
           default: () => []
       },
         nEquipoProp: {
+        type: String,
+        default: ''
+      },
+      tipo_tgs: {
         type: String,
         default: ''
       }
@@ -373,7 +371,6 @@
         area: '',
         orden: '',
         tipo: null,
-        tipoOptions: ['Horizontal', 'Vertical','Linea'],
         nEquipo: '',
         modelo: '',
         materialesOpcion:'',
@@ -418,7 +415,8 @@
         material: null,
         otdata: '',
         materialOptions: [],
-        espesor: ''
+        espesor: '',
+        tipo_componente_data: '',
       }
     },
     watch: {
@@ -429,26 +427,39 @@
         this.nEquipo          = this.nEquipoProp
         this.materialesOpcion = this.materialesProp
         this.orden            = this.otdataProp.numero
-          // Llamadas a la API
+        this.tipo             = this.tipo_tgs
+        if (this.tipo === 'Linea') {
+          this.detalle.material = this.material_selected;
+        }
         this.fetchModelos();
         this.fetchFluidos();
         this.fetchNormas();
         this.fetchMateriales();
         console.log(this.modeloOptions);
+
       }
+
+    },
+        tipo_tgs(newVal) {
+      if (typeof this.tipo_componente_data !== 'undefined'
+          && newVal !== this.tipo_componente_data) {
+        this.detallesList = {
+          descripcion: '',
+          material: '',
+          grado: '',
+          espNominal: '',
+          espMinMedido: ''
+        };
+      }
+      // Si tipo_componente_data no existe (modo "create"), no hacemos nada
     }
   },
     methods: {
       setForm(item) {
-      // Si no hay datos de componente, no hacer nada
-      if (!item || !Object.keys(item).length) {
-        console.warn('setForm: sin datos de componente, omitiendo');
-        return;
-      }
-          if (this.tipo === 'Linea' && this.detallesList.length >= 1) {
-            toastr.error('Solo se permite un material para Linea');
-            return;
-          }
+      if (this.tipo === 'Linea' && this.detallesList.length >= 1) {
+          toastr.error('Solo se permite un material para Linea');
+          return;
+        }
       const componente = item;
       console.log('entra la función setForm con datos:', componente);
 
@@ -474,7 +485,7 @@
       this.material          = componente.material                     ?? '';
       this.fluido            = componente.fluido                       ?? '';
       this.path3_componente  = componente.path3_componente             ?? '';
-
+      this.tipo_componente_data = componente.tipo_us;
       // Mapear detallesList de forma segura
       this.detallesList = (componente.materiales || []).map(m => ({
         descripcion: m.descripcion,
@@ -488,11 +499,11 @@
     },
       async storeRegistro() {
         // 1) Si modelo no tiene id, lo creamos
-        if (!this.modelo.id) {
+        if (!this.modelo.id && this.tipo !== 'Linea') {
           // Validar que el código exista y no sea sólo espacios
-          if (!this.modelo.codigo || this.modelo.codigo.trim() === "") {
+            if (!this.modelo.codigo || this.modelo.codigo.trim() === "") {
             toastr.error("Campo modelo obligatorio");
-            return; // cortamos la ejecución si falta el código
+            return;
           }
           const { data: nuevoModelo } = await axios.post(
             `/tgs-save-modelo/${this.modelo.codigo}`

@@ -143,9 +143,9 @@ footer {
     </footer>
 
 <main>
-<h3 style="text-align: center" ><b>LINEA</b></h3>
 <h3 style="text-align: center" ><b>EQUIPO: </b>{{ $informe->componente }}</h3>
 <h3 style="text-align: center" ><b>PLANTA: </b>{{$planta->nombre?? '-'}}</h3>
+<h3 style="text-align: center" ><b>AREA: </b>{{$componente_us->area ?? '-'}}</h3>
 
 @if ($componente_us->path3_componente)
 <div style="text-align: center; margin: 30px 0;">
@@ -268,24 +268,9 @@ footer {
       <td style="background-color: #c3c3c3;">{{ $componente_us->temp_operacion }}</td>
       <td>(°c)</td>
       <td>aislacion</td>
-      <td style="background-color: #c3c3c3;">{{ $componente_us->aislacion }}</td>
-      <td>esp</td>
-      <td style="background-color: #c3c3c3;">{{$diametro_espesor->espesor ?? $informe->espesor_especifico}}</td>
-      <td>plug</td>
-    </tr>
-
-    <tr>
-      <td colspan="3">Velocidad de corrosion</td>
-      <td style="background-color: #c3c3c3;">
-        5290 m/seg
-      </td>
-      <td>mm/año</td>
+      <td colspan="2" style="background-color: #c3c3c3;">{{ $componente_us->aislacion }}</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td style="background-color: #c3c3c3;">&nbsp;</td>
-      <td>&nbsp;</td>
-      <td style="background-color: #c3c3c3;">&nbsp;</td>
     </tr>
 
   </tbody>
@@ -295,10 +280,10 @@ footer {
 {{-- Sección Alcance --}}
 <h4 style="margin: 10px 0px 0px 0px;"><strong>Alcance:</strong></h4>
 <p style="margin: 0;">
-  El presente informe esta basado en los lineamientos de los “Procedimientos de Integridad” para la medición
-  de espesores generados por la aplicación de la norma API RP 570 implementada por TGS
-  Se realizo medición de espesores externa en la Línea de referencia, con los resultados que se muestran en
-  tablas adjuntas y con las consideraciones que de ellos se desprenden.
+  El presente informe esta basado en los lineamientos de los “Procedimientos de Integridad” para la 
+  medición de espesores generados por la aplicación de la norma API RP 581 implementada por TGS. Se 
+  realizó medición de espesores externa en el Equipo de referencia, con los resultados que se muestran 
+  en tablas adjuntas y con las consideraciones que de ellos se desprenden.
 </p>
 
 {{-- Sección Normas de referencia --}}

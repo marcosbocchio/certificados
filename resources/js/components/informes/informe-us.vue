@@ -6,7 +6,9 @@
         :plantaProp="planta"
         :nEquipoProp="componente"
         :materialesProp="materiales"
+        :material_selected="material"
         :otdataProp="otdata"
+        :tipo_tgs="tipo_tgs"
         @close="closeModal"
         @submit="handleModalSubmit"
     />
@@ -151,6 +153,13 @@
                     </div>
 
                     <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="tipo">Tipo *</label>
+                        <v-select id="tipo" :options="tipoOptions" v-model="tipo_tgs"></v-select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Equipo *</label>
                             <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno">
@@ -161,7 +170,7 @@
                             </v-select>
                         </div>
                     </div>
-
+                    <div class="clearfix"></div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="procRadio">Procedimiento US *</label>
@@ -169,7 +178,7 @@
                         </div>
                     </div>
 
-                    <div class="clearfix"></div>
+                    
 
                     <div class="col-md-3">
                         <div class="form-group">
@@ -201,7 +210,7 @@
                             <v-select v-model="estado_superficie" label="codigo" :options="estados_superficies"></v-select>
                         </div>
                     </div>
-
+                    <div class="clearfix"></div>
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="encoder">Encoder *</label>
@@ -209,7 +218,7 @@
                         </div>
                     </div>
 
-                    <div class="clearfix"></div>
+                    
                     
                     <div class="col-md-3">
                         <div class="form-group" >
@@ -1001,13 +1010,16 @@
                    </div>
                </div>
                <div v-if="
-    cliente.codigo === '0279' &&
-    tecnica && tecnica.codigo === 'ME' &&
-    (
-      (popupData && popupData.tipo    !== 'Linea') ||
-      (!popupData.tipo && componente_me_data && componente_me_data.tipo_us !== 'Linea')
-    )
-  " class="box box-custom-enod">
+                    cliente.codigo === '0279' &&
+                    tecnica && tecnica.codigo === 'ME' &&
+                    (
+                    /* si tiene popupData.tipo, lo usamos: */
+                    (popupData && popupData.tipo !== undefined && popupData.tipo    !== 'Linea') ||
+                    /* si no tiene popupData.tipo, miramos componente_me_data.tipo_us */
+                    ((popupData == null || popupData.tipo === undefined) &&
+                    componente_me_data && componente_me_data.tipo_us !== 'Linea')
+                    )
+                " class="box box-custom-enod">
                 <div class="box-body">
                 <div class="box-header with-border">
                     <h3 class="box-title">INSPECCIÓN VISUAL</h3>
@@ -1385,6 +1397,8 @@ export default {
         isModalOpen: false,
         popupData:'',
         tablaInspeccion: [],
+        tipo_tgs: null,
+        tipoOptions: ['Horizontal', 'Vertical','Linea'],
       }
     },
 
@@ -1558,6 +1572,8 @@ export default {
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
                if (this.cliente.codigo == '0279' && this.tecnica.codigo === 'ME'){
                 this.$refs.modalPopupRef.setForm(this.componente_me_data);
+                console.log()
+                this.tipo_tgs = this.componente_me_data.tipo_us;
                 const respuestas = this.inspeccion_visual || [];
 
                     respuestas.forEach(respuesta => {
