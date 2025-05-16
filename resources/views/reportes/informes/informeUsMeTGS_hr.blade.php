@@ -145,6 +145,7 @@ footer {
 <main>
 <h3 style="text-align: center" ><b>EQUIPO: </b>{{ $informe->componente }}</h3>
 <h3 style="text-align: center" ><b>PLANTA: </b>{{$planta->nombre?? '-'}}</h3>
+<h3 style="text-align: center" ><b>AREA: </b>{{$componente_us->area ?? '-'}}</h3>
 
 @if ($componente_us->path3_componente)
 <div style="text-align: center; margin: 30px 0;">

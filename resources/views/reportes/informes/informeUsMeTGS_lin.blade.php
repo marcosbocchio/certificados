@@ -385,7 +385,7 @@ footer {
     <thead>
       <tr>
         <th style="text-align:center; padding:6px; background:#c3c3c3; font-size:14px;">
-          <strong>ESQUEMA DE MEDICION</strong>
+          <strong>PROCEDIMIENTO</strong>
         </th>
       </tr>
     </thead>
