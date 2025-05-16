@@ -443,13 +443,7 @@
         tipo_tgs(newVal) {
       if (typeof this.tipo_componente_data !== 'undefined'
           && newVal !== this.tipo_componente_data) {
-        this.detallesList = {
-          descripcion: '',
-          material: '',
-          grado: '',
-          espNominal: '',
-          espMinMedido: ''
-        };
+        this.detallesList = [];
       }
       // Si tipo_componente_data no existe (modo "create"), no hacemos nada
     }
