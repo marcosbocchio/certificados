@@ -36,7 +36,11 @@
                             <label for="componente">
                                 Componente *
                                 <button type="button" @click="openModal" 
-                                v-if="cliente.codigo === '0279' && tecnica?.codigo === 'ME'" 
+                                v-if="
+                                    cliente.codigo === '0279'
+                                    && tecnica?.codigo === 'ME'
+                                    && tipo_tgs !== null
+                                    && material !== '' "
                                 :disabled="!componente">
                                 <i class="fa fa-list"></i>
                                 </button>
