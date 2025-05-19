@@ -383,7 +383,7 @@ footer {
                                 <td id="left">
                 <p>Firma:
                     @if($firma)
-                        <img src="{{ public_path($firma) }}" alt="" style="max-height:43px; margin-top:5px;">
+                        <img src="{{ public_path($firma) }}" alt="" style="max-height:43px; padding: 0px; margin:0px; overflow: hidden;">
                     @endif
                 </p>
             </td>
@@ -534,7 +534,7 @@ footer {
             <td id="left">
                 <p>Firma:
                     @if($firma)
-                        <img src="{{ public_path($firma) }}" alt="" style="max-height:43px; margin-top:5px;">
+                        <img src="{{ public_path($firma) }}" alt="" style="max-height:43px; padding: 0px; margin:0px; overflow: hidden;">
                     @endif
                 </p>
             </td>
