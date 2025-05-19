@@ -157,7 +157,9 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-3" v-if="
+                            cliente.codigo === '0279' &&
+                            tecnica && tecnica.codigo === 'ME'">
                       <div class="form-group">
                         <label for="tipo">Tipo *</label>
                         <v-select id="tipo" :options="tipoOptions" v-model="tipo_tgs"></v-select>
