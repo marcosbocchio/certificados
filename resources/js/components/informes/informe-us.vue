@@ -158,14 +158,17 @@
                     </div>
 
                     <div class="col-md-3">
-                      <div class="form-group">
-                        <label for="tipo">{{ cliente.codigo==='0279' && tecnica && tecnica.codigo==='ME' ? 'Tipo *' : 'Tipo' }}</label>
-                        <v-select id="tipo" :options="tipoOptions" v-model="tipo_tgs" :disabled="!(
-                            cliente.codigo==='0279' &&
-                            tecnica &&
-                            tecnica.codigo==='ME'
-                        )"></v-select>
-                      </div>
+                        <div class="form-group">
+                        <label for="tipo">
+                            {{ isTipoEnabled ? 'Tipo *' : 'Tipo' }}
+                        </label>
+                        <v-select
+                            id="tipo"
+                            :options="tipoOptions"
+                            v-model="tipo_tgs"
+                            :disabled="!isTipoEnabled"
+                        />
+                        </div>
                     </div>
 
                     <div class="col-md-3">
@@ -1019,13 +1022,13 @@
                    </div>
                </div>
                <div v-if="
-    cliente.codigo === '0279' &&
-    tecnica && tecnica.codigo === 'ME' &&
-    (
-      (componente_me_data && componente_me_data.tipo_us !== 'Linea')
-      || tipo_tgs !== 'Linea'
-    )
-  " class="box box-custom-enod">
+                    cliente.codigo === '0279' &&
+                    tecnica?.codigo === 'ME' &&
+                    (
+                    (componente_me_data?.tipo_us && componente_me_data.tipo_us !== 'Linea')
+                    || tipo_tgs !== 'Linea'
+                    )" 
+                class="box box-custom-enod">
                 <div class="box-body">
                 <div class="box-header with-border">
                     <h3 class="box-title">INSPECCIÓN VISUAL</h3>
@@ -1427,6 +1430,12 @@ export default {
                 return this.tecnica.codigo +  sprintf("%04d",this.numero_inf);
             }
         },
+        isTipoEnabled() {
+        return (
+            this.cliente?.codigo === '0279' &&
+            this.tecnica?.codigo === 'ME'
+        );
+        }
      },
 
       watch : {
@@ -1457,9 +1466,11 @@ export default {
             }
 
         },
-        tecnica: function (val) {
-        // val es el nuevo objeto técnica
-        this.tipo_tgs = null;
+        isTipoEnabled: function (newVal) {
+        if (!newVal) {
+            // …y resulta ser false, reseteamos el select
+            this.tipo_tgs = '';
+        }
         }
 
     },

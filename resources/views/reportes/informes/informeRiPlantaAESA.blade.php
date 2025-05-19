@@ -94,7 +94,7 @@ main{
 }
 footer {
         position: fixed;
-        bottom: 100px;
+        bottom: 110px;
         width: 100%;
         border: 3px solid black;
 }
@@ -144,7 +144,7 @@ footer {
             </tr>
 
             @php
-            $filas_por_hoja = ($contratista && $contratista->reporte_especial_en_cliente == 1) ? 21 : 25;
+            $filas_por_hoja = ($contratista && $contratista->reporte_especial_en_cliente == 1) ? 20 : 24;
             $contadorFilas = 0;
             @endphp
 
@@ -369,12 +369,12 @@ footer {
                             <tbody>
                                 <tr class="gris">
                                 <td style="width: 43mm;">
-    @if(!empty($contratista) && isset($contratista->nombre) && $contratista->nombre === 'ENOD')
-        Evaluador ENOD
-    @else
-        Evaluador AESA
-    @endif
-</td>
+                    @if(!empty($contratista) && isset($contratista->nombre) && $contratista->nombre === 'ENOD')
+                        Evaluador ENOD
+                    @else
+                        Evaluador AESA
+                    @endif
+                </td>
                                     <td style="width: 40mm;" >Inspector de AESA</td>
                                     <td style="width: 50mm;" >Inspector del Cliente</td>
                                     <td style="width: 48mm;" >Inspector Autorizado</td>
@@ -534,7 +534,7 @@ footer {
             <td id="left">
                 <p>Firma:
                     @if($firma)
-                        <img src="{{ public_path($firma) }}" alt="" style="height:40px; margin-top:5px;">
+                        <img src="{{ public_path($firma) }}" alt="" style="height:50px; margin-top:5px;">
                     @endif
                 </p>
             </td>
