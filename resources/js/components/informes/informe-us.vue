@@ -157,12 +157,14 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3" v-if="
-                            cliente.codigo === '0279' &&
-                            tecnica && tecnica.codigo === 'ME'">
+                    <div class="col-md-3">
                       <div class="form-group">
-                        <label for="tipo">Tipo *</label>
-                        <v-select id="tipo" :options="tipoOptions" v-model="tipo_tgs"></v-select>
+                        <label for="tipo">{{ cliente.codigo==='0279' && tecnica && tecnica.codigo==='ME' ? 'Tipo *' : 'Tipo' }}</label>
+                        <v-select id="tipo" :options="tipoOptions" v-model="tipo_tgs" :disabled="!(
+                            cliente.codigo==='0279' &&
+                            tecnica &&
+                            tecnica.codigo==='ME'
+                        )"></v-select>
                       </div>
                     </div>
 
@@ -1455,6 +1457,10 @@ export default {
             }
 
         },
+        tecnica: function (val) {
+        // val es el nuevo objeto técnica
+        this.tipo_tgs = null;
+        }
 
     },
 
