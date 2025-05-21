@@ -363,14 +363,6 @@ footer {
                                 {{$agente_acoplamiento->codigo}}
                                 </td>
                             </tr>
-                            <tr >
-                                <th colspan="4">Temperatura</th>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                {{$agente_acoplamiento->codigo}}
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </td>
