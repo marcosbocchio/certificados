@@ -12,10 +12,10 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="fecha">Fecha *</label>
-            <date-picker 
-              id="fecha" 
-              v-model="fecha" 
-              value-type="YYYY-MM-DD" 
+            <date-picker
+              id="fecha"
+              v-model="fecha"
+              value-type="YYYY-MM-DD"
               format="DD-MM-YYYY"
               :disabled-date="bloquearFechas">
             </date-picker>
@@ -123,7 +123,7 @@
                 </label>
               </td>
               <td class="col-md-1 text-center" style="width: 10px;margin-right: 10px">
-                <i :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'" 
+                <i :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'"
                   @click="abrirObservacionModal(index)"
                   style="cursor: pointer;width: 10px;margin-right: 10px"></i>
                 <i style="cursor: pointer;width: 10px;margin-right: 10px" class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
@@ -257,7 +257,7 @@ export default {
         return false; // No mostrar el checkbox de hora extra
     }
 },
-    
+
     mostrarHoraExtraCol() {
         const fechaSeleccionada = new Date(this.fecha);
         const diaSemana = fechaSeleccionada.getDay();
@@ -267,7 +267,7 @@ export default {
             return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
         }
 
-        const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
+        const esDiaDeSemana = diaSemana >= 0 && diaSemana <= 5;
 
         if (esDiaDeSemana) {
             return true; // Mostrar el checkbox
@@ -275,17 +275,17 @@ export default {
             return false; // No mostrar el checkbox
         }
     },
-    
+
     mostrarSDFCheckbox() {
     const fechaSeleccionada = new Date(this.fecha);
     const diaSemana = fechaSeleccionada.getDay();
-    
+
     const esSabadoODomingo = diaSemana === 5 || diaSemana === 6;
 
 
     if (this.contratista_selected != null) {
-        this.sdf_sn = false; 
-        return false; 
+        this.sdf_sn = false;
+        return false;
     }
 
     if (esSabadoODomingo || this.esFeriado()) {
@@ -311,7 +311,7 @@ export default {
     },
 },
   methods: {
-    
+
     abrirObservacionModal(index) {
       this.observacionIndex = index;
       this.observacionTexto = this.detalles[index].observaciones || ''; // Cargar la observación si existe
@@ -411,7 +411,7 @@ export default {
 
       // Separar los números si hay un guion
       const partes = parte.split('-');
-      
+
       // Verificar cada parte por separado
       for (let i = 0; i < partes.length; i++) {
         const response = await axios.post('/api/asistencia-comprobar-parte', {
@@ -434,7 +434,7 @@ export default {
     // Formatea la fecha al estilo "MM-YYYY"
     const date = new Date(fecha);
     const formattedDate = `${('0' + (date.getMonth() + 1)).slice(-2)}-${date.getFullYear()}`;
-    
+
     const response = await axios.get(`/api/asistencia-comprobar-user/${user_id}/${formattedDate}`);
 
     return response.data;
@@ -586,7 +586,7 @@ export default {
     }
 
       // Si todos los partes son válidos, procedemos con la carga
-      this.isLoading = true; 
+      this.isLoading = true;
       axios.post('/api/guardar_asistencia', {
         frente_id: this.frente_selected.id,
         fecha: this.fecha,
@@ -681,11 +681,11 @@ async obtenerFeriados() {
   },
   watch: {
     frente_selected: 'actualizarFechasBloqueadas',
-    
+
     fecha(newFecha, oldFecha) {
       if (newFecha !== oldFecha) {
         this.obtenerFeriados();
-        this.detalles = []; 
+        this.detalles = [];
       }
     },
     entrada_selected(newVal) {
@@ -704,12 +704,12 @@ async obtenerFeriados() {
   },
   mostrarHoraExtra(newVal) {
     if (!newVal) {
-      this.hora_extra_sn = false; 
+      this.hora_extra_sn = false;
     }
   },
   mostrarSDFCheckbox(newVal) {
     if (!newVal) {
-      this.sdf_sn = false; 
+      this.sdf_sn = false;
     }
   },
 }

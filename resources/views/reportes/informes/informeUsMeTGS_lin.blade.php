@@ -372,39 +372,39 @@ footer {
 
     <div style="page-break-after: always;"></div>
 
-@if(! empty($informe_us->path1_calibracion))
-  <table style="width:100%; border-collapse:collapse; font-size:9.5px; border:1px solid black; margin:10px 0;">
-    <thead>
-      <tr>
-        <th style="text-align:center; padding:6px; background:#c3c3c3; font-size:14px;">
-          <strong>PROCEDIMIENTO</strong>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td style="text-align: center; padding: 10px 100px;border:1px solid black;height: 700px">
-        <img
-          src="{{ public_path($informe_us->path1_calibracion) }}"
-          alt=""
-          style="
-            display: block;
-            max-width: 500px;
-            max-height: 700px;
-            width: auto;
-            height: auto;
-            margin: 0 auto;
-          "
-        >
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    @if(! empty($informe_us->path1_calibracion))
+      <table style="width:100%; border-collapse:collapse; font-size:9.5px; border:1px solid black; margin:10px 0;">
+        <thead>
+          <tr>
+            <th style="text-align:center; padding:6px; background:#c3c3c3; font-size:14px;">
+              <strong>PROCEDIMIENTO</strong>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td style="text-align: center; padding: 10px 100px;border:1px solid black;height: 700px">
+            <img
+              src="{{ public_path($informe_us->path1_calibracion) }}"
+              alt=""
+              style="
+                display: block;
+                max-width: 500px;
+                max-height: 700px;
+                width: auto;
+                height: auto;
+                margin: 0 auto;
+              "
+            >
+          </td>
+        </tr>
+        </tbody>
+      </table>
 
 
 
-  <div style="page-break-after: always;"></div>
-@endif
+      <div style="page-break-after: always;"></div>
+    @endif
     <table width="100%">
       <tbody>
           <tr>
