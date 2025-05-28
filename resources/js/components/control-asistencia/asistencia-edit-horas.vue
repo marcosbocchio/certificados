@@ -115,7 +115,7 @@
                 </label>
               </td>
               <td class="col-md-1 text-center">
-                <i  :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'" 
+                <i  :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'"
                   @click="abrirObservacionModal(index)"
                   style="cursor: pointer;width: 10px;margin-right: 10px"></i>
                 <i style="cursor: pointer;width: 10px;margin-right: 10px" class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
@@ -204,7 +204,7 @@ export default {
     return {
       detalles: [],
       fecha: '',
-      isDisabled: true, 
+      isDisabled: true,
       frente_selected: '',
       observacionTexto: '',
       operador_selected: '',
@@ -254,7 +254,7 @@ export default {
         return false; // No mostrar el checkbox de hora extra
     }
 },
-    
+
     mostrarHoraExtraCol() {
         const fechaSeleccionada = new Date(this.fecha);
         const diaSemana = fechaSeleccionada.getDay();
@@ -264,7 +264,7 @@ export default {
             return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
         }
 
-        const esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
+        const esDiaDeSemana = diaSemana >= 0 && diaSemana <= 5;
 
         if (esDiaDeSemana) {
             return true; // Mostrar el checkbox
@@ -272,17 +272,17 @@ export default {
             return false; // No mostrar el checkbox
         }
     },
-    
+
     mostrarSDFCheckbox() {
     const fechaSeleccionada = new Date(this.fecha);
     const diaSemana = fechaSeleccionada.getDay();
-    
+
     const esSabadoODomingo = diaSemana === 5 || diaSemana === 6;
 
 
     if (this.contratista_selected != null) {
-        this.sdf_sn = false; 
-        return false; 
+        this.sdf_sn = false;
+        return false;
     }
 
     if (esSabadoODomingo || this.esFeriado()) {
@@ -324,12 +324,12 @@ if (this.entrada_selected) {
 },
 mostrarHoraExtra(newVal) {
 if (!newVal) {
-  this.hora_extra_sn = false; 
+  this.hora_extra_sn = false;
 }
 },
 mostrarSDFCheckbox(newVal) {
 if (!newVal) {
-  this.sdf_sn = false; 
+  this.sdf_sn = false;
 }
 },
 },
@@ -408,7 +408,7 @@ async guardarObservacion() {
         // Crear un objeto con los datos necesarios
         const detalleData = {
           operador_id: operadorId,
-          ayudante_sn: this.detalles[this.observacionIndex].ayudante_sn, 
+          ayudante_sn: this.detalles[this.observacionIndex].ayudante_sn,
           ayudante_id: null,
           metodo_ensayo:this.detalles[this.observacionIndex].metodo_ensayo.id || null, // Se asume que ya es un valor adecuado (true/false o 1/0)
           entrada: this.detalles[this.observacionIndex].entrada || '',   // Si `entrada` es null o undefined, se asigna un string vacío
@@ -484,7 +484,7 @@ async guardarObservacion() {
     // Formatea la fecha al estilo "MM-YYYY"
     const date = new Date(fecha);
     const formattedDate = `${('0' + (date.getMonth() + 1)).slice(-2)}-${date.getFullYear()}`;
-    
+
     const response = await axios.get(`/api/asistencia-comprobar-user/${user_id}/${formattedDate}`);
     console.log(response.data);
     return response.data;
@@ -496,7 +496,7 @@ async guardarObservacion() {
   async agregarDetalle() {
     // Verificar si el operador ya está en la lista de detalles
     const existeOperador = this.detalles.some(detalle => detalle.operador.id === this.operador_selected.id);
-    
+
     // Si el operador ya está en la lista, mostrar un toastr.error
     if (existeOperador) {
       toastr.error('Operador ya seleccionado');

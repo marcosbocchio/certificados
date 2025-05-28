@@ -10478,7 +10478,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       if (this.mostrarSDFCheckboxCol) {
         return false; // Si el checkbox SDF se muestra, no mostrar el checkbox de hora extra
       }
-      var esDiaDeSemana = diaSemana >= 1 && diaSemana <= 5;
+      var esDiaDeSemana = diaSemana >= 0 && diaSemana <= 5;
       if (esDiaDeSemana) {
         return true; // Mostrar el checkbox
       } else {
@@ -129280,7 +129280,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-28a89753] {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 20px;\n}\n.btn-primary[data-v-28a89753] {\r\n  margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753], .date-picker.disabled[data-v-28a89753] {\r\n  background-color: #6c757d; /* Gris claro, ajusta según tu tema */\r\n  cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\r\n  display: none;\n}\r\n/* Agrega tus propios estilos para mantener la estética de la página */\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-28a89753] {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 20px;\n}\n.btn-primary[data-v-28a89753] {\n  margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753], .date-picker.disabled[data-v-28a89753] {\n  background-color: #6c757d; /* Gris claro, ajusta según tu tema */\n  cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\n  display: none;\n}\n/* Agrega tus propios estilos para mantener la estética de la página */\n", ""]);
 
 // exports
 
