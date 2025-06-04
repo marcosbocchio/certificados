@@ -21837,7 +21837,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'corrientes' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this12.corrientes = response.data;
+        // Filtra la corriente con id 1 antes de asignarla
+        _this12.corrientes = response.data.filter(function (corriente) {
+          return corriente.id !== 1;
+        });
       });
     },
     selectPosDetalle: function selectPosDetalle(index) {
@@ -76532,7 +76535,7 @@ var render = function render() {
     attrs: {
       "for": "v"
     }
-  }, [_vm._v("Kv *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("V*")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -76563,7 +76566,7 @@ var render = function render() {
     attrs: {
       "for": "am"
     }
-  }, [_vm._v("mA *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("A*")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -129280,7 +129283,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-28a89753] {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 20px;\n}\n.btn-primary[data-v-28a89753] {\n  margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753], .date-picker.disabled[data-v-28a89753] {\n  background-color: #6c757d; /* Gris claro, ajusta según tu tema */\n  cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\n  display: none;\n}\n/* Agrega tus propios estilos para mantener la estética de la página */\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-28a89753] {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 20px;\n}\n.btn-primary[data-v-28a89753] {\r\n  margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753], .date-picker.disabled[data-v-28a89753] {\r\n  background-color: #6c757d; /* Gris claro, ajusta según tu tema */\r\n  cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\r\n  display: none;\n}\r\n/* Agrega tus propios estilos para mantener la estética de la página */\r\n", ""]);
 
 // exports
 
@@ -129318,7 +129321,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-ba112644] {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 20px;\n}\n.btn-enod[data-v-ba112644] {\n  background-color: rgb(255, 204, 0);\n  color: rgb(0, 0, 0);\n}\n.btn-danger[data-v-ba112644] {\n  background-color: #dc3545;\n  color: #fff;\n}\n.btn-sm[data-v-ba112644] {\n  padding: 0.25rem 0.5rem;\n  font-size: 0.875rem;\n  line-height: 1.5;\n  border-radius: 0.2rem;\n}\n.custom-modal[data-v-ba112644] {\n  border-radius: 0.5rem;\n  background-color: #f8f9fa;\n  border: 1px solid #dee2e6;\n}\n.custom-textarea[data-v-ba112644] {\n  border-radius: 0.5rem;\n  border: 1px solid #ced4da;\n  resize: none;\n  padding: 0.5rem;\n}\n.modal-header[data-v-ba112644] {\n  border-bottom: 1px solid #dee2e6;\n  padding: 1rem;\n}\n.modal-title[data-v-ba112644] {\n  font-size: 1.25rem;\n  font-weight: 500;\n}\n.modal-footer[data-v-ba112644] {\n  border-top: 1px solid #dee2e6;\n  padding: 1rem;\n  display: flex;\n  justify-content: flex-end;\n}\n.modal-content[data-v-ba112644] {\n  border-radius: 0.5rem;\n}\n.hidden[data-v-ba112644] {\n  display: none;\n}\n.modal-body[data-v-ba112644] {\n  padding: 1rem;\n}\n.modal-footer .btn[data-v-ba112644] {\n  margin-left: 0.5rem;\n}\n\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-ba112644] {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 20px;\n}\n.btn-enod[data-v-ba112644] {\r\n  background-color: rgb(255, 204, 0);\r\n  color: rgb(0, 0, 0);\n}\n.btn-danger[data-v-ba112644] {\r\n  background-color: #dc3545;\r\n  color: #fff;\n}\n.btn-sm[data-v-ba112644] {\r\n  padding: 0.25rem 0.5rem;\r\n  font-size: 0.875rem;\r\n  line-height: 1.5;\r\n  border-radius: 0.2rem;\n}\n.custom-modal[data-v-ba112644] {\r\n  border-radius: 0.5rem;\r\n  background-color: #f8f9fa;\r\n  border: 1px solid #dee2e6;\n}\n.custom-textarea[data-v-ba112644] {\r\n  border-radius: 0.5rem;\r\n  border: 1px solid #ced4da;\r\n  resize: none;\r\n  padding: 0.5rem;\n}\n.modal-header[data-v-ba112644] {\r\n  border-bottom: 1px solid #dee2e6;\r\n  padding: 1rem;\n}\n.modal-title[data-v-ba112644] {\r\n  font-size: 1.25rem;\r\n  font-weight: 500;\n}\n.modal-footer[data-v-ba112644] {\r\n  border-top: 1px solid #dee2e6;\r\n  padding: 1rem;\r\n  display: flex;\r\n  justify-content: flex-end;\n}\n.modal-content[data-v-ba112644] {\r\n  border-radius: 0.5rem;\n}\n.hidden[data-v-ba112644] {\r\n  display: none;\n}\n.modal-body[data-v-ba112644] {\r\n  padding: 1rem;\n}\n.modal-footer .btn[data-v-ba112644] {\r\n  margin-left: 0.5rem;\n}\r\n\r\n", ""]);
 
 // exports
 

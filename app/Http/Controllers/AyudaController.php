@@ -54,6 +54,15 @@ public function __construct()
 
   }
 
+  public function VisualizarGestionUsuario(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.gestion_usuario',compact('user','header_titulo','header_descripcion'));
+
+  }
+
   public function visualizarOt(){
 
     $user = auth()->user();

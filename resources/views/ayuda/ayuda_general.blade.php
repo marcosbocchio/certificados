@@ -59,8 +59,7 @@
         @can('enod')
             <div class="col-sm-12">
                 <h3>Maestros&nbsp;</h3>
-                <p><a href="{{ route('error-404') }}" target="_blank">Consideraciones generales&nbsp;</a></p>
-
+                <p><a href="{{ route('ayuda-gestion-usuario') }}" target="_blank">Consideraciones generales&nbsp;</a></p>
                 <p><a href="{{ route('error-404') }}" target="_blank">Gestionar usuarios&nbsp;</a></p>
                 <p><a href="{{ route('error-404') }}" target="_blank">Gestionar clientes&nbsp;</a></p>
                 <p><a href="{{ route('error-404') }}" target="_blank">Gestionar comitentes&nbsp;</a></p>

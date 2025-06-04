@@ -281,14 +281,14 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="v">Kv *</label>
+                                <label for="v">V*</label>
                                 <input type="number" class="form-control" v-model="voltaje" id="v" max="9999" step="0.1">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="am">mA *</label>
+                                <label for="am">A*</label>
                                 <input type="number" class="form-control" v-model="am" id="am" max="9999" step="0.1">
                             </div>
                         </div>
@@ -1024,7 +1024,8 @@ export default {
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'corrientes' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
-            this.corrientes = response.data
+            // Filtra la corriente con id 1 antes de asignarla
+            this.corrientes = response.data.filter(corriente => corriente.id !== 1);
             });
          },
 

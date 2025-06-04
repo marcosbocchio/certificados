@@ -23,5 +23,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('generar_informes_pm', 'AyudaController@generarInformesPm')->name('ayuda-generar-informes-pm');
     Route::get('generar_informes_lp', 'AyudaController@generarInformesLp')->name('ayuda-generar-informes-lp');
     Route::get('generar_informes_us', 'AyudaController@generarInformesUs')->name('ayuda-generar-informes-us');
-
+    Route::get('gestionar_usuarios', 'AyudaController@VisualizarGestionUsuario')->name('ayuda-gestion-usuario');
 });
