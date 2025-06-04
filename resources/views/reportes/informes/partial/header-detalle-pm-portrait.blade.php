@@ -183,8 +183,8 @@
 
                             <tr>
                                 <th colspan="2">Equipo</th>
-                                <th colspan="1">Kv</th>
-                                <th colspan="1">mA</th>
+                                <th colspan="1">V</th>
+                                <th colspan="1">A</th>
                             </tr>
                             <tr>
                                 <td colspan="2">{{$interno_equipo->equipo->codigo}}</td>
