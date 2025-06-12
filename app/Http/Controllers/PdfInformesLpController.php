@@ -81,18 +81,20 @@ class PdfInformesLpController extends Controller
         $detalles = DetallesLp::with('referencia')
                                 ->where('informe_lp_id',$informe_lp->id)
                                 ->get();
-                                
+
         $detallesReferencia = DB::table('detalles_lp')
             ->join('detalles_lp_referencias', 'detalles_lp.detalle_lp_referencia_id', '=', 'detalles_lp_referencias.id')
             ->select('detalles_lp_referencias.*')
             ->where('detalles_lp.informe_lp_id', $informe_lp->id)
             ->get();
-        
+
         $informeEspecial = null;
         $estadoAceptacion = verificarSiTodosAceptables($detalles);
         obtenerInformeEspecial($ot, $metodo_ensayo, $informeEspecial);
         if($informeEspecial !== null){
-
+                    if ($contratista && $contratista->nombre === 'ENOD') {
+                    $ot->logo_contratista_sn = 1;
+                    }
             $blade = $informeEspecial;
             $pdf = PDF::loadView('reportes.informes.'.$blade,compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',

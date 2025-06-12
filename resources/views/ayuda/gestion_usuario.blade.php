@@ -19,8 +19,8 @@
             <p>Al acceder a la sección de Usuarios, se presentará una tabla con el listado de todos los usuarios registrados en el sistema. Por cada usuario, se mostrará información relevante como <strong>Nombre</strong>, <strong>Email</strong> y, si aplica, <strong>Cliente</strong> asociado.</p>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Listado_usuarios.PNG') }}" alt="Listado de Usuarios"/><br>
-            <p class="text-center help-block"><em>Fig. 1: Vista principal del listado de usuarios.</em></p>
+            <img class="img-responsive" src="{{ asset('img/ayuda/usuarios/enod_usuarios.gif') }}" alt="Listado de Usuarios Animación"/><br>
+            <p class="text-center help-block"><em>Fig. 1: Vista principal y búsqueda en el listado de usuarios (animación).</em></p>
         </div>
     </div>
 
@@ -45,8 +45,8 @@
             <p>Para agregar un nuevo usuario al sistema, haga clic en el botón amarillo <strong>"+ Nuevo"</strong> ubicado en la esquina superior izquierda de la pantalla de listado de usuarios.</p>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Boton_nuevo_usuario.PNG') }}" alt="Botón Nuevo Usuario"/><br>
-            <p class="text-center help-block"><em>Fig. 2: Botón para iniciar la creación de un nuevo usuario.</em></p>
+            <img class="img-responsive" src="{{ asset('img/ayuda/usuarios/enod_nuevo_usuario.gif') }}" alt="Creación de Nuevo Usuario Enod Animación"/><br>
+            <p class="text-center help-block"><em>Fig. 2: Proceso de creación de un nuevo usuario tipo "Enod" (animación).</em></p>
         </div>
         <div class="col-sm-12">
             <p>Esto abrirá el formulario de creación de usuarios. Primero, deberá seleccionar el tipo de usuario.</p>
@@ -59,10 +59,11 @@
             </ul>
             <p>La selección del tipo de usuario determinará los campos disponibles en el formulario.</p>
         </div>
-        <div class="col-sm-8 col-sm-offset-2">
+        {{-- Se combina Fig. 2 y Fig. 3 en la animación enod_nuevo_usuario.gif --}}
+        {{-- <div class="col-sm-8 col-sm-offset-2">
             <img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Formulario_crear_usuario_enod.PNG') }}" alt="Formulario Crear Usuario Enod/Local Neuquén"/><br>
             <p class="text-center help-block"><em>Fig. 3: Ejemplo de formulario de creación para usuario tipo "Enod".</em></p>
-        </div>
+        </div> --}}
         <div class="col-sm-12">
             <h4>Formulario de Creación para "Enod" o "Local Neuquén"</h4>
             <p>Si selecciona "Enod" o "Local Neuquén", deberá completar los siguientes campos (los campos con * son obligatorios):</p>
@@ -96,8 +97,8 @@
             </ul>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Formulario_crear_usuario_cliente.PNG') }}" alt="Formulario Crear Usuario Cliente"/><br>
-            <p class="text-center help-block"><em>Fig. 4: Ejemplo de formulario de creación para usuario tipo "Cliente".</em></p>
+            <img class="img-responsive" src="{{ asset('img/ayuda/usuarios/enod_nuevo_cliente.gif') }}" alt="Formulario Crear Usuario Cliente Animación"/><br>
+            <p class="text-center help-block"><em>Fig. 3: Ejemplo de formulario de creación para usuario tipo "Cliente" (animación).</em></p>
         </div>
 
         <div class="col-sm-12">
@@ -134,8 +135,8 @@
             </ol>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Formulario_editar_usuario.PNG') }}" alt="Formulario Editar Usuario"/><br>
-            <p class="text-center help-block"><em>Fig. 5: Ejemplo del formulario de edición de un usuario.</em></p>
+            <img class="img-responsive" src="{{ asset('img/ayuda/usuarios/enod_editar_usuario.gif') }}" alt="Formulario Editar Usuario Animación"/><br>
+            <p class="text-center help-block"><em>Fig. 4: Ejemplo del formulario de edición de un usuario (animación).</em></p>
         </div>
     </div>
 
@@ -160,10 +161,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h3>Artículos relacionados&nbsp;</h3>
-            <p><a href="{{ route('ayuda-configuracion-roles') }}">Configuración de Roles y Permisos</a></p>
-            <p><a href="{{ route('ayuda-gestion-clientes') }}">Gestión de Clientes (Maestro)</a></p>
-            <p><a href="{{ route('ayuda-gestion-eep') }}">Gestión de EEP</a></p>
-            <p><a href="{{ route('ayuda-notificaciones-sistema') }}">Configuración General de Notificaciones</a></p>
+
         </div>
     </div>
 </div>

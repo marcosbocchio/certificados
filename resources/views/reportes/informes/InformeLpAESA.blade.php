@@ -162,16 +162,6 @@ footer{
                                     / DYE PENETRANT EXAMINATION REPORT</b>
                             </td>
                         </tr>
-                        <tr>
-                            <td style="font-size: 8.80pt;">
-                                <b>Radiographic Examination Report</b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 8pt;">
-                                FGE-CA-034 - Rev.1 (02/01/2020 - AESA Privada)
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </td>
@@ -179,7 +169,7 @@ footer{
                 @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
                     <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:42px;max-width: 120px; margin-top: 5px;">
                 @else
-                    <img  src="{{ public_path('img/blank.png')}}" alt=""  style="max-height: 55px;margin-top: 5px;">
+                    <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 42px;margin-top: 5px;">
                 @endif
             </td>
         </tr>

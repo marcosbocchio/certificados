@@ -2,7 +2,7 @@
 .header{
     height: 31.92px;
     width: 100%;
-    padding: 5px 0px 0px 0px; 
+    padding: 5px 0px 0px 0px;
 }
 .cont{
     width:100%;
@@ -96,8 +96,8 @@
     <div class="color3"></div>
     <div class="color4"></div>
 </div>
-    
 
-  
 
-        
+
+
+
