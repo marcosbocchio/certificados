@@ -237,7 +237,7 @@ footer{
         <tr>
             <td style=" height: 7.5mm;">
                 <b>
-                    @if($contratista)
+                    @if($contratista && $contratista->nombre !== 'ENOD')
                         <b>{{ $contratista->nombre }}</b>
                     @endif
                 </b>
