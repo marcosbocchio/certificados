@@ -111,9 +111,9 @@
     <div class="row">
         <div class="col-sm-12">
             <h3>Artículos relacionados&nbsp;</h3>
-            <p><a href="{{ route('ayuda-ordenes-trabajo') }}">Gestión de Órdenes de Trabajo (OT)</a></p>
-            <p><a href="{{ route('ayuda-gestion-clientes') }}">Gestión de Clientes</a></p>
-            <p><a href="{{ route('ayuda-informes-configuracion') }}">Configuración de Informes (donde podría usarse el logo del comitente)</a></p>
+            <p><a href="{{ route('ayuda-visualizar-ot') }}">Gestión de Órdenes de Trabajo (OT)</a></p>
+            <p><a href="{{ route('ayuda-gestion-cliente') }}">Gestión de Clientes</a></p>
+            <p><a href="{{ route('error-404') }}">Configuración de Informes (donde podría usarse el logo del comitente)</a></p>
         </div>
     </div>
 </div>

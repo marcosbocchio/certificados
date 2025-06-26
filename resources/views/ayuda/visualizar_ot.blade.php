@@ -37,15 +37,15 @@
 				<li><strong>Partes:</strong> Generación y visualizacion de partes diarios de la OT</li>
 				<li><strong>Certificados:</strong>Generación y visualizacion de certificados de la OT</li>
 				</ul> <br>
-				<h3>Artículos relacionados&nbsp;</h3>
-				<p><a href="Visualizar_operador.html">Visualizar documentación de operadores asignados a una Orden de trabajo (OT) &nbsp;</a></p>
-				<p><a href="Visualizar_equipo.html">Visualizar documentación de equipos y fuentes asignadas a una Orden de trabajo (OT) &nbsp;</a></p>
-				<p><a href="Visualizar_procedimientos.html"> Visualizar documentación de procedimientos asignados a una Orden de trabajo (OT)&nbsp;</a></p>
-				<p><a href="Visualizar_vehiculo.html"> Visualizar documentación de vehículos y documentación complementaria asignados a Orden de trabajo (OT) &nbsp;</a></p>
-				<p><a href="Visualizar_remito.html">Visualizar remitos generados en una Orden de trabajo (OT) &nbsp;</a></p>
-				<p><a href="Visualizar_informe.html">Visualizar informes generados en una Orden de trabajo (OT) &nbsp;</a></p>
-				<p><a href="Visualizar_parte.html"> Visualizar partes diarios generados en una Orden de trabajo (OT)&nbsp;</a></p>
-				<p><a href="Visualizar_certificado.html"> Visualizar certificados generados en una Orden de trabajo (OT) &nbsp;</a></p>
+                <h3>Artículos relacionados&nbsp;</h3>
+                <p><a href="{{ route('ayuda-visualizar-doc-operadores') }}">Visualizar documentación de operadores asignados a una Orden de trabajo (OT) &nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}">Visualizar documentación de equipos y fuentes asignadas a una Orden de trabajo (OT) &nbsp;</a></p>
+                <p><a href="{{ route('ayuda-visualizar-procedimientos') }}"> Visualizar documentación de procedimientos asignados a una Orden de trabajo (OT)&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-visualizar-vehiculos') }}"> Visualizar documentación de vehículos y documentación complementaria asignados a Orden de trabajo (OT) &nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}">Visualizar remitos generados en una Orden de trabajo (OT) &nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}">Visualizar informes generados en una Orden de trabajo (OT) &nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}"> Visualizar partes diarios generados en una Orden de trabajo (OT)&nbsp;</a></p>
+                <p><a href="{{ route('error-404') }}"> Visualizar certificados generados en una Orden de trabajo (OT) &nbsp;</a></p>
 			</div>
         </div>
     </div>

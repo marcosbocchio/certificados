@@ -37,7 +37,7 @@
 			<p><a href="{{ route('ayuda-visualizar-vehiculos') }}" target="_blank"> Visualizar documentación de vehículos y documentación complementaria asignados a Orden de trabajo (OT)&nbsp;</a></p>
 
           @can('enod')
-                <p><a href="{{ route('error-404') }}" target="_blank">Creación de remitos&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-creacion-remito') }}" target="_blank">Creación de remitos&nbsp;</a></p>
                 <p><a href="{{ route('ayuda-generar-informes') }}"> Creación de informes&nbsp;</a></p>
            @endcan
 
@@ -61,22 +61,22 @@
                 <h3>Maestros&nbsp;</h3>
                 <p><a href="{{ route('error-404') }}" target="_blank">Consideraciones generales&nbsp;</a></p>
                 <p><a href="{{ route('ayuda-gestion-usuario') }}" target="_blank">Gestionar usuarios&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar clientes&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar comitentes&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar materiales&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar normas&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar documentaciones&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar Unidades de medidas&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar medidas&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar servicios&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar productos&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar soldadores&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar equipos&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar interno equipos&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar fuentes&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar interno fuente&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-cliente') }}" target="_blank">Gestionar clientes&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-comitente') }}" target="_blank">Gestionar comitentes&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-materiales') }}" target="_blank">Gestionar materiales&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-normas') }}" target="_blank">Gestionar normas&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-documentaciones') }}" target="_blank">Gestionar documentaciones&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-unidades-de-medida') }}" target="_blank">Gestionar Unidades de medidas&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-medidas') }}" target="_blank">Gestionar medidas&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-servicios') }}" target="_blank">Gestionar servicios&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-productos') }}" target="_blank">Gestionar productos&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-soldadores') }}" target="_blank">Gestionar soldadores&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-equipos') }}" target="_blank">Gestionar equipos&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-interno-equipos') }}" target="_blank">Gestionar interno equipos&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-fuentes') }}" target="_blank">Gestionar fuentes&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-interno-fuente') }}" target="_blank">Gestionar interno fuente&nbsp;</a></p>
                 <a name="-dosimetria" />
-                <p><a href="{{ route('error-404') }}" target="_blank">Gestionar roles&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestionar-roles') }}" target="_blank">Gestionar roles&nbsp;</a></p>
             </div>
          @endcan
 

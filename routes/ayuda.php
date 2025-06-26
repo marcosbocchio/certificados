@@ -24,4 +24,21 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('generar_informes_lp', 'AyudaController@generarInformesLp')->name('ayuda-generar-informes-lp');
     Route::get('generar_informes_us', 'AyudaController@generarInformesUs')->name('ayuda-generar-informes-us');
     Route::get('gestionar_usuarios', 'AyudaController@VisualizarGestionUsuario')->name('ayuda-gestion-usuario');
+
+    Route::get('ayuda_creacion_remito', 'AyudaController@creacionRemito')->name('ayuda-creacion-remito');
+    Route::get('ayuda_gestion_normas', 'AyudaController@gestionNormas')->name('ayuda-gestion-normas');
+    Route::get('ayuda_gestion_medidas', 'AyudaController@gestionMedidas')->name('ayuda-gestion-medidas');
+    Route::get('ayuda_gestion_interno_fuente', 'AyudaController@gestionarInternoFuente')->name('ayuda-gestion-interno-fuente');
+    Route::get('ayuda_gestion_cliente', 'AyudaController@gestionCliente')->name('ayuda-gestion-cliente');
+    Route::get('ayuda_gestion_comitente', 'AyudaController@gestionComitente')->name('ayuda-gestion-comitente');
+    Route::get('ayuda_gestion_documentaciones', 'AyudaController@gestionDocumentaciones')->name('ayuda-gestion-documentaciones');
+    Route::get('ayuda_gestion_equipos', 'AyudaController@gestionEquipos')->name('ayuda-gestion-equipos');
+    Route::get('ayuda_gestion_fuentes', 'AyudaController@gestionFuentes')->name('ayuda-gestion-fuentes');
+    Route::get('ayuda_gestion_interno_equipos', 'AyudaController@gestionInternoEquipos')->name('ayuda-gestion-interno-equipos');
+    Route::get('ayuda_gestion_materiales', 'AyudaController@gestionMateriales')->name('ayuda-gestion-materiales');
+    Route::get('ayuda_gestion_productos', 'AyudaController@gestionProductos')->name('ayuda-gestion-productos');
+    Route::get('ayuda_gestion_servicios', 'AyudaController@gestionServicios')->name('ayuda-gestion-servicios');
+    Route::get('ayuda_gestion_soldadores', 'AyudaController@gestionSoldadores')->name('ayuda-gestion-soldadores');
+    Route::get('ayuda_gestion_unidades_de_medida', 'AyudaController@gestionUnidadesDeMedida')->name('ayuda-gestion-unidades-de-medida');
+    Route::get('ayuda_gestionar_roles', 'AyudaController@gestionarRoles')->name('ayuda-gestionar-roles');
 });

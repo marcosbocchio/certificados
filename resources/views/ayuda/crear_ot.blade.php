@@ -27,7 +27,7 @@
 				<li><strong>Mostrar logo:</strong> Debe seleccionarse, si se desea que el logo sea visualizado en los informes</li>
 				<li><strong>Comitente:</strong> Comitente que solicita el ensayo </li>
 				<li><strong>Contacto n:</strong> Son los contactos del cliente que se desea aparezcan sus datos en la OT. El contacto 1 es obligato</li>
-				<li><strong>Responsable OT:</strong> Es el responsable Enod. Debe estar asignado como <a href="Asignar_operador.html"><strong>Operador de la OT</strong></a></li>
+				<li><strong>Responsable OT:</strong> Es el responsable Enod. Debe estar asignado como <a href="{{ route('ayuda-asignar-operadores') }}"><strong>Operador de la OT</strong></a></li>
 				<li><strong>Lugar de ensayo:</strong> Es la sección donde se especifica el lugar de ensayo. El campo<strong> Lugar de ensayo</strong> es descriptivo. El resto de los campos situan la ubicación en el mapa. Tener en cuenta que si se especifica latitud y longidtud, se reubicará la ubicación en el mapa independientemente de los valores seleccionados arriba.</li>
 				<li><strong>Servicios:</strong> Ingrese cada servicio presupuestado agregandolos con el boton <strong>"+".</strong> Es posible indicar norma de evaluación y de ensayo de ser necesario</li>
 				<li><strong>Productos:</strong> Ingrese cada producto presupuestado, indicando la medida correspondiente, agregandolos con el boton <strong>"+".</strong></li>
@@ -42,10 +42,10 @@
          	 </div>
 			<div class="col-sm-12">
 			  <h3>Artículos relacionados&nbsp;</h3>
-			  <p><a href="gestionar_clientes.html"> Gestionar clientes&nbsp;</a></p>
-			  <p><a href="gestionar_comitentes.html"> Gestionar comitentes&nbsp;</a></p>
-			  <p><a href="gestionar_servicios.html"> Gestionar servicios&nbsp;</a></p>
-			  <p><a href="gestionar_productos.html"> Gestionar productos&nbsp;</a></p>
+			  <p><a href="{{ route('ayuda-gestion-cliente') }}"> Gestionar clientes&nbsp;</a></p>
+			  <p><a href="{{ route('ayuda-gestion-comitente') }}"> Gestionar comitentes&nbsp;</a></p>
+			  <p><a href="{{ route('ayuda-gestion-servicios') }}"> Gestionar servicios&nbsp;</a></p>
+			  <p><a href="{{ route('ayuda-gestion-productos') }}"> Gestionar productos&nbsp;</a></p>
 			</div>
         </div>
       </div>

@@ -72,9 +72,9 @@
               <p>Como puede observarse en el video, por cada elemento agregado con el botón <img src="{{ asset('img/ayuda/Boton_agregar.PNG') }}" /> se crea una matriz de <strong>Posición</strong> x <strong>Generatrices</strong>, en la cual hay que completar cada casillero con el valor medido.<br> Es importante resaltar que si el valor ingresado es menor al <strong>Espesor mínimo</strong> el reporte resaltará dicho valor en color rojo.<br>
               Luego, es posible agregar hasta cuatro imagenes ilustrativas.</p>
               <h3>Artículos relacionados&nbsp;</h3>
-              <p><a href="Ayuda_nueva_ot.html">Cómo crear una Orden de trabajo (OT)&nbsp;</a></p>
-              <p><a href="Asignar_soldador.html">Asignar soldadores y usuarios de clientes a Orden de trabajo (OT)&nbsp;</a></p>
-              <p><a href="crear_informes.html"> Creación de informes&nbsp;</a></p>
+              <p><a href="{{ route('ayuda-crear-ot') }}">Cómo crear una Orden de trabajo (OT)&nbsp;</a></p>
+              <p><a href="{{ route('ayuda-asignar-soldadores-y-usuarios') }}">Asignar soldadores y usuarios de clientes a Orden de trabajo (OT)&nbsp;</a></p>
+              <p><a href="{{ route('ayuda-generar-informes') }}"> Creación de informes&nbsp;</a></p>
           </div>
         </div>
     </div>

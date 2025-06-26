@@ -130,7 +130,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h3>Artículos relacionados&nbsp;</h3>
-            <p><a href="{{ route('ayuda-ordenes-trabajo') }}">Gestión de Órdenes de Trabajo (OT)</a></p>
+            <p><a href="{{ route('ayuda-visualizar-ot') }}">Gestión de Órdenes de Trabajo (OT)</a></p>
         </div>
     </div>
 </div>

@@ -17,7 +17,7 @@
                 <p>La documentación queda asignada después de hacer click en el botón actualizar.<br></p>
                 <h3>Artículos relacionados&nbsp;</h3>
                 <p><a href="{{ route('ayuda-visualizar-vehiculos') }}"> Visualizar documentación de vehículos y documentación complementaria asignados a Orden de trabajo (OT) &nbsp;</a></p>
-                <p><a href="nada.html"> Gestionar Documentación&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-gestion-documentaciones') }}"> Gestionar Documentación&nbsp;</a></p>
            </div>
     </div>
 </div>

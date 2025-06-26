@@ -50,12 +50,12 @@
                 <li><a href="{{ route('ayuda-generar-informes-pm') }}">Generar informes PM</a></li>
                 <li><a href="{{ route('ayuda-generar-informes-lp') }}">Generar informes LP</a></li>
                 <li><a href="{{ route('ayuda-generar-informes-us') }}">Generar informes US</a></li>
-                <li><a href="Ayuda_generar_informesImportados.html">Importar informes externos</a></li>
+                <li><a href="{{ route('error-404') }}">Importar informes externos</a></li>
             </ul>
             <h3>Artículos relacionados&nbsp;</h3>
-            <p><a href="Asignar_operador.html"> Asignar operadores&nbsp;</a></p>
-            <p><a href="Asignar_procedimientos.html"> Asignar procedimientos&nbsp;</a></p>
-            <p><a href="Asignar_soldador.html"> Asignar soldadores&nbsp;</a></p>
+            <p><a href="{{ route('ayuda-asignar-operadores') }}"> Asignar operadores&nbsp;</a></p>
+            <p><a href="{{ route('ayuda-asignar-procedimientos') }}"> Asignar procedimientos&nbsp;</a></p>
+            <p><a href="{{ route('ayuda-asignar-soldadores-y-usuarios') }}"> Asignar soldadores&nbsp;</a></p>
         </div>
     </div>
 </div>

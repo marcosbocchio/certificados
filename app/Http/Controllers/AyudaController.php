@@ -17,94 +17,71 @@ public function __construct()
 
 }
 
+  private function returnAyudaView($viewName, $titulo = "Ayuda", $descripcion = '')
+  {
+      $user = auth()->user();
+      $header_titulo = $titulo;
+      $header_descripcion = $descripcion;
+      return view($viewName, compact('user', 'header_titulo', 'header_descripcion'));
+  }
 
   public function openAyuda(){
 
-    $user = auth()->user();
-    $header_titulo = "";
-    $header_descripcion = '';
-    return view('ayuda.ayuda_general',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.ayuda_general', "", "");
 
   }
 
   public function cambiarClave(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.cambiar_clave',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.cambiar_clave');
 
   }
 
   public function BuscarFormularios(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.buscar_formularios',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.buscar_formularios');
 
   }
 
   public function VisualizarDocOperadores(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.visualizar_doc_operadores',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.visualizar_doc_operadores');
 
   }
 
   public function VisualizarGestionUsuario(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.gestion_usuario',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.gestion_usuario');
 
   }
 
   public function visualizarOt(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.visualizar_ot',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.visualizar_ot');
 
   }
 
   public function crearOt(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.crear_ot',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.crear_ot');
 
   }
 
   public function asignarOperadores(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.asignar_operadores',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.asignar_operadores');
 
   }
 
   public function asignarSoldadoresUsuarios(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.asignar_soldadores_usuarios',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.asignar_soldadores_usuarios');
 
   }
 
   public function generarInformes(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.generar_informes',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.generar_informes');
 
   }
 
@@ -112,73 +89,129 @@ public function __construct()
 
   public function generarInformesRi(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.generar_informes_ri',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.generar_informes_ri');
 
   }
 
   public function generarInformesUs(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.generar_informes_us',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.generar_informes_us');
 
   }
 
   public function generarInformesPm(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.generar_informes_pm',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.generar_informes_pm');
 
   }
 
   public function generarInformesLp(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.generar_informes_lp',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.generar_informes_lp');
 
   }
   public function asignarVehiculos(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.asignar_vehiculos',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.asignar_vehiculos');
 
   }
 
   public function visualizarVehiculos(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.visualizar_vehiculos',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.visualizar_vehiculos');
 
   }
 
   public function AsignarProcedimientos(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.asignar_procedimientos',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.asignar_procedimientos');
 
   }
 
   public function visualizarProcedimientos(){
 
-    $user = auth()->user();
-    $header_titulo = "Ayuda";
-    $header_descripcion = '';
-    return view('ayuda.visualizar_procedimientos',compact('user','header_titulo','header_descripcion'));
+    return $this->returnAyudaView('ayuda.visualizar_procedimientos');
 
+  }
+
+  public function creacionRemito()
+  {
+      return $this->returnAyudaView('ayuda.creacion_remito');
+  }
+
+  public function gestionNormas()
+  {
+      return $this->returnAyudaView('ayuda.gesiton_normas');
+  }
+
+  public function gestionMedidas()
+  {
+      return $this->returnAyudaView('ayuda.gestiona_medidas');
+  }
+
+  public function gestionarInternoFuente()
+  {
+      return $this->returnAyudaView('ayuda.gestionar_internofuente');
+  }
+
+  public function gestionCliente()
+  {
+      return $this->returnAyudaView('ayuda.gestion_cliente');
+  }
+
+  public function gestionComitente()
+  {
+      return $this->returnAyudaView('ayuda.gestion_comitente');
+  }
+
+  public function gestionDocumentaciones()
+  {
+      return $this->returnAyudaView('ayuda.gestion_documentaciones');
+  }
+
+  public function gestionEquipos()
+  {
+      return $this->returnAyudaView('ayuda.gestion_equipos');
+  }
+
+  public function gestionFuentes()
+  {
+      return $this->returnAyudaView('ayuda.gestion_fuentes');
+  }
+
+  public function gestionInternoEquipos()
+  {
+      return $this->returnAyudaView('ayuda.gestion_internoequipos');
+  }
+
+  public function gestionMateriales()
+  {
+      return $this->returnAyudaView('ayuda.gestion_materiales');
+  }
+
+  public function gestionProductos()
+  {
+      return $this->returnAyudaView('ayuda.gestion_productos');
+  }
+
+  public function gestionServicios()
+  {
+      return $this->returnAyudaView('ayuda.gestion_servicios');
+  }
+
+  public function gestionSoldadores()
+  {
+      return $this->returnAyudaView('ayuda.gestion_soldadores');
+  }
+
+  public function gestionUnidadesDeMedida()
+  {
+      return $this->returnAyudaView('ayuda.gestion_unidadesdemedida');
+  }
+
+  public function gestionarRoles()
+  {
+      return $this->returnAyudaView('ayuda.gesitonar_roles');
   }
 
 }
