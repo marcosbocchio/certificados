@@ -371,6 +371,9 @@ Vue.component('stock-ajuste', AjustarStock);
 import TotalStock from './components/stock/stock-total.vue';
 Vue.component('stock-total', TotalStock);
 
+import informeSinParteReporte from './components/reportes/informes-sin-parte.vue';
+Vue.component('informes-sin-parte', informeSinParteReporte);
+
 import Registro from './components/stock/stock-registro.vue';
 Vue.component('stock-registro', Registro);
 
@@ -1076,7 +1079,7 @@ const store = new Vuex.Store({
       })
     },
 
-    loadContarDocumentaciones({ commit }, ot_id) { 
+    loadContarDocumentaciones({ commit }, ot_id) {
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-documentaciones/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -1088,7 +1091,7 @@ const store = new Vuex.Store({
           commit('decrementarLoading');
         });
     },
-    
+
     loadContarInternoEquipos({ commit }, ot_id) {
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
@@ -1101,11 +1104,11 @@ const store = new Vuex.Store({
           commit('decrementarLoading');
         });
     },
-    
+
     loadDiasDelMes({ commit }, payload) {
       commit('DiasDelMes', payload);
     },
-    
+
     loadContarPartes({ commit }, ot_id) {
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
@@ -1118,7 +1121,7 @@ const store = new Vuex.Store({
           commit('decrementarLoading');
         });
     },
-    
+
     loadContarCertificados({ commit }, ot_id) {
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
@@ -1131,7 +1134,7 @@ const store = new Vuex.Store({
           commit('decrementarLoading');
         });
     },
-    
+
     loadContarInformes({ commit }, ot_id) {
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
@@ -1144,7 +1147,7 @@ const store = new Vuex.Store({
           commit('decrementarLoading');
         });
     },
-    
+
     loadContarOperadores({ commit }, ot_id) {
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
@@ -1160,7 +1163,7 @@ const store = new Vuex.Store({
           commit('decrementarLoading');
         });
     },
-    
+
     loadContarSoldadores({ commit }, ot_id) {
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
@@ -1173,7 +1176,7 @@ const store = new Vuex.Store({
           commit('decrementarLoading');
         });
     },
-    
+
     loadContarUsuariosCliente({ commit }, ot_id) {
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
@@ -1186,7 +1189,7 @@ const store = new Vuex.Store({
           commit('decrementarLoading');
         });
     },
-    
+
     loadContarProcedimientos({ commit }, ot_id) {
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
@@ -1199,7 +1202,7 @@ const store = new Vuex.Store({
           commit('decrementarLoading');
         });
     },
-    
+
     loadContarVehiculos({ commit }, ot_id) {
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
@@ -1212,7 +1215,7 @@ const store = new Vuex.Store({
           commit('decrementarLoading');
         });
     },
-    
+
 
     loadContarDocumentacionesTotal({
       commit }) {

@@ -168,12 +168,12 @@
           <ul class="treeview-menu">
             @can('STOCK')
               <li><a href="{{ route('stock-table') }}">Compras</a></li>
-              <li><a href="{{ route('stock-total') }}">Stock</a></li> 
+              <li><a href="{{ route('stock-total') }}">Stock</a></li>
             @endcan
           </ul>
         </li>
       @endcan
-       
+
       @can('ASISTENCIA'){{-- Nueva opción de menú agregada --}}
         <li class="treeview">
           <a href="#">
@@ -305,8 +305,9 @@
               @can('R_resumen_epp')
                    <li><a href="{{ route('reporte-resumen-placasU') }}">placas entregas</a></li>
               @endcan
-
-
+              @can('R_resumen_epp')
+                   <li><a href="{{ route('reporte-infomres-sin-parte') }}">Infomres sin parte</a></li>
+              @endcan
             </ul>
           </li>
         @endcan
@@ -381,12 +382,12 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('software_download','INDUSTREX V4.2 Lite Setup.exe') }}"><i class="fa fa-download"></i>INDUSTREX V4.2 Lite</a></li>
-            
+
                 <li title="Formato Importación Soldadores CSV"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fa fa-download"></i>SOLDADORES CSV</a></li>
-            
-            
+
+
                 <li title="Importación Medición de espesores"><a href="{{ route('software_download','importacion_me.xlsx') }}"><i class="fa fa-download"></i>MEDICION DE ESPESORES</a></li>
-            
+
           </ul>
 
         </li>

@@ -36,7 +36,7 @@ class InformesController extends Controller
 
         $ot = Ots::where('id',$id)->with('cliente')->first();
         $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
-       
+
         $ot_metodos_ensayos = DB::table('ots')
                                    ->join('ot_servicios','ot_servicios.ot_id','=','ots.id')
                                    ->join('servicios','servicios.id','=','ot_servicios.servicio_id')
@@ -65,7 +65,7 @@ class InformesController extends Controller
                                     ->where('numero',$request->nuevoNumero)
                                     ->orderBy('numero_repetido','DESC')
                                     ->first();
-        
+
         $informe_ot = $informe_ot_view ? Informe::where('id',$informe_ot_view->id)->first() : null;
         $informe = Informe::where('id',$id)->first();
         $informe->numero = $request->nuevoNumero;
@@ -362,7 +362,6 @@ class InformesController extends Controller
         $informes = DB::select('CALL InformesPendientesSinParteDiario(?,?,?,?)',array($ot_id,0,$obra,$fechaParam));
         $this->addObjectSolicitadoPor($informes);
         return $informes;
-
      }
 
      public function OtInformesPendienteEditableParteDiario($ot_id,$parte_id,$obra,$fecha){
@@ -439,7 +438,7 @@ class InformesController extends Controller
 
             log::info('Entro en completo');
         }
-    
+
         return $clonar;
     }
     public function anular($id){

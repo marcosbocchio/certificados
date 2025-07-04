@@ -5,7 +5,7 @@
 <a name="-tablero-principal" />
 
 <div class="ayuda_enod">
-       <div class="row">
+       <div class="row">--
         <div class="col-sm-12">
             <h1>AYUDA GENERAL</h1>
             <p><a href="{{ route('ayuda-cambiar-clave') }}">Cómo cambiar o restablecer la contraseña de tu cuenta&nbsp;</a></p>

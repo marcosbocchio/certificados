@@ -249,6 +249,10 @@ Route::group(['middleware' => 'auth:api'], function () {
         'InformesController@OtInformesPendienteParteDiario'
     );
     Route::get(
+        'informes/cliente/{cliente_id}/ot/{ot_id}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/pendientes_parte_diario',
+        'InfomresSinParteController@obtenerInformesSinParte'
+    );
+    Route::get(
         'informes/ot/{ot_id}/parte/{parte_id}/obra/{obra}/fecha/{fecha}/pendientes_editables_parte_diario',
         'InformesController@OtInformesPendienteEditableParteDiario'
     );
@@ -329,7 +333,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'DocumentacionesController@DocumentacionesDeOt'
     );
     Route::post('documentacion/generar_link', 'ZipController@generarLink');
-    
+
 
     Route::get(
         'documentaciones/total',
@@ -675,7 +679,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'PartesController@getInformePmiParte'
     );
 
-    
+
     //certificados
     Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');
     Route::get(
@@ -850,7 +854,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('tgs/normas-fabricacion-us-me', 'TgsController@getNormasFabricacion');
 
     Route::get('tgs/getdatoscomponente/{id}', 'TgsController@getComponenteInforme');
-        
+
     Route::get('tgs/modelos-us-me', 'TgsController@getModelos');
     Route::post('tgs/modelos-us-me', 'TgsController@saveModelo');
 
@@ -859,16 +863,16 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('tgs/tipos-us-me', 'TgsController@getTipos');
     Route::post('tgs/tipos-us-me', 'TgsController@saveTipo');
-    
+
     Route::get('tgs/tabla-inspeccion', 'TgsController@getTablaInspeccion');
 
     Route::post('storage/componente_us', 'StorageController@saveComponenteUs')
         ->name('componente_us');
-        
+
     Route::post('tgs-save-modelo/{codigo}', 'TgsController@saveModelo');
     Route::post('tgs-save-fluido/{codigo}', 'TgsController@saveFluido');
-        
-    
+
+
 });
 
 Route::get('/fecha_actual', function () {

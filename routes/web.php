@@ -82,7 +82,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/clientes', 'ClientesController@callView')->name('clientes');
 
       Route::get('/area/enod/proveedores', 'ProveedoresController@callView')->name('proveedor');
-      
+
       Route::get('/area/enod/frentes', 'FrentesAsignacionController@callView')->name('frentesAsignacion');
 
 
@@ -94,7 +94,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/stock-edit/{id}', 'StockController@callViewEditS')->name('stock-edit');
       Route::get('/imprimir-stock/{id}', 'PdfStockController@imprimir')->name('imprimir.stock');
       Route::get('/imprimir-todo-stock', 'PdfStockController@imprimirTodoStock')->name('imprimir.todo.stock');
-      
+
       Route::get('/area/enod/asistencia/servicios', 'AsistenciaController@callViewServicios')->name('asistencia-servicios');
       Route::get('/area/enod/asistencia/horas', 'AsistenciaController@callViewHoras')->name('asistencia-horas');
       Route::get('/area/enod/asistencia-pagos', 'AsistenciaController@pagos')->name('asistencia-pagos');
@@ -116,7 +116,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/asignacion-operador/{operador}', 'AsignacionRopaController@callOperador')->name('asignacion-operador');
       Route::get('/area/enod/asignacion-operador-manual/{operador}/{fechaw}/{edit}', 'AsignacionRopaController@callOperadorManual')->name('asignacion-operador-manual');
 
-      
+
       Route::get('/area/enod/contratistas', 'ContratistasController@callView')->name('contratistas');
       Route::get('/area/enod/unidades-medidas', 'UnidadesMedidasController@callView')->name('unidades-medidas');
       Route::get('/area/enod/medidas', 'MedidasController@callView')->name('medidas');
@@ -154,7 +154,7 @@ Route::group(['middleware' => ['auth']], function () {
       // reportes
 
       Route::get('/pdf/dosimetria/periodos','PdfDosimetriaPeriodosController@imprimir')->name('pdfDosimetriaPeriodos');
-      
+
       Route::get('/pdf/remito/{id}','PdfRemitosController@imprimir')->name('pdfRemito');
       Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir');
       Route::get('/pdf/certificado/{id}/{estado}','PdfCertificadoController@imprimir');
@@ -198,6 +198,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/reportes/certificados','ReporteCertificadosPartesController@callView')->name('reporte-certificados');
       Route::get('/area/enod/reportes/partes','ReporteCertificadosPartesController@callViewPartes')->name('reporte-partes');
       Route::get('/area/enod/reportes/placasU','PlacasUsadasController@callView')->name('reporte-resumen-placasU');
+      Route::get('/area/enod/reportes/infomres-sin-parte','InfomresSinParteController@informesSinParteView')->name('reporte-infomres-sin-parte');
 
 
       /* QR */
@@ -243,7 +244,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 /** testeo sergio ___ */
-Route::get('/generar_zip', 'ZipController@generarYDescargarZip');    
+Route::get('/generar_zip', 'ZipController@generarYDescargarZip');
 
 Route::resource('personas_web', 'PersonaController');
 
