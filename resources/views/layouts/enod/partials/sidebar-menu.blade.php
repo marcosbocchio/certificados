@@ -305,7 +305,7 @@
               @can('R_resumen_epp')
                    <li><a href="{{ route('reporte-resumen-placasU') }}">placas entregas</a></li>
               @endcan
-              @can('R_resumen_epp')
+              @can('R_infomre_sin_parte')
                    <li><a href="{{ route('reporte-infomres-sin-parte') }}">Infomres sin parte</a></li>
               @endcan
             </ul>
