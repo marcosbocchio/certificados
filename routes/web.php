@@ -198,7 +198,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/reportes/certificados','ReporteCertificadosPartesController@callView')->name('reporte-certificados');
       Route::get('/area/enod/reportes/partes','ReporteCertificadosPartesController@callViewPartes')->name('reporte-partes');
       Route::get('/area/enod/reportes/placasU','PlacasUsadasController@callView')->name('reporte-resumen-placasU');
-      Route::get('/area/enod/reportes/infomres-sin-parte','InfomresSinParteController@informesSinParteView')->name('reporte-infomres-sin-parte');
+      Route::get('/area/enod/reportes/informes-sin-parte','InfomresSinParteController@informesSinParteView')->name('reporte-infomres-sin-parte');
 
 
       /* QR */
