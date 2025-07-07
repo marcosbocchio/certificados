@@ -17,7 +17,9 @@ class InfomresSinParteController extends Controller
         $header_titulo = "informes sin parte";
         $header_descripcion =".";
         $ots_data = Ots::select('id', 'numero')->get();
-        $clientes_data = Clientes::select('id', 'nombre_fantasia', 'razon_social')->get();
+        $clientes_data = Clientes::select('id', 'nombre_fantasia', 'razon_social')
+                            ->orderBy('nombre_fantasia') // Agrega esta línea para ordenar
+                            ->get();
         return view('reporte-infomres-sin-parte.reportes',compact('user','header_titulo','header_descripcion','ots_data', 'clientes_data'));
 
     }
