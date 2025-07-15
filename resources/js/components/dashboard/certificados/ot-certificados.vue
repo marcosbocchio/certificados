@@ -59,14 +59,21 @@
                                     </td>
 
                                     <td width="10px">
-                                        <a :href="'/pdf/certificado/' + ot_certificado.id + '/final' " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a>
+                                        <div class="dropdown">
+                                            <button class="btn btn-default dropdown-toggle btn-sm" type="button" :id="'certificateDropdown-' + ot_certificado.id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opciones de Certificado">
+                                                <span class="fa fa-file-pdf-o"></span> <span class="caret"></span> </button>
+                                            <ul class="dropdown-menu" :aria-labelledby="'certificateDropdown-' + ot_certificado.id">
+                                                <li><a :href="'/pdf/certificado/' + ot_certificado.id + '/final/normal'" target="_blank">Certificado Original</a></li>
+                                                <li><a :href="'/pdf/certificado/' + ot_certificado.id + '/final/agrupado'" target="_blank">Certificado Agrupado</a></li>
+                                            </ul>
+                                        </div>
                                     </td>
                                     <td width="10px">
                                         <button @click="informesEscaneados(ot_certificado.id)" :disabled="!$can('T_certif_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
                                     </td>
                                     <td width="10px">
                                         <button @click="exportarAExcel(ot_certificado.id)" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-file-excel-o"></span></button>
-                                    </td>                                    
+                                    </td>
                                     <td v-if="!ot_certificado.firma" width="10px">
                                         <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_certif_edita')"><span class="glyphicon glyphicon-pencil"></span></button>
                                    </td>
@@ -163,14 +170,14 @@ export default {
         },
 
         exportarAExcel: async function (id, estado = 'final') {
-            
+
             let data
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'certificados/id/'+ id + '/estado/' + estado + '?api_token=' + Laravel.user.api_token;
             await axios.get(urlRegistros).then(response =>{
                data = response.data
                console.log(data)
-            });     
+            });
             const cellsMerge = [ { s: {c:0, r:0}, e: {c:8, r:0} },
                                  { s: {c:0, r:1}, e: {c:8, r:1} },
                                  { s: {c:0, r:2}, e: {c:8, r:2} },
@@ -193,7 +200,7 @@ export default {
             const wb = XLSX.utils.book_new()
             XLSX.utils.book_append_sheet(wb, ws, 'Servicios')
             XLSX.utils.book_append_sheet(wb, ws2, 'Productos')
-            XLSX.writeFile(wb, 'CERTIFICADO-' + sprintf("%08d",data.certificado.numero) + '.xlsx')            
+            XLSX.writeFile(wb, 'CERTIFICADO-' + sprintf("%08d",data.certificado.numero) + '.xlsx')
         },
 
         hearderAndCellMerge: function (ws,data,cellsMerge) {
@@ -208,7 +215,7 @@ export default {
                 // var merge = XLSX.utils.decode_range(item)
                 if (!ws['!merges']) ws['!merges'] = []
                 ws['!merges'].push(item)
-            })  
+            })
             return ws
 
         },
@@ -235,7 +242,7 @@ export default {
             XLSX.utils.sheet_add_json(ws, rowsCertificadoProdutoParte.concat(rowsCertificadoProductoTotaltes), { skipHeader: true, origin: 'D9' })
 
             return ws
-        },        
+        },
 
         getCertificadosParteData: async function (data) {
 
@@ -243,8 +250,8 @@ export default {
                 var objTemp = {}
                 objTemp.fecha = obj.fecha_formateada
                 objTemp.parte_numero = obj.parte_numero
-                objTemp.obra =  !data.ot.obra ? obj.obra : ''                
-                return objTemp 
+                objTemp.obra =  !data.ot.obra ? obj.obra : ''
+                return objTemp
             })
         return resultado
         },
@@ -252,43 +259,43 @@ export default {
         getCertificadosServiciosData: async function (data) {
 
           var resultado =  data.partes_certificados.map(function(obj) {
-                var objTemp = {}               
+                var objTemp = {}
                 data.servicios_abreviaturas.forEach (function(item_abreviatura,index) {
                     var existeServicioEnParte = false
                     data.servicios_parte.forEach(function(item_servicio) {
                         if ((item_abreviatura == item_servicio.abreviatura)&&(item_servicio.parte_numero == obj.parte_numero)) {
                             objTemp[index] = item_servicio.cantidad
                             existeServicioEnParte = true
-                        } 
+                        }
                     })
-                    
-                    if (!existeServicioEnParte) objTemp[index] = ''                        
+
+                    if (!existeServicioEnParte) objTemp[index] = ''
 
                 } )
-                return objTemp 
+                return objTemp
             }.bind(this))
         return resultado
-        },  
+        },
         getCertificadosProductoData: async function (data) {
 
           var resultado =  data.partes_certificados.map(function(obj) {
-                var objTemp = {}               
+                var objTemp = {}
                 data.productos_unidades_medidas.forEach (function(item_pro_uni_med,index) {
                     var existeProductoEnParte = false
                     data.productos_parte.forEach(function(item_producto) {
                         if ((item_pro_uni_med == item_producto.unidad_medida_producto)&&(item_producto.parte_numero == obj.parte_numero)) {
                             objTemp[index] = item_producto.cantidad
                             existeProductoEnParte = true
-                        }  
+                        }
                     })
 
                     if (!existeProductoEnParte) objTemp[index] = ''
 
                 } )
-                return objTemp 
+                return objTemp
             }.bind(this))
         return resultado
-        },          
+        },
 
         getCertificadosServiciosTotaltesData: async function (data) {
             var resultado = []
@@ -301,7 +308,7 @@ export default {
                         }
                     })
                 objTemp[index] = total_servicio
-            }.bind(this))            
+            }.bind(this))
             resultado.push(objTemp)
             return resultado
         },
@@ -317,10 +324,10 @@ export default {
                         }
                     })
                 objTemp[index] = total_producto
-            }.bind(this))            
+            }.bind(this))
             resultado.push(objTemp)
             return resultado
-        },        
+        },
         firmar: function() {
             this.loading_table = true;
             axios.defaults.baseURL = this.url ;

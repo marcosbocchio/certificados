@@ -63221,16 +63221,38 @@ var render = function render() {
       attrs: {
         width: "10px"
       }
-    }, [_c("a", {
-      staticClass: "btn btn-default btn-sm",
+    }, [_c("div", {
+      staticClass: "dropdown"
+    }, [_c("button", {
+      staticClass: "btn btn-default dropdown-toggle btn-sm",
       attrs: {
-        href: "/pdf/certificado/" + ot_certificado.id + "/final",
-        target: "_blank",
-        title: "Informe"
+        type: "button",
+        id: "certificateDropdown-" + ot_certificado.id,
+        "data-toggle": "dropdown",
+        "aria-haspopup": "true",
+        "aria-expanded": "false",
+        title: "Opciones de Certificado"
       }
     }, [_c("span", {
       staticClass: "fa fa-file-pdf-o"
-    })])]), _vm._v(" "), _c("td", {
+    }), _vm._v(" "), _c("span", {
+      staticClass: "caret"
+    })]), _vm._v(" "), _c("ul", {
+      staticClass: "dropdown-menu",
+      attrs: {
+        "aria-labelledby": "certificateDropdown-" + ot_certificado.id
+      }
+    }, [_c("li", [_c("a", {
+      attrs: {
+        href: "/pdf/certificado/" + ot_certificado.id + "/final/normal",
+        target: "_blank"
+      }
+    }, [_vm._v("Certificado Original")])]), _vm._v(" "), _c("li", [_c("a", {
+      attrs: {
+        href: "/pdf/certificado/" + ot_certificado.id + "/final/agrupado",
+        target: "_blank"
+      }
+    }, [_vm._v("Certificado Agrupado")])])])])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
