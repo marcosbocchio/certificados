@@ -43,9 +43,9 @@ footer {
             <tr>
                 @for ( $x=0 ; $x< 3 ;$x++)
                     @if(isset($servicios_footer[$x]))
-                            <td style="font-size: 11px; width:33.33%px " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
+                                <td style="font-size: 11px; width:33.33%px " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
                     @else
-                            <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
+                                <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
                     @endif
                 @endfor
 
@@ -53,9 +53,9 @@ footer {
             <tr>
                 @for ( $x=3 ; $x< 6;$x++)
                     @if(isset($servicios_footer[$x]))
-                            <td style="font-size: 11px; width:33.33%px " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
+                                <td style="font-size: 11px; width:33.33%px " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
                     @else
-                            <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
+                                <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
                     @endif
                 @endfor
 
@@ -64,9 +64,9 @@ footer {
             <tr>
                 @for ( $x=6 ; $x< 9 ;$x++)
                     @if(isset($servicios_footer[$x]))
-                            <td style="font-size: 11px; width:33.33%px " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
+                                <td style="font-size: 11px; width:33.33%px " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
                     @else
-                            <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
+                                <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
                     @endif
                 @endfor
 
@@ -97,6 +97,7 @@ footer {
 <table width="100%" class="bordered-td" style="text-align: center;" >
     <thead>
         <tr>
+          {{-- La unidad de medida se define una vez al inicio --}}
           {{ $unidad_medida = ($modalidadCobro == 'COSTURAS') ? '"' : 'Cm'}}
            <th style="font-size: 12px; width:60px" class="bordered-td"  rowspan="2">Día</th>
            <th style="font-size: 12px;width:60px" class="bordered-td" rowspan="2">Parte</th>
@@ -105,7 +106,7 @@ footer {
            @endif
            <th style="font-size: 12px;" class="bordered-td" colspan="9" >SERVICIOS</th>
            <th style="font-size: 12px;" class="bordered-td" colspan="17">
-                 {{ $modalidadCobro }} EN {{ $unidad_medida}}
+                {{ $modalidadCobro }} EN {{ $unidad_medida}}
            </th>
         </tr>
         <tr>
@@ -135,93 +136,111 @@ footer {
         </tr>
     </thead>
     <tbody>
-        @foreach ($partes_certificado as $item_partes_certificado )
+        {{-- Iterar sobre las partes (agrupadas o normales) --}}
+        @foreach ($partes_certificado_para_vista as $item_partes_certificado )
 
             <tr>
                 <td style="font-size: 12px;" class="bordered-td">{{$item_partes_certificado->fecha_formateada}}</td>
-                <td style="font-size: 12px;" class="bordered-td">{{$item_partes_certificado->parte_numero}}</td>
+                {{-- Lógica condicional para el número de parte --}}
+                <td style="font-size: 12px;" class="bordered-td">
+                    @if ($agrupado_param == 'agrupado')
+                        {{ $item_partes_certificado->partes_numeros_agrupados }}
+                    @else
+                        {{ $item_partes_certificado->parte_numero }}
+                    @endif
+                </td>
                 @if (!$ot->obra)
-
-                    <td style="font-size: 12px;" class="bordered-td">{{$item_partes_certificado->obra}}</td>
-
+                    {{-- Lógica condicional para la obra --}}
+                    <td style="font-size: 12px;" class="bordered-td">
+                        @if ($agrupado_param == 'agrupado')
+                            {{ $item_partes_certificado->obras_agrupadas }}
+                        @else
+                            {{ $item_partes_certificado->obra }}
+                        @endif
+                    </td>
                 @endif
 
-           <!-- INSERTO LOS SERVICIOS EN LA TABLA -->
-
+            {{-- INSERTO LOS SERVICIOS EN LA TABLA --}}
             @foreach ($servicios_abreviaturas as $item_servicios_abreviaturas)
                 {{ $existeServicioEnParte = false }}
+                {{ $cantidadServicio = 0 }}
 
-                @foreach ($servicios_parte as $item_servicios_parte)
-
-                    @if (($item_servicios_abreviaturas == $item_servicios_parte->abreviatura)&&($item_servicios_parte->parte_numero == $item_partes_certificado->parte_numero))
-                             <td style="font-size: 12px;" class="bordered-td">{{$item_servicios_parte->cantidad}}</td>
-
-                             {{ $existeServicioEnParte = true }}
+                {{-- Buscar el servicio en los datos preparados para la vista (agrupados o normales) --}}
+                @foreach ($servicios_parte_para_vista as $item_servicios_parte)
+                    {{-- MODIFICADO: Agrega parte_id a la condición de coincidencia si NO está agrupado --}}
+                    @if (
+                        ($item_servicios_abreviaturas == $item_servicios_parte->abreviatura) &&
+                        ($item_partes_certificado->fecha_formateada == $item_servicios_parte->fecha_formateada) &&
+                        ($agrupado_param == 'agrupado' || $item_partes_certificado->parte_id == $item_servicios_parte->parte_id)
+                    )
+                        {{ $cantidadServicio = $item_servicios_parte->cantidad }}
+                        {{ $existeServicioEnParte = true }}
+                        @break {{-- Romper el bucle interno una vez que se encuentra la cantidad para esta fecha/servicio --}}
                     @endif
-
                 @endforeach
 
-                @if (!$existeServicioEnParte)
-
-                    <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
-
-                @endif
-
-
+                <td style="font-size: 12px;" class="bordered-td">
+                    @if ($existeServicioEnParte)
+                        {{ $cantidadServicio }}
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
             @endforeach
 
-            @for ( $x=$cant_servicios_parte  ;  $x < 9 ; $x++)
+            @for ( $x=$cant_servicios_parte ; $x < 9 ; $x++)
                 <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
             @endfor
-        <!-- INSERTO LOS PRODUCTOS EN LA TABLA -->
 
+            {{-- INSERTO LOS PRODUCTOS EN LA TABLA --}}
             @foreach ($productos_unidades_medidas as $item_productos_unidades_medidas)
                 {{ $existeProductoEnParte = false }}
+                {{ $cantidadProducto = 0 }}
 
-                @foreach ($productos_parte as $item_productos_parte)
-
-                    @if (($item_productos_unidades_medidas == $item_productos_parte->unidad_medida_producto)&&($item_productos_parte->parte_numero == $item_partes_certificado->parte_numero))
-                             <td style="font-size: 12px;" class="bordered-td">{{ $item_productos_parte->cantidad }} </td>
-                             {{ $existeProductoEnParte = true }}
+                {{-- Buscar el producto en los datos preparados para la vista (agrupados o normales) --}}
+                @foreach ($productos_parte_para_vista as $item_productos_parte)
+                    {{-- MODIFICADO: Agrega parte_id a la condición de coincidencia si NO está agrupado --}}
+                    @if (
+                        ($item_productos_unidades_medidas == $item_productos_parte->unidad_medida_producto) &&
+                        ($item_partes_certificado->fecha_formateada == $item_productos_parte->fecha_formateada) &&
+                        ($agrupado_param == 'agrupado' || $item_partes_certificado->parte_id == $item_productos_parte->parte_id)
+                    )
+                        {{ $cantidadProducto = $item_productos_parte->cantidad }}
+                        {{ $existeProductoEnParte = true }}
+                        @break {{-- Romper el bucle interno una vez que se encuentra la cantidad para esta fecha/producto --}}
                     @endif
-
-
                 @endforeach
 
-                @if (!$existeProductoEnParte)
-
-                    <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
-
-                @endif
-
+                <td style="font-size: 12px;" class="bordered-td">
+                    @if ($existeProductoEnParte)
+                        {{ $cantidadProducto }}
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
             @endforeach
 
 
-            @for ( $x=$cant_productos_parte ;  $x < 17 ; $x++)
+            @for ( $x=$cant_productos_parte ; $x < 17 ; $x++)
                 <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
             @endfor
           </tr>
 
-          <!-- TERMINÓ DE PONER LOS PRODUCTOS -->
+          @endforeach
 
-        @endforeach
-
-          <!-- AGREGO LOS TOTALES -->
-
-            <tr>
+          <tr>
                 @if (!$ot->obra)
                     <td style="font-size: 12px;" colspan='3' class="bordered-td">Total </td>
                 @else
-                     <td style="font-size: 12px;" colspan='2' class="bordered-td">Total </td>
+                    <td style="font-size: 12px;" colspan='2' class="bordered-td">Total </td>
                 @endif
-
-                <!--SERVICIOS -->
 
                 @foreach ($servicios_abreviaturas as $item_servicios_abreviaturas)
 
                     {{ $total_servicio = 0 }}
 
-                    @foreach ($servicios_parte as $item_servicios_parte)
+                    {{-- Sumar de los servicios_parte_para_vista, que ya vienen agrupados/sumados si aplica --}}
+                    @foreach ($servicios_parte_para_vista as $item_servicios_parte)
                         @if ($item_servicios_abreviaturas == $item_servicios_parte->abreviatura)
                             {{ $total_servicio = $total_servicio + $item_servicios_parte->cantidad}}
                         @endif
@@ -229,18 +248,17 @@ footer {
                     <td style="font-size: 12px;" class="bordered-td">{{ $total_servicio }}</td>
                 @endforeach
 
-                @for ( $x=$cant_servicios_parte  ;  $x < 9 ; $x++)
+                @for ( $x=$cant_servicios_parte ; $x < 9 ; $x++)
                     <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                 @endfor
 
-
-                <!--PRODUCTOS -->
 
                 @foreach ($productos_unidades_medidas as $item_productos_unidades_medidas)
 
                     {{ $total_producto = 0 }}
 
-                    @foreach ($productos_parte as $item_productos_parte)
+                    {{-- Sumar de los productos_parte_para_vista, que ya vienen agrupados/sumados si aplica --}}
+                    @foreach ($productos_parte_para_vista as $item_productos_parte)
                         @if ($item_productos_unidades_medidas == $item_productos_parte->unidad_medida_producto)
                             {{ $total_producto = $total_producto + $item_productos_parte->cantidad}}
                         @endif
@@ -249,7 +267,7 @@ footer {
                     </td>
                 @endforeach
 
-                @for ( $x=$cant_productos_parte  ;  $x < 17 ; $x++)
+                @for ( $x=$cant_productos_parte ; $x < 17 ; $x++)
                     <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                 @endfor
 
@@ -258,7 +276,6 @@ footer {
     </tbody>
 </table>
 
-<!-- AGREGO LOS CUADROS POR OBRA -->
 @php
 
     $cant_obras = count($obras);
@@ -303,8 +320,8 @@ footer {
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
 
-                                    @if (isset($tablas_por_obras[$x*3]->productos[$z]))
-                                    <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[$x*3]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[$x*3]->productos[$z]->cant_total_producto }}</td>
+                                        @if (isset($tablas_por_obras[$x*3]->productos[$z]))
+                                        <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[$x*3]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[$x*3]->productos[$z]->cant_total_producto }}</td>
                                         @else
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
@@ -345,8 +362,8 @@ footer {
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
 
-                                    @if (isset($tablas_por_obras[($x*3)+1]->productos[$z]))
-                                    <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[($x*3)+1]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+1]->productos[$z]->cant_total_producto }}</td>
+                                        @if (isset($tablas_por_obras[($x*3)+1]->productos[$z]))
+                                        <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[($x*3)+1]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+1]->productos[$z]->cant_total_producto }}</td>
                                         @else
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
@@ -387,8 +404,8 @@ footer {
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
 
-                                    @if (isset($tablas_por_obras[($x*3)+2]->productos[$z]))
-                                    <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[($x*3)+2]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+2]->productos[$z]->cant_total_producto }}</td>
+                                        @if (isset($tablas_por_obras[($x*3)+2]->productos[$z]))
+                                        <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[($x*3)+2]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+2]->productos[$z]->cant_total_producto }}</td>
                                         @else
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
@@ -409,7 +426,7 @@ footer {
 
     <script type="text/php">
 
-          if ( isset($pdf) ) {
+        if ( isset($pdf) ) {
             $x = 692;
             $y = 63;
             $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";

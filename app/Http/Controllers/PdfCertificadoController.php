@@ -15,28 +15,171 @@ use Illuminate\Support\Facades\Log;
 
 class PdfCertificadoController extends Controller
 {
-    public function imprimir($id,$estado){
+    /**
+     * Agrupa las partes por fecha, concatenando números de parte y obras.
+     *
+     * @param array $partes_certificado Array de objetos de partes de certificado.
+     * @return array Array de partes agrupadas por fecha.
+     */
+    private function groupPartesByDate(array $partes_certificado): array
+    {
+        $groupedPartes = [];
+
+        foreach ($partes_certificado as $parte) {
+            $fecha = $parte->fecha_formateada;
+
+            if (!isset($groupedPartes[$fecha])) {
+                $groupedPartes[$fecha] = [
+                    'fecha_formateada' => $fecha,
+                    'partes_numeros_agrupados' => [],
+                    'obras_agrupadas' => [],
+                    'parte_id' => $parte->parte_id, // Mantener el ID de la primera parte para referencia si es necesario
+                    'fecha_parte' => $parte->fecha_parte,
+                ];
+            }
+
+            // Concatenar números de parte únicos
+            if (!in_array($parte->parte_numero, $groupedPartes[$fecha]['partes_numeros_agrupados'])) {
+                $groupedPartes[$fecha]['partes_numeros_agrupados'][] = $parte->parte_numero;
+            }
+
+            // Concatenar obras únicas
+            if (!empty($parte->obra) && !in_array($parte->obra, $groupedPartes[$fecha]['obras_agrupadas'])) {
+                $groupedPartes[$fecha]['obras_agrupadas'][] = $parte->obra;
+            }
+        }
+
+        // Formatear las cadenas concatenadas
+        foreach ($groupedPartes as &$groupedParte) {
+            $groupedParte['partes_numeros_agrupados'] = implode(' / ', $groupedParte['partes_numeros_agrupados']);
+            $groupedParte['obras_agrupadas'] = implode(' / ', $groupedParte['obras_agrupadas']);
+            // Convertir a objeto para mantener consistencia con los resultados de DB::select
+            $groupedParte = (object)$groupedParte;
+        }
+
+        return array_values($groupedPartes); // Resetear las claves del array
+    }
+
+    /**
+     * Agrupa los servicios por fecha y abreviatura, sumando las cantidades.
+     *
+     * @param array $servicios_parte Array de objetos de servicios por parte.
+     * @return array Array de servicios agrupados por fecha y abreviatura.
+     */
+    private function groupServiciosByDate(array $servicios_parte): array
+    {
+        $groupedServicios = [];
+
+        foreach ($servicios_parte as $servicio) {
+            $fecha = $servicio->fecha_formateada;
+            $abreviatura = $servicio->abreviatura;
+            $key = $fecha . '_' . $abreviatura;
+
+            if (!isset($groupedServicios[$key])) {
+                $groupedServicios[$key] = [
+                    'fecha_formateada' => $fecha,
+                    'abreviatura' => $abreviatura,
+                    'cantidad' => 0.0,
+                    // Puedes añadir otras propiedades si son relevantes para la vista agrupada
+                    'descripcion_servicio' => $servicio->descripcion_servicio,
+                    'combinado_sn' => $servicio->combinado_sn,
+                    'nro_combinacion' => $servicio->nro_combinacion,
+                    'combinacion' => $servicio->combinacion,
+                    'obra' => $servicio->obra, // Podría ser la primera obra encontrada o concatenar si es necesario
+                ];
+            }
+            $groupedServicios[$key]['cantidad'] += (float) $servicio->cantidad;
+        }
+
+        // Convertir a objeto para mantener consistencia con los resultados de DB::select
+        foreach ($groupedServicios as &$groupedServicio) {
+            $groupedServicio = (object)$groupedServicio;
+        }
+
+        return array_values($groupedServicios); // Resetear las claves del array
+    }
+
+    /**
+     * Agrupa los productos por fecha y unidad de medida, sumando las cantidades.
+     *
+     * @param array $productos_parte Array de objetos de productos por parte.
+     * @return array Array de productos agrupados por fecha y unidad de medida.
+     */
+    private function groupProductosByDate(array $productos_parte): array
+    {
+        $groupedProductos = [];
+
+        foreach ($productos_parte as $producto) {
+            $fecha = $producto->fecha_formateada;
+            $unidadMedida = $producto->unidad_medida_producto;
+            $key = $fecha . '_' . ($unidadMedida ?? 'null'); // Manejar unidad_medida_producto nula
+
+            if (!isset($groupedProductos[$key])) {
+                $groupedProductos[$key] = [
+                    'fecha_formateada' => $fecha,
+                    'unidad_medida_producto' => $unidadMedida,
+                    'cantidad' => 0,
+                    // Puedes añadir otras propiedades si son relevantes para la vista agrupada
+                    'modalidad_cobro' => $producto->modalidad_cobro,
+                    'obra' => $producto->obra, // Podría ser la primera obra encontrada o concatenar si es necesario
+                ];
+            }
+            $groupedProductos[$key]['cantidad'] += (int) $producto->cantidad; // Sumar como entero
+        }
+
+        // Convertir a objeto para mantener consistencia con los resultados de DB::select
+        foreach ($groupedProductos as &$groupedProducto) {
+            $groupedProducto = (object)$groupedProducto;
+        }
+
+        return array_values($groupedProductos); // Resetear las claves del array
+    }
+
+
+    public function imprimir($id,$estado,$agrupado = "normal"){
 
         $certificado = Certificados::findOrFail($id);
         $ot = Ots::find($certificado->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
         $contratista = Contratistas::find($ot->contratista_id);
         $fecha = date("Y/m/d H:i:s");
-        $productoCosturaOt = (new \App\Http\Controllers\CertificadosController)->getModalidadCobro($certificado->ot_id);
+        $productoCosturaOt = (new \App\Http\Controllers\CertificadosController)->getModalidadCobro($ot->id);
         $modalidadCobro = ( $productoCosturaOt->count() > 0 ) ? 'COSTURAS' : 'PLACAS';
-        $partes_certificado =DB::select('CALL PartesCertificadoReporte(?)',array($id));
-        $servicios_parte = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
-        $servicios_abreviaturas = $this->abreviaturasUnicas($servicios_parte);
-        $servicios_combinaciones = $this->combinacionesUnicas($servicios_parte);
-        $servicios_footer = $this->ServiciosParteUnicas($servicios_parte);
-        $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));
-        $productos_unidades_medidas = $this->productosUnicos($productos_parte,$modalidadCobro);
-        $obras=[];
-        $obras = $this->obrasUnicas($partes_certificado);
-        $fechas = $this->getCombinados($servicios_parte);
-        $servicios_obras =  DB::select('CALL getServiciosObrasCertificado(?,?)',array($id,$estado));
 
-        $tablas_por_obras = $this->generarTablasPorObras($servicios_obras,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras,$fechas);
+        // Obtener datos originales
+        $partes_certificado_original = DB::select('CALL PartesCertificadoReporte(?)',array($id));
+        $servicios_parte_original = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
+        $productos_parte_original = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));
+
+        // Por defecto, las variables de la vista usan los datos originales
+        $partes_certificado_para_vista = $partes_certificado_original;
+        $servicios_parte_para_vista = $servicios_parte_original;
+        $productos_parte_para_vista = $productos_parte_original;
+
+        // *** APLICAR LÓGICA DE AGRUPAMIENTO SOLO SI $agrupado ES "agrupado" ***
+        if ($agrupado == "agrupado") {
+            $partes_certificado_para_vista = $this->groupPartesByDate($partes_certificado_original);
+            $servicios_parte_para_vista = $this->groupServiciosByDate($servicios_parte_original);
+            $productos_parte_para_vista = $this->groupProductosByDate($productos_parte_original);
+        }
+        // Fin de la lógica de agrupamiento condicional.
+
+        $servicios_abreviaturas = $this->abreviaturasUnicas($servicios_parte_original); // Las abreviaturas siempre se obtienen de los datos originales para tener todas las columnas posibles
+        $servicios_combinaciones = $this->combinacionesUnicas($servicios_parte_original);
+        $servicios_footer = $this->ServiciosParteUnicas($servicios_parte_original);
+
+        $productos_unidades_medidas = $this->productosUnicos($productos_parte_original,$modalidadCobro); // Las unidades de medida siempre se obtienen de los datos originales
+
+        $obras=[];
+        $obras = $this->obrasUnicas($partes_certificado_original); // Las obras se obtienen de los datos originales
+        $fechas = $this->getCombinados($servicios_parte_original); // Asume que getCombinados necesita los datos originales
+
+        // Asegúrate de que generarTablasPorObras pueda manejar los datos originales o agrupados según sea necesario,
+        // o si siempre necesita los datos originales para calcular los totales de las tablas por obra.
+        // Para este ejemplo, asumimos que sigue usando los originales para los totales por obra.
+        $servicios_obras =  DB::select('CALL getServiciosObrasCertificado(?,?)',array($id,$estado));
+        $tablas_por_obras = $this->generarTablasPorObras($servicios_obras,$servicios_combinaciones,$productos_parte_original,$productos_unidades_medidas,$obras,$fechas);
+        $agrupado_param = $agrupado;
         $evaluador = User::find($certificado->firma);
 
         $titulo1 = "CERTIFICADO" ;
@@ -45,36 +188,31 @@ class PdfCertificadoController extends Controller
         $fecha = date('d-m-Y', strtotime($certificado->fecha));
         $tipo_reporte = "CERTIFICADO N°:";
 
-        $pdf = PDF::loadView('reportes.certificados.certificado-v2',compact('fecha','nro','titulo1','titulo2','tipo_reporte','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras','servicios_footer'))->setPaper('a4','landscape')->setWarnings(false);
+        // Recopilar todas las variables relevantes en un solo array para depuración
+        $debugData = [
+            'servicios_parte_para_vista' => $servicios_parte_para_vista,
+            'productos_parte_para_vista' => $productos_parte_para_vista,
+            'partes_certificado_para_vista' => $partes_certificado_para_vista,
+            'tablas_por_obras' => $tablas_por_obras,
+            'servicios_abreviaturas' => $servicios_abreviaturas,
+            'productos_unidades_medidas' => $productos_unidades_medidas,
+            'modalidadCobro' => $modalidadCobro,
+            'obras' => $obras,
+            'servicios_footer' => $servicios_footer,
+            'agrupado_param' => $agrupado, // Para ver el valor del parámetro 'agrupado'
+        ];
+
+        // dd($debugData); // Descomenta esta línea para ver todos los datos juntos
+
+        $pdf = PDF::loadView('reportes.certificados.certificado-v2',compact(
+            'fecha','nro','titulo1','titulo2','tipo_reporte','certificado','ot','cliente','contratista',
+            'servicios_parte_para_vista', // Usar la variable que puede estar agrupada
+            'productos_parte_para_vista', // Usar la variable que puede estar agrupada
+            'modalidadCobro','partes_certificado_para_vista', // Usar la variable que puede estar agrupada
+            'servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras','servicios_footer','agrupado_param'
+        ))->setPaper('a4','landscape')->setWarnings(false);
         return $pdf->stream();
     }
-
-    public function exportarAExcel($id){
-        $estado = "final";
-        $result = [];
-        $certificado = Certificados::findOrFail($id);
-        $ot = Ots::find($certificado->ot_id);
-        $cliente = Clientes::find($ot->cliente_id);
-        $productoCosturaOt = (new \App\Http\Controllers\CertificadosController)->getModalidadCobro($certificado->ot_id);
-        $modalidadCobro = ( $productoCosturaOt->count() > 0 ) ? 'COSTURAS' : 'PLACAS';
-        $servicios_parte = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
-        $servicios_abreviaturas = $this->abreviaturasUnicas($servicios_parte);
-        $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));
-        $productos_unidades_medidas = $this->productosUnicos($productos_parte,$modalidadCobro);
-        $partes_certificado =DB::select('CALL PartesCertificadoReporte(?)',array($id));
-        $servicios_footer = $this->ServiciosParteUnicas($servicios_parte);
-        $result = array('certificado' => $certificado, 
-                        'ot'=> $ot, 
-                        'modalidadCobro' => $modalidadCobro, 
-                        'servicios_abreviaturas' => array_values($servicios_abreviaturas), 
-                        'productos_unidades_medidas' => array_values($productos_unidades_medidas), 
-                        'partes_certificados' => $partes_certificado,
-                        'productos_parte' => $productos_parte,
-                        'servicios_parte' => $servicios_parte,
-                        'cliente' => $cliente,
-                        'servicios_footer' => $servicios_footer);
-        return response()->json($result);
-    }    
 
     public function getCombinados($servicios_parte){
 
@@ -257,7 +395,7 @@ class PdfCertificadoController extends Controller
 
             $array_temp[] = $servicio->abreviatura;
 
-        }      
+        }
 
         return array_unique($array_temp);
 

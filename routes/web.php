@@ -157,7 +157,7 @@ Route::group(['middleware' => ['auth']], function () {
 
       Route::get('/pdf/remito/{id}','PdfRemitosController@imprimir')->name('pdfRemito');
       Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir');
-      Route::get('/pdf/certificado/{id}/{estado}','PdfCertificadoController@imprimir');
+      Route::get('/pdf/certificado/{id}/{estado}/{tipo_reporte}','PdfCertificadoController@imprimir');
 
       Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
       Route::get('/pdf/servicios/referencias/{id}','PdfServiciosReferenciasController@imprimir')->name('ServiciosReferencias');
