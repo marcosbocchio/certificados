@@ -63211,9 +63211,9 @@ var render = function render() {
     }, [_c("a", {
       staticClass: "btn btn-default btn-sm",
       attrs: {
-        href: "/pdf/certificado/" + ot_certificado.id + "/original",
+        href: "/pdf/certificado/" + ot_certificado.id + "/original/normal",
         target: "_blank",
-        title: "Informe original"
+        title: "certificado original"
       }
     }, [_c("span", {
       staticClass: "fa fa-file-pdf-o"
@@ -63235,8 +63235,6 @@ var render = function render() {
       }
     }, [_c("span", {
       staticClass: "fa fa-file-pdf-o"
-    }), _vm._v(" "), _c("span", {
-      staticClass: "caret"
     })]), _vm._v(" "), _c("ul", {
       staticClass: "dropdown-menu",
       attrs: {
@@ -63247,7 +63245,7 @@ var render = function render() {
         href: "/pdf/certificado/" + ot_certificado.id + "/final/normal",
         target: "_blank"
       }
-    }, [_vm._v("Certificado Original")])]), _vm._v(" "), _c("li", [_c("a", {
+    }, [_vm._v("Certificado")])]), _vm._v(" "), _c("li", [_c("a", {
       attrs: {
         href: "/pdf/certificado/" + ot_certificado.id + "/final/agrupado",
         target: "_blank"
@@ -63260,7 +63258,7 @@ var render = function render() {
       staticClass: "btn btn-default btn-sm",
       attrs: {
         disabled: !_vm.$can("T_certif_edita"),
-        title: "Informes escaneados"
+        title: "certificado escaneados"
       },
       on: {
         click: function click($event) {
@@ -63276,7 +63274,7 @@ var render = function render() {
     }, [_c("button", {
       staticClass: "btn btn-default btn-sm",
       attrs: {
-        title: "Informes escaneados"
+        title: "certificado escaneados"
       },
       on: {
         click: function click($event) {
