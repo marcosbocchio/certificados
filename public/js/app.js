@@ -63274,7 +63274,7 @@ var render = function render() {
     }, [_c("button", {
       staticClass: "btn btn-default btn-sm",
       attrs: {
-        title: "certificado escaneados"
+        title: "exportar excel"
       },
       on: {
         click: function click($event) {
