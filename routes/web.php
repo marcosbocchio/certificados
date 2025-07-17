@@ -156,7 +156,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/pdf/dosimetria/periodos','PdfDosimetriaPeriodosController@imprimir')->name('pdfDosimetriaPeriodos');
 
       Route::get('/pdf/remito/{id}','PdfRemitosController@imprimir')->name('pdfRemito');
-      Route::get('/pdf/parte/{id}/{estado}/{tipo_reporte}','PdfPartesController@imprimir');
+      Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir');
       Route::get('/pdf/certificado/{id}/{estado}/{tipo_reporte}','PdfCertificadoController@imprimir');
 
       Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
