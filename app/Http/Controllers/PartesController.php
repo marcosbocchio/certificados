@@ -60,7 +60,7 @@ class PartesController extends Controller
 
     }
 
-    
+
     public function paginate(Request $request,$ot_id){
 
      return DB::table('partes')

@@ -142,21 +142,20 @@
                                     <td v-else width="10px">
                                         <button @click.prevent="EditInformeImportable(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><span class="fa fa-edit"></span></button>
                                     </td>
-<td v-if="!ot_informe.importable_sn && (ot_informe.metodo == 'LP' || ot_informe.metodo == 'PM')" width="10px">
-    <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" style="margin-top: 5px;">
-            <app-icon img="clone" color="black"></app-icon>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-center">
-            <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'clonado')">Clonado</button></li>
-            <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'completo')">Clonado Completo</button></li>
-        </ul>
-    </div>
-</td>
-<td v-else>
-    <button @click="confirmarClanacion(k, 'clonado')" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><app-icon img="clone" color="black"></app-icon></button>
-</td>
-
+                                        <td v-if="!ot_informe.importable_sn && (ot_informe.metodo == 'LP' || ot_informe.metodo == 'PM' || ot_informe.metodo == 'US')" width="10px">
+                                            <div class="dropdown">
+                                                <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" style="margin-top: 5px;">
+                                                    <app-icon img="clone" color="black"></app-icon>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-center">
+                                                    <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'clonado')">Clonado</button></li>
+                                                    <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'completo')">Clonado Completo</button></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td v-else>
+                                            <button @click="confirmarClanacion(k, 'clonado')" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><app-icon img="clone" color="black"></app-icon></button>
+                                        </td>
                                     <td v-if="ot_informe.metodo == 'RI'">
                                         <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" :disabled="ot_informe.anulado_sn === 1" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
                                     </td>
@@ -303,11 +302,11 @@ export default {
       this.ContarInformes();
     if (this.numero_informe_formateado_xc !== '') {
         this.search = this.numero_informe_formateado_xc;
-        
+
         this.aplicarFiltro();
     }
     document.cookie = 'nroInformeFormateado=' + '' + ';path=/;';},
-  
+
 
   computed :{
 
@@ -317,7 +316,7 @@ export default {
     methods : {
 
         getResults :function(page = 1){
-            
+
             this.loading_table = true,
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page='+ page + '&search=' + this.search ;
@@ -489,7 +488,7 @@ export default {
                 $.each( this.errors, function( key, value ) {
                     toastr.error(value);
                     console.log( key + ": " + value );
-                }); 
+                });
 
                     if((typeof(this.errors)=='undefined') && (error)){
 

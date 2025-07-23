@@ -202,7 +202,15 @@ class PdfCertificadoController extends Controller
             'agrupado_param' => $agrupado, // Para ver el valor del parámetro 'agrupado'
         ];
 
-        // dd($debugData); // Descomenta esta línea para ver todos los datos juntos
+        // --- BLOQUE DE DEPURACIÓN ---
+        // Descomenta las siguientes dos líneas para inspeccionar las variables
+        // y ver la estructura de los datos antes de que se genere el PDF.
+        // dd([
+        //     'Datos Originales de Servicios' => $servicios_parte_original,
+        //     'Servicios desde el Procedimiento Almacenado' => $servicios_obras,
+        //     'Estructura de las Tablas Agrupadas' => $tablas_por_obras,
+        // ]);
+        // --- FIN DEL BLOQUE DE DEPURACIÓN ---
 
         $pdf = PDF::loadView('reportes.certificados.certificado-v2',compact(
             'fecha','nro','titulo1','titulo2','tipo_reporte','certificado','ot','cliente','contratista',
