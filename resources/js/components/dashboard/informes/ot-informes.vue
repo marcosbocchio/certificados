@@ -142,7 +142,7 @@
                                     <td v-else width="10px">
                                         <button @click.prevent="EditInformeImportable(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><span class="fa fa-edit"></span></button>
                                     </td>
-                                        <td v-if="!ot_informe.importable_sn && (ot_informe.metodo == 'LP' || ot_informe.metodo == 'PM' || ot_informe.metodo == 'US')" width="10px">
+                                        <td v-if="!ot_informe.importable_sn && (ot_informe.metodo == 'LP' || ot_informe.metodo == 'PM' || ot_informe.metodo == 'US'|| ot_informe.metodo == 'RI')" width="10px">
                                             <div class="dropdown">
                                                 <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" style="margin-top: 5px;">
                                                     <app-icon img="clone" color="black"></app-icon>
