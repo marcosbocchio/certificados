@@ -65522,7 +65522,7 @@ var render = function render() {
       }
     }, [_c("span", {
       staticClass: "fa fa-edit"
-    })])]), _vm._v(" "), !ot_informe.importable_sn && (ot_informe.metodo == "LP" || ot_informe.metodo == "PM" || ot_informe.metodo == "US" || ot_informe.metodo == "RI" || ot_informe.metodo == "RD" || ot_informe.metodo == "CV") ? _c("td", {
+    })])]), _vm._v(" "), !ot_informe.importable_sn && (ot_informe.metodo == "LP" || ot_informe.metodo == "PM" || ot_informe.metodo == "US" || ot_informe.metodo == "RI" || ot_informe.metodo == "RD" || ot_informe.metodo == "CV" || ot_informe.metodo == "TT") ? _c("td", {
       attrs: {
         width: "10px"
       }
