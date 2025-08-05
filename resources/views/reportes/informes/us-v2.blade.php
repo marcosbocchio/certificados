@@ -207,11 +207,21 @@ footer {
                     @endif
                 </td>
                 <td style="font-size: 9px; text-align: center;" class="bordered-td">
-                    <span class="EspecialCaracter">
-                        @if($calibracion->tipo_reflector)
-                            {{$calibracion->tipo_reflector}}
+
+                    {{-- 1. Guardián principal: Nos aseguramos de que exista un valor. --}}
+                    @if($calibracion->tipo_reflector)
+
+                        {{-- Si existe, siempre mostramos el tipo de reflector. --}}
+                        <span class="EspecialCaracter">
+                            {{ $calibracion->tipo_reflector }}
+                        </span>
+
+                        {{-- 2. Guardián secundario: Mostramos la referencia SOLO si no es 'N/A'. --}}
+                        @if($calibracion->tipo_reflector != 'N/A')
+                            &nbsp; {{ $calibracion->reflector_referencia }}
                         @endif
-                    </span> &nbsp; {{$calibracion->reflector_referencia}}
+
+                    @endif
                 </td>
                 <td style="font-size: 9px; text-align: center;" class="bordered-td">
                     @if($calibracion->ganancia_referencia)
