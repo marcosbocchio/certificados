@@ -12,14 +12,14 @@
 
 
     @if($tecnica->codigo == 'US' || $tecnica->codigo == 'PA' || $tecnica->codigo=='FMC-TFM')
-        @page { 
+        @page {
             margin: 260px 40px 260px 40px !important;
-            padding: 0px 0px 0px 0px !important; 
+            padding: 0px 0px 0px 0px !important;
         }
     @else
-        @page { 
+        @page {
             margin: 260px 40px 160px 40px !important;
-            padding: 0px 0px 0px 0px !important; 
+            padding: 0px 0px 0px 0px !important;
         }
     @endif
 
@@ -122,7 +122,7 @@ footer {
                     </tr>
                 </tbody>
             </table>
-    @endif 
+    @endif
     </footer>
 
 <main>
@@ -133,189 +133,148 @@ footer {
 
     @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA' || $tecnica->codigo=='FMC-TFM')
 
-        <table style="text-align: center;border-collapse: collapse;margin-top: 10px;" width="100%">
-            <tbody>
-                <tr>
-                    <td style="border: 1px solid #000;background:#D8D8D8;" colspan="16">DATOS DE CALIBRACIÓN</td>
-                </tr>
-                <tr>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -3.5px;margin-right: -3.5px;">ZAPATA</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -12px;margin-right: -12px;">PALPADOR</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -4px;margin-right: -4px;">N° SERIE</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -48px;margin-right: -48px;">FRECUENCIA (Mhz)</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -35px;margin-right: -35px;">ANG. APERTURA</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -14px;margin-right: -14px;">RANGO</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -22px;margin-right: -22px;">POSICIÓN</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">CURVA ELEVACION</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -55px;margin-right: -55px;">BLOCK CALIBRACIÓN</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">BLOCK SENSIBILIDAD</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -49.5px;margin-right: -49.5px;">REFLECTOR REF. (mm)</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">GANANCIA REF. (dB)</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -38px;margin-right: -38px;">NIVEL REGISTRO</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -54.5px;margin-right: -54.5px;">CORREC. TRANSF (dB)</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -67.5px;margin-right: -67.5px;">ADICIONAL BARRIDO (dB)</div></td>
-                    <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">AMPLIF. TOTAL (dB)</div></td>
-                </tr>
-            </tbody>
-        </table>
+        <table style="text-align: center; border-collapse: collapse; margin-top: 10px;" width="100%">
 
-        <table style="border-collapse: collapse;" width="100%">
-            <tbody>
-                @foreach ($calibraciones_us as $calibracion)
-                    <tr>
-                        <td style="font-size: 9px; width:85px;text-align: center;"class="bordered-td">
-                            @if($calibracion->zapata)
-                            {{ strtoupper($calibracion->zapata) }}
-                            @else
-                                &nbsp;
-                            @endif
-                        </td>
-                        <td style="font-size: 9px; width:85.3px;text-align: center;" class="bordered-td">
-                            @if ($calibracion->palpador)
-                            {{$calibracion->palpador->equipo->codigo}}
-                            @endif
-                        </td>
-                        <td style="font-size: 9px; width:70px;text-align: center;" class="bordered-td">
-                            @if ($calibracion->palpador)
-                            {{$calibracion->palpador->nro_serie}}
-                            @endif
-                        </td>
-                        <td style="font-size: 9px; width:25px;text-align: center;" class="bordered-td">{{$calibracion->frecuencia}}</td>
-                        <td style="font-size: 9px; width:35.1px;text-align: center;" class="bordered-td">{{$calibracion->angulo_apertura}}</td>
-                        <td style="font-size: 9px; width:36.3px;text-align: center;" class="bordered-td">{{$calibracion->rango}}</td>
-                        <td style="font-size: 9px; width:32.3px;text-align: center;" class="bordered-td">{{strtoupper($calibracion->posicion)}}</td>
-                        <td style="font-size: 9px; width:35.1px;text-align: center;" class="bordered-td">
-                            @if($calibracion->curva_elevacion)
-                                {{$calibracion->curva_elevacion}}
-                            @else
-                                &nbsp;
-                            @endif
-                        </td>
-                        <td style="font-size: 9px; width:28.8px;text-align: center;" class="bordered-td">
-                            @if ($calibracion->block_calibracion == 'Probeta')
-                                Pr
-                            @elseif(($calibracion->block_calibracion == 'Escalonado'))
-                                Es
-                            @else
-                                {{$calibracion->block_calibracion}}
-                            @endif
-                        </td>
-                        <td style="font-size: 9px; width:38.2px;text-align: center;" class="bordered-td">
-                            @if($calibracion->block_sensibilidad)
-                            {{$calibracion->block_sensibilidad}}
-                            @else
-                            &nbsp;
-                            @endif
-                        </td>
-                        <td style="font-size: 9px; width:39.1px;text-align: center;" class="bordered-td"><span class="EspecialCaracter">
-                            @if($calibracion->tipo_reflector)
-                                {{$calibracion->tipo_reflector}}</span> &nbsp; {{$calibracion->reflector_referencia}}
-                            @else
-                                &nbsp;
-                            @endif
-                        </td>
-                        <td style="font-size: 9px; width:29.5px;text-align: center;" class="bordered-td">
-                            @if($calibracion->ganancia_referencia)
-                                {{$calibracion->ganancia_referencia}}
-                            @else
-                                &nbsp;
-                            @endif
-                        </td>
-                        <td style="font-size: 9px; width:32.2px;text-align: center;" class="bordered-td">
-                            @if($calibracion->nivel_registro)
-                                {{$calibracion->nivel_registro}}&nbsp;%
-                            @else
-                                &nbsp;
-                            @endif
-                        </td>
-                        <td style="font-size: 9px; width:29.3px;text-align: center;" class="bordered-td">
-                            @if($calibracion->correccion_transferencia)
-                                {{$calibracion->correccion_transferencia}}
-                            @else
-                                &nbsp;
-                            @endif
-                        </td>
-                        <td style="font-size: 9px; width:28.8px;text-align: center;" class="bordered-td">
-                            @if($calibracion->adicional_barrido)
-                            {{$calibracion->adicional_barrido}}
-                            @else
-                            &nbsp;
-                            @endif
-                        </td>
-                        <td style="font-size: 9px;text-align: center" class="bordered-td">
-                            @if($calibracion->amplificacion_total)
-                                {{$calibracion->amplificacion_total}}
-                            @else
-                                &nbsp;
-                            @endif
-                        </td>
+    <thead>
+        <tr>
+            <td style="border: 1px solid #000; background:#D8D8D8;" colspan="16">DATOS DE CALIBRACIÓN</td>
+        </tr>
+        <tr>
+            <td id="rotate" style="font-size: 13px; width: 85px;" class="bordered-td"><div id="vertical" style="margin-left: -3.2px;margin-right: -3.2px;">ZAPATA</div></td>
+            <td id="rotate" style="font-size: 13px; width: 85px;" class="bordered-td"><div id="vertical" style="margin-left: -11.8px;margin-right: -11.8px;">PALPADOR</div></td>
+            <td id="rotate" style="font-size: 13px; width: 70px;" class="bordered-td"><div id="vertical" style="margin-left: -4px;margin-right: -3.7px;">N° SERIE</div></td>
+            <td id="rotate" style="font-size: 13px; width: 25px;" class="bordered-td"><div id="vertical" style="margin-left: -48px;margin-right: -47.6px;">FRECUENCIA (Mhz)</div></td>
+            <td id="rotate" style="font-size: 13px; width: 35px;" class="bordered-td"><div id="vertical" style="margin-left: -35px;margin-right: -35px;">ANG. APERTURA</div></td>
+            <td id="rotate" style="font-size: 13px; width: 36px;" class="bordered-td"><div id="vertical" style="margin-left: -14px;margin-right: -14px;">RANGO</div></td>
+            <td id="rotate" style="font-size: 13px; width: 39px;" class="bordered-td"><div id="vertical" style="margin-left: -20px;margin-right: -20px;">POSICIÓN</div></td>
+            <td id="rotate" style="font-size: 13px; width: 35px;" class="bordered-td"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">CURVA ELEVACION</div></td>
+            <td id="rotate" style="font-size: 13px; width: 29px;" class="bordered-td"><div id="vertical" style="margin-left: -55px;margin-right: -55px;">BLOCK CALIBRACIÓN</div></td>
+            <td id="rotate" style="font-size: 13px; width: 38px;" class="bordered-td"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">BLOCK SENSIBILIDAD</div></td>
+            <td id="rotate" style="font-size: 13px; width: 39px;" class="bordered-td"><div id="vertical" style="margin-left: -49.5px;margin-right: -49.5px;">REFLECTOR REF. (mm)</div></td>
+            <td id="rotate" style="font-size: 13px; width: 30px;" class="bordered-td"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">GANANCIA REF. (dB)</div></td>
+            <td id="rotate" style="font-size: 13px; width: 32px;" class="bordered-td"><div id="vertical" style="margin-left: -38px;margin-right: -38px;">NIVEL REGISTRO</div></td>
+            <td id="rotate" style="font-size: 13px; width: 29px;" class="bordered-td"><div id="vertical" style="margin-left: -54.5px;margin-right: -54.5px;">CORREC. TRANSF (dB)</div></td>
+            <td id="rotate" style="font-size: 13px; width: 29px;" class="bordered-td"><div id="vertical" style="margin-left: -67.5px;margin-right: -67.5px;">ADICIONAL BARRIDO (dB)</div></td>
+            <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -45px;margin-right: -45px; white-space: nowrap;">AMPLIF. TOTAL (dB)</div></td>
+        </tr>
+    </thead>
 
-                    </tr>
-                @endforeach
-
-
-                {{ $filasACompletar = 4 - count($calibraciones_us) }}
-                @for ( $x=0 ;  $x < $filasACompletar ; $x++)
-                    <tr>
-                        <td style="font-size: 9px; width:85px;text-align: center;"class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:85.3px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:70px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:25px;  text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:35.1px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:36.3px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:32.3px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:35.1px;text-align:   center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:28.8px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:38.2px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:39.1px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:29.5px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:32.2px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:29.3px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px; width:28.8px;text-align: center;" class="bordered-td">&nbsp;</td>
-                        <td style="font-size: 9px;text-align: center" class="bordered-td">&nbsp;</td>
-                    </tr>
-                @endfor
-            </tbody>
-        </table>
-
-    @endif
-
-    @if($tecnica->codigo == 'ME')
-    <table style="text-align: center;border-collapse: collapse;margin-top: 10px;" width="100%">
-        <thead>
-                <tr>
-                    <td style="font-size: 11px; width:150px; text-align: center " class="bordered-td" >PALPADOR</td>
-                    <td style="font-size: 11px; width:70px; text-align: center;" class="bordered-td">N° SERIE</td>
-                    <td style="font-size: 11px; width:80px; text-align: center;"  class="bordered-td">FRECUENCIA (Mhz)</td>
-                    <td style="font-size: 11px; width:80px;text-align: center;"  class="bordered-td">ANG. APERTURA</td>
-                    <td style="font-size: 11px; width:80px; text-align: center;" class="bordered-td">RANGO</td>
-                    <td style="font-size: 11px; width:80px; text-align: center;" class="bordered-td">POSICIÓN</td>
-                    <td style="font-size: 11px;  text-align: center;" class="bordered-td">BLOCK CALIBRACIÓN</td>
-                </tr>
-
-            </thead>
-            <tbody>
-                @foreach ($calibraciones_us as $calibracion)
-                <tr>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">
-                        @if ($calibracion->palpador)
-                           {{$calibracion->palpador->equipo->codigo}}
-                        @endif
-                    </td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">
-                        @if ($calibracion->palpador)
+    <tbody>
+        @foreach ($calibraciones_us as $calibracion)
+            <tr>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if($calibracion->zapata)
+                        {{ strtoupper($calibracion->zapata) }}
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if ($calibracion->palpador)
+                        {{$calibracion->palpador->equipo->codigo}}
+                    @endif
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if ($calibracion->palpador)
                         {{$calibracion->palpador->nro_serie}}
+                    @endif
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">{{$calibracion->frecuencia}}</td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">{{$calibracion->angulo_apertura}}</td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">{{$calibracion->rango}}</td>
+                <td style="font-size: 9px; text-align: center; word-wrap: break-word;" class="bordered-td">{{strtoupper($calibracion->posicion)}}</td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if($calibracion->curva_elevacion)
+                        {{$calibracion->curva_elevacion}}
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if ($calibracion->block_calibracion == 'Probeta')
+                        Pr
+                    @elseif(($calibracion->block_calibracion == 'Escalonado'))
+                        Es
+                    @else
+                        {{$calibracion->block_calibracion}}
+                    @endif
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if($calibracion->block_sensibilidad)
+                        {{$calibracion->block_sensibilidad}}
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    <span class="EspecialCaracter">
+                        @if($calibracion->tipo_reflector)
+                            {{$calibracion->tipo_reflector}}
                         @endif
-                    </td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">{{$calibracion->frecuencia}}</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">{{$calibracion->angulo_apertura}}</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">{{$calibracion->rango}}</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">{{strtoupper($calibracion->posicion)}}</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">{{$calibracion->block_calibracion}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                    </span> &nbsp; {{$calibracion->reflector_referencia}}
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if($calibracion->ganancia_referencia)
+                        {{$calibracion->ganancia_referencia}}
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if($calibracion->nivel_registro)
+                        {{$calibracion->nivel_registro}}&nbsp;%
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if($calibracion->correccion_transferencia)
+                        {{$calibracion->correccion_transferencia}}
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if($calibracion->adicional_barrido)
+                        {{$calibracion->adicional_barrido}}
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
+                <td style="font-size: 9px; text-align: center;" class="bordered-td">
+                    @if($calibracion->amplificacion_total)
+                        {{$calibracion->amplificacion_total}}
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
+            </tr>
+        @endforeach
+
+        {{ $filasACompletar = 4 - count($calibraciones_us) }}
+        @for ( $x=0 ;  $x < $filasACompletar ; $x++)
+            <tr>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+                <td class="bordered-td">&nbsp;</td>
+            </tr>
+        @endfor
+    </tbody>
+</table>
+
     @endif
 
 
@@ -413,7 +372,7 @@ footer {
 
     @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA' || $tecnica->codigo=='FMC-TFM')
       @include('reportes.informes.us-indicaciones-us-pa-v2')
-        
+
     @else
       @include('reportes.informes.us-indicaciones-me-v2')
     @endif

@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label for="componente">
                                 Componente *
-                                <button type="button" @click="openModal" 
+                                <button type="button" @click="openModal"
                                 v-if="
                                     cliente.codigo === '0279'
                                     && tecnica?.codigo === 'ME'
@@ -190,7 +190,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <div class="col-md-3">
                         <div class="form-group">
@@ -230,8 +230,8 @@
                         </div>
                     </div>
 
-                    
-                    
+
+
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="agente_acoplamiento">Agente Acoplamiento *</label>
@@ -374,7 +374,7 @@
                             <div v-show="tecnica.codigo !='ME'" class="col-md-3">
                                 <div class="form-group" >
                                     <label for="curva_elevacion" title="Curva Elevación">Curva Elevación *</label>
-                                     <v-select v-model="curva_elevacion" :options="['DAC', 'TCG']"></v-select>
+                                     <v-select v-model="curva_elevacion" :options="['DAC', 'TCG', 'N/A']"></v-select>
                                 </div>
                             </div>
 
@@ -399,7 +399,7 @@
                             <div v-show="tecnica.codigo !='ME'" class="col-md-3">
                                 <div class="form-group" >
                                     <label for="tipo_reflector" title="Tipo Reflector">Tipo Reflector *</label>
-                                     <v-select v-model="tipo_reflector" :options="['Ø', 'Ħ']"></v-select>
+                                     <v-select v-model="tipo_reflector" :options="['Ø', 'Ħ', 'N/A']"></v-select>
                                 </div>
                             </div>
 
@@ -650,12 +650,12 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="camino_sonico_us_pa" title="Camino sónico">Camino Sónico *</label>
-                                    <input 
-                                        type="number" 
-                                        v-model="camino_sonico_us_pa" 
-                                        class="form-control" 
-                                        id="camino_sonico_us_pa" 
-                                        step="0.01" 
+                                    <input
+                                        type="number"
+                                        v-model="camino_sonico_us_pa"
+                                        class="form-control"
+                                        id="camino_sonico_us_pa"
+                                        step="0.01"
                                     >
                                 </div>
                             </div>
@@ -802,16 +802,16 @@
                                         <input type="number" v-model="espesor_minimo_me" class="form-control" id="espesor_minimo_me" min="0" step="0.1">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-3">
                                     <div class="form-group" >
-                                        <label for="espesor_minimo_anterior_me" title="Espesor minimo anterior">Espesor minimo anterior 
+                                        <label for="espesor_minimo_anterior_me" title="Espesor minimo anterior">Espesor minimo anterior
                                             <span v-if="cliente.codigo == '0279'">*</span>
                                         </label>
                                         <input type="number" v-model="espesor_minimo_anterior_me" class="form-control" id="espesor_minimo_anterior_me" min="0" step="0.1">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-3">
                                     <div class="form-group" >
                                         <label for="años_ultima_inspeccion_me"
@@ -822,7 +822,7 @@
                                         <input type="number" v-model="años_ultima_inspeccion_me" class="form-control" id="años_ultima_inspeccion_me" min="0" step="0.1">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-3">
                                     <div class="form-group" >
                                         <label for="cantidad_generatrices_linea_pdf_me" title="Cantidad Generatrices por linea en informe">Generatrices por Linea en pdf *</label>
@@ -843,7 +843,7 @@
                                                         <th  class="col-lg-2">Mínimo</th>
                                                         <th  class="col-lg-2">Mínimo Ant</th>
                                                         <th  class="col-lg-2">Años Ultima Insp.</th>
-                                                        <th  class="col-lg-1">G.L.P.</th>                                                       
+                                                        <th  class="col-lg-1">G.L.P.</th>
                                                         <th  class="col-lg-3">Importar Excel</th>
                                                         <th  class="col-lg-2">&nbsp;</th>
                                                     </tr>
@@ -871,7 +871,7 @@
                                                                 {{ item.cantidad_generatrices_linea_pdf_me}}
                                                             </div>
                                                         </td>
-                                                        
+
                                                         <td>
                                                             <button type="button" @click="triggerFileUpload(k)">
                                                                 <i class="fa fa-file-excel-o"></i>
@@ -900,7 +900,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                
+
                             <div class="clearfix"></div>
                             <input type="file" ref="fileInput" style="display: none" @change="uploadExcel">
                             <div class="col-lg-12">
@@ -1027,7 +1027,7 @@
                     (
                     (componente_me_data?.tipo_us && componente_me_data.tipo_us !== 'Linea')
                     || tipo_tgs !== 'Linea'
-                    )" 
+                    )"
                 class="box box-custom-enod">
                 <div class="box-body">
                 <div class="box-header with-border">
@@ -1123,7 +1123,7 @@
             :color="'red'">
         </loading>
        <!-- Uso del modal -->
-        
+
     </div>
 </template>
 
@@ -1282,7 +1282,7 @@ export default {
             type : [ Object, Array ],
             required : false
             }
-            
+
     },
 
     data() {return {
@@ -1744,11 +1744,13 @@ export default {
 
         addCalibraciones : function () {
 
-            if(this.calibraciones.length == 4 ){
+            // Usamos un operador ternario para definir el límite en una sola línea
+            let limite = (this.tecnica.codigo === 'PA') ? 8 : 4;
 
-                 toastr.error('El máximo de calibraciones a ingresar son 4');
-                 return ;
-
+            // Ahora hacemos la validación contra ese límite dinámico
+            if (this.calibraciones.length >= limite) {
+                toastr.error(`El máximo de calibraciones a ingresar son ${limite}.`);
+                return;
             }
 
             if (this.tecnica.codigo !='ME' && !this.zapata){
@@ -1811,11 +1813,13 @@ export default {
                  return ;
             }
 
-            if(this.posicion.length  > 3){
+            if ((this.tecnica.codigo !== 'PA' && this.posicion.length > 3) || (this.tecnica.codigo === 'PA' && this.posicion.length > 10)) {
 
-                toastr.error('El campo Posición no debe contener más de 3 caracteres');
-                return ;
-             }
+                // Puedes usar un mensaje de error más genérico o adaptarlo
+                let limite = this.tecnica.codigo === 'PA' ? 10 : 3;
+                toastr.error(`El campo Posición no debe contener más de ${limite} caracteres.`);
+                return;
+            }
 
             if (this.tecnica.codigo !='ME' && !this.curva_elevacion){
 
@@ -1853,11 +1857,11 @@ export default {
                  return ;
             }
 
-            if(this.tecnica.codigo !='ME' && this.tipo_reflector.length  > 1){
+            if(this.tecnica.codigo !='ME' && this.tipo_reflector.length  > 3){
 
-                toastr.error('El campo Tipo Reflector no debe contener más de 1 caracteres');
+                toastr.error('El campo Tipo Reflector no debe contener más de 3 caracteres');
                 return ;
-             }
+            }
 
             if (this.tecnica.codigo !='ME' && !this.reflector_referencia){
 
@@ -2177,7 +2181,7 @@ uploadExcel(event) {
 processExcelData(data, filas, columnas) {
     const cantidad_posiciones_me = filas;
     const cantidad_generatrices_me = columnas;
-    
+
     if (this.currentPosition === null || this.currentPosition >= this.Tabla_me.length) {
         console.error('Posición actual no válida o fuera de rango.');
         return;
@@ -2220,7 +2224,7 @@ processExcelData(data, filas, columnas) {
 
             this.cantidad_posiciones_me = 50;
             this.cantidad_generatrices_me = 50;
-            
+
             if (!this.elemento_me) {
                 toastr.error('El campo Elemento es obligatorio');
                 return ;
@@ -2228,15 +2232,15 @@ processExcelData(data, filas, columnas) {
             if (!this.espesor_minimo_me && this.cliente.codigo == '0279') {
                 toastr.error('El campo espesor mínimo es obligatorio');
                 return ;
-            }  
+            }
             if (!this.espesor_minimo_anterior_me && this.cliente.codigo == '0279') {
                 toastr.error('El campo Espesor minimo anterior es obligatorio');
                 return ;
-            }   
+            }
             if (!this.años_ultima_inspeccion_me && this.cliente.codigo == '0279') {
                 toastr.error('El campo Años última inspección es obligatorio');
                 return ;
-            }        
+            }
             if (!this.elemento_me) {
                 toastr.error('El campo Elemento es obligatorio');
                 return ;
@@ -2354,7 +2358,7 @@ processExcelData(data, filas, columnas) {
 
 
             this.indexPosTabla_me = index ;
-            
+
         },
 
         getFocus(g,cant_g,p,cant_p){
@@ -2383,9 +2387,9 @@ processExcelData(data, filas, columnas) {
 
         selectPosPos: function(index) {
             try {
-               
+
                 this.indexPosPos = index;
-                
+
             } catch (error) {
                 // Muestra un mensaje de error en caso de que ocurra un problema
                 toastr.error('Formato inválido de tabla');
@@ -2565,7 +2569,7 @@ processExcelData(data, filas, columnas) {
                 }
 
             if(this.cliente.codigo === '0279' &&
-                this.tecnica.codigo === 'ME' && 
+                this.tecnica.codigo === 'ME' &&
                 this.Tabla_me.length === 0){
                 toastr.error('Registro De Mediciones es obligatorio para TGS');
                 return;

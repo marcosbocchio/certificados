@@ -27359,8 +27359,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     addCalibraciones: function addCalibraciones() {
-      if (this.calibraciones.length == 4) {
-        toastr.error('El máximo de calibraciones a ingresar son 4');
+      // Usamos un operador ternario para definir el límite en una sola línea
+      var limite = this.tecnica.codigo === 'PA' ? 8 : 4;
+
+      // Ahora hacemos la validación contra ese límite dinámico
+      if (this.calibraciones.length >= limite) {
+        toastr.error("El m\xE1ximo de calibraciones a ingresar son ".concat(limite, "."));
         return;
       }
       if (this.tecnica.codigo != 'ME' && !this.zapata) {
@@ -27403,8 +27407,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         toastr.error('El campo Posición es obligatorio');
         return;
       }
-      if (this.posicion.length > 3) {
-        toastr.error('El campo Posición no debe contener más de 3 caracteres');
+      if (this.tecnica.codigo !== 'PA' && this.posicion.length > 3 || this.tecnica.codigo === 'PA' && this.posicion.length > 10) {
+        // Puedes usar un mensaje de error más genérico o adaptarlo
+        var _limite = this.tecnica.codigo === 'PA' ? 10 : 3;
+        toastr.error("El campo Posici\xF3n no debe contener m\xE1s de ".concat(_limite, " caracteres."));
         return;
       }
       if (this.tecnica.codigo != 'ME' && !this.curva_elevacion) {
@@ -27431,8 +27437,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         toastr.error('El campo Tipo Reflector es obligatorio');
         return;
       }
-      if (this.tecnica.codigo != 'ME' && this.tipo_reflector.length > 1) {
-        toastr.error('El campo Tipo Reflector no debe contener más de 1 caracteres');
+      if (this.tecnica.codigo != 'ME' && this.tipo_reflector.length > 3) {
+        toastr.error('El campo Tipo Reflector no debe contener más de 3 caracteres');
         return;
       }
       if (this.tecnica.codigo != 'ME' && !this.reflector_referencia) {
@@ -86708,7 +86714,7 @@ var render = function render() {
     }
   }, [_vm._v("Curva Elevación *")]), _vm._v(" "), _c("v-select", {
     attrs: {
-      options: ["DAC", "TCG"]
+      options: ["DAC", "TCG", "N/A"]
     },
     model: {
       value: _vm.curva_elevacion,
@@ -86799,7 +86805,7 @@ var render = function render() {
     }
   }, [_vm._v("Tipo Reflector *")]), _vm._v(" "), _c("v-select", {
     attrs: {
-      options: ["Ø", "Ħ"]
+      options: ["Ø", "Ħ", "N/A"]
     },
     model: {
       value: _vm.tipo_reflector,
@@ -87767,7 +87773,7 @@ var render = function render() {
       "for": "espesor_minimo_anterior_me",
       title: "Espesor minimo anterior"
     }
-  }, [_vm._v("Espesor minimo anterior \n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor minimo anterior\n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
