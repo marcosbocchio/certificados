@@ -1745,7 +1745,7 @@ export default {
         addCalibraciones : function () {
 
             // Usamos un operador ternario para definir el límite en una sola línea
-            let limite = (this.tecnica.codigo === 'PA') ? 8 : 4;
+            let limite = (this.tecnica.codigo === 'PA') ? 10 : 4;
 
             // Ahora hacemos la validación contra ese límite dinámico
             if (this.calibraciones.length >= limite) {
@@ -2416,7 +2416,7 @@ processExcelData(data, filas, columnas) {
                 this.block_calibraciones = ['Probeta', 'Probeta escalonada'];
             }else{
 
-                this.block_calibraciones = ['V1', 'V2'];
+                this.block_calibraciones = ['V1', 'V2','N/A'];
             }
         },
 
