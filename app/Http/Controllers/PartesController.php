@@ -61,15 +61,30 @@ class PartesController extends Controller
     }
 
 
-    public function paginate(Request $request,$ot_id){
+    public function paginate(Request $request, $ot_id)
+    {
+        // Obtenemos el término de búsqueda desde la request.
+        // Si no existe, el valor por defecto será null.
+        $search = $request->input('search');
 
-     return DB::table('partes')
-                ->join('users','users.id','=','partes.user_id')
-                ->where('ot_id','=',$ot_id)
-                ->selectRaw('partes.id as id,ot_id,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha,tipo_servicio,firma,LPAD(partes.id, 8, "0") as numero_formateado,users.name')
-                ->orderBy('id','DESC')
-                ->paginate(10);
-      }
+        return DB::table('partes')
+            ->join('users', 'users.id', '=', 'partes.user_id')
+            ->where('ot_id', '=', $ot_id)
+            // Usamos when() para aplicar los filtros de búsqueda solo si $search tiene un valor.
+            ->when($search, function ($query) use ($search) {
+                return $query->where(function ($q) use ($search) {
+                    // Buscamos en las columnas que necesites.
+                    // La sub-cláusula where() agrupa los orWhere para no interferir con el where('ot_id',...)
+                    $q->orWhere('users.name', 'LIKE', "%{$search}%")
+                    ->orWhere('partes.tipo_servicio', 'LIKE', "%{$search}%")
+                    ->orWhere(DB::raw('LPAD(partes.id, 8, "0")'), 'LIKE', "%{$search}%")
+                    ->orWhere(DB::raw('DATE_FORMAT(partes.fecha,"%d/%m/%Y")'), 'LIKE', "%{$search}%");
+                });
+            })
+            ->selectRaw('partes.id as id, ot_id, DATE_FORMAT(partes.fecha,"%d/%m/%Y") as fecha, tipo_servicio, firma, LPAD(partes.id, 8, "0") as numero_formateado, users.name')
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
+    }
 
     public function getPartesOt($ot_id){
 

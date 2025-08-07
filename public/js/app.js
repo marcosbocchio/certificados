@@ -16952,7 +16952,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       ot_partes: {},
       index_parte: 0,
       loading_table: false,
-      partes: []
+      partes: [],
+      search: ''
     };
   },
   created: function created() {
@@ -16991,7 +16992,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var _this2 = this;
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'partes/ot/' + this.ot_id_data + '/paginate' + '?page=' + page;
+      // Añadimos el parámetro &search= a la URL
+      var urlRegistros = "partes/ot/".concat(this.ot_id_data, "/paginate?page=").concat(page, "&search=").concat(this.search);
       axios.get(urlRegistros).then(function (response) {
         _this2.ot_partes = response.data;
       });
@@ -66623,6 +66625,10 @@ var render = function render() {
   }, [_vm._v("Next >")])])], 1)])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-3"
+  }, [_c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -66636,7 +66642,52 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "fa fa-plus-circle"
-  }), _vm._v(" Nuevo")])])]), _vm._v(" "), _c("div", {
+  }), _vm._v(" Nuevo\n                       ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("div", {
+    staticClass: "input-group"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.search,
+      expression: "search"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "Buscar..."
+    },
+    domProps: {
+      value: _vm.search
+    },
+    on: {
+      keyup: function keyup($event) {
+        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
+        return _vm.getResults(1);
+      },
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.search = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "input-group-addon btn",
+    staticStyle: {
+      "background-color": "rgb(255, 204, 0)",
+      cursor: "pointer",
+      border: "none"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getResults(1);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-search"
+  })])])])])]), _vm._v(" "), _c("div", {
     staticClass: "clearfix"
   }), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"

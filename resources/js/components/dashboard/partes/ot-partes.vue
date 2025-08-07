@@ -17,7 +17,7 @@
        </div>
        <div v-show="parte_esp == 1">
 
-       
+
        <div class="clearfix"></div>
 
         <div class="col-md-12">
@@ -72,7 +72,7 @@
                         </table>
                     </div>
                     <pagination
-                        :data="partes" 
+                        :data="partes"
                         @pagination-change-page="fetchPartesPaginadas"
                         :limit="3">
                         <span slot="prev-nav">&lt; Previous</span>
@@ -81,11 +81,27 @@
                 </div>
             </div>
         </div>
-    </div>        
-                <div class="col-md-12">
-           <div v-show="$can('T_partes_edita')">
-                <a :href="'/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
-           </div>
+    </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <div v-show="$can('T_partes_edita')">
+                        <a :href="'/area/enod/ot/' + ot_id_data + '/parte'" class="btn btn-enod pull-left">
+                            <span class="fa fa-plus-circle"></span> Nuevo
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="text" v-model="search" class="form-control" @keyup.enter="getResults(1)" placeholder="Buscar...">
+                        <span class="input-group-addon btn" @click="getResults(1)" style="background-color: rgb(255, 204, 0); cursor: pointer; border: none;">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="clearfix"></div>
         <div class="col-md-12">
@@ -150,7 +166,7 @@
                 </div>
             </div>
         </div>
-    <div class="clearfix"></div>
+        <div class="clearfix"></div>
     <confirmar-modal></confirmar-modal>
  </div>
 </template>
@@ -172,6 +188,7 @@ export default {
       index_parte:0,
       loading_table : false,
       partes: [],
+        search: '',
     }
   },
   created : function() {
@@ -198,31 +215,31 @@ export default {
        ...mapState(['url','CantPartes'])
      },
 
-  methods : {
-    fetchPartesPaginadas(page = 1) {
-    axios.get(`partes-manuales/paginate?ot_id=${this.ot_data.id}&page=${page}`)
-    .then(response => {
-        this.partes = response.data;  // Asegúrate de que la respuesta contiene los datos de paginación esperados
-        console.log(this.partes); // Esto te ayudará a verificar que la paginación funciona correctamente
-    })
-    .catch(error => {
-        if (error.response) {
-            console.error('Error al obtener partes manuales:', error.response.status);
-        } else if (error.request) {
-            console.error('Error al realizar la solicitud:', error.request);
-        } else {
-            console.error('Error:', error.message);
-        }
-    });
-},
-      getResults :function(page = 1){
+    methods : {
+        fetchPartesPaginadas(page = 1) {
+        axios.get(`partes-manuales/paginate?ot_id=${this.ot_data.id}&page=${page}`)
+        .then(response => {
+            this.partes = response.data;  // Asegúrate de que la respuesta contiene los datos de paginación esperados
+            console.log(this.partes); // Esto te ayudará a verificar que la paginación funciona correctamente
+        })
+        .catch(error => {
+            if (error.response) {
+                console.error('Error al obtener partes manuales:', error.response.status);
+            } else if (error.request) {
+                console.error('Error al realizar la solicitud:', error.request);
+            } else {
+                console.error('Error:', error.message);
+            }
+        });
+        },
+        getResults: function(page = 1) {
+            axios.defaults.baseURL = this.url;
+            // Añadimos el parámetro &search= a la URL
+            var urlRegistros = `partes/ot/${this.ot_id_data}/paginate?page=${page}&search=${this.search}`;
 
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'partes/ot/' + this.ot_id_data + '/paginate' + '?page='+ page;
-            axios.get(urlRegistros).then(response =>{
-            this.ot_partes = response.data
+            axios.get(urlRegistros).then(response => {
+                this.ot_partes = response.data;
             });
-
         },
         editParteManual(id) {
             // Método para redireccionar a la página de edición del parte con el ID proporcionado
