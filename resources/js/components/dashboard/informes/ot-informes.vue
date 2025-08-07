@@ -142,20 +142,22 @@
                                     <td v-else width="10px">
                                         <button @click.prevent="EditInformeImportable(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><span class="fa fa-edit"></span></button>
                                     </td>
-                                        <td v-if="!ot_informe.importable_sn && (ot_informe.metodo == 'LP' || ot_informe.metodo == 'PM' || ot_informe.metodo == 'US'|| ot_informe.metodo == 'RI'|| ot_informe.metodo == 'RD'|| ot_informe.metodo == 'CV' || ot_informe.metodo == 'TT' || ot_informe.metodo == 'PMI' || ot_informe.metodo == 'CI')" width="10px">
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" style="margin-top: 5px;">
-                                                    <app-icon img="clone" color="black"></app-icon>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-center">
-                                                    <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'clonado')">Clonado</button></li>
-                                                    <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'completo')">Clonado Completo</button></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                        <td v-else>
-                                            <button @click="confirmarClanacion(k, 'clonado')" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><app-icon img="clone" color="black"></app-icon></button>
-                                        </td>
+                                    <td v-if="!ot_informe.importable_sn && (ot_informe.metodo == 'LP' || ot_informe.metodo == 'PM' || ot_informe.metodo == 'US'|| ot_informe.metodo == 'RI'|| ot_informe.metodo == 'RD'|| ot_informe.metodo == 'CV' || ot_informe.metodo == 'TT' || ot_informe.metodo == 'PMI')" width="10px">
+                                        <div class="dropdown">
+                                            <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" style="margin-top: 5px;">
+                                                <app-icon img="clone" color="black"></app-icon>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-center">
+                                                <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'clonado')">Clonado</button></li>
+                                                <li><button type="button" class="btn btn-link dropdown-item" @click="confirmarClanacion(k, 'completo')">Clonado Completo</button></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td v-else>
+                                        <button class="btn btn-default btn-sm" title="Clonar" :disabled="true" @click="confirmarClanacion(k, 'clonado')">
+                                            <app-icon img="clone" color="black"></app-icon>
+                                        </button>
+                                    </td>
                                     <td v-if="ot_informe.metodo == 'RI'">
                                         <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" :disabled="ot_informe.anulado_sn === 1" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
                                     </td>

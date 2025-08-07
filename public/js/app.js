@@ -24912,7 +24912,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       sistema_aesa: '',
       elemento_aesa: '',
       paq_de_prueba_aesa: '',
-      ptt_sn: ''
+      ptt_sn: '',
+      actionToConfirm: ''
     };
   },
   created: function created() {
@@ -25995,8 +25996,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.TablaModelos3d.splice(index, 1);
       this.modelo_3d = '';
     },
+    proceed: function proceed() {
+      if (this.actionToConfirm === 'store') {
+        this.Store(true);
+      } else if (this.actionToConfirm === 'update') {
+        this.Update(true);
+      }
+    },
     Store: function Store() {
       var _this22 = this;
+      var forzar = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      if (this.formato !== 'PERFILES' && this.TablaPasadas.length === 0 && !forzar) {
+        this.actionToConfirm = 'store';
+        $('#modal-advertencia-pasadas').modal('show');
+        return;
+      }
+      $('#modal-advertencia-pasadas').modal('hide');
       this.errors = [];
       var gasoducto_sn;
       if (this.formato == 'DUCTO') gasoducto_sn = true;else if (this.formato == 'PLANTA' || this.formato == 'PERFILES') gasoducto_sn = false;else gasoducto_sn = null;
@@ -26083,6 +26098,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     Update: function Update() {
       var _this23 = this;
+      var forzar = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      if (this.TablaPasadas.length === 0 && !forzar) {
+        this.actionToConfirm = 'update';
+        $('#modal-advertencia-pasadas').modal('show');
+        return;
+      }
+      $('#modal-advertencia-pasadas').modal('hide');
       this.errors = [];
       var gasoducto_sn;
       if (this.formato == 'DUCTO') gasoducto_sn = true;else if (this.formato == 'PLANTA' || this.formato == 'PERFILES') gasoducto_sn = false;else gasoducto_sn = null;
@@ -65528,7 +65550,7 @@ var render = function render() {
       }
     }, [_c("span", {
       staticClass: "fa fa-edit"
-    })])]), _vm._v(" "), !ot_informe.importable_sn && (ot_informe.metodo == "LP" || ot_informe.metodo == "PM" || ot_informe.metodo == "US" || ot_informe.metodo == "RI" || ot_informe.metodo == "RD" || ot_informe.metodo == "CV" || ot_informe.metodo == "TT" || ot_informe.metodo == "PMI" || ot_informe.metodo == "CI") ? _c("td", {
+    })])]), _vm._v(" "), !ot_informe.importable_sn && (ot_informe.metodo == "LP" || ot_informe.metodo == "PM" || ot_informe.metodo == "US" || ot_informe.metodo == "RI" || ot_informe.metodo == "RD" || ot_informe.metodo == "CV" || ot_informe.metodo == "TT" || ot_informe.metodo == "PMI") ? _c("td", {
       attrs: {
         width: "10px"
       }
@@ -65576,7 +65598,7 @@ var render = function render() {
       staticClass: "btn btn-default btn-sm",
       attrs: {
         title: "Clonar",
-        disabled: !_vm.$can("T_informes_edita") || ot_informe.anulado_sn === 1
+        disabled: true
       },
       on: {
         click: function click($event) {
@@ -84488,6 +84510,36 @@ var render = function render() {
     attrs: {
       tabindex: "-1",
       role: "dialog",
+      id: "modal-advertencia-pasadas"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_vm._m(7), _vm._v(" "), _vm._m(8), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-default",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Cancelar")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.proceed
+    }
+  }, [_vm._v("Continuar")])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      tabindex: "-1",
+      role: "dialog",
       id: "modal-clonar",
       "data-keyboard": "false",
       "data-backdrop": "static"
@@ -84499,7 +84551,7 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(7), _vm._v(" "), _c("div", {
+  }, [_vm._m(9), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row"
@@ -84647,7 +84699,7 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(8), _vm._v(" "), _c("div", {
+  }, [_vm._m(10), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row"
@@ -84682,7 +84734,7 @@ var render = function render() {
     attrs: {
       "for": "sheetjs-input"
     }
-  }), _vm._v(" "), _c("p", [_vm._v("Formato soportado : csv")])])])])]), _vm._v(" "), _vm._m(9)])])]), _vm._v(" "), _c("loading", {
+  }), _vm._v(" "), _c("p", [_vm._v("Formato soportado : csv")])])])])]), _vm._v(" "), _vm._m(11)])])]), _vm._v(" "), _c("loading", {
     attrs: {
       active: _vm.isLoading,
       loader: "bars",
@@ -84815,6 +84867,20 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "fa fa-minus"
   })])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "modal-header"
+  }, [_c("h4", {
+    staticClass: "modal-title"
+  }, [_vm._v("Advertencia")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "modal-body"
+  }, [_c("p", [_vm._v("No se cargaron pasadas. ¿Desea continuar de todas formas?")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

@@ -38,24 +38,24 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
-                                                
+
                                                 <!-- Checkbox para "R" -->
-                                                <input type="checkbox" id="reparacion_sn" 
-                                                    v-model="reparacion_sn" 
-                                                    :disabled="!pk || !tipo_soldadura" 
-                                                    @change="cambioReparacion_sn()" 
+                                                <input type="checkbox" id="reparacion_sn"
+                                                    v-model="reparacion_sn"
+                                                    :disabled="!pk || !tipo_soldadura"
+                                                    @change="cambioReparacion_sn()"
                                                     style="float:right">
                                                 <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
-                                                
+
                                                 <!-- v-select con opciones personalizadas -->
-                                                <v-select 
-                                                    v-model="tipo_soldadura" 
-                                                    label="codigo" 
-                                                    :options="ot_tipo_soldaduras_filter_R" 
-                                                    id="ot_obra_tipo_soldaduras" 
-                                                    @input="cambioOtTipoSoldadura" 
+                                                <v-select
+                                                    v-model="tipo_soldadura"
+                                                    label="codigo"
+                                                    :options="ot_tipo_soldaduras_filter_R"
+                                                    id="ot_obra_tipo_soldaduras"
+                                                    @input="cambioOtTipoSoldadura"
                                                     :disabled="(!isGasoducto || !obra || !pk)">
-                                                    
+
                                                     <!-- Template para mostrar codigo y descripcion -->
                                                     <template #option="option">
                                                         <span class="upSelect">{{ option.codigo }}</span> <br>
@@ -236,7 +236,7 @@
                              <div class="form-group" >
                                  <label for="foco">Foco </label>
                                  <input type="text" v-model="interno_fuente.foco" class="form-control" id="foco" disabled>
-                                 
+
                              </div>
                          </div>
                          <div v-else class="col-md-3">
@@ -427,23 +427,23 @@
                                         <input type="text" v-model="N_Reporte_RFI" class="form-control" id="N_Reporte_RFI" maxlength="30">
                                     </div>
                                 </div>
-                            
-                            
+
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="Sistema_aesa">Sistema</label>
                                         <input type="text" v-model="sistema_aesa" class="form-control" id="sistema_aesa" maxlength="20">
                                     </div>
                                 </div>
-                            
-                            
+
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="Elemento_aesa">Elemento</label>
                                         <input type="text" v-model="elemento_aesa" class="form-control" id="elemento_aesa" maxlength="20">
                                     </div>
                                 </div>
-                            
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="Paq_de_prueba_aesa">Paq. de prueba</label>
@@ -955,6 +955,23 @@
                    <button class="btn btn-primary" type="submit" :disabled="isLoading">Guardar</button>
             </form>
 
+            <div class="modal fade" tabindex="-1" role="dialog" id="modal-advertencia-pasadas">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Advertencia</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>No se cargaron pasadas. ¿Desea continuar de todas formas?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" @click="proceed">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
          <div class="modal fade " tabindex="-1" role="dialog" id="modal-clonar" data-keyboard="false" data-backdrop="static" >
              <div class="modal-dialog modal-md" role="document">
                  <div class="modal-content">
@@ -1281,6 +1298,7 @@ import { eventSetReferencia } from '../event-bus';
              elemento_aesa:'',
              paq_de_prueba_aesa:'',
              ptt_sn: '',
+             actionToConfirm: '',
 
          }},
      created : function(){
@@ -1464,7 +1482,7 @@ import { eventSetReferencia } from '../event-bus';
                 this.solicitado_por = this.solicitado_pordata ;
                 this.TablaTramos = this.tablatramos_data;
                 this.resultado_pdf_sn = this.informe_ridata.resultado_pdf_sn;
-                
+
 
                 if(this.informe_ridata.reparacion_sn){
                      this.getElementosReparacion();
@@ -1861,8 +1879,8 @@ import { eventSetReferencia } from '../event-bus';
             }
 
             // Verificar si ya existe el proceso_soldadores en el elemento actual
-                let procesoExistente = this.TablaPasadas.find(pasada => 
-                pasada.elemento_pasada === this.elemento_pasada && 
+                let procesoExistente = this.TablaPasadas.find(pasada =>
+                pasada.elemento_pasada === this.elemento_pasada &&
                 pasada.proceso_soldadores === this.proceso_soldadores);
 
                 if (this.formato == 'PLANTA' && procesoExistente && this.informe_especialdata != '') {
@@ -2335,7 +2353,24 @@ import { eventSetReferencia } from '../event-bus';
 
          },
 
-         Store : function(){
+         proceed: function() {
+             if (this.actionToConfirm === 'store') {
+                 this.Store(true);
+             } else if (this.actionToConfirm === 'update') {
+                 this.Update(true);
+             }
+         },
+
+         Store : function(forzar = false){
+
+                     if (this.formato !== 'PERFILES' && this.TablaPasadas.length === 0 && !forzar) {
+                        this.actionToConfirm = 'store';
+                         $('#modal-advertencia-pasadas').modal('show');
+                         return;
+                     }
+
+                     $('#modal-advertencia-pasadas').modal('hide');
+
                      this.errors =[];
                      let gasoducto_sn ;
                      if(this.formato =='DUCTO')
@@ -2352,6 +2387,8 @@ import { eventSetReferencia } from '../event-bus';
                      else
                          perfil_sn= null;
                      var urlRegistros = 'informes_ri' ;
+
+
                      this.$store.commit('loading', true);
                      axios({
                      method: 'post',
@@ -2410,7 +2447,7 @@ import { eventSetReferencia } from '../event-bus';
                          'elemento_aesa': this.elemento_aesa,
                          'paq_de_prueba_aesa':this.paq_de_prueba_aesa,
                          'ptt_sn':this.ptt_sn,
-                         
+
                  }}
 
 
@@ -2434,7 +2471,14 @@ import { eventSetReferencia } from '../event-bus';
                 }).finally( () => this.$store.commit('loading', false))
 
          },
-         Update : function() {
+                    Update : function(forzar = false) {
+                    if (this.TablaPasadas.length === 0 && !forzar) {
+                        this.actionToConfirm = 'update';
+                         $('#modal-advertencia-pasadas').modal('show');
+                         return;
+                     }
+
+                     $('#modal-advertencia-pasadas').modal('hide');
                      this.errors =[];
                      let gasoducto_sn ;
                      if(this.formato =='DUCTO')
