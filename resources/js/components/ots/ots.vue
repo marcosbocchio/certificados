@@ -69,7 +69,7 @@
               <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>
           </div>
         </div>
-        
+
         <div class="col-md-6">
           <div class="form-group">
               <label>Comitente</label>
@@ -193,6 +193,7 @@
               </v-select>
           </div>
         </div>
+        <div class="clearfix"></div>
         <div class="col-md-6">
           <div class="form-group">
              <label>Norma Evaluación</label>
