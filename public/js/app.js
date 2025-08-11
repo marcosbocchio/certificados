@@ -52419,10 +52419,11 @@ var render = function render() {
       attrs: {
         width: "10px"
       }
-    }, [registro.stockeable_sn !== 0 ? _c("button", {
+    }, [_c("button", {
       staticClass: "btn btn-warning btn-sm",
       attrs: {
-        title: "Ver Detalles"
+        title: "Ver Detalles",
+        disabled: registro.stockeable_sn === 0
       },
       on: {
         click: function click($event) {
@@ -52432,7 +52433,7 @@ var render = function render() {
       }
     }, [_c("span", {
       staticClass: "fa fa-list"
-    })]) : _vm._e()]), _vm._v(" "), _c("td", {
+    })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }

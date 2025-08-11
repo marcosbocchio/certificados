@@ -32,7 +32,7 @@
                 <span v-else>{{ registro.stock }}</span>
               </td>
               <td width="10px">
-                <button v-if="registro.stockeable_sn !== 0" class="btn btn-warning btn-sm" title="Ver Detalles" @click.prevent="registroProducto(registro.id)">
+                <button class="btn btn-warning btn-sm" title="Ver Detalles" @click.prevent="registroProducto(registro.id)" :disabled="registro.stockeable_sn === 0">
                     <span class="fa fa-list"></span>
                 </button>
               </td>
