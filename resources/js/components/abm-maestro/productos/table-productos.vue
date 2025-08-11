@@ -11,23 +11,31 @@
               <th style="text-align: center">Unidad Medida</th>
               <th style="text-align: center">Visible OT</th>
               <th style="text-align: center">Stock</th>
-              <th colspan="2">&nbsp;</th>
+              <th colspan="3">&nbsp;</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="registro in registros" :key="registro.id">
               <td>{{ registro.codigo }}</td>
               <td>{{ registro.descripcion }}</td>
-              <td style="text-align: center">{{ registro.unidad_medidas.codigo }}</td>     
+              <td style="text-align: center">{{ registro.unidad_medidas.codigo }}</td>
               <td style="text-align: center">
                 <div v-if="registro.visible_ot">
                     SI
-                </div>   
+                </div>
                 <div v-else>
-                    NO   
-                </div>             
+                    NO
+                </div>
               </td>
-              <td style="text-align: center">{{ registro.stock }}</td>
+              <td style="text-align: center">
+                <span v-if="registro.stockeable_sn === 0">-</span>
+                <span v-else>{{ registro.stock }}</span>
+              </td>
+              <td width="10px">
+                <button v-if="registro.stockeable_sn !== 0" class="btn btn-warning btn-sm" title="Ver Detalles" @click.prevent="registroProducto(registro.id)">
+                    <span class="fa fa-list"></span>
+                </button>
+              </td>
               <td width="10px">
                 <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_productos_edita')"><span class="fa fa-edit"></span></button>
               </td>
@@ -45,27 +53,32 @@
    </div>
   </div>
   </template>
-  
+
   <script>
+import { identity } from 'lodash';
+
     export default {
-      data() {return {  
+      data() {return {
       }},
       props : {
         registros : {
           type : Array,
           required : true,
-          default:function () { return [] }            
-        },    
-  
+          default:function () { return [] }
+        },
+
         loading : {
           type : Boolean,
           required : true
-        },    
-      }, 
+        },
+      },
       methods: {
       updateValue: function (registro) {
          this.$emit('editar', registro);
-      }
+      },
+          registroProducto(id) {
+        window.location.href = `/area/enod/stock-registro/${id}`;
+    },
     }
     }
   </script>
