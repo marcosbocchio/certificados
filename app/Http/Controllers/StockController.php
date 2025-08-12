@@ -303,6 +303,7 @@ public function actualizarStock($detalleCompra, $request)
                                 return $query->where('descripcion', 'like', "%{$searchTerm}%")
                                             ->orWhere('codigo', 'like', "%{$searchTerm}%");
                             })
+                            ->orderBy('codigo', 'asc')
                             ->paginate($perPage);
 
         return response()->json($productos);

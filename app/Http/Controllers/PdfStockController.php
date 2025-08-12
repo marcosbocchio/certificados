@@ -12,30 +12,32 @@ use Illuminate\Support\Facades\Log;
 class PdfStockController extends Controller
 {
     public function imprimir(Request $request, $productoId)
-{
-    Log::info('Fecha inicio recibida para el PDF:', [$request->query('fechaInicio')]);
-    $fechaInicio = $request->query('fechaInicio', Carbon::now()->subDays(30)->toDateString());
-    $fechaInicioFormato = Carbon::parse($fechaInicio)->format('d-m-Y');
-    
-    $stocks = Stock::with('user') // Cargar la relación con User
-               ->where('producto_id', $productoId)
-               ->whereDate('fecha', '>=', $fechaInicio)
-               ->orderBy('fecha', 'desc')
-               ->get();
+    {
+        Log::info('Fecha inicio recibida para el PDF:', [$request->query('fechaInicio')]);
+        $fechaInicio = $request->query('fechaInicio', Carbon::now()->subDays(30)->toDateString());
+        $fechaInicioFormato = Carbon::parse($fechaInicio)->format('d-m-Y');
 
-    $productos = Productos::where('id', $productoId)->first();
-    $fecha = date('d-m-Y'); // Esta podría ser la fecha actual o podrías querer usar la fechaInicio para algo en el PDF
+        $stocks = Stock::with('user') // Cargar la relación con User
+                ->where('producto_id', $productoId)
+                ->whereDate('fecha', '>=', $fechaInicio)
+                ->orderBy('fecha', 'desc')
+                ->get();
 
-    $pdf = PDF::loadView('stock.pdfstock', compact('stocks', 'productos', 'fecha', 'fechaInicioFormato'))
-              ->setPaper('a4', 'landscape')
-              ->setWarnings(false);
+        $productos = Productos::where('id', $productoId)->first();
+        $fecha = date('d-m-Y'); // Esta podría ser la fecha actual o podrías querer usar la fechaInicio para algo en el PDF
 
-    return $pdf->stream();
-}
+        $pdf = PDF::loadView('stock.pdfstock', compact('stocks', 'productos', 'fecha', 'fechaInicioFormato'))
+                ->setPaper('a4', 'landscape')
+                ->setWarnings(false);
+
+        return $pdf->stream();
+    }
 
     public function imprimirTodoStock()
     {
-        $productos = Productos::where('stockeable_sn', 1)->get();
+        $productos = Productos::where('stockeable_sn', 1)
+                            ->orderBy('codigo', 'asc') // <-- Cambio aquí
+                            ->get();
         $fecha = date('d-m-Y');
 
         $pdf = PDF::loadView('stock.pdfstock_todos', compact('productos','fecha'))->setPaper('a4','portrait');

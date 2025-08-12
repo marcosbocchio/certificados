@@ -1,21 +1,22 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-md-1">
-        <button @click="exportarPDF(id)" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
-      </div>
-      <div class="col-md-7">
-
-      </div>
-      <div class="col-md-4" style="display: flex;align-items: center; justify-content: flex-end;">
+  <div class="row">
+    <div class="col-md-2">
+        <button type="button" class="pull-left btn-enod btn-circle" @click="goBack">
+            <span class="fa fa-arrow-left"></span>
+        </button>
+    </div>
+    <div class="col-md-6 text-center">  <button @click="exportarPDF(id)" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
+    </div>
+    <div class="col-md-4" style="display: flex;align-items: center; justify-content: flex-end;">
         <div>
-          <p style="font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif; margin-right: 5px;">Mostar a partir de</p>
+            <p style="font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif; margin-right: 5px;">Mostar a partir de</p>
         </div>
         <div class="form-group">
-          <date-picker id="fechaDesde" v-model="fechaInicio" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Desde" @change="aplicarFiltro" class="flex-grow-1"></date-picker>
+            <date-picker id="fechaDesde" v-model="fechaInicio" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Desde" @change="aplicarFiltro" class="flex-grow-1"></date-picker>
         </div>
-      </div>
-  </div>
+    </div>
+</div>
   <div v-if="registro.data.length">
   </div>
     <div class="box box-custom-enod">
@@ -25,8 +26,8 @@
             <thead>
               <tr style="width: 100%;">
                 <th style="width: 10%;">Fecha</th>
-                <th style="width: 30%;">Movimiento</th>
-                <th style="width: 30%;">Observaciones</th>
+                <th style="width: 26%;">Movimiento</th>
+                <th style="width: 34%;">Observaciones</th>
                 <th style="text-align: right; width: 10%;">Usuario</th>
                 <th style="text-align: right; width: 10%;">Cantidad</th>
                 <th style="text-align: right; width: 10%;">Stock</th>
@@ -96,8 +97,11 @@ export default {
           this.registro = response.data;
         });
     },
+    goBack() {
+      window.history.back();
+    },
     aplicarFiltro() {
-      this.getRegistro(); 
+      this.getRegistro();
     },
     formatearFecha(fecha) {
       return fecha.split(' ')[0];
