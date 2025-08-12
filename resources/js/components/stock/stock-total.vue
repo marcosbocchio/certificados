@@ -9,7 +9,7 @@
       </span>
     </div>
   </div>
-  
+
   <div>
     <div class="box box-custom-enod">
       <div class="box-body">
@@ -17,13 +17,15 @@
           <table class="table table-hover table-striped table-condensed">
             <thead>
               <tr style="width: 100%;">
-                <th style="width: 45%;">Producto</th>
-                <th style="width: 45%;">Stock</th>
+                <th style="width: 25%;">Codigo</th>
+                <th style="width: 45%;">Descripción</th>
+                <th style="width: 25%;">Stock</th>
                 <th colspan="2" style="width: 5%;">Acciones</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="producto in productos" :key="producto.id">
+                <td>{{ producto.codigo }}</td>
                 <td>{{ producto.descripcion }}</td>
                 <td>{{ producto.stock }}</td>
                 <td width="10px">

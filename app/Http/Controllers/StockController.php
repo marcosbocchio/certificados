@@ -39,7 +39,7 @@ class StockController extends Controller
         $header_titulo = "Compras"; // Título para la página
         $header_descripcion = "Alta"; // Descripción o subtítulo para la página
         $stockItems = Stock::all(); // Obtener todos los elementos de stock
-    
+
         // Retornar la vista de stock, pasando los datos necesarios
         return view('stock.index', compact('user', 'header_titulo', 'header_descripcion', 'stockItems'));
     }
@@ -50,7 +50,7 @@ class StockController extends Controller
         $header_titulo = "COMPRAS"; // Título para la página
         $header_descripcion = "."; // Descripción o subtítulo para la página
         $proveedor = Proveedor::all();
-    
+
         // Retornar la vista de stock, pasando los datos necesarios
         return view('stock.table', compact('user', 'header_titulo', 'header_descripcion','proveedor'));
     }
@@ -60,7 +60,7 @@ class StockController extends Controller
         $user = auth()->user();
         $header_titulo = "Compras";
         $header_descripcion = "Vista";
-        $stockItem = Compra::where('id', $id)->first(); 
+        $stockItem = Compra::where('id', $id)->first();
         $stockItemCompra = DetalleCompra::where('compra_id', $id)->get();
         $proveedor = Proveedor::where('id', $stockItem->proveedor_id)->get();
         return view('stock.ajuste', compact('user', 'header_titulo', 'header_descripcion', 'stockItem','stockItemCompra','proveedor'));
@@ -102,9 +102,9 @@ class StockController extends Controller
         $producto = Productos::where('id', $id)->first();
         return view('stock.edit', compact('user', 'header_titulo', 'header_descripcion', 'producto',));
     }
-    
-//__________________________________________________function__________________________________________________    
-    
+
+//__________________________________________________function__________________________________________________
+
 public function store(CompraRequest $request)
 {
     DB::beginTransaction();
@@ -206,7 +206,7 @@ public function actualizarStock($detalleCompra, $request)
             'producto_id' => $detalleCompra->producto_id,
             'error' => $e->getMessage()
         ]);
-        
+
         throw $e;
     }
 }
@@ -275,7 +275,7 @@ public function actualizarStock($detalleCompra, $request)
         }
     }
 
-//__________________________________________________paginate__________________________________________________ 
+//__________________________________________________paginate__________________________________________________
 
     public function paginate(Request $request)
     {
@@ -297,13 +297,14 @@ public function actualizarStock($detalleCompra, $request)
     {
         $searchTerm = $request->search;
         $perPage = 10;
-    
+
         $productos = Productos::where('stockeable_sn', 1)
-                              ->when($searchTerm, function($query, $searchTerm) {
-                                  return $query->where('descripcion', 'like', "%{$searchTerm}%");
-                              })
-                              ->paginate($perPage);
-    
+                            ->when($searchTerm, function($query, $searchTerm) {
+                                return $query->where('descripcion', 'like', "%{$searchTerm}%")
+                                            ->orWhere('codigo', 'like', "%{$searchTerm}%");
+                            })
+                            ->paginate($perPage);
+
         return response()->json($productos);
     }
 
@@ -311,23 +312,23 @@ public function actualizarStock($detalleCompra, $request)
     public function paginateRegistro(Request $request, $id)
     {
         $perPage = 10;
-        
+
         // Asumiendo que estás utilizando Carbon para manejar fechas
         $fechaInicio = $request->input('fechaInicio', Carbon::now()->subDays(30)->toDateString());
-    
+
         $registro = Stock::where('producto_id', $id)
                         ->leftJoin('users', 'stock.user_id', '=', 'users.id')
                         ->whereDate('stock.created_at', '>=', $fechaInicio) // Especifica la tabla para 'created_at'
                         ->orderBy('stock.created_at', 'DESC') // Especifica la tabla para 'created_at' en el orderBy también
                         ->select('stock.*', DB::raw('IFNULL(users.name, "-") as user_name')) // Utiliza IFNULL para mostrar "Sin usuario" si no hay un usuario asociado
                         ->paginate($perPage);
-        
+
         return response()->json($registro);
     }
 
 
 
-//__________________________________________________Anular__________________________________________________ 
+//__________________________________________________Anular__________________________________________________
 
     public function compraAnulacion($id)
     {
@@ -346,7 +347,7 @@ public function actualizarStock($detalleCompra, $request)
                 $user_id = $userId = Auth::id();
             }
             foreach ($detallesCompra as $detalle) {
-                
+
                 $producto = Productos::find($detalle->producto_id);
                 if (!$producto) {
                     throw new \Exception("Producto no encontrado con ID: {$detalle->producto_id}");

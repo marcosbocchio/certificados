@@ -104584,7 +104584,7 @@ var render = function render() {
   }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.productos, function (producto) {
     return _c("tr", {
       key: producto.id
-    }, [_c("td", [_vm._v(_vm._s(producto.descripcion))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(producto.stock))]), _vm._v(" "), _c("td", {
+    }, [_c("td", [_vm._v(_vm._s(producto.codigo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(producto.descripcion))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(producto.stock))]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
@@ -104648,11 +104648,15 @@ var staticRenderFns = [function () {
     }
   }, [_c("th", {
     staticStyle: {
-      width: "45%"
+      width: "25%"
     }
-  }, [_vm._v("Producto")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Codigo")]), _vm._v(" "), _c("th", {
     staticStyle: {
       width: "45%"
+    }
+  }, [_vm._v("Descripción")]), _vm._v(" "), _c("th", {
+    staticStyle: {
+      width: "25%"
     }
   }, [_vm._v("Stock")]), _vm._v(" "), _c("th", {
     staticStyle: {
@@ -131143,7 +131147,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.exportar-todo-pdf[data-v-e92958ce] {\r\n  margin-bottom: 20px;\n}\n.export-search-container[data-v-e92958ce] {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 20px;\n}\r\n", ""]);
+exports.push([module.i, "\n.exportar-todo-pdf[data-v-e92958ce] {\n  margin-bottom: 20px;\n}\n.export-search-container[data-v-e92958ce] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  margin-bottom: 20px;\n}\n", ""]);
 
 // exports
 
