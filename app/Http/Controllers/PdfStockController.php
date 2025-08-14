@@ -33,13 +33,32 @@ class PdfStockController extends Controller
         return $pdf->stream();
     }
 
-    public function imprimirTodoStock()
+    public function imprimirTodoStock(Request $request)
     {
-        $productos = Productos::where('stockeable_sn', 1)
-                            ->orderBy('codigo', 'asc') // <-- Cambio aquí
-                            ->get();
-        $fecha = date('d-m-Y');
+        $searchTerm = $request->search;
+        // CORRECCIÓN: Recibimos el 1 o 0 y lo tratamos como un booleano
+        $filtroPlacas = (bool) $request->input('placas');
 
+        // Construimos la consulta con la misma lógica unificada
+        $query = Productos::query();
+
+        if ($filtroPlacas) {
+            // CORRECCIÓN: Apuntamos a la columna correcta.
+            $query->where('relacionado_a_placas_sn', 1);
+        }
+
+        if ($searchTerm) {
+            $query->where(function($subquery) use ($searchTerm) {
+                $subquery->where('descripcion', 'like', "%{$searchTerm}%")
+                        ->orWhere('codigo', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        // Obtenemos TODOS los resultados que coinciden, sin paginar
+        $productos = $query->orderBy('codigo', 'asc')->get();
+
+        // El resto de tu lógica para generar el PDF se mantiene igual
+        $fecha = date('d-m-Y');
         $pdf = PDF::loadView('stock.pdfstock_todos', compact('productos','fecha'))->setPaper('a4','portrait');
 
         return $pdf->stream('stock_total.pdf');
