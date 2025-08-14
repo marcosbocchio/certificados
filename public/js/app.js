@@ -104710,7 +104710,7 @@ var render = function render() {
     })])])]);
   }), 0)])]) : _c("div", {
     staticClass: "text-center"
-  }, [_c("p", [_vm._v("No se encontraron productos.")])])])]), _vm._v(" "), _c("pagination", {
+  }, [_c("p")])])]), _vm._v(" "), _c("pagination", {
     attrs: {
       data: _vm.pagination,
       limit: 4

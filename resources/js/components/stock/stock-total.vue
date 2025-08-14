@@ -60,7 +60,7 @@
             </table>
           </div>
           <div v-else class="text-center">
-            <p>No se encontraron productos.</p>
+            <p></p>
           </div>
         </div>
       </div>
