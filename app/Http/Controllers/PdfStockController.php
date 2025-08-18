@@ -38,7 +38,7 @@ class PdfStockController extends Controller
         $searchTerm = $request->search;
         // CORRECCIÓN: Recibimos el 1 o 0 y lo tratamos como un booleano
         $filtroPlacas = (bool) $request->input('placas');
-
+        $filtroPlacas_sn = (bool) $request->input('placas_sn');
         // Construimos la consulta con la misma lógica unificada
         $query = Productos::query();
 
@@ -46,7 +46,9 @@ class PdfStockController extends Controller
             // CORRECCIÓN: Apuntamos a la columna correcta.
             $query->where('relacionado_a_placas_sn', 1);
         }
-
+        if ($filtroPlacas_sn) {
+                $query->where('placa_sn', 1);
+        }
         if ($searchTerm) {
             $query->where(function($subquery) use ($searchTerm) {
                 $subquery->where('descripcion', 'like', "%{$searchTerm}%")

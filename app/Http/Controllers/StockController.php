@@ -298,6 +298,7 @@ public function actualizarStock($detalleCompra, $request)
         $searchTerm = $request->search;
         // CORRECCIÓN: Recibimos el 1 o 0 y lo tratamos como un booleano
         $filtroPlacas = (bool) $request->input('placas');
+        $filtroPlacas_sn = (bool) $request->input('placas_sn');
         $perPage = 10;
 
         // Inicia la construcción de la consulta
@@ -306,8 +307,10 @@ public function actualizarStock($detalleCompra, $request)
         // 1. APLICA EL FILTRO DE PLACAS
         // Si el checkbox está marcado ($filtroPlacas es true), se añade el filtro.
         if ($filtroPlacas) {
-            // CORRECCIÓN: Apuntamos a la columna correcta con el valor correcto.
             $query->where('relacionado_a_placas_sn', 1);
+        }
+        if ($filtroPlacas_sn) { // Usar la variable correcta
+            $query->where('placa_sn', 1);
         }
 
         // 2. APLICA EL FILTRO DE BÚSQUEDA POR TEXTO (si existe)

@@ -11,16 +11,18 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="checkbox" id="checkbox1" v-model="Registro.visible_ot" style="margin-top: 15px;">
-                                    <label for="checkbox1" style="margin-left:5px;">VISIBLE OT</label>
-                                    <input style="margin-left:20px;" type="checkbox" id="checkbox2" v-model="Registro.stockeable_sn">
-                                    <label style="margin-left:5px;" for="checkbox2">STOKEABLE</label>
-
-                                    <!-- Nuevo checkbox agregado -->
-                                    <input style="margin-left: 20px;" type="checkbox" id="checkbox3" v-model="Registro.relacionado_a_placas_sn">
-                                    <label style="margin-left: 5px;" for="checkbox3">RELACIONADO A PLACAS</label>
+                                    <label for="opcionesEdit">Opciones</label>
+                                    <v-select
+                                        id="opcionesEdit"
+                                        v-model="opcionesSeleccionadas"
+                                        :options="opcionesCheckbox"
+                                        label="text"
+                                        :reduce="option => option.value"
+                                        multiple
+                                        placeholder="Seleccionar..."
+                                    ></v-select>
                                 </div>
-                            </div>
+                                </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="codigo">Código *</label>
@@ -58,102 +60,117 @@
 </template>
 
 <script>
- import {mapState} from 'vuex'
- import { eventEditRegistro } from '../../event-bus';
+import { mapState } from 'vuex'
+import { eventEditRegistro } from '../../event-bus';
+
 export default {
-
-    props : {
-
-        selectRegistro : {
-            type : Object,
-            required : false,
-          }
-
+    props: {
+        selectRegistro: {
+            type: Object,
+            required: false,
+        }
     },
-    data() { return {
+    data() {
+        return {
+            Registro: {
+                'codigo': '',
+                'metros': '',
+                'descripcion': '',
+                'visible_ot': false,
+                'stockeable_sn': false,
+                'relacionado_a_placas_sn': false,
+                'placa_sn': false,
+            },
 
-        Registro : {
-            'codigo'  : '',
-            'metros'  : '',
-            'descripcion' : '',
-            'visible_ot'  : false,
-            'stockeable_sn':false,
-            'relacionado_a_placas_sn':false,
-         },
+            // --- NUEVOS DATOS PARA EL V-SELECT ---
+            opcionesCheckbox: [
+                { text: 'VISIBLE OT', value: 'visible_ot' },
+                { text: 'STOCKEABLE', value: 'stockeable_sn' },
+                { text: 'CUENTA COMO PLACA', value: 'relacionado_a_placas_sn' },
+                { text: 'ES PLACA', value: 'placa_sn' }
+            ],
+            opcionesSeleccionadas: [], // v-model para el v-select
+            // --- FIN DE NUEVOS DATOS ---
 
-         unidad_medida :{},
-         errors:{},
-         }
-
+            unidad_medida: {},
+            errors: {},
+        }
     },
- created: function () {
-
-    eventEditRegistro.$on('editar',function() {
-
-                 this.openModal();
-
-    }.bind(this));
-   this.$store.dispatch('loadUnidadesMedidas');
+    created: function () {
+        eventEditRegistro.$on('editar', function () {
+            this.openModal();
+        }.bind(this));
+        this.$store.dispatch('loadUnidadesMedidas');
     },
-
-    computed :{
-
-         ...mapState(['url','unidades_medidas'])
+    computed: {
+        ...mapState(['url', 'unidades_medidas'])
     },
-
     methods: {
+        openModal: function () {
+            this.$nextTick(function () {
+                // 1. Cargamos los datos del registro a editar
+                this.Registro.codigo = this.selectRegistro.codigo;
+                this.Registro.metros = this.selectRegistro.metros;
+                this.Registro.descripcion = this.selectRegistro.descripcion;
+                this.Registro.visible_ot = this.selectRegistro.visible_ot;
+                this.Registro.stockeable_sn = this.selectRegistro.stockeable_sn;
+                this.Registro.relacionado_a_placas_sn = this.selectRegistro.relacionado_a_placas_sn;
+                this.Registro.placa_sn = this.selectRegistro.placa_sn;
+                this.unidad_medida = this.selectRegistro.unidad_medidas;
 
-        openModal : function(){
+                // --- LÓGICA PARA PRE-CARGAR EL V-SELECT ---
+                // 2. Creamos un array temporal para las opciones pre-seleccionadas
+                let preseleccionadas = [];
+                if (this.Registro.visible_ot) preseleccionadas.push('visible_ot');
+                if (this.Registro.stockeable_sn) preseleccionadas.push('stockeable_sn');
+                if (this.Registro.relacionado_a_placas_sn) preseleccionadas.push('relacionado_a_placas_sn');
+                if (this.Registro.placa_sn) preseleccionadas.push('placa_sn');
 
-        this.$nextTick(function () {
-            this.Registro.codigo = this.selectRegistro.codigo;
-            this.Registro.metros = this.selectRegistro.metros;
-            this.Registro.descripcion = this.selectRegistro.descripcion;
-            this.Registro.visible_ot  = this.selectRegistro.visible_ot;
-            this.Registro.stockeable_sn = this.selectRegistro.stockeable_sn;
-            this.Registro.relacionado_a_placas_sn = this.selectRegistro.relacionado_a_placas_sn;
-            this.unidad_medida = this.selectRegistro.unidad_medidas;
+                // 3. Asignamos el array al v-model del v-select
+                this.opcionesSeleccionadas = preseleccionadas;
+                // --- FIN DE LA LÓGICA DE PRE-CARGA ---
 
-            console.log(this.selectRegistro.cliente_id);
-
-            $('#editar').modal('show');
-
-            this.$forceUpdate();
-        })
+                $('#editar').modal('show');
+                this.$forceUpdate();
+            })
         },
 
-        storeRegistro: function(){
+        storeRegistro: function () {
+            // --- LÓGICA DE CONVERSIÓN (igual que en el modal de crear) ---
+            this.Registro.visible_ot = false;
+            this.Registro.stockeable_sn = false;
+            this.Registro.relacionado_a_placas_sn = false;
+            this.Registro.placa_sn = false;
 
-            axios.defaults.baseURL = this.url ;
+            this.opcionesSeleccionadas.forEach(opcionValue => {
+                if (this.Registro.hasOwnProperty(opcionValue)) {
+                    this.Registro[opcionValue] = true;
+                }
+            });
+            // --- FIN DE LA LÓGICA DE CONVERSIÓN ---
+
+            axios.defaults.baseURL = this.url;
             var urlRegistros = 'productos/' + this.selectRegistro.id;
             axios.put(urlRegistros, {
-
-            ...this.Registro,
-            'unidad_medida' : this.unidad_medida,
-
+                ...this.Registro,
+                'unidad_medida': this.unidad_medida,
             }).then(response => {
                 this.$emit('update');
-                this.errors=[];
+                this.errors = [];
                 $('#editar').modal('hide');
                 toastr.success('Registro editado con éxito');
-                this.Registro={}
-
+                this.Registro = {}
             }).catch(error => {
                 this.errors = error.response.data.errors;
-                $.each( this.errors, function( key, value ) {
+                $.each(this.errors, function (key, value) {
                     toastr.error(value);
-                    console.log( key + ": " + value );
+                    console.log(key + ": " + value);
                 });
-
-                    if((typeof(this.errors)=='undefined') && (error)){
-
-                        toastr.error("Ocurrió un error al procesar la solicitud");
-
-                   }
+                if ((typeof (this.errors) == 'undefined') && (error)) {
+                    toastr.error("Ocurrió un error al procesar la solicitud");
+                }
             });
+        }
     }
 }
-
-}
 </script>
-

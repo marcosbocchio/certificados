@@ -1834,6 +1834,10 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../event-bus */ "./resources/js/components/event-bus.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -1843,8 +1847,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'abm-maestro',
+  components: {
+    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_2___default.a
+  },
   props: {
     modelo: {
       type: String,
@@ -1872,7 +1881,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       registro: {},
       selectRegistro: {},
       search: '',
-      loading: false
+      loading: false,
+      selectedFilters: [],
+      filterOptions: [{
+        text: 'Stockeable',
+        value: 'stockeable'
+      }, {
+        text: 'Cuenta como Placa',
+        value: 'relacionado_placas'
+      }, {
+        text: 'Es Placa',
+        value: 'placa_sn'
+      }],
+      filterActivos: false
     };
   },
   watch: {
@@ -1903,11 +1924,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.loading = true;
       axios.defaults.baseURL = this.url;
+      var stockeableActivo = this.selectedFilters.includes('stockeable');
+      var relacionPlacasActivo = this.selectedFilters.includes('relacionado_placas');
+      var Placas_sn_Activo = this.selectedFilters.includes('placa_sn');
       var urlRegistros = "".concat(this.modelo, "/paginate?page=").concat(page, "&search=").concat(this.search);
 
       // Filtros específicos según el modelo
       if (this.modelo === 'productos') {
-        urlRegistros += "&stockeable_sn=".concat(this.filterStockeable ? 1 : '', "&relacionado_a_placas_sn=").concat(this.filterRelacionPlacas ? 1 : '');
+        urlRegistros += "&stockeable_sn=".concat(stockeableActivo ? 1 : '');
+        urlRegistros += "&relacionado_a_placas_sn=".concat(relacionPlacasActivo ? 1 : '');
+        urlRegistros += "&placa_sn=".concat(Placas_sn_Activo ? 1 : '');
       }
       if (this.modelo === 'interno_equipos') {
         urlRegistros += "&activo_sn=".concat(this.filterActivos ? 1 : '');
@@ -6468,8 +6494,27 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         'descripcion': '',
         'visible_ot': false,
         'stockeable_sn': false,
-        'relacionado_a_placas_sn': false
+        'relacionado_a_placas_sn': false,
+        'placa_sn': false
       },
+      // --- NUEVOS DATOS PARA EL V-SELECT ---
+      opcionesCheckbox: [{
+        text: 'VISIBLE OT',
+        value: 'visible_ot'
+      }, {
+        text: 'STOCKEABLE',
+        value: 'stockeable_sn'
+      }, {
+        text: 'CUENTA COMO PLACA',
+        value: 'relacionado_a_placas_sn'
+      }, {
+        text: 'ES PLACA',
+        value: 'placa_sn'
+      }],
+      opcionesSeleccionadas: [],
+      // v-model para el v-select
+      // --- FIN DE NUEVOS DATOS ---
+
       unidad_medida: {},
       errors: {}
     };
@@ -6484,20 +6529,46 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   methods: {
     openModal: function openModal() {
       this.$nextTick(function () {
+        // 1. Cargamos los datos del registro a editar
         this.Registro.codigo = this.selectRegistro.codigo;
         this.Registro.metros = this.selectRegistro.metros;
         this.Registro.descripcion = this.selectRegistro.descripcion;
         this.Registro.visible_ot = this.selectRegistro.visible_ot;
         this.Registro.stockeable_sn = this.selectRegistro.stockeable_sn;
         this.Registro.relacionado_a_placas_sn = this.selectRegistro.relacionado_a_placas_sn;
+        this.Registro.placa_sn = this.selectRegistro.placa_sn;
         this.unidad_medida = this.selectRegistro.unidad_medidas;
-        console.log(this.selectRegistro.cliente_id);
+
+        // --- LÓGICA PARA PRE-CARGAR EL V-SELECT ---
+        // 2. Creamos un array temporal para las opciones pre-seleccionadas
+        var preseleccionadas = [];
+        if (this.Registro.visible_ot) preseleccionadas.push('visible_ot');
+        if (this.Registro.stockeable_sn) preseleccionadas.push('stockeable_sn');
+        if (this.Registro.relacionado_a_placas_sn) preseleccionadas.push('relacionado_a_placas_sn');
+        if (this.Registro.placa_sn) preseleccionadas.push('placa_sn');
+
+        // 3. Asignamos el array al v-model del v-select
+        this.opcionesSeleccionadas = preseleccionadas;
+        // --- FIN DE LA LÓGICA DE PRE-CARGA ---
+
         $('#editar').modal('show');
         this.$forceUpdate();
       });
     },
     storeRegistro: function storeRegistro() {
       var _this = this;
+      // --- LÓGICA DE CONVERSIÓN (igual que en el modal de crear) ---
+      this.Registro.visible_ot = false;
+      this.Registro.stockeable_sn = false;
+      this.Registro.relacionado_a_placas_sn = false;
+      this.Registro.placa_sn = false;
+      this.opcionesSeleccionadas.forEach(function (opcionValue) {
+        if (_this.Registro.hasOwnProperty(opcionValue)) {
+          _this.Registro[opcionValue] = true;
+        }
+      });
+      // --- FIN DE LA LÓGICA DE CONVERSIÓN ---
+
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'productos/' + this.selectRegistro.id;
       axios.put(urlRegistros, _objectSpread(_objectSpread({}, this.Registro), {}, {
@@ -6551,8 +6622,27 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         'metros': '',
         'descripcion': '',
         'visible_ot': false,
-        'stokeable_sn': false
+        'stockeable_sn': false,
+        'relacionado_a_placas_sn': false,
+        'placa_sn': false
       },
+      // Datos para el nuevo v-select de opciones
+      opcionesCheckbox: [{
+        text: 'VISIBLE OT',
+        value: 'visible_ot'
+      }, {
+        text: 'STOCKEABLE',
+        value: 'stockeable_sn'
+      }, {
+        text: 'CUENTA COMO PLACA',
+        value: 'relacionado_a_placas_sn'
+      }, {
+        text: 'ES PLACA',
+        value: 'placa_sn'
+      }],
+      opcionesSeleccionadas: [],
+      // v-model para el v-select
+
       altaRemito: false,
       unidad_medida: {},
       errors: {}
@@ -6571,9 +6661,18 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         'descripcion': '',
         'visible_ot': false,
         'stockeable_sn': false,
-        'relacionado_a_placas_sn': false
-      }, this.altaRemito = origen == 'remito' ? true : false;
-      this.Registro.stockeable_sn = this.altaRemito;
+        'relacionado_a_placas_sn': false,
+        'placa_sn': false
+      };
+
+      // Limpiamos el v-select al abrir el modal
+      this.opcionesSeleccionadas = [];
+      this.altaRemito = origen == 'remito';
+
+      // Si es altaRemito, pre-seleccionamos 'STOCKEABLE'
+      if (this.altaRemito) {
+        this.opcionesSeleccionadas.push('stockeable_sn');
+      }
       this.unidad_medida = {};
       $('#nuevo').modal('show');
       $(document).ready(function () {
@@ -6593,6 +6692,21 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     storeRegistro: function storeRegistro() {
       var _this2 = this;
+      // -- Lógica para convertir el array del v-select a las flags booleanas --
+      // 1. Reseteamos todos a false
+      this.Registro.visible_ot = false;
+      this.Registro.stockeable_sn = false;
+      this.Registro.relacionado_a_placas_sn = false;
+      this.Registro.placa_sn = false;
+
+      // 2. Recorremos el array y ponemos en true los que correspondan
+      this.opcionesSeleccionadas.forEach(function (opcionValue) {
+        if (_this2.Registro.hasOwnProperty(opcionValue)) {
+          _this2.Registro[opcionValue] = true;
+        }
+      });
+      // -- Fin de la lógica de conversión --
+
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'productos';
       axios.post(urlRegistros, _objectSpread(_objectSpread({}, this.Registro), {}, {
@@ -40586,7 +40700,17 @@ __webpack_require__.r(__webpack_exports__);
       pagination: {},
       searchTerm: '',
       relacionadoAPlacas: false,
-      isLoading: false
+      placa_sn: false,
+      isLoading: false,
+      selectedFilters: [],
+      filterOptions: [{
+        text: 'Cuenta como Placa',
+        value: 'relacionado_placas'
+      }, {
+        text: 'Es Placa',
+        value: 'placa_sn'
+      }],
+      filterActivos: false
     };
   },
   mounted: function mounted() {
@@ -40605,8 +40729,9 @@ __webpack_require__.r(__webpack_exports__);
       var params = {
         page: page,
         search: this.searchTerm,
-        // CORRECCIÓN: Aseguramos enviar 1 o 0
-        placas: this.relacionadoAPlacas ? 1 : 0
+        // CORRECCIÓN: Usamos el array 'selectedFilters' para ver qué filtros están activos
+        placas: this.selectedFilters.includes('relacionado_placas') ? 1 : 0,
+        placas_sn: this.selectedFilters.includes('placa_sn') ? 1 : 0
       };
       axios.get("/api/stock/paginatestock", {
         params: params
@@ -40626,9 +40751,11 @@ __webpack_require__.r(__webpack_exports__);
       window.location.href = "/area/enod/stock-edit/".concat(producto.id);
     },
     exportarTodoPDF: function exportarTodoPDF() {
+      // Usamos la misma lógica que en loadProductos para construir los parámetros
       var params = new URLSearchParams({
         search: this.searchTerm,
-        placas: this.relacionadoAPlacas ? 1 : 0
+        placas: this.selectedFilters.includes('relacionado_placas') ? '1' : '0',
+        placas_sn: this.selectedFilters.includes('placa_sn') ? '1' : '0'
       });
       var url = "/imprimir-todo-stock?".concat(params.toString());
       window.open(url, '_blank');
@@ -41196,70 +41323,28 @@ var render = function render() {
       expression: "modelo === 'productos'"
     }]
   }, [_c("div", {
-    staticClass: "col-md-8 col-xs-10 d-flex align-items-center text-right"
-  }, [_c("label", [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.filterStockeable,
-      expression: "filterStockeable"
-    }],
+    staticClass: "col-md-3 col-md-offset-5 col-xs-9 d-flex align-items-center text-right"
+  }, [_c("v-select", {
     attrs: {
-      type: "checkbox"
-    },
-    domProps: {
-      checked: Array.isArray(_vm.filterStockeable) ? _vm._i(_vm.filterStockeable, null) > -1 : _vm.filterStockeable
+      options: _vm.filterOptions,
+      label: "text",
+      reduce: function reduce(option) {
+        return option.value;
+      },
+      multiple: "",
+      placeholder: "Filtros"
     },
     on: {
-      change: [function ($event) {
-        var $$a = _vm.filterStockeable,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && (_vm.filterStockeable = $$a.concat([$$v]));
-          } else {
-            $$i > -1 && (_vm.filterStockeable = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.filterStockeable = $$c;
-        }
-      }, _vm.getResults]
-    }
-  }), _vm._v(" Stockeable\n              ")]), _vm._v(" "), _c("label", [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.filterRelacionPlacas,
-      expression: "filterRelacionPlacas"
-    }],
-    attrs: {
-      type: "checkbox"
+      input: _vm.getResults
     },
-    domProps: {
-      checked: Array.isArray(_vm.filterRelacionPlacas) ? _vm._i(_vm.filterRelacionPlacas, null) > -1 : _vm.filterRelacionPlacas
-    },
-    on: {
-      change: [function ($event) {
-        var $$a = _vm.filterRelacionPlacas,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && (_vm.filterRelacionPlacas = $$a.concat([$$v]));
-          } else {
-            $$i > -1 && (_vm.filterRelacionPlacas = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.filterRelacionPlacas = $$c;
-        }
-      }, _vm.getResults]
+    model: {
+      value: _vm.selectedFilters,
+      callback: function callback($$v) {
+        _vm.selectedFilters = $$v;
+      },
+      expression: "selectedFilters"
     }
-  }), _vm._v(" Relacionado a Placas\n              ")])]), _vm._v(" "), _c("div", {
+  })], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-3 col-xs-9 p-0"
   }, [_c("div", {
     staticClass: "input-group"
@@ -51803,133 +51888,29 @@ var render = function render() {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.Registro.visible_ot,
-      expression: "Registro.visible_ot"
-    }],
-    staticStyle: {
-      "margin-top": "15px"
-    },
+  }, [_c("label", {
     attrs: {
-      type: "checkbox",
-      id: "checkbox1"
-    },
-    domProps: {
-      checked: Array.isArray(_vm.Registro.visible_ot) ? _vm._i(_vm.Registro.visible_ot, null) > -1 : _vm.Registro.visible_ot
-    },
-    on: {
-      change: function change($event) {
-        var $$a = _vm.Registro.visible_ot,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && _vm.$set(_vm.Registro, "visible_ot", $$a.concat([$$v]));
-          } else {
-            $$i > -1 && _vm.$set(_vm.Registro, "visible_ot", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.$set(_vm.Registro, "visible_ot", $$c);
-        }
-      }
+      "for": "opcionesEdit"
     }
-  }), _vm._v(" "), _c("label", {
-    staticStyle: {
-      "margin-left": "5px"
-    },
+  }, [_vm._v("Opciones")]), _vm._v(" "), _c("v-select", {
     attrs: {
-      "for": "checkbox1"
+      id: "opcionesEdit",
+      options: _vm.opcionesCheckbox,
+      label: "text",
+      reduce: function reduce(option) {
+        return option.value;
+      },
+      multiple: "",
+      placeholder: "Seleccionar..."
+    },
+    model: {
+      value: _vm.opcionesSeleccionadas,
+      callback: function callback($$v) {
+        _vm.opcionesSeleccionadas = $$v;
+      },
+      expression: "opcionesSeleccionadas"
     }
-  }, [_vm._v("VISIBLE OT")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.Registro.stockeable_sn,
-      expression: "Registro.stockeable_sn"
-    }],
-    staticStyle: {
-      "margin-left": "20px"
-    },
-    attrs: {
-      type: "checkbox",
-      id: "checkbox2"
-    },
-    domProps: {
-      checked: Array.isArray(_vm.Registro.stockeable_sn) ? _vm._i(_vm.Registro.stockeable_sn, null) > -1 : _vm.Registro.stockeable_sn
-    },
-    on: {
-      change: function change($event) {
-        var $$a = _vm.Registro.stockeable_sn,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && _vm.$set(_vm.Registro, "stockeable_sn", $$a.concat([$$v]));
-          } else {
-            $$i > -1 && _vm.$set(_vm.Registro, "stockeable_sn", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.$set(_vm.Registro, "stockeable_sn", $$c);
-        }
-      }
-    }
-  }), _vm._v(" "), _c("label", {
-    staticStyle: {
-      "margin-left": "5px"
-    },
-    attrs: {
-      "for": "checkbox2"
-    }
-  }, [_vm._v("STOKEABLE")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.Registro.relacionado_a_placas_sn,
-      expression: "Registro.relacionado_a_placas_sn"
-    }],
-    staticStyle: {
-      "margin-left": "20px"
-    },
-    attrs: {
-      type: "checkbox",
-      id: "checkbox3"
-    },
-    domProps: {
-      checked: Array.isArray(_vm.Registro.relacionado_a_placas_sn) ? _vm._i(_vm.Registro.relacionado_a_placas_sn, null) > -1 : _vm.Registro.relacionado_a_placas_sn
-    },
-    on: {
-      change: function change($event) {
-        var $$a = _vm.Registro.relacionado_a_placas_sn,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && _vm.$set(_vm.Registro, "relacionado_a_placas_sn", $$a.concat([$$v]));
-          } else {
-            $$i > -1 && _vm.$set(_vm.Registro, "relacionado_a_placas_sn", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.$set(_vm.Registro, "relacionado_a_placas_sn", $$c);
-        }
-      }
-    }
-  }), _vm._v(" "), _c("label", {
-    staticStyle: {
-      "margin-left": "5px"
-    },
-    attrs: {
-      "for": "checkbox3"
-    }
-  }, [_vm._v("RELACIONADO A PLACAS")])])]), _vm._v(" "), _c("div", {
+  })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "form-group"
@@ -52125,134 +52106,30 @@ var render = function render() {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.Registro.visible_ot,
-      expression: "Registro.visible_ot"
-    }],
-    staticStyle: {
-      "margin-top": "15px"
-    },
+  }, [_c("label", {
     attrs: {
-      type: "checkbox",
-      id: "checkbox1"
-    },
-    domProps: {
-      checked: Array.isArray(_vm.Registro.visible_ot) ? _vm._i(_vm.Registro.visible_ot, null) > -1 : _vm.Registro.visible_ot
-    },
-    on: {
-      change: function change($event) {
-        var $$a = _vm.Registro.visible_ot,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && _vm.$set(_vm.Registro, "visible_ot", $$a.concat([$$v]));
-          } else {
-            $$i > -1 && _vm.$set(_vm.Registro, "visible_ot", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.$set(_vm.Registro, "visible_ot", $$c);
-        }
-      }
+      "for": "opciones"
     }
-  }), _vm._v(" "), _c("label", {
-    staticStyle: {
-      "margin-left": "5px"
-    },
+  }, [_vm._v("Opciones")]), _vm._v(" "), _c("v-select", {
     attrs: {
-      "for": "checkbox1"
-    }
-  }, [_vm._v("VISIBLE OT")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.Registro.stockeable_sn,
-      expression: "Registro.stockeable_sn"
-    }],
-    staticStyle: {
-      "margin-left": "20px"
-    },
-    attrs: {
-      type: "checkbox",
-      id: "checkbox2",
+      id: "opciones",
+      options: _vm.opcionesCheckbox,
+      label: "text",
+      reduce: function reduce(option) {
+        return option.value;
+      },
+      multiple: "",
+      placeholder: "Seleccionar...",
       disabled: _vm.altaRemito
     },
-    domProps: {
-      checked: Array.isArray(_vm.Registro.stockeable_sn) ? _vm._i(_vm.Registro.stockeable_sn, null) > -1 : _vm.Registro.stockeable_sn
-    },
-    on: {
-      change: function change($event) {
-        var $$a = _vm.Registro.stockeable_sn,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && _vm.$set(_vm.Registro, "stockeable_sn", $$a.concat([$$v]));
-          } else {
-            $$i > -1 && _vm.$set(_vm.Registro, "stockeable_sn", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.$set(_vm.Registro, "stockeable_sn", $$c);
-        }
-      }
+    model: {
+      value: _vm.opcionesSeleccionadas,
+      callback: function callback($$v) {
+        _vm.opcionesSeleccionadas = $$v;
+      },
+      expression: "opcionesSeleccionadas"
     }
-  }), _vm._v(" "), _c("label", {
-    staticStyle: {
-      "margin-left": "5px"
-    },
-    attrs: {
-      "for": "checkbox2"
-    }
-  }, [_vm._v("STOKEABLE")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.Registro.relacionado_a_placas_sn,
-      expression: "Registro.relacionado_a_placas_sn"
-    }],
-    staticStyle: {
-      "margin-left": "20px"
-    },
-    attrs: {
-      type: "checkbox",
-      id: "checkbox3"
-    },
-    domProps: {
-      checked: Array.isArray(_vm.Registro.relacionado_a_placas_sn) ? _vm._i(_vm.Registro.relacionado_a_placas_sn, null) > -1 : _vm.Registro.relacionado_a_placas_sn
-    },
-    on: {
-      change: function change($event) {
-        var $$a = _vm.Registro.relacionado_a_placas_sn,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && _vm.$set(_vm.Registro, "relacionado_a_placas_sn", $$a.concat([$$v]));
-          } else {
-            $$i > -1 && _vm.$set(_vm.Registro, "relacionado_a_placas_sn", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.$set(_vm.Registro, "relacionado_a_placas_sn", $$c);
-        }
-      }
-    }
-  }), _vm._v(" "), _c("label", {
-    staticStyle: {
-      "margin-left": "5px"
-    },
-    attrs: {
-      "for": "checkbox3"
-    }
-  }, [_vm._v("RELACIONADO A PLACAS")])])]), _vm._v(" "), _c("div", {
+  })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "form-group"
@@ -104573,50 +104450,32 @@ var render = function render() {
       click: _vm.exportarTodoPDF
     }
   }, [_vm._v("Exportar PDF")])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4"
+    staticClass: "col-md-3"
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
+    staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-check form-check-inline mr-2"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.relacionadoAPlacas,
-      expression: "relacionadoAPlacas"
-    }],
-    staticClass: "form-check-input",
+  }, [_c("v-select", {
     attrs: {
-      type: "checkbox",
-      id: "placasCheck"
-    },
-    domProps: {
-      checked: Array.isArray(_vm.relacionadoAPlacas) ? _vm._i(_vm.relacionadoAPlacas, null) > -1 : _vm.relacionadoAPlacas
+      options: _vm.filterOptions,
+      label: "text",
+      reduce: function reduce(option) {
+        return option.value;
+      },
+      multiple: "",
+      placeholder: "Filtros"
     },
     on: {
-      change: function change($event) {
-        var $$a = _vm.relacionadoAPlacas,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && (_vm.relacionadoAPlacas = $$a.concat([$$v]));
-          } else {
-            $$i > -1 && (_vm.relacionadoAPlacas = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.relacionadoAPlacas = $$c;
-        }
-      }
+      input: _vm.getResults
+    },
+    model: {
+      value: _vm.selectedFilters,
+      callback: function callback($$v) {
+        _vm.selectedFilters = $$v;
+      },
+      expression: "selectedFilters"
     }
-  }), _vm._v(" "), _c("label", {
-    staticClass: "form-check-label",
-    attrs: {
-      "for": "placasCheck"
-    }
-  }, [_vm._v("\n            Relacionado a placas\n          ")])])]), _vm._v(" "), _c("div", {
+  })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "input-group",
@@ -129938,7 +129797,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-28a89753] {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 20px;\n}\n.btn-primary[data-v-28a89753] {\r\n  margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753], .date-picker.disabled[data-v-28a89753] {\r\n  background-color: #6c757d; /* Gris claro, ajusta según tu tema */\r\n  cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\r\n  display: none;\n}\r\n/* Agrega tus propios estilos para mantener la estética de la página */\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-28a89753] {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 20px;\n}\n.btn-primary[data-v-28a89753] {\n  margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753], .date-picker.disabled[data-v-28a89753] {\n  background-color: #6c757d; /* Gris claro, ajusta según tu tema */\n  cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\n  display: none;\n}\n/* Agrega tus propios estilos para mantener la estética de la página */\n", ""]);
 
 // exports
 

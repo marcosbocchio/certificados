@@ -4,14 +4,19 @@
       <div class="col-md-3">
         <button @click="exportarTodoPDF" class="btn btn-enod exportar-todo-pdf">Exportar PDF</button>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
       </div>
-      <div class="col-md-2">
+      <div class="col-md-3">
         <div class="form-check form-check-inline mr-2">
-          <input class="form-check-input" type="checkbox" id="placasCheck" v-model="relacionadoAPlacas">
-          <label class="form-check-label" for="placasCheck">
-            Relacionado a placas
-          </label>
+            <v-select
+                    v-model="selectedFilters"
+                    :options="filterOptions"
+                    label="text"
+                    :reduce="option => option.value"
+                    multiple
+                    placeholder="Filtros"
+                    @input="getResults"
+                ></v-select>
         </div>
       </div>
       <div class="col-md-3">
@@ -90,8 +95,15 @@ export default {
       pagination: {},
       searchTerm: '',
       relacionadoAPlacas: false,
+      placa_sn: false,
       isLoading: false,
-    };
+      selectedFilters: [],
+        filterOptions: [
+                { text: 'Cuenta como Placa', value: 'relacionado_placas' },
+                { text: 'Es Placa', value: 'placa_sn' }
+            ],
+    filterActivos: false,
+        }
   },
   mounted() {
     this.loadProductos();
@@ -103,24 +115,25 @@ export default {
   },
   methods: {
     loadProductos(page = 1) {
-      this.isLoading = true;
-      const params = {
-        page: page,
-        search: this.searchTerm,
-        // CORRECCIÓN: Aseguramos enviar 1 o 0
-        placas: this.relacionadoAPlacas ? 1 : 0
-      };
+        this.isLoading = true;
+        const params = {
+            page: page,
+            search: this.searchTerm,
+            // CORRECCIÓN: Usamos el array 'selectedFilters' para ver qué filtros están activos
+            placas: this.selectedFilters.includes('relacionado_placas') ? 1 : 0,
+            placas_sn: this.selectedFilters.includes('placa_sn') ? 1 : 0
+        };
 
-      axios.get(`/api/stock/paginatestock`, { params })
+        axios.get(`/api/stock/paginatestock`, { params })
         .then(response => {
-          this.productos = response.data.data;
-          this.pagination = response.data;
+            this.productos = response.data.data;
+            this.pagination = response.data;
         })
         .catch(error => {
-          console.error('API error:', error);
+            console.error('API error:', error);
         })
         .finally(() => {
-          this.isLoading = false;
+            this.isLoading = false;
         });
     },
     registroProducto(producto) {
@@ -130,12 +143,15 @@ export default {
       window.location.href = `/area/enod/stock-edit/${producto.id}`;
     },
     exportarTodoPDF() {
-      const params = new URLSearchParams({
-        search: this.searchTerm,
-        placas: this.relacionadoAPlacas ? 1 : 0
-      });
-      const url = `/imprimir-todo-stock?${params.toString()}`;
-      window.open(url, '_blank');
+        // Usamos la misma lógica que en loadProductos para construir los parámetros
+        const params = new URLSearchParams({
+            search: this.searchTerm,
+            placas: this.selectedFilters.includes('relacionado_placas') ? '1' : '0',
+            placas_sn: this.selectedFilters.includes('placa_sn') ? '1' : '0'
+        });
+
+        const url = `/imprimir-todo-stock?${params.toString()}`;
+        window.open(url, '_blank');
     },
     getResults(page = 1) {
       this.loadProductos(page);

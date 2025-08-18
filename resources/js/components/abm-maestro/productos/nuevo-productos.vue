@@ -11,17 +11,19 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="checkbox" id="checkbox1" v-model="Registro.visible_ot" style="margin-top: 15px;">
-                                    <label for="checkbox1" style="margin-left: 5px;">VISIBLE OT</label>
-
-                                    <input style="margin-left: 20px;" type="checkbox" id="checkbox2" v-model="Registro.stockeable_sn" :disabled="altaRemito">
-                                    <label style="margin-left: 5px;" for="checkbox2">STOKEABLE</label>
-                                    
-                                    <!-- Nuevo checkbox agregado -->
-                                    <input style="margin-left: 20px;" type="checkbox" id="checkbox3" v-model="Registro.relacionado_a_placas_sn">
-                                    <label style="margin-left: 5px;" for="checkbox3">RELACIONADO A PLACAS</label>
+                                    <label for="opciones">Opciones</label>
+                                    <v-select
+                                        id="opciones"
+                                        v-model="opcionesSeleccionadas"
+                                        :options="opcionesCheckbox"
+                                        label="text"
+                                        :reduce="option => option.value"
+                                        multiple
+                                        placeholder="Seleccionar..."
+                                        :disabled="altaRemito"
+                                    ></v-select>
                                 </div>
-                            </div>
+                                </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="codigo">Código *</label>
@@ -59,96 +61,122 @@
 </template>
 
 <script>
- import {mapState} from 'vuex'
- import { eventNewRegistro } from '../../event-bus';
+import { mapState } from 'vuex'
+import { eventNewRegistro } from '../../event-bus';
 
 export default {
-    data() { return {
+    data() {
+        return {
+            Registro: {
+                'codigo': '',
+                'metros': '',
+                'descripcion': '',
+                'visible_ot': false,
+                'stockeable_sn': false,
+                'relacionado_a_placas_sn': false,
+                'placa_sn': false,
+            },
+            // Datos para el nuevo v-select de opciones
+            opcionesCheckbox: [
+                { text: 'VISIBLE OT', value: 'visible_ot' },
+                { text: 'STOCKEABLE', value: 'stockeable_sn' },
+                { text: 'CUENTA COMO PLACA', value: 'relacionado_a_placas_sn' },
+                { text: 'ES PLACA', value: 'placa_sn' }
+            ],
+            opcionesSeleccionadas: [], // v-model para el v-select
 
-        Registro : {
-            'codigo'  : '',
-            'metros'  : '',
-            'descripcion' : '',
-            'visible_ot'  : false,
-            'stokeable_sn':false,
-         },
-        altaRemito: false,
-        unidad_medida :{},
-        errors:{},
-         }
-
+            altaRemito: false,
+            unidad_medida: {},
+            errors: {},
+        }
     },
- created: function () {
-
-    eventNewRegistro.$on('open',this.openModal);
-    this.$store.dispatch('loadUnidadesMedidas');
-
+    created: function () {
+        eventNewRegistro.$on('open', this.openModal);
+        this.$store.dispatch('loadUnidadesMedidas');
     },
-    computed :{
-        ...mapState(['url','unidades_medidas'])
+    computed: {
+        ...mapState(['url', 'unidades_medidas'])
     },
-
     methods: {
-        openModal : function(origen){
+        openModal: function (origen) {
             this.Registro = {
-                    'codigo'  : '',
-                    'metros'  : '',
-                    'descripcion' : '',
-                    'visible_ot'  : false,
-                    'stockeable_sn':false,
-                    'relacionado_a_placas_sn':false,
-                    },
-            this.altaRemito = (origen == 'remito') ? true : false
-            this.Registro.stockeable_sn = this.altaRemito
-            this.unidad_medida ={};
+                'codigo': '',
+                'metros': '',
+                'descripcion': '',
+                'visible_ot': false,
+                'stockeable_sn': false,
+                'relacionado_a_placas_sn': false,
+                'placa_sn': false,
+            };
+
+            // Limpiamos el v-select al abrir el modal
+            this.opcionesSeleccionadas = [];
+
+            this.altaRemito = (origen == 'remito');
+
+            // Si es altaRemito, pre-seleccionamos 'STOCKEABLE'
+            if (this.altaRemito) {
+                this.opcionesSeleccionadas.push('stockeable_sn');
+            }
+
+            this.unidad_medida = {};
             $('#nuevo').modal('show');
-            $( document ).ready(function() {
-                setTimeout(function(){
+            $(document).ready(function () {
+                setTimeout(function () {
                     $("#pass").attr('readonly', false);
                     $("#pass").focus();
-                },500);
+                }, 500);
             });
         },
 
-        getUnidadesMedidas: function(){
-            axios.defaults.baseURL = this.url ;
+        getUnidadesMedidas: function () {
+            axios.defaults.baseURL = this.url;
             var urlRegistros = 'productos' + '?api_token=' + Laravel.user.api_token;
-            axios.get(urlRegistros).then(response =>{
-            this.unidades_medidas = response.data
+            axios.get(urlRegistros).then(response => {
+                this.unidades_medidas = response.data
             });
         },
 
-        storeRegistro: function() {
+        storeRegistro: function () {
+            // -- Lógica para convertir el array del v-select a las flags booleanas --
+            // 1. Reseteamos todos a false
+            this.Registro.visible_ot = false;
+            this.Registro.stockeable_sn = false;
+            this.Registro.relacionado_a_placas_sn = false;
+            this.Registro.placa_sn = false;
 
-            axios.defaults.baseURL = this.url ;
+            // 2. Recorremos el array y ponemos en true los que correspondan
+            this.opcionesSeleccionadas.forEach(opcionValue => {
+                if (this.Registro.hasOwnProperty(opcionValue)) {
+                    this.Registro[opcionValue] = true;
+                }
+            });
+            // -- Fin de la lógica de conversión --
+
+            axios.defaults.baseURL = this.url;
             var urlRegistros = 'productos';
             axios.post(urlRegistros, {
-
-            ...this.Registro,
-            'unidad_medida' : this.unidad_medida,
-
+                ...this.Registro,
+                'unidad_medida': this.unidad_medida,
             }).then(response => {
                 this.$emit('store');
-                this.errors=[];
+                this.errors = [];
                 $('#nuevo').modal('hide');
                 toastr.success('Registro creado con éxito');
-                this.Registro={}
-
+                this.Registro = {}
             }).catch(error => {
                 console.log(error);
                 this.errors = error.response.data.errors;
-                $.each( this.errors, function( key, value ) {
+                $.each(this.errors, function (key, value) {
                     toastr.error(value);
-                    console.log( key + ": " + value );
+                    console.log(key + ": " + value);
                 });
 
-                if((typeof(this.errors)=='undefined') && (error)){
-                toastr.error("Ocurrió un error al procesar la solicitud");
-
-            }
+                if ((typeof (this.errors) == 'undefined') && (error)) {
+                    toastr.error("Ocurrió un error al procesar la solicitud");
+                }
             });
-            }
-}
-
+        }
+    }
 }
 </script>

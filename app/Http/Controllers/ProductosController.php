@@ -13,7 +13,7 @@ class ProductosController extends Controller
     public function __construct()
     {
 
-          $this->middleware(['role_or_permission:Sistemas|M_productos'],['only' => ['callView']]);
+        $this->middleware(['role_or_permission:Sistemas|M_productos'],['only' => ['callView']]);
 
     }
 
@@ -26,14 +26,16 @@ class ProductosController extends Controller
     {
         return  Productos::with('unidadMedidas')->orderBy('descripcion','ASC')->get();
     }
+
     public function paginate(Request $request)
     {
         $filtro = $request->input('search');
         $stockeable = $request->input('stockeable_sn');
         $relacionado = $request->input('relacionado_a_placas_sn');
-    
+        $placa_sn = $request->input('placa_sn');
+
         return Productos::with('unidadMedidas')
-                        ->filtro($filtro, $stockeable, $relacionado)  // Pasa los nuevos parámetros al scopeFiltro
+                        ->filtro($filtro, $stockeable, $relacionado,$placa_sn)  // Pasa los nuevos parámetros al scopeFiltro
                         ->orderBy('codigo', 'ASC')
                         ->paginate(10);
     }
@@ -149,6 +151,7 @@ class ProductosController extends Controller
         $producto->visible_ot = $request->visible_ot;
         $producto->stockeable_sn = $request->stockeable_sn;
         $producto->relacionado_a_placas_sn = $request->relacionado_a_placas_sn;
+        $producto->placa_sn = $request->placa_sn;
         $producto->save();
 
     }

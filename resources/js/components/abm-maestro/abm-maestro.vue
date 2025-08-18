@@ -11,13 +11,16 @@
 
         <!-- Checkboxes y buscador alineados horizontalmente -->
         <div v-show="modelo === 'productos'">
-            <div class="col-md-8 col-xs-10 d-flex align-items-center text-right">
-                <label>
-                    <input type="checkbox" v-model="filterStockeable" @change="getResults"> Stockeable
-                </label>
-                <label>
-                    <input type="checkbox" v-model="filterRelacionPlacas" @change="getResults"> Relacionado a Placas
-                </label>
+            <div class="col-md-3 col-md-offset-5 col-xs-9 d-flex align-items-center text-right">
+                <v-select
+                    v-model="selectedFilters"
+                    :options="filterOptions"
+                    label="text"
+                    :reduce="option => option.value"
+                    multiple
+                    placeholder="Filtros"
+                    @input="getResults"
+                ></v-select>
             </div>
             <div class="col-md-3 col-xs-9 p-0">
                 <div class="input-group">
@@ -79,10 +82,14 @@
   import {mapState} from 'vuex'
   import { eventNewRegistro, eventEditRegistro, eventModal } from '../event-bus';
   import { EventBus } from '../event-bus';
+  import vSelect from 'vue-select';
+  import 'vue-select/dist/vue-select.css';
     export default {
       name: 'abm-maestro',
+      components: {
+        vSelect
+      },
       props : {
-
           modelo : {
             type : String,
             required : true,
@@ -114,8 +121,14 @@
         registro: {},
         selectRegistro: {},
         search:'',
-        loading : false,
-
+        loading : false
+        ,selectedFilters: [],
+        filterOptions: [
+            { text: 'Stockeable', value: 'stockeable' },
+            { text: 'Cuenta como Placa', value: 'relacionado_placas' },
+            { text: 'Es Placa', value: 'placa_sn' }
+        ],
+        filterActivos: false,
         }
       },
 
@@ -152,7 +165,7 @@
 
              eventNewRegistro.$emit('open',this.modelo);
            },
-           
+
 
            aplicarFiltro : function(){
 
@@ -161,27 +174,32 @@
             },
 
             getResults(page = 1) {
-        this.loading = true;
-        axios.defaults.baseURL = this.url;
+            this.loading = true;
+            axios.defaults.baseURL = this.url;
 
-        let urlRegistros = `${this.modelo}/paginate?page=${page}&search=${this.search}`;
+            const stockeableActivo = this.selectedFilters.includes('stockeable');
+            const relacionPlacasActivo = this.selectedFilters.includes('relacionado_placas');
+            const Placas_sn_Activo = this.selectedFilters.includes('placa_sn');
+            let urlRegistros = `${this.modelo}/paginate?page=${page}&search=${this.search}`;
 
-        // Filtros específicos según el modelo
-        if (this.modelo === 'productos') {
-            urlRegistros += `&stockeable_sn=${this.filterStockeable ? 1 : ''}&relacionado_a_placas_sn=${this.filterRelacionPlacas ? 1 : ''}`;
-        }
+            // Filtros específicos según el modelo
+            if (this.modelo === 'productos') {
+                urlRegistros += `&stockeable_sn=${stockeableActivo ? 1 : ''}`;
+                urlRegistros += `&relacionado_a_placas_sn=${relacionPlacasActivo ? 1 : ''}`;
+                urlRegistros += `&placa_sn=${Placas_sn_Activo ? 1 : ''}`;
+            }
 
-        if (this.modelo === 'interno_equipos') {
-            urlRegistros += `&activo_sn=${this.filterActivos ? 1 : ''}`;
-        }
+            if (this.modelo === 'interno_equipos') {
+                urlRegistros += `&activo_sn=${this.filterActivos ? 1 : ''}`;
+            }
 
-        axios.get(urlRegistros)
-            .then(response => {
-                this.registros = response.data;
-                console.log(this.registros);
-            })
-            .finally(() => this.loading = false);
-    },
+            axios.get(urlRegistros)
+                .then(response => {
+                    this.registros = response.data;
+                    console.log(this.registros);
+                })
+                .finally(() => this.loading = false);
+            },
 
             editRegistro : function(item){
 
