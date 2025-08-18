@@ -79,7 +79,7 @@ export default {
             // Datos para el nuevo v-select de opciones
             opcionesCheckbox: [
                 { text: 'VISIBLE OT', value: 'visible_ot' },
-                { text: 'STOCKEABLE', value: 'stockeable_sn' },
+                { text: 'STOCK', value: 'stockeable_sn' },
                 { text: 'CUENTA COMO PLACA', value: 'relacionado_a_placas_sn' },
                 { text: 'ES PLACA', value: 'placa_sn' }
             ],

@@ -1884,7 +1884,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       loading: false,
       selectedFilters: [],
       filterOptions: [{
-        text: 'Stockeable',
+        text: 'Stock',
         value: 'stockeable'
       }, {
         text: 'Cuenta como Placa',
@@ -6502,7 +6502,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         text: 'VISIBLE OT',
         value: 'visible_ot'
       }, {
-        text: 'STOCKEABLE',
+        text: 'STOCK',
         value: 'stockeable_sn'
       }, {
         text: 'CUENTA COMO PLACA',
@@ -6631,7 +6631,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         text: 'VISIBLE OT',
         value: 'visible_ot'
       }, {
-        text: 'STOCKEABLE',
+        text: 'STOCK',
         value: 'stockeable_sn'
       }, {
         text: 'CUENTA COMO PLACA',
