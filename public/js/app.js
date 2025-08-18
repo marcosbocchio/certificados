@@ -1887,7 +1887,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         text: 'Stock',
         value: 'stockeable'
       }, {
-        text: 'Cuenta como Placa',
+        text: 'Rel. placa',
         value: 'relacionado_placas'
       }, {
         text: 'Es Placa',
@@ -6505,7 +6505,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         text: 'STOCK',
         value: 'stockeable_sn'
       }, {
-        text: 'CUENTA COMO PLACA',
+        text: 'REL. PLACA',
         value: 'relacionado_a_placas_sn'
       }, {
         text: 'ES PLACA',
@@ -6634,7 +6634,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         text: 'STOCK',
         value: 'stockeable_sn'
       }, {
-        text: 'CUENTA COMO PLACA',
+        text: 'REL. PLACA',
         value: 'relacionado_a_placas_sn'
       }, {
         text: 'ES PLACA',
@@ -40704,7 +40704,7 @@ __webpack_require__.r(__webpack_exports__);
       isLoading: false,
       selectedFilters: [],
       filterOptions: [{
-        text: 'Cuenta como Placa',
+        text: 'Rel. placa',
         value: 'relacionado_placas'
       }, {
         text: 'Es Placa',

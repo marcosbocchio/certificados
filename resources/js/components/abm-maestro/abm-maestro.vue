@@ -125,7 +125,7 @@
         ,selectedFilters: [],
         filterOptions: [
             { text: 'Stock', value: 'stockeable' },
-            { text: 'Cuenta como Placa', value: 'relacionado_placas' },
+            { text: 'Rel. placa', value: 'relacionado_placas' },
             { text: 'Es Placa', value: 'placa_sn' }
         ],
         filterActivos: false,

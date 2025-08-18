@@ -86,7 +86,7 @@ export default {
             opcionesCheckbox: [
                 { text: 'VISIBLE OT', value: 'visible_ot' },
                 { text: 'STOCK', value: 'stockeable_sn' },
-                { text: 'CUENTA COMO PLACA', value: 'relacionado_a_placas_sn' },
+                { text: 'REL. PLACA', value: 'relacionado_a_placas_sn' },
                 { text: 'ES PLACA', value: 'placa_sn' }
             ],
             opcionesSeleccionadas: [], // v-model para el v-select

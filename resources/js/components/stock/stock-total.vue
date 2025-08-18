@@ -99,7 +99,7 @@ export default {
       isLoading: false,
       selectedFilters: [],
         filterOptions: [
-                { text: 'Cuenta como Placa', value: 'relacionado_placas' },
+                { text: 'Rel. placa', value: 'relacionado_placas' },
                 { text: 'Es Placa', value: 'placa_sn' }
             ],
     filterActivos: false,
