@@ -40,14 +40,10 @@ class PdfStockController extends Controller
         $filtroPlacas = (bool) $request->input('placas');
         $filtroPlacas_sn = (bool) $request->input('placas_sn');
 
-        // 1. Construimos la consulta base
+        // 1. Construimos la consulta base con los filtros (esto no cambia)
         $query = Productos::query();
-
-        // === MODIFICACIÓN AÑADIDA ===
-        // Se agrega el filtro OBLIGATORIO para que solo traiga productos stockeables.
         $query->where('stockeable_sn', 1);
 
-        // El resto de los filtros se aplican sobre el resultado anterior
         if ($filtroPlacas) {
             $query->where('relacionado_a_placas_sn', 1);
         }
@@ -61,10 +57,10 @@ class PdfStockController extends Controller
             });
         }
 
-        // 2. Obtenemos los resultados y cargamos la relación con el grupo
+        // 2. Obtenemos los resultados (esto no cambia)
         $productos = $query->with('grupo')->orderBy('codigo', 'asc')->get();
 
-        // 3. Agrupamos la colección de resultados
+        // 3. Agrupamos la colección (esto no cambia)
         $productosAgrupados = $productos->groupBy(function ($producto) {
             if ($producto->grupo) {
                 return $producto->grupo->codigo;
@@ -72,9 +68,23 @@ class PdfStockController extends Controller
             return 'Sin Asignar';
         });
 
-        // 4. Pasamos la nueva colección a la vista del PDF
+        // === MODIFICACIÓN PARA ORDENAR ===
+        // 4. Separamos el grupo "Sin Asignar" si existe.
+        $sinAsignar = $productosAgrupados->pull('Sin Asignar');
+
+        // 5. Ordenamos alfabéticamente los grupos restantes por su clave (el código del grupo).
+        $gruposOrdenados = $productosAgrupados->sortKeys();
+
+        // 6. Si existía el grupo "Sin Asignar", lo volvemos a poner al final.
+        if ($sinAsignar) {
+            $gruposOrdenados->put('Sin Asignar', $sinAsignar);
+        }
+        // === FIN DE LA MODIFICACIÓN ===
+
+        // 7. Pasamos la nueva colección YA ORDENADA a la vista del PDF.
         $fecha = date('d-m-Y');
-        $pdf = PDF::loadView('stock.pdfstock_todos', compact('productosAgrupados', 'fecha'))->setPaper('a4', 'portrait');
+        // Usamos la nueva variable $gruposOrdenados
+        $pdf = PDF::loadView('stock.pdfstock_todos', ['productosAgrupados' => $gruposOrdenados, 'fecha' => $fecha])->setPaper('a4', 'portrait');
 
         return $pdf->stream('stock_total.pdf');
     }
