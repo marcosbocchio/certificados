@@ -51,11 +51,12 @@
             text-align: left;
             border: none;
         }
-        .table th {
+        /* === SELECTOR CORREGIDO === */
+        /* Este estilo ahora solo se aplica a los th dentro de la fila con la clase .column-headers */
+        .table thead .column-headers th {
             background-color: rgb(41,128,186);
             color: #ffffff;
         }
-        /* Esta regla hace que el encabezado de la tabla se repita en cada página */
         .table thead {
             display: table-header-group;
         }
@@ -65,13 +66,13 @@
         .table tbody tr:nth-child(odd) {
             background-color: #F2F2F2;
         }
-        /* === NUEVA CLASE PARA LA CELDA DEL TÍTULO DEL GRUPO === */
+        /* Se eliminó !important ya que no hay conflicto */
         .group-subtitle-cell {
             font-size: 14px;
             font-weight: bold;
             padding: 10px 0;
-            background-color: #e9ecef !important; /* !important para sobreescribir el azul */
-            color: #333 !important; /* !important para sobreescribir el blanco */
+            background-color: #e9ecef;
+            color: #333;
             text-align: center;
         }
         .align-right {
@@ -107,7 +108,8 @@
                         </th>
                     </tr>
                     <!-- Fila 2 del encabezado: Títulos de las Columnas -->
-                    <tr>
+                    <!-- === CLASE AÑADIDA AQUÍ === -->
+                    <tr class="column-headers">
                         <th>Código</th>
                         <th>Descripción</th>
                         <th class="align-right">Stock</th>
