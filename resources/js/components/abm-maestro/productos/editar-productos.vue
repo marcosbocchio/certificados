@@ -91,7 +91,7 @@ export default {
                 'stockeable_sn': false,
                 'relacionado_a_placas_sn': false,
                 'placa_sn': false,
-                'grupo_id': ''
+                'grupo_id': null
             },
 
             // --- NUEVOS DATOS PARA EL V-SELECT ---

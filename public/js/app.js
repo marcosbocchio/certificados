@@ -6496,7 +6496,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         'stockeable_sn': false,
         'relacionado_a_placas_sn': false,
         'placa_sn': false,
-        'grupo_id': ''
+        'grupo_id': null
       },
       // --- NUEVOS DATOS PARA EL V-SELECT ---
       opcionesCheckbox: [{
