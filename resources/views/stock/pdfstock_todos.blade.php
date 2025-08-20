@@ -26,6 +26,7 @@
         .header-table, .table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed; /* Fuerza a la tabla a respetar los anchos definidos */
         }
         .logo img {
             height: auto;
@@ -50,9 +51,8 @@
             padding: 8px;
             text-align: left;
             border: none;
+            word-wrap: break-word; /* Permite que el texto largo se divida en varias líneas */
         }
-        /* === SELECTOR CORREGIDO === */
-        /* Este estilo ahora solo se aplica a los th dentro de la fila con la clase .column-headers */
         .table thead .column-headers th {
             background-color: rgb(41,128,186);
             color: #ffffff;
@@ -66,7 +66,6 @@
         .table tbody tr:nth-child(odd) {
             background-color: #F2F2F2;
         }
-        /* Se eliminó !important ya que no hay conflicto */
         .group-subtitle-cell {
             font-size: 14px;
             font-weight: bold;
@@ -75,9 +74,10 @@
             color: #333;
             text-align: center;
         }
-        .align-right {
-            text-align: right;
-        }
+        /* === ANCHOS DE COLUMNA DEFINIDOS === */
+        .col-codigo { width: 25%; }
+        .col-descripcion { width: 55%; }
+        .col-stock { width: 20%; text-align: right; }
     </style>
 </head>
 <body>
@@ -108,20 +108,19 @@
                         </th>
                     </tr>
                     <!-- Fila 2 del encabezado: Títulos de las Columnas -->
-                    <!-- === CLASE AÑADIDA AQUÍ === -->
                     <tr class="column-headers">
-                        <th>Código</th>
-                        <th>Descripción</th>
-                        <th class="align-right">Stock</th>
+                        <th class="col-codigo">Código</th>
+                        <th class="col-descripcion">Descripción</th>
+                        <th class="col-stock">Stock</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- El segundo bucle recorre los productos de este grupo específico -->
                     @foreach ($productosDelGrupo as $producto)
                         <tr>
-                            <td>{{ $producto->codigo }}</td>
-                            <td>{{ $producto->descripcion }}</td>
-                            <td class="align-right">{{ $producto->stock }}</td>
+                            <td class="col-codigo">{{ $producto->codigo }}</td>
+                            <td class="col-descripcion">{{ $producto->descripcion }}</td>
+                            <td class="col-stock">{{ $producto->stock }}</td>
                         </tr>
                     @endforeach
                 </tbody>
