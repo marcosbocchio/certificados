@@ -37,6 +37,17 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="name">Grupo</label>
+                                    <v-select
+                                        v-model="Registro.grupo_id"
+                                        label="codigo"
+                                        :options="producto_grupo"
+                                        :reduce="grupo => grupo.id"
+                                    ></v-select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="codigo">Metros Totales</label>
                                     <input autocomplete="off" v-model="Registro.metros" type="number" name="metros" class="form-control" min="0" step="0.01">
                                 </div>
@@ -80,6 +91,7 @@ export default {
                 'stockeable_sn': false,
                 'relacionado_a_placas_sn': false,
                 'placa_sn': false,
+                'grupo_id': ''
             },
 
             // --- NUEVOS DATOS PARA EL V-SELECT ---
@@ -90,6 +102,7 @@ export default {
                 { text: 'ES PLACA', value: 'placa_sn' }
             ],
             opcionesSeleccionadas: [], // v-model para el v-select
+            producto_grupo: [],
             // --- FIN DE NUEVOS DATOS ---
 
             unidad_medida: {},
@@ -100,6 +113,7 @@ export default {
         eventEditRegistro.$on('editar', function () {
             this.openModal();
         }.bind(this));
+        this.getProductosGrupos();
         this.$store.dispatch('loadUnidadesMedidas');
     },
     computed: {
@@ -116,6 +130,7 @@ export default {
                 this.Registro.stockeable_sn = this.selectRegistro.stockeable_sn;
                 this.Registro.relacionado_a_placas_sn = this.selectRegistro.relacionado_a_placas_sn;
                 this.Registro.placa_sn = this.selectRegistro.placa_sn;
+                this.Registro.grupo_id = this.selectRegistro.agrupacion_id  || null;;
                 this.unidad_medida = this.selectRegistro.unidad_medidas;
 
                 // --- LÓGICA PARA PRE-CARGAR EL V-SELECT ---
@@ -134,7 +149,13 @@ export default {
                 this.$forceUpdate();
             })
         },
-
+        getProductosGrupos: function () {
+            axios.defaults.baseURL = this.url;
+            var urlRegistros = 'productos/grupos' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response => {
+                this.producto_grupo = response.data
+            });
+        },
         storeRegistro: function () {
             // --- LÓGICA DE CONVERSIÓN (igual que en el modal de crear) ---
             this.Registro.visible_ot = false;

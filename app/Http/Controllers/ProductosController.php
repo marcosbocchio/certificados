@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductoRequest;
 use Illuminate\Support\Facades\DB;
 use App\Productos;
+use App\Productos_grupo;
 
 class ProductosController extends Controller
 {
@@ -60,6 +61,9 @@ class ProductosController extends Controller
 
     }
 
+    public function getProductosGrupo() {
+           return Productos_grupo::orderBy('descripcion', 'asc')->get();
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -152,6 +156,7 @@ class ProductosController extends Controller
         $producto->stockeable_sn = $request->stockeable_sn;
         $producto->relacionado_a_placas_sn = $request->relacionado_a_placas_sn;
         $producto->placa_sn = $request->placa_sn;
+        $producto->agrupacion_id = $request->grupo_id;
         $producto->save();
 
     }

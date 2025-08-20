@@ -304,6 +304,10 @@ public function actualizarStock($detalleCompra, $request)
         // Inicia la construcción de la consulta
         $query = Productos::query();
 
+        // ****** MODIFICACIÓN ******
+        // Se agrega la condición OBLIGATORIA para que solo filtre productos stockeables.
+        $query->where('stockeable_sn', 1);
+
         // 1. APLICA EL FILTRO DE PLACAS
         // Si el checkbox está marcado ($filtroPlacas es true), se añade el filtro.
         if ($filtroPlacas) {

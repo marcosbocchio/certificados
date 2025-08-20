@@ -4,11 +4,25 @@
     <meta charset="UTF-8">
     <title>Stock de Productos</title>
     <style>
+        @page {
+            /* Dejamos espacio en el margen superior para el encabezado fijo */
+            margin: 85px 25px 40px 25px;
+        }
+
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
             font-size: 10px;
             color: #333;
         }
+
+        header {
+            position: fixed;
+            top: -75px; /* Posicionamos el encabezado en el margen superior */
+            left: 0px;
+            right: 0px;
+            height: 70px;
+        }
+
         .header-table, .table {
             width: 100%;
             border-collapse: collapse;
@@ -28,8 +42,9 @@
             text-align: right;
         }
         .table{
-            margin-top: 10px;
+            margin-top: 15px; /* Espacio entre tablas de diferentes grupos */
             border-collapse: collapse;
+            page-break-inside: auto; /* Permite que la tabla se divida entre páginas */
         }
         .table th, .table td {
             padding: 8px;
@@ -40,32 +55,58 @@
             background-color: rgb(41,128,186);
             color: #ffffff;
         }
+        /* Esta regla hace que el encabezado de la tabla se repita en cada página */
+        .table thead {
+            display: table-header-group;
+        }
+        .table tbody tr {
+            page-break-inside: avoid; /* Intenta no cortar una fila por la mitad */
+        }
         .table tbody tr:nth-child(odd) {
             background-color: #F2F2F2;
         }
-        .page-break {
-        page-break-after: always;
-    }
+        /* === NUEVA CLASE PARA LA CELDA DEL TÍTULO DEL GRUPO === */
+        .group-subtitle-cell {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 0;
+            background-color: #e9ecef !important; /* !important para sobreescribir el azul */
+            color: #333 !important; /* !important para sobreescribir el blanco */
+            text-align: center;
+        }
+        .align-right {
+            text-align: right;
+        }
     </style>
 </head>
-<main>
-    @php $itemsPerPage = 30; @endphp
-    @foreach ($productos->chunk($itemsPerPage) as $chunk)
-        <header>
-            <table class="header-table">
-                <tr>
-                    <td class="logo">
-                        <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
-                    </td>
-                    <td class="title">Stock de Productos</td>
-                    <td class="date"><b>FECHA:</b> {{ date('d-m-Y') }}</td>
-                </tr>
-            </table>
-            <div style="height: 3px; background-color: rgb(255,204, 0); margin-top: 10px;"></div>
-        </header>
-        <main>
+<body>
+    <!-- El encabezado ahora está FUERA del bucle y se repetirá en cada página gracias al CSS -->
+    <header>
+        <table class="header-table">
+            <tr>
+                <td class="logo">
+                    <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
+                </td>
+                <td class="title">Stock de Productos</td>
+                <td class="date"><b>FECHA:</b> {{ $fecha }}</td>
+            </tr>
+        </table>
+        <div style="height: 3px; background-color: rgb(255,204, 0); margin-top: 10px;"></div>
+    </header>
+
+    <main>
+        <!-- El bucle principal recorre los grupos -->
+        @foreach ($productosAgrupados as $nombreDelGrupo => $productosDelGrupo)
+            <!-- Ahora creamos una tabla por cada grupo -->
             <table class="table">
                 <thead>
+                    <!-- Fila 1 del encabezado: Título del Grupo -->
+                    <tr>
+                        <th colspan="3" class="group-subtitle-cell">
+                            {{ $nombreDelGrupo }}
+                        </th>
+                    </tr>
+                    <!-- Fila 2 del encabezado: Títulos de las Columnas -->
                     <tr>
                         <th>Código</th>
                         <th>Descripción</th>
@@ -73,7 +114,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($chunk as $producto)
+                    <!-- El segundo bucle recorre los productos de este grupo específico -->
+                    @foreach ($productosDelGrupo as $producto)
                         <tr>
                             <td>{{ $producto->codigo }}</td>
                             <td>{{ $producto->descripcion }}</td>
@@ -82,28 +124,22 @@
                     @endforeach
                 </tbody>
             </table>
-        </main>
-        @if (!$loop->last)
-            <div class="page-break"></div>
-@endif
-@endforeach
-</main>
-<script type="text/php">
+        @endforeach
+    </main>
 
-    if ( isset($pdf) ) {
-        $x = 492;
-        $y = 43;
-        $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
-        $font = $fontMetrics->get_font("serif", "bold");
-        $size = 8;
-        $color = array(0,0,0);
-        $word_space = 0.0;  //  default
-        $char_space = 0.0;  //  default
-        $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-
-        /* $pdf->line(34,167,561,167,array(0,0,0),1.5); */
-    }
-
-</script>
+    <script type="text/php">
+        if ( isset($pdf) ) {
+            $x = 492;
+            $y = 43;
+            $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
+            $font = $fontMetrics->get_font("serif", "bold");
+            $size = 8;
+            $color = array(0,0,0);
+            $word_space = 0.0;
+            $char_space = 0.0;
+            $angle = 0.0;
+            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+        }
+    </script>
+</body>
 </html>

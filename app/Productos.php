@@ -35,4 +35,9 @@ class Productos extends Model
     public function unidadMedidas() {
         return $this->belongsTo('App\UnidadesMedidas', 'unidades_medida_id', 'id');
     }
+
+    public function grupo() {
+        return $this->belongsTo('App\Productos_grupo', 'agrupacion_id', 'id');
+    }
+
 }

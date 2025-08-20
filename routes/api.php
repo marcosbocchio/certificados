@@ -98,6 +98,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     );
     Route::resource('ot_servicios', 'OtServiciosController');
     Route::get('productos/ots', 'ProductosController@ProductosOts');
+    Route::get('productos/grupos', 'ProductosController@getProductosGrupo');
     Route::get('productos/paginate', 'ProductosController@paginate');
     Route::get(
         'productos/stockeable',

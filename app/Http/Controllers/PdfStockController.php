@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Stock;
 use App\Productos;
+use App\Productos_grupo;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -36,18 +37,22 @@ class PdfStockController extends Controller
     public function imprimirTodoStock(Request $request)
     {
         $searchTerm = $request->search;
-        // CORRECCIÓN: Recibimos el 1 o 0 y lo tratamos como un booleano
         $filtroPlacas = (bool) $request->input('placas');
         $filtroPlacas_sn = (bool) $request->input('placas_sn');
-        // Construimos la consulta con la misma lógica unificada
+
+        // 1. Construimos la consulta base
         $query = Productos::query();
 
+        // === MODIFICACIÓN AÑADIDA ===
+        // Se agrega el filtro OBLIGATORIO para que solo traiga productos stockeables.
+        $query->where('stockeable_sn', 1);
+
+        // El resto de los filtros se aplican sobre el resultado anterior
         if ($filtroPlacas) {
-            // CORRECCIÓN: Apuntamos a la columna correcta.
             $query->where('relacionado_a_placas_sn', 1);
         }
         if ($filtroPlacas_sn) {
-                $query->where('placa_sn', 1);
+            $query->where('placa_sn', 1);
         }
         if ($searchTerm) {
             $query->where(function($subquery) use ($searchTerm) {
@@ -56,12 +61,20 @@ class PdfStockController extends Controller
             });
         }
 
-        // Obtenemos TODOS los resultados que coinciden, sin paginar
-        $productos = $query->orderBy('codigo', 'asc')->get();
+        // 2. Obtenemos los resultados y cargamos la relación con el grupo
+        $productos = $query->with('grupo')->orderBy('codigo', 'asc')->get();
 
-        // El resto de tu lógica para generar el PDF se mantiene igual
+        // 3. Agrupamos la colección de resultados
+        $productosAgrupados = $productos->groupBy(function ($producto) {
+            if ($producto->grupo) {
+                return $producto->grupo->codigo;
+            }
+            return 'Sin Asignar';
+        });
+
+        // 4. Pasamos la nueva colección a la vista del PDF
         $fecha = date('d-m-Y');
-        $pdf = PDF::loadView('stock.pdfstock_todos', compact('productos','fecha'))->setPaper('a4','portrait');
+        $pdf = PDF::loadView('stock.pdfstock_todos', compact('productosAgrupados', 'fecha'))->setPaper('a4', 'portrait');
 
         return $pdf->stream('stock_total.pdf');
     }

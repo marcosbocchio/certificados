@@ -38,6 +38,17 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="name">Grupo</label>
+                                    <v-select
+                                        v-model="Registro.grupo_id"
+                                        label="codigo"
+                                        :options="producto_grupo"
+                                        :reduce="grupo => grupo.id"
+                                    ></v-select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="codigo">Metros Totales</label>
                                     <input autocomplete="off" v-model="Registro.metros" type="number" name="metros" class="form-control" min="0" step="0.01">
                                 </div>
@@ -75,6 +86,7 @@ export default {
                 'stockeable_sn': false,
                 'relacionado_a_placas_sn': false,
                 'placa_sn': false,
+                'grupo_id': ''
             },
             // Datos para el nuevo v-select de opciones
             opcionesCheckbox: [
@@ -84,7 +96,7 @@ export default {
                 { text: 'ES PLACA', value: 'placa_sn' }
             ],
             opcionesSeleccionadas: [], // v-model para el v-select
-
+            producto_grupo: [],
             altaRemito: false,
             unidad_medida: {},
             errors: {},
@@ -92,6 +104,7 @@ export default {
     },
     created: function () {
         eventNewRegistro.$on('open', this.openModal);
+        this.getProductosGrupos();
         this.$store.dispatch('loadUnidadesMedidas');
     },
     computed: {
@@ -134,6 +147,13 @@ export default {
             var urlRegistros = 'productos' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response => {
                 this.unidades_medidas = response.data
+            });
+        },
+        getProductosGrupos: function () {
+            axios.defaults.baseURL = this.url;
+            var urlRegistros = 'productos/grupos' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response => {
+                this.producto_grupo = response.data
             });
         },
 
