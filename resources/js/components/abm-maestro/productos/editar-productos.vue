@@ -180,6 +180,7 @@ export default {
                 this.errors = [];
                 $('#editar').modal('hide');
                 toastr.success('Registro editado con éxito');
+                this.grupo_id = null;
                 this.Registro = {}
             }).catch(error => {
                 this.errors = error.response.data.errors;

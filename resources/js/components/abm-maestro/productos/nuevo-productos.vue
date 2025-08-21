@@ -86,7 +86,7 @@ export default {
                 'stockeable_sn': false,
                 'relacionado_a_placas_sn': false,
                 'placa_sn': false,
-                'grupo_id': ''
+                'grupo_id': null
             },
             // Datos para el nuevo v-select de opciones
             opcionesCheckbox: [
@@ -183,6 +183,7 @@ export default {
                 this.errors = [];
                 $('#nuevo').modal('hide');
                 toastr.success('Registro creado con éxito');
+                this.grupo_id = null;
                 this.Registro = {}
             }).catch(error => {
                 console.log(error);
