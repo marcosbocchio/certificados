@@ -62,7 +62,7 @@ class ProductosController extends Controller
     }
 
     public function getProductosGrupo() {
-           return Productos_grupo::orderBy('descripcion', 'asc')->get();
+           return Productos_grupo::orderBy('codigo', 'asc')->get();
     }
 
     /**
