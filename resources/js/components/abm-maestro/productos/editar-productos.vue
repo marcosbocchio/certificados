@@ -19,7 +19,7 @@
                                         label="text"
                                         :reduce="option => option.value"
                                         multiple
-                                        placeholder="Seleccionar..."
+                                        placeholder="Seleccionar"
                                     ></v-select>
                                 </div>
                                 </div>
@@ -156,6 +156,21 @@ export default {
                 this.producto_grupo = response.data
             });
         },
+        resetForm() {
+            this.Registro = {
+                'codigo': '',
+                'metros': '',
+                'descripcion': '',
+                'visible_ot': false,
+                'stockeable_sn': false,
+                'relacionado_a_placas_sn': false,
+                'placa_sn': false,
+                'grupo_id': null
+            };
+            this.unidad_medida = {};
+            this.opcionesSeleccionadas = [];
+            this.errors = {};
+        },
         storeRegistro: function () {
             // --- LÓGICA DE CONVERSIÓN (igual que en el modal de crear) ---
             this.Registro.visible_ot = false;
@@ -180,8 +195,7 @@ export default {
                 this.errors = [];
                 $('#editar').modal('hide');
                 toastr.success('Registro editado con éxito');
-                this.grupo_id = null;
-                this.Registro = {}
+                this.resetForm();
             }).catch(error => {
                 this.errors = error.response.data.errors;
                 $.each(this.errors, function (key, value) {

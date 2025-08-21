@@ -6568,6 +6568,21 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this.producto_grupo = response.data;
       });
     },
+    resetForm: function resetForm() {
+      this.Registro = {
+        'codigo': '',
+        'metros': '',
+        'descripcion': '',
+        'visible_ot': false,
+        'stockeable_sn': false,
+        'relacionado_a_placas_sn': false,
+        'placa_sn': false,
+        'grupo_id': null
+      };
+      this.unidad_medida = {};
+      this.opcionesSeleccionadas = [];
+      this.errors = {};
+    },
     storeRegistro: function storeRegistro() {
       var _this2 = this;
       // --- LÓGICA DE CONVERSIÓN (igual que en el modal de crear) ---
@@ -6591,8 +6606,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this2.errors = [];
         $('#editar').modal('hide');
         toastr.success('Registro editado con éxito');
-        _this2.grupo_id = null;
-        _this2.Registro = {};
+        _this2.resetForm();
       })["catch"](function (error) {
         _this2.errors = error.response.data.errors;
         $.each(_this2.errors, function (key, value) {
@@ -51926,7 +51940,7 @@ var render = function render() {
         return option.value;
       },
       multiple: "",
-      placeholder: "Seleccionar..."
+      placeholder: "Seleccionar"
     },
     model: {
       value: _vm.opcionesSeleccionadas,
@@ -52167,7 +52181,7 @@ var render = function render() {
         return option.value;
       },
       multiple: "",
-      placeholder: "Seleccionar...",
+      placeholder: "Seleccionar",
       disabled: _vm.altaRemito
     },
     model: {

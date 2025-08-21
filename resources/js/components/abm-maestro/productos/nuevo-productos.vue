@@ -19,7 +19,7 @@
                                         label="text"
                                         :reduce="option => option.value"
                                         multiple
-                                        placeholder="Seleccionar..."
+                                        placeholder="Seleccionar"
                                         :disabled="altaRemito"
                                     ></v-select>
                                 </div>
