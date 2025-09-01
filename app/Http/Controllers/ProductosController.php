@@ -43,7 +43,7 @@ class ProductosController extends Controller
 
     public function getProductoStockeable(){
 
-        return Productos::where('stockeable_sn',1)->get();
+        return Productos::where('stockeable_sn',1)->orderBy('codigo', 'ASC')->get();
 
     }
 
