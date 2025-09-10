@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('proveedores/paginate', 'ProveedoresController@paginate');
     Route::get('proveedores/get-proveedores', 'ProveedoresController@getProveedores');
     Route::resource('proveedores', 'ProveedoresController');
-//frente asignacion
+    //frente asignacion
     Route::get('frentesAsignacion/paginate', 'FrentesAsignacionController@getFrentes');
     Route::post('frentesAsignacion/store', 'FrentesAsignacionController@store');
     Route::put('frentesAsignacion/update/{id}', 'FrentesAsignacionController@update');
@@ -246,7 +246,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('informes/{id}/desanular', 'InformesController@desanular');
 
     Route::get(
-        'informes/ot/{ot_id}/obra/{obra}/fecha/{fecha}/pendientes_parte_diario',
+        'informes/ot/{ot_id}/obra/{obra}/fecha/{fecha}/permitir/{permitir_anteriores_sn}/pendientes_parte_diario',
         'InformesController@OtInformesPendienteParteDiario'
     );
     Route::get(
@@ -847,9 +847,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('bombas', 'BombasController');
 
     // QR
-    Route::get('qr-interno-equipos/tipo_equipamiento/{tipo_equipamiento_id}/search/{search}','QrController@getInternoEquipos');
-    Route::get('interno_equipos/{id}/documentaciones','QrController@getDocIntEquipos');
-    Route::get('interno_fuentes/{id}/documentaciones','QrController@getDocIntEquiposFuente');
+    Route::get('qr-interno-equipos/tipo_equipamiento/{tipo_equipamiento_id}/search/{search}', 'QrController@getInternoEquipos');
+    Route::get('interno_equipos/{id}/documentaciones', 'QrController@getDocIntEquipos');
+    Route::get('interno_fuentes/{id}/documentaciones', 'QrController@getDocIntEquiposFuente');
 
     // TGS
     Route::get('tgs/normas-fabricacion-us-me', 'TgsController@getNormasFabricacion');
@@ -872,8 +872,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('tgs-save-modelo/{codigo}', 'TgsController@saveModelo');
     Route::post('tgs-save-fluido/{codigo}', 'TgsController@saveFluido');
-
-
 });
 
 Route::get('/fecha_actual', function () {
