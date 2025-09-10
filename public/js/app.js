@@ -95957,9 +95957,7 @@ var render = function render() {
     staticClass: "box-body"
   }, [_vm.isLoading ? _c("div", {
     staticClass: "text-center"
-  }, [_c("i", {
-    staticClass: "fa fa-spinner fa-spin"
-  }), _vm._v(" Cargando...\n                    ")]) : _c("div", {
+  }) : _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "table-responsive"

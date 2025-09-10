@@ -200,7 +200,6 @@
                     </div>
                     <div class="box-body">
                         <div v-if="isLoading" class="text-center">
-                            <i class="fa fa-spinner fa-spin"></i> Cargando...
                         </div>
                         <div v-else class="col-md-12">
                             <div class="table-responsive">
