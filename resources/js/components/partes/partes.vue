@@ -502,7 +502,7 @@
                                                 <td>
                                                     <div>
                                                         {{ item.diametro_especifico ? item.diametro_especifico :
-                                                        item.diametro }}
+                                                            item.diametro }}
                                                     </div>
                                                 </td>
                                                 <td style="text-align:center"> <a @click="RemoveTablaPm(k)"> <app-icon
@@ -555,7 +555,7 @@
                                                 <td>
                                                     <div>
                                                         {{ item.diametro_especifico ? item.diametro_especifico :
-                                                        item.diametro }}
+                                                            item.diametro }}
                                                     </div>
                                                 </td>
                                                 <td style="text-align:center"> <a @click="RemoveTablaLp(k)"> <app-icon
@@ -608,7 +608,7 @@
                                                 <td>
                                                     <div>
                                                         {{ item.diametro_especifico ? item.diametro_especifico :
-                                                        item.diametro }}
+                                                            item.diametro }}
                                                     </div>
                                                 </td>
                                                 <td style="text-align:center"> <a @click="RemoveTablaRd(k)"> <app-icon
@@ -970,7 +970,7 @@
                                             <tr v-for="(item, k) in TablaInformesImportados" :key="k"
                                                 @click="selectPosTablaInformesImportables(k)">
                                                 <td v-if="item.visible && itemMetodo == item.metodo"> {{
-                                                    item.numero_formateado}}</td>
+                                                    item.numero_formateado }}</td>
                                                 <td v-if="item.visible && itemMetodo == item.metodo">
                                                     <div
                                                         v-if="indexTablaInformesImportados == k && itemMetodo == item.metodo">
@@ -1228,10 +1228,11 @@ export default {
             this.RecalcularViaticos();
             this.RecalcularHospedaje();
         },
-        obra: {
+            obra: {
             handler: function (after, before) {
                 if (before) {
                     this.resetInformesSelect()
+                    this.informes = [];
                 }
                 if (!this.editmode) {
                     this.getInformesPendientesParte();
@@ -1311,6 +1312,7 @@ export default {
         setObra: function (value) {
 
             this.obra = value;
+
         },
 
         resetInformesSelect: function () {
@@ -1320,7 +1322,7 @@ export default {
                 item.informe_sel = false;
 
             });
-
+            this.informes = [];
             this.TablaInformesRi = [];
             this.TablaInformesLp = [];
             this.TablaInformesRd = [];
@@ -1441,6 +1443,10 @@ export default {
         },
 
         getInformesPendientesParte: function () {
+            if (!this.obra) {
+                console.log('No se puede buscar sin obra');
+                return;
+            }
             if (this.fecha) {
                 // La fecha siempre se envía
                 var fecha = this.fecha;
