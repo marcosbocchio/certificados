@@ -254,7 +254,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'InfomresSinParteController@obtenerInformesSinParte'
     );
     Route::get(
-        'informes/ot/{ot_id}/parte/{parte_id}/obra/{obra}/fecha/{fecha}/pendientes_editables_parte_diario',
+        'informes/ot/{ot_id}/parte/{parte_id}/obra/{obra}/fecha/{fecha}/permitir/{permitir_anteriores_sn}/pendientes_editables_parte_diario',
         'InformesController@OtInformesPendienteEditableParteDiario'
     );
     Route::get(

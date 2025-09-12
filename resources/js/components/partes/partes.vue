@@ -1228,7 +1228,7 @@ export default {
             this.RecalcularViaticos();
             this.RecalcularHospedaje();
         },
-            obra: {
+        obra: {
             handler: function (after, before) {
                 if (before) {
                     this.resetInformesSelect()
@@ -1489,14 +1489,28 @@ export default {
         },
 
         getInformesPendientesYEditableParte: function () {
-            var fechaFiltrada = this.permitir_anteriores_sn ? null : this.fecha;
-            axios.defaults.baseURL = this.url;
-            var obraInformes = this.obra
-            if (this.obra) {
-                obraInformes = this.obra.replace('/', '--');
+            // Si no se selecciona una obra, no se realiza la consulta.
+            if (!this.obra) {
+                console.log('No se puede buscar sin obra');
+                return;
             }
+
             if (this.fecha) {
-                var urlRegistros = 'informes/ot/' + this.otdata.id + '/parte/' + this.parte_data.id + '/obra/' + obraInformes + '/fecha/' + fechaFiltrada + '/pendientes_editables_parte_diario' + '?api_token=' + Laravel.user.api_token;
+                // La fecha siempre se envía si está disponible.
+                var fecha = this.fecha;
+                // La bandera 'permitir_anteriores_sn' se envía como string 'true' o 'false'.
+                var permitirAnteriores = this.permitir_anteriores_sn;
+
+                // Se usa la URL base configurada.
+                axios.defaults.baseURL = this.url;
+                var obraInformes = this.obra;
+                if (this.obra) {
+                    obraInformes = this.obra.replace('/', '--');
+                }
+
+                // Construcción de la URL completa con todos los parámetros de ruta, incluyendo 'permitir'.
+                var urlRegistros = 'informes/ot/' + this.otdata.id + '/parte/' + this.parte_data.id + '/obra/' + obraInformes + '/fecha/' + fecha + '/permitir/' + permitirAnteriores + '/pendientes_editables_parte_diario' + '?api_token=' + Laravel.user.api_token;
+
                 axios.get(urlRegistros).then(response => {
                     this.informes = response.data
 

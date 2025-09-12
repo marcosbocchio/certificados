@@ -353,14 +353,15 @@ class InformesController extends Controller
     public function OtInformesPendienteParteDiario($ot_id, $obra, $fecha, $permitir_anteriores_sn)
     {
         $permitir_anteriores = ($permitir_anteriores_sn === 'true');
+        $obra = str_replace('--', '/', $obra);
 
         // El parte_id se mantiene en 0 para obtener informes sin parte diario asignado.
         $parte_id = 0;
 
         $informes = DB::select(
-            // Se agrega un nuevo parámetro '?' para el campo obra en la llamada al stored procedure.
+            // Se agregan los 5 parámetros esperados.
             'CALL InformesPendientesSinParteDiario(?, ?, ?, ?, ?)',
-            // Se pasa el nuevo parámetro $obra en el array.
+            // Se pasan los 5 valores correspondientes.
             array($ot_id, $parte_id, $obra, $fecha, $permitir_anteriores)
         );
 
@@ -368,12 +369,17 @@ class InformesController extends Controller
         return $informes;
     }
 
-    public function OtInformesPendienteEditableParteDiario($ot_id, $parte_id, $obra, $fecha)
+    public function OtInformesPendienteEditableParteDiario($ot_id, $parte_id, $obra, $fecha, $permitir_anteriores_sn)
     {
-
         $fechaParam = ($fecha === 'null') ? null : $fecha;
         $obra = str_replace('--', '/', $obra);
-        $informes_pendientes = DB::select('CALL InformesPendientesSinParteDiario(?,?,?,?)', array($ot_id, $parte_id, $obra, $fechaParam));
+        $permitir_anteriores = ($permitir_anteriores_sn === 'true');
+
+        $informes_pendientes = DB::select(
+            'CALL InformesPendientesSinParteDiario(?,?,?,?,?)',
+            array($ot_id, $parte_id, $obra, $fechaParam, $permitir_anteriores)
+        );
+
         $this->addObjectSolicitadoPor($informes_pendientes);
         return $informes_pendientes;
     }
