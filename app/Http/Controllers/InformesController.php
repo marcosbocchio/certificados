@@ -354,11 +354,14 @@ class InformesController extends Controller
     {
         $permitir_anteriores = ($permitir_anteriores_sn === 'true');
 
+        // El parte_id se mantiene en 0 para obtener informes sin parte diario asignado.
         $parte_id = 0;
 
         $informes = DB::select(
-            'CALL InformesPendientesSinParteDiario(?, ?, ?, ?)',
-            array($ot_id, $parte_id, $fecha, $permitir_anteriores)
+            // Se agrega un nuevo parámetro '?' para el campo obra en la llamada al stored procedure.
+            'CALL InformesPendientesSinParteDiario(?, ?, ?, ?, ?)',
+            // Se pasa el nuevo parámetro $obra en el array.
+            array($ot_id, $parte_id, $obra, $fecha, $permitir_anteriores)
         );
 
         $this->addObjectSolicitadoPor($informes);
