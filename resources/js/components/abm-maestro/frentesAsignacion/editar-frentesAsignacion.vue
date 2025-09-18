@@ -29,7 +29,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="checkbox" id="centro-distribucion" v-model="frente.centro_distribucion_sn">
+                                    <input type="checkbox" id="centro-distribucion" v-model="frente.centro_distribucion_sn" :disabled="centroDistribucionExists">
                                     <label for="centro-distribucion">Centro de Distribución</label>
                                 </div>
                             </div>
@@ -59,18 +59,33 @@ export default {
     data() {
         return {
             frente: {
+                id: null,
                 codigo: '',
                 descripcion: '',
                 horas_diarias_laborables: '',
                 centro_distribucion_sn: false,
                 controla_hs_extras_sn: false
-            }
+            },
+            centroDistribucionExists: false,
         };
     },
     created() {
         eventEditRegistro.$on('editar', this.openModal);
     },
     methods: {
+        checkExistingCentroDistribucion() {
+            axios.get('frentes/check-centro-distribucion')
+                .then(response => {
+                    if (response.data.exists && !this.frente.centro_distribucion_sn) {
+                        this.centroDistribucionExists = true;
+                    } else {
+                        this.centroDistribucionExists = false;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error checking centro de distribucion:", error);
+                });
+        },
         guardar() {
             if (this.frente.codigo === '' || this.frente.horas_diarias_laborables === '') {
                 alert('Los campos Código y Horas Laborales son obligatorios.');
@@ -93,17 +108,20 @@ export default {
             });
         },
         openModal(registro) {
-            this.frente = registro;
+            this.frente = { ...registro };
+            this.checkExistingCentroDistribucion();
             $('#editar-frente').modal('show');
         },
         limpiarFormulario() {
             this.frente = {
+                id: null,
                 codigo: '',
                 descripcion: '',
                 horas_diarias_laborables: '',
                 centro_distribucion_sn: false,
                 controla_hs_extras_sn: false
             };
+            this.centroDistribucionExists = false;
         }
     }
 };

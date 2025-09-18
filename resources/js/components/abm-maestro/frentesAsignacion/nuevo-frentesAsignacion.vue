@@ -29,7 +29,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <input type="checkbox" id="centro-distribucion" v-model="centro_distribucion_sn">
+                  <input type="checkbox" id="centro-distribucion" v-model="centro_distribucion_sn" :disabled="centroDistribucionExists">
                   <label for="centro-distribucion">Centro de Distribución</label>
                 </div>
               </div>
@@ -64,13 +64,24 @@ export default {
       descripcion: '',
       horas_diarias_laborables: '',
       centro_distribucion_sn: false,
-      controla_hs_extras_sn: false
+      controla_hs_extras_sn: false,
+      centroDistribucionExists: false,
     };
   },
   created() {
     eventNewRegistro.$on('open', this.openModal);
+    this.checkExistingCentroDistribucion();
   },
   methods: {
+    checkExistingCentroDistribucion() {
+        axios.get('frentes/check-centro-distribucion')
+            .then(response => {
+                this.centroDistribucionExists = response.data.exists;
+            })
+            .catch(error => {
+                console.error("Error checking centro de distribucion:", error);
+            });
+    },
     guardar() {
       if (this.codigo === '' || this.horas_diarias_laborables === '') {
         toastr.error('Los campos Código y Horas Laborales son obligatorios.');
@@ -95,6 +106,7 @@ export default {
     },
     openModal() {
       $('#nuevo-frente').modal('show');
+      this.checkExistingCentroDistribucion();
     },
     limpiarFormulario() {
       this.codigo = '';
@@ -102,6 +114,7 @@ export default {
       this.horas_diarias_laborables = '';
       this.centro_distribucion_sn = false;
       this.controla_hs_extras_sn = false;
+      this.checkExistingCentroDistribucion();
     }
   }
 };
