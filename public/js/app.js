@@ -129721,7 +129721,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n/* Tu CSS aquí */\n", ""]);
+exports.push([module.i, "\r\n/* Tu CSS aquí */\r\n", ""]);
 
 // exports
 
@@ -129949,7 +129949,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.box.box-custom-enod[data-v-0a1313be] {\n    padding: 20px;\n}\n.modal.show[data-v-0a1313be] {\n    display: block;\n    z-index: 1050;\n    background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-content[data-v-0a1313be] {\n    background-color: white;\n    padding: 20px;\n    border-radius: 5px;\n}\n", ""]);
+exports.push([module.i, "\n.box.box-custom-enod[data-v-0a1313be] {\r\n    padding: 20px;\n}\n.modal.show[data-v-0a1313be] {\r\n    display: block;\r\n    z-index: 1050;\r\n    background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-content[data-v-0a1313be] {\r\n    background-color: white;\r\n    padding: 20px;\r\n    border-radius: 5px;\n}\r\n", ""]);
 
 // exports
 
@@ -131013,7 +131013,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-04aace14],\n.form-control[readonly][data-v-04aace14],\nfieldset[disabled] .form-control[data-v-04aace14] {\n    background-color: #eee;\n}\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-04aace14],\r\n.form-control[readonly][data-v-04aace14],\r\nfieldset[disabled] .form-control[data-v-04aace14] {\r\n    background-color: #eee;\n}\r\n", ""]);
 
 // exports
 
@@ -131127,7 +131127,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-7c22c270], .form-control[readonly][data-v-7c22c270], fieldset[disabled] .form-control[data-v-7c22c270] {\n     background-color: #eee;\n}\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-7c22c270], .form-control[readonly][data-v-7c22c270], fieldset[disabled] .form-control[data-v-7c22c270] {\r\n     background-color: #eee;\n}\r\n", ""]);
 
 // exports
 
@@ -131222,7 +131222,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.checkbox-right[data-v-067d0ecf] {\n\n\n    float: right;\n    margin-right: 15px;\n}\n", ""]);
+exports.push([module.i, "\n.checkbox-right[data-v-067d0ecf] {\r\n\r\n\r\n    float: right;\r\n    margin-right: 15px;\n}\r\n", ""]);
 
 // exports
 
