@@ -82,4 +82,10 @@ class FrentesController extends Controller
     {
         //
     }
+
+    public function checkCentroDistribucion()
+    {
+        $exists = \App\Frentes::where('centro_distribucion_sn', 1)->exists();
+        return response()->json(['exists' => $exists]);
+    }
 }

@@ -265,7 +265,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'informes/revisiones/ot/{ot_id}/metodo/{metodo}/informe_id/{informe_id}',
         'InformesController@getInformeRevisiones'
     );
-
+    Route::get('frentes/check-centro-distribucion', 'FrentesController@checkCentroDistribucion');
     Route::get(
         'certificados/parte/{parte_id}/servicios',
         'CertificadosController@getParteServicios'

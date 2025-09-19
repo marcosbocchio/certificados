@@ -1,4 +1,3 @@
-@ -1,583 +1,593 @@
 <template>
  <div class="row">
        <div class="col-md-12">
@@ -230,7 +229,7 @@
                                     </div>
                                 </div>
 
-                                
+
                             </div>
                         </div>
                         <div class="box box-custom-enod">
@@ -324,7 +323,7 @@ export default {
         esBorrador: true,
         cargando_stop:false,
         observaciones_remito: '',
-        
+
     }},
 
     created : function() {
@@ -605,7 +604,7 @@ export default {
                 'observaciones'     : this.listaObservaciones,
                 'borrador_sn': this.valorBorradorSN,
                 'observaciones_remito':this.observaciones_remito,
-                
+
           }}
 
         ).then( () => {

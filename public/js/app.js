@@ -3955,26 +3955,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       frente: {
+        id: null,
         codigo: '',
         descripcion: '',
         horas_diarias_laborables: '',
         centro_distribucion_sn: false,
         controla_hs_extras_sn: false
-      }
+      },
+      centroDistribucionExists: false
     };
   },
   created: function created() {
     _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventEditRegistro"].$on('editar', this.openModal);
   },
   methods: {
-    guardar: function guardar() {
+    checkExistingCentroDistribucion: function checkExistingCentroDistribucion() {
       var _this = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('frentes/check-centro-distribucion').then(function (response) {
+        if (response.data.exists && !_this.frente.centro_distribucion_sn) {
+          _this.centroDistribucionExists = true;
+        } else {
+          _this.centroDistribucionExists = false;
+        }
+      })["catch"](function (error) {
+        console.error("Error checking centro de distribucion:", error);
+      });
+    },
+    guardar: function guardar() {
+      var _this2 = this;
       if (this.frente.codigo === '' || this.frente.horas_diarias_laborables === '') {
         alert('Los campos Código y Horas Laborales son obligatorios.');
         return;
@@ -3987,23 +4007,26 @@ __webpack_require__.r(__webpack_exports__);
         controla_hs_extras_sn: this.frente.controla_hs_extras_sn
       }).then(function (response) {
         $('#editar-frente').modal('hide');
-        _this.limpiarFormulario();
+        _this2.limpiarFormulario();
       })["catch"](function (error) {
         console.error(error);
       });
     },
     openModal: function openModal(registro) {
-      this.frente = registro;
+      this.frente = _objectSpread({}, registro);
+      this.checkExistingCentroDistribucion();
       $('#editar-frente').modal('show');
     },
     limpiarFormulario: function limpiarFormulario() {
       this.frente = {
+        id: null,
         codigo: '',
         descripcion: '',
         horas_diarias_laborables: '',
         centro_distribucion_sn: false,
         controla_hs_extras_sn: false
       };
+      this.centroDistribucionExists = false;
     }
   }
 });
@@ -4034,15 +4057,25 @@ __webpack_require__.r(__webpack_exports__);
       descripcion: '',
       horas_diarias_laborables: '',
       centro_distribucion_sn: false,
-      controla_hs_extras_sn: false
+      controla_hs_extras_sn: false,
+      centroDistribucionExists: false
     };
   },
   created: function created() {
     _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$on('open', this.openModal);
+    this.checkExistingCentroDistribucion();
   },
   methods: {
-    guardar: function guardar() {
+    checkExistingCentroDistribucion: function checkExistingCentroDistribucion() {
       var _this = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('frentes/check-centro-distribucion').then(function (response) {
+        _this.centroDistribucionExists = response.data.exists;
+      })["catch"](function (error) {
+        console.error("Error checking centro de distribucion:", error);
+      });
+    },
+    guardar: function guardar() {
+      var _this2 = this;
       if (this.codigo === '' || this.horas_diarias_laborables === '') {
         toastr.error('Los campos Código y Horas Laborales son obligatorios.');
         return;
@@ -4057,13 +4090,14 @@ __webpack_require__.r(__webpack_exports__);
         _event_bus__WEBPACK_IMPORTED_MODULE_1__["EventBus"].$emit('registro-guardado');
         $('#nuevo-frente').modal('hide');
         toastr.success('Frente Guardado');
-        _this.limpiarFormulario();
+        _this2.limpiarFormulario();
       })["catch"](function (error) {
         console.error(error);
       });
     },
     openModal: function openModal() {
       $('#nuevo-frente').modal('show');
+      this.checkExistingCentroDistribucion();
     },
     limpiarFormulario: function limpiarFormulario() {
       this.codigo = '';
@@ -4071,6 +4105,7 @@ __webpack_require__.r(__webpack_exports__);
       this.horas_diarias_laborables = '';
       this.centro_distribucion_sn = false;
       this.controla_hs_extras_sn = false;
+      this.checkExistingCentroDistribucion();
     }
   }
 });
@@ -46396,7 +46431,8 @@ var render = function render() {
     }],
     attrs: {
       type: "checkbox",
-      id: "centro-distribucion"
+      id: "centro-distribucion",
+      disabled: _vm.centroDistribucionExists
     },
     domProps: {
       checked: Array.isArray(_vm.frente.centro_distribucion_sn) ? _vm._i(_vm.frente.centro_distribucion_sn, null) > -1 : _vm.frente.centro_distribucion_sn
@@ -46655,7 +46691,8 @@ var render = function render() {
     }],
     attrs: {
       type: "checkbox",
-      id: "centro-distribucion"
+      id: "centro-distribucion",
+      disabled: _vm.centroDistribucionExists
     },
     domProps: {
       checked: Array.isArray(_vm.centro_distribucion_sn) ? _vm._i(_vm.centro_distribucion_sn, null) > -1 : _vm.centro_distribucion_sn
@@ -129684,7 +129721,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\r\n/* Tu CSS aquí */\r\n", ""]);
+exports.push([module.i, "\n/* Tu CSS aquí */\n", ""]);
 
 // exports
 
@@ -129703,7 +129740,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\r\n/* Tu CSS aquí */\r\n", ""]);
+exports.push([module.i, "\n/* Tu CSS aquí */\n", ""]);
 
 // exports
 
@@ -129912,7 +129949,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.box.box-custom-enod[data-v-0a1313be] {\r\n    padding: 20px;\n}\n.modal.show[data-v-0a1313be] {\r\n    display: block;\r\n    z-index: 1050;\r\n    background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-content[data-v-0a1313be] {\r\n    background-color: white;\r\n    padding: 20px;\r\n    border-radius: 5px;\n}\r\n", ""]);
+exports.push([module.i, "\n.box.box-custom-enod[data-v-0a1313be] {\n    padding: 20px;\n}\n.modal.show[data-v-0a1313be] {\n    display: block;\n    z-index: 1050;\n    background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-content[data-v-0a1313be] {\n    background-color: white;\n    padding: 20px;\n    border-radius: 5px;\n}\n", ""]);
 
 // exports
 
@@ -130976,7 +131013,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-04aace14],\r\n.form-control[readonly][data-v-04aace14],\r\nfieldset[disabled] .form-control[data-v-04aace14] {\r\n    background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-04aace14],\n.form-control[readonly][data-v-04aace14],\nfieldset[disabled] .form-control[data-v-04aace14] {\n    background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -131090,7 +131127,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-7c22c270], .form-control[readonly][data-v-7c22c270], fieldset[disabled] .form-control[data-v-7c22c270] {\r\n     background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-7c22c270], .form-control[readonly][data-v-7c22c270], fieldset[disabled] .form-control[data-v-7c22c270] {\n     background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -131185,7 +131222,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.checkbox-right[data-v-067d0ecf] {\r\n\r\n\r\n    float: right;\r\n    margin-right: 15px;\n}\r\n", ""]);
+exports.push([module.i, "\n.checkbox-right[data-v-067d0ecf] {\n\n\n    float: right;\n    margin-right: 15px;\n}\n", ""]);
 
 // exports
 
