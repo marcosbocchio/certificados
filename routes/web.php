@@ -183,8 +183,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/pdf/informe/tt/{informe}','pdfInformesTtController@imprimir')->name('pdfInformeTt');
       Route::get('/pdf/informe/pmi/{informe}','PdfInformesPmiController@imprimir')->name('pdfInformePmi');
       //Route::get('/pdf/informe/us/indicaciones/referencia/{id}','pdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
-      Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','pdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
-      Route::get('/pdf/informe/us/{informe}/indicaciones_me','pdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
+      Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','PdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
+      Route::get('/pdf/informe/us/{informe}/indicaciones_me','PdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
       Route::get('/pdf/reporte-interno-equipos-ri/tipo_equipamiento/{tipo_equipamiento_id}/vencidas_sn/{vencidas_sn}/noVencidas_sn/{noVencidas_sn}/todos_sn/{todos_sn}','PdfInternosEquiposController@imprimir');
 
 
