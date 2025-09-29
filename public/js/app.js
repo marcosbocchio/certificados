@@ -129740,7 +129740,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n/* Tu CSS aquí */\n", ""]);
+exports.push([module.i, "\r\n/* Tu CSS aquí */\r\n", ""]);
 
 // exports
 
@@ -130367,7 +130367,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.dropdown-menu-center[data-v-e6d6cda6] {\n    /* Mueve el menú un poco a la derecha y ajusta verticalmente */\n    transform: translate(5%, -70%);\n}\n.dropdown-item[data-v-e6d6cda6] {\n    width: 100%;\n    text-align: left;\n    /* Estilo para los elementos dentro del menú */\n    color: black !important; /* Cambia el color del texto a negro */\n    text-decoration: none !important; /* Elimina el subrayado */\n}\n.dropdown-item[data-v-e6d6cda6]:hover, .dropdown-item[data-v-e6d6cda6]:focus {\n    background-color: #e1e3e9; /* Reemplaza #color con el código hexadecimal del color deseado */\n    color: white; /* Cambia el color del texto si es necesario */\n}\n", ""]);
+exports.push([module.i, "\n.dropdown-menu-center[data-v-e6d6cda6] {\r\n    /* Mueve el menú un poco a la derecha y ajusta verticalmente */\r\n    transform: translate(5%, -70%);\n}\n.dropdown-item[data-v-e6d6cda6] {\r\n    width: 100%;\r\n    text-align: left;\r\n    /* Estilo para los elementos dentro del menú */\r\n    color: black !important; /* Cambia el color del texto a negro */\r\n    text-decoration: none !important; /* Elimina el subrayado */\n}\n.dropdown-item[data-v-e6d6cda6]:hover, .dropdown-item[data-v-e6d6cda6]:focus {\r\n    background-color: #e1e3e9; /* Reemplaza #color con el código hexadecimal del color deseado */\r\n    color: white; /* Cambia el color del texto si es necesario */\n}\r\n", ""]);
 
 // exports
 
