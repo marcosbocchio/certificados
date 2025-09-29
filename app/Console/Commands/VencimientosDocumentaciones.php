@@ -104,7 +104,7 @@ class VencimientosDocumentaciones extends Command
 
                 (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
                 $equipos_vencidos = $this->VencimientosEquipos($alarma);
-                $this->EnviarMailVencimientosSoloReceptores($equipos_vencidos,$item->codigo,);
+                $this->EnviarMailVencimientosSoloReceptores($equipos_vencidos,$item->codigo);
                 Log::debug("Documentacion equipos: " . $equipos_vencidos);
             }
         }
