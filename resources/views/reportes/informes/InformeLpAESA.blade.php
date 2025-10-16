@@ -295,7 +295,7 @@
 
                     <b>{{ $detalle->pieza }}{{ $soldadoresText }}</b>@if($i < count($detalles)-1) | @endif
                         @endforeach
-                </td>
+                        </td>
             </tr>
         </tbody>
     </table>
@@ -311,7 +311,15 @@
                     <b>{{$material->codigo}}</b>
                 </td>
                 <td style="height: 7mm;">
-                    <b>{{$diametro_espesor->diametro}}</b>
+                    @php
+                    $diam = strtoupper(trim($diametro_espesor->diametro ?? ''));
+                    @endphp
+
+                    @if($diam !== 'CHAPA' && $diam !== 'VARIOS' && $diam !== '')
+                    <b>{{ $diam }}"</b>
+                    @else
+                    &nbsp;
+                    @endif
                 </td>
                 <td style="height: 7mm;">
                     @if ($informe->espesor_chapa)
