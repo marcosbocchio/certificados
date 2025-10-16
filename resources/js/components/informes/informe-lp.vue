@@ -1076,7 +1076,7 @@ export default {
                 toastr.error('El campo cm es obligatorio');
                 return;
             }
-
+console.log(this.soldador1, this.soldador2)
             this.TablaLp.push({
                 pieza: this.pieza,
                 cm: this.cm,

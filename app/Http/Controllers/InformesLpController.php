@@ -129,8 +129,8 @@ class InformesLpController extends Controller
             $detalleLp = new DetallesLp;
             $detalleLp->informe_lp_id = $informeLp->id;
             $detalleLp->pieza = $detalle['pieza'];
-            $detalleLp->soldador1_id = isset($detalle['soldador1']['id']) ? $detalle['soldador1']['id'] : null;
-            $detalleLp->soldador2_id = isset($detalle['soldador2']['id']) ? $detalle['soldador2']['id'] : null;
+            $detalleLp->soldador1_id = isset($detalle['soldador1']['soldadores_id']) ? $detalle['soldador1']['soldadores_id'] : null;
+            $detalleLp->soldador2_id = isset($detalle['soldador2']['soldadores_id']) ? $detalle['soldador2']['soldadores_id'] : null;
             $detalleLp->cm = $detalle['cm'];
             $detalleLp->detalle = $detalle['detalle'];
             $detalleLp->aceptable_sn = $detalle['aceptable_sn'];
@@ -274,6 +274,7 @@ class InformesLpController extends Controller
             ->where('detalles_lp.informe_lp_id', $id)
             ->selectRaw('
             detalles_lp.id,
+            detalles_lp.informe_lp_id,
             detalles_lp.pieza,
             detalles_lp.cm,
             detalles_lp.detalle,
@@ -294,13 +295,14 @@ class InformesLpController extends Controller
             ->orderBy('detalles_lp.id', 'asc')
             ->get();
 
-        $detalles = $detalles->map(function ($item) {
+        return $detalles->map(function ($item) {
             return [
                 'id' => $item->id,
+                'informe_lp_id' => $item->informe_lp_id,
                 'pieza' => $item->pieza,
                 'cm' => $item->cm,
                 'detalle' => $item->detalle,
-                'aceptable_sn' => $item->aceptable_sn,
+                'aceptable_sn' => (bool)$item->aceptable_sn,
                 'observaciones' => $item->observaciones,
                 'path1' => $item->path1,
                 'path2' => $item->path2,
@@ -318,9 +320,8 @@ class InformesLpController extends Controller
                 ] : null,
             ];
         });
-
-        return $detalles;
     }
+
 
 
 
