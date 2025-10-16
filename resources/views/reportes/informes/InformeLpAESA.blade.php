@@ -1,187 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>INFORME {{ $nro }}</title>
     <link rel="stylesheet" href="{{ asset('/css/reportes/pdf.css') }}" media="all" />
 </head>
 
 <style>
-body{
-    font-family: "Encode Sans",Arial,sans-serif;
-}
-main{
-    border: 3px solid black;
-    margin-top:-3mm;
-}
-footer{
-    font-family: "Encode Sans",Arial,sans-serif;
-    border: 3px solid black;
-    width: 164mm;
-}
-.logo{
-    width: 20%;
-}
-.logo img{
-    height: 60px;
-}
-#bordernone{
-    border:none;
-}
-.tablamain{
+    body {
+        font-family: "Encode Sans", Arial, sans-serif;
+    }
+
+    main {
+        border: 3px solid black;
+        margin-top: -3mm;
+    }
+
+    footer {
+        font-family: "Encode Sans", Arial, sans-serif;
+        border: 3px solid black;
+        width: 164mm;
+    }
+
+    .logo {
+        width: 20%;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    #bordernone {
+        border: none;
+    }
+
+    .tablamain {
         font-size: 7pt;
         border-collapse: collapse;
         width: 100%;
-}
-#left{
-    text-align:left;
-    margin-left:2px;
-}
-#tabla6{
-    font-size: 6pt;
-    text-align:left;
-    margin-left:2px;
-}
-#font7{
-    font-size: 7.3pt;
-    text-align:left;
-    margin-left:2px;
-}
-.tablamain td {
+    }
+
+    #left {
+        text-align: left;
+        margin-left: 2px;
+    }
+
+    #tabla6 {
+        font-size: 6pt;
+        text-align: left;
+        margin-left: 2px;
+    }
+
+    #font7 {
+        font-size: 7.3pt;
+        text-align: left;
+        margin-left: 2px;
+    }
+
+    .tablamain td {
         border: 1.5px solid black;
         text-align: center;
         padding: 0px 0px 0px 0px;
-}
-.tablamain .gris{
+    }
+
+    .tablamain .gris {
         background-color: #D9D9D9;
-}
-.tablamain .celda-corta {
+    }
+
+    .tablamain .celda-corta {
         width: 25%;
-}
-.tablamain .celda-larga {
+    }
+
+    .tablamain .celda-larga {
         width: 75%;
-}
-.tablafooter{
+    }
+
+    .tablafooter {
         font-size: 7pt;
         border-collapse: collapse;
         width: 100%;
-}
+    }
 
-.header{
-    height: 31.92px;
-    width: 100%;
-}
-.cont{
-    width:100%;
-    margin: -4px 0px 2px 0px;
-    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
-}
-.color1 {
-    display:inline-block;
-    height: 5px;
-    width: 25%;
-    background: #7f8e2b;
-    padding:0px;
-    margin: 0px -4px 0px -2px;
-}
+    .header {
+        height: 31.92px;
+        width: 100%;
+    }
 
-.color2 {
-    display:inline-block;
-    height: 5px;
-    width: 25%;
-  background: #c0504d;
-  padding:0px;
-  margin: 0px -2px 0px 0px;
-  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
-}
+    .cont {
+        width: 100%;
+        margin: -4px 0px 2px 0px;
+        box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    }
 
-.color3 {
-    display:inline-block;
-    height: 5px;
-    width: 25%;
-    background: #f1ab00;
-    padding:0px;
-    margin: 0px 0px 0px -2px;
-}
+    .color1 {
+        display: inline-block;
+        height: 5px;
+        width: 25%;
+        background: #7f8e2b;
+        padding: 0px;
+        margin: 0px -4px 0px -2px;
+    }
 
-.color4 {
-    display:inline-block;
-    height: 5px;
-    width: 25%;
-    background: #4f81bd;
-    padding:0px;
-    margin: 0px 0px 0px -4px;
-}
+    .color2 {
+        display: inline-block;
+        height: 5px;
+        width: 25%;
+        background: #c0504d;
+        padding: 0px;
+        margin: 0px -2px 0px 0px;
+        box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    }
+
+    .color3 {
+        display: inline-block;
+        height: 5px;
+        width: 25%;
+        background: #f1ab00;
+        padding: 0px;
+        margin: 0px 0px 0px -2px;
+    }
+
+    .color4 {
+        display: inline-block;
+        height: 5px;
+        width: 25%;
+        background: #4f81bd;
+        padding: 0px;
+        margin: 0px 0px 0px -4px;
+    }
+
     .col1 {
         width: 35.72mm;
     }
-    .col1 b{
-        padding-left:1px;
+
+    .col1 b {
+        padding-left: 1px;
     }
+
     .col2 {
         width: 40mm;
     }
-    .col3{
+
+    .col3 {
         width: 25.82mm;
     }
-    .col4{
+
+    .col4 {
         width: 40.60mm;
     }
-    .col3 b{
-        padding-left:1px;
-    }
-    #qr{
-    font-size: 8pt;
-    width: 19mm;
-    height: 19mm;
-}
-#titulo{
-    font-size:9pt;
-}
 
+    .col3 b {
+        padding-left: 1px;
+    }
+
+    #qr {
+        font-size: 8pt;
+        width: 19mm;
+        height: 19mm;
+    }
+
+    #titulo {
+        font-size: 9pt;
+    }
 </style>
 
 <main>
-<table class="header">
-    <tbody>
-        <tr>
-            <td class="logo">
-                <img src="{{ public_path('img/aesa.png')}}" alt="x">
-            </td>
-            <td style="width: 60%;">
-                <table style="border-collapse: collapse;">
-                    <tbody style="text-align: center;">
-                        <tr>
-                            <td style="font-size: 7pt;">
-                                FORMULARIO
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 9.8pt;">
-                                <b>INFORME DE ENSAYOS POR LÍQUIDOS PENETRANTES
-                                    / DYE PENETRANT EXAMINATION REPORT</b>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td style="width: 20%;">
-                @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
-                    <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:42px;max-width: 120px; margin-top: 5px;">
-                @else
-                    <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 42px;margin-top: 5px;">
-                @endif
-            </td>
-        </tr>
-    </tbody>
-</table>
-<div class="cont">
-    <div class="color1"></div>
-    <div class="color2"></div>
-    <div class="color3"></div>
-    <div class="color4"></div>
-</div>
-@if ($contratista && $contratista->reporte_especial_en_cliente == 1)
+    <table class="header">
+        <tbody>
+            <tr>
+                <td class="logo">
+                    <img src="{{ public_path('img/aesa.png')}}" alt="x">
+                </td>
+                <td style="width: 60%;">
+                    <table style="border-collapse: collapse;">
+                        <tbody style="text-align: center;">
+                            <tr>
+                                <td style="font-size: 7pt;">
+                                    FORMULARIO
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 9.8pt;">
+                                    <b>INFORME DE ENSAYOS POR LÍQUIDOS PENETRANTES
+                                        / DYE PENETRANT EXAMINATION REPORT</b>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="width: 20%;">
+                    @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
+                    <img src="{{ public_path($contratista->path_logo)}}" alt="" style="height:42px;max-width: 120px; margin-top: 5px;">
+                    @else
+                    <img src="{{ public_path('img/blank.png')}}" alt="" style="height: 42px;margin-top: 5px;">
+                    @endif
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="cont">
+        <div class="color1"></div>
+        <div class="color2"></div>
+        <div class="color3"></div>
+        <div class="color4"></div>
+    </div>
+    @if ($contratista && $contratista->reporte_especial_en_cliente == 1)
     <table class="tablamain">
         <tbody>
             <tr>
@@ -201,7 +225,7 @@ footer{
                 <td class="col3" id="tabla6"><b>PIE / N° ACTIVIDAD:</b></td>
                 <td class="col4"> R0 / RT: 4.4/4.9</td>
             </tr>
-            <tr >
+            <tr>
                 <td class="col1" id="left"><b>ELEMENTO</b></td>
                 <td class="col2">&nbsp;</td>
                 <td class="col3" id="tabla6"><b>TIPO DE INSPECCION:</b></td>
@@ -215,7 +239,7 @@ footer{
             </tr>
         </tbody>
     </table>
-@else
+    @else
     <table class="tablamain">
         <tbody>
             <tr>
@@ -226,179 +250,194 @@ footer{
             </tr>
         </tbody>
     </table>
-@endif
-<table class="tablamain">
-    <tbody>
-        <tr><td colspan="2" style="width: 78mm; height:4mm;" id="titulo"><b>Identificación del Material / Material Identification</b></td></tr>
-        <tr>
-            <td style="width: 77mm; height: 4mm;" id="font7">Cliente / Customer</td>
-            <td style="width: 86mm; height: 4mm;" id="font7">Obra / Job</td>
-        </tr>
-        <tr>
-            <td style=" height: 7.5mm;">
-                <b>
-                    @if($contratista && $contratista->nombre !== 'ENOD')
+    @endif
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td colspan="2" style="width: 78mm; height:4mm;" id="titulo"><b>Identificación del Material / Material Identification</b></td>
+            </tr>
+            <tr>
+                <td style="width: 77mm; height: 4mm;" id="font7">Cliente / Customer</td>
+                <td style="width: 86mm; height: 4mm;" id="font7">Obra / Job</td>
+            </tr>
+            <tr>
+                <td style=" height: 7.5mm;">
+                    <b>
+                        @if($contratista && $contratista->nombre !== 'ENOD')
                         <b>{{ $contratista->nombre }}</b>
-                    @endif
-                </b>
-            </td>
-            @if(isset($informe))
+                        @endif
+                    </b>
+                </td>
+                @if(isset($informe))
                 <td><span class="datosHead" style=" height: 7.5mm;"><b>{{$informe->obra}}</b></span></td>
-            @else
+                @else
                 <td><span class="datosHead" style=" height: 7.5mm;"></span><b>{{$ot->obra}}</b></td>
-            @endif
-        </tr>
-    </tbody>
-</table>
-<table class="tablamain">
-    <tbody>
-        <tr>
-            <td style="width: 61mm;height: 4mm;" id="font7">Equipo / Equipment</td>
-            <td style="width: 102mm;height: 4mm;" id="font7">Componentes a Ensayar / Components to Test</td>
-        </tr>
-        <tr>
-            <td style="height: 7.5mm;"><b>{{$informe->linea}}</b></td>
-                <td style="height: 7.5mm;">
-                    @foreach ($detalles as $detalle)
-                    <b> {{ $detalle->pieza }} </b>
+                @endif
+            </tr>
+        </tbody>
+    </table>
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td style="width: 61mm;height: 4mm;" id="font7">Equipo / Equipment</td>
+                <td style="width: 102mm;height: 4mm;" id="font7">Componentes a Ensayar / Components to Test</td>
+            </tr>
+            <tr>
+                <td style="height: 7.5mm;"><b>{{ $informe->linea }}</b></td>
+                <td style="height: 7.5mm; line-height: 1.3; word-wrap: break-word; white-space: normal; font-size: 7pt; padding: 1mm;">
+                    @foreach ($detalles as $i => $detalle)
+                    @php
+                    $soldadores = [];
+                    if ($detalle->soldador1 && $detalle->soldador1->codigo) $soldadores[] = $detalle->soldador1->codigo;
+                    if ($detalle->soldador2 && $detalle->soldador2->codigo) $soldadores[] = $detalle->soldador2->codigo;
+                    $soldadoresText = count($soldadores) ? ' (' . implode(' - ', $soldadores) . ')' : '';
+                    @endphp
+
+                    <b>{{ $detalle->pieza }}{{ $soldadoresText }}</b>@if($i < count($detalles)-1) | @endif
+                        @endforeach
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td style="width: 77mm;height: 4mm;" id="font7">Material / Material</td>
+                <td style="width: 43mm;height: 4mm;" id="font7">Diametro / Diameter</td>
+                <td style="width: 43mm;height: 4mm;" id="font7">Espesor / Thickness</td>
+            </tr>
+            <tr>
+                <td style="height: 7mm;">
+                    <b>{{$material->codigo}}</b>
+                </td>
+                <td style="height: 7mm;">
+                    <b>{{$diametro_espesor->diametro}}</b>
+                </td>
+                <td style="height: 7mm;">
+                    @if ($informe->espesor_chapa)
+                    <b>{{ $informe->espesor_chapa }} mm</b>
+                    @elseif($informe->espesor_especifico)
+                    <b>{{ $informe->espesor_especifico }} mm</b>
+                    @else
+                    <b>{{ $diametro_espesor->espesor }} mm</b>
+                    @endif
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td colspan="3" style="height: 5mm;" id="titulo"><b>Procedimiento / Procedure</b></td>
+            </tr>
+            <tr>
+                <td style="width: 55mm;height: 4mm;" id="font7">Procedimiento Nº y rev./ Procedure Nº and rev</td>
+                <td style="width: 52mm;" id="font7">Norma de Ensayo / Standard Test</td>
+                <td style="width: 55mm;" id="font7">Norma de Eval. / Evaluation Standard</td>
+            </tr>
+            <tr>
+                <td style="height: 7.5mm;"><b>{{$procedimiento_inf->titulo}}</b></td>
+                <td><b>{{$norma_ensayo->codigo}}</b></td>
+                <td><b>{{$norma_evaluacion->codigo}}</b></td>
+            </tr>
+            <tr>
+                <td style="height: 4mm;" id="font7">Cond. Superficial/ Surface Condition</td>
+                <td id="font7">Limpieza Previa / Precleaning</td>
+                <td id="font7">Temp. Superficie/ Surface Temperature</td>
+            </tr>
+            <tr>
+                <td style="height: 7.5mm;"><b>{{$informe_lp->condiciones_superficial}}</b></td>
+                <td><b>{{$informe_lp->limpieza_previa}}</b></td>
+                <td><b>{{$informe_lp->temperatura_superficial}}°</b></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td style="width: 77mm;height: 4mm;" id="font7">Temperatura de Consumibles / Consumables Temperature</td>
+                <td style="width: 86mm;" id="font7">Termómetro / Thermometer</td>
+            </tr>
+            <tr>
+                <td style="height: 7.5mm; "><b>{{$informe_lp->temperatura_consumibles}}°</b></td>
+                <td><b>{{$informe_lp->termostato}}</b></td>
+            </tr>
+            <tr>
+                <td style="height: 4mm; " id="font7">Marca y Designación del Penetrante / Penetrant Brand and Design</td>
+                <td id="font7">Modo de Aplicación / Aplicated by</td>
+            </tr>
+            <tr>
+                <td style="height: 7.5mm; ">
+                    <b>{{$penetrante->tipo}}</b>
+
+                    @if ($penetrante->marca)
+                    &nbsp;/&nbsp;<b>{{$penetrante->marca}}</b>
+                    @else
+                    &nbsp;
+                    @endif
+                </td>
+                <td><b>{{$penetrante_aplicacion->codigo}}</b></td>
+            </tr>
+            <tr>
+                <td style="height: 4mm; " id="font7">Marca y Designación del Removedor / Remover Brand and Design.</td>
+                <td id="font7">Forma de Remoción / Removed by</td>
+            </tr>
+            <tr>
+                <td style="height: 7.5mm; ">
+                    <b>{{$removedor->tipo}}</b>
+                    @if ($removedor->marca)
+
+                    &nbsp;/&nbsp;<b>{{$removedor->marca}}</b>
+
+                    @endif
+                </td>
+                <td><b>{{$removedor_aplicacion->codigo}}</b></td>
+            </tr>
+            <tr>
+                <td style="height: 4mm; " id="font7">Marca y Designación del Revelador / Developer Brand and Design.</td>
+                <td id="font7">Modo de Aplicación / Aplicated by</td>
+            </tr>
+            <tr>
+                <td style="height: 7.5mm; ">
+                    <b>{{$revelador->tipo}}</b>
+                    @if ($revelador->marca)
+
+                    &nbsp;/&nbsp;<b>{{$revelador->marca}}</b>
+
+                    @endif
+                </td>
+                <td><b>{{$revelador_aplicacion->codigo}}</b></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td style="height:7mm; width:40mm">Técnica<br>Technique</td>
+                <td style="width:37mm">Tipo de Penetrante<br>Penetrant Type</td>
+                <td style="width:41mm">Limpieza Final<br>Post Examination Cleaning</td>
+                <td style="width:45mm">Equipo de Iluminación<br>Lighting Equipment;</td>
+            </tr>
+            <tr>
+                <td style="height:9mm">
+                    @foreach($propiedadesAMostrar as $propiedad)
+                    <b> {{ $propiedad }} </b>
                     @endforeach
                 </td>
-        </tr>
-    </tbody>
-</table>
-<table class="tablamain">
-    <tbody>
-        <tr>
-            <td style="width: 77mm;height: 4mm;" id="font7">Material / Material</td>
-            <td style="width: 86mm;height: 4mm;" id="font7">Espesor / Thickness</td>
-        </tr>
-        <tr>
-            <td style="height: 7mm;">
-                <b>{{$material->codigo}}</b>
-            </td>
-            <td style="height: 7mm;">
-                                    @if ($informe->espesor_chapa)
-                                        <b>{{ $informe->espesor_chapa }} mm</b>
-                                    @elseif($informe->espesor_especifico)
-                                        <b>{{ $informe->espesor_especifico }} mm</b>
-                                    @else
-                                        <b>{{ $diametro_espesor->espesor }} mm</b>
-                                    @endif
-            </td>
-        </tr>
-    </tbody>
-</table>
-<table class="tablamain">
-    <tbody>
-        <tr><td colspan="3" style="height: 5mm;" id="titulo"><b>Procedimiento / Procedure</b></td></tr>
-        <tr>
-            <td style="width: 55mm;height: 4mm;" id="font7">Procedimiento Nº y rev./ Procedure Nº and rev</td>
-            <td style="width: 52mm;" id="font7">Norma de Ensayo / Standard Test</td>
-            <td style="width: 55mm;" id="font7">Norma de Eval. / Evaluation Standard</td>
-        </tr>
-        <tr>
-            <td style="height: 7.5mm;"><b>{{$procedimiento_inf->titulo}}</b></td>
-            <td><b>{{$norma_ensayo->codigo}}</b></td>
-            <td><b>{{$norma_evaluacion->codigo}}</b></td>
-        </tr>
-        <tr>
-            <td style="height: 4mm;" id="font7">Cond. Superficial/ Surface Condition</td>
-            <td id="font7">Limpieza Previa / Precleaning</td>
-            <td id="font7">Temp. Superficie/ Surface Temperature</td>
-        </tr>
-        <tr>
-            <td style="height: 7.5mm;"><b>{{$informe_lp->condiciones_superficial}}</b></td>
-            <td><b>{{$informe_lp->limpieza_previa}}</b></td>
-            <td><b>{{$informe_lp->temperatura_superficial}}°</b></td>
-        </tr>
-    </tbody>
-</table>
-<table class="tablamain">
-    <tbody>
-        <tr>
-            <td style="width: 77mm;height: 4mm;" id="font7">Temperatura de Consumibles / Consumables Temperature</td>
-            <td style="width: 86mm;" id="font7">Termómetro / Thermometer</td>
-        </tr>
-        <tr>
-            <td style="height: 7.5mm; "><b>{{$informe_lp->temperatura_consumibles}}°</b></td>
-            <td><b>{{$informe_lp->termostato}}</b></td>
-        </tr>
-        <tr>
-            <td style="height: 4mm; " id="font7">Marca y Designación del Penetrante / Penetrant Brand and Design</td>
-            <td id="font7">Modo de Aplicación / Aplicated by</td>
-        </tr>
-        <tr>
-            <td style="height: 7.5mm; ">
-                                    <b>{{$penetrante->tipo}}</b>
-
-                                    @if ($penetrante->marca)
-                                    &nbsp;/&nbsp;<b>{{$penetrante->marca}}</b>
-                                    @else
-                                         &nbsp;
-                                    @endif
-            </td>
-            <td><b>{{$penetrante_aplicacion->codigo}}</b></td>
-        </tr>
-        <tr>
-            <td style="height: 4mm; " id="font7">Marca y Designación del Removedor / Remover Brand and Design.</td>
-            <td id="font7">Forma de Remoción / Removed by</td>
-        </tr>
-        <tr>
-            <td style="height: 7.5mm; ">
-                                    <b>{{$removedor->tipo}}</b>
-                                    @if ($removedor->marca)
-
-                                    &nbsp;/&nbsp;<b>{{$removedor->marca}}</b>
-
-                                    @endif
-            </td>
-            <td><b>{{$removedor_aplicacion->codigo}}</b></td>
-        </tr>
-        <tr>
-            <td style="height: 4mm; " id="font7">Marca y Designación del Revelador / Developer Brand and Design.</td>
-            <td id="font7">Modo de Aplicación / Aplicated by</td>
-        </tr>
-        <tr>
-            <td style="height: 7.5mm; ">
-                                    <b>{{$revelador->tipo}}</b>
-                                    @if ($revelador->marca)
-
-                                        &nbsp;/&nbsp;<b>{{$revelador->marca}}</b>
-
-                                    @endif
-            </td>
-            <td><b>{{$revelador_aplicacion->codigo}}</b></td>
-        </tr>
-    </tbody>
-</table>
-<table class="tablamain">
-    <tbody>
-        <tr>
-            <td style="height:7mm; width:40mm">Técnica<br>Technique</td>
-            <td style="width:37mm">Tipo de Penetrante<br>Penetrant Type</td>
-            <td style="width:41mm">Limpieza Final<br>Post Examination Cleaning</td>
-            <td style="width:45mm">Equipo de Iluminación<br>Lighting Equipment;</td>
-        </tr>
-        <tr>
-            <td style="height:9mm">
-                @foreach($propiedadesAMostrar as $propiedad)
-                   <b> {{ $propiedad }} </b>
-                @endforeach
-            </td>
-            <td><b>{{$metodo->tipo}} {{$metodo->metodo}}</b></td>
-            <td>
-                @if ($informe_lp->limpieza_final)
-                                         <b>{{$informe_lp->limpieza_final}}</b>
-                                    @else
-                                          &nbsp;
-                                    @endif
-            </td>
-            <td><b>{{$iluminacion->codigo}}</b></td>
-        </tr>
-    </tbody>
-</table>
-@php $primerDetalle = $detallesReferencia->first(); @endphp
-@if ($primerDetalle)
+                <td><b>{{$metodo->tipo}} {{$metodo->metodo}}</b></td>
+                <td>
+                    @if ($informe_lp->limpieza_final)
+                    <b>{{$informe_lp->limpieza_final}}</b>
+                    @else
+                    &nbsp;
+                    @endif
+                </td>
+                <td><b>{{$iluminacion->codigo}}</b></td>
+            </tr>
+        </tbody>
+    </table>
+    @php $primerDetalle = $detallesReferencia->first(); @endphp
+    @if ($primerDetalle)
     <table class="tablamain" style="page-break-inside: avoid;">
         <tbody>
             <tr>
@@ -406,193 +445,193 @@ footer{
             </tr>
             <tr>
                 <td style="height:32mm;">
-                    <img src="{{ asset($primerDetalle->path1) }}" alt="Imagen"  style="max-height: 30mm; margin: 1mm;">
+                    <img src="{{ asset($primerDetalle->path1) }}" alt="Imagen" style="max-height: 30mm; margin: 1mm;">
                 </td>
             </tr>
         </tbody>
     </table>
-@endif
+    @endif
 
-<table class="tablamain">
-    <tbody>
-        <tr>
+    <table class="tablamain">
+        <tbody>
+            <tr>
                 <td style="height:5mm" id="titulo"><b>Informe / Report:</b></td>
             </tr>
             <tr>
                 <td style="height:13mm; text-align: left; padding-left:20px;">{{$informe->observaciones}}</td>
             </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
-<table class="tablamain">
-    <tbody>
-        <tr>
-            <td style="height:9mm">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td style="width: 3mm">
-                                @if($estadoAceptacion == 'Aceptado')
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td style="height:9mm">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="width: 3mm">
+                                    @if($estadoAceptacion == 'Aceptado')
                                     X
-                                @endif
-                            </td>
-                            <td id="bordernone">Aceptado / Accepted</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td style="width: 3mm">&nbsp;</td>
-                            <td id="bordernone">Observado / Observed</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td style="width: 3mm;">
-                                @if($estadoAceptacion == 'Rechazado')
+                                    @endif
+                                </td>
+                                <td id="bordernone">Aceptado / Accepted</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="width: 3mm">&nbsp;</td>
+                                <td id="bordernone">Observado / Observed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="width: 3mm;">
+                                    @if($estadoAceptacion == 'Rechazado')
                                     X
-                                @endif
-                            </td>
-                            <td id="bordernone">Rechazado / Reject</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<table class="tablamain">
-<tbody>
-    <tr>
-        <td style="height:30mm; width: 40mm; vertical-align: top;">
-            <table style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
-                            Evaluador / Evaluated by
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="bordernone" style="height:40px; text-align:left;">
-                            Firma:
-                                @if($firma)
+                                    @endif
+                                </td>
+                                <td id="bordernone">Rechazado / Reject</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td style="height:30mm; width: 40mm; vertical-align: top;">
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
+                                    Evaluador / Evaluated by
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="bordernone" style="height:40px; text-align:left;">
+                                    Firma:
+                                    @if($firma)
                                     <img src="{{ public_path($firma) }}" alt="" style="height:40px;">
-                                @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="bordernone" style="text-align:left;">
-                            <table style="width: 100%;">
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align:left;" id="bordernone">Fecha: {{ $fecha }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </td>
-        <td style="height:30mm; width: 40mm; vertical-align: top;">
-            <table style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
-                            Inspector AESA / Manufacture
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="bordernone" style="height:40px; text-align:left;">
-                            Firma:
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="bordernone" style="text-align:left;">
-                            <table style="width: 100%;">
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align:left;" id="bordernone">Fecha</td>
-                                        <td id="bordernone">&nbsp;</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </td>
-        <td style="height:30mm; width: 40mm; vertical-align: top;">
-            <table style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
-                            Inspector Cliente / Customer
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="bordernone" style="height:40px; text-align:left;">
-                            Firma:
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="bordernone" style="text-align:left;">
-                            <table style="width: 100%;">
-                                <tbody>
-                                    <tr>
-                                        <td  style="text-align:left;"id="bordernone">Fecha</td>
-                                        <td id="bordernone">&nbsp;</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </td>
-        <td style="height:30mm; width: 40mm; vertical-align: top;">
-            <table style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
-                            Insp. Autorizado / AI
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="bordernone" style="height:40px; text-align:left;">
-                            Firma:
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="bordernone" style="text-align:left;">
-                            <table style="width: 100%;">
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align:left;" id="bordernone">Fecha</td>
-                                        <td id="bordernone">&nbsp;</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-</tbody>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="bordernone" style="text-align:left;">
+                                    <table style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:left;" id="bordernone">Fecha: {{ $fecha }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="height:30mm; width: 40mm; vertical-align: top;">
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
+                                    Inspector AESA / Manufacture
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="bordernone" style="height:40px; text-align:left;">
+                                    Firma:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="bordernone" style="text-align:left;">
+                                    <table style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:left;" id="bordernone">Fecha</td>
+                                                <td id="bordernone">&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="height:30mm; width: 40mm; vertical-align: top;">
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
+                                    Inspector Cliente / Customer
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="bordernone" style="height:40px; text-align:left;">
+                                    Firma:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="bordernone" style="text-align:left;">
+                                    <table style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:left;" id="bordernone">Fecha</td>
+                                                <td id="bordernone">&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="height:30mm; width: 40mm; vertical-align: top;">
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td style="text-align:left; padding-bottom:5mm;" id="bordernone">
+                                    Insp. Autorizado / AI
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="bordernone" style="height:40px; text-align:left;">
+                                    Firma:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="bordernone" style="text-align:left;">
+                                    <table style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:left;" id="bordernone">Fecha</td>
+                                                <td id="bordernone">&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
 
-</table>
+    </table>
 </main>
 <script type="text/php">
 
-if ( isset($pdf) ) {
+    if ( isset($pdf) ) {
     $x = 270;
     $y = 805;
     $text = "Pagina {PAGE_NUM}";
@@ -622,4 +661,5 @@ if ( isset($pdf) ) {
 }
 
 </script>
+
 </html>
