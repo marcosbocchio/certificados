@@ -490,10 +490,10 @@
                                         <thead>
                                             <tr>
                                                 <th class="col-md-2">Elemento</th>
-                                                <th class="col-md-3">Cuño P</th>
-                                                <th class="col-md-3">Cuño Z</th>
+                                                <th class="col-md-4">Cuño P</th>
+                                                <th class="col-md-4">Cuño Z</th>
                                                 <th class="col-md-1">CM</th>
-                                                <th class="col-md-5">Detalle</th>
+                                                <th class="col-md-3">Detalle</th>
                                                 <th class="col-md-1">Aceptable</th>
                                                 <th class="col-md-1">Referencia</th>
                                                 <th class="col-md-2">&nbsp;</th>
@@ -503,8 +503,36 @@
                                             <tr v-for="(item, k) in (TablaLp)" :key="k" @click="selectPosDetalle(k)"
                                                 :class="{ selected: indexPosDetalle === k }">
                                                 <td>{{ item.pieza }}</td>
-                                                <td>{{ item.soldador1 ? item.soldador1.codigo : '' }}</td>
-                                                <td>{{ item.soldador2 ? item.soldador2.codigo : '' }}</td>
+                                                <td>
+                                                    <div v-if="indexPosDetalle == k">
+                                                        <v-select v-model="TablaLp[k].soldador1" :options="soldadores"
+                                                            label="codigo" append-to-body style="min-width: 100px;">
+                                                            <template #option="{ codigo, nombre }">
+                                                                <span class="upSelect">{{ nombre }}</span><br>
+                                                                <span class="downSelect">{{ codigo }}</span>
+                                                            </template>
+                                                        </v-select>
+                                                    </div>
+                                                    <div v-else>
+                                                        {{ item.soldador1 ? item.soldador1.codigo : '' }}
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div v-if="indexPosDetalle == k">
+                                                        <v-select v-model="TablaLp[k].soldador2" :options="soldadores"
+                                                            label="codigo" append-to-body style="min-width: 100px;">
+                                                            <template #option="{ codigo, nombre }">
+                                                                <span class="upSelect">{{ nombre }}</span><br>
+                                                                <span class="downSelect">{{ codigo }}</span>
+                                                            </template>
+                                                        </v-select>
+                                                    </div>
+                                                    <div v-else>
+                                                        {{ item.soldador2 ? item.soldador2.codigo : '' }}
+                                                    </div>
+                                                </td>
+
                                                 <td>{{ item.cm }}</td>
                                                 <td>
                                                     <div v-if="indexPosDetalle == k">
@@ -1076,7 +1104,7 @@ export default {
                 toastr.error('El campo cm es obligatorio');
                 return;
             }
-console.log(this.soldador1, this.soldador2)
+            console.log(this.soldador1, this.soldador2)
             this.TablaLp.push({
                 pieza: this.pieza,
                 cm: this.cm,

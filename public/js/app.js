@@ -75924,7 +75924,62 @@ var render = function render() {
           return _vm.selectPosDetalle(k);
         }
       }
-    }, [_c("td", [_vm._v(_vm._s(item.pieza))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.soldador1 ? item.soldador1.codigo : ""))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.soldador2 ? item.soldador2.codigo : ""))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.cm))]), _vm._v(" "), _c("td", [_vm.indexPosDetalle == k ? _c("div", [_c("input", {
+    }, [_c("td", [_vm._v(_vm._s(item.pieza))]), _vm._v(" "), _c("td", [_vm.indexPosDetalle == k ? _c("div", [_c("v-select", {
+      staticStyle: {
+        "min-width": "100px"
+      },
+      attrs: {
+        options: _vm.soldadores,
+        label: "codigo",
+        "append-to-body": ""
+      },
+      scopedSlots: _vm._u([{
+        key: "option",
+        fn: function fn(_ref) {
+          var codigo = _ref.codigo,
+            nombre = _ref.nombre;
+          return [_c("span", {
+            staticClass: "upSelect"
+          }, [_vm._v(_vm._s(nombre))]), _c("br"), _vm._v(" "), _c("span", {
+            staticClass: "downSelect"
+          }, [_vm._v(_vm._s(codigo))])];
+        }
+      }], null, true),
+      model: {
+        value: _vm.TablaLp[k].soldador1,
+        callback: function callback($$v) {
+          _vm.$set(_vm.TablaLp[k], "soldador1", $$v);
+        },
+        expression: "TablaLp[k].soldador1"
+      }
+    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(item.soldador1 ? item.soldador1.codigo : "") + "\n                                                ")])]), _vm._v(" "), _c("td", [_vm.indexPosDetalle == k ? _c("div", [_c("v-select", {
+      staticStyle: {
+        "min-width": "100px"
+      },
+      attrs: {
+        options: _vm.soldadores,
+        label: "codigo"
+      },
+      scopedSlots: _vm._u([{
+        key: "option",
+        fn: function fn(_ref2) {
+          var codigo = _ref2.codigo,
+            nombre = _ref2.nombre;
+          return [_c("span", {
+            staticClass: "upSelect"
+          }, [_vm._v(_vm._s(nombre))]), _c("br"), _vm._v(" "), _c("span", {
+            staticClass: "downSelect"
+          }, [_vm._v(_vm._s(codigo))])];
+        }
+      }], null, true),
+      model: {
+        value: _vm.TablaLp[k].soldador2,
+        callback: function callback($$v) {
+          _vm.$set(_vm.TablaLp[k], "soldador2", $$v);
+        },
+        expression: "TablaLp[k].soldador2"
+      }
+    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(item.soldador2 ? item.soldador2.codigo : "") + "\n                                                ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.cm))]), _vm._v(" "), _c("td", [_vm.indexPosDetalle == k ? _c("div", [_c("input", {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -76077,13 +76132,13 @@ var staticRenderFns = [function () {
   return _c("thead", [_c("tr", [_c("th", {
     staticClass: "col-md-2"
   }, [_vm._v("Elemento")]), _vm._v(" "), _c("th", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-4"
   }, [_vm._v("Cuño P")]), _vm._v(" "), _c("th", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-4"
   }, [_vm._v("Cuño Z")]), _vm._v(" "), _c("th", {
     staticClass: "col-md-1"
   }, [_vm._v("CM")]), _vm._v(" "), _c("th", {
-    staticClass: "col-md-5"
+    staticClass: "col-md-3"
   }, [_vm._v("Detalle")]), _vm._v(" "), _c("th", {
     staticClass: "col-md-1"
   }, [_vm._v("Aceptable")]), _vm._v(" "), _c("th", {
