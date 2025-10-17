@@ -312,10 +312,10 @@
                 </td>
                 <td style="height: 7mm;">
                     @php
-                    $diam = strtoupper(trim($diametro_espesor->diametro ?? ''));
+                    $diam = strtoupper(trim($diametro_espesor->diametro));
                     @endphp
 
-                    @if($diam !== 'CHAPA' && $diam !== 'VARIOS' && $diam !== '')
+                    @if(!in_array($diam, ['CHAPA', 'VARIOS']))
                     <b>{{ $diam }}"</b>
                     @else
                     &nbsp;
