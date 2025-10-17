@@ -130676,7 +130676,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.existe[data-v-275b8cdc] {\n\n    color: blue;\n}\n.checkbox-inline[data-v-275b8cdc] {\n    margin-left: 0px;\n}\n.form-control[disabled][data-v-275b8cdc],\n.form-control[readonly][data-v-275b8cdc],\nfieldset[disabled] .form-control[data-v-275b8cdc] {\n    background-color: #eee;\n}\n", ""]);
+exports.push([module.i, "\n.existe[data-v-275b8cdc] {\r\n\r\n    color: blue;\n}\n.checkbox-inline[data-v-275b8cdc] {\r\n    margin-left: 0px;\n}\n.form-control[disabled][data-v-275b8cdc],\r\n.form-control[readonly][data-v-275b8cdc],\r\nfieldset[disabled] .form-control[data-v-275b8cdc] {\r\n    background-color: #eee;\n}\r\n", ""]);
 
 // exports
 

@@ -23,6 +23,7 @@ use App\Iluminaciones;
 use App\User;
 use App\DetallesLpReferencias;
 use App\OtTipoSoldaduras;
+use Illuminate\Support\Facades\Log;
 use Exception as Exception;
 
 class InformesLpController extends Controller
@@ -128,20 +129,13 @@ class InformesLpController extends Controller
 
             $detalleLp = new DetallesLp;
             $detalleLp->informe_lp_id = $informeLp->id;
-            $detalleLp->pieza = $detalle['pieza'] ?? null;
-
-            $detalleLp->soldador1_id = isset($detalle['soldador1'])
-                ? (is_array($detalle['soldador1']) ? ($detalle['soldador1']['id'] ?? null) : $detalle['soldador1'])
-                : null;
-
-            $detalleLp->soldador2_id = isset($detalle['soldador2'])
-                ? (is_array($detalle['soldador2']) ? ($detalle['soldador2']['id'] ?? null) : $detalle['soldador2'])
-                : null;
-
-            $detalleLp->cm = $detalle['cm'] ?? 0;
-            $detalleLp->detalle = $detalle['detalle'] ?? null;
-            $detalleLp->aceptable_sn = $detalle['aceptable_sn'] ?? 0;
-            $detalleLp->detalle_lp_referencia_id = $this->saveReferencia($detalle);
+            $detalleLp->pieza = $detalle['pieza'];
+            $detalleLp->soldador1_id = isset($detalle['soldador1']['soldadores_id']) ? $detalle['soldador1']['soldadores_id'] : null;
+            $detalleLp->soldador2_id = isset($detalle['soldador2']['soldadores_id']) ? $detalle['soldador2']['soldadores_id'] : null;
+            $detalleLp->cm = $detalle['cm'];
+            $detalleLp->detalle = $detalle['detalle'];
+            $detalleLp->aceptable_sn = $detalle['aceptable_sn'];
+            $detalleLp->detalle_lp_referencia_id = $referencia_id;
             $detalleLp->save();
         }
     }
@@ -316,18 +310,19 @@ class InformesLpController extends Controller
                 'path3' => $item->path3,
                 'path4' => $item->path4,
                 'soldador1' => $item->soldador1_id ? [
-                    'id' => $item->soldador1_id,
+                    'soldadores_id' => $item->soldador1_id,
                     'codigo' => $item->soldador1_codigo,
                     'nombre' => $item->soldador1_nombre,
                 ] : null,
                 'soldador2' => $item->soldador2_id ? [
-                    'id' => $item->soldador2_id,
+                    'soldadores_id' => $item->soldador2_id,
                     'codigo' => $item->soldador2_codigo,
                     'nombre' => $item->soldador2_nombre,
                 ] : null,
             ];
         });
     }
+
 
 
 
@@ -341,32 +336,51 @@ class InformesLpController extends Controller
      */
     public function update(InformeLpRequest $request, $id)
     {
-
-
         $EsRevision = (new \App\Http\Controllers\InformesController)->EsRevision($id);
 
         if ($EsRevision) {
-
             return $this->store($request, $EsRevision);
         }
 
         $informe  = Informe::find($id);
         $informeLp = InformesLp::where('informe_id', $informe->id)->first();
+
         DB::beginTransaction();
         try {
+            // 🔹 Log para ver qué llega desde Vue (sin procesar)
+            Log::debug('📦 Datos completos recibidos en update:', $request->all());
 
+            // 🔹 Log específico de los detalles (en crudo)
+            Log::debug('🧩 Detalles crudos:', $request->detalles);
+
+            // 🔹 Intentamos decodificarlos para ver su estructura
+            $decoded = is_array($request->detalles)
+                ? $request->detalles
+                : json_decode($request->detalles, true);
+
+            Log::debug('🧩 Detalles decodificados (array):', $decoded);
+
+            // 🔹 Resto del proceso normal
             $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request, $informe);
             $this->saveInformeLp($request, $informe, $informeLp);
+
+            // ⚠️ Log para confirmar el ID del informe LP
+            Log::debug('📄 Borrando detalles previos de informe_lp_id:', ['id' => $informeLp->id]);
             DetallesLp::where('informe_lp_id', $informeLp->id)->delete();
+
+            // 🔹 Guardamos los nuevos detalles y vemos qué entra
             $this->saveDetalle($request, $informeLp);
+
             DB::commit();
         } catch (Exception $e) {
-
             DB::rollback();
+            Log::error('❌ Error en update InformeLp:', ['error' => $e->getMessage()]);
             throw $e;
         }
+
         return $informe;
     }
+
 
     /**
      * Remove the specified resource from storage.
