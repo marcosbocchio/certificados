@@ -313,13 +313,10 @@
                 <td style="height: 7mm;">
                     @php
                     $diam = strtoupper(trim($diametro_espesor->diametro));
+                    $sinComillas = ['CHAPA', 'VARIOS'];
                     @endphp
 
-                    @if(!in_array($diam, ['CHAPA', 'VARIOS']))
-                    <b>{{ $diam }}"</b>
-                    @else
-                    &nbsp;
-                    @endif
+                    <b>{{ $diam }}@unless(in_array($diam, $sinComillas))"@endunless</b>
                 </td>
                 <td style="height: 7mm;">
                     @if ($informe->espesor_chapa)
