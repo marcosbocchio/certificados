@@ -44,6 +44,9 @@
                             <h3 class="box-title">Partes sin certificados</h3>
 
                             <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-default btn-sm" @click="limpiarTodo" :disabled="loading" title="Limpiar Todo">
+                                    <app-icon img="trash" color="black"></app-icon>
+                                </button>
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>
                             </div>
@@ -689,6 +692,27 @@ export default {
                 return item.parte_id != id;
             });
 
+        },
+
+        limpiarTodo : function(){
+
+            this.loading = true;
+
+            this.partes.forEach(function(item){
+                item.parte_sel = false;
+            });
+
+            this.TablaPartesServicios = [];
+            this.TablaPartesProductosPorPlacas = [];
+            this.TablaPartesProductosPorCosturas = [];
+
+            this.indexTablaPartesProductosPorPlacas = -1;
+            this.indexTablaPartesProductosPorCosturas = -1;
+            this.indexTablaPartesServicios = -1;
+
+            this.titulo = '';
+
+            this.loading = false;
         },
 
         getPartesPendientesCertificado: function(){
