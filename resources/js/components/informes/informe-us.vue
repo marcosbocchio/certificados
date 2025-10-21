@@ -1407,7 +1407,6 @@ export default {
         popupData:'',
         tablaInspeccion: [],
         tipo_tgs: null,
-        tipoOptions: ['Horizontal', 'Vertical','Linea'],
       }
     },
 
@@ -1438,11 +1437,14 @@ export default {
         },
         pdfEspecialsn() {
             return this.pdf_especial.length > 0;
-        }        
+        },
+        tipoOptions() {
+            return  this.pdfEspecialsn ? this.pdf_especial.map(item => item.tipo_informe) : [];
+        }
+               
      },
 
       watch : {
-
 
         diametro : function(val){
 
@@ -2470,18 +2472,10 @@ processExcelData(data, filas, columnas) {
         Store : function(){
 
             this.errors =[];
-            if (
-                this.pdfEspecialsn &&
-                    this.tecnica.codigo === 'ME' &&
-                    (this.popupData === null || this.popupData === '')
-                ) {
-                    toastr.error('Detalle componente es obligatorio para TGS');
-                    return;
-                }
 
             if(this.pdfEspecialsn &&
                 this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0){
-                toastr.error('Registro De Mediciones es obligatorio para TGS');
+                toastr.error('Registro De Mediciones es obligatorio para informe especial');
                 return;
             }
             var urlRegistros = 'informes_us' ;

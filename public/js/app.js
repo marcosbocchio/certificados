@@ -27234,8 +27234,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       isModalOpen: false,
       popupData: '',
       tablaInspeccion: [],
-      tipo_tgs: null,
-      tipoOptions: ['Horizontal', 'Vertical', 'Linea']
+      tipo_tgs: null
     };
   },
   created: function created() {
@@ -27259,6 +27258,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     pdfEspecialsn: function pdfEspecialsn() {
       return this.pdf_especial.length > 0;
+    },
+    tipoOptions: function tipoOptions() {
+      return this.pdfEspecialsn ? this.pdf_especial.map(function (item) {
+        return item.tipo_informe;
+      }) : [];
     }
   }),
   watch: {
@@ -28271,12 +28275,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     Store: function Store() {
       var _this17 = this;
       this.errors = [];
-      if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
-        toastr.error('Detalle componente es obligatorio para TGS');
-        return;
-      }
       if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
-        toastr.error('Registro De Mediciones es obligatorio para TGS');
+        toastr.error('Registro De Mediciones es obligatorio para informe especial');
         return;
       }
       var urlRegistros = 'informes_us';
