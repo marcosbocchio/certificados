@@ -93584,7 +93584,7 @@ var render = function render() {
     on: {
       place_changed: _vm.setPlace
     }
-  }, [_vm._v("\r\n                  >\r\n              ")])], 1)]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                  >\n              ")])], 1)]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
@@ -93801,7 +93801,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n           \r\n        ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n           \n        ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -94049,7 +94049,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n             \r\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n             \n          ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -94128,7 +94128,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n             \r\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n             \n          ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -94187,7 +94187,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n             \r\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n             \n          ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -130165,7 +130165,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-28a89753] {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-top: 20px;\n}\n.btn-primary[data-v-28a89753] {\r\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753],\r\n.date-picker.disabled[data-v-28a89753] {\r\n    background-color: #6c757d;\r\n    /* Gris claro, ajusta según tu tema */\r\n    cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\r\n    display: none;\n}\r\n\r\n/* Agrega tus propios estilos para mantener la estética de la página */\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-28a89753] {\n    display: flex;\n    justify-content: flex-end;\n    margin-top: 20px;\n}\n.btn-primary[data-v-28a89753] {\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753],\n.date-picker.disabled[data-v-28a89753] {\n    background-color: #6c757d;\n    /* Gris claro, ajusta según tu tema */\n    cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\n    display: none;\n}\n\n/* Agrega tus propios estilos para mantener la estética de la página */\n", ""]);
 
 // exports
 
@@ -130184,7 +130184,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-bcf3f43a] {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-top: 20px;\n}\n.btn-primary[data-v-bcf3f43a] {\r\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-bcf3f43a],\r\n.date-picker.disabled[data-v-bcf3f43a] {\r\n    background-color: #6c757d;\r\n    /* Gris claro, ajusta según tu tema */\r\n    cursor: not-allowed;\n}\n.hidden[data-v-bcf3f43a] {\r\n    display: none;\n}\r\n\r\n/* Agrega tus propios estilos para mantener la estética de la página */\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-bcf3f43a] {\n    display: flex;\n    justify-content: flex-end;\n    margin-top: 20px;\n}\n.btn-primary[data-v-bcf3f43a] {\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-bcf3f43a],\n.date-picker.disabled[data-v-bcf3f43a] {\n    background-color: #6c757d;\n    /* Gris claro, ajusta según tu tema */\n    cursor: not-allowed;\n}\n.hidden[data-v-bcf3f43a] {\n    display: none;\n}\n\n/* Agrega tus propios estilos para mantener la estética de la página */\n", ""]);
 
 // exports
 
@@ -130222,7 +130222,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-424ac0a4] {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-top: 20px;\n}\n.btn-enod[data-v-424ac0a4] {\r\n    background-color: rgb(255, 204, 0);\r\n    color: rgb(0, 0, 0);\n}\n.btn-danger[data-v-424ac0a4] {\r\n    background-color: #dc3545;\r\n    color: #fff;\n}\n.btn-sm[data-v-424ac0a4] {\r\n    padding: 0.25rem 0.5rem;\r\n    font-size: 0.875rem;\r\n    line-height: 1.5;\r\n    border-radius: 0.2rem;\n}\n.custom-modal[data-v-424ac0a4] {\r\n    border-radius: 0.5rem;\r\n    background-color: #f8f9fa;\r\n    border: 1px solid #dee2e6;\n}\n.custom-textarea[data-v-424ac0a4] {\r\n    border-radius: 0.5rem;\r\n    border: 1px solid #ced4da;\r\n    resize: none;\r\n    padding: 0.5rem;\n}\n.modal-header[data-v-424ac0a4] {\r\n    border-bottom: 1px solid #dee2e6;\r\n    padding: 1rem;\n}\n.modal-title[data-v-424ac0a4] {\r\n    font-size: 1.25rem;\r\n    font-weight: 500;\n}\n.modal-footer[data-v-424ac0a4] {\r\n    border-top: 1px solid #dee2e6;\r\n    padding: 1rem;\r\n    display: flex;\r\n    justify-content: flex-end;\n}\n.modal-content[data-v-424ac0a4] {\r\n    border-radius: 0.5rem;\n}\n.hidden[data-v-424ac0a4] {\r\n    display: none;\n}\n.modal-body[data-v-424ac0a4] {\r\n    padding: 1rem;\n}\n.modal-footer .btn[data-v-424ac0a4] {\r\n    margin-left: 0.5rem;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-424ac0a4] {\n    display: flex;\n    justify-content: flex-end;\n    margin-top: 20px;\n}\n.btn-enod[data-v-424ac0a4] {\n    background-color: rgb(255, 204, 0);\n    color: rgb(0, 0, 0);\n}\n.btn-danger[data-v-424ac0a4] {\n    background-color: #dc3545;\n    color: #fff;\n}\n.btn-sm[data-v-424ac0a4] {\n    padding: 0.25rem 0.5rem;\n    font-size: 0.875rem;\n    line-height: 1.5;\n    border-radius: 0.2rem;\n}\n.custom-modal[data-v-424ac0a4] {\n    border-radius: 0.5rem;\n    background-color: #f8f9fa;\n    border: 1px solid #dee2e6;\n}\n.custom-textarea[data-v-424ac0a4] {\n    border-radius: 0.5rem;\n    border: 1px solid #ced4da;\n    resize: none;\n    padding: 0.5rem;\n}\n.modal-header[data-v-424ac0a4] {\n    border-bottom: 1px solid #dee2e6;\n    padding: 1rem;\n}\n.modal-title[data-v-424ac0a4] {\n    font-size: 1.25rem;\n    font-weight: 500;\n}\n.modal-footer[data-v-424ac0a4] {\n    border-top: 1px solid #dee2e6;\n    padding: 1rem;\n    display: flex;\n    justify-content: flex-end;\n}\n.modal-content[data-v-424ac0a4] {\n    border-radius: 0.5rem;\n}\n.hidden[data-v-424ac0a4] {\n    display: none;\n}\n.modal-body[data-v-424ac0a4] {\n    padding: 1rem;\n}\n.modal-footer .btn[data-v-424ac0a4] {\n    margin-left: 0.5rem;\n}\n", ""]);
 
 // exports
 
@@ -131077,7 +131077,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.map-container {\r\n    width: 100%;\r\n    height: 425px;\r\n    display: inline-block;\n}\n.vtimeselector__input {\r\n    width: 100%;\r\n    box-sizing: border-box;\r\n    padding: 6px 12px;\r\n    height: 34px;\r\n    font-size: 14px;\r\n    background-color: #fff;\r\n    border: 1px solid #ccc;\n}\n.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {\r\n\r\n    background-color: #fff;\n}\n.existe {\r\n\r\n    color: blue ;\n}\n.downSelect {\r\n font-style: oblique;\r\n font-size: 12px;\n}\n.upSelect {\r\n  font-weight: bold;\r\n  font-size: 14;\n}\n.markError{\r\n\r\n  border-color: red;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.map-container {\n    width: 100%;\n    height: 425px;\n    display: inline-block;\n}\n.vtimeselector__input {\n    width: 100%;\n    box-sizing: border-box;\n    padding: 6px 12px;\n    height: 34px;\n    font-size: 14px;\n    background-color: #fff;\n    border: 1px solid #ccc;\n}\n.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {\n\n    background-color: #fff;\n}\n.existe {\n\n    color: blue ;\n}\n.downSelect {\n font-style: oblique;\n font-size: 12px;\n}\n.upSelect {\n  font-weight: bold;\n  font-size: 14;\n}\n.markError{\n\n  border-color: red;\n}\n\n", ""]);
 
 // exports
 
@@ -131305,7 +131305,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.text-center[data-v-2493830e] {\r\n  text-align: center;\n}\r\n", ""]);
+exports.push([module.i, "\n.text-center[data-v-2493830e] {\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -390364,8 +390364,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Marcos\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Marcos\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\Quinteros\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Quinteros\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ }),
