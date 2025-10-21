@@ -2535,7 +2535,7 @@ processExcelData(data, filas, columnas) {
                 'TablaModelos3d' :this.TablaModelos3d,
                 'data_popup': this.popupData,
                 'tablaInspeccion': this.tablaInspeccion,
-
+                'tipo_tgs': this.tipo_tgs,
         }}
 
         ).then(response => {
@@ -2630,7 +2630,10 @@ processExcelData(data, filas, columnas) {
                 'solicitado_por'    : this.solicitado_por,
                 'TablaModelos3d' :this.TablaModelos3d,
                 'data_popup': this.popupData,
-                'tablaInspeccion': this.tablaInspeccion,
+                'tablaInspeccion': this.tablaInspeccion,  
+                'tipo_tgs': this.tipo_tgs,
+
+              
           }}
 
 

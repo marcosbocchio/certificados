@@ -28328,7 +28328,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           'solicitado_por': this.solicitado_por,
           'TablaModelos3d': this.TablaModelos3d,
           'data_popup': this.popupData,
-          'tablaInspeccion': this.tablaInspeccion
+          'tablaInspeccion': this.tablaInspeccion,
+          'tipo_tgs': this.tipo_tgs
         }
       }).then(function (response) {
         var informe = response.data;
@@ -28408,7 +28409,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           'solicitado_por': this.solicitado_por,
           'TablaModelos3d': this.TablaModelos3d,
           'data_popup': this.popupData,
-          'tablaInspeccion': this.tablaInspeccion
+          'tablaInspeccion': this.tablaInspeccion,
+          'tipo_tgs': this.tipo_tgs
         }
       }).then(function (response) {
         var informe = response.data;
@@ -28628,46 +28630,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     storeRegistro: function storeRegistro() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _yield$axios$post, nuevoModelo, _yield$axios$post2, nuevoFluido, popupData;
+        var popupData;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              if (!(!_this.modelo.id && _this.tipo !== 'Linea')) {
-                _context.next = 9;
-                break;
-              }
-              if (!(!_this.modelo.codigo || _this.modelo.codigo.trim() === "")) {
-                _context.next = 4;
-                break;
-              }
-              toastr.error("Campo modelo obligatorio");
-              return _context.abrupt("return");
-            case 4:
-              _context.next = 6;
-              return axios.post("/tgs-save-modelo/".concat(_this.modelo.codigo));
-            case 6:
-              _yield$axios$post = _context.sent;
-              nuevoModelo = _yield$axios$post.data;
-              _this.modelo = nuevoModelo;
-            case 9:
-              if (_this.fluido.id) {
-                _context.next = 18;
-                break;
-              }
-              if (!(!_this.fluido.codigo || _this.fluido.codigo.trim() === "")) {
-                _context.next = 13;
-                break;
-              }
-              toastr.error("Campo fluido obligatorio");
-              return _context.abrupt("return");
-            case 13:
-              _context.next = 15;
-              return axios.post("/tgs-save-fluido/".concat(_this.fluido.codigo));
-            case 15:
-              _yield$axios$post2 = _context.sent;
-              nuevoFluido = _yield$axios$post2.data;
-              _this.fluido = nuevoFluido;
-            case 18:
+              // 1) Si modelo no tiene id, lo creamos
+              /*         if (!this.modelo.id && this.tipo !== 'Linea') {
+                        // Validar que el código exista y no sea sólo espacios
+                          if (!this.modelo.codigo || this.modelo.codigo.trim() === "") {
+                          toastr.error("Campo modelo obligatorio");
+                          return;
+                        }
+                        const { data: nuevoModelo } = await axios.post(
+                          `/tgs-save-modelo/${this.modelo.codigo}`
+                        );
+                        this.modelo = nuevoModelo;
+                      }
+              
+                      if (!this.fluido.id) {
+                        // Validar que el código exista y no sea sólo espacios
+                        if (!this.fluido.codigo || this.fluido.codigo.trim() === "") {
+                          toastr.error("Campo fluido obligatorio");
+                          return;
+                        }
+                        const { data: nuevoFluido } = await axios.post(
+                          `/tgs-save-fluido/${this.fluido.codigo}`
+                        );
+                        this.fluido = nuevoFluido;
+                      } */
               console.log(_this.material);
               // 3) Ya con ambos id garantizados, armo el objeto
               popupData = {
@@ -28704,7 +28694,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               console.log('Datos listos para enviar:', popupData);
               _this.$emit('submit', popupData);
               _this.closeModal();
-            case 23:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -89269,7 +89259,7 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group d-flex"
-  }, [_c("label", [_vm._v("Modelo")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Modelo *")]), _vm._v(" "), _c("v-select", {
     attrs: {
       label: "codigo",
       options: _vm.modeloOptions,
@@ -89659,7 +89649,7 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group d-flex"
-  }, [_c("label", [_vm._v("Fluido")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Fluido * ")]), _vm._v(" "), _c("v-select", {
     attrs: {
       options: _vm.fluidoOptions,
       label: "codigo",
@@ -130897,7 +130887,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\n  position: fixed;       /* ocupa toda la pantalla */\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;         /* flex para centrar */\n  align-items: center;   /* centrar vertical */\n  justify-content: center;/* centrar horizontal */\n  background: rgba(0,0,0,0.5); /* overlay oscuro */\n  z-index: 9999;         /* por encima de todo */\n}\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\n  margin: 0;             /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\n  max-height: 90vh;\n  overflow-y: auto;\n}\n", ""]);
+exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\n  position: fixed;       /* ocupa toda la pantalla */\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;         /* flex para centrar */\n  align-items: center;   /* centrar vertical */\n  justify-content: center;/* centrar horizontal */\n  background: rgba(0,0,0,0.5); /* overlay oscuro */\n  z-index: 9999;         /* por encima de todo */\n}\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\n  margin: 0;             /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\n  max-height: 90vh;\n  overflow-y: auto;\n}\n.form-control[disabled][data-v-653e7c51], .form-control[readonly][data-v-653e7c51], fieldset[disabled] .form-control[data-v-653e7c51] {\n    background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
