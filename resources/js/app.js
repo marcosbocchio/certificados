@@ -494,6 +494,7 @@ const store = new Vuex.Store({
     localidades: [],
     ot_tipo_soldaduras: [],
     ot_obra_tipo_soldaduras: [],
+    pdf_especial: {},
     materiales: [],
     diametros: [],
     espesores: [],
@@ -716,6 +717,20 @@ const store = new Vuex.Store({
           resolve();
         })
       })
+    },
+
+    // En actions:
+    loadPdfEspecial({ commit }, { metodo, cliente_id }) {
+      axios.defaults.baseURL = store.state.url; // '/api/'
+      const url = `pdf_especial/metodo/${metodo}/cliente/${cliente_id}?api_token=${Laravel.user.api_token}`;
+      return new Promise((resolve, reject) => {
+        axios.get(url)
+          .then((response) => {
+            commit('getPdfEspecial', response.data);
+            resolve(response.data);
+          })
+          .catch(reject);
+      });
     },
 
     loadOtPqrs({
@@ -1281,7 +1296,10 @@ const store = new Vuex.Store({
   },
   mutations: {
 
-
+    getPdfEspecial(state, pdf_especial) {
+      state.pdf_especial = pdf_especial
+    },
+    
     loading(state, estado) {
       state.isLoading = estado
     },

@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-md-3" v-if="tipo !== 'Linea'">
                       <div class="form-group d-flex">
-                        <label>Modelo</label>
+                        <label>Modelo *</label>
                         <v-select
                           v-model="modelo"
                           label="codigo"
@@ -214,7 +214,7 @@
                     <div class="box-header with-border"></div>
                     <div class="col-md-3">
                       <div class="form-group d-flex">
-                        <label>Fluido</label>
+                        <label>Fluido * </label>
                         <v-select
                           v-model="fluido"
                           :options="fluidoOptions"
@@ -493,7 +493,7 @@
     },
       async storeRegistro() {
         // 1) Si modelo no tiene id, lo creamos
-        if (!this.modelo.id && this.tipo !== 'Linea') {
+/*         if (!this.modelo.id && this.tipo !== 'Linea') {
           // Validar que el código exista y no sea sólo espacios
             if (!this.modelo.codigo || this.modelo.codigo.trim() === "") {
             toastr.error("Campo modelo obligatorio");
@@ -515,7 +515,7 @@
             `/tgs-save-fluido/${this.fluido.codigo}`
           );
           this.fluido = nuevoFluido;
-        }
+        } */
         console.log(this.material);
         // 3) Ya con ambos id garantizados, armo el objeto
         const popupData = {
@@ -687,5 +687,10 @@
     max-height: 90vh;
     overflow-y: auto;
   }
+
+  .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+      background-color: #eee;
+  }
+
   </style>
   

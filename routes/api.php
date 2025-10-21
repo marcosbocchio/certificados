@@ -213,6 +213,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         'DefectosRiController@DefectosGasoducto'
     );
 
+    Route::get('pdf_especial/metodo/{metodo}/cliente/{cliente_id}', 'PdfEspecialController@getPdfEspecial');
+    
     Route::get('defectos_rd/planta', 'DefectosRdController@DefectosPlanta');
     Route::get(
         'defectos_rd/gasoducto',

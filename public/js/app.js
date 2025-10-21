@@ -16470,7 +16470,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.Registro.obra = value || 'N/A'; // Si value es null o falsy, asigna 'N/A'
     },
     setPlanta: function setPlanta(value) {
-      console.log('el value es', value);
       this.Registro.planta = value;
     },
     updateRegistro: function updateRegistro() {
@@ -27235,14 +27234,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       isModalOpen: false,
       popupData: '',
       tablaInspeccion: [],
-      tipo_tgs: null,
-      tipoOptions: ['Horizontal', 'Vertical', 'Linea']
+      tipo_tgs: null
     };
   },
   created: function created() {
     this.init();
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])(['isLoading', 'url', 'ot_obra_tipo_soldaduras', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos', 'interno_equipos', 'palpadores', 'modelos_3d'])), {}, {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])(['isLoading', 'url', 'ot_obra_tipo_soldaduras', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos', 'interno_equipos', 'palpadores', 'modelos_3d', 'pdf_especial'])), {}, {
     numero_inf_code: function numero_inf_code() {
       if (this.numero_inf) {
         if (this.informedata.numero_repetido) {
@@ -27255,8 +27253,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }
     },
     isTipoEnabled: function isTipoEnabled() {
-      var _this$cliente, _this$tecnica;
-      return ((_this$cliente = this.cliente) === null || _this$cliente === void 0 ? void 0 : _this$cliente.codigo) === '0279' && ((_this$tecnica = this.tecnica) === null || _this$tecnica === void 0 ? void 0 : _this$tecnica.codigo) === 'ME';
+      var _this$tecnica;
+      return this.pdfEspecialsn && ((_this$tecnica = this.tecnica) === null || _this$tecnica === void 0 ? void 0 : _this$tecnica.codigo) === 'ME';
+    },
+    pdfEspecialsn: function pdfEspecialsn() {
+      return this.pdf_especial.length > 0;
+    },
+    tipoOptions: function tipoOptions() {
+      return this.pdfEspecialsn ? this.pdf_especial.map(function (item) {
+        return item.tipo_informe;
+      }) : [];
     }
   }),
   watch: {
@@ -27321,7 +27327,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               _this.$store.dispatch('loadEjecutorEnsayo', _this.otdata.id);
               _this.getGeneratrices();
               _this.getUsuariosCliente();
-              if (!(_this.cliente.codigo == '0279')) {
+              if (!_this.pdfEspecialsn) {
                 _context.next = 19;
                 break;
               }
@@ -27332,7 +27338,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               _this.$store.dispatch('loadModelos3d');
               _this.getAccesoriosUs();
               _this.getSoldadores();
-            case 23:
+              _this.$store.dispatch('loadPdfEspecial', {
+                metodo: _this.metodo,
+                cliente_id: _this.otdata.cliente_id
+              });
+            case 24:
             case "end":
               return _context.stop();
           }
@@ -27402,7 +27412,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
               if (!this.editmode) {
-                _context3.next = 50;
+                _context3.next = 52;
                 break;
               }
               this.fecha = this.informedata.fecha;
@@ -27457,7 +27467,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
                 'ot_id': this.otdata.id,
                 'obra': this.informedata.obra
               });
-              if (this.cliente.codigo == '0279' && this.tecnica.codigo === 'ME') {
+              _context3.next = 46;
+              return this.$store.dispatch('loadPdfEspecial', {
+                metodo: this.metodo,
+                cliente_id: this.otdata.cliente_id
+              });
+            case 46:
+              if (this.pdfEspecialsn && this.tecnica.codigo === 'ME') {
                 this.$refs.modalPopupRef.setForm(this.componente_me_data);
                 console.log();
                 this.tipo_tgs = this.componente_me_data.tipo_us;
@@ -27484,19 +27500,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
                 });
               }
               this.popupData = this.componente_me_data;
-              _context3.next = 48;
+              _context3.next = 50;
               return this.getTecnicas();
-            case 48:
-              _context3.next = 55;
-              break;
             case 50:
-              _context3.next = 52;
-              return this.getTecnicas();
+              _context3.next = 57;
+              break;
             case 52:
+              _context3.next = 54;
+              return this.getTecnicas();
+            case 54:
               this.tecnica = this.tecnicas[0];
               this.SetearBlockCalibraciones();
               this.getNumeroInforme();
-            case 55:
+            case 57:
             case "end":
               return _context3.stop();
           }
@@ -28055,15 +28071,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         toastr.error('El campo Elemento es obligatorio');
         return;
       }
-      if (!this.espesor_minimo_me && this.cliente.codigo == '0279') {
+      if (!this.espesor_minimo_me && this.pdfEspecialsn) {
         toastr.error('El campo espesor mínimo es obligatorio');
         return;
       }
-      if (!this.espesor_minimo_anterior_me && this.cliente.codigo == '0279') {
+      if (!this.espesor_minimo_anterior_me && this.pdfEspecialsn) {
         toastr.error('El campo Espesor minimo anterior es obligatorio');
         return;
       }
-      if (!this.años_ultima_inspeccion_me && this.cliente.codigo == '0279') {
+      if (!this.años_ultima_inspeccion_me && this.pdfEspecialsn) {
         toastr.error('El campo Años última inspección es obligatorio');
         return;
       }
@@ -28259,12 +28275,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     Store: function Store() {
       var _this17 = this;
       this.errors = [];
-      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
-        toastr.error('Detalle componente es obligatorio para TGS');
-        return;
-      }
-      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
-        toastr.error('Registro De Mediciones es obligatorio para TGS');
+      if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
+        toastr.error('Registro De Mediciones es obligatorio para informe especial');
         return;
       }
       var urlRegistros = 'informes_us';
@@ -28316,7 +28328,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           'solicitado_por': this.solicitado_por,
           'TablaModelos3d': this.TablaModelos3d,
           'data_popup': this.popupData,
-          'tablaInspeccion': this.tablaInspeccion
+          'tablaInspeccion': this.tablaInspeccion,
+          'tipo_tgs': this.tipo_tgs
         }
       }).then(function (response) {
         var informe = response.data;
@@ -28338,11 +28351,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     Update: function Update() {
       var _this18 = this;
       this.errors = [];
-      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
+      if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
         toastr.error('Detalle componente es obligatorio para TGS');
         return;
       }
-      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
+      if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
         toastr.error('Registro De Mediciones es obligatorio para TGS');
         return;
       }
@@ -28396,7 +28409,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           'solicitado_por': this.solicitado_por,
           'TablaModelos3d': this.TablaModelos3d,
           'data_popup': this.popupData,
-          'tablaInspeccion': this.tablaInspeccion
+          'tablaInspeccion': this.tablaInspeccion,
+          'tipo_tgs': this.tipo_tgs
         }
       }).then(function (response) {
         var informe = response.data;
@@ -28616,46 +28630,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     storeRegistro: function storeRegistro() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var _yield$axios$post, nuevoModelo, _yield$axios$post2, nuevoFluido, popupData;
+        var popupData;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              if (!(!_this.modelo.id && _this.tipo !== 'Linea')) {
-                _context.next = 9;
-                break;
-              }
-              if (!(!_this.modelo.codigo || _this.modelo.codigo.trim() === "")) {
-                _context.next = 4;
-                break;
-              }
-              toastr.error("Campo modelo obligatorio");
-              return _context.abrupt("return");
-            case 4:
-              _context.next = 6;
-              return axios.post("/tgs-save-modelo/".concat(_this.modelo.codigo));
-            case 6:
-              _yield$axios$post = _context.sent;
-              nuevoModelo = _yield$axios$post.data;
-              _this.modelo = nuevoModelo;
-            case 9:
-              if (_this.fluido.id) {
-                _context.next = 18;
-                break;
-              }
-              if (!(!_this.fluido.codigo || _this.fluido.codigo.trim() === "")) {
-                _context.next = 13;
-                break;
-              }
-              toastr.error("Campo fluido obligatorio");
-              return _context.abrupt("return");
-            case 13:
-              _context.next = 15;
-              return axios.post("/tgs-save-fluido/".concat(_this.fluido.codigo));
-            case 15:
-              _yield$axios$post2 = _context.sent;
-              nuevoFluido = _yield$axios$post2.data;
-              _this.fluido = nuevoFluido;
-            case 18:
+              // 1) Si modelo no tiene id, lo creamos
+              /*         if (!this.modelo.id && this.tipo !== 'Linea') {
+                        // Validar que el código exista y no sea sólo espacios
+                          if (!this.modelo.codigo || this.modelo.codigo.trim() === "") {
+                          toastr.error("Campo modelo obligatorio");
+                          return;
+                        }
+                        const { data: nuevoModelo } = await axios.post(
+                          `/tgs-save-modelo/${this.modelo.codigo}`
+                        );
+                        this.modelo = nuevoModelo;
+                      }
+              
+                      if (!this.fluido.id) {
+                        // Validar que el código exista y no sea sólo espacios
+                        if (!this.fluido.codigo || this.fluido.codigo.trim() === "") {
+                          toastr.error("Campo fluido obligatorio");
+                          return;
+                        }
+                        const { data: nuevoFluido } = await axios.post(
+                          `/tgs-save-fluido/${this.fluido.codigo}`
+                        );
+                        this.fluido = nuevoFluido;
+                      } */
               console.log(_this.material);
               // 3) Ya con ambos id garantizados, armo el objeto
               popupData = {
@@ -28692,7 +28694,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               console.log('Datos listos para enviar:', popupData);
               _this.$emit('submit', popupData);
               _this.closeModal();
-            case 23:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -86212,7 +86214,7 @@ var render = function render() {
     attrs: {
       "for": "componente"
     }
-  }, [_vm._v("\n                            Componente *\n                            "), _vm.cliente.codigo === "0279" && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && _vm.tipo_tgs !== null && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
+  }, [_vm._v("\n                            Componente *\n                            "), _vm.pdfEspecialsn && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && _vm.tipo_tgs !== null && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
     attrs: {
       type: "button",
       disabled: !_vm.componente
@@ -88140,7 +88142,7 @@ var render = function render() {
       "for": "espesor_minimo_me",
       title: "espesor_minimo_me"
     }
-  }, [_vm._v("Espesor Mínimo\n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor Mínimo\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88172,7 +88174,7 @@ var render = function render() {
       "for": "espesor_minimo_anterior_me",
       title: "Espesor minimo anterior"
     }
-  }, [_vm._v("Espesor minimo anterior\n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor minimo anterior\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88205,7 +88207,7 @@ var render = function render() {
       "for": "años_ultima_inspeccion_me",
       title: "Años desde la última inspección"
     }
-  }, [_vm._v("Años desde la última inspección\n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Años desde la última inspección\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88659,7 +88661,7 @@ var render = function render() {
         _vm.path4_indicacion = $event;
       }
     }
-  })], 1)])])]), _vm._v(" "), _vm.cliente.codigo === "0279" && ((_vm$tecnica2 = _vm.tecnica) === null || _vm$tecnica2 === void 0 ? void 0 : _vm$tecnica2.codigo) === "ME" && ((_vm$componente_me_dat = _vm.componente_me_data) !== null && _vm$componente_me_dat !== void 0 && _vm$componente_me_dat.tipo_us && _vm.componente_me_data.tipo_us !== "Linea" || _vm.tipo_tgs !== "Linea") ? _c("div", {
+  })], 1)])])]), _vm._v(" "), _vm.pdfEspecialsn && ((_vm$tecnica2 = _vm.tecnica) === null || _vm$tecnica2 === void 0 ? void 0 : _vm$tecnica2.codigo) === "ME" && ((_vm$componente_me_dat = _vm.componente_me_data) !== null && _vm$componente_me_dat !== void 0 && _vm$componente_me_dat.tipo_us && _vm.componente_me_data.tipo_us !== "Linea" || _vm.tipo_tgs !== "Linea") ? _c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
     staticClass: "box-body"
@@ -89257,7 +89259,7 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group d-flex"
-  }, [_c("label", [_vm._v("Modelo")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Modelo *")]), _vm._v(" "), _c("v-select", {
     attrs: {
       label: "codigo",
       options: _vm.modeloOptions,
@@ -89647,7 +89649,7 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group d-flex"
-  }, [_c("label", [_vm._v("Fluido")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Fluido * ")]), _vm._v(" "), _c("v-select", {
     attrs: {
       options: _vm.fluidoOptions,
       label: "codigo",
@@ -130885,7 +130887,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\n  position: fixed;       /* ocupa toda la pantalla */\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;         /* flex para centrar */\n  align-items: center;   /* centrar vertical */\n  justify-content: center;/* centrar horizontal */\n  background: rgba(0,0,0,0.5); /* overlay oscuro */\n  z-index: 9999;         /* por encima de todo */\n}\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\n  margin: 0;             /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\n  max-height: 90vh;\n  overflow-y: auto;\n}\n", ""]);
+exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\n  position: fixed;       /* ocupa toda la pantalla */\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;         /* flex para centrar */\n  align-items: center;   /* centrar vertical */\n  justify-content: center;/* centrar horizontal */\n  background: rgba(0,0,0,0.5); /* overlay oscuro */\n  z-index: 9999;         /* por encima de todo */\n}\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\n  margin: 0;             /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\n  max-height: 90vh;\n  overflow-y: auto;\n}\n.form-control[disabled][data-v-653e7c51], .form-control[readonly][data-v-653e7c51], fieldset[disabled] .form-control[data-v-653e7c51] {\n    background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -373551,6 +373553,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
     localidades: [],
     ot_tipo_soldaduras: [],
     ot_obra_tipo_soldaduras: [],
+    pdf_especial: {},
     materiales: [],
     diametros: [],
     espesores: [],
@@ -373730,8 +373733,22 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadOtPqrs: function loadOtPqrs(_ref15, ot_id) {
+    // En actions:
+    loadPdfEspecial: function loadPdfEspecial(_ref15, _ref16) {
       var commit = _ref15.commit;
+      var metodo = _ref16.metodo,
+        cliente_id = _ref16.cliente_id;
+      axios.defaults.baseURL = store.state.url; // '/api/'
+      var url = "pdf_especial/metodo/".concat(metodo, "/cliente/").concat(cliente_id, "?api_token=").concat(Laravel.user.api_token);
+      return new Promise(function (resolve, reject) {
+        axios.get(url).then(function (response) {
+          commit('getPdfEspecial', response.data);
+          resolve(response.data);
+        })["catch"](reject);
+      });
+    },
+    loadOtPqrs: function loadOtPqrs(_ref17, ot_id) {
+      var commit = _ref17.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_tipo_soldaduras/ot/' + ot_id + /pqrs/ + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373741,24 +373758,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadMateriales: function loadMateriales(_ref16) {
-      var commit = _ref16.commit;
+    loadMateriales: function loadMateriales(_ref18) {
+      var commit = _ref18.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'materiales' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getMateriales', response.data);
       });
     },
-    loadDiametros: function loadDiametros(_ref17) {
-      var commit = _ref17.commit;
+    loadDiametros: function loadDiametros(_ref19) {
+      var commit = _ref19.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'diametros' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getDiametros', response.data);
       });
     },
-    loadEspesores: function loadEspesores(_ref18, diametro_code) {
-      var commit = _ref18.commit;
+    loadEspesores: function loadEspesores(_ref20, diametro_code) {
+      var commit = _ref20.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'espesor/' + diametro_code + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373768,16 +373785,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadMedidasPlaca: function loadMedidasPlaca(_ref19) {
-      var commit = _ref19.commit;
+    loadMedidasPlaca: function loadMedidasPlaca(_ref21) {
+      var commit = _ref21.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'medidas/cm/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getMedidasPlaca', response.data);
       });
     },
-    loadProcedimietosOtMetodo: function loadProcedimietosOtMetodo(_ref20, payload) {
-      var commit = _ref20.commit;
+    loadProcedimietosOtMetodo: function loadProcedimietosOtMetodo(_ref22, payload) {
+      var commit = _ref22.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'procedimientos_informes/ot/' + payload.ot_id + '/metodo/' + payload.metodo + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373787,48 +373804,48 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadNormaEvaluaciones: function loadNormaEvaluaciones(_ref21) {
-      var commit = _ref21.commit;
+    loadNormaEvaluaciones: function loadNormaEvaluaciones(_ref23) {
+      var commit = _ref23.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getNormaEvaluaciones', response.data);
       });
     },
-    loadNormaEnsayos: function loadNormaEnsayos(_ref22) {
-      var commit = _ref22.commit;
+    loadNormaEnsayos: function loadNormaEnsayos(_ref24) {
+      var commit = _ref24.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getNormaEnsayos', response.data);
       });
     },
-    loadUnidadesMedidas: function loadUnidadesMedidas(_ref23) {
-      var commit = _ref23.commit;
+    loadUnidadesMedidas: function loadUnidadesMedidas(_ref25) {
+      var commit = _ref25.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'unidades_medidas/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getUnidadesMedidas', response.data);
       });
     },
-    loadMetodosEnsayos: function loadMetodosEnsayos(_ref24) {
-      var commit = _ref24.commit;
+    loadMetodosEnsayos: function loadMetodosEnsayos(_ref26) {
+      var commit = _ref26.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getMetodosEnsayos', response.data);
       });
     },
-    loadTiposEquipamiento: function loadTiposEquipamiento(_ref25) {
-      var commit = _ref25.commit;
+    loadTiposEquipamiento: function loadTiposEquipamiento(_ref27) {
+      var commit = _ref27.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'tipos_equipamiento' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getTiposEquipamiento', response.data);
       });
     },
-    loadInternoEquipos: function loadInternoEquipos(_ref26, payload) {
-      var commit = _ref26.commit;
+    loadInternoEquipos: function loadInternoEquipos(_ref28, payload) {
+      var commit = _ref28.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '/tipo_penetrante/' + payload.tipo_penetrante + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373838,8 +373855,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadInstrumentosMediciones: function loadInstrumentosMediciones(_ref27, payload) {
-      var commit = _ref27.commit;
+    loadInstrumentosMediciones: function loadInstrumentosMediciones(_ref29, payload) {
+      var commit = _ref29.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '/tipo_penetrante/' + payload.tipo_penetrante + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373849,8 +373866,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadVehiculos: function loadVehiculos(_ref28) {
-      var commit = _ref28.commit;
+    loadVehiculos: function loadVehiculos(_ref30) {
+      var commit = _ref30.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'vehiculos' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373860,8 +373877,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadVehiculosOt: function loadVehiculosOt(_ref29, ot_id) {
-      var commit = _ref29.commit;
+    loadVehiculosOt: function loadVehiculosOt(_ref31, ot_id) {
+      var commit = _ref31.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'vehiculos' + '/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373871,8 +373888,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadPalpadores: function loadPalpadores(_ref30) {
-      var commit = _ref30.commit;
+    loadPalpadores: function loadPalpadores(_ref32) {
+      var commit = _ref32.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'palpadores' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373882,8 +373899,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadParticulas: function loadParticulas(_ref31, metodo_trabajo_pm_id) {
-      var commit = _ref31.commit;
+    loadParticulas: function loadParticulas(_ref33, metodo_trabajo_pm_id) {
+      var commit = _ref33.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'particulas/metodo_trabajo_pm/' + metodo_trabajo_pm_id + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373893,8 +373910,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadUbicacionInternoEquipo: function loadUbicacionInternoEquipo(_ref32, id) {
-      var commit = _ref32.commit;
+    loadUbicacionInternoEquipo: function loadUbicacionInternoEquipo(_ref34, id) {
+      var commit = _ref34.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/' + id + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373904,32 +373921,32 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadInternoFuentes: function loadInternoFuentes(_ref33, activo_sn) {
-      var commit = _ref33.commit;
+    loadInternoFuentes: function loadInternoFuentes(_ref35, activo_sn) {
+      var commit = _ref35.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_fuentes/activo_sn/' + activo_sn + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getInternoFuentes', response.data);
       });
     },
-    loadEquipos: function loadEquipos(_ref34) {
-      var commit = _ref34.commit;
+    loadEquipos: function loadEquipos(_ref36) {
+      var commit = _ref36.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'equipos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getEquipos', response.data);
       });
     },
-    loadFuentes: function loadFuentes(_ref35) {
-      var commit = _ref35.commit;
+    loadFuentes: function loadFuentes(_ref37) {
+      var commit = _ref37.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'fuentes' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getFuentes', response.data);
       });
     },
-    loadFuentePorInterno: function loadFuentePorInterno(_ref36, interno_fuente_id) {
-      var commit = _ref36.commit;
+    loadFuentePorInterno: function loadFuentePorInterno(_ref38, interno_fuente_id) {
+      var commit = _ref38.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'fuentes/interno_fuente/' + interno_fuente_id + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373939,8 +373956,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadTipoLiquidos: function loadTipoLiquidos(_ref37, payload) {
-      var commit = _ref37.commit;
+    loadTipoLiquidos: function loadTipoLiquidos(_ref39, payload) {
+      var commit = _ref39.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'tipo_liquidos/penetrante_sn/' + payload.penetrante_sn + '/revelador_sn/' + payload.revelador_sn + '/removedor_sn/' + payload.removedor_sn + '/metodo_trabajo_lp_id/' + payload.metodo_trabajo_lp_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
@@ -373950,8 +373967,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadIluminaciones: function loadIluminaciones(_ref38) {
-      var commit = _ref38.commit;
+    loadIluminaciones: function loadIluminaciones(_ref40) {
+      var commit = _ref40.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'iluminaciones' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373961,16 +373978,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadEjecutorEnsayo: function loadEjecutorEnsayo(_ref39, ot_id) {
-      var commit = _ref39.commit;
+    loadEjecutorEnsayo: function loadEjecutorEnsayo(_ref41, ot_id) {
+      var commit = _ref41.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-operarios/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getEjecutorEnsayo', response.data);
       });
     },
-    loadOperadores: function loadOperadores(_ref40) {
-      var commit = _ref40.commit;
+    loadOperadores: function loadOperadores(_ref42) {
+      var commit = _ref42.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-operarios/users' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373980,24 +373997,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadOperadoresEmpresa: function loadOperadoresEmpresa(_ref41) {
-      var commit = _ref41.commit;
+    loadOperadoresEmpresa: function loadOperadoresEmpresa(_ref43) {
+      var commit = _ref43.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'users/empresa' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getOperadoresEmpresa', response.data);
       });
     },
-    loadOperadoresDisometria: function loadOperadoresDisometria(_ref42) {
-      var commit = _ref42.commit;
+    loadOperadoresDisometria: function loadOperadoresDisometria(_ref44) {
+      var commit = _ref44.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_operador/operadores' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getOperadoresDosimetria', response.data);
       });
     },
-    loadDosimetriaResumen: function loadDosimetriaResumen(_ref43, payload) {
-      var commit = _ref43.commit;
+    loadDosimetriaResumen: function loadDosimetriaResumen(_ref45, payload) {
+      var commit = _ref45.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_resumen/year/' + payload.year + '/operadores/' + payload.operadores + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374007,8 +374024,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadDosimetriaOperador: function loadDosimetriaOperador(_ref44, payload) {
-      var commit = _ref44.commit;
+    loadDosimetriaOperador: function loadDosimetriaOperador(_ref46, payload) {
+      var commit = _ref46.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_operador/operador/' + payload.operador_id + '/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374018,8 +374035,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadDosimetriaMensualOperadores: function loadDosimetriaMensualOperadores(_ref45, payload) {
-      var commit = _ref45.commit;
+    loadDosimetriaMensualOperadores: function loadDosimetriaMensualOperadores(_ref47, payload) {
+      var commit = _ref47.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_operador/operadores/year/' + payload.year + '/month/' + payload.month + '/operadores_ids/null' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374029,8 +374046,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadDosimetriaRx: function loadDosimetriaRx(_ref46, payload) {
-      var commit = _ref46.commit;
+    loadDosimetriaRx: function loadDosimetriaRx(_ref48, payload) {
+      var commit = _ref48.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_rx/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374040,8 +374057,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadDosimetriaEstados: function loadDosimetriaEstados(_ref47, payload) {
-      var commit = _ref47.commit;
+    loadDosimetriaEstados: function loadDosimetriaEstados(_ref49, payload) {
+      var commit = _ref49.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_estados/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374051,8 +374068,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadContarDocumentaciones: function loadContarDocumentaciones(_ref48, ot_id) {
-      var commit = _ref48.commit;
+    loadContarDocumentaciones: function loadContarDocumentaciones(_ref50, ot_id) {
+      var commit = _ref50.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-documentaciones/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374062,8 +374079,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarInternoEquipos: function loadContarInternoEquipos(_ref49, ot_id) {
-      var commit = _ref49.commit;
+    loadContarInternoEquipos: function loadContarInternoEquipos(_ref51, ot_id) {
+      var commit = _ref51.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374073,12 +374090,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadDiasDelMes: function loadDiasDelMes(_ref50, payload) {
-      var commit = _ref50.commit;
+    loadDiasDelMes: function loadDiasDelMes(_ref52, payload) {
+      var commit = _ref52.commit;
       commit('DiasDelMes', payload);
     },
-    loadContarPartes: function loadContarPartes(_ref51, ot_id) {
-      var commit = _ref51.commit;
+    loadContarPartes: function loadContarPartes(_ref53, ot_id) {
+      var commit = _ref53.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'partes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374088,8 +374105,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarCertificados: function loadContarCertificados(_ref52, ot_id) {
-      var commit = _ref52.commit;
+    loadContarCertificados: function loadContarCertificados(_ref54, ot_id) {
+      var commit = _ref54.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'certificados/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374099,8 +374116,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarInformes: function loadContarInformes(_ref53, ot_id) {
-      var commit = _ref53.commit;
+    loadContarInformes: function loadContarInformes(_ref55, ot_id) {
+      var commit = _ref55.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'informes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374110,8 +374127,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarOperadores: function loadContarOperadores(_ref54, ot_id) {
-      var commit = _ref54.commit;
+    loadContarOperadores: function loadContarOperadores(_ref56, ot_id) {
+      var commit = _ref56.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_operarios/users/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374123,8 +374140,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarSoldadores: function loadContarSoldadores(_ref55, ot_id) {
-      var commit = _ref55.commit;
+    loadContarSoldadores: function loadContarSoldadores(_ref57, ot_id) {
+      var commit = _ref57.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_soldadores/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374134,8 +374151,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarUsuariosCliente: function loadContarUsuariosCliente(_ref56, ot_id) {
-      var commit = _ref56.commit;
+    loadContarUsuariosCliente: function loadContarUsuariosCliente(_ref58, ot_id) {
+      var commit = _ref58.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_usuarios_clientes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374145,8 +374162,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarProcedimientos: function loadContarProcedimientos(_ref57, ot_id) {
-      var commit = _ref57.commit;
+    loadContarProcedimientos: function loadContarProcedimientos(_ref59, ot_id) {
+      var commit = _ref59.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_procedimientos_propios/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374156,8 +374173,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarVehiculos: function loadContarVehiculos(_ref58, ot_id) {
-      var commit = _ref58.commit;
+    loadContarVehiculos: function loadContarVehiculos(_ref60, ot_id) {
+      var commit = _ref60.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'vehiculos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374167,24 +374184,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarDocumentacionesTotal: function loadContarDocumentacionesTotal(_ref59) {
-      var commit = _ref59.commit;
+    loadContarDocumentacionesTotal: function loadContarDocumentacionesTotal(_ref61) {
+      var commit = _ref61.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'documentaciones/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarDocumentacionesTotal', response.data);
       });
     },
-    loadServiciosOt: function loadServiciosOt(_ref60, ot_id) {
-      var commit = _ref60.commit;
+    loadServiciosOt: function loadServiciosOt(_ref62, ot_id) {
+      var commit = _ref62.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_servicios/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getServiciosOt', response.data);
       });
     },
-    loadCurie: function loadCurie(_ref61, payload) {
-      var commit = _ref61.commit;
+    loadCurie: function loadCurie(_ref63, payload) {
+      var commit = _ref63.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_fuentes/' + payload.interno_fuente_id + '/fecha_final/' + payload.fecha_final + '/curie' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374194,8 +374211,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadModelos3d: function loadModelos3d(_ref62) {
-      var commit = _ref62.commit;
+    loadModelos3d: function loadModelos3d(_ref64) {
+      var commit = _ref64.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'modelos_3d/' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374205,16 +374222,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadRoles: function loadRoles(_ref63) {
-      var commit = _ref63.commit;
+    loadRoles: function loadRoles(_ref65) {
+      var commit = _ref65.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'roles' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getRoles', response.data);
       });
     },
-    loadPermisos: function loadPermisos(_ref64) {
-      var commit = _ref64.commit;
+    loadPermisos: function loadPermisos(_ref66) {
+      var commit = _ref66.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'permissions' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
@@ -374223,6 +374240,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
     }
   },
   mutations: {
+    getPdfEspecial: function getPdfEspecial(state, pdf_especial) {
+      state.pdf_especial = pdf_especial;
+    },
     loading: function loading(state, estado) {
       state.isLoading = estado;
     },

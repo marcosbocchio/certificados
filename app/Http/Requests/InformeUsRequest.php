@@ -25,6 +25,7 @@ class InformeUsRequest extends FormRequest
     {
 
         $condicional_espesor='';
+        $condicional_pdf_especial='';
 
         if($this->diametro['diametro'] == 'CHAPA'){
 
@@ -44,13 +45,24 @@ class InformeUsRequest extends FormRequest
         } else {
 
             $condicional_espesor = [
-
                 'espesor'                     => 'required',
                 'espesor_chapa'               =>  '',
-
                 ];
 
         }
+        if($this->tipo_tgs == 'Linea'){
+            $condicional_pdf_especial = [
+                'data_popup.fluido' => 'required',
+            ];
+        }
+
+        if($this->tipo_tgs == 'Horizontal' || $this->tipo_tgs == 'Vertical'){
+            $condicional_pdf_especial = [
+                'data_popup.fluido' => 'required',
+                'data_popup.modelo' => 'required',
+            ];
+        }
+
 
         $validacion = [
 
@@ -72,6 +84,7 @@ class InformeUsRequest extends FormRequest
         ];
 
         $validacion_completa =array_merge($condicional_espesor,$validacion);
+        $validacion_completa =array_merge($validacion_completa,$condicional_pdf_especial);
 
         return $validacion_completa;
 
@@ -83,7 +96,8 @@ class InformeUsRequest extends FormRequest
         return [
 
             'ot_tipo_soldadura'           => 'Eps',
-
+            'data_popup.fluido'           => 'Fluido en el detalle del componente',
+            'data_popup.modelo'           => 'Modelo en el detalle del componente',
             ];
     }
 }
