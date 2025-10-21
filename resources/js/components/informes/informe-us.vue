@@ -1411,7 +1411,7 @@ export default {
       }
     },
 
-    created() {
+    created() {  
         this.init();
     },
 
@@ -1431,11 +1431,14 @@ export default {
             }
         },
         isTipoEnabled() {
-        return (
-            this.cliente?.codigo === '0279' &&
-            this.tecnica?.codigo === 'ME'
-        );
-        }
+            return (
+                this.cliente?.codigo === '0279' &&
+                this.tecnica?.codigo === 'ME'
+            );
+        },
+        pdfEspecial() {
+            return this.$store.state.pdf_especial;
+        }        
      },
 
       watch : {
@@ -1506,6 +1509,7 @@ export default {
             this.$store.dispatch('loadModelos3d');
             this.getAccesoriosUs();
             this.getSoldadores();
+            this.$store.dispatch('loadPdfEspecial', {metodo: this.metodo.id,cliente_id: this.otdata.cliente_id});        
         },
         async getTablaInspeccion() {
             try {

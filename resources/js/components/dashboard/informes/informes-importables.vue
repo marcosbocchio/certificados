@@ -271,8 +271,6 @@ components: {
     this.Registro.obra = value || 'N/A';  // Si value es null o falsy, asigna 'N/A'
 },
         setPlanta : function(value){
-
-            console.log('el value es',value)
             this.Registro.planta = value;
         },
 
