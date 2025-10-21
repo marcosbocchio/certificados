@@ -7,7 +7,7 @@
                          <div class="box-body">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="fecha">Fecha *</label>
+                                    <label >Fecha *</label>
                                     <div>
                                         <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
                                     </div>
@@ -66,7 +66,7 @@
                                     <tbody>
                                         <tr v-for="(parte,k) in partes" :key="k">
                                             <td>
-                                                <input type="checkbox" id="informe_sel" v-model="partes[k].parte_sel" @change="getPartes(k)" :disabled="loading">
+                                                <input type="checkbox" :id="'informe_sel_'+k" v-model="partes[k].parte_sel" @change="getPartes(k)" :disabled="loading">
                                             </td>
                                             <td>{{ parte.numero_formateado}}</td>
                                             <td>{{ parte.obra}}</td>
@@ -76,6 +76,9 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div v-if="loading" class="overlay">
+                              <loading-spin></loading-spin>
                         </div>
                     </div>
 
@@ -118,11 +121,13 @@
                                                 <td  v-if="item.visible">
 
                                                     <div class="input-group col-xs-12">
-                                                        <input type="number" id="nro_combinacion" class="form-control form-group-xs text-center"  maxlength="2" v-model="TablaPartesServicios[k].nro_combinacion" disabled >
+                                                        <input type="number" :id="'nro_combinacion_'+k" class="form-control form-group-xs text-center"  maxlength="2" v-model="TablaPartesServicios[k].nro_combinacion" disabled >
 
                                                         <span class="input-group-btn">
-                                                            <button type="button"  class="btn btn-md btn-default" @click="borrarCombinacion(TablaPartesServicios[k].nro_combinacion)">X</button>
-
+                                                            <button type="button" class="btn btn-md btn-default" v-if="!TablaPartesServicios[k].manual_uncombined_sn" @click="borrarCombinacionIndex(k)">X</button>
+                                                            <button type="button" class="btn btn-md btn-default" v-else @click="revertirCombinacionIndex(k)" title="Volver a combinación">
+                                                                <i class="fa fa-undo"></i>
+                                                            </button>
                                                         </span>
 
                                                     </div>
@@ -152,6 +157,9 @@
                                         </table>
                                     </div>
                                 </div>
+                            </div>
+                            <div v-if="loading" class="overlay">
+                                  <loading-spin></loading-spin>
                             </div>
                         </div>
                     </div>
@@ -196,6 +204,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div v-if="loading" class="overlay">
+                                  <loading-spin></loading-spin>
+                            </div>
                         </div>
                     </div>
 
@@ -238,6 +249,9 @@
                                         </table>
                                     </div>
                                 </div>
+                            </div>
+                            <div v-if="loading" class="overlay">
+                                  <loading-spin></loading-spin>
                             </div>
                         </div>
                     </div>
@@ -414,7 +428,8 @@ export default {
             this.partes[index].parte_sel = false;
             for ( let x = 0 ; x <= index; x++ ) {
 
-                await this.getServiciosParte(this.partes[x].id);
+                const isLast = x === index;
+                await this.getServiciosParte(this.partes[x].id, isLast);
                 this.getProductosParte(this.partes[x].id);
                 this.partes[x].parte_sel = true;
 
@@ -494,42 +509,67 @@ export default {
 
         cargarCombinados : function(){
 
-            let longServicios = this.TablaPartesServicios.length;
+            const longServicios = this.TablaPartesServicios.length;
+            if (longServicios === 0) {
+                this.CompletarNoCombinados();
+                return;
+            }
 
-            if(longServicios > 0 ){
+            // Ordenar por fecha, obra y abreviatura para asegurar bloques contiguos por día
+            this.TablaPartesServicios.sort((a, b) => {
+                const da = new Date(a.fecha);
+                const db = new Date(b.fecha);
+                if (da - db !== 0) return da - db;
+                if ((a.obra || '') < (b.obra || '')) return -1;
+                if ((a.obra || '') > (b.obra || '')) return 1;
+                if ((a.abreviatura || '') < (b.abreviatura || '')) return -1;
+                if ((a.abreviatura || '') > (b.abreviatura || '')) return 1;
+                return 0;
+            });
 
-                let index = 0;
-                let contador = 1;
-                let fecha_inicial = moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY');
-                let fecha_final =  moment(this.TablaPartesServicios[longServicios -1].fecha).format('DD/MM/YYYY');
-
-                this.TablaPartesServicios.forEach(function(item)  {
+            // Limpiar sólo los que no están descombinados manualmente
+            this.TablaPartesServicios.forEach((item) => {
+                if (!item.manual_uncombined_sn) {
+                    item.prev_nro_combinacion = item.nro_combinacion || null;
                     item.nro_combinacion = '';
-                });
+                    item.combinacion = '';
+                }
+            });
 
-                while ((fecha_inicial <= fecha_final)&&(index < longServicios)) {
+            let index = 0;
+            let contador = 1;
 
-                    let abrev = this.getAbrevCombinadas(fecha_inicial);
-                    console.log( 'fecha inicial: ' + fecha_inicial +' abraviaturas: ' + abrev);
-                    while ((index < longServicios) && (moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') == fecha_inicial)) {
+            while (index < longServicios) {
+                const fechaActual = moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY');
 
-                        if ((abrev.findIndex(elemento => elemento == this.TablaPartesServicios[index].abreviatura) != -1)&&(abrev.length > 2)) {
-
-                            let longAbrev = abrev.length;
-                            this.TablaPartesServicios[index].combinacion = abrev[longAbrev - 1];
-                            this.TablaPartesServicios[index].nro_combinacion = contador;
-                        }
-                        index++;
+                // Coleccionar abreviaturas combinables del bloque del día
+                const abrev = [];
+                let j = index;
+                while (j < longServicios && moment(this.TablaPartesServicios[j].fecha).format('DD/MM/YYYY') === fechaActual) {
+                    const it = this.TablaPartesServicios[j];
+                    if (it.combinado_sn && !it.manual_uncombined_sn && !abrev.includes(it.abreviatura)) {
+                        abrev.push(it.abreviatura);
                     }
-                    contador++;
-
-                    if(index < longServicios){
-
-                        fecha_inicial =  moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY');
-
-                    }
+                    j++;
                 }
 
+                if (abrev.length >= 2) {
+                    abrev.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+                    const etiqueta = abrev.slice().reverse().join(' + ');
+
+                    let k = index;
+                    while (k < longServicios && moment(this.TablaPartesServicios[k].fecha).format('DD/MM/YYYY') === fechaActual) {
+                        const it = this.TablaPartesServicios[k];
+                        if (!it.manual_uncombined_sn && abrev.includes(it.abreviatura)) {
+                            it.combinacion = etiqueta;
+                            it.nro_combinacion = contador;
+                        }
+                        k++;
+                    }
+                    contador++;
+                }
+
+                index = j; // avanzar al próximo bloque por fecha
             }
 
             this.CompletarNoCombinados();
@@ -547,7 +587,9 @@ export default {
 
             while((index < longServicios) && (moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') == fecha_inicial) ){
 
-                if ((this.TablaPartesServicios[index].combinado_sn) && (abreviaturas.findIndex(elemento => elemento == this.TablaPartesServicios[index].abreviatura) == -1)){
+                if ((this.TablaPartesServicios[index].combinado_sn)
+                    && (!this.TablaPartesServicios[index].manual_uncombined_sn)
+                    && (abreviaturas.findIndex(elemento => elemento == this.TablaPartesServicios[index].abreviatura) == -1)){
 
                         abreviaturas.push(this.TablaPartesServicios[index].abreviatura);
                     }
@@ -579,22 +621,89 @@ export default {
             });
        },
        borrarCombinacion : function(nro){
-
+           // Mantención backward-compat si se llamara por nro (no usado ahora)
            this.TablaPartesServicios.forEach(function(item){
-
                if(item.nro_combinacion == nro){
-
+                   item.prev_nro_combinacion = item.nro_combinacion || null;
+                   item.manual_uncombined_sn = true;
                    item.combinacion = '';
                    item.nro_combinacion = '';
                }
+           }.bind(this));
+           this.CompletarNoCombinados();
+       },
 
-           });
+       borrarCombinacionIndex : function(index){
+
+           const ref = this.TablaPartesServicios[index];
+           const targetFecha = moment(ref.fecha).format('DD/MM/YYYY');
+           const targetObra = ref.obra;
+           const targetNro = ref.nro_combinacion;
+
+           this.TablaPartesServicios.forEach(function(item){
+               if(item.nro_combinacion == targetNro
+                 && moment(item.fecha).format('DD/MM/YYYY') == targetFecha
+                 && item.obra == targetObra){
+
+                   item.prev_nro_combinacion = item.nro_combinacion || null;
+                   item.manual_uncombined_sn = true;
+                   item.combinacion = '';
+                   item.nro_combinacion = '';
+               }
+           }.bind(this));
 
            this.CompletarNoCombinados();
+       },
+
+       revertirCombinacion : function(prevNro){
+           // Mantención backward-compat
+           this.TablaPartesServicios.forEach(function(item){
+               if(item.manual_uncombined_sn && item.prev_nro_combinacion === prevNro){
+                   item.manual_uncombined_sn = false;
+                   item.nro_combinacion = item.prev_nro_combinacion;
+               }
+           }.bind(this));
+           this.cargarCombinados();
+       },
+
+       revertirCombinacionIndex : function(index){
+
+           const ref = this.TablaPartesServicios[index];
+           const targetFecha = moment(ref.fecha).format('DD/MM/YYYY');
+           const targetObra = ref.obra;
+           const prevNro = ref.prev_nro_combinacion;
+
+           this.TablaPartesServicios.forEach(function(item){
+               if(item.manual_uncombined_sn
+                 && item.prev_nro_combinacion === prevNro
+                 && moment(item.fecha).format('DD/MM/YYYY') == targetFecha
+                 && item.obra == targetObra){
+                   item.manual_uncombined_sn = false;
+                   item.nro_combinacion = item.prev_nro_combinacion;
+               }
+           }.bind(this));
+
+           this.cargarCombinados();
+       },
+
+       descombinarItem : function(index){
+
+           let it = this.TablaPartesServicios[index];
+           it.manual_uncombined_sn = true;
+           it.nro_combinacion = '';
+           it.combinacion = it.abreviatura;
 
        },
 
-        async getServiciosParte(id){
+       recombinarItem : function(index){
+
+           let it = this.TablaPartesServicios[index];
+           it.manual_uncombined_sn = false;
+           this.cargarCombinados();
+
+       },
+
+        async getServiciosParte(id, recompute = true){
 
         axios.defaults.baseURL = this.url ;
         var urlRegistros = 'certificados/parte/' + id + '/servicios' + '?api_token=' + Laravel.user.api_token;
@@ -616,7 +725,9 @@ export default {
                 abreviatura :item.abreviatura,
                 visible : true,
                 nro_combinacion : 0,
+                prev_nro_combinacion : null,
                 combinado_sn :item.combinado_sn,
+                manual_uncombined_sn : false,
                 combinacion : '',
                 obra : item.obra,
                 fecha : item.fecha,
@@ -624,7 +735,7 @@ export default {
 
             });
         }.bind(this));
-        this.cargarCombinados();
+        if (recompute) this.cargarCombinados();
 
         },
 
