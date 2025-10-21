@@ -27241,7 +27241,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   created: function created() {
     this.init();
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])(['isLoading', 'url', 'ot_obra_tipo_soldaduras', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos', 'interno_equipos', 'palpadores', 'modelos_3d'])), {}, {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])(['isLoading', 'url', 'ot_obra_tipo_soldaduras', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos', 'interno_equipos', 'palpadores', 'modelos_3d', 'pdf_especial'])), {}, {
     numero_inf_code: function numero_inf_code() {
       if (this.numero_inf) {
         if (this.informedata.numero_repetido) {
@@ -27254,11 +27254,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }
     },
     isTipoEnabled: function isTipoEnabled() {
-      var _this$cliente, _this$tecnica;
-      return ((_this$cliente = this.cliente) === null || _this$cliente === void 0 ? void 0 : _this$cliente.codigo) === '0279' && ((_this$tecnica = this.tecnica) === null || _this$tecnica === void 0 ? void 0 : _this$tecnica.codigo) === 'ME';
+      var _this$tecnica;
+      return this.pdfEspecialsn && ((_this$tecnica = this.tecnica) === null || _this$tecnica === void 0 ? void 0 : _this$tecnica.codigo) === 'ME';
     },
-    pdfEspecial: function pdfEspecial() {
-      return this.$store.state.pdf_especial;
+    pdfEspecialsn: function pdfEspecialsn() {
+      return this.pdf_especial.length > 0;
     }
   }),
   watch: {
@@ -27323,7 +27323,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               _this.$store.dispatch('loadEjecutorEnsayo', _this.otdata.id);
               _this.getGeneratrices();
               _this.getUsuariosCliente();
-              if (!(_this.cliente.codigo == '0279')) {
+              if (!_this.pdfEspecialsn) {
                 _context.next = 19;
                 break;
               }
@@ -27335,7 +27335,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               _this.getAccesoriosUs();
               _this.getSoldadores();
               _this.$store.dispatch('loadPdfEspecial', {
-                metodo: _this.metodo.id,
+                metodo: _this.metodo,
                 cliente_id: _this.otdata.cliente_id
               });
             case 24:
@@ -27408,7 +27408,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
               if (!this.editmode) {
-                _context3.next = 50;
+                _context3.next = 52;
                 break;
               }
               this.fecha = this.informedata.fecha;
@@ -27463,7 +27463,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
                 'ot_id': this.otdata.id,
                 'obra': this.informedata.obra
               });
-              if (this.cliente.codigo == '0279' && this.tecnica.codigo === 'ME') {
+              _context3.next = 46;
+              return this.$store.dispatch('loadPdfEspecial', {
+                metodo: this.metodo,
+                cliente_id: this.otdata.cliente_id
+              });
+            case 46:
+              if (this.pdfEspecialsn && this.tecnica.codigo === 'ME') {
                 this.$refs.modalPopupRef.setForm(this.componente_me_data);
                 console.log();
                 this.tipo_tgs = this.componente_me_data.tipo_us;
@@ -27490,19 +27496,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
                 });
               }
               this.popupData = this.componente_me_data;
-              _context3.next = 48;
+              _context3.next = 50;
               return this.getTecnicas();
-            case 48:
-              _context3.next = 55;
-              break;
             case 50:
-              _context3.next = 52;
-              return this.getTecnicas();
+              _context3.next = 57;
+              break;
             case 52:
+              _context3.next = 54;
+              return this.getTecnicas();
+            case 54:
               this.tecnica = this.tecnicas[0];
               this.SetearBlockCalibraciones();
               this.getNumeroInforme();
-            case 55:
+            case 57:
             case "end":
               return _context3.stop();
           }
@@ -28061,15 +28067,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         toastr.error('El campo Elemento es obligatorio');
         return;
       }
-      if (!this.espesor_minimo_me && this.cliente.codigo == '0279') {
+      if (!this.espesor_minimo_me && this.pdfEspecialsn) {
         toastr.error('El campo espesor mínimo es obligatorio');
         return;
       }
-      if (!this.espesor_minimo_anterior_me && this.cliente.codigo == '0279') {
+      if (!this.espesor_minimo_anterior_me && this.pdfEspecialsn) {
         toastr.error('El campo Espesor minimo anterior es obligatorio');
         return;
       }
-      if (!this.años_ultima_inspeccion_me && this.cliente.codigo == '0279') {
+      if (!this.años_ultima_inspeccion_me && this.pdfEspecialsn) {
         toastr.error('El campo Años última inspección es obligatorio');
         return;
       }
@@ -28265,11 +28271,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     Store: function Store() {
       var _this17 = this;
       this.errors = [];
-      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
+      if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
         toastr.error('Detalle componente es obligatorio para TGS');
         return;
       }
-      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
+      if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
         toastr.error('Registro De Mediciones es obligatorio para TGS');
         return;
       }
@@ -28344,11 +28350,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     Update: function Update() {
       var _this18 = this;
       this.errors = [];
-      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
+      if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
         toastr.error('Detalle componente es obligatorio para TGS');
         return;
       }
-      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
+      if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
         toastr.error('Registro De Mediciones es obligatorio para TGS');
         return;
       }
@@ -86218,7 +86224,7 @@ var render = function render() {
     attrs: {
       "for": "componente"
     }
-  }, [_vm._v("\n                            Componente *\n                            "), _vm.cliente.codigo === "0279" && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && _vm.tipo_tgs !== null && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
+  }, [_vm._v("\n                            Componente *\n                            "), _vm.pdfEspecialsn && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && _vm.tipo_tgs !== null && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
     attrs: {
       type: "button",
       disabled: !_vm.componente
@@ -88146,7 +88152,7 @@ var render = function render() {
       "for": "espesor_minimo_me",
       title: "espesor_minimo_me"
     }
-  }, [_vm._v("Espesor Mínimo\n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor Mínimo\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88178,7 +88184,7 @@ var render = function render() {
       "for": "espesor_minimo_anterior_me",
       title: "Espesor minimo anterior"
     }
-  }, [_vm._v("Espesor minimo anterior\n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor minimo anterior\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88211,7 +88217,7 @@ var render = function render() {
       "for": "años_ultima_inspeccion_me",
       title: "Años desde la última inspección"
     }
-  }, [_vm._v("Años desde la última inspección\n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Años desde la última inspección\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88665,7 +88671,7 @@ var render = function render() {
         _vm.path4_indicacion = $event;
       }
     }
-  })], 1)])])]), _vm._v(" "), _vm.cliente.codigo === "0279" && ((_vm$tecnica2 = _vm.tecnica) === null || _vm$tecnica2 === void 0 ? void 0 : _vm$tecnica2.codigo) === "ME" && ((_vm$componente_me_dat = _vm.componente_me_data) !== null && _vm$componente_me_dat !== void 0 && _vm$componente_me_dat.tipo_us && _vm.componente_me_data.tipo_us !== "Linea" || _vm.tipo_tgs !== "Linea") ? _c("div", {
+  })], 1)])])]), _vm._v(" "), _vm.pdfEspecialsn && ((_vm$tecnica2 = _vm.tecnica) === null || _vm$tecnica2 === void 0 ? void 0 : _vm$tecnica2.codigo) === "ME" && ((_vm$componente_me_dat = _vm.componente_me_data) !== null && _vm$componente_me_dat !== void 0 && _vm$componente_me_dat.tipo_us && _vm.componente_me_data.tipo_us !== "Linea" || _vm.tipo_tgs !== "Linea") ? _c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
     staticClass: "box-body"
@@ -373751,10 +373757,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         })["catch"](reject);
       });
     },
-    // En mutations:
-    getPdfEspecial: function getPdfEspecial(state, payload) {
-      state.pdf_especial = payload || {};
-    },
     loadOtPqrs: function loadOtPqrs(_ref17, ot_id) {
       var commit = _ref17.commit;
       axios.defaults.baseURL = store.state.url;
@@ -374248,6 +374250,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
     }
   },
   mutations: {
+    getPdfEspecial: function getPdfEspecial(state, pdf_especial) {
+      state.pdf_especial = pdf_especial;
+    },
     loading: function loading(state, estado) {
       state.isLoading = estado;
     },

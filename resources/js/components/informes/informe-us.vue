@@ -37,7 +37,7 @@
                                 Componente *
                                 <button type="button" @click="openModal"
                                 v-if="
-                                    cliente.codigo === '0279'
+                                    pdfEspecialsn
                                     && tecnica?.codigo === 'ME'
                                     && tipo_tgs !== null
                                     && material !== ''
@@ -797,7 +797,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group" >
                                         <label for="espesor_minimo_me" title="espesor_minimo_me">Espesor Mínimo
-                                            <span v-if="cliente.codigo == '0279'">*</span>
+                                            <span v-if="pdfEspecialsn">*</span>
                                         </label>
                                         <input type="number" v-model="espesor_minimo_me" class="form-control" id="espesor_minimo_me" min="0" step="0.1">
                                     </div>
@@ -806,7 +806,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group" >
                                         <label for="espesor_minimo_anterior_me" title="Espesor minimo anterior">Espesor minimo anterior
-                                            <span v-if="cliente.codigo == '0279'">*</span>
+                                            <span v-if="pdfEspecialsn">*</span>
                                         </label>
                                         <input type="number" v-model="espesor_minimo_anterior_me" class="form-control" id="espesor_minimo_anterior_me" min="0" step="0.1">
                                     </div>
@@ -817,7 +817,7 @@
                                         <label for="años_ultima_inspeccion_me"
                                                     class="text-nowrap"
                                                     title="Años desde la última inspección">Años desde la última inspección
-                                            <span v-if="cliente.codigo == '0279'">*</span>
+                                            <span v-if="pdfEspecialsn">*</span>
                                         </label>
                                         <input type="number" v-model="años_ultima_inspeccion_me" class="form-control" id="años_ultima_inspeccion_me" min="0" step="0.1">
                                     </div>
@@ -1022,7 +1022,7 @@
                    </div>
                </div>
                <div v-if="
-                    cliente.codigo === '0279' &&
+                    pdfEspecialsn &&
                     tecnica?.codigo === 'ME' &&
                     (
                     (componente_me_data?.tipo_us && componente_me_data.tipo_us !== 'Linea')
@@ -1417,7 +1417,7 @@ export default {
 
     computed :{
 
-        ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','palpadores','modelos_3d']),
+        ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','palpadores','modelos_3d','pdf_especial']),
         numero_inf_code : function()  {
             if(this.numero_inf){
                 if(this.informedata.numero_repetido){
@@ -1432,12 +1432,12 @@ export default {
         },
         isTipoEnabled() {
             return (
-                this.cliente?.codigo === '0279' &&
+                this.pdfEspecialsn &&
                 this.tecnica?.codigo === 'ME'
             );
         },
-        pdfEspecial() {
-            return this.$store.state.pdf_especial;
+        pdfEspecialsn() {
+            return this.pdf_especial.length > 0;
         }        
      },
 
@@ -1470,10 +1470,10 @@ export default {
 
         },
         isTipoEnabled: function (newVal) {
-        if (!newVal) {
-            // …y resulta ser false, reseteamos el select
-            this.tipo_tgs = '';
-        }
+            if (!newVal) {
+                // …y resulta ser false, reseteamos el select
+                this.tipo_tgs = '';
+            }
         }
 
     },
@@ -1502,14 +1502,14 @@ export default {
             this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
             this.getGeneratrices();
             this.getUsuariosCliente();
-            if (this.cliente.codigo == '0279'){
+            if (this.pdfEspecialsn) {
                 await this.getTablaInspeccion();
             }
             this.setEdit();
             this.$store.dispatch('loadModelos3d');
             this.getAccesoriosUs();
             this.getSoldadores();
-            this.$store.dispatch('loadPdfEspecial', {metodo: this.metodo.id,cliente_id: this.otdata.cliente_id});        
+            this.$store.dispatch('loadPdfEspecial', {metodo: this.metodo,cliente_id: this.otdata.cliente_id});        
         },
         async getTablaInspeccion() {
             try {
@@ -1595,7 +1595,8 @@ export default {
                this.solicitado_por = this.solicitado_pordata ;
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
-               if (this.cliente.codigo == '0279' && this.tecnica.codigo === 'ME'){
+               await this.$store.dispatch('loadPdfEspecial', {metodo: this.metodo,cliente_id: this.otdata.cliente_id});        
+               if (this.pdfEspecialsn && this.tecnica.codigo === 'ME'){
                 this.$refs.modalPopupRef.setForm(this.componente_me_data);
                 console.log()
                 this.tipo_tgs = this.componente_me_data.tipo_us;
@@ -2233,15 +2234,15 @@ processExcelData(data, filas, columnas) {
                 toastr.error('El campo Elemento es obligatorio');
                 return ;
             }
-            if (!this.espesor_minimo_me && this.cliente.codigo == '0279') {
+            if (!this.espesor_minimo_me && this.pdfEspecialsn) {
                 toastr.error('El campo espesor mínimo es obligatorio');
                 return ;
             }
-            if (!this.espesor_minimo_anterior_me && this.cliente.codigo == '0279') {
+            if (!this.espesor_minimo_anterior_me && this.pdfEspecialsn) {
                 toastr.error('El campo Espesor minimo anterior es obligatorio');
                 return ;
             }
-            if (!this.años_ultima_inspeccion_me && this.cliente.codigo == '0279') {
+            if (!this.años_ultima_inspeccion_me && this.pdfEspecialsn) {
                 toastr.error('El campo Años última inspección es obligatorio');
                 return ;
             }
@@ -2470,7 +2471,7 @@ processExcelData(data, filas, columnas) {
 
             this.errors =[];
             if (
-                    this.cliente.codigo === '0279' &&
+                this.pdfEspecialsn &&
                     this.tecnica.codigo === 'ME' &&
                     (this.popupData === null || this.popupData === '')
                 ) {
@@ -2478,7 +2479,7 @@ processExcelData(data, filas, columnas) {
                     return;
                 }
 
-            if(this.cliente.codigo === '0279' &&
+            if(this.pdfEspecialsn &&
                 this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0){
                 toastr.error('Registro De Mediciones es obligatorio para TGS');
                 return;
@@ -2564,7 +2565,7 @@ processExcelData(data, filas, columnas) {
 
             this.errors =[];
             if (
-                    this.cliente.codigo === '0279' &&
+                this.pdfEspecialsn &&
                     this.tecnica.codigo === 'ME' &&
                     (this.popupData === null || this.popupData === '')
                 ) {
@@ -2572,7 +2573,7 @@ processExcelData(data, filas, columnas) {
                     return;
                 }
 
-            if(this.cliente.codigo === '0279' &&
+            if( this.pdfEspecialsn &&
                 this.tecnica.codigo === 'ME' &&
                 this.Tabla_me.length === 0){
                 toastr.error('Registro De Mediciones es obligatorio para TGS');

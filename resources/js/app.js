@@ -733,11 +733,6 @@ const store = new Vuex.Store({
       });
     },
 
-    // En mutations:
-    getPdfEspecial(state, payload) {
-      state.pdf_especial = payload || {};
-    },    
-
     loadOtPqrs({
       commit }, ot_id) {
       axios.defaults.baseURL = store.state.url;
@@ -1301,7 +1296,10 @@ const store = new Vuex.Store({
   },
   mutations: {
 
-
+    getPdfEspecial(state, pdf_especial) {
+      state.pdf_especial = pdf_especial
+    },
+    
     loading(state, estado) {
       state.isLoading = estado
     },
