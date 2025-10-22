@@ -24,8 +24,8 @@ class InformeUsRequest extends FormRequest
     public function rules()
     {
 
-        $condicional_espesor='';
-        $condicional_pdf_especial='';
+        $condicional_espesor = [];
+        $condicional_pdf_especial = [];
 
         if($this->diametro['diametro'] == 'CHAPA'){
 
