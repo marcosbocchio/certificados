@@ -1,23 +1,18 @@
 <template>
-    <div class="row">
-        <!-- cerca de la sección -->
-<div>
-  tecnica: {{ tecnica.codigo }} |
-  tipo_tgs: {{ tipo_tgs }} |
-  pdfEspecialsn: {{ pdfEspecialsn }}
-</div>
+    <div class="row">    
+
         <ModalPopup
-        ref="modalPopupRef"
-        :is-open="isModalOpen"
-        :plantaProp="typeof planta === 'string' ? { codigo: planta } : (planta || {})"
-        :nEquipoProp="componente"
-        :materialesProp="materiales"
-        :material_selected="(material && typeof material === 'object') ? material : {}"
-        :otdataProp="otdata"
-        :tipo_tgs="tipo_tgs"
-        @close="closeModal"
-        @submit="handleModalSubmit"
-    />
+            ref="modalPopupRef"
+            :is-open="isModalOpen"
+            :plantaProp="typeof planta === 'string' ? { codigo: planta } : (planta || {})"
+            :nEquipoProp="componente"
+            :materialesProp="materiales"
+            :material_selected="(material && typeof material === 'object') ? material : {}"
+            :otdataProp="otdata"
+            :tipo_tgs="tipo_tgs"
+            @close="closeModal"
+            @submit="handleModalSubmit"
+        />
        <div class="col-md-12">
            <form @submit.prevent="editmode ? Update() : Store()"  method="post">
                <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra($event)" @set-planta="setPlanta($event)"></informe-header>
@@ -1452,8 +1447,10 @@ export default {
         },
         mostrarInspeccionVisual() {
         return this.pdfEspecialsn
-            && ((this.tecnica?.codigo || '').toUpperCase() === 'ME')
-            && ((this.tipo_tgs || '') !== 'Linea');
+            && this.tecnica.codigo === 'ME'
+            && (this.tipo_tgs == 'Horizontal'
+            || this.tipo_tgs == 'Vertical')
+        
         }        
                
      },
@@ -1517,10 +1514,8 @@ export default {
             this.getPalpadores();
             this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
             this.getGeneratrices();
-            this.getUsuariosCliente();
-            if (this.pdfEspecialsn) {
-                await this.getTablaInspeccion();
-            }
+            this.getUsuariosCliente();          
+            await this.getTablaInspeccion();            
             this.setEdit();
             this.$store.dispatch('loadModelos3d');
             this.getAccesoriosUs();

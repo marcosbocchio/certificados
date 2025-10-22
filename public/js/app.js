@@ -27275,8 +27275,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     }) : [];
   },
   mostrarInspeccionVisual: function mostrarInspeccionVisual() {
-    var _this$tecnica2;
-    return this.pdfEspecialsn && (((_this$tecnica2 = this.tecnica) === null || _this$tecnica2 === void 0 ? void 0 : _this$tecnica2.codigo) || '').toUpperCase() === 'ME' && (this.tipo_tgs || '') !== 'Linea';
+    return this.pdfEspecialsn && this.tecnica.codigo === 'ME' && (this.tipo_tgs == 'Horizontal' || this.tipo_tgs == 'Vertical');
   }
 })), "watch", {
   diametro: function diametro(val) {
@@ -27339,13 +27338,9 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
             _this.$store.dispatch('loadEjecutorEnsayo', _this.otdata.id);
             _this.getGeneratrices();
             _this.getUsuariosCliente();
-            if (!_this.pdfEspecialsn) {
-              _context.next = 19;
-              break;
-            }
-            _context.next = 19;
+            _context.next = 18;
             return _this.getTablaInspeccion();
-          case 19:
+          case 18:
             _this.setEdit();
             _this.$store.dispatch('loadModelos3d');
             _this.getAccesoriosUs();
@@ -27354,7 +27349,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
               metodo: _this.metodo,
               cliente_id: _this.otdata.cliente_id
             });
-          case 24:
+          case 23:
           case "end":
             return _context.stop();
         }
@@ -86118,7 +86113,7 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "row"
-  }, [_c("div", [_vm._v("\n  tecnica: " + _vm._s(_vm.tecnica.codigo) + " |\n  tipo_tgs: " + _vm._s(_vm.tipo_tgs) + " |\n  pdfEspecialsn: " + _vm._s(_vm.pdfEspecialsn) + "\n")]), _vm._v(" "), _c("ModalPopup", {
+  }, [_c("ModalPopup", {
     ref: "modalPopupRef",
     attrs: {
       "is-open": _vm.isModalOpen,
@@ -86224,7 +86219,7 @@ var render = function render() {
     attrs: {
       "for": "componente"
     }
-  }, [_vm._v("\n                                Componente *\n                                "), _vm.pdfEspecialsn && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && _vm.tipo_tgs !== null && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
+  }, [_vm._v("\n                            Componente *\n                            "), _vm.pdfEspecialsn && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && _vm.tipo_tgs !== null && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
     attrs: {
       type: "button",
       disabled: !_vm.componente
@@ -86623,7 +86618,7 @@ var render = function render() {
     attrs: {
       "for": "tipo"
     }
-  }, [_vm._v("\n                            " + _vm._s(_vm.isTipoEnabled ? "Tipo *" : "Tipo") + "\n                        ")]), _vm._v(" "), _c("v-select", {
+  }, [_vm._v("\n                        " + _vm._s(_vm.isTipoEnabled ? "Tipo *" : "Tipo") + "\n                    ")]), _vm._v(" "), _c("v-select", {
     attrs: {
       id: "tipo",
       options: _vm.tipoOptions,
@@ -86904,7 +86899,7 @@ var render = function render() {
   }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.TablaModelos3d, function (item, k) {
     return _c("tr", {
       key: k
-    }, [_c("td", [_vm._v("\n                                                    " + _vm._s(item.codigo) + "\n                                                ")]), _vm._v(" "), _c("td", [_c("a", {
+    }, [_c("td", [_vm._v("\n                                                " + _vm._s(item.codigo) + "\n                                            ")]), _vm._v(" "), _c("td", [_c("a", {
       on: {
         click: function click($event) {
           return _vm.RemoveModelo(k);
@@ -87466,7 +87461,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                                 \n                            ")]), _vm._v(" "), _vm.calibraciones.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                             \n                        ")]), _vm._v(" "), _vm.calibraciones.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -88009,7 +88004,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                                 \n                            ")]), _vm._v(" "), _vm.Tabla_us_pa.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                             \n                        ")]), _vm._v(" "), _vm.Tabla_us_pa.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -88152,7 +88147,7 @@ var render = function render() {
       "for": "espesor_minimo_me",
       title: "espesor_minimo_me"
     }
-  }, [_vm._v("Espesor Mínimo\n                                            "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor Mínimo\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88184,7 +88179,7 @@ var render = function render() {
       "for": "espesor_minimo_anterior_me",
       title: "Espesor minimo anterior"
     }
-  }, [_vm._v("Espesor minimo anterior\n                                            "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor minimo anterior\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88217,7 +88212,7 @@ var render = function render() {
       "for": "años_ultima_inspeccion_me",
       title: "Años desde la última inspección"
     }
-  }, [_vm._v("Años desde la última inspección\n                                            "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Años desde la última inspección\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88403,7 +88398,7 @@ var render = function render() {
           _vm.$set(item, "cantidad_generatrices_linea_pdf_me", $event.target.value);
         }
       }
-    })]) : _c("div", [_vm._v("\n                                                                " + _vm._s(item.cantidad_generatrices_linea_pdf_me) + "\n                                                            ")])]), _vm._v(" "), _c("td", [_c("button", {
+    })]) : _c("div", [_vm._v("\n                                                            " + _vm._s(item.cantidad_generatrices_linea_pdf_me) + "\n                                                        ")])]), _vm._v(" "), _c("td", [_c("button", {
       attrs: {
         type: "button"
       },
@@ -88513,7 +88508,7 @@ var render = function render() {
             return _vm.selectPosGeneratriz(g);
           }
         }
-      }, [p === 1 && g === 1 ? _c("div", [_vm._v("\n                                                                 \n                                                            ")]) : p === 1 && g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm._v("\n                                                                       ACCESORIO      \n                                                            ")]) : g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm.indexPosPos == p && _vm.indexPosGeneratriz == g ? _c("div", [_c("input", {
+      }, [p === 1 && g === 1 ? _c("div", [_vm._v("\n                                                             \n                                                        ")]) : p === 1 && g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm._v("\n                                                                   ACCESORIO      \n                                                        ")]) : g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm.indexPosPos == p && _vm.indexPosGeneratriz == g ? _c("div", [_c("input", {
         directives: [{
           name: "model",
           rawName: "v-model",
@@ -88592,7 +88587,7 @@ var render = function render() {
             _vm.$set(_vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1], p - 1, $event.target.value);
           }
         }
-      })])]) : _c("div", [_vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1][p - 1] != "" ? _c("div", [_vm._v("\n                                                                    " + _vm._s(_vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1][p - 1]) + "\n                                                                ")]) : _c("div", [_c("span", {
+      })])]) : _c("div", [_vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1][p - 1] != "" ? _c("div", [_vm._v("\n                                                                " + _vm._s(_vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1][p - 1]) + "\n                                                            ")]) : _c("div", [_c("span", {
         staticStyle: {
           "font-style": "oblique",
           color: "cadetblue"
@@ -88703,7 +88698,7 @@ var render = function render() {
             return _vm.seleccionarRespuesta(item, "SI");
           }
         }
-      }, [_vm._v("\n                                SI\n                            ")])]), _vm._v(" "), _c("td", {
+      }, [_vm._v("\n                            SI\n                        ")])]), _vm._v(" "), _c("td", {
         staticClass: "align-middle text-center"
       }, [_c("button", {
         staticClass: "btn btn-circle",
@@ -88716,7 +88711,7 @@ var render = function render() {
             return _vm.seleccionarRespuesta(item, "NO");
           }
         }
-      }, [_vm._v("\n                                NO\n                            ")])]), _vm._v(" "), _c("td", {
+      }, [_vm._v("\n                            NO\n                        ")])]), _vm._v(" "), _c("td", {
         staticClass: "align-middle text-center"
       }, [_c("button", {
         staticClass: "btn btn-circle",
@@ -88729,7 +88724,7 @@ var render = function render() {
             return _vm.seleccionarRespuesta(item, "N/A");
           }
         }
-      }, [_vm._v("\n                                N/A\n                            ")])])]);
+      }, [_vm._v("\n                            N/A\n                        ")])])]);
     }), 0)])])]);
   })], 2)]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
@@ -390375,8 +390370,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Marcos\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Marcos\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ }),

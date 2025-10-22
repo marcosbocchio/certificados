@@ -86,15 +86,15 @@ class InformesUsController extends Controller
                 $popupData = $request->input('data_popup', []);
 
                 if ($clienteId) {
-                    $pdfMatch = PdfEspecial::where('cliente_id', $clienteId)
-                        ->where('tipo_informe', isset($popupData['tipo']) ? $popupData['tipo'] : null)
+                   $pdfMatch = PdfEspecial::where('cliente_id', $clienteId)
+                        ->where('tipo_informe', $request->tipo_tgs)
                         ->first();
                 } else {
                     $pdfMatch = null;
                 }
-                log::debug('-------'.$popupData['tipo']);
+           
                 log::info($pdfMatch);
-                if (!empty($pdfMatch)) {
+                if (!empty($request->tipo_tgs)) {
                     // 6) guardo componente
                     (new \App\Http\Controllers\TgsController())
                         ->saveComponente(
@@ -103,10 +103,16 @@ class InformesUsController extends Controller
                             $popupData,
                             $request->tipo_tgs
                         );
+                    
+                    $tablaInspeccion = $request->input('tablaInspeccion', []);
+                    \Log::info('=== ANTES de llamar saveTablaInforme (Store) ===');
+                    \Log::info('Informe ID: ' . $informe->id);
+                    \Log::info('tablaInspeccion desde request: ' . json_encode($tablaInspeccion));
+                    
                     (new \App\Http\Controllers\TgsController())
                         ->saveTablaInforme(
                             $informe->id,
-                            $request->input('tablaInspeccion', [])
+                            $tablaInspeccion
                         );
                 }
     
@@ -133,7 +139,7 @@ class InformesUsController extends Controller
 
     public function update(InformeUsRequest $request, $id){
 
-
+        Log::info('=== INICIO update InformeUs ===');
         $EsRevision = (new \App\Http\Controllers\InformesController)->EsRevision($id);
 
         if($EsRevision){
@@ -156,7 +162,9 @@ class InformesUsController extends Controller
 
             DetalleUsPaUs::where('informe_us_id',$informeUs->id)->delete();
             $this->deleteInforme_us_me($informeUs->id);
-
+            ComponenteUsMe::where('informe_us_id', $informeUs->id)->delete();
+            RespuestasInforme::where('informe_id', $informe->id)->delete();
+            
             if ($tecnica->codigo == 'ME'){
                 $this->saveInforme_us_me($request,$informeUs);
                 $otData    = $request->input('ot', []);
@@ -164,15 +172,15 @@ class InformesUsController extends Controller
                 $popupData = $request->input('data_popup', []);
                 if ($clienteId) {
                     $pdfMatch = PdfEspecial::where('cliente_id', $clienteId)
-                        ->where('tipo_informe', isset($popupData['tipo']) ? $popupData['tipo'] : null)
+                        ->where('tipo_informe', $request->tipo_tgs)
                         ->first();
                 } else {
+                    log::info('no hay pdf especial');
                     $pdfMatch = null;
                 }
-                if (! empty($pdfMatch)) {
+                log::info('pdfMatch: '.$pdfMatch);
+                if (!empty($request->tipo_tgs)) {
                     // 6) guardo componente
-                    ComponenteUsMe::where('informe_us_id', $informeUs->id)->delete();
-                    RespuestasInforme::where('informe_id', $informe->id)->delete();
                     (new \App\Http\Controllers\TgsController())
                         ->saveComponente(
                             $informeUs->id,
@@ -181,10 +189,16 @@ class InformesUsController extends Controller
                             $request->tipo_tgs
 
                         );
+                    
+                    $tablaInspeccion = $request->input('tablaInspeccion', []);
+                    \Log::info('=== ANTES de llamar saveTablaInforme (Update) ===');
+                    \Log::info('Informe ID: ' . $informe->id);
+                    \Log::info('tablaInspeccion desde request: ' . json_encode($tablaInspeccion));
+                    
                     (new \App\Http\Controllers\TgsController())
                         ->saveTablaInforme(
                             $informe->id,
-                            $request->input('tablaInspeccion', [])
+                            $tablaInspeccion
                         );
                 }
                 

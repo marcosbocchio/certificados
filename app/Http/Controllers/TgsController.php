@@ -105,29 +105,56 @@ class TgsController extends Controller
 
     public function saveTablaInforme(int $informeId, array $tablaInspeccion)
     {
+        Log::info('=== INICIO saveTablaInforme ===');
+        Log::info('Informe ID: ' . $informeId);
+        Log::info('Tabla Inspección recibida: ' . json_encode($tablaInspeccion));
      
         RespuestasInforme::where('informe_id', $informeId)->delete();
+        Log::info('Respuestas anteriores eliminadas');
 
         $insertData = [];
-        foreach ($tablaInspeccion as $categoria) {
-            foreach ($categoria['items'] as $item) {
+        foreach ($tablaInspeccion as $categoriaIndex => $categoria) {
+            Log::info("Procesando categoría {$categoriaIndex}: " . json_encode($categoria));
+            
+            if (!isset($categoria['items']) || !is_array($categoria['items'])) {
+                Log::warning("La categoría {$categoriaIndex} no tiene items o no es un array");
+                continue;
+            }
+            
+            foreach ($categoria['items'] as $itemIndex => $item) {
+                Log::info("  Procesando item {$itemIndex}: " . json_encode($item));
+                
                 if (isset($item['selected']) && in_array($item['selected'], ['SI','NO','N/A'])) {
                     $insertData[] = [
                         'informe_id'         => $informeId,
                         'item_categoria_id'  => $item['id'],
                         'respuesta'          => $item['selected'],
                     ];
+                    Log::info("    Item agregado a insertData");
+                } else {
+                    Log::warning("    Item no tiene 'selected' válido. Selected: " . ($item['selected'] ?? 'NO EXISTE'));
                 }
             }
         }
 
+        Log::info('Total de registros a insertar: ' . count($insertData));
+        Log::info('Datos a insertar: ' . json_encode($insertData));
 
         if (!empty($insertData)) {
-    
-            DB::transaction(function() use ($insertData) {
-                RespuestasInforme::insert($insertData);
-            });
+            try {
+                DB::transaction(function() use ($insertData) {
+                    RespuestasInforme::insert($insertData);
+                });
+                Log::info('Datos insertados correctamente');
+            } catch (\Exception $e) {
+                Log::error('Error al insertar datos: ' . $e->getMessage());
+                throw $e;
+            }
+        } else {
+            Log::warning('No hay datos para insertar (insertData está vacío)');
         }
+        
+        Log::info('=== FIN saveTablaInforme ===');
     }
 
     // Obtener todos los NormasFabricacion
