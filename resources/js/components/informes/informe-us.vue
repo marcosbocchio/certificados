@@ -1,12 +1,18 @@
 <template>
     <div class="row">
+        <!-- cerca de la sección -->
+<div>
+  tecnica: {{ tecnica.codigo }} |
+  tipo_tgs: {{ tipo_tgs }} |
+  pdfEspecialsn: {{ pdfEspecialsn }}
+</div>
         <ModalPopup
         ref="modalPopupRef"
         :is-open="isModalOpen"
-        :plantaProp="planta"
+        :plantaProp="typeof planta === 'string' ? { codigo: planta } : (planta || {})"
         :nEquipoProp="componente"
         :materialesProp="materiales"
-        :material_selected="material"
+        :material_selected="(material && typeof material === 'object') ? material : {}"
         :otdataProp="otdata"
         :tipo_tgs="tipo_tgs"
         @close="closeModal"
@@ -52,8 +58,8 @@
 
                     <div class="col-md-3" >
                         <div class="form-group">
-                            <label for="material">Material *</label>
-                            <v-select v-model="material" label="codigo" :options="materiales" id="material"></v-select>
+                        <label for="material">Material *</label>
+                        <v-select v-model="material" label="codigo" :options="materiales" :input-id="'material'"></v-select>
                         </div>
                     </div>
 
@@ -1021,14 +1027,8 @@
                         </div>
                    </div>
                </div>
-               <div v-if="
-                    pdfEspecialsn &&
-                    tecnica?.codigo === 'ME' &&
-                    (
-                    (componente_me_data?.tipo_us && componente_me_data.tipo_us !== 'Linea')
-                    || tipo_tgs !== 'Linea'
-                    )"
-                class="box box-custom-enod">
+               
+               <div v-if="mostrarInspeccionVisual" class="box box-custom-enod">
                 <div class="box-body">
                 <div class="box-header with-border">
                     <h3 class="box-title">INSPECCIÓN VISUAL</h3>
@@ -1148,10 +1148,7 @@ export default {
         DatePicker,
         ModalPopup,
         Loading
-
-
     },
-
     props :{
 
         editmode : {
@@ -1282,7 +1279,19 @@ export default {
             type : [ Object, Array ],
             required : false
             }
+    },
 
+    computed: {
+        plantaObj() {
+            return typeof this.planta === 'string'
+                ? { codigo: this.planta }
+                : (this.planta || {});
+        },
+        materialSelectedObj() {
+            return (this.material && typeof this.material === 'object')
+                ? this.material
+                : {};
+        },
     },
 
     data() {return {
@@ -1440,7 +1449,12 @@ export default {
         },
         tipoOptions() {
             return  this.pdfEspecialsn ? this.pdf_especial.map(item => item.tipo_informe) : [];
-        }
+        },
+        mostrarInspeccionVisual() {
+        return this.pdfEspecialsn
+            && ((this.tecnica?.codigo || '').toUpperCase() === 'ME')
+            && ((this.tipo_tgs || '') !== 'Linea');
+        }        
                
      },
 

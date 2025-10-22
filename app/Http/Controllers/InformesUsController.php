@@ -100,7 +100,8 @@ class InformesUsController extends Controller
                         ->saveComponente(
                             $informeUs->id,
                             $clienteId,
-                            $popupData
+                            $popupData,
+                            $request->tipo_tgs
                         );
                     (new \App\Http\Controllers\TgsController())
                         ->saveTablaInforme(
@@ -176,7 +177,9 @@ class InformesUsController extends Controller
                         ->saveComponente(
                             $informeUs->id,
                             $clienteId,
-                            $popupData
+                            $popupData,
+                            $request->tipo_tgs
+
                         );
                     (new \App\Http\Controllers\TgsController())
                         ->saveTablaInforme(

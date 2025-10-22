@@ -112,6 +112,7 @@
                           v-model="detalle.material"
                           :options="materialesOpcion"
                           label="codigo"
+                          :input-id="'detalleMaterial'"
                         />
                       </div>
                     </div>
@@ -336,16 +337,16 @@
         default: false
       },
         plantaProp: {
-        type: Object,
-        default: () => ({})
+        type: [Object, String],
+        default: ''
       },
         otdataProp: {
         type: Object,
         default: () => ({})
       },
         material_selected: {
-        type: Object,
-        default: () => ({})
+        type: [Object, String],
+        default: ''
       },
         materialesProp: {
           type: Array,
@@ -423,13 +424,17 @@
     // Cada vez que abra el modal, sincronizo los props a mi data interna:
     isOpen(val) {
       if (val) {
-        this.planta           = this.plantaProp.codigo
+        this.planta           = (this.plantaProp && typeof this.plantaProp === 'object')
+                                  ? this.plantaProp.codigo
+                                  : (this.plantaProp || '')
         this.nEquipo          = this.nEquipoProp
         this.materialesOpcion = this.materialesProp
         this.orden            = this.otdataProp.numero
         this.tipo             = this.tipo_tgs
         if (this.tipo === 'Linea') {
-          this.detalle.material = this.material_selected;
+          this.detalle.material = (this.material_selected && typeof this.material_selected === 'object')
+            ? this.material_selected
+            : {};
         }
         this.fetchModelos();
         this.fetchFluidos();
@@ -440,7 +445,7 @@
       }
 
     },
-        tipo_tgs(newVal) {
+    tipo_tgs(newVal) {
       if (typeof this.tipo_componente_data !== 'undefined'
           && newVal !== this.tipo_componente_data) {
         this.detallesList = [];

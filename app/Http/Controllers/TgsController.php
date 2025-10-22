@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class TgsController extends Controller
 {
-    public function saveComponente($informeUs, $clienteId, $popup)
+    public function saveComponente($informeUs, $clienteId, $popup, $tipo_tgs)
     {
         // 1) Busco el PdfEspecial
         $pdf = PdfEspecial::where('cliente_id', $clienteId)
@@ -54,7 +54,7 @@ class TgsController extends Controller
         $componente->informe_us_id              = $informeUs;
         $componente->area                       = $popup['area']              ?? null;
         $componente->orden                      = $popup['orden']             ?? null;
-        $componente->tipo_us                    = $popup['tipo']              ;
+        $componente->tipo_us                    = $tipo_tgs      ;
         $componente->pdf_especial_id            = $pdf->id;
         $componente->modelo_id                  = $modeloId;
         $componente->path3_componente           = $popup['path3_componente'];
