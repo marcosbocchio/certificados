@@ -86219,7 +86219,7 @@ var render = function render() {
     attrs: {
       "for": "componente"
     }
-  }, [_vm._v("\n                            Componente *\n                            "), _vm.pdfEspecialsn && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && (_vm.tipo_tgs == "Horizontal" || _vm.tipo_tgs == "Vertical" || _vm.tipo_tgs == "Linea") && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
+  }, [_vm._v("\n                                Componente *\n                                "), _vm.pdfEspecialsn && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && (_vm.tipo_tgs == "Horizontal" || _vm.tipo_tgs == "Vertical" || _vm.tipo_tgs == "Linea") && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
     attrs: {
       type: "button",
       disabled: !_vm.componente
@@ -86618,7 +86618,7 @@ var render = function render() {
     attrs: {
       "for": "tipo"
     }
-  }, [_vm._v("\n                        " + _vm._s(_vm.isTipoEnabled ? "Tipo *" : "Tipo") + "\n                    ")]), _vm._v(" "), _c("v-select", {
+  }, [_vm._v("\n                                " + _vm._s(_vm.isTipoEnabled ? "Tipo *" : "Tipo") + "\n                            ")]), _vm._v(" "), _c("v-select", {
     attrs: {
       id: "tipo",
       options: _vm.tipoOptions,
@@ -86927,7 +86927,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87108,7 +87108,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87154,7 +87154,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }]
   }, [_c("div", {
     staticClass: "clearfix"
@@ -87163,7 +87163,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87173,7 +87173,7 @@ var render = function render() {
       "for": "block_sensibilidad",
       title: "Block Sensibilidad"
     }
-  }, [_vm._v("Block Sensibilidad *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Block Sensibilidad\n                                    *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87199,7 +87199,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87225,7 +87225,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo == "ME",
-      expression: "tecnica.codigo =='ME'"
+      expression: "tecnica.codigo == 'ME'"
     }]
   }, [_c("div", {
     staticClass: "clearfix"
@@ -87234,7 +87234,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87244,7 +87244,7 @@ var render = function render() {
       "for": "reflector_referencia",
       title: "Reflector Referencia (mm)"
     }
-  }, [_vm._v("Reflector Referencia (mm) *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Reflector\n                                    Referencia (mm)\n                                    *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87271,7 +87271,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87281,7 +87281,7 @@ var render = function render() {
       "for": "ganancia_referencia",
       title: "Ganancia Referencia (dB)"
     }
-  }, [_vm._v("Ganancia Referencia (dB) *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Ganancia\n                                    Referencia (dB) *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87307,7 +87307,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87343,7 +87343,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87353,7 +87353,7 @@ var render = function render() {
       "for": "correccion_transferencia",
       title: "Corrección Transferencia (dB)"
     }
-  }, [_vm._v("Corrección Transferencia (dB) *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Corrección Transferencia\n                                    (dB) *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87379,7 +87379,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87389,7 +87389,7 @@ var render = function render() {
       "for": "adicional_barrido",
       title: "Adicional Barrido (dB)"
     }
-  }, [_vm._v("Adicional Barrido (dB) *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Adicional Barrido (dB)\n                                    *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87415,7 +87415,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo !='ME'"
+      expression: "tecnica.codigo != 'ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87425,7 +87425,7 @@ var render = function render() {
       "for": "amplificacion_total",
       title: "Amplificación Total (dB)"
     }
-  }, [_vm._v("Amplificación Total (dB) *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Amplificación\n                                    Total (dB) *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87776,7 +87776,7 @@ var render = function render() {
       "for": "angulo_incidencia_us_pa",
       title: "Ángulo Incidencia"
     }
-  }, [_vm._v("Ángulo Incidencia *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Ángulo Incidencia\n                                    *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88147,7 +88147,7 @@ var render = function render() {
       "for": "espesor_minimo_me",
       title: "espesor_minimo_me"
     }
-  }, [_vm._v("Espesor Mínimo\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor Mínimo\n                                    "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88179,7 +88179,7 @@ var render = function render() {
       "for": "espesor_minimo_anterior_me",
       title: "Espesor minimo anterior"
     }
-  }, [_vm._v("Espesor minimo anterior\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor\n                                    minimo anterior\n                                    "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88212,7 +88212,7 @@ var render = function render() {
       "for": "años_ultima_inspeccion_me",
       title: "Años desde la última inspección"
     }
-  }, [_vm._v("Años desde la última inspección\n                                        "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Años desde la última inspección\n                                    "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88244,7 +88244,7 @@ var render = function render() {
       "for": "cantidad_generatrices_linea_pdf_me",
       title: "Cantidad Generatrices por linea en informe"
     }
-  }, [_vm._v("Generatrices por Linea en pdf *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Generatrices por Linea en pdf\n                                    *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88398,7 +88398,7 @@ var render = function render() {
           _vm.$set(item, "cantidad_generatrices_linea_pdf_me", $event.target.value);
         }
       }
-    })]) : _c("div", [_vm._v("\n                                                            " + _vm._s(item.cantidad_generatrices_linea_pdf_me) + "\n                                                        ")])]), _vm._v(" "), _c("td", [_c("button", {
+    })]) : _c("div", [_vm._v("\n                                                    " + _vm._s(item.cantidad_generatrices_linea_pdf_me) + "\n                                                ")])]), _vm._v(" "), _c("td", [_c("button", {
       attrs: {
         type: "button"
       },
@@ -88508,12 +88508,12 @@ var render = function render() {
             return _vm.selectPosGeneratriz(g);
           }
         }
-      }, [p === 1 && g === 1 ? _c("div", [_vm._v("\n                                                             \n                                                        ")]) : p === 1 && g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm._v("\n                                                                   ACCESORIO      \n                                                        ")]) : g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm.indexPosPos == p && _vm.indexPosGeneratriz == g ? _c("div", [_c("input", {
+      }, [p === 1 && g === 1 ? _c("div", [_vm._v("\n                                                             \n                                                        ")]) : p === 1 && g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm._v("\n                                                                  ACCESORIO      \n                                                        ")]) : g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm.indexPosPos == p && _vm.indexPosGeneratriz == g ? _c("div", [_c("input", {
         directives: [{
           name: "model",
           rawName: "v-model",
           value: _vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1][p - 1],
-          expression: "Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]"
+          expression: "Tabla_me[indexPosTabla_me].mediciones[g - 1][p - 1]"
         }],
         attrs: {
           type: "text",
@@ -88533,7 +88533,7 @@ var render = function render() {
           name: "model",
           rawName: "v-model",
           value: _vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1][p - 1],
-          expression: "Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]"
+          expression: "Tabla_me[indexPosTabla_me].mediciones[g - 1][p - 1]"
         }],
         ref: "refInputMediciones",
         refInFor: true,
@@ -88561,7 +88561,7 @@ var render = function render() {
           name: "model",
           rawName: "v-model",
           value: _vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1][p - 1],
-          expression: "Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]"
+          expression: "Tabla_me[indexPosTabla_me].mediciones[g - 1][p - 1]"
         }],
         ref: "refInputMediciones",
         refInFor: true,
@@ -88592,7 +88592,7 @@ var render = function render() {
           "font-style": "oblique",
           color: "cadetblue"
         }
-      }, [_vm._v(" " + _vm._s(p - 1) + "-" + _vm._s(_vm.generatrices[g - 2].valor) + " ")])])])]);
+      }, [_vm._v("\n                                                                    " + _vm._s(p - 1) + "-" + _vm._s(_vm.generatrices[g - 2].valor) + " ")])])])]);
     }), 0);
   }), 0)])])])]) : _vm._e()])])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
@@ -88698,7 +88698,7 @@ var render = function render() {
             return _vm.seleccionarRespuesta(item, "SI");
           }
         }
-      }, [_vm._v("\n                            SI\n                        ")])]), _vm._v(" "), _c("td", {
+      }, [_vm._v("\n                                                SI\n                                            ")])]), _vm._v(" "), _c("td", {
         staticClass: "align-middle text-center"
       }, [_c("button", {
         staticClass: "btn btn-circle",
@@ -88711,7 +88711,7 @@ var render = function render() {
             return _vm.seleccionarRespuesta(item, "NO");
           }
         }
-      }, [_vm._v("\n                            NO\n                        ")])]), _vm._v(" "), _c("td", {
+      }, [_vm._v("\n                                                NO\n                                            ")])]), _vm._v(" "), _c("td", {
         staticClass: "align-middle text-center"
       }, [_c("button", {
         staticClass: "btn btn-circle",
@@ -88724,7 +88724,7 @@ var render = function render() {
             return _vm.seleccionarRespuesta(item, "N/A");
           }
         }
-      }, [_vm._v("\n                            N/A\n                        ")])])]);
+      }, [_vm._v("\n                                                N/A\n                                            ")])])]);
     }), 0)])])]);
   })], 2)]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
@@ -93590,7 +93590,7 @@ var render = function render() {
     on: {
       place_changed: _vm.setPlace
     }
-  }, [_vm._v("\r\n                  >\r\n              ")])], 1)]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                  >\n              ")])], 1)]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
@@ -93807,7 +93807,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n           \r\n        ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n           \n        ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -94055,7 +94055,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n             \r\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n             \n          ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -94134,7 +94134,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n             \r\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n             \n          ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -94193,7 +94193,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n             \r\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n             \n          ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -130171,7 +130171,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-28a89753] {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-top: 20px;\n}\n.btn-primary[data-v-28a89753] {\r\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753],\r\n.date-picker.disabled[data-v-28a89753] {\r\n    background-color: #6c757d;\r\n    /* Gris claro, ajusta según tu tema */\r\n    cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\r\n    display: none;\n}\r\n\r\n/* Agrega tus propios estilos para mantener la estética de la página */\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-28a89753] {\n    display: flex;\n    justify-content: flex-end;\n    margin-top: 20px;\n}\n.btn-primary[data-v-28a89753] {\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753],\n.date-picker.disabled[data-v-28a89753] {\n    background-color: #6c757d;\n    /* Gris claro, ajusta según tu tema */\n    cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\n    display: none;\n}\n\n/* Agrega tus propios estilos para mantener la estética de la página */\n", ""]);
 
 // exports
 
@@ -130190,7 +130190,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-bcf3f43a] {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-top: 20px;\n}\n.btn-primary[data-v-bcf3f43a] {\r\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-bcf3f43a],\r\n.date-picker.disabled[data-v-bcf3f43a] {\r\n    background-color: #6c757d;\r\n    /* Gris claro, ajusta según tu tema */\r\n    cursor: not-allowed;\n}\n.hidden[data-v-bcf3f43a] {\r\n    display: none;\n}\r\n\r\n/* Agrega tus propios estilos para mantener la estética de la página */\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-bcf3f43a] {\n    display: flex;\n    justify-content: flex-end;\n    margin-top: 20px;\n}\n.btn-primary[data-v-bcf3f43a] {\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-bcf3f43a],\n.date-picker.disabled[data-v-bcf3f43a] {\n    background-color: #6c757d;\n    /* Gris claro, ajusta según tu tema */\n    cursor: not-allowed;\n}\n.hidden[data-v-bcf3f43a] {\n    display: none;\n}\n\n/* Agrega tus propios estilos para mantener la estética de la página */\n", ""]);
 
 // exports
 
@@ -130228,7 +130228,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-424ac0a4] {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-top: 20px;\n}\n.btn-enod[data-v-424ac0a4] {\r\n    background-color: rgb(255, 204, 0);\r\n    color: rgb(0, 0, 0);\n}\n.btn-danger[data-v-424ac0a4] {\r\n    background-color: #dc3545;\r\n    color: #fff;\n}\n.btn-sm[data-v-424ac0a4] {\r\n    padding: 0.25rem 0.5rem;\r\n    font-size: 0.875rem;\r\n    line-height: 1.5;\r\n    border-radius: 0.2rem;\n}\n.custom-modal[data-v-424ac0a4] {\r\n    border-radius: 0.5rem;\r\n    background-color: #f8f9fa;\r\n    border: 1px solid #dee2e6;\n}\n.custom-textarea[data-v-424ac0a4] {\r\n    border-radius: 0.5rem;\r\n    border: 1px solid #ced4da;\r\n    resize: none;\r\n    padding: 0.5rem;\n}\n.modal-header[data-v-424ac0a4] {\r\n    border-bottom: 1px solid #dee2e6;\r\n    padding: 1rem;\n}\n.modal-title[data-v-424ac0a4] {\r\n    font-size: 1.25rem;\r\n    font-weight: 500;\n}\n.modal-footer[data-v-424ac0a4] {\r\n    border-top: 1px solid #dee2e6;\r\n    padding: 1rem;\r\n    display: flex;\r\n    justify-content: flex-end;\n}\n.modal-content[data-v-424ac0a4] {\r\n    border-radius: 0.5rem;\n}\n.hidden[data-v-424ac0a4] {\r\n    display: none;\n}\n.modal-body[data-v-424ac0a4] {\r\n    padding: 1rem;\n}\n.modal-footer .btn[data-v-424ac0a4] {\r\n    margin-left: 0.5rem;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-424ac0a4] {\n    display: flex;\n    justify-content: flex-end;\n    margin-top: 20px;\n}\n.btn-enod[data-v-424ac0a4] {\n    background-color: rgb(255, 204, 0);\n    color: rgb(0, 0, 0);\n}\n.btn-danger[data-v-424ac0a4] {\n    background-color: #dc3545;\n    color: #fff;\n}\n.btn-sm[data-v-424ac0a4] {\n    padding: 0.25rem 0.5rem;\n    font-size: 0.875rem;\n    line-height: 1.5;\n    border-radius: 0.2rem;\n}\n.custom-modal[data-v-424ac0a4] {\n    border-radius: 0.5rem;\n    background-color: #f8f9fa;\n    border: 1px solid #dee2e6;\n}\n.custom-textarea[data-v-424ac0a4] {\n    border-radius: 0.5rem;\n    border: 1px solid #ced4da;\n    resize: none;\n    padding: 0.5rem;\n}\n.modal-header[data-v-424ac0a4] {\n    border-bottom: 1px solid #dee2e6;\n    padding: 1rem;\n}\n.modal-title[data-v-424ac0a4] {\n    font-size: 1.25rem;\n    font-weight: 500;\n}\n.modal-footer[data-v-424ac0a4] {\n    border-top: 1px solid #dee2e6;\n    padding: 1rem;\n    display: flex;\n    justify-content: flex-end;\n}\n.modal-content[data-v-424ac0a4] {\n    border-radius: 0.5rem;\n}\n.hidden[data-v-424ac0a4] {\n    display: none;\n}\n.modal-body[data-v-424ac0a4] {\n    padding: 1rem;\n}\n.modal-footer .btn[data-v-424ac0a4] {\n    margin-left: 0.5rem;\n}\n", ""]);
 
 // exports
 
@@ -130874,7 +130874,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.existe[data-v-084fc4a8] {\n\n    color: blue ;\n    margin-top: ;\n}\n.checkbox-inline[data-v-084fc4a8] {\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-084fc4a8] {\n\n    width: 12.499999995%\n}\n@media (min-width: 768px)  {\n.size-1-5[data-v-084fc4a8] {\n\n        width: 12.499999995%;\n}\n}\n.form-control[disabled][data-v-084fc4a8], .form-control[readonly][data-v-084fc4a8], fieldset[disabled] .form-control[data-v-084fc4a8] {\n     background-color: #eee;\n}\ntable th[data-v-084fc4a8], table td[data-v-084fc4a8] {\n\n    text-align: center;\n}\n.colorearLimiteTablaUs[data-v-084fc4a8] {\n    color:blue;\n}\n", ""]);
+exports.push([module.i, "\n.existe[data-v-084fc4a8] {\n\n    color: blue;\n    margin-top: ;\n}\n.checkbox-inline[data-v-084fc4a8] {\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-084fc4a8] {\n\n    width: 12.499999995%\n}\n@media (min-width: 768px) {\n.size-1-5[data-v-084fc4a8] {\n\n        width: 12.499999995%;\n}\n}\n.form-control[disabled][data-v-084fc4a8],\n.form-control[readonly][data-v-084fc4a8],\nfieldset[disabled] .form-control[data-v-084fc4a8] {\n    background-color: #eee;\n}\ntable th[data-v-084fc4a8],\ntable td[data-v-084fc4a8] {\n\n    text-align: center;\n}\n.colorearLimiteTablaUs[data-v-084fc4a8] {\n    color: blue;\n}\n", ""]);
 
 // exports
 
@@ -131083,7 +131083,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.map-container {\r\n    width: 100%;\r\n    height: 425px;\r\n    display: inline-block;\n}\n.vtimeselector__input {\r\n    width: 100%;\r\n    box-sizing: border-box;\r\n    padding: 6px 12px;\r\n    height: 34px;\r\n    font-size: 14px;\r\n    background-color: #fff;\r\n    border: 1px solid #ccc;\n}\n.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {\r\n\r\n    background-color: #fff;\n}\n.existe {\r\n\r\n    color: blue ;\n}\n.downSelect {\r\n font-style: oblique;\r\n font-size: 12px;\n}\n.upSelect {\r\n  font-weight: bold;\r\n  font-size: 14;\n}\n.markError{\r\n\r\n  border-color: red;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.map-container {\n    width: 100%;\n    height: 425px;\n    display: inline-block;\n}\n.vtimeselector__input {\n    width: 100%;\n    box-sizing: border-box;\n    padding: 6px 12px;\n    height: 34px;\n    font-size: 14px;\n    background-color: #fff;\n    border: 1px solid #ccc;\n}\n.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {\n\n    background-color: #fff;\n}\n.existe {\n\n    color: blue ;\n}\n.downSelect {\n font-style: oblique;\n font-size: 12px;\n}\n.upSelect {\n  font-weight: bold;\n  font-size: 14;\n}\n.markError{\n\n  border-color: red;\n}\n\n", ""]);
 
 // exports
 
@@ -131311,7 +131311,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.text-center[data-v-2493830e] {\r\n  text-align: center;\n}\r\n", ""]);
+exports.push([module.i, "\n.text-center[data-v-2493830e] {\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -390370,8 +390370,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\Quinteros\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Quinteros\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ }),
