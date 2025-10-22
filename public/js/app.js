@@ -28648,7 +28648,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
                         );
                         this.modelo = nuevoModelo;
                       }
-                       if (!this.fluido.id) {
+                        if (!this.fluido.id) {
                         // Validar que el código exista y no sea sólo espacios
                         if (!this.fluido.codigo || this.fluido.codigo.trim() === "") {
                           toastr.error("Campo fluido obligatorio");
@@ -130873,7 +130873,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.existe[data-v-084fc4a8] {\n\n    color: blue;\n    margin-top: ;\n}\n.checkbox-inline[data-v-084fc4a8] {\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-084fc4a8] {\n\n    width: 12.499999995%\n}\n@media (min-width: 768px) {\n.size-1-5[data-v-084fc4a8] {\n\n        width: 12.499999995%;\n}\n}\n.form-control[disabled][data-v-084fc4a8],\n.form-control[readonly][data-v-084fc4a8],\nfieldset[disabled] .form-control[data-v-084fc4a8] {\n    background-color: #eee;\n}\ntable th[data-v-084fc4a8],\ntable td[data-v-084fc4a8] {\n\n    text-align: center;\n}\n.colorearLimiteTablaUs[data-v-084fc4a8] {\n    color: blue;\n}\n", ""]);
+exports.push([module.i, "\n.existe[data-v-084fc4a8] {\r\n\r\n    color: blue;\r\n    margin-top: ;\n}\n.checkbox-inline[data-v-084fc4a8] {\r\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-084fc4a8] {\r\n\r\n    width: 12.499999995%\n}\n@media (min-width: 768px) {\n.size-1-5[data-v-084fc4a8] {\r\n\r\n        width: 12.499999995%;\n}\n}\n.form-control[disabled][data-v-084fc4a8],\r\n.form-control[readonly][data-v-084fc4a8],\r\nfieldset[disabled] .form-control[data-v-084fc4a8] {\r\n    background-color: #eee;\n}\ntable th[data-v-084fc4a8],\r\ntable td[data-v-084fc4a8] {\r\n\r\n    text-align: center;\n}\n.colorearLimiteTablaUs[data-v-084fc4a8] {\r\n    color: blue;\n}\r\n", ""]);
 
 // exports
 
@@ -130892,7 +130892,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\n    position: fixed;\n    /* ocupa toda la pantalla */\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    display: flex;\n    /* flex para centrar */\n    align-items: center;\n    /* centrar vertical */\n    justify-content: center;\n    /* centrar horizontal */\n    background: rgba(0, 0, 0, 0.5);\n    /* overlay oscuro */\n    z-index: 9999;\n    /* por encima de todo */\n}\n\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\n    margin: 0;\n    /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\n    max-height: 90vh;\n    overflow-y: auto;\n}\n.form-control[disabled][data-v-653e7c51],\n.form-control[readonly][data-v-653e7c51],\nfieldset[disabled] .form-control[data-v-653e7c51] {\n    background-color: #eee;\n}\n", ""]);
+exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\r\n    position: fixed;\r\n    /* ocupa toda la pantalla */\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    display: flex;\r\n    /* flex para centrar */\r\n    align-items: center;\r\n    /* centrar vertical */\r\n    justify-content: center;\r\n    /* centrar horizontal */\r\n    background: rgba(0, 0, 0, 0.5);\r\n    /* overlay oscuro */\r\n    z-index: 9999;\r\n    /* por encima de todo */\n}\r\n\r\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\r\n    margin: 0;\r\n    /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\r\n    max-height: 90vh;\r\n    overflow-y: auto;\n}\n.form-control[disabled][data-v-653e7c51],\r\n.form-control[readonly][data-v-653e7c51],\r\nfieldset[disabled] .form-control[data-v-653e7c51] {\r\n    background-color: #eee;\n}\r\n", ""]);
 
 // exports
 
