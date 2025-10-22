@@ -40,7 +40,7 @@
                                 v-if="
                                     pdfEspecialsn
                                     && tecnica?.codigo === 'ME'
-                                    && tipo_tgs !== null
+                                    && ( tipo_tgs == 'Horizontal' || tipo_tgs == 'Vertical' || tipo_tgs == 'Linea')
                                     && material !== ''
                                     && planta !== '' "
                                 :disabled="!componente">

@@ -86219,7 +86219,7 @@ var render = function render() {
     attrs: {
       "for": "componente"
     }
-  }, [_vm._v("\n                            Componente *\n                            "), _vm.pdfEspecialsn && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && _vm.tipo_tgs !== null && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
+  }, [_vm._v("\n                            Componente *\n                            "), _vm.pdfEspecialsn && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && (_vm.tipo_tgs == "Horizontal" || _vm.tipo_tgs == "Vertical" || _vm.tipo_tgs == "Linea") && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
     attrs: {
       type: "button",
       disabled: !_vm.componente
