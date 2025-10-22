@@ -28648,8 +28648,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
                         );
                         this.modelo = nuevoModelo;
                       }
-              
-                      if (!this.fluido.id) {
+                       if (!this.fluido.id) {
                         // Validar que el código exista y no sea sólo espacios
                         if (!this.fluido.codigo || this.fluido.codigo.trim() === "") {
                           toastr.error("Campo fluido obligatorio");
@@ -89129,7 +89128,7 @@ var render = function render() {
     attrs: {
       "for": "planta"
     }
-  }, [_vm._v("Planta *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Planta")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -89159,7 +89158,7 @@ var render = function render() {
     attrs: {
       "for": "area"
     }
-  }, [_vm._v("Área *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Área")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -89189,7 +89188,7 @@ var render = function render() {
     attrs: {
       "for": "orden"
     }
-  }, [_vm._v("Orden *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Orden")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -89219,7 +89218,7 @@ var render = function render() {
     attrs: {
       "for": "nEquipo"
     }
-  }, [_vm._v("N° de Equipo *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("N° de Equipo")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -130893,7 +130892,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\n  position: fixed;       /* ocupa toda la pantalla */\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;         /* flex para centrar */\n  align-items: center;   /* centrar vertical */\n  justify-content: center;/* centrar horizontal */\n  background: rgba(0,0,0,0.5); /* overlay oscuro */\n  z-index: 9999;         /* por encima de todo */\n}\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\n  margin: 0;             /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\n  max-height: 90vh;\n  overflow-y: auto;\n}\n.form-control[disabled][data-v-653e7c51], .form-control[readonly][data-v-653e7c51], fieldset[disabled] .form-control[data-v-653e7c51] {\n    background-color: #eee;\n}\n\n", ""]);
+exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\n    position: fixed;\n    /* ocupa toda la pantalla */\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    display: flex;\n    /* flex para centrar */\n    align-items: center;\n    /* centrar vertical */\n    justify-content: center;\n    /* centrar horizontal */\n    background: rgba(0, 0, 0, 0.5);\n    /* overlay oscuro */\n    z-index: 9999;\n    /* por encima de todo */\n}\n\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\n    margin: 0;\n    /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\n    max-height: 90vh;\n    overflow-y: auto;\n}\n.form-control[disabled][data-v-653e7c51],\n.form-control[readonly][data-v-653e7c51],\nfieldset[disabled] .form-control[data-v-653e7c51] {\n    background-color: #eee;\n}\n", ""]);
 
 // exports
 
