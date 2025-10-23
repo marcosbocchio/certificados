@@ -108,7 +108,6 @@ export default {
     },
     exportarPDF(id) {
       const url = `/imprimir-stock/${id}?fechaInicio=${this.fechaInicio}`;
-      console.log(url); // Imprime la URL para comprobar
       window.open(url, '_blank');
     },
   },

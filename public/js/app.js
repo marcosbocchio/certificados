@@ -40720,7 +40720,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     exportarPDF: function exportarPDF(id) {
       var url = "/imprimir-stock/".concat(id, "?fechaInicio=").concat(this.fechaInicio);
-      console.log(url); // Imprime la URL para comprobar
       window.open(url, '_blank');
     }
   }
