@@ -669,7 +669,7 @@
 
         if ( isset($pdf) ) {
             $x = 764;
-            $y = 70;
+            $y = 61;
             $text = "RG.27 Rev.02";
             $font = $fontMetrics->get_font("serif", "normal");
             $size = 8;
