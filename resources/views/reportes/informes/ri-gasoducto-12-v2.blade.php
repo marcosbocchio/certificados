@@ -9,7 +9,7 @@
 
 <style>
     @page {
-        margin: 240px 40px 255px 40px !important;
+        margin: 240px 40px 225px 40px !important;
         padding: 0px 0px 0px 0px !important;
     }
 
@@ -22,6 +22,10 @@
         position: fixed;
         bottom: 0px;
         padding-top: 0px;
+    }
+
+    .page-break {
+        page-break-before: always;
     }
 </style>
 
@@ -38,70 +42,74 @@
 
         @include('reportes.partial.linea-amarilla')
 
-        <table width="100%" style="border-collapse: collapse;">
-            <tbody>
-                <tr>
-                    <td style="font-size: 14px;"><strong>Diccionario</strong></td>
-                </tr>
-                <tr>
-                    <td style="font-size: 11px; " class="bordered-td"><b>F: </b>Fisura</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>FF: </b>Falta de fusion</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>FP: </b>Falta de Penetración</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>FPD: </b>FP por Desalineación</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>FFP: </b>FF por Pasadas</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>HL: </b>Desalineación</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 11px; " class="bordered-td"><b>PE: </b>Penetración Excesiva</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>Q: </b>Quemaduras</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>CI: </b>Concavidad Interna</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>CE: </b>Concavidad Externa</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>SI: </b>Socavado Interior</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>SE: </b>Socavado Exterior</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 11px; " class="bordered-td"><b>ME: </b>Escoria Aislada</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>MEL: </b>Escoria Lineal</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>P: </b>Poros</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>NP: </b>Nido de Poros</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>PV: </b>Poro Vermicular</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>CH: </b>Cordón Hueco</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 11px; " class="bordered-td"><b>IT: </b>Inclusión de Tungteno</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>SA: </b>Salto de Arco</td>
-                    <td style="font-size: 11px; " colspan="2" class="bordered-td"><b>AD: </b>Acumulación de Discontinuidades</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>DP: </b>Defecto de Placa</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>RP: </b>Repetir Placa</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 11px; " class="bordered-td"><b>MDC: </b>Material dentro del caño</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>R: </b>Raiz</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>Y: </b>Relleno</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>S: </b>Sobremonta</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>AP: </b>Aprobado</td>
-                    <td style="font-size: 11px; " class="bordered-td"><b>RZ: </b>Rechazado</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>
-                        @if($informe->numero_offline)
-                        Referencia : {{ $informe->numero_offline}} /
-                        @endif
-                        {{$informe->observaciones}}
-                    </td>
-                </tr>
+        <table width="100%" style="border-collapse: collapse;margin-bottom: -10px;"" >
+        <tbody>
+            <tr>
+                <td style=" font-size: 14px;"><strong>Diccionario</strong></td>
+            </tr>
+            <tr>
+                <td style="font-size: 11px; " class="bordered-td"><b>F: </b>Fisura</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>FF: </b>Falta de fusion</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>FP: </b>Falta de Penetración</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>FPD: </b>FP por Desalineación</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>FFP: </b>FF por Pasadas</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>HL: </b>Desalineación</td>
+            </tr>
+            <tr>
+                <td style="font-size: 11px; " class="bordered-td"><b>PE: </b>Penetración Excesiva</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>Q: </b>Quemaduras</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>CI: </b>Concavidad Interna</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>CE: </b>Concavidad Externa</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>SI: </b>Socavado Interior</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>SE: </b>Socavado Exterior</td>
+            </tr>
+            <tr>
+                <td style="font-size: 11px; " class="bordered-td"><b>ME: </b>Escoria Aislada</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>MEL: </b>Escoria Lineal</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>P: </b>Poros</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>NP: </b>Nido de Poros</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>PV: </b>Poro Vermicular</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>CH: </b>Cordón Hueco</td>
+            </tr>
+            <tr>
+                <td style="font-size: 11px; " class="bordered-td"><b>IT: </b>Inclusión de Tungteno</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>SA: </b>Salto de Arco</td>
+                <td style="font-size: 11px; " colspan="2" class="bordered-td"><b>AD: </b>Acumulación de Discontinuidades</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>DP: </b>Defecto de Placa</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>RP: </b>Repetir Placa</td>
+            </tr>
+            <tr>
+                <td style="font-size: 11px; " class="bordered-td"><b>MDC: </b>Material dentro del caño</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>R: </b>Raiz</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>Y: </b>Relleno</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>S: </b>Sobremonta</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>AP: </b>Aprobado</td>
+                <td style="font-size: 11px; " class="bordered-td"><b>RZ: </b>Rechazado</td>
+            </tr>
+            <tr>
+                <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>
+                    @if($informe->numero_offline)
+                    Referencia : {{ $informe->numero_offline}} /
+                    @endif
+                    {{$informe->observaciones}}
+                </td>
+            </tr>
             </tbody>
         </table>
 
-        @include('reportes.partial.linea-amarilla')
-        @include('reportes.informes.partial.firmas')
+        <div style="margin-bottom: -60px;">
+            @include('reportes.partial.linea-amarilla')
+        </div>
+        <div style="margin-top: -20px;">
+            @include('reportes.informes.partial.firmas')
+        </div>
     </footer>
 
 
     <main>
         @include('reportes.informes.partial.header-detalle-ri-landscope')
 
-        <table width="100%" style="border-collapse: collapse;">
+        <table width="100%" style="border-collapse: collapse; page-break-before: always;">
             <thead>
                 <tr>
                     <td colspan="22"><strong style="font-size: 14px;">Indicaciones</strong></td>
