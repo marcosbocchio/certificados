@@ -9,7 +9,7 @@
 
 <style>
     @page {
-        margin: 240px 40px 245px 40px !important;
+        margin: 240px 40px 255px 40px !important;
         padding: 0px 0px 0px 0px !important;
     }
 
@@ -20,7 +20,7 @@
 
     footer {
         position: fixed;
-        bottom: 15px;
+        bottom: 0px;
         padding-top: 0px;
     }
 </style>
@@ -98,7 +98,7 @@
     </footer>
 
 
-    <main style="margin: 1px 0px;">
+    <main>
         @include('reportes.informes.partial.header-detalle-ri-landscope')
 
         <table width="100%" style="border-collapse: collapse;">
@@ -669,7 +669,7 @@
 
         if ( isset($pdf) ) {
             $x = 764;
-            $y = 61;
+            $y = 70;
             $text = "RG.27 Rev.02";
             $font = $fontMetrics->get_font("serif", "normal");
             $size = 8;
