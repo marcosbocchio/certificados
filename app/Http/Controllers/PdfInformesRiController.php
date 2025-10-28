@@ -245,9 +245,10 @@ class PdfInformesRiController extends Controller
             $max_pasadas = InformesRiElementosView::where('informe_id', $id)->max('cantidad_pasadas');
 
             $plantilla = ($max_pasadas > 6) ? 'ri-gasoducto-12-v2' : 'ri-gasoducto-6-v2';
-            log:info($plantilla);
             $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)', array($informe_ri->id));
             $pasadas_juntas = DB::select('CALL InformeRiGasoductoPasadasJuntas(?)', array($informe_ri->id));
+            log::info($pasadas_juntas);
+            $juntas_posiciones = collect($juntas_posiciones);
             $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)', array($informe_ri->id));
 
             //  dd($juntas_posiciones,$pasadas_juntas,$defectos_posiciones);
