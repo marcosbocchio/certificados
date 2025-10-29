@@ -9938,6 +9938,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.TablaPartesProductosPorCosturas = JSON.parse(JSON.stringify(this.productos_costura_data));
     },
     cargarCombinados: function cargarCombinados() {
+      var _this5 = this;
       var longServicios = this.TablaPartesServicios.length;
       if (longServicios === 0) {
         this.CompletarNoCombinados();
@@ -9956,51 +9957,56 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         return 0;
       });
 
-      // Limpiar sólo los que no están descombinados manualmente
+      // Limpiar sólo los que no están descombinados manualmente, sin tocar prev_nro_combinacion
       this.TablaPartesServicios.forEach(function (item) {
         if (!item.manual_uncombined_sn) {
-          item.prev_nro_combinacion = item.nro_combinacion || null;
           item.nro_combinacion = '';
           item.combinacion = '';
         }
       });
-      var index = 0;
-      var contador = 1;
-      while (index < longServicios) {
-        var fechaActual = moment__WEBPACK_IMPORTED_MODULE_5___default()(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY');
 
-        // Coleccionar abreviaturas combinables del bloque del día
-        var abrev = [];
-        var j = index;
-        while (j < longServicios && moment__WEBPACK_IMPORTED_MODULE_5___default()(this.TablaPartesServicios[j].fecha).format('DD/MM/YYYY') === fechaActual) {
-          var it = this.TablaPartesServicios[j];
-          if (it.combinado_sn && !it.manual_uncombined_sn && !abrev.includes(it.abreviatura)) {
-            abrev.push(it.abreviatura);
-          }
-          j++;
+      // Agrupar por fecha_formateada (ignorar obra)
+      var normalizeFecha = function normalizeFecha(s) {
+        return (s || '').replace(/-/g, '/');
+      };
+      var groups = {};
+      this.TablaPartesServicios.forEach(function (it, idx) {
+        var key = normalizeFecha(it.fecha_formateada);
+        if (!groups[key]) {
+          groups[key] = {
+            indices: [],
+            abrev: new Set()
+          };
         }
-        if (abrev.length >= 2) {
-          abrev.sort(function (a, b) {
+        groups[key].indices.push(idx);
+        if (it.visible && it.combinado_sn && !it.manual_uncombined_sn) {
+          groups[key].abrev.add(it.abreviatura);
+        }
+      });
+
+      // Generar etiqueta y asignar números por grupo (por fecha)
+      var contador = 1;
+      Object.keys(groups).sort().forEach(function (key) {
+        var abrevArray = Array.from(groups[key].abrev);
+        if (abrevArray.length >= 2) {
+          abrevArray.sort(function (a, b) {
             return a.toLowerCase().localeCompare(b.toLowerCase());
           });
-          var etiqueta = abrev.slice().reverse().join(' + ');
-          var k = index;
-          while (k < longServicios && moment__WEBPACK_IMPORTED_MODULE_5___default()(this.TablaPartesServicios[k].fecha).format('DD/MM/YYYY') === fechaActual) {
-            var _it = this.TablaPartesServicios[k];
-            if (!_it.manual_uncombined_sn && abrev.includes(_it.abreviatura)) {
-              _it.combinacion = etiqueta;
-              _it.nro_combinacion = contador;
+          var etiqueta = abrevArray.slice().reverse().join(' + ');
+          groups[key].indices.forEach(function (idx) {
+            var it = _this5.TablaPartesServicios[idx];
+            if (!it.manual_uncombined_sn && it.visible && abrevArray.includes(it.abreviatura)) {
+              it.combinacion = etiqueta;
+              it.nro_combinacion = contador;
             }
-            k++;
-          }
+          });
           contador++;
         }
-        index = j; // avanzar al próximo bloque por fecha
-      }
+      });
       this.CompletarNoCombinados();
     },
     getAbrevCombinadas: function getAbrevCombinadas(fecha_inicial) {
-      var _this5 = this;
+      var _this6 = this;
       var index = 0;
       var longServicios = this.TablaPartesServicios.length;
       var abreviaturas = [];
@@ -10009,7 +10015,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }
       while (index < longServicios && moment__WEBPACK_IMPORTED_MODULE_5___default()(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') == fecha_inicial) {
         if (this.TablaPartesServicios[index].combinado_sn && !this.TablaPartesServicios[index].manual_uncombined_sn && abreviaturas.findIndex(function (elemento) {
-          return elemento == _this5.TablaPartesServicios[index].abreviatura;
+          return elemento == _this6.TablaPartesServicios[index].abreviatura;
         }) == -1) {
           abreviaturas.push(this.TablaPartesServicios[index].abreviatura);
         }
@@ -10049,11 +10055,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     borrarCombinacionIndex: function borrarCombinacionIndex(index) {
       var ref = this.TablaPartesServicios[index];
-      var targetFecha = moment__WEBPACK_IMPORTED_MODULE_5___default()(ref.fecha).format('DD/MM/YYYY');
+      var normalize = function normalize(s) {
+        return (s || '').replace(/-/g, '/');
+      };
+      var targetFecha = normalize(ref.fecha_formateada);
       var targetObra = ref.obra;
       var targetNro = ref.nro_combinacion;
+
+      // Si no hay número de combinación válido, no hacer nada
+      if (!targetNro || parseInt(targetNro) <= 0) {
+        return;
+      }
       this.TablaPartesServicios.forEach(function (item) {
-        if (item.nro_combinacion == targetNro && moment__WEBPACK_IMPORTED_MODULE_5___default()(item.fecha).format('DD/MM/YYYY') == targetFecha && item.obra == targetObra) {
+        if (item.nro_combinacion == targetNro && normalize(item.fecha_formateada) == targetFecha) {
           item.prev_nro_combinacion = item.nro_combinacion || null;
           item.manual_uncombined_sn = true;
           item.combinacion = '';
@@ -10063,27 +10077,98 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.CompletarNoCombinados();
     },
     revertirCombinacion: function revertirCombinacion(prevNro) {
-      // Mantención backward-compat
-      this.TablaPartesServicios.forEach(function (item) {
-        if (item.manual_uncombined_sn && item.prev_nro_combinacion === prevNro) {
-          item.manual_uncombined_sn = false;
-          item.nro_combinacion = item.prev_nro_combinacion;
-        }
-      }.bind(this));
-      this.cargarCombinados();
+      // Buscar algún índice que cumpla y delegar a la versión por índice
+      var idx = this.TablaPartesServicios.findIndex(function (item) {
+        return item.manual_uncombined_sn && item.prev_nro_combinacion === prevNro;
+      });
+      if (idx !== -1) {
+        this.revertirCombinacionIndex(idx);
+      }
     },
     revertirCombinacionIndex: function revertirCombinacionIndex(index) {
       var ref = this.TablaPartesServicios[index];
-      var targetFecha = moment__WEBPACK_IMPORTED_MODULE_5___default()(ref.fecha).format('DD/MM/YYYY');
+      var normalize = function normalize(s) {
+        return (s || '').replace(/-/g, '/');
+      };
+      var targetFecha = normalize(ref.fecha_formateada);
       var targetObra = ref.obra;
       var prevNro = ref.prev_nro_combinacion;
-      this.TablaPartesServicios.forEach(function (item) {
-        if (item.manual_uncombined_sn && item.prev_nro_combinacion === prevNro && moment__WEBPACK_IMPORTED_MODULE_5___default()(item.fecha).format('DD/MM/YYYY') == targetFecha && item.obra == targetObra) {
-          item.manual_uncombined_sn = false;
-          item.nro_combinacion = item.prev_nro_combinacion;
+      var fechaMatches = function fechaMatches(itm) {
+        return normalize(itm.fecha_formateada) === targetFecha;
+      };
+      if (prevNro && parseInt(prevNro) > 0) {
+        // 1) Restaurar el estado (salir de manual_uncombined y volver al nro original)
+        this.TablaPartesServicios.forEach(function (item) {
+          if (item.manual_uncombined_sn && item.prev_nro_combinacion === prevNro && fechaMatches(item)) {
+            item.manual_uncombined_sn = false;
+            item.nro_combinacion = item.prev_nro_combinacion;
+          }
+        }.bind(this));
+
+        // 2) Recalcular SOLO la etiqueta del grupo restaurado (mismo día, misma obra y mismo nro)
+        var abrev = [];
+        this.TablaPartesServicios.forEach(function (it) {
+          if (fechaMatches(it) && !it.manual_uncombined_sn && Number(it.nro_combinacion) === Number(prevNro) && it.combinado_sn && !abrev.includes(it.abreviatura)) {
+            abrev.push(it.abreviatura);
+          }
+        });
+        if (abrev.length >= 2) {
+          abrev.sort(function (a, b) {
+            return a.toLowerCase().localeCompare(b.toLowerCase());
+          });
+          var etiqueta = abrev.slice().reverse().join(' + ');
+          this.TablaPartesServicios.forEach(function (it) {
+            if (fechaMatches(it) && !it.manual_uncombined_sn && Number(it.nro_combinacion) === Number(prevNro) && abrev.includes(it.abreviatura)) {
+              it.combinacion = etiqueta;
+            }
+          });
+          // Garantizar que la fila de referencia tenga la etiqueta
+          ref.combinacion = etiqueta;
         }
-      }.bind(this));
-      this.cargarCombinados();
+      } else {
+        // No hay número previo: crear uno nuevo si hay condiciones para combinar
+        // 1) Encontrar abreviaturas combinables en el día/obra, incluyendo SIEMPRE la del item ref
+        var targetAbrev = ref.abreviatura;
+        var _abrev = [];
+        this.TablaPartesServicios.forEach(function (it) {
+          if (fechaMatches(it) && it.combinado_sn && (!it.manual_uncombined_sn || it === ref) && !_abrev.includes(it.abreviatura)) {
+            _abrev.push(it.abreviatura);
+          }
+        });
+        if (_abrev.includes(targetAbrev) && _abrev.length >= 2) {
+          // 2) Calcular el nuevo número GLOBAL: max existente en toda la tabla + 1
+          var maxNro = 0;
+          this.TablaPartesServicios.forEach(function (it) {
+            var n = parseInt(it.nro_combinacion || 0);
+            if (!isNaN(n) && n > maxNro) maxNro = n;
+          });
+          var newNro = maxNro + 1;
+
+          // 3) Armar etiqueta
+          _abrev.sort(function (a, b) {
+            return a.toLowerCase().localeCompare(b.toLowerCase());
+          });
+          var _etiqueta = _abrev.slice().reverse().join(' + ');
+
+          // 4) Asignar combinación SOLO a los ítems del día/obra con esas abreviaturas
+          this.TablaPartesServicios.forEach(function (it) {
+            if (fechaMatches(it) && it.combinado_sn && _abrev.includes(it.abreviatura)) {
+              it.manual_uncombined_sn = false;
+              it.prev_nro_combinacion = newNro;
+              it.nro_combinacion = newNro;
+              it.combinacion = _etiqueta;
+            }
+          });
+          // Garantizar que la fila de referencia tenga el número y la etiqueta
+          ref.manual_uncombined_sn = false;
+          ref.prev_nro_combinacion = newNro;
+          ref.nro_combinacion = newNro;
+          ref.combinacion = _etiqueta;
+        }
+      }
+
+      // 3) Completar los que no quedaron combinados
+      this.CompletarNoCombinados();
     },
     descombinarItem: function descombinarItem(index) {
       var it = this.TablaPartesServicios[index];
@@ -10098,14 +10183,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     getServiciosParte: function getServiciosParte(id) {
       var _arguments = arguments,
-        _this6 = this;
+        _this7 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var recompute, urlRegistros, res, parte_servicios;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
               recompute = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : true;
-              axios.defaults.baseURL = _this6.url;
+              axios.defaults.baseURL = _this7.url;
               urlRegistros = 'certificados/parte/' + id + '/servicios' + '?api_token=' + Laravel.user.api_token;
               _context3.next = 5;
               return axios.get(urlRegistros);
@@ -10137,8 +10222,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
                   fecha: item.fecha,
                   fecha_formateada: item.fecha_formateada
                 });
-              }.bind(_this6));
-              if (recompute) _this6.cargarCombinados();
+              }.bind(_this7));
+              if (recompute) _this7.cargarCombinados();
             case 11:
             case "end":
               return _context3.stop();
@@ -10147,7 +10232,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }))();
     },
     getProductosParte: function getProductosParte(id) {
-      var _this7 = this;
+      var _this8 = this;
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'certificados/parte/' + id + '/modo_cobro/' + this.modo_cobro + '/productos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
@@ -10174,7 +10259,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               visible: true
             });
           }
-        }.bind(_this7));
+        }.bind(_this8));
       });
     },
     deleteServiciosParte: function deleteServiciosParte(id) {
@@ -10205,24 +10290,24 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.loading = false;
     },
     getPartesPendientesCertificado: function getPartesPendientesCertificado() {
-      var _this8 = this;
+      var _this9 = this;
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'partes/ot/' + this.otdata.id + '/pendientes_certificados' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this8.partes = response.data;
+        _this9.partes = response.data;
       });
     },
     getNumeroCertificado: function getNumeroCertificado() {
-      var _this9 = this;
+      var _this10 = this;
       if (!this.editmode) {
         axios.defaults.baseURL = this.url;
         var urlRegistros = 'certificados/generar-numero-certificado' + '?api_token=' + Laravel.user.api_token;
         axios.get(urlRegistros).then(function (response) {
-          _this9.numero_inf_generado = response.data;
-          if (_this9.numero_inf_generado.length) {
-            _this9.numero = _this9.numero_inf_generado[0].numero_certificado;
+          _this10.numero_inf_generado = response.data;
+          if (_this10.numero_inf_generado.length) {
+            _this10.numero = _this10.numero_inf_generado[0].numero_certificado;
           } else {
-            _this9.numero = 1;
+            _this10.numero = 1;
           }
         });
       }
@@ -10237,12 +10322,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.indexTablaPartesServicios = index;
     },
     RemoveTablaPartesServicios: function RemoveTablaPartesServicios(index) {
+      var ref = this.TablaPartesServicios[index];
+      // Si pertenece a un grupo combinado activo, primero descombinar ese grupo específico
+      var hasGrupo = ref && !ref.manual_uncombined_sn && Number(ref.nro_combinacion) > 0;
+      if (hasGrupo) {
+        this.borrarCombinacionIndex(index); // esto ya recalcula solo etiquetas del grupo vía CompletarNoCombinados
+      }
+
+      // Luego ocultar solo la fila
       this.TablaPartesServicios[index].visible = false;
       this.TablaPartesServicios[index].cant_final = '';
-      this.cargarCombinados();
+
+      // Evitar recomputar globalmente para no renumerar otros grupos
+      // this.cargarCombinados();
     },
     Store: function Store() {
-      var _this10 = this;
+      var _this11 = this;
       this.errors = [];
       this.loading = true;
       var urlRegistros = 'certificados';
@@ -10262,17 +10357,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }
       }).then(function (response) {
         var certificado = response.data;
-        toastr.success('Certificado N°' + _this10.numero_code + ' fue creado con éxito ');
-        window.open('/pdf/certificado/' + certificado.id + '/final', '_blank');
-        window.location.href = '/certificados/ot/' + _this10.otdata.id;
+        toastr.success('Certificado N°' + _this11.numero_code + ' fue creado con éxito ');
+        window.open('/pdf/certificado/' + certificado.id + '/final/agrupado', '_blank');
+        window.location.href = '/certificados/ot/' + _this11.otdata.id;
       })["catch"](function (error) {
-        _this10.errors = error.response.data.errors;
+        _this11.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this10.errors, function (key, value) {
+        $.each(_this11.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
-        if (typeof _this10.errors == 'undefined' && error) {
+        if (typeof _this11.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       })["finally"](function () {
@@ -10280,7 +10375,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     Update: function Update() {
-      var _this11 = this;
+      var _this12 = this;
       this.errors = [];
       var urlRegistros = 'certificados/' + this.certificado_data.id;
       this.loading = true;
@@ -10299,17 +10394,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           'TablaPartesProductosPorCosturas': this.TablaPartesProductosPorCosturas
         }
       }).then(function () {
-        toastr.success('Certificado N°' + _this11.numero_code + ' fue actualizado con éxito ');
-        window.open('/pdf/certificado/' + _this11.certificado_data.id + '/final', '_blank');
-        window.location.href = '/certificados/ot/' + _this11.otdata.id;
+        toastr.success('Certificado N°' + _this12.numero_code + ' fue actualizado con éxito ');
+        window.open('/pdf/certificado/' + _this12.certificado_data.id + '/final/agrupado', '_blank');
+        window.location.href = '/certificados/ot/' + _this12.otdata.id;
       })["catch"](function (error) {
-        _this11.errors = error.response.data.errors;
+        _this12.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this11.errors, function (key, value) {
+        $.each(_this12.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
-        if (typeof _this11.errors == 'undefined' && error) {
+        if (typeof _this12.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       })["finally"](function () {
@@ -59217,7 +59312,7 @@ var render = function render() {
       }
     }), _vm._v(" "), _c("span", {
       staticClass: "input-group-btn"
-    }, [!_vm.TablaPartesServicios[k].manual_uncombined_sn ? _c("button", {
+    }, [!_vm.TablaPartesServicios[k].manual_uncombined_sn && Number(_vm.TablaPartesServicios[k].nro_combinacion) > 0 ? _c("button", {
       staticClass: "btn btn-md btn-default",
       attrs: {
         type: "button"
@@ -390339,8 +390434,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Marcos\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Marcos\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ }),

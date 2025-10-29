@@ -153,6 +153,19 @@ class PdfCertificadoController extends Controller
      */
     private function buildServiciosObrasFromServiciosParte(array $servicios_parte): array
     {
+        $extractQty = function($row): float {
+            // Robustez: distintos SP/capas pueden nombrar distinto la cantidad
+            if (isset($row->cant_final)) {
+                return (float)$row->cant_final;
+            }
+            if (isset($row->cantidad)) {
+                return (float)$row->cantidad;
+            }
+            if (isset($row->cant_total)) {
+                return (float)$row->cant_total;
+            }
+            return 0.0;
+        };
         // Totales por clave "obra|combinacion"
         $totalsByObraComb = [];
 
@@ -177,15 +190,16 @@ class PdfCertificadoController extends Controller
 
             $obra = $items[0]->obra ?? '';
             $nroComb = $items[0]->nro_combinacion ?? null;
+            $isCombinedGroup = ($nroComb !== null && $nroComb !== '' && intval($nroComb) > 0);
 
-            // Grupo combinado: nro_combinacion no nulo
-            if ($nroComb !== null) {
+            // Grupo combinado: nro_combinacion válido (> 0)
+            if ($isCombinedGroup) {
                 // Construir mapa abreviatura -> cantidad total dentro del grupo (misma fecha y nro)
                 $qtyByAbbrev = [];
                 $combinationLabel = $items[0]->combinacion ?? null; // todos los items deberían compartirlo
                 foreach ($items as $it) {
                     $abbrev = $it->abreviatura ?? ($it->combinacion ?? '');
-                    $qty = (float)($it->cantidad ?? 0);
+                    $qty = $extractQty($it);
                     if (!isset($qtyByAbbrev[$abbrev])) {
                         $qtyByAbbrev[$abbrev] = 0.0;
                     }
@@ -206,7 +220,8 @@ class PdfCertificadoController extends Controller
                 // Unidades combinadas = mínimo entre las cantidades de todas las abreviaturas involucradas
                 $combinedUnits = 0.0;
                 if (!empty($qtyByAbbrev)) {
-                    $combinedUnits = min($qtyByAbbrev);
+                    $values = array_values($qtyByAbbrev);
+                    $combinedUnits = min($values);
                 }
 
                 // Sumar al total de la combinación
@@ -233,8 +248,9 @@ class PdfCertificadoController extends Controller
 
             // Grupo NO combinado: sumar cada ítem como individual (combinacion == abreviatura en la práctica)
             foreach ($items as $it) {
-                $abbrevOrComb = $it->combinacion ?? $it->abreviatura ?? '';
-                $qty = (float)($it->cantidad ?? 0);
+                // En NO combinado, siempre contabilizar por abreviatura (evitar contaminar con etiquetas previas)
+                $abbrevOrComb = $it->abreviatura ?? ($it->combinacion ?? '');
+                $qty = $extractQty($it);
                 $k = $obra . '|' . $abbrevOrComb;
                 if (!isset($totalsByObraComb[$k])) {
                     $totalsByObraComb[$k] = 0.0;

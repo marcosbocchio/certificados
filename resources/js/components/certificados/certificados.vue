@@ -124,7 +124,7 @@
                                                         <input type="number" :id="'nro_combinacion_'+k" class="form-control form-group-xs text-center"  maxlength="2" v-model="TablaPartesServicios[k].nro_combinacion" disabled >
 
                                                         <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-md btn-default" v-if="!TablaPartesServicios[k].manual_uncombined_sn" @click="borrarCombinacionIndex(k)">X</button>
+                                                            <button type="button" class="btn btn-md btn-default" v-if="!TablaPartesServicios[k].manual_uncombined_sn && Number(TablaPartesServicios[k].nro_combinacion) > 0" @click="borrarCombinacionIndex(k)">X</button>
                                                             <button type="button" class="btn btn-md btn-default" v-else @click="revertirCombinacionIndex(k)" title="Volver a combinación">
                                                                 <i class="fa fa-undo"></i>
                                                             </button>
@@ -527,50 +527,45 @@ export default {
                 return 0;
             });
 
-            // Limpiar sólo los que no están descombinados manualmente
+            // Limpiar sólo los que no están descombinados manualmente, sin tocar prev_nro_combinacion
             this.TablaPartesServicios.forEach((item) => {
                 if (!item.manual_uncombined_sn) {
-                    item.prev_nro_combinacion = item.nro_combinacion || null;
                     item.nro_combinacion = '';
                     item.combinacion = '';
                 }
             });
 
-            let index = 0;
-            let contador = 1;
-
-            while (index < longServicios) {
-                const fechaActual = moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY');
-
-                // Coleccionar abreviaturas combinables del bloque del día
-                const abrev = [];
-                let j = index;
-                while (j < longServicios && moment(this.TablaPartesServicios[j].fecha).format('DD/MM/YYYY') === fechaActual) {
-                    const it = this.TablaPartesServicios[j];
-                    if (it.combinado_sn && !it.manual_uncombined_sn && !abrev.includes(it.abreviatura)) {
-                        abrev.push(it.abreviatura);
-                    }
-                    j++;
+            // Agrupar por fecha_formateada (ignorar obra)
+            const normalizeFecha = (s) => (s || '').replace(/-/g,'/');
+            const groups = {};
+            this.TablaPartesServicios.forEach((it, idx) => {
+                const key = normalizeFecha(it.fecha_formateada);
+                if (!groups[key]) {
+                    groups[key] = { indices: [], abrev: new Set() };
                 }
+                groups[key].indices.push(idx);
+                if (it.visible && it.combinado_sn && !it.manual_uncombined_sn) {
+                    groups[key].abrev.add(it.abreviatura);
+                }
+            });
 
-                if (abrev.length >= 2) {
-                    abrev.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
-                    const etiqueta = abrev.slice().reverse().join(' + ');
-
-                    let k = index;
-                    while (k < longServicios && moment(this.TablaPartesServicios[k].fecha).format('DD/MM/YYYY') === fechaActual) {
-                        const it = this.TablaPartesServicios[k];
-                        if (!it.manual_uncombined_sn && abrev.includes(it.abreviatura)) {
+            // Generar etiqueta y asignar números por grupo (por fecha)
+            let contador = 1;
+            Object.keys(groups).sort().forEach((key) => {
+                const abrevArray = Array.from(groups[key].abrev);
+                if (abrevArray.length >= 2) {
+                    abrevArray.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+                    const etiqueta = abrevArray.slice().reverse().join(' + ');
+                    groups[key].indices.forEach((idx) => {
+                        const it = this.TablaPartesServicios[idx];
+                        if (!it.manual_uncombined_sn && it.visible && abrevArray.includes(it.abreviatura)) {
                             it.combinacion = etiqueta;
                             it.nro_combinacion = contador;
                         }
-                        k++;
-                    }
+                    });
                     contador++;
                 }
-
-                index = j; // avanzar al próximo bloque por fecha
-            }
+            });
 
             this.CompletarNoCombinados();
 
@@ -636,14 +631,19 @@ export default {
        borrarCombinacionIndex : function(index){
 
            const ref = this.TablaPartesServicios[index];
-           const targetFecha = moment(ref.fecha).format('DD/MM/YYYY');
+           const normalize = (s) => (s || '').replace(/-/g,'/');
+           const targetFecha = normalize(ref.fecha_formateada);
            const targetObra = ref.obra;
            const targetNro = ref.nro_combinacion;
 
+           // Si no hay número de combinación válido, no hacer nada
+           if (!targetNro || parseInt(targetNro) <= 0) {
+               return;
+           }
+
            this.TablaPartesServicios.forEach(function(item){
                if(item.nro_combinacion == targetNro
-                 && moment(item.fecha).format('DD/MM/YYYY') == targetFecha
-                 && item.obra == targetObra){
+                 && normalize(item.fecha_formateada) == targetFecha){
 
                    item.prev_nro_combinacion = item.nro_combinacion || null;
                    item.manual_uncombined_sn = true;
@@ -656,34 +656,107 @@ export default {
        },
 
        revertirCombinacion : function(prevNro){
-           // Mantención backward-compat
-           this.TablaPartesServicios.forEach(function(item){
-               if(item.manual_uncombined_sn && item.prev_nro_combinacion === prevNro){
-                   item.manual_uncombined_sn = false;
-                   item.nro_combinacion = item.prev_nro_combinacion;
-               }
-           }.bind(this));
-           this.cargarCombinados();
+           // Buscar algún índice que cumpla y delegar a la versión por índice
+           const idx = this.TablaPartesServicios.findIndex(item => item.manual_uncombined_sn && item.prev_nro_combinacion === prevNro);
+           if (idx !== -1) {
+               this.revertirCombinacionIndex(idx);
+           }
        },
 
        revertirCombinacionIndex : function(index){
 
            const ref = this.TablaPartesServicios[index];
-           const targetFecha = moment(ref.fecha).format('DD/MM/YYYY');
+           const normalize = (s) => (s || '').replace(/-/g,'/');
+           const targetFecha = normalize(ref.fecha_formateada);
            const targetObra = ref.obra;
            const prevNro = ref.prev_nro_combinacion;
 
-           this.TablaPartesServicios.forEach(function(item){
-               if(item.manual_uncombined_sn
-                 && item.prev_nro_combinacion === prevNro
-                 && moment(item.fecha).format('DD/MM/YYYY') == targetFecha
-                 && item.obra == targetObra){
-                   item.manual_uncombined_sn = false;
-                   item.nro_combinacion = item.prev_nro_combinacion;
-               }
-           }.bind(this));
+           const fechaMatches = function (itm) { return normalize(itm.fecha_formateada) === targetFecha; };
 
-           this.cargarCombinados();
+           if (prevNro && parseInt(prevNro) > 0) {
+               // 1) Restaurar el estado (salir de manual_uncombined y volver al nro original)
+               this.TablaPartesServicios.forEach(function(item){
+                   if(item.manual_uncombined_sn
+                     && item.prev_nro_combinacion === prevNro
+                     && fechaMatches(item)){
+                       item.manual_uncombined_sn = false;
+                       item.nro_combinacion = item.prev_nro_combinacion;
+                   }
+               }.bind(this));
+
+               // 2) Recalcular SOLO la etiqueta del grupo restaurado (mismo día, misma obra y mismo nro)
+               const abrev = [];
+               this.TablaPartesServicios.forEach(function(it){
+                   if (fechaMatches(it)
+                       && !it.manual_uncombined_sn
+                       && Number(it.nro_combinacion) === Number(prevNro)
+                       && it.combinado_sn
+                       && !abrev.includes(it.abreviatura)) {
+                       abrev.push(it.abreviatura);
+                   }
+               });
+               if (abrev.length >= 2) {
+                   abrev.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+                   const etiqueta = abrev.slice().reverse().join(' + ');
+                   this.TablaPartesServicios.forEach(function(it){
+                       if (fechaMatches(it)
+                           && !it.manual_uncombined_sn
+                           && Number(it.nro_combinacion) === Number(prevNro)
+                           && abrev.includes(it.abreviatura)) {
+                           it.combinacion = etiqueta;
+                       }
+                   });
+                   // Garantizar que la fila de referencia tenga la etiqueta
+                   ref.combinacion = etiqueta;
+               }
+           } else {
+               // No hay número previo: crear uno nuevo si hay condiciones para combinar
+               // 1) Encontrar abreviaturas combinables en el día/obra, incluyendo SIEMPRE la del item ref
+               const targetAbrev = ref.abreviatura;
+               const abrev = [];
+               this.TablaPartesServicios.forEach(function(it){
+                   if (fechaMatches(it)
+                       && it.combinado_sn
+                       && (!it.manual_uncombined_sn || it === ref)
+                       && !abrev.includes(it.abreviatura)) {
+                       abrev.push(it.abreviatura);
+                   }
+               });
+
+               if (abrev.includes(targetAbrev) && abrev.length >= 2) {
+                   // 2) Calcular el nuevo número GLOBAL: max existente en toda la tabla + 1
+                   let maxNro = 0;
+                   this.TablaPartesServicios.forEach(function(it){
+                       const n = parseInt(it.nro_combinacion || 0);
+                       if (!isNaN(n) && n > maxNro) maxNro = n;
+                   });
+                   const newNro = maxNro + 1;
+
+                   // 3) Armar etiqueta
+                   abrev.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+                   const etiqueta = abrev.slice().reverse().join(' + ');
+
+                   // 4) Asignar combinación SOLO a los ítems del día/obra con esas abreviaturas
+                   this.TablaPartesServicios.forEach(function(it){
+                       if (fechaMatches(it)
+                           && it.combinado_sn
+                           && abrev.includes(it.abreviatura)) {
+                           it.manual_uncombined_sn = false;
+                           it.prev_nro_combinacion = newNro;
+                           it.nro_combinacion = newNro;
+                           it.combinacion = etiqueta;
+                       }
+                   });
+                   // Garantizar que la fila de referencia tenga el número y la etiqueta
+                   ref.manual_uncombined_sn = false;
+                   ref.prev_nro_combinacion = newNro;
+                   ref.nro_combinacion = newNro;
+                   ref.combinacion = etiqueta;
+               }
+           }
+
+           // 3) Completar los que no quedaron combinados
+           this.CompletarNoCombinados();
        },
 
        descombinarItem : function(index){
@@ -878,9 +951,19 @@ export default {
 
        RemoveTablaPartesServicios: function(index){
 
+           const ref = this.TablaPartesServicios[index];
+           // Si pertenece a un grupo combinado activo, primero descombinar ese grupo específico
+           const hasGrupo = ref && !ref.manual_uncombined_sn && Number(ref.nro_combinacion) > 0;
+           if (hasGrupo) {
+               this.borrarCombinacionIndex(index); // esto ya recalcula solo etiquetas del grupo vía CompletarNoCombinados
+           }
+
+           // Luego ocultar solo la fila
            this.TablaPartesServicios[index].visible = false;
            this.TablaPartesServicios[index].cant_final='';
-           this.cargarCombinados();
+
+           // Evitar recomputar globalmente para no renumerar otros grupos
+           // this.cargarCombinados();
 
        },
 
@@ -910,7 +993,7 @@ export default {
 
           let certificado = response.data;
           toastr.success('Certificado N°' +  this.numero_code + ' fue creado con éxito ');
-          window.open('/pdf/certificado/' + certificado.id + '/final','_blank');
+          window.open('/pdf/certificado/' + certificado.id + '/final/agrupado','_blank');
           window.location.href ='/certificados/ot/' + this.otdata.id;
 
         }).catch(error => {
@@ -955,7 +1038,7 @@ export default {
         ).then( () => {
 
           toastr.success('Certificado N°' +  this.numero_code + ' fue actualizado con éxito ');
-          window.open('/pdf/certificado/' + this.certificado_data.id + '/final','_blank');
+          window.open('/pdf/certificado/' + this.certificado_data.id + '/final/agrupado','_blank');
           window.location.href ='/certificados/ot/' + this.otdata.id;
 
         }).catch(error => {
