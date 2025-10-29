@@ -9865,7 +9865,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     seleccionarAnteriores: function seleccionarAnteriores(index) {
       var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var x;
+        var x, isLast;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
@@ -9873,21 +9873,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               x = 0;
             case 2:
               if (!(x <= index)) {
-                _context2.next = 10;
+                _context2.next = 11;
                 break;
               }
-              _context2.next = 5;
-              return _this3.getServiciosParte(_this3.partes[x].id);
-            case 5:
+              isLast = x === index;
+              _context2.next = 6;
+              return _this3.getServiciosParte(_this3.partes[x].id, isLast);
+            case 6:
               _this3.getProductosParte(_this3.partes[x].id);
               _this3.partes[x].parte_sel = true;
-            case 7:
+            case 8:
               x++;
               _context2.next = 2;
               break;
-            case 10:
-              _this3.completarTitulo(index);
             case 11:
+              _this3.completarTitulo(index);
+            case 12:
             case "end":
               return _context2.stop();
           }
@@ -9939,33 +9940,69 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     cargarCombinados: function cargarCombinados() {
       var _this5 = this;
       var longServicios = this.TablaPartesServicios.length;
-      if (longServicios > 0) {
-        var index = 0;
-        var contador = 1;
-        var fecha_inicial = moment__WEBPACK_IMPORTED_MODULE_5___default()(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY');
-        var fecha_final = moment__WEBPACK_IMPORTED_MODULE_5___default()(this.TablaPartesServicios[longServicios - 1].fecha).format('DD/MM/YYYY');
-        this.TablaPartesServicios.forEach(function (item) {
-          item.nro_combinacion = '';
-        });
-        while (fecha_inicial <= fecha_final && index < longServicios) {
-          var abrev = this.getAbrevCombinadas(fecha_inicial);
-          console.log('fecha inicial: ' + fecha_inicial + ' abraviaturas: ' + abrev);
-          while (index < longServicios && moment__WEBPACK_IMPORTED_MODULE_5___default()(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') == fecha_inicial) {
-            if (abrev.findIndex(function (elemento) {
-              return elemento == _this5.TablaPartesServicios[index].abreviatura;
-            }) != -1 && abrev.length > 2) {
-              var longAbrev = abrev.length;
-              this.TablaPartesServicios[index].combinacion = abrev[longAbrev - 1];
-              this.TablaPartesServicios[index].nro_combinacion = contador;
-            }
-            index++;
-          }
-          contador++;
-          if (index < longServicios) {
-            fecha_inicial = moment__WEBPACK_IMPORTED_MODULE_5___default()(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY');
-          }
-        }
+      if (longServicios === 0) {
+        this.CompletarNoCombinados();
+        return;
       }
+
+      // Ordenar por fecha, obra y abreviatura para asegurar bloques contiguos por día
+      this.TablaPartesServicios.sort(function (a, b) {
+        var da = new Date(a.fecha);
+        var db = new Date(b.fecha);
+        if (da - db !== 0) return da - db;
+        if ((a.obra || '') < (b.obra || '')) return -1;
+        if ((a.obra || '') > (b.obra || '')) return 1;
+        if ((a.abreviatura || '') < (b.abreviatura || '')) return -1;
+        if ((a.abreviatura || '') > (b.abreviatura || '')) return 1;
+        return 0;
+      });
+
+      // Limpiar sólo los que no están descombinados manualmente, sin tocar prev_nro_combinacion
+      this.TablaPartesServicios.forEach(function (item) {
+        if (!item.manual_uncombined_sn) {
+          item.nro_combinacion = '';
+          item.combinacion = '';
+        }
+      });
+
+      // Agrupar por fecha_formateada (ignorar obra)
+      var normalizeFecha = function normalizeFecha(s) {
+        return (s || '').replace(/-/g, '/');
+      };
+      var groups = {};
+      this.TablaPartesServicios.forEach(function (it, idx) {
+        var key = normalizeFecha(it.fecha_formateada);
+        if (!groups[key]) {
+          groups[key] = {
+            indices: [],
+            abrev: new Set()
+          };
+        }
+        groups[key].indices.push(idx);
+        if (it.visible && it.combinado_sn && !it.manual_uncombined_sn) {
+          groups[key].abrev.add(it.abreviatura);
+        }
+      });
+
+      // Generar etiqueta y asignar números por grupo (por fecha)
+      var contador = 1;
+      Object.keys(groups).sort().forEach(function (key) {
+        var abrevArray = Array.from(groups[key].abrev);
+        if (abrevArray.length >= 2) {
+          abrevArray.sort(function (a, b) {
+            return a.toLowerCase().localeCompare(b.toLowerCase());
+          });
+          var etiqueta = abrevArray.slice().reverse().join(' + ');
+          groups[key].indices.forEach(function (idx) {
+            var it = _this5.TablaPartesServicios[idx];
+            if (!it.manual_uncombined_sn && it.visible && abrevArray.includes(it.abreviatura)) {
+              it.combinacion = etiqueta;
+              it.nro_combinacion = contador;
+            }
+          });
+          contador++;
+        }
+      });
       this.CompletarNoCombinados();
     },
     getAbrevCombinadas: function getAbrevCombinadas(fecha_inicial) {
@@ -9977,7 +10014,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         index++;
       }
       while (index < longServicios && moment__WEBPACK_IMPORTED_MODULE_5___default()(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') == fecha_inicial) {
-        if (this.TablaPartesServicios[index].combinado_sn && abreviaturas.findIndex(function (elemento) {
+        if (this.TablaPartesServicios[index].combinado_sn && !this.TablaPartesServicios[index].manual_uncombined_sn && abreviaturas.findIndex(function (elemento) {
           return elemento == _this6.TablaPartesServicios[index].abreviatura;
         }) == -1) {
           abreviaturas.push(this.TablaPartesServicios[index].abreviatura);
@@ -10005,30 +10042,163 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     borrarCombinacion: function borrarCombinacion(nro) {
+      // Mantención backward-compat si se llamara por nro (no usado ahora)
       this.TablaPartesServicios.forEach(function (item) {
         if (item.nro_combinacion == nro) {
+          item.prev_nro_combinacion = item.nro_combinacion || null;
+          item.manual_uncombined_sn = true;
           item.combinacion = '';
           item.nro_combinacion = '';
         }
-      });
+      }.bind(this));
       this.CompletarNoCombinados();
     },
+    borrarCombinacionIndex: function borrarCombinacionIndex(index) {
+      var ref = this.TablaPartesServicios[index];
+      var normalize = function normalize(s) {
+        return (s || '').replace(/-/g, '/');
+      };
+      var targetFecha = normalize(ref.fecha_formateada);
+      var targetObra = ref.obra;
+      var targetNro = ref.nro_combinacion;
+
+      // Si no hay número de combinación válido, no hacer nada
+      if (!targetNro || parseInt(targetNro) <= 0) {
+        return;
+      }
+      this.TablaPartesServicios.forEach(function (item) {
+        if (item.nro_combinacion == targetNro && normalize(item.fecha_formateada) == targetFecha) {
+          item.prev_nro_combinacion = item.nro_combinacion || null;
+          item.manual_uncombined_sn = true;
+          item.combinacion = '';
+          item.nro_combinacion = '';
+        }
+      }.bind(this));
+      this.CompletarNoCombinados();
+    },
+    revertirCombinacion: function revertirCombinacion(prevNro) {
+      // Buscar algún índice que cumpla y delegar a la versión por índice
+      var idx = this.TablaPartesServicios.findIndex(function (item) {
+        return item.manual_uncombined_sn && item.prev_nro_combinacion === prevNro;
+      });
+      if (idx !== -1) {
+        this.revertirCombinacionIndex(idx);
+      }
+    },
+    revertirCombinacionIndex: function revertirCombinacionIndex(index) {
+      var ref = this.TablaPartesServicios[index];
+      var normalize = function normalize(s) {
+        return (s || '').replace(/-/g, '/');
+      };
+      var targetFecha = normalize(ref.fecha_formateada);
+      var targetObra = ref.obra;
+      var prevNro = ref.prev_nro_combinacion;
+      var fechaMatches = function fechaMatches(itm) {
+        return normalize(itm.fecha_formateada) === targetFecha;
+      };
+      if (prevNro && parseInt(prevNro) > 0) {
+        // 1) Restaurar el estado (salir de manual_uncombined y volver al nro original)
+        this.TablaPartesServicios.forEach(function (item) {
+          if (item.manual_uncombined_sn && item.prev_nro_combinacion === prevNro && fechaMatches(item)) {
+            item.manual_uncombined_sn = false;
+            item.nro_combinacion = item.prev_nro_combinacion;
+          }
+        }.bind(this));
+
+        // 2) Recalcular SOLO la etiqueta del grupo restaurado (mismo día, misma obra y mismo nro)
+        var abrev = [];
+        this.TablaPartesServicios.forEach(function (it) {
+          if (fechaMatches(it) && !it.manual_uncombined_sn && Number(it.nro_combinacion) === Number(prevNro) && it.combinado_sn && !abrev.includes(it.abreviatura)) {
+            abrev.push(it.abreviatura);
+          }
+        });
+        if (abrev.length >= 2) {
+          abrev.sort(function (a, b) {
+            return a.toLowerCase().localeCompare(b.toLowerCase());
+          });
+          var etiqueta = abrev.slice().reverse().join(' + ');
+          this.TablaPartesServicios.forEach(function (it) {
+            if (fechaMatches(it) && !it.manual_uncombined_sn && Number(it.nro_combinacion) === Number(prevNro) && abrev.includes(it.abreviatura)) {
+              it.combinacion = etiqueta;
+            }
+          });
+          // Garantizar que la fila de referencia tenga la etiqueta
+          ref.combinacion = etiqueta;
+        }
+      } else {
+        // No hay número previo: crear uno nuevo si hay condiciones para combinar
+        // 1) Encontrar abreviaturas combinables en el día/obra, incluyendo SIEMPRE la del item ref
+        var targetAbrev = ref.abreviatura;
+        var _abrev = [];
+        this.TablaPartesServicios.forEach(function (it) {
+          if (fechaMatches(it) && it.combinado_sn && (!it.manual_uncombined_sn || it === ref) && !_abrev.includes(it.abreviatura)) {
+            _abrev.push(it.abreviatura);
+          }
+        });
+        if (_abrev.includes(targetAbrev) && _abrev.length >= 2) {
+          // 2) Calcular el nuevo número GLOBAL: max existente en toda la tabla + 1
+          var maxNro = 0;
+          this.TablaPartesServicios.forEach(function (it) {
+            var n = parseInt(it.nro_combinacion || 0);
+            if (!isNaN(n) && n > maxNro) maxNro = n;
+          });
+          var newNro = maxNro + 1;
+
+          // 3) Armar etiqueta
+          _abrev.sort(function (a, b) {
+            return a.toLowerCase().localeCompare(b.toLowerCase());
+          });
+          var _etiqueta = _abrev.slice().reverse().join(' + ');
+
+          // 4) Asignar combinación SOLO a los ítems del día/obra con esas abreviaturas
+          this.TablaPartesServicios.forEach(function (it) {
+            if (fechaMatches(it) && it.combinado_sn && _abrev.includes(it.abreviatura)) {
+              it.manual_uncombined_sn = false;
+              it.prev_nro_combinacion = newNro;
+              it.nro_combinacion = newNro;
+              it.combinacion = _etiqueta;
+            }
+          });
+          // Garantizar que la fila de referencia tenga el número y la etiqueta
+          ref.manual_uncombined_sn = false;
+          ref.prev_nro_combinacion = newNro;
+          ref.nro_combinacion = newNro;
+          ref.combinacion = _etiqueta;
+        }
+      }
+
+      // 3) Completar los que no quedaron combinados
+      this.CompletarNoCombinados();
+    },
+    descombinarItem: function descombinarItem(index) {
+      var it = this.TablaPartesServicios[index];
+      it.manual_uncombined_sn = true;
+      it.nro_combinacion = '';
+      it.combinacion = it.abreviatura;
+    },
+    recombinarItem: function recombinarItem(index) {
+      var it = this.TablaPartesServicios[index];
+      it.manual_uncombined_sn = false;
+      this.cargarCombinados();
+    },
     getServiciosParte: function getServiciosParte(id) {
-      var _this7 = this;
+      var _arguments = arguments,
+        _this7 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        var urlRegistros, res, parte_servicios;
+        var recompute, urlRegistros, res, parte_servicios;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
+              recompute = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : true;
               axios.defaults.baseURL = _this7.url;
               urlRegistros = 'certificados/parte/' + id + '/servicios' + '?api_token=' + Laravel.user.api_token;
-              _context3.next = 4;
+              _context3.next = 5;
               return axios.get(urlRegistros);
-            case 4:
+            case 5:
               res = _context3.sent;
-              _context3.next = 7;
+              _context3.next = 8;
               return res.data;
-            case 7:
+            case 8:
               parte_servicios = _context3.sent;
               parte_servicios.forEach(function (item) {
                 var cantidad = (Math.round(item.cantidad * 100) / 100).toFixed(2);
@@ -10044,15 +10214,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
                   abreviatura: item.abreviatura,
                   visible: true,
                   nro_combinacion: 0,
+                  prev_nro_combinacion: null,
                   combinado_sn: item.combinado_sn,
+                  manual_uncombined_sn: false,
                   combinacion: '',
                   obra: item.obra,
                   fecha: item.fecha,
                   fecha_formateada: item.fecha_formateada
                 });
               }.bind(_this7));
-              _this7.cargarCombinados();
-            case 10:
+              if (recompute) _this7.cargarCombinados();
+            case 11:
             case "end":
               return _context3.stop();
           }
@@ -10103,6 +10275,20 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         return item.parte_id != id;
       });
     },
+    limpiarTodo: function limpiarTodo() {
+      this.loading = true;
+      this.partes.forEach(function (item) {
+        item.parte_sel = false;
+      });
+      this.TablaPartesServicios = [];
+      this.TablaPartesProductosPorPlacas = [];
+      this.TablaPartesProductosPorCosturas = [];
+      this.indexTablaPartesProductosPorPlacas = -1;
+      this.indexTablaPartesProductosPorCosturas = -1;
+      this.indexTablaPartesServicios = -1;
+      this.titulo = '';
+      this.loading = false;
+    },
     getPartesPendientesCertificado: function getPartesPendientesCertificado() {
       var _this9 = this;
       axios.defaults.baseURL = this.url;
@@ -10136,9 +10322,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.indexTablaPartesServicios = index;
     },
     RemoveTablaPartesServicios: function RemoveTablaPartesServicios(index) {
+      var ref = this.TablaPartesServicios[index];
+      // Si pertenece a un grupo combinado activo, primero descombinar ese grupo específico
+      var hasGrupo = ref && !ref.manual_uncombined_sn && Number(ref.nro_combinacion) > 0;
+      if (hasGrupo) {
+        this.borrarCombinacionIndex(index); // esto ya recalcula solo etiquetas del grupo vía CompletarNoCombinados
+      }
+
+      // Luego ocultar solo la fila
       this.TablaPartesServicios[index].visible = false;
       this.TablaPartesServicios[index].cant_final = '';
-      this.cargarCombinados();
+
+      // Evitar recomputar globalmente para no renumerar otros grupos
+      // this.cargarCombinados();
     },
     Store: function Store() {
       var _this11 = this;
@@ -10162,7 +10358,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }).then(function (response) {
         var certificado = response.data;
         toastr.success('Certificado N°' + _this11.numero_code + ' fue creado con éxito ');
-        window.open('/pdf/certificado/' + certificado.id + '/final', '_blank');
+        window.open('/pdf/certificado/' + certificado.id + '/final/agrupado', '_blank');
         window.location.href = '/certificados/ot/' + _this11.otdata.id;
       })["catch"](function (error) {
         _this11.errors = error.response.data.errors;
@@ -10199,7 +10395,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }
       }).then(function () {
         toastr.success('Certificado N°' + _this12.numero_code + ' fue actualizado con éxito ');
-        window.open('/pdf/certificado/' + _this12.certificado_data.id + '/final', '_blank');
+        window.open('/pdf/certificado/' + _this12.certificado_data.id + '/final/agrupado', '_blank');
         window.location.href = '/certificados/ot/' + _this12.otdata.id;
       })["catch"](function (error) {
         _this12.errors = error.response.data.errors;
@@ -16470,6 +16666,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.Registro.obra = value || 'N/A'; // Si value es null o falsy, asigna 'N/A'
     },
     setPlanta: function setPlanta(value) {
+      console.log('el value es', value);
       this.Registro.planta = value;
     },
     updateRegistro: function updateRegistro() {
@@ -20933,9 +21130,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _functions_sprintf_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../functions/sprintf.js */ "./resources/js/functions/sprintf.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -21129,10 +21323,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       condiciones_superficial: '',
       temperatura_superficial: null,
       temperatura_consumibles: null,
-      termostato: 'FLUKE 572-2',
-      soldadores: [],
-      soldador1: '',
-      soldador2: ''
+      termostato: 'FLUKE 572-2'
     };
   },
   created: function created() {
@@ -21159,7 +21350,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     this.getUsuariosCliente();
     this.getAplicacionesLp();
     this.setEdit();
-    this.getSoldadores();
   },
   mounted: function mounted() {
     this.getNumeroInforme();
@@ -21250,26 +21440,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         this.interno_equipo = null;
       }
     },
-    getSoldadores: function getSoldadores() {
-      var _this2 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var urlRegistros;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              axios.defaults.baseURL = _this2.url;
-              urlRegistros = 'ot_soldadores/ot/' + _this2.otdata.id + '?api_token=' + Laravel.user.api_token;
-              _context.next = 4;
-              return axios.get(urlRegistros).then(function (response) {
-                _this2.soldadores = response.data;
-              });
-            case 4:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee);
-      }))();
-    },
     setObra: function setObra(value) {
       this.obra = value;
       this.ot_tipo_soldadura = '';
@@ -21284,12 +21454,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.planta = value;
     },
     getNumeroInforme: function getNumeroInforme() {
-      var _this3 = this;
+      var _this2 = this;
       if (!this.editmode) {
         axios.defaults.baseURL = this.url;
         var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/0' + '/generar-numero-informe/' + '?api_token=' + Laravel.user.api_token;
         axios.get(urlRegistros).then(function (response) {
-          _this3.numero_inf = response.data;
+          _this2.numero_inf = response.data;
         });
       }
     },
@@ -21304,11 +21474,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }
     },
     getUsuariosCliente: function getUsuariosCliente() {
-      var _this4 = this;
+      var _this3 = this;
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this4.usuarios_cliente = response.data;
+        _this3.usuarios_cliente = response.data;
       });
     },
     getFuente: function getFuente() {
@@ -21353,13 +21523,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     getInternoEquipos: function getInternoEquipos() {
-      var _this5 = this;
+      var _this4 = this;
       this.$store.dispatch('loadInternoEquipos', {
         'metodo': this.metodo,
         'activo_sn': 1,
         'tipo_penetrante': this.tipo_penetrante
       }).then(function (response) {
-        _this5.interno_equipo = '';
+        _this4.interno_equipo = '';
       });
     },
     setearTipoPenetrante: function setearTipoPenetrante() {
@@ -21382,20 +21552,20 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.indexPosDetalle = index;
     },
     getMetodosTrabajoLp: function getMetodosTrabajoLp() {
-      var _this6 = this;
+      var _this5 = this;
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'metodos_trabajo_lp' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this6.metodos_trabajo_lp = response.data;
+        _this5.metodos_trabajo_lp = response.data;
       });
     },
     getAplicacionesLp: function getAplicacionesLp() {
-      var _this7 = this;
+      var _this6 = this;
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'aplicaciones_lp' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this7.aplicaciones_lp = response.data;
-        _this7.$store.commit('loading', false);
+        _this6.aplicaciones_lp = response.data;
+        _this6.$store.commit('loading', false);
       });
     },
     addDetalle: function addDetalle() {
@@ -21407,12 +21577,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         toastr.error('El campo cm es obligatorio');
         return;
       }
-      console.log(this.soldador1, this.soldador2);
       this.TablaLp.push({
         pieza: this.pieza,
         cm: this.cm,
-        soldador1: this.soldador1,
-        soldador2: this.soldador2,
         detalle: 'OK',
         aceptable_sn: 1,
         observaciones: '',
@@ -21449,7 +21616,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.modelo_3d = '';
     },
     Store: function Store() {
-      var _this8 = this;
+      var _this7 = this;
       this.errors = [];
       this.$store.commit('loading', true);
       var urlRegistros = 'informes_lp';
@@ -21514,25 +21681,25 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }
       }).then(function (response) {
         var informe = response.data;
-        toastr.success('informe N°' + _this8.numero_inf + ' fue creado con éxito ');
+        toastr.success('informe N°' + _this7.numero_inf + ' fue creado con éxito ');
         window.open('/pdf/informe/lp/' + informe.id, '_blank');
-        window.location.href = '/informes/ot/' + _this8.otdata.id;
+        window.location.href = '/informes/ot/' + _this7.otdata.id;
       })["catch"](function (error) {
-        _this8.errors = error.response.data.errors;
+        _this7.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this8.errors, function (key, value) {
+        $.each(_this7.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
-        if (typeof _this8.errors == 'undefined' && error) {
+        if (typeof _this7.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       })["finally"](function () {
-        return _this8.$store.commit('loading', false);
+        return _this7.$store.commit('loading', false);
       });
     },
     Update: function Update() {
-      var _this9 = this;
+      var _this8 = this;
       this.errors = [];
       this.$store.commit('loading', true);
       var urlRegistros = 'informes_lp/' + this.informedata.id;
@@ -21597,21 +21764,21 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }
       }).then(function (response) {
         var informe = response.data;
-        toastr.success('informe N°' + _this9.numero_inf + ' fue actualizado con éxito ');
+        toastr.success('informe N°' + _this8.numero_inf + ' fue actualizado con éxito ');
         window.open('/pdf/informe/lp/' + informe.id, '_blank');
-        window.location.href = '/informes/ot/' + _this9.otdata.id;
+        window.location.href = '/informes/ot/' + _this8.otdata.id;
       })["catch"](function (error) {
-        _this9.errors = error.response.data.errors;
+        _this8.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this9.errors, function (key, value) {
+        $.each(_this8.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
-        if (typeof _this9.errors == 'undefined' && error) {
+        if (typeof _this8.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       })["finally"](function () {
-        return _this9.$store.commit('loading', false);
+        return _this8.$store.commit('loading', false);
       });
     }
   }
@@ -26975,6 +27142,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _functions_sprintf_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../functions/sprintf.js */ "./resources/js/functions/sprintf.js");
 /* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! xlsx */ "./node_modules/xlsx/xlsx.js");
 /* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(xlsx__WEBPACK_IMPORTED_MODULE_12__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -26986,7 +27154,6 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 
 
 
@@ -27000,7 +27167,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty(_defineProperty(_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"],
     ModalPopup: _pop_up_componente_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
@@ -27113,16 +27280,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     solicitado_pordata: {
       type: [Object, Array],
       required: false
-    }
-  },
-  computed: {
-    plantaObj: function plantaObj() {
-      return typeof this.planta === 'string' ? {
-        codigo: this.planta
-      } : this.planta || {};
-    },
-    materialSelectedObj: function materialSelectedObj() {
-      return this.material && _typeof(this.material) === 'object' ? this.material : {};
     }
   },
   data: function data() {
@@ -27244,1199 +27401,1188 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       isModalOpen: false,
       popupData: '',
       tablaInspeccion: [],
-      tipo_tgs: null
+      tipo_tgs: null,
+      tipoOptions: ['Horizontal', 'Vertical', 'Linea']
     };
   },
   created: function created() {
     this.init();
-  }
-}, "computed", _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])(['isLoading', 'url', 'ot_obra_tipo_soldaduras', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos', 'interno_equipos', 'palpadores', 'modelos_3d', 'pdf_especial'])), {}, {
-  numero_inf_code: function numero_inf_code() {
-    if (this.numero_inf) {
-      if (this.informedata.numero_repetido) {
-        if (this.informedata.numero_repetido !== 1) {
-          return this.tecnica.codigo + Object(_functions_sprintf_js__WEBPACK_IMPORTED_MODULE_11__["sprintf"])("%04d", this.numero_inf) + '-' + this.informedata.numero_repetido;
-        } else {
-          return this.tecnica.codigo + Object(_functions_sprintf_js__WEBPACK_IMPORTED_MODULE_11__["sprintf"])("%04d", this.numero_inf);
-        }
-      } else return this.tecnica.codigo + Object(_functions_sprintf_js__WEBPACK_IMPORTED_MODULE_11__["sprintf"])("%04d", this.numero_inf);
+  },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])(['isLoading', 'url', 'ot_obra_tipo_soldaduras', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos', 'interno_equipos', 'palpadores', 'modelos_3d'])), {}, {
+    numero_inf_code: function numero_inf_code() {
+      if (this.numero_inf) {
+        if (this.informedata.numero_repetido) {
+          if (this.informedata.numero_repetido !== 1) {
+            return this.tecnica.codigo + Object(_functions_sprintf_js__WEBPACK_IMPORTED_MODULE_11__["sprintf"])("%04d", this.numero_inf) + '-' + this.informedata.numero_repetido;
+          } else {
+            return this.tecnica.codigo + Object(_functions_sprintf_js__WEBPACK_IMPORTED_MODULE_11__["sprintf"])("%04d", this.numero_inf);
+          }
+        } else return this.tecnica.codigo + Object(_functions_sprintf_js__WEBPACK_IMPORTED_MODULE_11__["sprintf"])("%04d", this.numero_inf);
+      }
+    },
+    isTipoEnabled: function isTipoEnabled() {
+      var _this$cliente, _this$tecnica;
+      return ((_this$cliente = this.cliente) === null || _this$cliente === void 0 ? void 0 : _this$cliente.codigo) === '0279' && ((_this$tecnica = this.tecnica) === null || _this$tecnica === void 0 ? void 0 : _this$tecnica.codigo) === 'ME';
     }
-  },
-  isTipoEnabled: function isTipoEnabled() {
-    var _this$tecnica;
-    return this.pdfEspecialsn && ((_this$tecnica = this.tecnica) === null || _this$tecnica === void 0 ? void 0 : _this$tecnica.codigo) === 'ME';
-  },
-  pdfEspecialsn: function pdfEspecialsn() {
-    return this.pdf_especial.length > 0;
-  },
-  tipoOptions: function tipoOptions() {
-    return this.pdfEspecialsn ? this.pdf_especial.map(function (item) {
-      return item.tipo_informe;
-    }) : [];
-  },
-  mostrarInspeccionVisual: function mostrarInspeccionVisual() {
-    return this.pdfEspecialsn && this.tecnica.codigo === 'ME' && (this.tipo_tgs == 'Horizontal' || this.tipo_tgs == 'Vertical');
-  }
-})), "watch", {
-  diametro: function diametro(val) {
-    if (val) {
-      if (val.diametro == 'CHAPA') {
-        this.isChapa = true;
-        this.isVarios = false;
-      } else if (val.diametro == 'VARIOS') {
-        this.isChapa = false;
-        this.isVarios = true;
-        this.espesor_chapa = '';
-      } else {
-        this.isChapa = false;
-        this.isVarios = false;
-        this.espesor_chapa = '';
+  }),
+  watch: {
+    diametro: function diametro(val) {
+      if (val) {
+        if (val.diametro == 'CHAPA') {
+          this.isChapa = true;
+          this.isVarios = false;
+        } else if (val.diametro == 'VARIOS') {
+          this.isChapa = false;
+          this.isVarios = true;
+          this.espesor_chapa = '';
+        } else {
+          this.isChapa = false;
+          this.isVarios = false;
+          this.espesor_chapa = '';
+        }
+      }
+    },
+    isTipoEnabled: function isTipoEnabled(newVal) {
+      if (!newVal) {
+        // …y resulta ser false, reseteamos el select
+        this.tipo_tgs = '';
       }
     }
   },
-  isTipoEnabled: function isTipoEnabled(newVal) {
-    if (!newVal) {
-      // …y resulta ser false, reseteamos el select
-      this.tipo_tgs = '';
-    }
-  }
-}), "methods", {
-  init: function init() {
-    var _this = this;
-    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
-        while (1) switch (_context.prev = _context.next) {
-          case 0:
-            _this.$store.commit('loading', true);
-            _context.next = 3;
-            return _this.getCliente();
-          case 3:
-            // ← esto se espera
-            _this.$store.commit('loading', true);
-            _this.$store.dispatch('loadMateriales');
-            _this.$store.dispatch('loadDiametros');
-            _this.getAgenteAcomplamiento();
-            _this.$store.dispatch('loadInternoEquipos', {
-              'metodo': _this.metodo,
-              'activo_sn': 1,
-              'tipo_penetrante': 'null'
-            });
-            _this.$store.dispatch('loadProcedimietosOtMetodo', {
-              'ot_id': _this.otdata.id,
-              'metodo': _this.metodo
-            }).then(function (response) {
-              if (_this.procedimientos.length == 0) {
-                toastr.options = _toastrConfig__WEBPACK_IMPORTED_MODULE_6__["toastrInfo"];
-                toastr.info('No existe ningún procedimiento para el método de ensayo seleccionado');
-                toastr.options = _toastrConfig__WEBPACK_IMPORTED_MODULE_6__["toastrDefault"];
-              }
-            });
-            _this.$store.dispatch('loadNormaEvaluaciones');
-            _this.$store.dispatch('loadNormaEnsayos');
-            _this.getEstadosSuperficies();
-            _this.getPalpadores();
-            _this.$store.dispatch('loadEjecutorEnsayo', _this.otdata.id);
-            _this.getGeneratrices();
-            _this.getUsuariosCliente();
-            _context.next = 18;
-            return _this.getTablaInspeccion();
-          case 18:
-            _this.setEdit();
-            _this.$store.dispatch('loadModelos3d');
-            _this.getAccesoriosUs();
-            _this.getSoldadores();
-            _this.$store.dispatch('loadPdfEspecial', {
-              metodo: _this.metodo,
-              cliente_id: _this.otdata.cliente_id
-            });
-          case 23:
-          case "end":
-            return _context.stop();
-        }
-      }, _callee);
-    }))();
-  },
-  getTablaInspeccion: function getTablaInspeccion() {
-    var _this2 = this;
-    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var response;
-      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-        while (1) switch (_context2.prev = _context2.next) {
-          case 0:
-            _context2.prev = 0;
-            _context2.next = 3;
-            return axios.get('tgs/tabla-inspeccion');
-          case 3:
-            response = _context2.sent;
-            // Ajustá si tu axios tiene baseURL
-            // Recorremos los datos y agregamos el campo "selected" a cada item
-            _this2.tablaInspeccion = response.data.map(function (categoria) {
-              return _objectSpread(_objectSpread({}, categoria), {}, {
-                items: categoria.items.map(function (item) {
-                  return _objectSpread(_objectSpread({}, item), {}, {
-                    selected: 'N/A' // 'SI' | 'NO' | 'N/A'
-                  });
-                })
+  methods: {
+    init: function init() {
+      var _this = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _this.$store.commit('loading', true);
+              _context.next = 3;
+              return _this.getCliente();
+            case 3:
+              // ← esto se espera
+              _this.$store.commit('loading', true);
+              _this.$store.dispatch('loadMateriales');
+              _this.$store.dispatch('loadDiametros');
+              _this.getAgenteAcomplamiento();
+              _this.$store.dispatch('loadInternoEquipos', {
+                'metodo': _this.metodo,
+                'activo_sn': 1,
+                'tipo_penetrante': 'null'
               });
-            });
-            _context2.next = 10;
-            break;
-          case 7:
-            _context2.prev = 7;
-            _context2.t0 = _context2["catch"](0);
-            console.error('Error al cargar la tabla de inspección', _context2.t0);
-          case 10:
-          case "end":
-            return _context2.stop();
-        }
-      }, _callee2, null, [[0, 7]]);
-    }))();
-  },
-  seleccionarRespuesta: function seleccionarRespuesta(item, respuesta) {
-    item.selected = respuesta;
-  },
-  openModal: function openModal() {
-    this.isModalOpen = true;
-  },
-  // Cierra el popup
-  closeModal: function closeModal() {
-    this.isModalOpen = false;
-  },
-  // Recibe y maneja los datos del modal al hacer submit
-  handleModalSubmit: function handleModalSubmit(popupData) {
-    this.popupData = popupData;
-    // Aquí puedes procesar los datos recibidos según tu lógica
-    this.closeModal();
-  },
-  colorLimiteTabla: function colorLimiteTabla(p, g) {
-    return p === 1 || g === 1 ? '#bee5eb' : null;
-  },
-  setEdit: function () {
-    var _setEdit = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-      var _this3 = this;
-      var respuestas;
-      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-        while (1) switch (_context3.prev = _context3.next) {
-          case 0:
-            if (!this.editmode) {
-              _context3.next = 52;
-              break;
-            }
-            this.fecha = this.informedata.fecha;
-            this.numero_inf = this.informedata.numero;
-            this.obra = this.informedata.obra;
-            this.planta = this.informedata.planta;
-            this.componente = this.informedata.componente;
-            this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
-            this.linea = this.informedata.linea;
-            this.plano_isom = this.informedata.plano_isom;
-            this.hoja = this.informedata.hoja;
-            this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
-            this.path1_calibracion = this.informe_usdata.path1_calibracion;
-            this.path2_calibracion = this.informe_usdata.path2_calibracion;
-            this.path3_calibracion = this.informe_usdata.path3_calibracion;
-            this.path4_calibracion = this.informe_usdata.path4_calibracion;
-            this.path1_indicacion = this.informe_usdata.path1_indicacion;
-            this.path2_indicacion = this.informe_usdata.path2_indicacion;
-            this.path3_indicacion = this.informe_usdata.path3_indicacion;
-            this.path4_indicacion = this.informe_usdata.path4_indicacion;
-            this.pqr = this.informedata.pqr;
-            this.material = this.materialdata;
-            this.material2 = this.material2data;
-            if (this.informedata.material2_tipo) {
-              this.material2_tipo = this.informedata.material2_tipo;
-            }
-            ;
-            this.diametro = this.diametro_espesordata['id'] !== 'undefined' && !(this.diametro_espesordata instanceof Array) ? this.diametro_espesordata : {
-              'diametro': this.informedata.diametro_especifico
-            };
-            this.espesor = this.informedata.espesor_especifico ? {
-              'espesor': this.informedata.espesor_especifico
-            } : this.diametro_espesordata;
-            this.espesor_chapa = this.informedata.espesor_chapa;
-            this.tecnica = this.tecnicadata;
-            this.interno_equipo = this.interno_equipodata;
-            this.procedimiento = this.procedimientodata;
-            this.norma_evaluacion = this.norma_evaluaciondata;
-            this.norma_ensayo = this.norma_ensayodata;
-            this.ejecutor_ensayo = this.ejecutor_ensayodata;
-            this.estado_superficie = this.estado_superficiedata;
-            this.encoder = this.informe_usdata.encoder;
-            this.agente_acoplamiento = this.agente_acoplamientodata;
-            this.observaciones = this.informedata.observaciones;
-            this.calibraciones = this.calibraciones_data;
-            this.Tabla_us_pa = this.tabla_us_pa_data;
-            this.Tabla_me = this.tabla_me_data;
-            this.TablaModelos3d = this.tablamodelos3d_data;
-            this.solicitado_por = this.solicitado_pordata;
-            this.SetearBlockCalibraciones();
-            this.$store.dispatch('loadOtObraTipoSoldaduras', {
-              'ot_id': this.otdata.id,
-              'obra': this.informedata.obra
-            });
-            _context3.next = 46;
-            return this.$store.dispatch('loadPdfEspecial', {
-              metodo: this.metodo,
-              cliente_id: this.otdata.cliente_id
-            });
-          case 46:
-            if (this.pdfEspecialsn && this.tecnica.codigo === 'ME') {
-              this.$refs.modalPopupRef.setForm(this.componente_me_data);
-              console.log();
-              this.tipo_tgs = this.componente_me_data.tipo_us;
-              respuestas = this.inspeccion_visual || [];
-              respuestas.forEach(function (respuesta) {
-                var _iterator = _createForOfIteratorHelper(_this3.tablaInspeccion),
-                  _step;
-                try {
-                  for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                    var categoria = _step.value;
-                    var item = categoria.items.find(function (i) {
-                      return i.id === respuesta.item_categoria_id;
-                    });
-                    if (item) {
-                      item.selected = respuesta.respuesta;
-                      break;
-                    }
-                  }
-                } catch (err) {
-                  _iterator.e(err);
-                } finally {
-                  _iterator.f();
+              _this.$store.dispatch('loadProcedimietosOtMetodo', {
+                'ot_id': _this.otdata.id,
+                'metodo': _this.metodo
+              }).then(function (response) {
+                if (_this.procedimientos.length == 0) {
+                  toastr.options = _toastrConfig__WEBPACK_IMPORTED_MODULE_6__["toastrInfo"];
+                  toastr.info('No existe ningún procedimiento para el método de ensayo seleccionado');
+                  toastr.options = _toastrConfig__WEBPACK_IMPORTED_MODULE_6__["toastrDefault"];
                 }
               });
-            }
-            this.popupData = this.componente_me_data;
-            _context3.next = 50;
-            return this.getTecnicas();
-          case 50:
-            _context3.next = 57;
-            break;
-          case 52:
-            _context3.next = 54;
-            return this.getTecnicas();
-          case 54:
-            this.tecnica = this.tecnicas[0];
-            this.SetearBlockCalibraciones();
-            this.getNumeroInforme();
-          case 57:
-          case "end":
-            return _context3.stop();
-        }
-      }, _callee3, this);
-    }));
-    function setEdit() {
-      return _setEdit.apply(this, arguments);
-    }
-    return setEdit;
-  }(),
-  setObra: function setObra(value) {
-    this.obra = value;
-    this.ot_tipo_soldadura = '';
-    if (this.obra) {
-      this.$store.dispatch('loadOtObraTipoSoldaduras', {
-        'ot_id': this.otdata.id,
-        'obra': this.obra
-      });
-    }
-  },
-  setPlanta: function setPlanta(value) {
-    this.planta = value;
-  },
-  getSoldadores: function getSoldadores() {
-    var _this4 = this;
-    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-      var urlRegistros;
-      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-        while (1) switch (_context4.prev = _context4.next) {
-          case 0:
-            axios.defaults.baseURL = _this4.url;
-            urlRegistros = 'ot_soldadores/ot/' + _this4.otdata.id + '?api_token=' + Laravel.user.api_token;
-            _context4.next = 4;
-            return axios.get(urlRegistros).then(function (response) {
-              _this4.opcionesSoldadores = response.data;
-            });
-          case 4:
-          case "end":
-            return _context4.stop();
-        }
-      }, _callee4);
-    }))();
-  },
-  getCliente: function getCliente() {
-    var _this5 = this;
-    axios.defaults.baseURL = this.url;
-    var urlRegistros = "clientes/" + this.otdata.cliente_id + "?api_token=" + Laravel.user.api_token;
-    return axios.get(urlRegistros).then(function (response) {
-      _this5.cliente = response.data;
-    });
-  },
-  obtenerCodigoSoldadorPorId: function obtenerCodigoSoldadorPorId(id) {
-    var soldador = this.opcionesSoldadores.find(function (s) {
-      return s.id === id;
-    });
-    return soldador ? soldador.codigo : '-'; //
-  },
-  getNumeroInforme: function getNumeroInforme() {
-    var _this6 = this;
-    axios.defaults.baseURL = this.url;
-    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/' + this.tecnica.id + '/generar-numero-informe/' + '?api_token=' + Laravel.user.api_token;
-    axios.get(urlRegistros).then(function (response) {
-      _this6.numero_inf = response.data;
-    });
-  },
-  getTecnicas: function () {
-    var _getTecnicas = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-      var _this7 = this;
-      var urlRegistros;
-      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-        while (1) switch (_context5.prev = _context5.next) {
-          case 0:
-            axios.defaults.baseURL = this.url;
-            urlRegistros = 'tecnicas/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;
-            _context5.next = 4;
-            return axios.get(urlRegistros).then(function (response) {
-              _this7.tecnicas = response.data;
-            });
-          case 4:
-          case "end":
-            return _context5.stop();
-        }
-      }, _callee5, this);
-    }));
-    function getTecnicas() {
-      return _getTecnicas.apply(this, arguments);
-    }
-    return getTecnicas;
-  }(),
-  getEstadosSuperficies: function getEstadosSuperficies() {
-    var _this8 = this;
-    axios.defaults.baseURL = this.url;
-    var urlRegistros = 'estados_superficies' + '?api_token=' + Laravel.user.api_token;
-    axios.get(urlRegistros).then(function (response) {
-      _this8.estados_superficies = response.data;
-    });
-  },
-  getUsuariosCliente: function getUsuariosCliente() {
-    var _this9 = this;
-    axios.defaults.baseURL = this.url;
-    var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
-    axios.get(urlRegistros).then(function (response) {
-      _this9.usuarios_cliente = response.data;
-    });
-  },
-  getAgenteAcomplamiento: function getAgenteAcomplamiento() {
-    var _this10 = this;
-    axios.defaults.baseURL = this.url;
-    var urlRegistros = 'agente_acoplamientos' + '?api_token=' + Laravel.user.api_token;
-    axios.get(urlRegistros).then(function (response) {
-      _this10.agente_acoplamientos = response.data;
-    });
-  },
-  getAccesoriosUs: function getAccesoriosUs() {
-    var _this11 = this;
-    axios.defaults.baseURL = this.url;
-    var urlRegistros = 'accesorios_us' + '?api_token=' + Laravel.user.api_token;
-    axios.get(urlRegistros).then(function (response) {
-      _this11.accesorios_us = response.data;
-    });
-  },
-  getPalpadores: function getPalpadores() {
-    var _this12 = this;
-    this.$store.dispatch('loadPalpadores').then(function (response) {
-      _this12.palpador = '';
-    });
-  },
-  getEspesores: function getEspesores(diametro) {
-    this.espesor = '';
-    if (diametro != 'CHAPA') {
-      this.espesor_chapa = '';
-    }
-    var index = this.diametros.findIndex(function (e) {
-      return e.diametro_code === diametro.diametro_code;
-    });
-    if (diametro) {
-      this.$store.dispatch('loadEspesores', diametro.diametro_code);
-      if (index === -1) {
-        if (!this.validarDiametroEspecifico(diametro.diametro)) {
-          this.diametro = {};
-        }
-      }
-    }
-  },
-  validarDiametroEspecifico: function validarDiametroEspecifico(diametro) {
-    var exp_posicion = /^[0-9]{0,3}.[0-9]{0,2}m$/;
-    return exp_posicion.test(this.diametro.diametro);
-  },
-  getGeneratrices: function getGeneratrices() {
-    var _this13 = this;
-    axios.defaults.baseURL = this.url;
-    var urlRegistros = 'generatrices' + '?api_token=' + Laravel.user.api_token;
-    axios.get(urlRegistros).then(function (response) {
-      _this13.generatrices = response.data;
-      _this13.$store.commit('loading', false);
-    });
-  },
-  addCalibraciones: function addCalibraciones() {
-    // Usamos un operador ternario para definir el límite en una sola línea
-    var limite = this.tecnica.codigo === 'PA' ? 10 : 4;
-
-    // Ahora hacemos la validación contra ese límite dinámico
-    if (this.calibraciones.length >= limite) {
-      toastr.error("El m\xE1ximo de calibraciones a ingresar son ".concat(limite, "."));
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && !this.zapata) {
-      toastr.error('El campo Zapata es obligatorio');
-      return;
-    }
-    if (this.zapata.length > 20) {
-      toastr.error('El campo Zapata no debe contener más de 20 caracteres');
-      return;
-    }
-    if (!this.palpador) {
-      toastr.error('El campo Palpador es obligatorio');
-      return;
-    }
-    if (!this.frecuencia) {
-      toastr.error('El campo Frecuencia es obligatorio');
-      return;
-    }
-    if (this.frecuencia > 999) {
-      toastr.error('El campo Frecuencia no debe ser mayor a 999');
-      return;
-    }
-    if (!this.angulo_apertura) {
-      toastr.error('El campo Angulo Apertura es obligatorio');
-      return;
-    }
-    if (this.angulo_apertura.length > 7) {
-      toastr.error('El campo Angulo Apertura no debe contener más de 7 caracteres');
-      return;
-    }
-    if (!this.rango) {
-      toastr.error('El campo Rango es obligatorio');
-      return;
-    }
-    if (this.rango.length > 7) {
-      toastr.error('El campo Rango no debe contener más de 7 caracteres');
-      return;
-    }
-    if (!this.posicion) {
-      toastr.error('El campo Posición es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo !== 'PA' && this.posicion.length > 3 || this.tecnica.codigo === 'PA' && this.posicion.length > 10) {
-      // Puedes usar un mensaje de error más genérico o adaptarlo
-      var _limite = this.tecnica.codigo === 'PA' ? 10 : 3;
-      toastr.error("El campo Posici\xF3n no debe contener m\xE1s de ".concat(_limite, " caracteres."));
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && !this.curva_elevacion) {
-      toastr.error('El campo Curva Elevación es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && this.curva_elevacion.length > 3) {
-      toastr.error('El campo Curva Elevación no debe contener más de 3 caracteres');
-      return;
-    }
-    if (!this.block_calibracion) {
-      toastr.error('El campo Block Calibración es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && !this.block_sensibilidad) {
-      toastr.error('El campo Block Sensibilidad es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && this.block_sensibilidad > 999) {
-      toastr.error('El campo Block Sensibilidad no debe ser mayor a 999');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && !this.tipo_reflector) {
-      toastr.error('El campo Tipo Reflector es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && this.tipo_reflector.length > 3) {
-      toastr.error('El campo Tipo Reflector no debe contener más de 3 caracteres');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && !this.reflector_referencia) {
-      toastr.error('El campo Reflector Referencia es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && this.reflector_referencia > 99.9) {
-      toastr.error('El campo Reflector Referencia no debe ser mayor a 99.9');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && !this.ganancia_referencia) {
-      toastr.error('El campo Ganancia Referencia es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && this.ganancia_referencia > 999) {
-      toastr.error('El campo Ganancia Referencia no debe ser mayor a 999');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && !this.nivel_registro) {
-      toastr.error('El campo Nivel Registro es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && this.nivel_registro > 999) {
-      toastr.error('El campo Nivel Registro no debe ser mayor a 999');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && !this.correccion_transferencia) {
-      toastr.error('El campo Corrección Transferencia es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && this.correccion_transferencia > 999) {
-      toastr.error('El campo Corrección Transferencia no debe ser mayor a 999');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && !this.adicional_barrido) {
-      toastr.error('El campo Adicional Barrido es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && this.adicional_barrido > 999) {
-      toastr.error('El campo Adicional Barrido no debe ser mayor a 999');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && !this.amplificacion_total) {
-      toastr.error('El campo Amplificación Total es obligatorio');
-      return;
-    }
-    if (this.tecnica.codigo != 'ME' && this.amplificacion_total > 999) {
-      toastr.error('El campo Amplificación Total no debe ser mayor a 999');
-      return;
-    }
-    this.calibraciones.push({
-      zapata: this.zapata,
-      palpador: this.palpador,
-      frecuencia: this.frecuencia,
-      angulo_apertura: this.angulo_apertura,
-      rango: this.rango,
-      posicion: this.posicion,
-      curva_elevacion: this.curva_elevacion,
-      block_calibracion: this.block_calibracion,
-      block_sensibilidad: this.block_sensibilidad,
-      tipo_reflector: this.tipo_reflector,
-      reflector_referencia: this.reflector_referencia,
-      ganancia_referencia: this.ganancia_referencia,
-      correccion_transferencia: this.correccion_transferencia,
-      nivel_registro: this.nivel_registro,
-      adicional_barrido: this.adicional_barrido,
-      amplificacion_total: this.amplificacion_total
-    });
-  },
-  validarDecimales: function validarDecimales(valor) {
-    var decimales = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-    var regex = new RegExp("^-?\\d+(?:\\.\\d{0,".concat(decimales, "})?$"));
-    return regex.test(valor);
-  },
-  addTabla_us_pa: function addTabla_us_pa() {
-    if (!this.elemento_us_pa) {
-      toastr.error('El campo Elemento es obligatorio');
-      return;
-    }
-    if (this.elemento_us_pa.length > 30) {
-      toastr.error('El campo Elemento no debe contener más de 30 caracteres');
-      return;
-    }
-    if (this.diametro_us_pa && this.diametro_us_pa.length > 10) {
-      toastr.error('El campo Diametro no debe contener más de 10 caracteres');
-      return;
-    }
-    if (!this.diametro_us_pa.diametro) {
-      toastr.error('El campo Diametro es obligatorio');
-      return;
-    }
-    if (!this.nro_indicacion_us_pa) {
-      toastr.error('El campo N° Indicación es obligatorio');
-      return;
-    }
-    if (!this.barrido_us_pa) {
-      toastr.error('El campo Barrido es obligatorio');
-      return;
-    }
-    if (this.nivel_nro_indicacion_us_paregistro > 9999) {
-      toastr.error('El campo N° Indicación no debe ser mayor a 9999');
-      return;
-    }
-    if (!this.posicion_examen_us_pa) {
-      toastr.error('El campo Posición Examen es obligatorio');
-      return;
-    }
-    if (this.posicion_examen_us_pa.length > 7) {
-      toastr.error('El campo Posición Examen no debe contener más de 7 caracteres');
-      return;
-    }
-    if (!this.angulo_incidencia_us_pa) {
-      toastr.error('El campo Ángulo Incidencia es obligatorio');
-      return;
-    }
-    if (this.angulo_incidencia_us_pa.length > 10) {
-      toastr.error('El campo Ángulo Incidencia no debe contener más de 10 caracteres');
-      return;
-    }
-    if (!this.camino_sonico_us_pa) {
-      toastr.error('El campo Camino Sónico es obligatorio');
-      return;
-    }
-    if (this.camino_sonico_us_pa.length > 7) {
-      toastr.error('El campo Camino Sónico no debe contener más de 6 caracteres');
-      return;
-    }
-
-    // Validación de decimales para camino_sonico_us_pa
-    if (!this.validarDecimales(this.camino_sonico_us_pa)) {
-      toastr.error('El campo Camino Sónico no debe tener más de 2 decimales');
-      return;
-    }
-    if (!this.x_us_pa) {
-      toastr.error('El campo X es obligatorio');
-      return;
-    }
-    if (this.x_us_pa > 9999) {
-      toastr.error('El campo X no debe ser mayor a 9999');
-      return;
-    }
-
-    // Validación de decimales para x_us_pa
-    if (!this.validarDecimales(this.x_us_pa)) {
-      toastr.error('El campo X no debe tener más de 2 decimales');
-      return;
-    }
-    if (!this.y_us_pa) {
-      toastr.error('El campo Y es obligatorio');
-      return;
-    }
-    if (this.y_us_pa > 9999) {
-      toastr.error('El campo Y no debe ser mayor a 9999');
-      return;
-    }
-
-    // Validación de decimales para y_us_pa
-    if (!this.validarDecimales(this.y_us_pa)) {
-      toastr.error('El campo Y no debe tener más de 2 decimales');
-      return;
-    }
-    if (!this.z_us_pa) {
-      toastr.error('El campo Z es obligatorio');
-      return;
-    }
-    if (this.z_us_pa > 9999) {
-      toastr.error('El campo Z no debe ser mayor a 9999');
-      return;
-    }
-
-    // Validación de decimales para z_us_pa
-    if (!this.validarDecimales(this.z_us_pa)) {
-      toastr.error('El campo Z no debe tener más de 2 decimales');
-      return;
-    }
-    if (!this.longitud_us_pa) {
-      toastr.error('El campo longitud es obligatorio');
-      return;
-    }
-    if (this.longitud_us_pa > 9999) {
-      toastr.error('El campo Longitud no debe ser mayor a 9999');
-      return;
-    }
-
-    // Validación de decimales para longitud_us_pa
-    if (!this.validarDecimales(this.longitud_us_pa)) {
-      toastr.error('El campo Longitud no debe tener más de 2 decimales');
-      return;
-    }
-    if (!this.nivel_registro_us_pa) {
-      toastr.error('El campo Nivel Registro es obligatorio');
-      return;
-    }
-    if (this.nivel_registro_us_pa.length > 6) {
-      toastr.error('El campo Nivel Registro no debe contener más de 6 caracteres');
-      return;
-    }
-
-    // Validación de decimales para nivel_registro_us_pa
-    if (!this.validarDecimales(this.nivel_registro_us_pa)) {
-      toastr.error('El campo Nivel Registro no debe tener más de 2 decimales');
-      return;
-    }
-    this.Tabla_us_pa.push({
-      elemento_us_pa: this.elemento_us_pa,
-      soldadorP: this.soldadorP ? this.soldadorP.id : '',
-      soldadorZ: this.soldadorZ ? this.soldadorZ.id : '',
-      diametro_us_pa: this.diametro_us_pa ? this.diametro_us_pa.diametro : '',
-      nro_indicacion_us_pa: this.nro_indicacion_us_pa,
-      barrido_us_pa: this.barrido_us_pa,
-      posicion_examen_us_pa: this.posicion_examen_us_pa,
-      angulo_incidencia_us_pa: this.angulo_incidencia_us_pa,
-      camino_sonico_us_pa: this.camino_sonico_us_pa,
-      x_us_pa: this.x_us_pa,
-      y_us_pa: this.y_us_pa,
-      z_us_pa: this.z_us_pa,
-      longitud_us_pa: this.longitud_us_pa,
-      nivel_registro_us_pa: this.nivel_registro_us_pa,
-      aceptable_sn_us_pa: false,
-      observaciones: '',
-      path1: null,
-      path2: null,
-      path3: null,
-      path4: null
-    });
-  },
-  triggerFileUpload: function triggerFileUpload(pos) {
-    this.currentPosition = pos; // Almacena la posición actual
-    this.$refs.fileInput.value = ''; // Limpia el valor actual del input para permitir la recarga del mismo archivo
-    this.$refs.fileInput.click(); // Activa el input de tipo file
-  },
-  uploadExcel: function uploadExcel(event) {
-    var _this14 = this;
-    var file = event.target.files[0];
-    if (!file) {
-      return; // Si no hay archivo seleccionado, sale temprano
-    }
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      var data = new Uint8Array(e.target.result);
-      var workbook = xlsx__WEBPACK_IMPORTED_MODULE_12__["read"](data, {
-        type: 'array'
-      });
-      var firstSheetName = workbook.SheetNames[0];
-      var worksheet = workbook.Sheets[firstSheetName];
-      var excelData = xlsx__WEBPACK_IMPORTED_MODULE_12__["utils"].sheet_to_json(worksheet, {
-        header: 1
-      });
-
-      // Procesa las filas para detenerse al encontrar el primer espacio en blanco en la primera columna, a partir de la segunda fila
-      var filasValidas = [];
-      for (var i = 0; i < excelData.length; i++) {
-        // Acepta todas las celdas de la primera fila
-        if (i === 0) {
-          filasValidas.push(excelData[i]);
-        } else {
-          // Detiene el ciclo si encuentra un espacio en blanco en la primera columna de las filas siguientes
-          if (excelData[i][0] === undefined || excelData[i][0].toString().trim() === '') {
-            break;
+              _this.$store.dispatch('loadNormaEvaluaciones');
+              _this.$store.dispatch('loadNormaEnsayos');
+              _this.getEstadosSuperficies();
+              _this.getPalpadores();
+              _this.$store.dispatch('loadEjecutorEnsayo', _this.otdata.id);
+              _this.getGeneratrices();
+              _this.getUsuariosCliente();
+              if (!(_this.cliente.codigo == '0279')) {
+                _context.next = 19;
+                break;
+              }
+              _context.next = 19;
+              return _this.getTablaInspeccion();
+            case 19:
+              _this.setEdit();
+              _this.$store.dispatch('loadModelos3d');
+              _this.getAccesoriosUs();
+              _this.getSoldadores();
+            case 23:
+            case "end":
+              return _context.stop();
           }
-          filasValidas.push(excelData[i]);
+        }, _callee);
+      }))();
+    },
+    getTablaInspeccion: function getTablaInspeccion() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios.get('tgs/tabla-inspeccion');
+            case 3:
+              response = _context2.sent;
+              // Ajustá si tu axios tiene baseURL
+              // Recorremos los datos y agregamos el campo "selected" a cada item
+              _this2.tablaInspeccion = response.data.map(function (categoria) {
+                return _objectSpread(_objectSpread({}, categoria), {}, {
+                  items: categoria.items.map(function (item) {
+                    return _objectSpread(_objectSpread({}, item), {}, {
+                      selected: 'N/A' // 'SI' | 'NO' | 'N/A'
+                    });
+                  })
+                });
+              });
+              _context2.next = 10;
+              break;
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              console.error('Error al cargar la tabla de inspección', _context2.t0);
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 7]]);
+      }))();
+    },
+    seleccionarRespuesta: function seleccionarRespuesta(item, respuesta) {
+      item.selected = respuesta;
+    },
+    openModal: function openModal() {
+      this.isModalOpen = true;
+    },
+    // Cierra el popup
+    closeModal: function closeModal() {
+      this.isModalOpen = false;
+    },
+    // Recibe y maneja los datos del modal al hacer submit
+    handleModalSubmit: function handleModalSubmit(popupData) {
+      this.popupData = popupData;
+      // Aquí puedes procesar los datos recibidos según tu lógica
+      this.closeModal();
+    },
+    colorLimiteTabla: function colorLimiteTabla(p, g) {
+      return p === 1 || g === 1 ? '#bee5eb' : null;
+    },
+    setEdit: function () {
+      var _setEdit = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var _this3 = this;
+        var respuestas;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              if (!this.editmode) {
+                _context3.next = 50;
+                break;
+              }
+              this.fecha = this.informedata.fecha;
+              this.numero_inf = this.informedata.numero;
+              this.obra = this.informedata.obra;
+              this.planta = this.informedata.planta;
+              this.componente = this.informedata.componente;
+              this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
+              this.linea = this.informedata.linea;
+              this.plano_isom = this.informedata.plano_isom;
+              this.hoja = this.informedata.hoja;
+              this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
+              this.path1_calibracion = this.informe_usdata.path1_calibracion;
+              this.path2_calibracion = this.informe_usdata.path2_calibracion;
+              this.path3_calibracion = this.informe_usdata.path3_calibracion;
+              this.path4_calibracion = this.informe_usdata.path4_calibracion;
+              this.path1_indicacion = this.informe_usdata.path1_indicacion;
+              this.path2_indicacion = this.informe_usdata.path2_indicacion;
+              this.path3_indicacion = this.informe_usdata.path3_indicacion;
+              this.path4_indicacion = this.informe_usdata.path4_indicacion;
+              this.pqr = this.informedata.pqr;
+              this.material = this.materialdata;
+              this.material2 = this.material2data;
+              if (this.informedata.material2_tipo) {
+                this.material2_tipo = this.informedata.material2_tipo;
+              }
+              ;
+              this.diametro = this.diametro_espesordata['id'] !== 'undefined' && !(this.diametro_espesordata instanceof Array) ? this.diametro_espesordata : {
+                'diametro': this.informedata.diametro_especifico
+              };
+              this.espesor = this.informedata.espesor_especifico ? {
+                'espesor': this.informedata.espesor_especifico
+              } : this.diametro_espesordata;
+              this.espesor_chapa = this.informedata.espesor_chapa;
+              this.tecnica = this.tecnicadata;
+              this.interno_equipo = this.interno_equipodata;
+              this.procedimiento = this.procedimientodata;
+              this.norma_evaluacion = this.norma_evaluaciondata;
+              this.norma_ensayo = this.norma_ensayodata;
+              this.ejecutor_ensayo = this.ejecutor_ensayodata;
+              this.estado_superficie = this.estado_superficiedata;
+              this.encoder = this.informe_usdata.encoder;
+              this.agente_acoplamiento = this.agente_acoplamientodata;
+              this.observaciones = this.informedata.observaciones;
+              this.calibraciones = this.calibraciones_data;
+              this.Tabla_us_pa = this.tabla_us_pa_data;
+              this.Tabla_me = this.tabla_me_data;
+              this.TablaModelos3d = this.tablamodelos3d_data;
+              this.solicitado_por = this.solicitado_pordata;
+              this.SetearBlockCalibraciones();
+              this.$store.dispatch('loadOtObraTipoSoldaduras', {
+                'ot_id': this.otdata.id,
+                'obra': this.informedata.obra
+              });
+              if (this.cliente.codigo == '0279' && this.tecnica.codigo === 'ME') {
+                this.$refs.modalPopupRef.setForm(this.componente_me_data);
+                console.log();
+                this.tipo_tgs = this.componente_me_data.tipo_us;
+                respuestas = this.inspeccion_visual || [];
+                respuestas.forEach(function (respuesta) {
+                  var _iterator = _createForOfIteratorHelper(_this3.tablaInspeccion),
+                    _step;
+                  try {
+                    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                      var categoria = _step.value;
+                      var item = categoria.items.find(function (i) {
+                        return i.id === respuesta.item_categoria_id;
+                      });
+                      if (item) {
+                        item.selected = respuesta.respuesta;
+                        break;
+                      }
+                    }
+                  } catch (err) {
+                    _iterator.e(err);
+                  } finally {
+                    _iterator.f();
+                  }
+                });
+              }
+              this.popupData = this.componente_me_data;
+              _context3.next = 48;
+              return this.getTecnicas();
+            case 48:
+              _context3.next = 55;
+              break;
+            case 50:
+              _context3.next = 52;
+              return this.getTecnicas();
+            case 52:
+              this.tecnica = this.tecnicas[0];
+              this.SetearBlockCalibraciones();
+              this.getNumeroInforme();
+            case 55:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, this);
+      }));
+      function setEdit() {
+        return _setEdit.apply(this, arguments);
+      }
+      return setEdit;
+    }(),
+    setObra: function setObra(value) {
+      this.obra = value;
+      this.ot_tipo_soldadura = '';
+      if (this.obra) {
+        this.$store.dispatch('loadOtObraTipoSoldaduras', {
+          'ot_id': this.otdata.id,
+          'obra': this.obra
+        });
+      }
+    },
+    setPlanta: function setPlanta(value) {
+      this.planta = value;
+    },
+    getSoldadores: function getSoldadores() {
+      var _this4 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var urlRegistros;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              axios.defaults.baseURL = _this4.url;
+              urlRegistros = 'ot_soldadores/ot/' + _this4.otdata.id + '?api_token=' + Laravel.user.api_token;
+              _context4.next = 4;
+              return axios.get(urlRegistros).then(function (response) {
+                _this4.opcionesSoldadores = response.data;
+              });
+            case 4:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4);
+      }))();
+    },
+    getCliente: function getCliente() {
+      var _this5 = this;
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = "clientes/" + this.otdata.cliente_id + "?api_token=" + Laravel.user.api_token;
+      return axios.get(urlRegistros).then(function (response) {
+        _this5.cliente = response.data;
+      });
+    },
+    obtenerCodigoSoldadorPorId: function obtenerCodigoSoldadorPorId(id) {
+      var soldador = this.opcionesSoldadores.find(function (s) {
+        return s.id === id;
+      });
+      return soldador ? soldador.codigo : '-'; //
+    },
+    getNumeroInforme: function getNumeroInforme() {
+      var _this6 = this;
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/' + this.tecnica.id + '/generar-numero-informe/' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this6.numero_inf = response.data;
+      });
+    },
+    getTecnicas: function () {
+      var _getTecnicas = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        var _this7 = this;
+        var urlRegistros;
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
+            case 0:
+              axios.defaults.baseURL = this.url;
+              urlRegistros = 'tecnicas/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;
+              _context5.next = 4;
+              return axios.get(urlRegistros).then(function (response) {
+                _this7.tecnicas = response.data;
+              });
+            case 4:
+            case "end":
+              return _context5.stop();
+          }
+        }, _callee5, this);
+      }));
+      function getTecnicas() {
+        return _getTecnicas.apply(this, arguments);
+      }
+      return getTecnicas;
+    }(),
+    getEstadosSuperficies: function getEstadosSuperficies() {
+      var _this8 = this;
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'estados_superficies' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this8.estados_superficies = response.data;
+      });
+    },
+    getUsuariosCliente: function getUsuariosCliente() {
+      var _this9 = this;
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this9.usuarios_cliente = response.data;
+      });
+    },
+    getAgenteAcomplamiento: function getAgenteAcomplamiento() {
+      var _this10 = this;
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'agente_acoplamientos' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this10.agente_acoplamientos = response.data;
+      });
+    },
+    getAccesoriosUs: function getAccesoriosUs() {
+      var _this11 = this;
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'accesorios_us' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this11.accesorios_us = response.data;
+      });
+    },
+    getPalpadores: function getPalpadores() {
+      var _this12 = this;
+      this.$store.dispatch('loadPalpadores').then(function (response) {
+        _this12.palpador = '';
+      });
+    },
+    getEspesores: function getEspesores(diametro) {
+      this.espesor = '';
+      if (diametro != 'CHAPA') {
+        this.espesor_chapa = '';
+      }
+      var index = this.diametros.findIndex(function (e) {
+        return e.diametro_code === diametro.diametro_code;
+      });
+      if (diametro) {
+        this.$store.dispatch('loadEspesores', diametro.diametro_code);
+        if (index === -1) {
+          if (!this.validarDiametroEspecifico(diametro.diametro)) {
+            this.diametro = {};
+          }
         }
       }
-      var cantidad_filas = filasValidas.length;
-      var cantidad_columnas = 0;
-      if (cantidad_filas > 0) {
-        cantidad_columnas = filasValidas.reduce(function (max, row) {
-          return Math.max(max, row.length);
-        }, 0);
+    },
+    validarDiametroEspecifico: function validarDiametroEspecifico(diametro) {
+      var exp_posicion = /^[0-9]{0,3}.[0-9]{0,2}m$/;
+      return exp_posicion.test(this.diametro.diametro);
+    },
+    getGeneratrices: function getGeneratrices() {
+      var _this13 = this;
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'generatrices' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this13.generatrices = response.data;
+        _this13.$store.commit('loading', false);
+      });
+    },
+    addCalibraciones: function addCalibraciones() {
+      // Usamos un operador ternario para definir el límite en una sola línea
+      var limite = this.tecnica.codigo === 'PA' ? 10 : 4;
+
+      // Ahora hacemos la validación contra ese límite dinámico
+      if (this.calibraciones.length >= limite) {
+        toastr.error("El m\xE1ximo de calibraciones a ingresar son ".concat(limite, "."));
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && !this.zapata) {
+        toastr.error('El campo Zapata es obligatorio');
+        return;
+      }
+      if (this.zapata.length > 20) {
+        toastr.error('El campo Zapata no debe contener más de 20 caracteres');
+        return;
+      }
+      if (!this.palpador) {
+        toastr.error('El campo Palpador es obligatorio');
+        return;
+      }
+      if (!this.frecuencia) {
+        toastr.error('El campo Frecuencia es obligatorio');
+        return;
+      }
+      if (this.frecuencia > 999) {
+        toastr.error('El campo Frecuencia no debe ser mayor a 999');
+        return;
+      }
+      if (!this.angulo_apertura) {
+        toastr.error('El campo Angulo Apertura es obligatorio');
+        return;
+      }
+      if (this.angulo_apertura.length > 7) {
+        toastr.error('El campo Angulo Apertura no debe contener más de 7 caracteres');
+        return;
+      }
+      if (!this.rango) {
+        toastr.error('El campo Rango es obligatorio');
+        return;
+      }
+      if (this.rango.length > 7) {
+        toastr.error('El campo Rango no debe contener más de 7 caracteres');
+        return;
+      }
+      if (!this.posicion) {
+        toastr.error('El campo Posición es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo !== 'PA' && this.posicion.length > 3 || this.tecnica.codigo === 'PA' && this.posicion.length > 10) {
+        // Puedes usar un mensaje de error más genérico o adaptarlo
+        var _limite = this.tecnica.codigo === 'PA' ? 10 : 3;
+        toastr.error("El campo Posici\xF3n no debe contener m\xE1s de ".concat(_limite, " caracteres."));
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && !this.curva_elevacion) {
+        toastr.error('El campo Curva Elevación es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && this.curva_elevacion.length > 3) {
+        toastr.error('El campo Curva Elevación no debe contener más de 3 caracteres');
+        return;
+      }
+      if (!this.block_calibracion) {
+        toastr.error('El campo Block Calibración es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && !this.block_sensibilidad) {
+        toastr.error('El campo Block Sensibilidad es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && this.block_sensibilidad > 999) {
+        toastr.error('El campo Block Sensibilidad no debe ser mayor a 999');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && !this.tipo_reflector) {
+        toastr.error('El campo Tipo Reflector es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && this.tipo_reflector.length > 3) {
+        toastr.error('El campo Tipo Reflector no debe contener más de 3 caracteres');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && !this.reflector_referencia) {
+        toastr.error('El campo Reflector Referencia es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && this.reflector_referencia > 99.9) {
+        toastr.error('El campo Reflector Referencia no debe ser mayor a 99.9');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && !this.ganancia_referencia) {
+        toastr.error('El campo Ganancia Referencia es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && this.ganancia_referencia > 999) {
+        toastr.error('El campo Ganancia Referencia no debe ser mayor a 999');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && !this.nivel_registro) {
+        toastr.error('El campo Nivel Registro es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && this.nivel_registro > 999) {
+        toastr.error('El campo Nivel Registro no debe ser mayor a 999');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && !this.correccion_transferencia) {
+        toastr.error('El campo Corrección Transferencia es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && this.correccion_transferencia > 999) {
+        toastr.error('El campo Corrección Transferencia no debe ser mayor a 999');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && !this.adicional_barrido) {
+        toastr.error('El campo Adicional Barrido es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && this.adicional_barrido > 999) {
+        toastr.error('El campo Adicional Barrido no debe ser mayor a 999');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && !this.amplificacion_total) {
+        toastr.error('El campo Amplificación Total es obligatorio');
+        return;
+      }
+      if (this.tecnica.codigo != 'ME' && this.amplificacion_total > 999) {
+        toastr.error('El campo Amplificación Total no debe ser mayor a 999');
+        return;
+      }
+      this.calibraciones.push({
+        zapata: this.zapata,
+        palpador: this.palpador,
+        frecuencia: this.frecuencia,
+        angulo_apertura: this.angulo_apertura,
+        rango: this.rango,
+        posicion: this.posicion,
+        curva_elevacion: this.curva_elevacion,
+        block_calibracion: this.block_calibracion,
+        block_sensibilidad: this.block_sensibilidad,
+        tipo_reflector: this.tipo_reflector,
+        reflector_referencia: this.reflector_referencia,
+        ganancia_referencia: this.ganancia_referencia,
+        correccion_transferencia: this.correccion_transferencia,
+        nivel_registro: this.nivel_registro,
+        adicional_barrido: this.adicional_barrido,
+        amplificacion_total: this.amplificacion_total
+      });
+    },
+    validarDecimales: function validarDecimales(valor) {
+      var decimales = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+      var regex = new RegExp("^-?\\d+(?:\\.\\d{0,".concat(decimales, "})?$"));
+      return regex.test(valor);
+    },
+    addTabla_us_pa: function addTabla_us_pa() {
+      if (!this.elemento_us_pa) {
+        toastr.error('El campo Elemento es obligatorio');
+        return;
+      }
+      if (this.elemento_us_pa.length > 30) {
+        toastr.error('El campo Elemento no debe contener más de 30 caracteres');
+        return;
+      }
+      if (this.diametro_us_pa && this.diametro_us_pa.length > 10) {
+        toastr.error('El campo Diametro no debe contener más de 10 caracteres');
+        return;
+      }
+      if (!this.diametro_us_pa.diametro) {
+        toastr.error('El campo Diametro es obligatorio');
+        return;
+      }
+      if (!this.nro_indicacion_us_pa) {
+        toastr.error('El campo N° Indicación es obligatorio');
+        return;
+      }
+      if (!this.barrido_us_pa) {
+        toastr.error('El campo Barrido es obligatorio');
+        return;
+      }
+      if (this.nivel_nro_indicacion_us_paregistro > 9999) {
+        toastr.error('El campo N° Indicación no debe ser mayor a 9999');
+        return;
+      }
+      if (!this.posicion_examen_us_pa) {
+        toastr.error('El campo Posición Examen es obligatorio');
+        return;
+      }
+      if (this.posicion_examen_us_pa.length > 7) {
+        toastr.error('El campo Posición Examen no debe contener más de 7 caracteres');
+        return;
+      }
+      if (!this.angulo_incidencia_us_pa) {
+        toastr.error('El campo Ángulo Incidencia es obligatorio');
+        return;
+      }
+      if (this.angulo_incidencia_us_pa.length > 10) {
+        toastr.error('El campo Ángulo Incidencia no debe contener más de 10 caracteres');
+        return;
+      }
+      if (!this.camino_sonico_us_pa) {
+        toastr.error('El campo Camino Sónico es obligatorio');
+        return;
+      }
+      if (this.camino_sonico_us_pa.length > 7) {
+        toastr.error('El campo Camino Sónico no debe contener más de 6 caracteres');
+        return;
       }
 
-      // Llama a processExcelData con los datos filtrados y las dimensiones ajustadas
-      _this14.processExcelData(filasValidas, cantidad_filas, cantidad_columnas);
-    };
-    reader.readAsArrayBuffer(file);
-  },
-  processExcelData: function processExcelData(data, filas, columnas) {
-    var cantidad_posiciones_me = filas;
-    var cantidad_generatrices_me = columnas;
-    if (this.currentPosition === null || this.currentPosition >= this.Tabla_me.length) {
-      console.error('Posición actual no válida o fuera de rango.');
-      return;
-    }
+      // Validación de decimales para camino_sonico_us_pa
+      if (!this.validarDecimales(this.camino_sonico_us_pa)) {
+        toastr.error('El campo Camino Sónico no debe tener más de 2 decimales');
+        return;
+      }
+      if (!this.x_us_pa) {
+        toastr.error('El campo X es obligatorio');
+        return;
+      }
+      if (this.x_us_pa > 9999) {
+        toastr.error('El campo X no debe ser mayor a 9999');
+        return;
+      }
 
-    // Borrar completamente mediciones y luego inicializarlo
-    this.Tabla_me[this.currentPosition].mediciones = [];
-    for (var i = 0; i < cantidad_generatrices_me; i++) {
-      // Inicializar cada columna con un array vacío
-      this.Tabla_me[this.currentPosition].mediciones[i] = [];
-    }
-    for (var col = 0; col < cantidad_generatrices_me; col++) {
-      for (var row = 0; row < cantidad_posiciones_me; row++) {
-        if (row < data.length && col < data[row].length) {
-          var valor = data[row][col] ? data[row][col].toString() : '';
-          this.Tabla_me[this.currentPosition].mediciones[col][row] = valor;
+      // Validación de decimales para x_us_pa
+      if (!this.validarDecimales(this.x_us_pa)) {
+        toastr.error('El campo X no debe tener más de 2 decimales');
+        return;
+      }
+      if (!this.y_us_pa) {
+        toastr.error('El campo Y es obligatorio');
+        return;
+      }
+      if (this.y_us_pa > 9999) {
+        toastr.error('El campo Y no debe ser mayor a 9999');
+        return;
+      }
+
+      // Validación de decimales para y_us_pa
+      if (!this.validarDecimales(this.y_us_pa)) {
+        toastr.error('El campo Y no debe tener más de 2 decimales');
+        return;
+      }
+      if (!this.z_us_pa) {
+        toastr.error('El campo Z es obligatorio');
+        return;
+      }
+      if (this.z_us_pa > 9999) {
+        toastr.error('El campo Z no debe ser mayor a 9999');
+        return;
+      }
+
+      // Validación de decimales para z_us_pa
+      if (!this.validarDecimales(this.z_us_pa)) {
+        toastr.error('El campo Z no debe tener más de 2 decimales');
+        return;
+      }
+      if (!this.longitud_us_pa) {
+        toastr.error('El campo longitud es obligatorio');
+        return;
+      }
+      if (this.longitud_us_pa > 9999) {
+        toastr.error('El campo Longitud no debe ser mayor a 9999');
+        return;
+      }
+
+      // Validación de decimales para longitud_us_pa
+      if (!this.validarDecimales(this.longitud_us_pa)) {
+        toastr.error('El campo Longitud no debe tener más de 2 decimales');
+        return;
+      }
+      if (!this.nivel_registro_us_pa) {
+        toastr.error('El campo Nivel Registro es obligatorio');
+        return;
+      }
+      if (this.nivel_registro_us_pa.length > 6) {
+        toastr.error('El campo Nivel Registro no debe contener más de 6 caracteres');
+        return;
+      }
+
+      // Validación de decimales para nivel_registro_us_pa
+      if (!this.validarDecimales(this.nivel_registro_us_pa)) {
+        toastr.error('El campo Nivel Registro no debe tener más de 2 decimales');
+        return;
+      }
+      this.Tabla_us_pa.push({
+        elemento_us_pa: this.elemento_us_pa,
+        soldadorP: this.soldadorP ? this.soldadorP.id : '',
+        soldadorZ: this.soldadorZ ? this.soldadorZ.id : '',
+        diametro_us_pa: this.diametro_us_pa ? this.diametro_us_pa.diametro : '',
+        nro_indicacion_us_pa: this.nro_indicacion_us_pa,
+        barrido_us_pa: this.barrido_us_pa,
+        posicion_examen_us_pa: this.posicion_examen_us_pa,
+        angulo_incidencia_us_pa: this.angulo_incidencia_us_pa,
+        camino_sonico_us_pa: this.camino_sonico_us_pa,
+        x_us_pa: this.x_us_pa,
+        y_us_pa: this.y_us_pa,
+        z_us_pa: this.z_us_pa,
+        longitud_us_pa: this.longitud_us_pa,
+        nivel_registro_us_pa: this.nivel_registro_us_pa,
+        aceptable_sn_us_pa: false,
+        observaciones: '',
+        path1: null,
+        path2: null,
+        path3: null,
+        path4: null
+      });
+    },
+    triggerFileUpload: function triggerFileUpload(pos) {
+      this.currentPosition = pos; // Almacena la posición actual
+      this.$refs.fileInput.value = ''; // Limpia el valor actual del input para permitir la recarga del mismo archivo
+      this.$refs.fileInput.click(); // Activa el input de tipo file
+    },
+    uploadExcel: function uploadExcel(event) {
+      var _this14 = this;
+      var file = event.target.files[0];
+      if (!file) {
+        return; // Si no hay archivo seleccionado, sale temprano
+      }
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var data = new Uint8Array(e.target.result);
+        var workbook = xlsx__WEBPACK_IMPORTED_MODULE_12__["read"](data, {
+          type: 'array'
+        });
+        var firstSheetName = workbook.SheetNames[0];
+        var worksheet = workbook.Sheets[firstSheetName];
+        var excelData = xlsx__WEBPACK_IMPORTED_MODULE_12__["utils"].sheet_to_json(worksheet, {
+          header: 1
+        });
+
+        // Procesa las filas para detenerse al encontrar el primer espacio en blanco en la primera columna, a partir de la segunda fila
+        var filasValidas = [];
+        for (var i = 0; i < excelData.length; i++) {
+          // Acepta todas las celdas de la primera fila
+          if (i === 0) {
+            filasValidas.push(excelData[i]);
+          } else {
+            // Detiene el ciclo si encuentra un espacio en blanco en la primera columna de las filas siguientes
+            if (excelData[i][0] === undefined || excelData[i][0].toString().trim() === '') {
+              break;
+            }
+            filasValidas.push(excelData[i]);
+          }
+        }
+        var cantidad_filas = filasValidas.length;
+        var cantidad_columnas = 0;
+        if (cantidad_filas > 0) {
+          cantidad_columnas = filasValidas.reduce(function (max, row) {
+            return Math.max(max, row.length);
+          }, 0);
+        }
+
+        // Llama a processExcelData con los datos filtrados y las dimensiones ajustadas
+        _this14.processExcelData(filasValidas, cantidad_filas, cantidad_columnas);
+      };
+      reader.readAsArrayBuffer(file);
+    },
+    processExcelData: function processExcelData(data, filas, columnas) {
+      var cantidad_posiciones_me = filas;
+      var cantidad_generatrices_me = columnas;
+      if (this.currentPosition === null || this.currentPosition >= this.Tabla_me.length) {
+        console.error('Posición actual no válida o fuera de rango.');
+        return;
+      }
+
+      // Borrar completamente mediciones y luego inicializarlo
+      this.Tabla_me[this.currentPosition].mediciones = [];
+      for (var i = 0; i < cantidad_generatrices_me; i++) {
+        // Inicializar cada columna con un array vacío
+        this.Tabla_me[this.currentPosition].mediciones[i] = [];
+      }
+      for (var col = 0; col < cantidad_generatrices_me; col++) {
+        for (var row = 0; row < cantidad_posiciones_me; row++) {
+          if (row < data.length && col < data[row].length) {
+            var valor = data[row][col] ? data[row][col].toString() : '';
+            this.Tabla_me[this.currentPosition].mediciones[col][row] = valor;
+          } else {
+            this.Tabla_me[this.currentPosition].mediciones[col][row] = '';
+          }
+        }
+      }
+
+      // Agregar un array adicional para 'ACCESORIOS' con nulls en los espacios adicionales
+      var accesorios = ['ACCESORIO'];
+      for (var _i = 1; _i < cantidad_posiciones_me; _i++) {
+        accesorios.push(null); // Completar con null para el resto de los elementos
+
+        this.Tabla_me[this.currentPosition].cantidad_posiciones_me = cantidad_posiciones_me - 1;
+        this.Tabla_me[this.currentPosition].cantidad_generatrices_me = cantidad_generatrices_me;
+      }
+      this.Tabla_me[this.currentPosition].mediciones.push(accesorios);
+      this.currentPosition = null;
+    },
+    addTabla_me: function addTabla_me() {
+      var _this15 = this;
+      this.cantidad_posiciones_me = 50;
+      this.cantidad_generatrices_me = 50;
+      if (!this.elemento_me) {
+        toastr.error('El campo Elemento es obligatorio');
+        return;
+      }
+      if (!this.espesor_minimo_me && this.cliente.codigo == '0279') {
+        toastr.error('El campo espesor mínimo es obligatorio');
+        return;
+      }
+      if (!this.espesor_minimo_anterior_me && this.cliente.codigo == '0279') {
+        toastr.error('El campo Espesor minimo anterior es obligatorio');
+        return;
+      }
+      if (!this.años_ultima_inspeccion_me && this.cliente.codigo == '0279') {
+        toastr.error('El campo Años última inspección es obligatorio');
+        return;
+      }
+      if (!this.elemento_me) {
+        toastr.error('El campo Elemento es obligatorio');
+        return;
+      }
+      if (this.elemento_me.length > 30) {
+        toastr.error('El campo Elemento no debe contener más de 30 caracteres');
+        return;
+      }
+      if (this.umbral_me && this.umbral_me > 99.9) {
+        toastr.error('El campo umbral no debe ser mayor a 99,9');
+        return;
+      }
+      if (this.espesor_minimo_me && this.espesor_minimo_me > 99.9) {
+        toastr.error('El campo espesor mínimo no debe ser mayor a 99,9');
+        return;
+      }
+      if (this.espesor_minimo_anterior_me && this.espesor_minimo_anterior_me > 99.9) {
+        toastr.error('El campo Espesor minimo anterior no debe ser mayor a 99,9');
+        return;
+      }
+      if (this.años_ultima_inspeccion_me && this.años_ultima_inspeccion_me > 99.9) {
+        toastr.error('El campo Años última inspección no debe ser mayor a 99,9');
+        return;
+      }
+      if (this.espesor_minimo_me && this.espesor_minimo_me > 99.9) {
+        toastr.error('El campo espesor mínimo no debe ser mayor a 99,9');
+        return;
+      }
+      if (this.diametro_me.length > 10) {
+        toastr.error('El campo diametro no debe contener más de 10 caracteres');
+        return;
+      }
+      if (this.cantidad_posiciones_me > 100) {
+        toastr.error('El campo posiciones o debe ser mayor a 100');
+        return;
+      }
+      if (!this.cantidad_generatrices_me) {
+        toastr.error('El campo generatrices es obligatorio');
+        return;
+      }
+      if (this.cantidad_generatrices_me < 1 || this.cantidad_generatrices_me > this.generatrices.length) {
+        toastr.error('La cantidad de generatrices ingresadas no debe ser mayor a las registradas (' + this.generatrices.length + ')');
+        return;
+      }
+      var mediciones = new Array(parseInt(this.cantidad_generatrices_me));
+      var _loop = function _loop(g) {
+        mediciones[g] = [];
+        var index_generatriz = _this15.generatrices.findIndex(function (e) {
+          return e.nro == g;
+        });
+        mediciones[g][0] = g > 0 ? _this15.generatrices[index_generatriz].valor : '';
+        for (var p = 1; p < parseInt(_this15.cantidad_posiciones_me) + 1; p++) {
+          mediciones[g][p] = g > 0 ? '' : p;
+        }
+      };
+      for (var g = 0; g < parseInt(this.cantidad_generatrices_me) + 2; g++) {
+        _loop(g);
+      }
+      mediciones[mediciones.length - 1][0] = 'ACCESORIO';
+      this.Tabla_me.push({
+        elemento_me: this.elemento_me,
+        umbral_me: this.umbral_me,
+        espesor_minimo_me: this.espesor_minimo_me,
+        cantidad_posiciones_me: this.cantidad_posiciones_me,
+        cantidad_generatrices_me: this.cantidad_generatrices_me,
+        cantidad_generatrices_linea_pdf_me: this.cantidad_generatrices_linea_pdf_me,
+        espesor_minimo_anterior_me: this.espesor_minimo_anterior_me,
+        años_ultima_inspeccion_me: this.años_ultima_inspeccion_me,
+        mediciones: mediciones
+      });
+    },
+    agregarPestana: function agregarPestana(wb, nombre, datos) {
+      var ws = xlsx__WEBPACK_IMPORTED_MODULE_12__["utils"].aoa_to_sheet([]);
+      var columnaActual = 'B'; // Comenzar en la columna 'B'
+
+      datos.mediciones.forEach(function (medicion, index) {
+        // Convertir cada elemento de la medicion en un arreglo para que se inserte verticalmente
+        var datosVerticales = medicion.map(function (dato) {
+          return [dato];
+        });
+        // Insertar la medicion vertical en la hoja, comenzando en 'B1', 'C1', etc.
+        xlsx__WEBPACK_IMPORTED_MODULE_12__["utils"].sheet_add_aoa(ws, datosVerticales, {
+          origin: "".concat(columnaActual, 1)
+        });
+
+        // Incrementar la letra de la columna para la próxima medicion
+        columnaActual = String.fromCharCode(columnaActual.charCodeAt(0) + 1);
+      });
+      xlsx__WEBPACK_IMPORTED_MODULE_12__["utils"].book_append_sheet(wb, ws, nombre);
+    },
+    createExel: function createExel() {
+      // Crear un nuevo libro Excel
+      var wb = xlsx__WEBPACK_IMPORTED_MODULE_12__["utils"].book_new();
+
+      // Iterar sobre las pestañas
+      for (var i = 0; i < this.Tabla_me.length; i++) {
+        var pestaña = this.Tabla_me[i];
+        var sheetName = pestaña.elemento_me;
+        this.agregarPestana(wb, sheetName, pestaña);
+      }
+
+      // Guardar el archivo Excel y descargarlo
+      xlsx__WEBPACK_IMPORTED_MODULE_12__["writeFile"](wb, "".concat(this.numero_inf_code, "-MEDICI\xD3N DE ESPESORES.xlsx"));
+    },
+    selectPosTabla_us_pa: function selectPosTabla_us_pa(index) {
+      this.indexPosTabla_us_pa = index;
+    },
+    selectPosTabla_me: function selectPosTabla_me(index) {
+      this.indexPosTabla_me = index;
+    },
+    getFocus: function getFocus(g, cant_g, p, cant_p) {
+      var _this16 = this;
+      if (g > cant_g) {
+        if (p > cant_p) {
+          this.indexPosGeneratriz = 2;
+          this.indexPosPos = 1;
         } else {
-          this.Tabla_me[this.currentPosition].mediciones[col][row] = '';
+          this.indexPosGeneratriz = 1;
+          this.indexPosPos = p + 1;
         }
-      }
-    }
-
-    // Agregar un array adicional para 'ACCESORIOS' con nulls en los espacios adicionales
-    var accesorios = ['ACCESORIO'];
-    for (var _i = 1; _i < cantidad_posiciones_me; _i++) {
-      accesorios.push(null); // Completar con null para el resto de los elementos
-
-      this.Tabla_me[this.currentPosition].cantidad_posiciones_me = cantidad_posiciones_me - 1;
-      this.Tabla_me[this.currentPosition].cantidad_generatrices_me = cantidad_generatrices_me;
-    }
-    this.Tabla_me[this.currentPosition].mediciones.push(accesorios);
-    this.currentPosition = null;
-  },
-  addTabla_me: function addTabla_me() {
-    var _this15 = this;
-    this.cantidad_posiciones_me = 50;
-    this.cantidad_generatrices_me = 50;
-    if (!this.elemento_me) {
-      toastr.error('El campo Elemento es obligatorio');
-      return;
-    }
-    if (!this.espesor_minimo_me && this.pdfEspecialsn) {
-      toastr.error('El campo espesor mínimo es obligatorio');
-      return;
-    }
-    if (!this.espesor_minimo_anterior_me && this.pdfEspecialsn) {
-      toastr.error('El campo Espesor minimo anterior es obligatorio');
-      return;
-    }
-    if (!this.años_ultima_inspeccion_me && this.pdfEspecialsn) {
-      toastr.error('El campo Años última inspección es obligatorio');
-      return;
-    }
-    if (!this.elemento_me) {
-      toastr.error('El campo Elemento es obligatorio');
-      return;
-    }
-    if (this.elemento_me.length > 30) {
-      toastr.error('El campo Elemento no debe contener más de 30 caracteres');
-      return;
-    }
-    if (this.umbral_me && this.umbral_me > 99.9) {
-      toastr.error('El campo umbral no debe ser mayor a 99,9');
-      return;
-    }
-    if (this.espesor_minimo_me && this.espesor_minimo_me > 99.9) {
-      toastr.error('El campo espesor mínimo no debe ser mayor a 99,9');
-      return;
-    }
-    if (this.espesor_minimo_anterior_me && this.espesor_minimo_anterior_me > 99.9) {
-      toastr.error('El campo Espesor minimo anterior no debe ser mayor a 99,9');
-      return;
-    }
-    if (this.años_ultima_inspeccion_me && this.años_ultima_inspeccion_me > 99.9) {
-      toastr.error('El campo Años última inspección no debe ser mayor a 99,9');
-      return;
-    }
-    if (this.espesor_minimo_me && this.espesor_minimo_me > 99.9) {
-      toastr.error('El campo espesor mínimo no debe ser mayor a 99,9');
-      return;
-    }
-    if (this.diametro_me.length > 10) {
-      toastr.error('El campo diametro no debe contener más de 10 caracteres');
-      return;
-    }
-    if (this.cantidad_posiciones_me > 100) {
-      toastr.error('El campo posiciones o debe ser mayor a 100');
-      return;
-    }
-    if (!this.cantidad_generatrices_me) {
-      toastr.error('El campo generatrices es obligatorio');
-      return;
-    }
-    if (this.cantidad_generatrices_me < 1 || this.cantidad_generatrices_me > this.generatrices.length) {
-      toastr.error('La cantidad de generatrices ingresadas no debe ser mayor a las registradas (' + this.generatrices.length + ')');
-      return;
-    }
-    var mediciones = new Array(parseInt(this.cantidad_generatrices_me));
-    var _loop = function _loop(g) {
-      mediciones[g] = [];
-      var index_generatriz = _this15.generatrices.findIndex(function (e) {
-        return e.nro == g;
-      });
-      mediciones[g][0] = g > 0 ? _this15.generatrices[index_generatriz].valor : '';
-      for (var p = 1; p < parseInt(_this15.cantidad_posiciones_me) + 1; p++) {
-        mediciones[g][p] = g > 0 ? '' : p;
-      }
-    };
-    for (var g = 0; g < parseInt(this.cantidad_generatrices_me) + 2; g++) {
-      _loop(g);
-    }
-    mediciones[mediciones.length - 1][0] = 'ACCESORIO';
-    this.Tabla_me.push({
-      elemento_me: this.elemento_me,
-      umbral_me: this.umbral_me,
-      espesor_minimo_me: this.espesor_minimo_me,
-      cantidad_posiciones_me: this.cantidad_posiciones_me,
-      cantidad_generatrices_me: this.cantidad_generatrices_me,
-      cantidad_generatrices_linea_pdf_me: this.cantidad_generatrices_linea_pdf_me,
-      espesor_minimo_anterior_me: this.espesor_minimo_anterior_me,
-      años_ultima_inspeccion_me: this.años_ultima_inspeccion_me,
-      mediciones: mediciones
-    });
-  },
-  agregarPestana: function agregarPestana(wb, nombre, datos) {
-    var ws = xlsx__WEBPACK_IMPORTED_MODULE_12__["utils"].aoa_to_sheet([]);
-    var columnaActual = 'B'; // Comenzar en la columna 'B'
-
-    datos.mediciones.forEach(function (medicion, index) {
-      // Convertir cada elemento de la medicion en un arreglo para que se inserte verticalmente
-      var datosVerticales = medicion.map(function (dato) {
-        return [dato];
-      });
-      // Insertar la medicion vertical en la hoja, comenzando en 'B1', 'C1', etc.
-      xlsx__WEBPACK_IMPORTED_MODULE_12__["utils"].sheet_add_aoa(ws, datosVerticales, {
-        origin: "".concat(columnaActual, 1)
-      });
-
-      // Incrementar la letra de la columna para la próxima medicion
-      columnaActual = String.fromCharCode(columnaActual.charCodeAt(0) + 1);
-    });
-    xlsx__WEBPACK_IMPORTED_MODULE_12__["utils"].book_append_sheet(wb, ws, nombre);
-  },
-  createExel: function createExel() {
-    // Crear un nuevo libro Excel
-    var wb = xlsx__WEBPACK_IMPORTED_MODULE_12__["utils"].book_new();
-
-    // Iterar sobre las pestañas
-    for (var i = 0; i < this.Tabla_me.length; i++) {
-      var pestaña = this.Tabla_me[i];
-      var sheetName = pestaña.elemento_me;
-      this.agregarPestana(wb, sheetName, pestaña);
-    }
-
-    // Guardar el archivo Excel y descargarlo
-    xlsx__WEBPACK_IMPORTED_MODULE_12__["writeFile"](wb, "".concat(this.numero_inf_code, "-MEDICI\xD3N DE ESPESORES.xlsx"));
-  },
-  selectPosTabla_us_pa: function selectPosTabla_us_pa(index) {
-    this.indexPosTabla_us_pa = index;
-  },
-  selectPosTabla_me: function selectPosTabla_me(index) {
-    this.indexPosTabla_me = index;
-  },
-  getFocus: function getFocus(g, cant_g, p, cant_p) {
-    var _this16 = this;
-    if (g > cant_g) {
-      if (p > cant_p) {
-        this.indexPosGeneratriz = 2;
-        this.indexPosPos = 1;
       } else {
-        this.indexPosGeneratriz = 1;
-        this.indexPosPos = p + 1;
+        this.indexPosGeneratriz = g + 1;
       }
-    } else {
-      this.indexPosGeneratriz = g + 1;
-    }
-    setTimeout(function (x) {
-      _this16.$nextTick(function () {
-        _this16.$refs['refInputMediciones'][0].focus();
+      setTimeout(function (x) {
+        _this16.$nextTick(function () {
+          _this16.$refs['refInputMediciones'][0].focus();
+        });
+      }, 350);
+    },
+    selectPosGeneratriz: function selectPosGeneratriz(index) {
+      this.indexPosGeneratriz = index;
+    },
+    selectPosPos: function selectPosPos(index) {
+      try {
+        this.indexPosPos = index;
+      } catch (error) {
+        // Muestra un mensaje de error en caso de que ocurra un problema
+        toastr.error('Formato inválido de tabla');
+        // Opcionalmente, puedes registrar el error en la consola
+        console.error('Error en selectPosPos:', error);
+      }
+    },
+    resetTecnica: function resetTecnica() {
+      this.calibraciones = [];
+      this.SetearBlockCalibraciones();
+      // si entro en modo edicion no debo cambiar nunca la numeracion si mantengo la tecnica
+      if (this.editmode && this.tecnica.id == this.informedata.tecnica_id) {
+        this.numero_inf = this.informedata.numero;
+      } else {
+        this.getNumeroInforme();
+      }
+    },
+    SetearBlockCalibraciones: function SetearBlockCalibraciones() {
+      if (this.tecnica.codigo == 'ME') {
+        this.block_calibraciones = ['Probeta', 'Probeta escalonada'];
+      } else {
+        this.block_calibraciones = ['V1', 'V2', 'N/A'];
+      }
+    },
+    removeCalibraciones: function removeCalibraciones(index) {
+      this.calibraciones.splice(index, 1);
+    },
+    removeTabla_us_pa: function removeTabla_us_pa(index) {
+      this.Tabla_us_pa.splice(index, 1);
+    },
+    removeTabla_me: function removeTabla_me(index) {
+      this.Tabla_me.splice(index, 1);
+    },
+    OpenReferencias_us_pa: function OpenReferencias_us_pa(event, index, tabla, inputsReferencia) {
+      this.index_referencias = index;
+      this.tabla = tabla;
+      this.inputsData = inputsReferencia;
+      _event_bus__WEBPACK_IMPORTED_MODULE_5__["eventSetReferencia"].$emit('open');
+    },
+    AddReferencia_us_pa: function AddReferencia_us_pa(Ref) {
+      this.Tabla_us_pa[this.index_referencias].observaciones = Ref.observaciones;
+      this.Tabla_us_pa[this.index_referencias].path1 = Ref.path1;
+      this.Tabla_us_pa[this.index_referencias].path2 = Ref.path2;
+      this.Tabla_us_pa[this.index_referencias].path3 = Ref.path3;
+      this.Tabla_us_pa[this.index_referencias].path4 = Ref.path4;
+      $('#nuevo').modal('hide');
+    },
+    addModelo: function addModelo() {
+      this.TablaModelos3d.push(_objectSpread({}, this.modelo_3d));
+    },
+    RemoveModelo: function RemoveModelo(index) {
+      this.TablaModelos3d.splice(index, 1);
+      this.modelo_3d = '';
+    },
+    Store: function Store() {
+      var _this17 = this;
+      this.errors = [];
+      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
+        toastr.error('Detalle componente es obligatorio para TGS');
+        return;
+      }
+      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
+        toastr.error('Registro De Mediciones es obligatorio para TGS');
+        return;
+      }
+      var urlRegistros = 'informes_us';
+      this.$store.commit('loading', true);
+      axios({
+        method: 'post',
+        url: urlRegistros,
+        data: {
+          'ot': this.otdata,
+          'obra': this.obra,
+          'planta': this.planta,
+          'fecha': this.fecha,
+          'ot_tipo_soldadura': this.ot_tipo_soldadura,
+          'observaciones': this.observaciones,
+          'numero_inf': this.numero_inf,
+          'componente': this.componente,
+          'material': this.material,
+          'material2': this.material2,
+          'material2_tipo': this.material2_tipo,
+          'linea': this.linea,
+          'plano_isom': this.plano_isom,
+          'hoja': this.hoja,
+          'diametro': this.diametro,
+          'espesor': this.espesor,
+          'espesor_chapa': this.espesor_chapa,
+          'procedimiento_soldadura': this.procedimiento_soldadura,
+          'pqr': this.pqr,
+          'tecnica': this.tecnica,
+          'interno_equipo': this.interno_equipo,
+          'procedimiento': this.procedimiento,
+          'ejecutor_ensayo': this.ejecutor_ensayo,
+          'norma_ensayo': this.norma_ensayo,
+          'norma_evaluacion': this.norma_evaluacion,
+          'estado_superficie': this.estado_superficie,
+          'encoder': this.encoder,
+          'agente_acoplamiento': this.agente_acoplamiento,
+          'metodo_ensayo': this.metodo,
+          'path1_calibracion': this.path1_calibracion,
+          'path2_calibracion': this.path2_calibracion,
+          'path3_calibracion': this.path3_calibracion,
+          'path4_calibracion': this.path4_calibracion,
+          'path1_indicacion': this.path1_indicacion,
+          'path2_indicacion': this.path2_indicacion,
+          'path3_indicacion': this.path3_indicacion,
+          'path4_indicacion': this.path4_indicacion,
+          'calibraciones': this.calibraciones,
+          'tabla_us_pa': this.Tabla_us_pa,
+          'tabla_me': this.Tabla_me,
+          'solicitado_por': this.solicitado_por,
+          'TablaModelos3d': this.TablaModelos3d,
+          'data_popup': this.popupData,
+          'tablaInspeccion': this.tablaInspeccion
+        }
+      }).then(function (response) {
+        var informe = response.data;
+        toastr.success('informe N°' + _this17.numero_inf + ' fue creado con éxito ');
+        window.open('/pdf/informe/us/' + informe.id, '_blank');
+        window.location.href = '/informes/ot/' + _this17.otdata.id;
+      })["catch"](function (error) {
+        _this17.errors = error.response.data.errors;
+        $.each(_this17.errors, function (key, value) {
+          toastr.error(value);
+        });
+        if (typeof _this17.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
+      })["finally"](function () {
+        return _this17.$store.commit('loading', false);
       });
-    }, 350);
-  },
-  selectPosGeneratriz: function selectPosGeneratriz(index) {
-    this.indexPosGeneratriz = index;
-  },
-  selectPosPos: function selectPosPos(index) {
-    try {
-      this.indexPosPos = index;
-    } catch (error) {
-      // Muestra un mensaje de error en caso de que ocurra un problema
-      toastr.error('Formato inválido de tabla');
-      // Opcionalmente, puedes registrar el error en la consola
-      console.error('Error en selectPosPos:', error);
-    }
-  },
-  resetTecnica: function resetTecnica() {
-    this.calibraciones = [];
-    this.SetearBlockCalibraciones();
-    // si entro en modo edicion no debo cambiar nunca la numeracion si mantengo la tecnica
-    if (this.editmode && this.tecnica.id == this.informedata.tecnica_id) {
-      this.numero_inf = this.informedata.numero;
-    } else {
-      this.getNumeroInforme();
-    }
-  },
-  SetearBlockCalibraciones: function SetearBlockCalibraciones() {
-    if (this.tecnica.codigo == 'ME') {
-      this.block_calibraciones = ['Probeta', 'Probeta escalonada'];
-    } else {
-      this.block_calibraciones = ['V1', 'V2', 'N/A'];
-    }
-  },
-  removeCalibraciones: function removeCalibraciones(index) {
-    this.calibraciones.splice(index, 1);
-  },
-  removeTabla_us_pa: function removeTabla_us_pa(index) {
-    this.Tabla_us_pa.splice(index, 1);
-  },
-  removeTabla_me: function removeTabla_me(index) {
-    this.Tabla_me.splice(index, 1);
-  },
-  OpenReferencias_us_pa: function OpenReferencias_us_pa(event, index, tabla, inputsReferencia) {
-    this.index_referencias = index;
-    this.tabla = tabla;
-    this.inputsData = inputsReferencia;
-    _event_bus__WEBPACK_IMPORTED_MODULE_5__["eventSetReferencia"].$emit('open');
-  },
-  AddReferencia_us_pa: function AddReferencia_us_pa(Ref) {
-    this.Tabla_us_pa[this.index_referencias].observaciones = Ref.observaciones;
-    this.Tabla_us_pa[this.index_referencias].path1 = Ref.path1;
-    this.Tabla_us_pa[this.index_referencias].path2 = Ref.path2;
-    this.Tabla_us_pa[this.index_referencias].path3 = Ref.path3;
-    this.Tabla_us_pa[this.index_referencias].path4 = Ref.path4;
-    $('#nuevo').modal('hide');
-  },
-  addModelo: function addModelo() {
-    this.TablaModelos3d.push(_objectSpread({}, this.modelo_3d));
-  },
-  RemoveModelo: function RemoveModelo(index) {
-    this.TablaModelos3d.splice(index, 1);
-    this.modelo_3d = '';
-  },
-  Store: function Store() {
-    var _this17 = this;
-    this.errors = [];
-    if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
-      toastr.error('Registro De Mediciones es obligatorio para informe especial');
-      return;
-    }
-    var urlRegistros = 'informes_us';
-    this.$store.commit('loading', true);
-    axios({
-      method: 'post',
-      url: urlRegistros,
-      data: {
-        'ot': this.otdata,
-        'obra': this.obra,
-        'planta': this.planta,
-        'fecha': this.fecha,
-        'ot_tipo_soldadura': this.ot_tipo_soldadura,
-        'observaciones': this.observaciones,
-        'numero_inf': this.numero_inf,
-        'componente': this.componente,
-        'material': this.material,
-        'material2': this.material2,
-        'material2_tipo': this.material2_tipo,
-        'linea': this.linea,
-        'plano_isom': this.plano_isom,
-        'hoja': this.hoja,
-        'diametro': this.diametro,
-        'espesor': this.espesor,
-        'espesor_chapa': this.espesor_chapa,
-        'procedimiento_soldadura': this.procedimiento_soldadura,
-        'pqr': this.pqr,
-        'tecnica': this.tecnica,
-        'interno_equipo': this.interno_equipo,
-        'procedimiento': this.procedimiento,
-        'ejecutor_ensayo': this.ejecutor_ensayo,
-        'norma_ensayo': this.norma_ensayo,
-        'norma_evaluacion': this.norma_evaluacion,
-        'estado_superficie': this.estado_superficie,
-        'encoder': this.encoder,
-        'agente_acoplamiento': this.agente_acoplamiento,
-        'metodo_ensayo': this.metodo,
-        'path1_calibracion': this.path1_calibracion,
-        'path2_calibracion': this.path2_calibracion,
-        'path3_calibracion': this.path3_calibracion,
-        'path4_calibracion': this.path4_calibracion,
-        'path1_indicacion': this.path1_indicacion,
-        'path2_indicacion': this.path2_indicacion,
-        'path3_indicacion': this.path3_indicacion,
-        'path4_indicacion': this.path4_indicacion,
-        'calibraciones': this.calibraciones,
-        'tabla_us_pa': this.Tabla_us_pa,
-        'tabla_me': this.Tabla_me,
-        'solicitado_por': this.solicitado_por,
-        'TablaModelos3d': this.TablaModelos3d,
-        'data_popup': this.popupData,
-        'tablaInspeccion': this.tablaInspeccion,
-        'tipo_tgs': this.tipo_tgs
+    },
+    Update: function Update() {
+      var _this18 = this;
+      this.errors = [];
+      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
+        toastr.error('Detalle componente es obligatorio para TGS');
+        return;
       }
-    }).then(function (response) {
-      var informe = response.data;
-      toastr.success('informe N°' + _this17.numero_inf + ' fue creado con éxito ');
-      window.open('/pdf/informe/us/' + informe.id, '_blank');
-      window.location.href = '/informes/ot/' + _this17.otdata.id;
-    })["catch"](function (error) {
-      _this17.errors = error.response.data.errors;
-      $.each(_this17.errors, function (key, value) {
-        toastr.error(value);
+      if (this.cliente.codigo === '0279' && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
+        toastr.error('Registro De Mediciones es obligatorio para TGS');
+        return;
+      }
+      this.$store.commit('loading', true);
+      var urlRegistros = 'informes_us/' + this.informedata.id;
+      axios({
+        method: 'put',
+        url: urlRegistros,
+        data: {
+          'ot': this.otdata,
+          'obra': this.obra,
+          'planta': this.planta,
+          'fecha': this.fecha,
+          'observaciones': this.observaciones,
+          'numero_inf': this.numero_inf,
+          'tipo_soldadura': this.ot_tipo_soldadura.tipo_soldadura,
+          'ot_tipo_soldadura': this.ot_tipo_soldadura,
+          'componente': this.componente,
+          'material': this.material,
+          'material2': this.material2,
+          'material2_tipo': this.material2_tipo,
+          'linea': this.linea,
+          'plano_isom': this.plano_isom,
+          'hoja': this.hoja,
+          'diametro': this.diametro,
+          'espesor': this.espesor,
+          'espesor_chapa': this.espesor_chapa,
+          'procedimiento_soldadura': this.procedimiento_soldadura,
+          'pqr': this.pqr,
+          'tecnica': this.tecnica,
+          'interno_equipo': this.interno_equipo,
+          'procedimiento': this.procedimiento,
+          'ejecutor_ensayo': this.ejecutor_ensayo,
+          'norma_ensayo': this.norma_ensayo,
+          'norma_evaluacion': this.norma_evaluacion,
+          'estado_superficie': this.estado_superficie,
+          'encoder': this.encoder,
+          'agente_acoplamiento': this.agente_acoplamiento,
+          'metodo_ensayo': this.metodo,
+          'path1_calibracion': this.path1_calibracion,
+          'path2_calibracion': this.path2_calibracion,
+          'path3_calibracion': this.path3_calibracion,
+          'path4_calibracion': this.path4_calibracion,
+          'path1_indicacion': this.path1_indicacion,
+          'path2_indicacion': this.path2_indicacion,
+          'path3_indicacion': this.path3_indicacion,
+          'path4_indicacion': this.path4_indicacion,
+          'calibraciones': this.calibraciones,
+          'tabla_us_pa': this.Tabla_us_pa,
+          'tabla_me': this.Tabla_me,
+          'solicitado_por': this.solicitado_por,
+          'TablaModelos3d': this.TablaModelos3d,
+          'data_popup': this.popupData,
+          'tablaInspeccion': this.tablaInspeccion
+        }
+      }).then(function (response) {
+        var informe = response.data;
+        toastr.success('informe N°' + _this18.numero_inf + ' fue actualizado con éxito ');
+        window.open('/pdf/informe/us/' + informe.id, '_blank');
+        window.location.href = '/informes/ot/' + _this18.otdata.id;
+      })["catch"](function (error) {
+        _this18.errors = error.response.data.errors;
+        $.each(_this18.errors, function (key, value) {
+          toastr.error(value);
+        });
+        if (typeof _this18.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
+      })["finally"](function () {
+        return _this18.$store.commit('loading', false);
       });
-      if (typeof _this17.errors == 'undefined' && error) {
-        toastr.error("Ocurrió un error al procesar la solicitud");
-      }
-    })["finally"](function () {
-      return _this17.$store.commit('loading', false);
-    });
-  },
-  Update: function Update() {
-    var _this18 = this;
-    this.errors = [];
-    if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && (this.popupData === null || this.popupData === '')) {
-      toastr.error('Detalle componente es obligatorio para TGS');
-      return;
     }
-    if (this.pdfEspecialsn && this.tecnica.codigo === 'ME' && this.Tabla_me.length === 0) {
-      toastr.error('Registro De Mediciones es obligatorio para TGS');
-      return;
-    }
-    this.$store.commit('loading', true);
-    var urlRegistros = 'informes_us/' + this.informedata.id;
-    axios({
-      method: 'put',
-      url: urlRegistros,
-      data: {
-        'ot': this.otdata,
-        'obra': this.obra,
-        'planta': this.planta,
-        'fecha': this.fecha,
-        'observaciones': this.observaciones,
-        'numero_inf': this.numero_inf,
-        'tipo_soldadura': this.ot_tipo_soldadura.tipo_soldadura,
-        'ot_tipo_soldadura': this.ot_tipo_soldadura,
-        'componente': this.componente,
-        'material': this.material,
-        'material2': this.material2,
-        'material2_tipo': this.material2_tipo,
-        'linea': this.linea,
-        'plano_isom': this.plano_isom,
-        'hoja': this.hoja,
-        'diametro': this.diametro,
-        'espesor': this.espesor,
-        'espesor_chapa': this.espesor_chapa,
-        'procedimiento_soldadura': this.procedimiento_soldadura,
-        'pqr': this.pqr,
-        'tecnica': this.tecnica,
-        'interno_equipo': this.interno_equipo,
-        'procedimiento': this.procedimiento,
-        'ejecutor_ensayo': this.ejecutor_ensayo,
-        'norma_ensayo': this.norma_ensayo,
-        'norma_evaluacion': this.norma_evaluacion,
-        'estado_superficie': this.estado_superficie,
-        'encoder': this.encoder,
-        'agente_acoplamiento': this.agente_acoplamiento,
-        'metodo_ensayo': this.metodo,
-        'path1_calibracion': this.path1_calibracion,
-        'path2_calibracion': this.path2_calibracion,
-        'path3_calibracion': this.path3_calibracion,
-        'path4_calibracion': this.path4_calibracion,
-        'path1_indicacion': this.path1_indicacion,
-        'path2_indicacion': this.path2_indicacion,
-        'path3_indicacion': this.path3_indicacion,
-        'path4_indicacion': this.path4_indicacion,
-        'calibraciones': this.calibraciones,
-        'tabla_us_pa': this.Tabla_us_pa,
-        'tabla_me': this.Tabla_me,
-        'solicitado_por': this.solicitado_por,
-        'TablaModelos3d': this.TablaModelos3d,
-        'data_popup': this.popupData,
-        'tablaInspeccion': this.tablaInspeccion,
-        'tipo_tgs': this.tipo_tgs
-      }
-    }).then(function (response) {
-      var informe = response.data;
-      toastr.success('informe N°' + _this18.numero_inf + ' fue actualizado con éxito ');
-      window.open('/pdf/informe/us/' + informe.id, '_blank');
-      window.location.href = '/informes/ot/' + _this18.otdata.id;
-    })["catch"](function (error) {
-      _this18.errors = error.response.data.errors;
-      $.each(_this18.errors, function (key, value) {
-        toastr.error(value);
-      });
-      if (typeof _this18.errors == 'undefined' && error) {
-        toastr.error("Ocurrió un error al procesar la solicitud");
-      }
-    })["finally"](function () {
-      return _this18.$store.commit('loading', false);
-    });
   }
-}));
+});
 
 /***/ }),
 
@@ -28450,6 +28596,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _toastrConfig__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../toastrConfig */ "./resources/js/components/toastrConfig.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -28458,7 +28605,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ModalPopup',
@@ -28468,8 +28614,10 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       "default": false
     },
     plantaProp: {
-      type: [Object, String],
-      "default": ''
+      type: Object,
+      "default": function _default() {
+        return {};
+      }
     },
     otdataProp: {
       type: Object,
@@ -28478,8 +28626,10 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       }
     },
     material_selected: {
-      type: [Object, String],
-      "default": ''
+      type: Object,
+      "default": function _default() {
+        return {};
+      }
     },
     materialesProp: {
       type: Array,
@@ -28560,13 +28710,13 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     // Cada vez que abra el modal, sincronizo los props a mi data interna:
     isOpen: function isOpen(val) {
       if (val) {
-        this.planta = this.plantaProp && _typeof(this.plantaProp) === 'object' ? this.plantaProp.codigo : this.plantaProp || '';
+        this.planta = this.plantaProp.codigo;
         this.nEquipo = this.nEquipoProp;
         this.materialesOpcion = this.materialesProp;
         this.orden = this.otdataProp.numero;
         this.tipo = this.tipo_tgs;
         if (this.tipo === 'Linea') {
-          this.detalle.material = this.material_selected && _typeof(this.material_selected) === 'object' ? this.material_selected : {};
+          this.detalle.material = this.material_selected;
         }
         this.fetchModelos();
         this.fetchFluidos();
@@ -28632,33 +28782,46 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     storeRegistro: function storeRegistro() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var popupData;
+        var _yield$axios$post, nuevoModelo, _yield$axios$post2, nuevoFluido, popupData;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              // 1) Si modelo no tiene id, lo creamos
-              /*         if (!this.modelo.id && this.tipo !== 'Linea') {
-                        // Validar que el código exista y no sea sólo espacios
-                          if (!this.modelo.codigo || this.modelo.codigo.trim() === "") {
-                          toastr.error("Campo modelo obligatorio");
-                          return;
-                        }
-                        const { data: nuevoModelo } = await axios.post(
-                          `/tgs-save-modelo/${this.modelo.codigo}`
-                        );
-                        this.modelo = nuevoModelo;
-                      }
-                        if (!this.fluido.id) {
-                        // Validar que el código exista y no sea sólo espacios
-                        if (!this.fluido.codigo || this.fluido.codigo.trim() === "") {
-                          toastr.error("Campo fluido obligatorio");
-                          return;
-                        }
-                        const { data: nuevoFluido } = await axios.post(
-                          `/tgs-save-fluido/${this.fluido.codigo}`
-                        );
-                        this.fluido = nuevoFluido;
-                      } */
+              if (!(!_this.modelo.id && _this.tipo !== 'Linea')) {
+                _context.next = 9;
+                break;
+              }
+              if (!(!_this.modelo.codigo || _this.modelo.codigo.trim() === "")) {
+                _context.next = 4;
+                break;
+              }
+              toastr.error("Campo modelo obligatorio");
+              return _context.abrupt("return");
+            case 4:
+              _context.next = 6;
+              return axios.post("/tgs-save-modelo/".concat(_this.modelo.codigo));
+            case 6:
+              _yield$axios$post = _context.sent;
+              nuevoModelo = _yield$axios$post.data;
+              _this.modelo = nuevoModelo;
+            case 9:
+              if (_this.fluido.id) {
+                _context.next = 18;
+                break;
+              }
+              if (!(!_this.fluido.codigo || _this.fluido.codigo.trim() === "")) {
+                _context.next = 13;
+                break;
+              }
+              toastr.error("Campo fluido obligatorio");
+              return _context.abrupt("return");
+            case 13:
+              _context.next = 15;
+              return axios.post("/tgs-save-fluido/".concat(_this.fluido.codigo));
+            case 15:
+              _yield$axios$post2 = _context.sent;
+              nuevoFluido = _yield$axios$post2.data;
+              _this.fluido = nuevoFluido;
+            case 18:
               console.log(_this.material);
               // 3) Ya con ambos id garantizados, armo el objeto
               popupData = {
@@ -28695,7 +28858,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
               console.log('Datos listos para enviar:', popupData);
               _this.$emit('submit', popupData);
               _this.closeModal();
-            case 5:
+            case 23:
             case "end":
               return _context.stop();
           }
@@ -40720,6 +40883,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     exportarPDF: function exportarPDF(id) {
       var url = "/imprimir-stock/".concat(id, "?fechaInicio=").concat(this.fechaInicio);
+      console.log(url); // Imprime la URL para comprobar
       window.open(url, '_blank');
     }
   }
@@ -58928,11 +59092,7 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "fecha"
-    }
-  }, [_vm._v("Fecha *")]), _vm._v(" "), _c("div", [_c("date-picker", {
+  }, [_c("label", [_vm._v("Fecha *")]), _vm._v(" "), _c("div", [_c("date-picker", {
     attrs: {
       "value-type": "YYYY-MM-DD",
       format: "DD-MM-YYYY",
@@ -59030,7 +59190,28 @@ var render = function render() {
     }
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "box-title"
+  }, [_vm._v("Partes sin certificados")]), _vm._v(" "), _c("div", {
+    staticClass: "box-tools pull-right"
+  }, [_c("button", {
+    staticClass: "btn btn-default btn-sm",
+    attrs: {
+      type: "button",
+      disabled: _vm.loading,
+      title: "Limpiar Todo"
+    },
+    on: {
+      click: _vm.limpiarTodo
+    }
+  }, [_c("app-icon", {
+    attrs: {
+      img: "trash",
+      color: "black"
+    }
+  })], 1), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c("div", {
     staticClass: "box-body"
   }, [_c("div", {
     staticClass: "col-md-12"
@@ -59050,7 +59231,7 @@ var render = function render() {
       }],
       attrs: {
         type: "checkbox",
-        id: "informe_sel",
+        id: "informe_sel_" + k,
         disabled: _vm.loading
       },
       domProps: {
@@ -59077,7 +59258,9 @@ var render = function render() {
         }]
       }
     })]), _vm._v(" "), _c("td", [_vm._v(_vm._s(parte.numero_formateado))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(parte.obra))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(parte.fecha_formateada))])]);
-  }), 0)])])])])]), _vm._v(" "), _c("div", {
+  }), 0)])])])]), _vm._v(" "), _vm.loading ? _c("div", {
+    staticClass: "overlay"
+  }, [_c("loading-spin")], 1) : _vm._e()]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -59114,7 +59297,7 @@ var render = function render() {
       staticClass: "form-control form-group-xs text-center",
       attrs: {
         type: "number",
-        id: "nro_combinacion",
+        id: "nro_combinacion_" + k,
         maxlength: "2",
         disabled: ""
       },
@@ -59129,17 +59312,30 @@ var render = function render() {
       }
     }), _vm._v(" "), _c("span", {
       staticClass: "input-group-btn"
-    }, [_c("button", {
+    }, [!_vm.TablaPartesServicios[k].manual_uncombined_sn && Number(_vm.TablaPartesServicios[k].nro_combinacion) > 0 ? _c("button", {
       staticClass: "btn btn-md btn-default",
       attrs: {
         type: "button"
       },
       on: {
         click: function click($event) {
-          return _vm.borrarCombinacion(_vm.TablaPartesServicios[k].nro_combinacion);
+          return _vm.borrarCombinacionIndex(k);
         }
       }
-    }, [_vm._v("X")])])])]) : _vm._e(), _vm._v(" "), item.visible ? _c("td", [_c("span", {
+    }, [_vm._v("X")]) : _c("button", {
+      staticClass: "btn btn-md btn-default",
+      attrs: {
+        type: "button",
+        title: "Volver a combinación"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.revertirCombinacionIndex(k);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fa fa-undo"
+    })])])])]) : _vm._e(), _vm._v(" "), item.visible ? _c("td", [_c("span", {
       staticStyle: {
         display: "inline-block"
       }
@@ -59186,7 +59382,9 @@ var render = function render() {
         color: "black"
       }
     })], 1)]) : _vm._e()]);
-  }), 0)])])])])])]), _vm._v(" "), _c("div", {
+  }), 0)])])])]), _vm._v(" "), _vm.loading ? _c("div", {
+    staticClass: "overlay"
+  }, [_c("loading-spin")], 1) : _vm._e()])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -59232,7 +59430,9 @@ var render = function render() {
         }
       }
     })]) : _c("div", [_vm._v("\n                                                    " + _vm._s(item.costuras_final) + "\n                                                ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.pulgadas))])]);
-  }), 0)])])])])])]), _vm._v(" "), _c("div", {
+  }), 0)])])])]), _vm._v(" "), _vm.loading ? _c("div", {
+    staticClass: "overlay"
+  }, [_c("loading-spin")], 1) : _vm._e()])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -59278,7 +59478,9 @@ var render = function render() {
         }
       }
     })]) : _c("div", [_vm._v("\n                                                    " + _vm._s(item.placas_final) + "\n                                                ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.cm))])]);
-  }), 0)])])])])])]), _vm._v(" "), _c("button", {
+  }), 0)])])])]), _vm._v(" "), _vm.loading ? _c("div", {
+    staticClass: "overlay"
+  }, [_c("loading-spin")], 1) : _vm._e()])]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-primary",
     attrs: {
       type: "submit",
@@ -59289,13 +59491,7 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "box-header with-border"
-  }, [_c("h3", {
-    staticClass: "box-title"
-  }, [_vm._v("Partes sin certificados")]), _vm._v(" "), _c("div", {
-    staticClass: "box-tools pull-right"
-  }, [_c("button", {
+  return _c("button", {
     staticClass: "btn btn-box-tool",
     attrs: {
       type: "button",
@@ -59303,7 +59499,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("i", {
     staticClass: "fa fa-minus"
-  })])])]);
+  })]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -75307,7 +75503,7 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("label", [_vm._v("Aplicación Penetrante")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Aplicación  Penetrante")]), _vm._v(" "), _c("v-select", {
     attrs: {
       label: "codigo",
       options: _vm.aplicaciones_lp
@@ -75380,7 +75576,7 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("label", [_vm._v("Aplicación Revelador *")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Aplicación  Revelador *")]), _vm._v(" "), _c("v-select", {
     attrs: {
       label: "codigo",
       options: _vm.aplicaciones_lp
@@ -75422,7 +75618,7 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("label", [_vm._v("Aplicación Removedor *")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Aplicación  Removedor *")]), _vm._v(" "), _c("v-select", {
     attrs: {
       label: "codigo",
       options: _vm.aplicaciones_lp
@@ -75816,54 +76012,6 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("label", [_vm._v("Cuño P")]), _vm._v(" "), _c("v-select", {
-    attrs: {
-      options: _vm.soldadores,
-      label: "codigo"
-    },
-    scopedSlots: _vm._u([{
-      key: "option",
-      fn: function fn(option) {
-        return [_c("span", {
-          staticClass: "upSelect"
-        }, [_vm._v(_vm._s(option.nombre) + " ")]), _vm._v(" "), _c("br"), _vm._v(" "), _c("span", {
-          staticClass: "downSelect"
-        }, [_vm._v(" " + _vm._s(option.codigo) + " ")])];
-      }
-    }]),
-    model: {
-      value: _vm.soldador1,
-      callback: function callback($$v) {
-        _vm.soldador1 = $$v;
-      },
-      expression: "soldador1"
-    }
-  })], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("label", [_vm._v("Cuño Z")]), _vm._v(" "), _c("v-select", {
-    attrs: {
-      options: _vm.soldadores,
-      label: "codigo"
-    },
-    scopedSlots: _vm._u([{
-      key: "option",
-      fn: function fn(option) {
-        return [_c("span", {
-          staticClass: "upSelect"
-        }, [_vm._v(_vm._s(option.nombre) + " ")]), _vm._v(" "), _c("br"), _vm._v(" "), _c("span", {
-          staticClass: "downSelect"
-        }, [_vm._v(" " + _vm._s(option.codigo) + " ")])];
-      }
-    }]),
-    model: {
-      value: _vm.soldador2,
-      callback: function callback($$v) {
-        _vm.soldador2 = $$v;
-      },
-      expression: "soldador2"
-    }
-  })], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
@@ -75926,63 +76074,7 @@ var render = function render() {
           return _vm.selectPosDetalle(k);
         }
       }
-    }, [_c("td", [_vm._v(_vm._s(item.pieza))]), _vm._v(" "), _c("td", [_vm.indexPosDetalle == k ? _c("div", [_c("v-select", {
-      staticStyle: {
-        "min-width": "100px"
-      },
-      attrs: {
-        options: _vm.soldadores,
-        label: "codigo",
-        "append-to-body": ""
-      },
-      scopedSlots: _vm._u([{
-        key: "option",
-        fn: function fn(_ref) {
-          var codigo = _ref.codigo,
-            nombre = _ref.nombre;
-          return [_c("span", {
-            staticClass: "upSelect"
-          }, [_vm._v(_vm._s(nombre))]), _c("br"), _vm._v(" "), _c("span", {
-            staticClass: "downSelect"
-          }, [_vm._v(_vm._s(codigo))])];
-        }
-      }], null, true),
-      model: {
-        value: _vm.TablaLp[k].soldador1,
-        callback: function callback($$v) {
-          _vm.$set(_vm.TablaLp[k], "soldador1", $$v);
-        },
-        expression: "TablaLp[k].soldador1"
-      }
-    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(item.soldador1 ? item.soldador1.codigo : "") + "\n                                                ")])]), _vm._v(" "), _c("td", [_vm.indexPosDetalle == k ? _c("div", [_c("v-select", {
-      staticStyle: {
-        "min-width": "100px"
-      },
-      attrs: {
-        options: _vm.soldadores,
-        label: "codigo",
-        "append-to-body": ""
-      },
-      scopedSlots: _vm._u([{
-        key: "option",
-        fn: function fn(_ref2) {
-          var codigo = _ref2.codigo,
-            nombre = _ref2.nombre;
-          return [_c("span", {
-            staticClass: "upSelect"
-          }, [_vm._v(_vm._s(nombre))]), _c("br"), _vm._v(" "), _c("span", {
-            staticClass: "downSelect"
-          }, [_vm._v(_vm._s(codigo))])];
-        }
-      }], null, true),
-      model: {
-        value: _vm.TablaLp[k].soldador2,
-        callback: function callback($$v) {
-          _vm.$set(_vm.TablaLp[k], "soldador2", $$v);
-        },
-        expression: "TablaLp[k].soldador2"
-      }
-    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(item.soldador2 ? item.soldador2.codigo : "") + "\n                                                ")])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.cm))]), _vm._v(" "), _c("td", [_vm.indexPosDetalle == k ? _c("div", [_c("input", {
+    }, [_c("td", [_vm._v(_vm._s(item.pieza))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.cm))]), _vm._v(" "), _c("td", [_vm.indexPosDetalle == k ? _c("div", [_c("input", {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -76003,7 +76095,7 @@ var render = function render() {
           _vm.$set(_vm.TablaLp[k], "detalle", $event.target.value);
         }
       }
-    })]) : _c("div", [_vm._v("\n                                                    " + _vm._s(_vm.TablaLp[k].detalle) + "\n                                                ")])]), _vm._v(" "), _c("td", {
+    })]) : _c("div", [_vm._v("\n                                                " + _vm._s(_vm.TablaLp[k].detalle) + "\n                                                ")])]), _vm._v(" "), _c("td", {
       staticStyle: {
         "text-align": "center"
       }
@@ -76135,13 +76227,9 @@ var staticRenderFns = [function () {
   return _c("thead", [_c("tr", [_c("th", {
     staticClass: "col-md-2"
   }, [_vm._v("Elemento")]), _vm._v(" "), _c("th", {
-    staticClass: "col-md-4"
-  }, [_vm._v("Cuño P")]), _vm._v(" "), _c("th", {
-    staticClass: "col-md-4"
-  }, [_vm._v("Cuño Z")]), _vm._v(" "), _c("th", {
     staticClass: "col-md-1"
   }, [_vm._v("CM")]), _vm._v(" "), _c("th", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-5"
   }, [_vm._v("Detalle")]), _vm._v(" "), _c("th", {
     staticClass: "col-md-1"
   }, [_vm._v("Aceptable")]), _vm._v(" "), _c("th", {
@@ -83743,7 +83831,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                          \n                     ")]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
     staticClass: "col-sm-6"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -83995,9 +84083,9 @@ var render = function render() {
     attrs: {
       "for": "resultado_pdf_sn"
     }
-  }, [_vm._v("Mostrar resultado\n                                en PDF")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Mostrar resultado en PDF")])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaDetalle.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                  \n             ")]), _vm._v(" "), _vm.TablaDetalle.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -84042,7 +84130,7 @@ var render = function render() {
           _vm.$set(_vm.TablaDetalle[k], "densidad", $event.target.value);
         }
       }
-    })]) : _c("div", [_vm._v("\n                                                        " + _vm._s(FIlaTabla.densidad) + "\n                                                    ")])]), _vm._v(" "), _c("td", {
+    })]) : _c("div", [_vm._v("\n                                                    " + _vm._s(FIlaTabla.densidad) + "\n                                                ")])]), _vm._v(" "), _c("td", {
       on: {
         click: function click($event) {
           return _vm.selectPosDetalle(k);
@@ -84113,7 +84201,7 @@ var render = function render() {
           _vm.$set(_vm.TablaDetalle[k], "observacion", $event.target.value);
         }
       }
-    })]) : _c("div", [_vm._v("\n                                                        " + _vm._s(_vm.TablaDetalle[k].observacion) + "\n                                                    ")])]), _vm._v(" "), _c("td", [_c("a", {
+    })]) : _c("div", [_vm._v("\n                                                " + _vm._s(_vm.TablaDetalle[k].observacion) + "\n                                                ")])]), _vm._v(" "), _c("td", [_c("a", {
       on: {
         click: function click($event) {
           return _vm.RemoveDetalle(k);
@@ -84191,7 +84279,7 @@ var render = function render() {
       attrs: {
         "for": "posicionPlacaGosaducto"
       }
-    }, [_vm._v("Pos.\n                                                                        Indicación")]), _vm._v(" "), _c("input", {
+    }, [_vm._v("Pos. Indicación")]), _vm._v(" "), _c("input", {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -84258,7 +84346,7 @@ var render = function render() {
       }
     })], 1)])])]), _vm._v(" "), _c("div", {
       staticClass: "form-group"
-    }, [_vm._v("\n                                                                 \n                                                            ")]), _vm._v(" "), _vm.TablaDetalle.length && _vm.TablaDetalle[_vm.indexDetalle].defectos.length ? _c("div", [_c("div", {
+    }, [_vm._v("\n                                                             \n                                                        ")]), _vm._v(" "), _vm.TablaDetalle.length && _vm.TablaDetalle[_vm.indexDetalle].defectos.length ? _c("div", [_c("div", {
       staticClass: "col-md-8"
     }, [_c("div", {
       staticClass: "table-responsive"
@@ -84268,14 +84356,14 @@ var render = function render() {
       staticClass: "col-md-2"
     }, [_vm._v("Código")]), _vm._v(" "), _c("th", {
       staticClass: "col-md-6"
-    }, [_vm._v("Descripción\n                                                                                    ")]), _vm._v(" "), _c("th", {
+    }, [_vm._v("Descripción")]), _vm._v(" "), _c("th", {
       staticClass: "col-md-2"
-    }, [_vm._v("Posición\n                                                                                    ")]), _vm._v(" "), _vm.formato == "DUCTO" ? _c("th", {
+    }, [_vm._v("Posición")]), _vm._v(" "), _vm.formato == "DUCTO" ? _c("th", {
       staticClass: "col-md-2"
     }, [_vm._v("Sector")]) : _vm._e(), _vm._v(" "), _c("th", [_vm._v(" ")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.TablaDetalle.length > 0 ? _vm.TablaDetalle[_vm.indexDetalle].defectos : [], function (defectoPasada, k) {
       return _c("tr", {
         key: k
-      }, [_c("td", [_vm._v(_vm._s(defectoPasada.codigo) + "\n                                                                                    ")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(defectoPasada.descripcion))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(defectoPasada.posicion) + "\n                                                                                    ")]), _vm._v(" "), _vm.formato == "DUCTO" ? _c("td", [_vm._v(_vm._s(defectoPasada.pasada))]) : _vm._e(), _vm._v(" "), _c("td", {
+      }, [_c("td", [_vm._v(_vm._s(defectoPasada.codigo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(defectoPasada.descripcion))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(defectoPasada.posicion))]), _vm._v(" "), _vm.formato == "DUCTO" ? _c("td", [_vm._v(_vm._s(defectoPasada.pasada))]) : _vm._e(), _vm._v(" "), _c("td", {
         staticClass: "pointer"
       }, [_c("a", {
         on: {
@@ -84435,7 +84523,7 @@ var render = function render() {
     }
   })], 1)])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaTramos.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                      \n                 ")]), _vm._v(" "), _vm.TablaTramos.length ? _c("div", [_c("div", {
     staticClass: "col-md-11"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -84688,7 +84776,7 @@ var render = function render() {
     }
   })], 1)])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaPasadas.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                      \n                 ")]), _vm._v(" "), _vm.TablaPasadas.length ? _c("div", [_c("div", {
     staticClass: "col-md-11"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -84715,7 +84803,7 @@ var render = function render() {
           return _vm.selectPosPasadas(k);
         }
       }
-    }, [Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm._v(_vm._s(Pasada.elemento_pasada))]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm._v(_vm._s(Pasada.pasada) + "\n                                            ")]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
+    }, [Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm._v(_vm._s(Pasada.elemento_pasada))]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm._v(_vm._s(Pasada.pasada))]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
       attrs: {
         options: _vm.soldadores,
         label: "codigo"
@@ -84737,7 +84825,7 @@ var render = function render() {
         },
         expression: "TablaPasadas[indexPasada].soldador3"
       }
-    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(Pasada.soldador3.codigo) + "\n                                                ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
+    })], 1) : _c("div", [_vm._v("\n                                                     " + _vm._s(Pasada.soldador3.codigo) + "\n                                                 ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
       attrs: {
         options: _vm.soldadores,
         label: "codigo",
@@ -84760,7 +84848,7 @@ var render = function render() {
         },
         expression: "TablaPasadas[indexPasada].soldador2"
       }
-    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(Pasada.soldador2.codigo) + "\n                                                ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
+    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(Pasada.soldador2.codigo) + "\n                                                 ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
       attrs: {
         options: _vm.soldadores,
         label: "codigo"
@@ -84782,7 +84870,7 @@ var render = function render() {
         },
         expression: "TablaPasadas[indexPasada].soldador1"
       }
-    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(Pasada.soldador1.codigo) + "\n                                                ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada && _vm.formato == "PLANTA" ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
+    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(Pasada.soldador1.codigo) + "\n                                                 ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada && _vm.formato == "PLANTA" ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
       attrs: {
         options: ["GMAW", "GTAW", "SAW", "SMAW"],
         disabled: !_vm.isGasoducto || _vm.pasada != "1" || !_vm.TablaDetalle.length
@@ -84938,7 +85026,7 @@ var render = function render() {
     attrs: {
       "for": "sel_todos"
     }
-  }, [_vm._v("Seleccionar\n                                        Todos")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Seleccionar Todos")])])])]), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-12"
@@ -85018,7 +85106,7 @@ var render = function render() {
       expression: "clonando_pasada"
     }],
     staticClass: "fa fa-spin fa-refresh"
-  }), _vm._v(" Clonar\n                        ")])])])])]), _vm._v(" "), _c("div", {
+  }), _vm._v(" Clonar\n                 ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       tabindex: "-1",
@@ -86104,9 +86192,8 @@ render._withStripped = true;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var render = function render() {
-  var _vm$tecnica;
+  var _vm$tecnica, _vm$tecnica2, _vm$componente_me_dat;
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
@@ -86115,12 +86202,10 @@ var render = function render() {
     ref: "modalPopupRef",
     attrs: {
       "is-open": _vm.isModalOpen,
-      plantaProp: typeof _vm.planta === "string" ? {
-        codigo: _vm.planta
-      } : _vm.planta || {},
+      plantaProp: _vm.planta,
       nEquipoProp: _vm.componente,
       materialesProp: _vm.materiales,
-      material_selected: _vm.material && _typeof(_vm.material) === "object" ? _vm.material : {},
+      material_selected: _vm.material,
       otdataProp: _vm.otdata,
       tipo_tgs: _vm.tipo_tgs
     },
@@ -86217,7 +86302,7 @@ var render = function render() {
     attrs: {
       "for": "componente"
     }
-  }, [_vm._v("\n                                Componente *\n                                "), _vm.pdfEspecialsn && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && (_vm.tipo_tgs == "Horizontal" || _vm.tipo_tgs == "Vertical" || _vm.tipo_tgs == "Linea") && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
+  }, [_vm._v("\n                            Componente *\n                            "), _vm.cliente.codigo === "0279" && ((_vm$tecnica = _vm.tecnica) === null || _vm$tecnica === void 0 ? void 0 : _vm$tecnica.codigo) === "ME" && _vm.tipo_tgs !== null && _vm.material !== "" && _vm.planta !== "" ? _c("button", {
     attrs: {
       type: "button",
       disabled: !_vm.componente
@@ -86261,7 +86346,7 @@ var render = function render() {
     attrs: {
       label: "codigo",
       options: _vm.materiales,
-      "input-id": "material"
+      id: "material"
     },
     model: {
       value: _vm.material,
@@ -86616,7 +86701,7 @@ var render = function render() {
     attrs: {
       "for": "tipo"
     }
-  }, [_vm._v("\n                                " + _vm._s(_vm.isTipoEnabled ? "Tipo *" : "Tipo") + "\n                            ")]), _vm._v(" "), _c("v-select", {
+  }, [_vm._v("\n                        " + _vm._s(_vm.isTipoEnabled ? "Tipo *" : "Tipo") + "\n                    ")]), _vm._v(" "), _c("v-select", {
     attrs: {
       id: "tipo",
       options: _vm.tipoOptions,
@@ -86925,7 +87010,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87106,7 +87191,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87152,7 +87237,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }]
   }, [_c("div", {
     staticClass: "clearfix"
@@ -87161,7 +87246,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87171,7 +87256,7 @@ var render = function render() {
       "for": "block_sensibilidad",
       title: "Block Sensibilidad"
     }
-  }, [_vm._v("Block Sensibilidad\n                                    *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Block Sensibilidad *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87197,7 +87282,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87223,7 +87308,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo == "ME",
-      expression: "tecnica.codigo == 'ME'"
+      expression: "tecnica.codigo =='ME'"
     }]
   }, [_c("div", {
     staticClass: "clearfix"
@@ -87232,7 +87317,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87242,7 +87327,7 @@ var render = function render() {
       "for": "reflector_referencia",
       title: "Reflector Referencia (mm)"
     }
-  }, [_vm._v("Reflector\n                                    Referencia (mm)\n                                    *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Reflector Referencia (mm) *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87269,7 +87354,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87279,7 +87364,7 @@ var render = function render() {
       "for": "ganancia_referencia",
       title: "Ganancia Referencia (dB)"
     }
-  }, [_vm._v("Ganancia\n                                    Referencia (dB) *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Ganancia Referencia (dB) *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87305,7 +87390,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87341,7 +87426,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87351,7 +87436,7 @@ var render = function render() {
       "for": "correccion_transferencia",
       title: "Corrección Transferencia (dB)"
     }
-  }, [_vm._v("Corrección Transferencia\n                                    (dB) *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Corrección Transferencia (dB) *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87377,7 +87462,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87387,7 +87472,7 @@ var render = function render() {
       "for": "adicional_barrido",
       title: "Adicional Barrido (dB)"
     }
-  }, [_vm._v("Adicional Barrido (dB)\n                                    *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Adicional Barrido (dB) *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87413,7 +87498,7 @@ var render = function render() {
       name: "show",
       rawName: "v-show",
       value: _vm.tecnica.codigo != "ME",
-      expression: "tecnica.codigo != 'ME'"
+      expression: "tecnica.codigo !='ME'"
     }],
     staticClass: "col-md-3"
   }, [_c("div", {
@@ -87423,7 +87508,7 @@ var render = function render() {
       "for": "amplificacion_total",
       title: "Amplificación Total (dB)"
     }
-  }, [_vm._v("Amplificación\n                                    Total (dB) *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Amplificación Total (dB) *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -87774,7 +87859,7 @@ var render = function render() {
       "for": "angulo_incidencia_us_pa",
       title: "Ángulo Incidencia"
     }
-  }, [_vm._v("Ángulo Incidencia\n                                    *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Ángulo Incidencia *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88145,7 +88230,7 @@ var render = function render() {
       "for": "espesor_minimo_me",
       title: "espesor_minimo_me"
     }
-  }, [_vm._v("Espesor Mínimo\n                                    "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor Mínimo\n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88177,7 +88262,7 @@ var render = function render() {
       "for": "espesor_minimo_anterior_me",
       title: "Espesor minimo anterior"
     }
-  }, [_vm._v("Espesor\n                                    minimo anterior\n                                    "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Espesor minimo anterior\n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88210,7 +88295,7 @@ var render = function render() {
       "for": "años_ultima_inspeccion_me",
       title: "Años desde la última inspección"
     }
-  }, [_vm._v("Años desde la última inspección\n                                    "), _vm.pdfEspecialsn ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Años desde la última inspección\n                                        "), _vm.cliente.codigo == "0279" ? _c("span", [_vm._v("*")]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88242,7 +88327,7 @@ var render = function render() {
       "for": "cantidad_generatrices_linea_pdf_me",
       title: "Cantidad Generatrices por linea en informe"
     }
-  }, [_vm._v("Generatrices por Linea en pdf\n                                    *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Generatrices por Linea en pdf *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -88396,7 +88481,7 @@ var render = function render() {
           _vm.$set(item, "cantidad_generatrices_linea_pdf_me", $event.target.value);
         }
       }
-    })]) : _c("div", [_vm._v("\n                                                    " + _vm._s(item.cantidad_generatrices_linea_pdf_me) + "\n                                                ")])]), _vm._v(" "), _c("td", [_c("button", {
+    })]) : _c("div", [_vm._v("\n                                                            " + _vm._s(item.cantidad_generatrices_linea_pdf_me) + "\n                                                        ")])]), _vm._v(" "), _c("td", [_c("button", {
       attrs: {
         type: "button"
       },
@@ -88506,12 +88591,12 @@ var render = function render() {
             return _vm.selectPosGeneratriz(g);
           }
         }
-      }, [p === 1 && g === 1 ? _c("div", [_vm._v("\n                                                             \n                                                        ")]) : p === 1 && g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm._v("\n                                                                  ACCESORIO      \n                                                        ")]) : g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm.indexPosPos == p && _vm.indexPosGeneratriz == g ? _c("div", [_c("input", {
+      }, [p === 1 && g === 1 ? _c("div", [_vm._v("\n                                                             \n                                                        ")]) : p === 1 && g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm._v("\n                                                                   ACCESORIO      \n                                                        ")]) : g === parseInt(_vm.Tabla_me[_vm.indexPosTabla_me].cantidad_generatrices_me) + 1 ? _c("div", [_vm.indexPosPos == p && _vm.indexPosGeneratriz == g ? _c("div", [_c("input", {
         directives: [{
           name: "model",
           rawName: "v-model",
           value: _vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1][p - 1],
-          expression: "Tabla_me[indexPosTabla_me].mediciones[g - 1][p - 1]"
+          expression: "Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]"
         }],
         attrs: {
           type: "text",
@@ -88531,7 +88616,7 @@ var render = function render() {
           name: "model",
           rawName: "v-model",
           value: _vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1][p - 1],
-          expression: "Tabla_me[indexPosTabla_me].mediciones[g - 1][p - 1]"
+          expression: "Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]"
         }],
         ref: "refInputMediciones",
         refInFor: true,
@@ -88559,7 +88644,7 @@ var render = function render() {
           name: "model",
           rawName: "v-model",
           value: _vm.Tabla_me[_vm.indexPosTabla_me].mediciones[g - 1][p - 1],
-          expression: "Tabla_me[indexPosTabla_me].mediciones[g - 1][p - 1]"
+          expression: "Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]"
         }],
         ref: "refInputMediciones",
         refInFor: true,
@@ -88590,7 +88675,7 @@ var render = function render() {
           "font-style": "oblique",
           color: "cadetblue"
         }
-      }, [_vm._v("\n                                                                    " + _vm._s(p - 1) + "-" + _vm._s(_vm.generatrices[g - 2].valor) + " ")])])])]);
+      }, [_vm._v(" " + _vm._s(p - 1) + "-" + _vm._s(_vm.generatrices[g - 2].valor) + " ")])])])]);
     }), 0);
   }), 0)])])])]) : _vm._e()])])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
@@ -88664,7 +88749,7 @@ var render = function render() {
         _vm.path4_indicacion = $event;
       }
     }
-  })], 1)])])]), _vm._v(" "), _vm.mostrarInspeccionVisual ? _c("div", {
+  })], 1)])])]), _vm._v(" "), _vm.cliente.codigo === "0279" && ((_vm$tecnica2 = _vm.tecnica) === null || _vm$tecnica2 === void 0 ? void 0 : _vm$tecnica2.codigo) === "ME" && ((_vm$componente_me_dat = _vm.componente_me_data) !== null && _vm$componente_me_dat !== void 0 && _vm$componente_me_dat.tipo_us && _vm.componente_me_data.tipo_us !== "Linea" || _vm.tipo_tgs !== "Linea") ? _c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
     staticClass: "box-body"
@@ -88696,7 +88781,7 @@ var render = function render() {
             return _vm.seleccionarRespuesta(item, "SI");
           }
         }
-      }, [_vm._v("\n                                                SI\n                                            ")])]), _vm._v(" "), _c("td", {
+      }, [_vm._v("\n                            SI\n                        ")])]), _vm._v(" "), _c("td", {
         staticClass: "align-middle text-center"
       }, [_c("button", {
         staticClass: "btn btn-circle",
@@ -88709,7 +88794,7 @@ var render = function render() {
             return _vm.seleccionarRespuesta(item, "NO");
           }
         }
-      }, [_vm._v("\n                                                NO\n                                            ")])]), _vm._v(" "), _c("td", {
+      }, [_vm._v("\n                            NO\n                        ")])]), _vm._v(" "), _c("td", {
         staticClass: "align-middle text-center"
       }, [_c("button", {
         staticClass: "btn btn-circle",
@@ -88722,7 +88807,7 @@ var render = function render() {
             return _vm.seleccionarRespuesta(item, "N/A");
           }
         }
-      }, [_vm._v("\n                                                N/A\n                                            ")])])]);
+      }, [_vm._v("\n                            N/A\n                        ")])])]);
     }), 0)])])]);
   })], 2)]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
@@ -89127,7 +89212,7 @@ var render = function render() {
     attrs: {
       "for": "planta"
     }
-  }, [_vm._v("Planta")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Planta *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -89157,7 +89242,7 @@ var render = function render() {
     attrs: {
       "for": "area"
     }
-  }, [_vm._v("Área")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Área *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -89187,7 +89272,7 @@ var render = function render() {
     attrs: {
       "for": "orden"
     }
-  }, [_vm._v("Orden")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Orden *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -89217,7 +89302,7 @@ var render = function render() {
     attrs: {
       "for": "nEquipo"
     }
-  }, [_vm._v("N° de Equipo")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("N° de Equipo *")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -89262,7 +89347,7 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group d-flex"
-  }, [_c("label", [_vm._v("Modelo *")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Modelo")]), _vm._v(" "), _c("v-select", {
     attrs: {
       label: "codigo",
       options: _vm.modeloOptions,
@@ -89393,8 +89478,7 @@ var render = function render() {
   }, [_vm._v("Material")]), _vm._v(" "), _c("v-select", {
     attrs: {
       options: _vm.materialesOpcion,
-      label: "codigo",
-      "input-id": "detalleMaterial"
+      label: "codigo"
     },
     model: {
       value: _vm.detalle.material,
@@ -89653,7 +89737,7 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group d-flex"
-  }, [_c("label", [_vm._v("Fluido * ")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Fluido")]), _vm._v(" "), _c("v-select", {
     attrs: {
       options: _vm.fluidoOptions,
       label: "codigo",
@@ -130682,7 +130766,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.existe[data-v-275b8cdc] {\r\n\r\n    color: blue;\n}\n.checkbox-inline[data-v-275b8cdc] {\r\n    margin-left: 0px;\n}\n.form-control[disabled][data-v-275b8cdc],\r\n.form-control[readonly][data-v-275b8cdc],\r\nfieldset[disabled] .form-control[data-v-275b8cdc] {\r\n    background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.existe[data-v-275b8cdc] {\n\n    color: blue ;\n}\n.checkbox-inline[data-v-275b8cdc] {\n    margin-left: 0px;\n}\n.form-control[disabled][data-v-275b8cdc], .form-control[readonly][data-v-275b8cdc], fieldset[disabled] .form-control[data-v-275b8cdc] {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -130796,7 +130880,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-13a6ae76],\r\n.form-control[readonly][data-v-13a6ae76],\r\nfieldset[disabled] .form-control[data-v-13a6ae76] {\r\n    background-color: #eee;\n}\n.checkbox-inline[data-v-13a6ae76] {\r\n    margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-13a6ae76] {\r\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-13a6ae76] {\r\n        overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-13a6ae76]:nth-child(4n+1),\r\n.tabla-detalle tr[data-v-13a6ae76]:nth-child(4n+2) {\r\n    background: #f2f2f2;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-13a6ae76], .form-control[readonly][data-v-13a6ae76], fieldset[disabled] .form-control[data-v-13a6ae76] {\n      background-color: #eee;\n}\n.checkbox-inline[data-v-13a6ae76] {\n     margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-13a6ae76] {\n         position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-13a6ae76] {\n         overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-13a6ae76]:nth-child(4n+1), .tabla-detalle tr[data-v-13a6ae76]:nth-child(4n+2) {\n background: #f2f2f2;\n}\n\n ", ""]);
 
 // exports
 
@@ -130815,7 +130899,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-select .vs__selected-options {\r\n    flex-wrap: nowrap;\r\n    white-space: nowrap;\r\n    overflow: hidden;\n}\r\n", ""]);
+exports.push([module.i, "\n.v-select .vs__selected-options{\n    flex-wrap: nowrap;\n    white-space: nowrap;\n    overflow: hidden;\n}\n\n", ""]);
 
 // exports
 
@@ -130872,7 +130956,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.existe[data-v-084fc4a8] {\r\n\r\n    color: blue;\r\n    margin-top: ;\n}\n.checkbox-inline[data-v-084fc4a8] {\r\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-084fc4a8] {\r\n\r\n    width: 12.499999995%\n}\n@media (min-width: 768px) {\n.size-1-5[data-v-084fc4a8] {\r\n\r\n        width: 12.499999995%;\n}\n}\n.form-control[disabled][data-v-084fc4a8],\r\n.form-control[readonly][data-v-084fc4a8],\r\nfieldset[disabled] .form-control[data-v-084fc4a8] {\r\n    background-color: #eee;\n}\ntable th[data-v-084fc4a8],\r\ntable td[data-v-084fc4a8] {\r\n\r\n    text-align: center;\n}\n.colorearLimiteTablaUs[data-v-084fc4a8] {\r\n    color: blue;\n}\r\n", ""]);
+exports.push([module.i, "\n.existe[data-v-084fc4a8] {\n\n    color: blue ;\n    margin-top: ;\n}\n.checkbox-inline[data-v-084fc4a8] {\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-084fc4a8] {\n\n    width: 12.499999995%\n}\n@media (min-width: 768px)  {\n.size-1-5[data-v-084fc4a8] {\n\n        width: 12.499999995%;\n}\n}\n.form-control[disabled][data-v-084fc4a8], .form-control[readonly][data-v-084fc4a8], fieldset[disabled] .form-control[data-v-084fc4a8] {\n     background-color: #eee;\n}\ntable th[data-v-084fc4a8], table td[data-v-084fc4a8] {\n\n    text-align: center;\n}\n.colorearLimiteTablaUs[data-v-084fc4a8] {\n    color:blue;\n}\n", ""]);
 
 // exports
 
@@ -130891,7 +130975,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\r\n    position: fixed;\r\n    /* ocupa toda la pantalla */\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    display: flex;\r\n    /* flex para centrar */\r\n    align-items: center;\r\n    /* centrar vertical */\r\n    justify-content: center;\r\n    /* centrar horizontal */\r\n    background: rgba(0, 0, 0, 0.5);\r\n    /* overlay oscuro */\r\n    z-index: 9999;\r\n    /* por encima de todo */\n}\r\n\r\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\r\n    margin: 0;\r\n    /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\r\n    max-height: 90vh;\r\n    overflow-y: auto;\n}\n.form-control[disabled][data-v-653e7c51],\r\n.form-control[readonly][data-v-653e7c51],\r\nfieldset[disabled] .form-control[data-v-653e7c51] {\r\n    background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\n  position: fixed;       /* ocupa toda la pantalla */\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;         /* flex para centrar */\n  align-items: center;   /* centrar vertical */\n  justify-content: center;/* centrar horizontal */\n  background: rgba(0,0,0,0.5); /* overlay oscuro */\n  z-index: 9999;         /* por encima de todo */\n}\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\n  margin: 0;             /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\n  max-height: 90vh;\n  overflow-y: auto;\n}\n", ""]);
 
 // exports
 
@@ -373557,7 +373641,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
     localidades: [],
     ot_tipo_soldaduras: [],
     ot_obra_tipo_soldaduras: [],
-    pdf_especial: {},
     materiales: [],
     diametros: [],
     espesores: [],
@@ -373737,22 +373820,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    // En actions:
-    loadPdfEspecial: function loadPdfEspecial(_ref15, _ref16) {
+    loadOtPqrs: function loadOtPqrs(_ref15, ot_id) {
       var commit = _ref15.commit;
-      var metodo = _ref16.metodo,
-        cliente_id = _ref16.cliente_id;
-      axios.defaults.baseURL = store.state.url; // '/api/'
-      var url = "pdf_especial/metodo/".concat(metodo, "/cliente/").concat(cliente_id, "?api_token=").concat(Laravel.user.api_token);
-      return new Promise(function (resolve, reject) {
-        axios.get(url).then(function (response) {
-          commit('getPdfEspecial', response.data);
-          resolve(response.data);
-        })["catch"](reject);
-      });
-    },
-    loadOtPqrs: function loadOtPqrs(_ref17, ot_id) {
-      var commit = _ref17.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_tipo_soldaduras/ot/' + ot_id + /pqrs/ + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373762,24 +373831,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadMateriales: function loadMateriales(_ref18) {
-      var commit = _ref18.commit;
+    loadMateriales: function loadMateriales(_ref16) {
+      var commit = _ref16.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'materiales' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getMateriales', response.data);
       });
     },
-    loadDiametros: function loadDiametros(_ref19) {
-      var commit = _ref19.commit;
+    loadDiametros: function loadDiametros(_ref17) {
+      var commit = _ref17.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'diametros' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getDiametros', response.data);
       });
     },
-    loadEspesores: function loadEspesores(_ref20, diametro_code) {
-      var commit = _ref20.commit;
+    loadEspesores: function loadEspesores(_ref18, diametro_code) {
+      var commit = _ref18.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'espesor/' + diametro_code + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373789,16 +373858,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadMedidasPlaca: function loadMedidasPlaca(_ref21) {
-      var commit = _ref21.commit;
+    loadMedidasPlaca: function loadMedidasPlaca(_ref19) {
+      var commit = _ref19.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'medidas/cm/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getMedidasPlaca', response.data);
       });
     },
-    loadProcedimietosOtMetodo: function loadProcedimietosOtMetodo(_ref22, payload) {
-      var commit = _ref22.commit;
+    loadProcedimietosOtMetodo: function loadProcedimietosOtMetodo(_ref20, payload) {
+      var commit = _ref20.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'procedimientos_informes/ot/' + payload.ot_id + '/metodo/' + payload.metodo + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373808,48 +373877,48 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadNormaEvaluaciones: function loadNormaEvaluaciones(_ref23) {
-      var commit = _ref23.commit;
+    loadNormaEvaluaciones: function loadNormaEvaluaciones(_ref21) {
+      var commit = _ref21.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getNormaEvaluaciones', response.data);
       });
     },
-    loadNormaEnsayos: function loadNormaEnsayos(_ref24) {
-      var commit = _ref24.commit;
+    loadNormaEnsayos: function loadNormaEnsayos(_ref22) {
+      var commit = _ref22.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getNormaEnsayos', response.data);
       });
     },
-    loadUnidadesMedidas: function loadUnidadesMedidas(_ref25) {
-      var commit = _ref25.commit;
+    loadUnidadesMedidas: function loadUnidadesMedidas(_ref23) {
+      var commit = _ref23.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'unidades_medidas/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getUnidadesMedidas', response.data);
       });
     },
-    loadMetodosEnsayos: function loadMetodosEnsayos(_ref26) {
-      var commit = _ref26.commit;
+    loadMetodosEnsayos: function loadMetodosEnsayos(_ref24) {
+      var commit = _ref24.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getMetodosEnsayos', response.data);
       });
     },
-    loadTiposEquipamiento: function loadTiposEquipamiento(_ref27) {
-      var commit = _ref27.commit;
+    loadTiposEquipamiento: function loadTiposEquipamiento(_ref25) {
+      var commit = _ref25.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'tipos_equipamiento' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getTiposEquipamiento', response.data);
       });
     },
-    loadInternoEquipos: function loadInternoEquipos(_ref28, payload) {
-      var commit = _ref28.commit;
+    loadInternoEquipos: function loadInternoEquipos(_ref26, payload) {
+      var commit = _ref26.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '/tipo_penetrante/' + payload.tipo_penetrante + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373859,8 +373928,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadInstrumentosMediciones: function loadInstrumentosMediciones(_ref29, payload) {
-      var commit = _ref29.commit;
+    loadInstrumentosMediciones: function loadInstrumentosMediciones(_ref27, payload) {
+      var commit = _ref27.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '/tipo_penetrante/' + payload.tipo_penetrante + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373870,8 +373939,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadVehiculos: function loadVehiculos(_ref30) {
-      var commit = _ref30.commit;
+    loadVehiculos: function loadVehiculos(_ref28) {
+      var commit = _ref28.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'vehiculos' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373881,8 +373950,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadVehiculosOt: function loadVehiculosOt(_ref31, ot_id) {
-      var commit = _ref31.commit;
+    loadVehiculosOt: function loadVehiculosOt(_ref29, ot_id) {
+      var commit = _ref29.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'vehiculos' + '/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373892,8 +373961,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadPalpadores: function loadPalpadores(_ref32) {
-      var commit = _ref32.commit;
+    loadPalpadores: function loadPalpadores(_ref30) {
+      var commit = _ref30.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'palpadores' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373903,8 +373972,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadParticulas: function loadParticulas(_ref33, metodo_trabajo_pm_id) {
-      var commit = _ref33.commit;
+    loadParticulas: function loadParticulas(_ref31, metodo_trabajo_pm_id) {
+      var commit = _ref31.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'particulas/metodo_trabajo_pm/' + metodo_trabajo_pm_id + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373914,8 +373983,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadUbicacionInternoEquipo: function loadUbicacionInternoEquipo(_ref34, id) {
-      var commit = _ref34.commit;
+    loadUbicacionInternoEquipo: function loadUbicacionInternoEquipo(_ref32, id) {
+      var commit = _ref32.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/' + id + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373925,32 +373994,32 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadInternoFuentes: function loadInternoFuentes(_ref35, activo_sn) {
-      var commit = _ref35.commit;
+    loadInternoFuentes: function loadInternoFuentes(_ref33, activo_sn) {
+      var commit = _ref33.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_fuentes/activo_sn/' + activo_sn + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getInternoFuentes', response.data);
       });
     },
-    loadEquipos: function loadEquipos(_ref36) {
-      var commit = _ref36.commit;
+    loadEquipos: function loadEquipos(_ref34) {
+      var commit = _ref34.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'equipos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getEquipos', response.data);
       });
     },
-    loadFuentes: function loadFuentes(_ref37) {
-      var commit = _ref37.commit;
+    loadFuentes: function loadFuentes(_ref35) {
+      var commit = _ref35.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'fuentes' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getFuentes', response.data);
       });
     },
-    loadFuentePorInterno: function loadFuentePorInterno(_ref38, interno_fuente_id) {
-      var commit = _ref38.commit;
+    loadFuentePorInterno: function loadFuentePorInterno(_ref36, interno_fuente_id) {
+      var commit = _ref36.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'fuentes/interno_fuente/' + interno_fuente_id + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373960,8 +374029,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadTipoLiquidos: function loadTipoLiquidos(_ref39, payload) {
-      var commit = _ref39.commit;
+    loadTipoLiquidos: function loadTipoLiquidos(_ref37, payload) {
+      var commit = _ref37.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'tipo_liquidos/penetrante_sn/' + payload.penetrante_sn + '/revelador_sn/' + payload.revelador_sn + '/removedor_sn/' + payload.removedor_sn + '/metodo_trabajo_lp_id/' + payload.metodo_trabajo_lp_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
@@ -373971,8 +374040,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadIluminaciones: function loadIluminaciones(_ref40) {
-      var commit = _ref40.commit;
+    loadIluminaciones: function loadIluminaciones(_ref38) {
+      var commit = _ref38.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'iluminaciones' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -373982,16 +374051,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadEjecutorEnsayo: function loadEjecutorEnsayo(_ref41, ot_id) {
-      var commit = _ref41.commit;
+    loadEjecutorEnsayo: function loadEjecutorEnsayo(_ref39, ot_id) {
+      var commit = _ref39.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-operarios/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getEjecutorEnsayo', response.data);
       });
     },
-    loadOperadores: function loadOperadores(_ref42) {
-      var commit = _ref42.commit;
+    loadOperadores: function loadOperadores(_ref40) {
+      var commit = _ref40.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-operarios/users' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374001,24 +374070,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadOperadoresEmpresa: function loadOperadoresEmpresa(_ref43) {
-      var commit = _ref43.commit;
+    loadOperadoresEmpresa: function loadOperadoresEmpresa(_ref41) {
+      var commit = _ref41.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'users/empresa' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getOperadoresEmpresa', response.data);
       });
     },
-    loadOperadoresDisometria: function loadOperadoresDisometria(_ref44) {
-      var commit = _ref44.commit;
+    loadOperadoresDisometria: function loadOperadoresDisometria(_ref42) {
+      var commit = _ref42.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_operador/operadores' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getOperadoresDosimetria', response.data);
       });
     },
-    loadDosimetriaResumen: function loadDosimetriaResumen(_ref45, payload) {
-      var commit = _ref45.commit;
+    loadDosimetriaResumen: function loadDosimetriaResumen(_ref43, payload) {
+      var commit = _ref43.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_resumen/year/' + payload.year + '/operadores/' + payload.operadores + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374028,8 +374097,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadDosimetriaOperador: function loadDosimetriaOperador(_ref46, payload) {
-      var commit = _ref46.commit;
+    loadDosimetriaOperador: function loadDosimetriaOperador(_ref44, payload) {
+      var commit = _ref44.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_operador/operador/' + payload.operador_id + '/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374039,8 +374108,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadDosimetriaMensualOperadores: function loadDosimetriaMensualOperadores(_ref47, payload) {
-      var commit = _ref47.commit;
+    loadDosimetriaMensualOperadores: function loadDosimetriaMensualOperadores(_ref45, payload) {
+      var commit = _ref45.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_operador/operadores/year/' + payload.year + '/month/' + payload.month + '/operadores_ids/null' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374050,8 +374119,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadDosimetriaRx: function loadDosimetriaRx(_ref48, payload) {
-      var commit = _ref48.commit;
+    loadDosimetriaRx: function loadDosimetriaRx(_ref46, payload) {
+      var commit = _ref46.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_rx/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374061,8 +374130,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadDosimetriaEstados: function loadDosimetriaEstados(_ref49, payload) {
-      var commit = _ref49.commit;
+    loadDosimetriaEstados: function loadDosimetriaEstados(_ref47, payload) {
+      var commit = _ref47.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'dosimetria_estados/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374072,8 +374141,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadContarDocumentaciones: function loadContarDocumentaciones(_ref50, ot_id) {
-      var commit = _ref50.commit;
+    loadContarDocumentaciones: function loadContarDocumentaciones(_ref48, ot_id) {
+      var commit = _ref48.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-documentaciones/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374083,8 +374152,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarInternoEquipos: function loadContarInternoEquipos(_ref51, ot_id) {
-      var commit = _ref51.commit;
+    loadContarInternoEquipos: function loadContarInternoEquipos(_ref49, ot_id) {
+      var commit = _ref49.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374094,12 +374163,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadDiasDelMes: function loadDiasDelMes(_ref52, payload) {
-      var commit = _ref52.commit;
+    loadDiasDelMes: function loadDiasDelMes(_ref50, payload) {
+      var commit = _ref50.commit;
       commit('DiasDelMes', payload);
     },
-    loadContarPartes: function loadContarPartes(_ref53, ot_id) {
-      var commit = _ref53.commit;
+    loadContarPartes: function loadContarPartes(_ref51, ot_id) {
+      var commit = _ref51.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'partes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374109,8 +374178,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarCertificados: function loadContarCertificados(_ref54, ot_id) {
-      var commit = _ref54.commit;
+    loadContarCertificados: function loadContarCertificados(_ref52, ot_id) {
+      var commit = _ref52.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'certificados/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374120,8 +374189,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarInformes: function loadContarInformes(_ref55, ot_id) {
-      var commit = _ref55.commit;
+    loadContarInformes: function loadContarInformes(_ref53, ot_id) {
+      var commit = _ref53.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'informes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374131,8 +374200,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarOperadores: function loadContarOperadores(_ref56, ot_id) {
-      var commit = _ref56.commit;
+    loadContarOperadores: function loadContarOperadores(_ref54, ot_id) {
+      var commit = _ref54.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_operarios/users/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374144,8 +374213,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarSoldadores: function loadContarSoldadores(_ref57, ot_id) {
-      var commit = _ref57.commit;
+    loadContarSoldadores: function loadContarSoldadores(_ref55, ot_id) {
+      var commit = _ref55.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_soldadores/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374155,8 +374224,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarUsuariosCliente: function loadContarUsuariosCliente(_ref58, ot_id) {
-      var commit = _ref58.commit;
+    loadContarUsuariosCliente: function loadContarUsuariosCliente(_ref56, ot_id) {
+      var commit = _ref56.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_usuarios_clientes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374166,8 +374235,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarProcedimientos: function loadContarProcedimientos(_ref59, ot_id) {
-      var commit = _ref59.commit;
+    loadContarProcedimientos: function loadContarProcedimientos(_ref57, ot_id) {
+      var commit = _ref57.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_procedimientos_propios/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374177,8 +374246,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarVehiculos: function loadContarVehiculos(_ref60, ot_id) {
-      var commit = _ref60.commit;
+    loadContarVehiculos: function loadContarVehiculos(_ref58, ot_id) {
+      var commit = _ref58.commit;
       commit('incrementarLoading');
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'vehiculos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
@@ -374188,24 +374257,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         commit('decrementarLoading');
       });
     },
-    loadContarDocumentacionesTotal: function loadContarDocumentacionesTotal(_ref61) {
-      var commit = _ref61.commit;
+    loadContarDocumentacionesTotal: function loadContarDocumentacionesTotal(_ref59) {
+      var commit = _ref59.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'documentaciones/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarDocumentacionesTotal', response.data);
       });
     },
-    loadServiciosOt: function loadServiciosOt(_ref62, ot_id) {
-      var commit = _ref62.commit;
+    loadServiciosOt: function loadServiciosOt(_ref60, ot_id) {
+      var commit = _ref60.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_servicios/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getServiciosOt', response.data);
       });
     },
-    loadCurie: function loadCurie(_ref63, payload) {
-      var commit = _ref63.commit;
+    loadCurie: function loadCurie(_ref61, payload) {
+      var commit = _ref61.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_fuentes/' + payload.interno_fuente_id + '/fecha_final/' + payload.fecha_final + '/curie' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374215,8 +374284,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadModelos3d: function loadModelos3d(_ref64) {
-      var commit = _ref64.commit;
+    loadModelos3d: function loadModelos3d(_ref62) {
+      var commit = _ref62.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'modelos_3d/' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -374226,16 +374295,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
         });
       });
     },
-    loadRoles: function loadRoles(_ref65) {
-      var commit = _ref65.commit;
+    loadRoles: function loadRoles(_ref63) {
+      var commit = _ref63.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'roles' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getRoles', response.data);
       });
     },
-    loadPermisos: function loadPermisos(_ref66) {
-      var commit = _ref66.commit;
+    loadPermisos: function loadPermisos(_ref64) {
+      var commit = _ref64.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'permissions' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
@@ -374244,9 +374313,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_32__["default"].Store({
     }
   },
   mutations: {
-    getPdfEspecial: function getPdfEspecial(state, pdf_especial) {
-      state.pdf_especial = pdf_especial;
-    },
     loading: function loading(state, estado) {
       state.isLoading = estado;
     },
@@ -390368,8 +390434,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Quinteros\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Quinteros\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ }),
