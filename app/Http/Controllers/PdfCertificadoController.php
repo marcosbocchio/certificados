@@ -169,94 +169,151 @@ class PdfCertificadoController extends Controller
         // Totales por clave "obra|combinacion"
         $totalsByObraComb = [];
 
-        // 1) Agrupar por (obra, fecha_formateada, nro_combinacion)
-        $groups = [];
-        foreach ($servicios_parte as $servicio) {
-            $obra = $servicio->obra ?? '';
-            $fecha = $servicio->fecha_formateada ?? '';
-            $nroComb = $servicio->nro_combinacion ?? null;
-            $key = $obra . '|' . $fecha . '|' . ($nroComb === null ? 'null' : (string)$nroComb);
-            if (!isset($groups[$key])) {
-                $groups[$key] = [];
+        // 1) Separar grupos combinados por (fecha, nro) y acumular no combinados
+        $combinedGroups = [];
+        $nonCombined = [];
+        foreach ($servicios_parte as $it) {
+            $obra = $it->obra ?? '';
+            $fecha = $it->fecha_formateada ?? '';
+            $nroComb = $it->nro_combinacion ?? null;
+            if ($nroComb !== null && $nroComb !== '' && intval($nroComb) > 0) {
+                $gkey = $fecha . '|' . (string)$nroComb;
+                if (!isset($combinedGroups[$gkey])) {
+                    $combinedGroups[$gkey] = [];
+                }
+                $combinedGroups[$gkey][] = $it;
+            } else {
+                $nonCombined[] = $it;
             }
-            $groups[$key][] = $servicio;
         }
 
-        // 2) Procesar cada grupo aplicando la lógica de combinados
-        foreach ($groups as $key => $items) {
-            if (empty($items)) {
-                continue;
-            }
+        // 2) Procesar grupos combinados cruzando obras por fecha
+        foreach ($combinedGroups as $gkey => $items) {
+            if (empty($items)) continue;
 
-            $obra = $items[0]->obra ?? '';
-            $nroComb = $items[0]->nro_combinacion ?? null;
-            $isCombinedGroup = ($nroComb !== null && $nroComb !== '' && intval($nroComb) > 0);
+            // Construir estructura: abreviaturas, obras, cantidades por obra/abreviatura
+            $obrasSet = [];
+            $setAbbrevs = [];
+            $qtyByAbbrevTotal = [];
+            $qtyByObraAbbrev = [];
+            $combinationLabel = null;
 
-            // Grupo combinado: nro_combinacion válido (> 0)
-            if ($isCombinedGroup) {
-                // Construir mapa abreviatura -> cantidad total dentro del grupo (misma fecha y nro)
-                $qtyByAbbrev = [];
-                $combinationLabel = $items[0]->combinacion ?? null; // todos los items deberían compartirlo
-                foreach ($items as $it) {
-                    $abbrev = $it->abreviatura ?? ($it->combinacion ?? '');
-                    $qty = $extractQty($it);
-                    if (!isset($qtyByAbbrev[$abbrev])) {
-                        $qtyByAbbrev[$abbrev] = 0.0;
-                    }
-                    $qtyByAbbrev[$abbrev] += $qty;
-                    // Si algún item no tiene label de combinación, lo reconstruimos al final a partir de las claves
-                    if ($combinationLabel === null) {
-                        $combinationLabel = null; // Señal para armarlo después
-                    }
-                }
-
-                // Si no vino el label de combinación, lo armamos ordenando las abreviaturas por nombre
-                if ($combinationLabel === null) {
-                    $parts = array_keys($qtyByAbbrev);
-                    sort($parts);
-                    $combinationLabel = implode(' + ', $parts);
-                }
-
-                // Unidades combinadas = mínimo entre las cantidades de todas las abreviaturas involucradas
-                $combinedUnits = 0.0;
-                if (!empty($qtyByAbbrev)) {
-                    $values = array_values($qtyByAbbrev);
-                    $combinedUnits = min($values);
-                }
-
-                // Sumar al total de la combinación
-                $kComb = $obra . '|' . $combinationLabel;
-                if (!isset($totalsByObraComb[$kComb])) {
-                    $totalsByObraComb[$kComb] = 0.0;
-                }
-                $totalsByObraComb[$kComb] += $combinedUnits;
-
-                // Excedentes: se suman como individuales por abreviatura
-                foreach ($qtyByAbbrev as $abbrev => $qty) {
-                    $leftover = $qty - $combinedUnits;
-                    if ($leftover > 0) {
-                        $kInd = $obra . '|' . $abbrev; // individual usa abreviatura como "combinacion"
-                        if (!isset($totalsByObraComb[$kInd])) {
-                            $totalsByObraComb[$kInd] = 0.0;
-                        }
-                        $totalsByObraComb[$kInd] += $leftover;
-                    }
-                }
-
-                continue; // listo el grupo combinado
-            }
-
-            // Grupo NO combinado: sumar cada ítem como individual (combinacion == abreviatura en la práctica)
             foreach ($items as $it) {
-                // En NO combinado, siempre contabilizar por abreviatura (evitar contaminar con etiquetas previas)
-                $abbrevOrComb = $it->abreviatura ?? ($it->combinacion ?? '');
+                $obra = $it->obra ?? '';
+                $abbrev = $it->abreviatura ?? ($it->combinacion ?? '');
                 $qty = $extractQty($it);
-                $k = $obra . '|' . $abbrevOrComb;
-                if (!isset($totalsByObraComb[$k])) {
-                    $totalsByObraComb[$k] = 0.0;
+                $obrasSet[$obra] = true;
+                $setAbbrevs[$abbrev] = true;
+                if (!isset($qtyByAbbrevTotal[$abbrev])) $qtyByAbbrevTotal[$abbrev] = 0.0;
+                $qtyByAbbrevTotal[$abbrev] += $qty;
+                if (!isset($qtyByObraAbbrev[$obra])) $qtyByObraAbbrev[$obra] = [];
+                if (!isset($qtyByObraAbbrev[$obra][$abbrev])) $qtyByObraAbbrev[$obra][$abbrev] = 0.0;
+                $qtyByObraAbbrev[$obra][$abbrev] += $qty;
+                if ($combinationLabel === null) {
+                    $combinationLabel = $it->combinacion ?? null;
                 }
-                $totalsByObraComb[$k] += $qty;
             }
+
+            if ($combinationLabel === null) {
+                $parts = array_keys($setAbbrevs);
+                sort($parts);
+                $combinationLabel = implode(' + ', $parts);
+            }
+
+            // Unidades combinadas globales del día = mínimo por abreviatura
+            $combinedUnits = 0.0;
+            if (!empty($qtyByAbbrevTotal)) {
+                $values = array_values($qtyByAbbrevTotal);
+                $combinedUnits = min($values);
+            }
+
+            // Repartir el combinado equitativamente entre las obras participantes
+            $obras = array_keys($obrasSet);
+            $numObras = max(1, count($obras));
+            $share = $combinedUnits / $numObras;
+            foreach ($obras as $obra) {
+                $kComb = $obra . '|' . $combinationLabel;
+                if (!isset($totalsByObraComb[$kComb])) $totalsByObraComb[$kComb] = 0.0;
+                $totalsByObraComb[$kComb] += $share;
+            }
+
+            // Consumir cantidades para cada abreviatura:
+            // - Preferir descontar de obras que NO tengan todas las abreviaturas (incompletas)
+            // - Luego, si falta, de las completas
+            $allAbbrevs = array_keys($setAbbrevs);
+            $obrasComplete = [];
+            foreach ($obras as $obra) {
+                $hasAll = true;
+                foreach ($allAbbrevs as $ab) {
+                    if (empty($qtyByObraAbbrev[$obra][$ab])) { $hasAll = false; break; }
+                }
+                $obrasComplete[$obra] = $hasAll;
+            }
+
+            foreach ($allAbbrevs as $abbrev) {
+                $remaining = $combinedUnits;
+                if ($remaining <= 0) break;
+
+                // 1) Incompletas que tengan esta abreviatura, orden desc por qty
+                $candidates = [];
+                foreach ($obras as $obra) {
+                    $qty = $qtyByObraAbbrev[$obra][$abbrev] ?? 0.0;
+                    if (!$obrasComplete[$obra] && $qty > 0) {
+                        $candidates[] = [$obra, $qty];
+                    }
+                }
+                usort($candidates, function($a,$b){ return ($a[1] < $b[1]) ? 1 : -1; });
+                foreach ($candidates as $cand) {
+                    if ($remaining <= 0) break;
+                    $obra = $cand[0];
+                    $avail = $qtyByObraAbbrev[$obra][$abbrev];
+                    $take = min($avail, $remaining);
+                    $qtyByObraAbbrev[$obra][$abbrev] -= $take;
+                    $remaining -= $take;
+                }
+
+                // 2) Completas si todavía resta
+                if ($remaining > 0) {
+                    $candidates = [];
+                    foreach ($obras as $obra) {
+                        $qty = $qtyByObraAbbrev[$obra][$abbrev] ?? 0.0;
+                        if ($obrasComplete[$obra] && $qty > 0) {
+                            $candidates[] = [$obra, $qty];
+                        }
+                    }
+                    usort($candidates, function($a,$b){ return ($a[1] < $b[1]) ? 1 : -1; });
+                    foreach ($candidates as $cand) {
+                        if ($remaining <= 0) break;
+                        $obra = $cand[0];
+                        $avail = $qtyByObraAbbrev[$obra][$abbrev];
+                        $take = min($avail, $remaining);
+                        $qtyByObraAbbrev[$obra][$abbrev] -= $take;
+                        $remaining -= $take;
+                    }
+                }
+            }
+
+            // 3) Agregar sobrantes por obra y abreviatura
+            foreach ($obras as $obra) {
+                foreach ($allAbbrevs as $abbrev) {
+                    $left = $qtyByObraAbbrev[$obra][$abbrev] ?? 0.0;
+                    if ($left > 0) {
+                        $kInd = $obra . '|' . $abbrev;
+                        if (!isset($totalsByObraComb[$kInd])) $totalsByObraComb[$kInd] = 0.0;
+                        $totalsByObraComb[$kInd] += $left;
+                    }
+                }
+            }
+        }
+
+        // 3) Procesar no combinados: sumar por obra y abreviatura
+        foreach ($nonCombined as $it) {
+            $obra = $it->obra ?? '';
+            $abbrevOrComb = $it->abreviatura ?? ($it->combinacion ?? '');
+            $qty = $extractQty($it);
+            $k = $obra . '|' . $abbrevOrComb;
+            if (!isset($totalsByObraComb[$k])) $totalsByObraComb[$k] = 0.0;
+            $totalsByObraComb[$k] += $qty;
         }
 
         // 3) Transformar a arreglo de objetos compatible con generarTablasPorObras
