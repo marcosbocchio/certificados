@@ -254,11 +254,11 @@ class PdfCertificadoController extends Controller
                 $remaining = $combinedUnits;
                 if ($remaining <= 0) break;
 
-                // 1) Incompletas que tengan esta abreviatura, orden desc por qty
+                // 1) Completas que tengan esta abreviatura, orden desc por qty
                 $candidates = [];
                 foreach ($obras as $obra) {
                     $qty = $qtyByObraAbbrev[$obra][$abbrev] ?? 0.0;
-                    if (!$obrasComplete[$obra] && $qty > 0) {
+                    if ($obrasComplete[$obra] && $qty > 0) {
                         $candidates[] = [$obra, $qty];
                     }
                 }
@@ -272,12 +272,12 @@ class PdfCertificadoController extends Controller
                     $remaining -= $take;
                 }
 
-                // 2) Completas si todavía resta
+                // 2) Incompletas si todavía resta
                 if ($remaining > 0) {
                     $candidates = [];
                     foreach ($obras as $obra) {
                         $qty = $qtyByObraAbbrev[$obra][$abbrev] ?? 0.0;
-                        if ($obrasComplete[$obra] && $qty > 0) {
+                        if (!$obrasComplete[$obra] && $qty > 0) {
                             $candidates[] = [$obra, $qty];
                         }
                     }
@@ -515,13 +515,14 @@ class PdfCertificadoController extends Controller
                 $cant_total_servicio = 0;
 
                 foreach ($servicios_obras as $servicio) {
-
-
                     if( ($servicio->obra == $obra) && ($servicio->combinacion == $combinacion)){
-
                              $cant_total_servicio =  $servicio->cantidad_total_servicio;
-
                     }
+                }
+
+                // Ocultar filas de servicios con total 0
+                if ($cant_total_servicio <= 0) {
+                    continue;
                 }
 
                 $obj->servicio = $combinacion;
