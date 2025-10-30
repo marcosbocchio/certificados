@@ -10076,48 +10076,31 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }
       });
 
-      // 2) Armar lista de descombinado: siempre incluir el clickeado
-      var indicesToUncombine = new Set([index]);
-
-      // 3) Buscar un "par" de diferente obra y diferente abreviatura dentro del mismo grupo
-      var targetAbrev = ref.abreviatura;
-      var counterpartIdx = groupIndices.find(function (idx) {
-        var it = _this7.TablaPartesServicios[idx];
-        return it.visible && it.combinado_sn && !it.manual_uncombined_sn && it.obra !== targetObra && it.abreviatura !== targetAbrev;
-      });
-      if (typeof counterpartIdx !== 'undefined') {
-        indicesToUncombine.add(counterpartIdx);
-      }
-
-      // 4) Ejecutar descombinado sobre los seleccionados
-      this.TablaPartesServicios.forEach(function (item, idx) {
-        if (indicesToUncombine.has(idx)) {
-          item.prev_nro_combinacion = item.nro_combinacion || null;
-          item.manual_uncombined_sn = true;
-          item.combinacion = '';
-          item.nro_combinacion = '';
-        }
-      }.bind(this));
-
-      // 5) Verificar si el grupo restante sigue teniendo al menos 2 abreviaturas; si no, descombinar todo el grupo
-      var remainingAbrev = new Set();
+      // 2) Detectar si en la obra clickeada hay combinación "intra-obra" (2+ abreviaturas)
+      var abrevEnObra = new Set();
       groupIndices.forEach(function (idx) {
-        if (!indicesToUncombine.has(idx)) {
-          var it = _this7.TablaPartesServicios[idx];
-          if (it.visible && it.combinado_sn && !it.manual_uncombined_sn) {
-            remainingAbrev.add(it.abreviatura);
-          }
+        var it = _this7.TablaPartesServicios[idx];
+        if (it.obra === targetObra && it.visible && !it.manual_uncombined_sn) {
+          abrevEnObra.add(it.abreviatura);
         }
       });
-      if (remainingAbrev.size < 2) {
-        this.TablaPartesServicios.forEach(function (item, idx) {
-          if (groupIndices.includes(idx) && !indicesToUncombine.has(idx)) {
+      var intraObra = abrevEnObra.size >= 2;
+      if (intraObra) {
+        // 3.a Descombinar TODO el grupo (misma fecha y nro)
+        this.TablaPartesServicios.forEach(function (item) {
+          if (item.nro_combinacion == targetNro && normalize(item.fecha_formateada) == targetFecha) {
             item.prev_nro_combinacion = item.nro_combinacion || null;
             item.manual_uncombined_sn = true;
             item.combinacion = '';
             item.nro_combinacion = '';
           }
         }.bind(this));
+      } else {
+        // 3.b Descombinar SOLO el clickeado (obra "otra")
+        this.TablaPartesServicios[index].prev_nro_combinacion = this.TablaPartesServicios[index].nro_combinacion || null;
+        this.TablaPartesServicios[index].manual_uncombined_sn = true;
+        this.TablaPartesServicios[index].combinacion = '';
+        this.TablaPartesServicios[index].nro_combinacion = '';
       }
       this.CompletarNoCombinados();
     },
