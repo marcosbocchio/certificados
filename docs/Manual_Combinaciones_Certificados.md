@@ -11,7 +11,7 @@ Describir cómo gestionar combinaciones de servicios en la UI (`resources/js/com
 - Al marcar partes, se cargan sus servicios en `TablaPartesServicios` con, entre otros, estos campos por ítem: `fecha`, `fecha_formateada`, `obra`, `abreviatura`, `combinado_sn`, `nro_combinacion`, `prev_nro_combinacion`, `manual_uncombined_sn`, `combinacion`, `visible`.
 
 #### 1.2 Combinación automática (cargarCombinados)
-- Agrupa por día y obra: misma `fecha_formateada` y misma `obra`.
+- Agrupa por día: misma `fecha_formateada` (se ignora la `obra`).
 - Se combinan abreviaturas cuando:
   - `combinado_sn === true` y
   - hay al menos 2 abreviaturas distintas ese día y obra.
@@ -22,16 +22,19 @@ Describir cómo gestionar combinaciones de servicios en la UI (`resources/js/com
 #### 1.3 Acciones manuales por ítem
 - Botón X (descombinar):
   - Solo visible si `nro_combinacion > 0` y `manual_uncombined_sn == false`.
-  - Descombina únicamente el grupo de ese ítem (misma `fecha_formateada`, misma `obra` y mismo `nro_combinacion`).
-  - Setea: `manual_uncombined_sn = true`, `nro_combinacion = ''`, `combinacion = ''`. Luego completa no combinados con la abreviatura.
+  - Regla de parejas entre obras:
+    - Descombina la fila clickeada.
+    - Además descombina, dentro del mismo grupo (misma `fecha_formateada` y `nro_combinacion`), una fila de OTRA `obra` y abreviatura DIFERENTE (pareja cruzada).
+    - Si el grupo restante queda con menos de 2 abreviaturas, se descombina todo el grupo.
+  - Setea: `manual_uncombined_sn = true`, `nro_combinacion = ''`, `combinacion = ''` en filas afectadas y luego completa no combinados con la abreviatura.
 
 - Botón flecha (recombinar):
-  - Si existe `prev_nro_combinacion > 0`, restaura ese número y recalcula solo la etiqueta del grupo restaurado (misma fecha y obra y mismo número previo).
+  - Si existe `prev_nro_combinacion > 0`, restaura ese número y recalcula la etiqueta del grupo restaurado (misma fecha, sin importar la obra).
   - Si NO existe número previo (por ejemplo, tras guardar y volver a editar):
-    - Busca abreviaturas combinables ese mismo día y obra (incluyendo la abreviatura del ítem). Si hay al menos 2, crea una nueva combinación.
+    - Busca abreviaturas combinables ese mismo día (incluyendo la abreviatura del ítem). Si hay al menos 2, crea una nueva combinación.
     - Asignación del número: toma el máximo `nro_combinacion` global en toda la tabla y usa `max + 1`.
-    - Aplica `nro_combinacion = newNro`, `prev_nro_combinacion = newNro`, `manual_uncombined_sn = false` y etiqueta calculada solo a ese grupo del día y obra.
-    - No combina con servicios de otra fecha ni otra obra.
+    - Aplica `nro_combinacion = newNro`, `prev_nro_combinacion = newNro`, `manual_uncombined_sn = false` y etiqueta calculada a las filas del día que integran la combinación.
+    - No combina con servicios de otra fecha.
 
 - Botón “-” (ocultar fila):
   - Si la fila pertenece a un grupo combinado activo, primero descombina ese grupo específico (ver X) y luego oculta la fila (`visible = false`, `cant_final = ''`).
@@ -74,11 +77,11 @@ Ejemplo:
 ---
 
 ### 3) Buenas prácticas y notas
-- La combinación siempre se limita a ítems del mismo día (`fecha_formateada`) y misma `obra`.
-- `combinado_sn` debe ser `true` en ambos servicios para que sean combinables.
-- La numeración automática durante un recálculo completo es por día, pero las recombinaciones manuales sin número previo usan numeración global creciente (`max + 1`).
+- La combinación se limita a ítems del mismo día (`fecha_formateada`), independientemente de la `obra`.
+- `combinado_sn` debe ser `true` en los servicios para que sean combinables.
+- La numeración automática durante un recálculo completo es por fecha; las recombinaciones manuales sin número previo usan numeración global creciente (`max + 1`).
 - La X no se muestra si no hay número de combinación (> 0), evitando acciones inválidas.
-- El borrado de fila no renumera grupos ajenos.
+- El borrado de fila primero descombina según la regla de parejas y luego oculta la fila; no renumera grupos ajenos.
 
 ---
 

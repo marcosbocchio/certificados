@@ -10054,6 +10054,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.CompletarNoCombinados();
     },
     borrarCombinacionIndex: function borrarCombinacionIndex(index) {
+      var _this7 = this;
       var ref = this.TablaPartesServicios[index];
       var normalize = function normalize(s) {
         return (s || '').replace(/-/g, '/');
@@ -10066,14 +10067,58 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       if (!targetNro || parseInt(targetNro) <= 0) {
         return;
       }
-      this.TablaPartesServicios.forEach(function (item) {
+
+      // 1) Construir el grupo por fecha y nro
+      var groupIndices = [];
+      this.TablaPartesServicios.forEach(function (item, idx) {
         if (item.nro_combinacion == targetNro && normalize(item.fecha_formateada) == targetFecha) {
+          groupIndices.push(idx);
+        }
+      });
+
+      // 2) Armar lista de descombinado: siempre incluir el clickeado
+      var indicesToUncombine = new Set([index]);
+
+      // 3) Buscar un "par" de diferente obra y diferente abreviatura dentro del mismo grupo
+      var targetAbrev = ref.abreviatura;
+      var counterpartIdx = groupIndices.find(function (idx) {
+        var it = _this7.TablaPartesServicios[idx];
+        return it.visible && it.combinado_sn && !it.manual_uncombined_sn && it.obra !== targetObra && it.abreviatura !== targetAbrev;
+      });
+      if (typeof counterpartIdx !== 'undefined') {
+        indicesToUncombine.add(counterpartIdx);
+      }
+
+      // 4) Ejecutar descombinado sobre los seleccionados
+      this.TablaPartesServicios.forEach(function (item, idx) {
+        if (indicesToUncombine.has(idx)) {
           item.prev_nro_combinacion = item.nro_combinacion || null;
           item.manual_uncombined_sn = true;
           item.combinacion = '';
           item.nro_combinacion = '';
         }
       }.bind(this));
+
+      // 5) Verificar si el grupo restante sigue teniendo al menos 2 abreviaturas; si no, descombinar todo el grupo
+      var remainingAbrev = new Set();
+      groupIndices.forEach(function (idx) {
+        if (!indicesToUncombine.has(idx)) {
+          var it = _this7.TablaPartesServicios[idx];
+          if (it.visible && it.combinado_sn && !it.manual_uncombined_sn) {
+            remainingAbrev.add(it.abreviatura);
+          }
+        }
+      });
+      if (remainingAbrev.size < 2) {
+        this.TablaPartesServicios.forEach(function (item, idx) {
+          if (groupIndices.includes(idx) && !indicesToUncombine.has(idx)) {
+            item.prev_nro_combinacion = item.nro_combinacion || null;
+            item.manual_uncombined_sn = true;
+            item.combinacion = '';
+            item.nro_combinacion = '';
+          }
+        }.bind(this));
+      }
       this.CompletarNoCombinados();
     },
     revertirCombinacion: function revertirCombinacion(prevNro) {
@@ -10183,14 +10228,14 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     getServiciosParte: function getServiciosParte(id) {
       var _arguments = arguments,
-        _this7 = this;
+        _this8 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var recompute, urlRegistros, res, parte_servicios;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
               recompute = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : true;
-              axios.defaults.baseURL = _this7.url;
+              axios.defaults.baseURL = _this8.url;
               urlRegistros = 'certificados/parte/' + id + '/servicios' + '?api_token=' + Laravel.user.api_token;
               _context3.next = 5;
               return axios.get(urlRegistros);
@@ -10222,8 +10267,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
                   fecha: item.fecha,
                   fecha_formateada: item.fecha_formateada
                 });
-              }.bind(_this7));
-              if (recompute) _this7.cargarCombinados();
+              }.bind(_this8));
+              if (recompute) _this8.cargarCombinados();
             case 11:
             case "end":
               return _context3.stop();
@@ -10232,7 +10277,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }))();
     },
     getProductosParte: function getProductosParte(id) {
-      var _this8 = this;
+      var _this9 = this;
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'certificados/parte/' + id + '/modo_cobro/' + this.modo_cobro + '/productos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
@@ -10259,7 +10304,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               visible: true
             });
           }
-        }.bind(_this8));
+        }.bind(_this9));
       });
     },
     deleteServiciosParte: function deleteServiciosParte(id) {
@@ -10290,24 +10335,24 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.loading = false;
     },
     getPartesPendientesCertificado: function getPartesPendientesCertificado() {
-      var _this9 = this;
+      var _this10 = this;
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'partes/ot/' + this.otdata.id + '/pendientes_certificados' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this9.partes = response.data;
+        _this10.partes = response.data;
       });
     },
     getNumeroCertificado: function getNumeroCertificado() {
-      var _this10 = this;
+      var _this11 = this;
       if (!this.editmode) {
         axios.defaults.baseURL = this.url;
         var urlRegistros = 'certificados/generar-numero-certificado' + '?api_token=' + Laravel.user.api_token;
         axios.get(urlRegistros).then(function (response) {
-          _this10.numero_inf_generado = response.data;
-          if (_this10.numero_inf_generado.length) {
-            _this10.numero = _this10.numero_inf_generado[0].numero_certificado;
+          _this11.numero_inf_generado = response.data;
+          if (_this11.numero_inf_generado.length) {
+            _this11.numero = _this11.numero_inf_generado[0].numero_certificado;
           } else {
-            _this10.numero = 1;
+            _this11.numero = 1;
           }
         });
       }
@@ -10337,7 +10382,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       // this.cargarCombinados();
     },
     Store: function Store() {
-      var _this11 = this;
+      var _this12 = this;
       this.errors = [];
       this.loading = true;
       var urlRegistros = 'certificados';
@@ -10357,17 +10402,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }
       }).then(function (response) {
         var certificado = response.data;
-        toastr.success('Certificado N°' + _this11.numero_code + ' fue creado con éxito ');
+        toastr.success('Certificado N°' + _this12.numero_code + ' fue creado con éxito ');
         window.open('/pdf/certificado/' + certificado.id + '/final/agrupado', '_blank');
-        window.location.href = '/certificados/ot/' + _this11.otdata.id;
+        window.location.href = '/certificados/ot/' + _this12.otdata.id;
       })["catch"](function (error) {
-        _this11.errors = error.response.data.errors;
+        _this12.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this11.errors, function (key, value) {
+        $.each(_this12.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
-        if (typeof _this11.errors == 'undefined' && error) {
+        if (typeof _this12.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       })["finally"](function () {
@@ -10375,7 +10420,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     Update: function Update() {
-      var _this12 = this;
+      var _this13 = this;
       this.errors = [];
       var urlRegistros = 'certificados/' + this.certificado_data.id;
       this.loading = true;
@@ -10394,17 +10439,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           'TablaPartesProductosPorCosturas': this.TablaPartesProductosPorCosturas
         }
       }).then(function () {
-        toastr.success('Certificado N°' + _this12.numero_code + ' fue actualizado con éxito ');
-        window.open('/pdf/certificado/' + _this12.certificado_data.id + '/final/agrupado', '_blank');
-        window.location.href = '/certificados/ot/' + _this12.otdata.id;
+        toastr.success('Certificado N°' + _this13.numero_code + ' fue actualizado con éxito ');
+        window.open('/pdf/certificado/' + _this13.certificado_data.id + '/final/agrupado', '_blank');
+        window.location.href = '/certificados/ot/' + _this13.otdata.id;
       })["catch"](function (error) {
-        _this12.errors = error.response.data.errors;
+        _this13.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this12.errors, function (key, value) {
+        $.each(_this13.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
-        if (typeof _this12.errors == 'undefined' && error) {
+        if (typeof _this13.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       })["finally"](function () {
