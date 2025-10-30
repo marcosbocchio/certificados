@@ -136,6 +136,201 @@ class PdfCertificadoController extends Controller
     }
 
 
+    /**
+     * Construye un resumen por obra y combinación aplicando la lógica de combinados:
+     * - Para grupos combinados (misma obra, fecha y nro_combinacion):
+     *   El total combinado para la "combinacion" es el mínimo entre las cantidades
+     *   de todas las abreviaturas involucradas en ese grupo. Los excedentes (cantidad - mínimo)
+     *   se suman como servicios individuales por abreviatura.
+     * - Para servicios no combinados: se suman completos como individuales (combinacion == abreviatura).
+     *
+     * Retorna un arreglo de objetos con propiedades: obra, combinacion, cantidad_total_servicio.
+     * Esto emula la salida de getServiciosObrasCertificado para alimentar generarTablasPorObras
+     * sin modificar la parte visual.
+     *
+     * @param array $servicios_parte
+     * @return array
+     */
+    private function buildServiciosObrasFromServiciosParte(array $servicios_parte): array
+    {
+        $extractQty = function($row): float {
+            // Robustez: distintos SP/capas pueden nombrar distinto la cantidad
+            if (isset($row->cant_final)) {
+                return (float)$row->cant_final;
+            }
+            if (isset($row->cantidad)) {
+                return (float)$row->cantidad;
+            }
+            if (isset($row->cant_total)) {
+                return (float)$row->cant_total;
+            }
+            return 0.0;
+        };
+        // Totales por clave "obra|combinacion"
+        $totalsByObraComb = [];
+
+        // 1) Separar grupos combinados por (fecha, nro) y acumular no combinados
+        $combinedGroups = [];
+        $nonCombined = [];
+        foreach ($servicios_parte as $it) {
+            $obra = $it->obra ?? '';
+            $fecha = $it->fecha_formateada ?? '';
+            $nroComb = $it->nro_combinacion ?? null;
+            if ($nroComb !== null && $nroComb !== '' && intval($nroComb) > 0) {
+                $gkey = $fecha . '|' . (string)$nroComb;
+                if (!isset($combinedGroups[$gkey])) {
+                    $combinedGroups[$gkey] = [];
+                }
+                $combinedGroups[$gkey][] = $it;
+            } else {
+                $nonCombined[] = $it;
+            }
+        }
+
+        // 2) Procesar grupos combinados cruzando obras por fecha
+        foreach ($combinedGroups as $gkey => $items) {
+            if (empty($items)) continue;
+
+            // Construir estructura: abreviaturas, obras, cantidades por obra/abreviatura
+            $obrasSet = [];
+            $setAbbrevs = [];
+            $qtyByAbbrevTotal = [];
+            $qtyByObraAbbrev = [];
+            $combinationLabel = null;
+
+            foreach ($items as $it) {
+                $obra = $it->obra ?? '';
+                $abbrev = $it->abreviatura ?? ($it->combinacion ?? '');
+                $qty = $extractQty($it);
+                $obrasSet[$obra] = true;
+                $setAbbrevs[$abbrev] = true;
+                if (!isset($qtyByAbbrevTotal[$abbrev])) $qtyByAbbrevTotal[$abbrev] = 0.0;
+                $qtyByAbbrevTotal[$abbrev] += $qty;
+                if (!isset($qtyByObraAbbrev[$obra])) $qtyByObraAbbrev[$obra] = [];
+                if (!isset($qtyByObraAbbrev[$obra][$abbrev])) $qtyByObraAbbrev[$obra][$abbrev] = 0.0;
+                $qtyByObraAbbrev[$obra][$abbrev] += $qty;
+                if ($combinationLabel === null) {
+                    $combinationLabel = $it->combinacion ?? null;
+                }
+            }
+
+            if ($combinationLabel === null) {
+                $parts = array_keys($setAbbrevs);
+                sort($parts);
+                $combinationLabel = implode(' + ', $parts);
+            }
+
+            // Unidades combinadas globales del día = mínimo por abreviatura
+            $combinedUnits = 0.0;
+            if (!empty($qtyByAbbrevTotal)) {
+                $values = array_values($qtyByAbbrevTotal);
+                $combinedUnits = min($values);
+            }
+
+            // Repartir el combinado equitativamente entre las obras participantes
+            $obras = array_keys($obrasSet);
+            $numObras = max(1, count($obras));
+            $share = $combinedUnits / $numObras;
+            foreach ($obras as $obra) {
+                $kComb = $obra . '|' . $combinationLabel;
+                if (!isset($totalsByObraComb[$kComb])) $totalsByObraComb[$kComb] = 0.0;
+                $totalsByObraComb[$kComb] += $share;
+            }
+
+            // Consumir cantidades para cada abreviatura:
+            // - Preferir descontar de obras que NO tengan todas las abreviaturas (incompletas)
+            // - Luego, si falta, de las completas
+            $allAbbrevs = array_keys($setAbbrevs);
+            $obrasComplete = [];
+            foreach ($obras as $obra) {
+                $hasAll = true;
+                foreach ($allAbbrevs as $ab) {
+                    if (empty($qtyByObraAbbrev[$obra][$ab])) { $hasAll = false; break; }
+                }
+                $obrasComplete[$obra] = $hasAll;
+            }
+
+            foreach ($allAbbrevs as $abbrev) {
+                $remaining = $combinedUnits;
+                if ($remaining <= 0) break;
+
+                // 1) Completas que tengan esta abreviatura, orden desc por qty
+                $candidates = [];
+                foreach ($obras as $obra) {
+                    $qty = $qtyByObraAbbrev[$obra][$abbrev] ?? 0.0;
+                    if ($obrasComplete[$obra] && $qty > 0) {
+                        $candidates[] = [$obra, $qty];
+                    }
+                }
+                usort($candidates, function($a,$b){ return ($a[1] < $b[1]) ? 1 : -1; });
+                foreach ($candidates as $cand) {
+                    if ($remaining <= 0) break;
+                    $obra = $cand[0];
+                    $avail = $qtyByObraAbbrev[$obra][$abbrev];
+                    $take = min($avail, $remaining);
+                    $qtyByObraAbbrev[$obra][$abbrev] -= $take;
+                    $remaining -= $take;
+                }
+
+                // 2) Incompletas si todavía resta
+                if ($remaining > 0) {
+                    $candidates = [];
+                    foreach ($obras as $obra) {
+                        $qty = $qtyByObraAbbrev[$obra][$abbrev] ?? 0.0;
+                        if (!$obrasComplete[$obra] && $qty > 0) {
+                            $candidates[] = [$obra, $qty];
+                        }
+                    }
+                    usort($candidates, function($a,$b){ return ($a[1] < $b[1]) ? 1 : -1; });
+                    foreach ($candidates as $cand) {
+                        if ($remaining <= 0) break;
+                        $obra = $cand[0];
+                        $avail = $qtyByObraAbbrev[$obra][$abbrev];
+                        $take = min($avail, $remaining);
+                        $qtyByObraAbbrev[$obra][$abbrev] -= $take;
+                        $remaining -= $take;
+                    }
+                }
+            }
+
+            // 3) Agregar sobrantes por obra y abreviatura
+            foreach ($obras as $obra) {
+                foreach ($allAbbrevs as $abbrev) {
+                    $left = $qtyByObraAbbrev[$obra][$abbrev] ?? 0.0;
+                    if ($left > 0) {
+                        $kInd = $obra . '|' . $abbrev;
+                        if (!isset($totalsByObraComb[$kInd])) $totalsByObraComb[$kInd] = 0.0;
+                        $totalsByObraComb[$kInd] += $left;
+                    }
+                }
+            }
+        }
+
+        // 3) Procesar no combinados: sumar por obra y abreviatura
+        foreach ($nonCombined as $it) {
+            $obra = $it->obra ?? '';
+            $abbrevOrComb = $it->abreviatura ?? ($it->combinacion ?? '');
+            $qty = $extractQty($it);
+            $k = $obra . '|' . $abbrevOrComb;
+            if (!isset($totalsByObraComb[$k])) $totalsByObraComb[$k] = 0.0;
+            $totalsByObraComb[$k] += $qty;
+        }
+
+        // 3) Transformar a arreglo de objetos compatible con generarTablasPorObras
+        $result = [];
+        foreach ($totalsByObraComb as $k => $total) {
+            list($obra, $combinacion) = explode('|', $k, 2);
+            $obj = new stdClass();
+            $obj->obra = $obra;
+            $obj->combinacion = $combinacion;
+            $obj->cantidad_total_servicio = $total;
+            $result[] = $obj;
+        }
+
+        return $result;
+    }
+
+
     public function imprimir($id,$estado,$agrupado = "normal"){
 
         $certificado = Certificados::findOrFail($id);
@@ -165,7 +360,11 @@ class PdfCertificadoController extends Controller
         // Fin de la lógica de agrupamiento condicional.
 
         $servicios_abreviaturas = $this->abreviaturasUnicas($servicios_parte_original); // Las abreviaturas siempre se obtienen de los datos originales para tener todas las columnas posibles
-        $servicios_combinaciones = $this->combinacionesUnicas($servicios_parte_original);
+        // Asegurar columnas para combinados y para servicios individuales (sobrantes): unión de combinaciones y abreviaturas
+        $servicios_combinaciones = array_values(array_unique(array_merge(
+            $this->combinacionesUnicas($servicios_parte_original),
+            $servicios_abreviaturas
+        )));
         $servicios_footer = $this->ServiciosParteUnicas($servicios_parte_original);
 
         $productos_unidades_medidas = $this->productosUnicos($productos_parte_original,$modalidadCobro); // Las unidades de medida siempre se obtienen de los datos originales
@@ -177,7 +376,8 @@ class PdfCertificadoController extends Controller
         // Asegúrate de que generarTablasPorObras pueda manejar los datos originales o agrupados según sea necesario,
         // o si siempre necesita los datos originales para calcular los totales de las tablas por obra.
         // Para este ejemplo, asumimos que sigue usando los originales para los totales por obra.
-        $servicios_obras =  DB::select('CALL getServiciosObrasCertificado(?,?)',array($id,$estado));
+        // Construir servicios_obras aplicando la lógica de combinados y sobrantes sin modificar la vista
+        $servicios_obras =  $this->buildServiciosObrasFromServiciosParte($servicios_parte_original);
         $tablas_por_obras = $this->generarTablasPorObras($servicios_obras,$servicios_combinaciones,$productos_parte_original,$productos_unidades_medidas,$obras,$fechas);
         $agrupado_param = $agrupado;
         $evaluador = User::find($certificado->firma);
@@ -315,13 +515,14 @@ class PdfCertificadoController extends Controller
                 $cant_total_servicio = 0;
 
                 foreach ($servicios_obras as $servicio) {
-
-
                     if( ($servicio->obra == $obra) && ($servicio->combinacion == $combinacion)){
-
                              $cant_total_servicio =  $servicio->cantidad_total_servicio;
-
                     }
+                }
+
+                // Ocultar filas de servicios con total 0
+                if ($cant_total_servicio <= 0) {
+                    continue;
                 }
 
                 $obj->servicio = $combinacion;
