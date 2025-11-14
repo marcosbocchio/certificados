@@ -1,8 +1,8 @@
 @php
-    // Agrupar pasadas de esta junta por número (1–12)
-    $pasadasPorNumero = collect($pasadas_juntas)
-        ->where('junta_id', $junta_posiciones->junta_id ?? $junta_posiciones->id)
-        ->keyBy('numero');
+// Agrupar pasadas de esta junta por número (1–12)
+$pasadasPorNumero = collect($pasadas_juntas)
+->where('junta_id', $junta_posiciones->junta_id ?? $junta_posiciones->id)
+->keyBy('numero');
 @endphp
 
 <tr>
@@ -23,8 +23,8 @@
 
     {{-- Encabezados pasadas 1–6 --}}
     @foreach ([1,2,3,4,5,6] as $num)
-        <td class="bordered-td" style="font-size:11px;text-align:center;"
-            colspan="{{ $num === 1 ? 3 : 2 }}">{{ $num }}° Pasada</td>
+    <td class="bordered-td" style="font-size:11px;text-align:center;"
+        colspan="{{ $num === 1 ? 3 : 2 }}">{{ $num }}° Pasada</td>
     @endforeach
 
     {{-- Columna: Código / Densidad / Defectos --}}
@@ -39,14 +39,14 @@
     <td class="bordered-td" style="font-size:9px;width:85px;text-align:center;" rowspan="4">
         @php $primero = true; @endphp
         @foreach ($defectos_posiciones as $def)
-            @if ($def->posicion_id == $junta_posiciones->posicion_id)
-                @if (!$primero) / @endif
-                {{ $def->codigo }}
-                @php $primero = false; @endphp
-            @endif
+        @if ($def->posicion_id == $junta_posiciones->posicion_id)
+        @if (!$primero) / @endif
+        {{ $def->codigo }}
+        @php $primero = false; @endphp
+        @endif
         @endforeach
         @if ($primero)
-            &nbsp;
+        &nbsp;
         @endif
     </td>
 
@@ -54,42 +54,55 @@
     <td class="bordered-td" style="font-size:9px;width:170px;text-align:center;" rowspan="4">
         @php $primero = true; @endphp
         @foreach ($defectos_posiciones as $def)
-            @if ($def->posicion_id == $junta_posiciones->posicion_id)
-                @if (!$primero) / @endif
-                @php
-                    if ($def->pasada === 'RAIZ') {
-                        $sector = 'R';
-                    } elseif ($def->pasada === 'RELLENO') {
-                        $sector = 'Y';
-                    } elseif ($def->pasada === 'SOBREMONTA') {
-                        $sector = 'S';
-                    } else {
-                        $sector = '';
-                    }
-                    $valor = $def->codigo . '(' . $def->posicion . ')' . $sector;
-                @endphp
-                {{ $valor }}
-                @php $primero = false; @endphp
-            @endif
+        @if ($def->posicion_id == $junta_posiciones->posicion_id)
+
+        @php
+        $tienePosicion = $def->posicion !== null && $def->posicion !== '';
+        $tienePasada = !empty($def->pasada);
+        @endphp
+
+        @if ($tienePosicion && $tienePasada)
+        @if (!$primero) / @endif
+
+        @php
+        if ($def->pasada === 'RAIZ') {
+        $sector = 'R';
+        } elseif ($def->pasada === 'RELLENO') {
+        $sector = 'Y';
+        } elseif ($def->pasada === 'SOBREMONTA') {
+        $sector = 'S';
+        } else {
+        $sector = '';
+        }
+
+        $valor = $def->codigo . '(' . $def->posicion . ')' . $sector;
+        @endphp
+
+        {{ $valor }}
+        @php $primero = false; @endphp
+        @endif
+        @endif
         @endforeach
+
         @if ($primero)
-            &nbsp;
+        &nbsp;
         @endif
     </td>
+
 
     {{-- Resultado --}}
     <td class="bordered-td" style="font-size:9px;width:32.7px;text-align:center;" rowspan="4">
         @if ($informe_ri->resultado_pdf_sn && $junta_posiciones->aceptable_sn)
-            X
+        X
         @else
-            &nbsp;
+        &nbsp;
         @endif
     </td>
     <td class="bordered-td" style="font-size:9px;text-align:center;" rowspan="4">
         @if ($informe_ri->resultado_pdf_sn && !$junta_posiciones->aceptable_sn)
-            X
+        X
         @else
-            &nbsp;
+        &nbsp;
         @endif
     </td>
 </tr>
@@ -97,37 +110,37 @@
 {{-- ====== PASADAS 1 A 6 ====== --}}
 <tr>
     @for ($i = 1; $i <= 6; $i++)
-        @php $p = $pasadasPorNumero[$i] ?? null; @endphp
-        @if ($i === 1)
-            <td class="bordered-td" style="font-size:9px;width:39px;text-align:center;">{!! $p->soldadorp ?? '&nbsp;' !!}</td>
-            <td class="bordered-td" style="font-size:9px;width:37px;text-align:center;">{!! $p->soldadorl ?? '&nbsp;' !!}</td>
-            <td class="bordered-td" style="font-size:9px;width:37px;text-align:center;">{!! $p->soldadorz ?? '&nbsp;' !!}</td>
+        @php $p=$pasadasPorNumero[$i] ?? null; @endphp
+        @if ($i===1)
+        <td class="bordered-td" style="font-size:9px;width:39px;text-align:center;">{!! $p->soldadorp ?? '&nbsp;' !!}</td>
+        <td class="bordered-td" style="font-size:9px;width:37px;text-align:center;">{!! $p->soldadorl ?? '&nbsp;' !!}</td>
+        <td class="bordered-td" style="font-size:9px;width:37px;text-align:center;">{!! $p->soldadorz ?? '&nbsp;' !!}</td>
         @else
-            <td class="bordered-td" style="font-size:9px;width:36.8px;text-align:center;">{!! $p->soldadorp ?? '&nbsp;' !!}</td>
-            <td class="bordered-td" style="font-size:9px;width:36.8px;text-align:center;">{!! $p->soldadorz ?? '&nbsp;' !!}</td>
+        <td class="bordered-td" style="font-size:9px;width:36.8px;text-align:center;">{!! $p->soldadorp ?? '&nbsp;' !!}</td>
+        <td class="bordered-td" style="font-size:9px;width:36.8px;text-align:center;">{!! $p->soldadorz ?? '&nbsp;' !!}</td>
         @endif
-    @endfor
+        @endfor
 </tr>
 
 {{-- ====== ENCABEZADOS PASADAS 7 A 12 ====== --}}
 <tr>
     @foreach ([7,8,9,10,11,12] as $num)
-        <td class="bordered-td" style="font-size:11px;text-align:center;"
-            colspan="{{ $num === 7 ? 3 : 2 }}">{{ $num }}° Pasada</td>
+    <td class="bordered-td" style="font-size:11px;text-align:center;"
+        colspan="{{ $num === 7 ? 3 : 2 }}">{{ $num }}° Pasada</td>
     @endforeach
 </tr>
 
 {{-- ====== PASADAS 7 A 12 ====== --}}
 <tr>
     @for ($i = 7; $i <= 12; $i++)
-        @php $p = $pasadasPorNumero[$i] ?? null; @endphp
-        @if ($i === 7)
-            <td class="bordered-td" style="font-size:9px;width:39px;text-align:center;">{!! $p->soldadorp ?? '&nbsp;' !!}</td>
-            <td class="bordered-td" style="font-size:9px;width:37px;text-align:center;">{!! $p->soldadorl ?? '&nbsp;' !!}</td>
-            <td class="bordered-td" style="font-size:9px;width:37px;text-align:center;">{!! $p->soldadorz ?? '&nbsp;' !!}</td>
+        @php $p=$pasadasPorNumero[$i] ?? null; @endphp
+        @if ($i===7)
+        <td class="bordered-td" style="font-size:9px;width:39px;text-align:center;">{!! $p->soldadorp ?? '&nbsp;' !!}</td>
+        <td class="bordered-td" style="font-size:9px;width:37px;text-align:center;">{!! $p->soldadorl ?? '&nbsp;' !!}</td>
+        <td class="bordered-td" style="font-size:9px;width:37px;text-align:center;">{!! $p->soldadorz ?? '&nbsp;' !!}</td>
         @else
-            <td class="bordered-td" style="font-size:9px;width:36.7px;text-align:center;">{!! $p->soldadorp ?? '&nbsp;' !!}</td>
-            <td class="bordered-td" style="font-size:9px;width:36.7px;text-align:center;">{!! $p->soldadorz ?? '&nbsp;' !!}</td>
+        <td class="bordered-td" style="font-size:9px;width:36.7px;text-align:center;">{!! $p->soldadorp ?? '&nbsp;' !!}</td>
+        <td class="bordered-td" style="font-size:9px;width:36.7px;text-align:center;">{!! $p->soldadorz ?? '&nbsp;' !!}</td>
         @endif
-    @endfor
+        @endfor
 </tr>
