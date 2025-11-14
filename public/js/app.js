@@ -41138,7 +41138,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         var categoriasMap = response.data.map(function (cat) {
           return {
             text: "".concat(cat.codigo),
-            value: "".concat(cat.id)
+            value: cat.id
           };
         });
         _this.filterOptions = [{
@@ -41157,14 +41157,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.isLoading = true;
       var categoriaSeleccionada = this.selectedFilters.find(function (f) {
-        return f.startsWith("cat_");
+        return typeof f === "number";
       });
       var params = {
         page: page,
         search: this.searchTerm,
         placas: this.selectedFilters.includes("relacionado_placas") ? 1 : 0,
         placas_sn: this.selectedFilters.includes("placa_sn") ? 1 : 0,
-        categoria: categoriaSeleccionada ? categoriaSeleccionada.replace("cat_", "") : ""
+        categoria: categoriaSeleccionada !== null && categoriaSeleccionada !== void 0 ? categoriaSeleccionada : ""
       };
       axios.get("/api/stock/paginatestock", {
         params: params
@@ -41185,13 +41185,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     exportarTodoPDF: function exportarTodoPDF() {
       var categoriaSeleccionada = this.selectedFilters.find(function (f) {
-        return f.startsWith("cat_");
+        return typeof f === "number";
       });
       var params = new URLSearchParams({
         search: this.searchTerm,
         placas: this.selectedFilters.includes("relacionado_placas") ? "1" : "0",
         placas_sn: this.selectedFilters.includes("placa_sn") ? "1" : "0",
-        categoria: categoriaSeleccionada ? categoriaSeleccionada.replace("cat_", "") : ""
+        categoria: categoriaSeleccionada !== null && categoriaSeleccionada !== void 0 ? categoriaSeleccionada : ""
       });
       var url = "/imprimir-todo-stock?".concat(params.toString());
       window.open(url, "_blank");
@@ -105101,10 +105101,14 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("button", {
     staticClass: "btn btn-enod exportar-todo-pdf",
+    attrs: {
+      disabled: !_vm.productos.length,
+      title: !_vm.productos.length ? "No hay datos para exportar" : "Exportar PDF"
+    },
     on: {
       click: _vm.exportarTodoPDF
     }
-  }, [_vm._v("Exportar PDF")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                Exportar PDF\n            ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
@@ -105178,9 +105182,18 @@ var render = function render() {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
     staticClass: "box-body"
-  }, [_vm.isLoading ? _c("div", {
-    staticClass: "text-center"
-  }) : _vm.productos.length ? _c("div", {
+  }, [_c("loading", {
+    attrs: {
+      active: _vm.isLoading,
+      loader: "bars",
+      color: "red"
+    },
+    on: {
+      "update:active": function updateActive($event) {
+        _vm.isLoading = $event;
+      }
+    }
+  }), _vm._v(" "), _vm.productos.length ? _c("div", {
     staticClass: "table-responsive"
   }, [_c("table", {
     staticClass: "table table-hover table-striped table-condensed"
@@ -105224,7 +105237,7 @@ var render = function render() {
     })])])]);
   }), 0)])]) : _c("div", {
     staticClass: "text-center"
-  }, [_c("p", [_vm._v("No hay resultados")])])])]), _vm._v(" "), _c("pagination", {
+  }, [_c("p", [_vm._v("No hay resultados")])])], 1)]), _vm._v(" "), _c("pagination", {
     attrs: {
       data: _vm.pagination,
       limit: 4
@@ -105242,18 +105255,7 @@ var render = function render() {
       slot: "next-nav"
     },
     slot: "next-nav"
-  }, [_vm._v("Next >")])]), _vm._v(" "), _c("loading", {
-    attrs: {
-      active: _vm.isLoading,
-      loader: "bars",
-      color: "red"
-    },
-    on: {
-      "update:active": function updateActive($event) {
-        _vm.isLoading = $event;
-      }
-    }
-  })], 1)]);
+  }, [_vm._v("Next >")])])], 1)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -105266,7 +105268,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       width: "25%"
     }
-  }, [_vm._v("Codigo")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Código")]), _vm._v(" "), _c("th", {
     staticStyle: {
       width: "45%"
     }

@@ -2,8 +2,12 @@
     <div>
         <div class="row">
             <div class="col-md-3">
-                <button @click="exportarTodoPDF" class="btn btn-enod exportar-todo-pdf">Exportar PDF</button>
+                <button @click="exportarTodoPDF" class="btn btn-enod exportar-todo-pdf" :disabled="!productos.length"
+                    :title="!productos.length ? 'No hay datos para exportar' : 'Exportar PDF'">
+                    Exportar PDF
+                </button>
             </div>
+
             <div class="col-md-3"></div>
 
             <div class="col-md-3">
@@ -28,20 +32,18 @@
         <div>
             <div class="box box-custom-enod">
                 <div class="box-body">
+                    <loading :active.sync="isLoading" :loader="'bars'" :color="'red'" />
 
-                    <div v-if="isLoading" class="text-center"></div>
-
-                    <div v-else-if="productos.length" class="table-responsive">
+                    <div v-if="productos.length" class="table-responsive">
                         <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr style="width: 100%;">
-                                    <th style="width: 25%;">Codigo</th>
+                                    <th style="width: 25%;">Código</th>
                                     <th style="width: 45%;">Descripción</th>
                                     <th style="width: 25%;">Stock</th>
                                     <th colspan="2" style="width: 5%;">Acciones</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 <tr v-for="producto in productos" :key="producto.id">
                                     <td>{{ producto.codigo }}</td>
@@ -54,7 +56,6 @@
                                             <span class="fa fa-edit"></span>
                                         </button>
                                     </td>
-
                                     <td width="10px">
                                         <button class="btn btn-warning btn-sm" title="Ver Detalles"
                                             @click.prevent="registroProducto(producto)">
@@ -69,7 +70,6 @@
                     <div v-else class="text-center">
                         <p>No hay resultados</p>
                     </div>
-
                 </div>
             </div>
 
@@ -77,8 +77,6 @@
                 <span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span>
             </pagination>
-
-            <loading :active.sync="isLoading" :loader="'bars'" :color="'red'" />
         </div>
     </div>
 </template>
@@ -88,7 +86,9 @@ import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
-    components: { Loading },
+    components: {
+        Loading
+    },
 
     data() {
         return {
@@ -112,6 +112,7 @@ export default {
         this.loadCategorias();
         this.loadProductos();
     },
+
     methods: {
         loadCategorias() {
             axios
@@ -119,7 +120,7 @@ export default {
                 .then(response => {
                     const categoriasMap = response.data.map(cat => ({
                         text: `${cat.codigo}`,
-                        value: `${cat.id}`
+                        value: cat.id
                     }));
 
                     this.filterOptions = [
@@ -131,13 +132,13 @@ export default {
                 .catch(error => {
                     console.error("Error al cargar categorías:", error);
                 });
-        }
-        ,
+        },
+
         loadProductos(page = 1) {
             this.isLoading = true;
 
             const categoriaSeleccionada = this.selectedFilters.find(f =>
-                f.startsWith("cat_")
+                typeof f === "number"
             );
 
             const params = {
@@ -145,13 +146,11 @@ export default {
                 search: this.searchTerm,
                 placas: this.selectedFilters.includes("relacionado_placas") ? 1 : 0,
                 placas_sn: this.selectedFilters.includes("placa_sn") ? 1 : 0,
-                categoria: categoriaSeleccionada
-                    ? categoriaSeleccionada.replace("cat_", "")
-                    : ""
+                categoria: categoriaSeleccionada ?? ""
             };
 
             axios
-                .get(`/api/stock/paginatestock`, { params })
+                .get("/api/stock/paginatestock", { params })
                 .then(response => {
                     this.productos = response.data.data;
                     this.pagination = response.data;
@@ -174,16 +173,14 @@ export default {
 
         exportarTodoPDF() {
             const categoriaSeleccionada = this.selectedFilters.find(f =>
-                f.startsWith("cat_")
+                typeof f === "number"
             );
 
             const params = new URLSearchParams({
                 search: this.searchTerm,
                 placas: this.selectedFilters.includes("relacionado_placas") ? "1" : "0",
                 placas_sn: this.selectedFilters.includes("placa_sn") ? "1" : "0",
-                categoria: categoriaSeleccionada
-                    ? categoriaSeleccionada.replace("cat_", "")
-                    : ""
+                categoria: categoriaSeleccionada ?? ""
             });
 
             const url = `/imprimir-todo-stock?${params.toString()}`;

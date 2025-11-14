@@ -32,27 +32,51 @@ class PdfStockController extends Controller
         return $pdf->stream();
     }
 
-    public function imprimirTodoStock()
+    public function imprimirTodoStock(Request $request)
     {
         $fecha = date('d-m-Y');
 
-        // Traemos los productos stockeables junto con su grupo
-        $productos = Productos::where('stockeable_sn', 1)
-            ->leftJoin('productos_grupo', 'productos.agrupacion_id', '=', 'productos_grupo.id')
-            ->select('productos.*', 'productos_grupo.descripcion as grupo_descripcion')
-            ->orderBy('grupo_descripcion')
-            ->orderBy('productos.descripcion')
-            ->get();
+        $search       = $request->query('search', '');
+        $placas       = (int) $request->query('placas', 0);
+        $placas_sn    = (int) $request->query('placas_sn', 0);
+        $categoria_id = $request->query('categoria', null); // id numérico o null
 
-        // Armamos colección agrupada por nombre de grupo
+        $query = Productos::where('stockeable_sn', 1)
+            ->leftJoin('productos_grupo', 'productos.agrupacion_id', '=', 'productos_grupo.id')
+            ->select('productos.*', 'productos_grupo.codigo as grupo_codigo');
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('productos.codigo', 'LIKE', "%{$search}%")
+                    ->orWhere('productos.descripcion', 'LIKE', "%{$search}%");
+            });
+        }
+
+        if ($placas === 1) {
+            $query->where('relacionado_a_placas_sn', 1);
+        }
+
+        if ($placas_sn === 1) {
+            $query->where('placa_sn', 1);
+        }
+
+        if (!empty($categoria_id)) {
+            $query->where('agrupacion_id', $categoria_id);
+        }
+
+
+        $query->orderBy('grupo_codigo')
+            ->orderBy('productos.descripcion');
+
+        $productos = $query->get();
+
         $productosAgrupados = $productos->groupBy(function ($producto) {
-            // Si no tiene grupo, lo mandamos a un grupo "Sin grupo" (o el nombre que quieras)
-            return $producto->grupo_descripcion ?: 'Sin grupo';
+            return $producto->grupo_codigo ?: 'Sin grupo';
         });
 
         $pdf = PDF::loadView('stock.pdfstock_todos', [
             'productosAgrupados' => $productosAgrupados,
-            'fecha'             => $fecha,
+            'fecha'              => $fecha,
         ])
             ->setPaper('a4', 'portrait');
 
