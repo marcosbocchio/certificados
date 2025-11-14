@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,9 +23,8 @@ class StockController extends Controller
     public function __construct()
     {
 
-     $this->middleware(['role_or_permission:Sistemas|S_stock_acceder'],['only' => ['callViewTotalStock']]);
-     $this->middleware(['role_or_permission:Sistemas|S_compras_acceder'],['only' => ['callViewTable']]);
-
+        $this->middleware(['role_or_permission:Sistemas|S_stock_acceder'], ['only' => ['callViewTotalStock']]);
+        $this->middleware(['role_or_permission:Sistemas|S_compras_acceder'], ['only' => ['callViewTable']]);
     }
 
     public function index()
@@ -32,7 +32,7 @@ class StockController extends Controller
         $stockItems = Stock::all();
         return response()->json($stockItems);
     }
-//__________________________________________________callView__________________________________________________
+    //__________________________________________________callView__________________________________________________
     public function callView()
     {
         $user = auth()->user(); // Obtener el usuario autenticado
@@ -52,7 +52,7 @@ class StockController extends Controller
         $proveedor = Proveedor::all();
 
         // Retornar la vista de stock, pasando los datos necesarios
-        return view('stock.table', compact('user', 'header_titulo', 'header_descripcion','proveedor'));
+        return view('stock.table', compact('user', 'header_titulo', 'header_descripcion', 'proveedor'));
     }
 
     public function vistaAjusteStock($id)
@@ -63,7 +63,7 @@ class StockController extends Controller
         $stockItem = Compra::where('id', $id)->first();
         $stockItemCompra = DetalleCompra::where('compra_id', $id)->get();
         $proveedor = Proveedor::where('id', $stockItem->proveedor_id)->get();
-        return view('stock.ajuste', compact('user', 'header_titulo', 'header_descripcion', 'stockItem','stockItemCompra','proveedor'));
+        return view('stock.ajuste', compact('user', 'header_titulo', 'header_descripcion', 'stockItem', 'stockItemCompra', 'proveedor'));
     }
 
     public function callViewTotalStock()
@@ -90,7 +90,7 @@ class StockController extends Controller
         $header_titulo = "Movimientos - " . $RegistroName;
         $header_descripcion = ".";
         $id = $id;
-        return view('stock.registro', compact('user', 'header_titulo', 'header_descripcion','id',));
+        return view('stock.registro', compact('user', 'header_titulo', 'header_descripcion', 'id',));
     }
     public function callViewEditS($id)
     {
@@ -103,113 +103,110 @@ class StockController extends Controller
         return view('stock.edit', compact('user', 'header_titulo', 'header_descripcion', 'producto',));
     }
 
-//__________________________________________________function__________________________________________________
+    //__________________________________________________function__________________________________________________
 
-public function store(CompraRequest $request)
-{
-    DB::beginTransaction();
+    public function store(CompraRequest $request)
+    {
+        DB::beginTransaction();
 
-    try {
-        $compra = new Compra([
-            'fecha' => $request->fecha,
-            'fecha_remito' => $request->fecha_remito,
-            'proveedor_id' => $request->proveedor_id,
-            'numero_remito' => $request->numero_remito,
-        ]);
-        $compra->save();
-
-        foreach ($request->detalles as $detalle) {
-            $detalleCompra = new DetalleCompra([
-                'compra_id' => $compra->id,
-                'producto_id' => $detalle['producto_id'],
-                'cantidad' => $detalle['cantidad'],
+        try {
+            $compra = new Compra([
+                'fecha' => $request->fecha,
+                'fecha_remito' => $request->fecha_remito,
+                'proveedor_id' => $request->proveedor_id,
+                'numero_remito' => $request->numero_remito,
             ]);
-            $detalleCompra->save();
-            $this->actualizarStock($detalleCompra, $request);
-        }
+            $compra->save();
 
-        DB::commit();
-        return response()->json(['message' => 'Compra guardada con éxito', 'compra' => $compra], 200);
-    } catch (\Exception $e) {
-        DB::rollback();
-        Log::error('Error al guardar la compra: ' . $e->getMessage());
-        return response()->json(['error' => 'Error interno del servidor'], 500);
+            foreach ($request->detalles as $detalle) {
+                $detalleCompra = new DetalleCompra([
+                    'compra_id' => $compra->id,
+                    'producto_id' => $detalle['producto_id'],
+                    'cantidad' => $detalle['cantidad'],
+                ]);
+                $detalleCompra->save();
+                $this->actualizarStock($detalleCompra, $request);
+            }
+
+            DB::commit();
+            return response()->json(['message' => 'Compra guardada con éxito', 'compra' => $compra], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error al guardar la compra: ' . $e->getMessage());
+            return response()->json(['error' => 'Error interno del servidor'], 500);
+        }
     }
-}
-public function reemplazarStockProducto(StockRequest $request)
-{
-    DB::beginTransaction();
-    try {
-        $user_id = null;
+    public function reemplazarStockProducto(StockRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $user_id = null;
 
-        if (Auth::check())
-        {
-             $user_id = $userId = Auth::id();
+            if (Auth::check()) {
+                $user_id = $userId = Auth::id();
+            }
+            $producto = Productos::findOrFail($request->producto_id);
+            $nuevoValorStock = $request->stock; // El nuevo valor del stock a establecer
+
+            // Reemplazar el stock del producto con el nuevo valor
+            $producto->stock = $nuevoValorStock;
+            $producto->save();
+            log::info($request->tipo_movimiento);
+            // Registrar el ajuste en la tabla 'stock'
+            $registroStock = new Stock([
+                'producto_id' => $request->producto_id,
+                'fecha' => now(),
+                'cantidad' =>  $request->cantidad,
+                'obs' => $request->observaciones,
+                'stock' => $nuevoValorStock,
+                'user_id' => $user_id,
+                'tipo_movimiento' => $request->tipo_movimiento,
+            ]);
+            $registroStock->save();
+
+            DB::commit();
+            return response()->json(['message' => 'Stock reemplazado y registrado con éxito.']);
+        } catch (\Exception $e) {
+            Log::error('Error al reemplazar stock: ' . $e->getMessage());
+            DB::rollback();
+            return response()->json(['error' => 'Error interno del servidor', 'exception' => $e->getMessage()], 500);
         }
-        $producto = Productos::findOrFail($request->producto_id);
-        $nuevoValorStock = $request->stock; // El nuevo valor del stock a establecer
-
-        // Reemplazar el stock del producto con el nuevo valor
-        $producto->stock = $nuevoValorStock;
-        $producto->save();
-        log::info($request->tipo_movimiento);
-        // Registrar el ajuste en la tabla 'stock'
-        $registroStock = new Stock([
-            'producto_id' => $request->producto_id,
-            'fecha' => now(),
-            'cantidad' =>  $request->cantidad,
-            'obs' => $request->observaciones,
-            'stock'=> $nuevoValorStock,
-            'user_id'=>$user_id,
-            'tipo_movimiento'=> $request->tipo_movimiento,
-        ]);
-        $registroStock->save();
-
-        DB::commit();
-        return response()->json(['message' => 'Stock reemplazado y registrado con éxito.']);
-    } catch (\Exception $e) {
-        Log::error('Error al reemplazar stock: ' . $e->getMessage());
-        DB::rollback();
-        return response()->json(['error' => 'Error interno del servidor', 'exception' => $e->getMessage()], 500);
     }
-}
-public function actualizarStock($detalleCompra, $request)
-{
-    try {
-        $producto = Productos::find($detalleCompra->producto_id);
-        if (!$producto) {
-            throw new \Exception("Producto no encontrado");
+    public function actualizarStock($detalleCompra, $request)
+    {
+        try {
+            $producto = Productos::find($detalleCompra->producto_id);
+            if (!$producto) {
+                throw new \Exception("Producto no encontrado");
+            }
+            $user_id = null;
+
+            if (Auth::check()) {
+                $user_id = $userId = Auth::id();
+            }
+            // Actualizar el stock del producto
+            $producto->stock += $detalleCompra->cantidad;
+            $producto->save();
+
+            // Crear un nuevo registro en la tabla de stock
+            $nuevoStock = new Stock([
+                'producto_id' => $detalleCompra->producto_id,
+                'cantidad' => $detalleCompra->cantidad,
+                'obs' => $request->obs,
+                'stock' => $producto->stock,
+                'user_id' => $user_id,
+                'tipo_movimiento' => $request->tipo_movimiento,
+            ]);
+            $nuevoStock->save();
+        } catch (\Exception $e) {
+            Log::error('Error al actualizar el stock del producto', [
+                'producto_id' => $detalleCompra->producto_id,
+                'error' => $e->getMessage()
+            ]);
+
+            throw $e;
         }
-        $user_id = null;
-
-        if (Auth::check())
-        {
-             $user_id = $userId = Auth::id();
-        }
-        // Actualizar el stock del producto
-        $producto->stock += $detalleCompra->cantidad;
-        $producto->save();
-
-        // Crear un nuevo registro en la tabla de stock
-        $nuevoStock = new Stock([
-            'producto_id' => $detalleCompra->producto_id,
-            'cantidad' => $detalleCompra->cantidad,
-            'obs' => $request->obs,
-            'stock' => $producto->stock,
-            'user_id'=> $user_id,
-            'tipo_movimiento' => $request->tipo_movimiento,
-        ]);
-        $nuevoStock->save();
-
-    } catch (\Exception $e) {
-        Log::error('Error al actualizar el stock del producto', [
-            'producto_id' => $detalleCompra->producto_id,
-            'error' => $e->getMessage()
-        ]);
-
-        throw $e;
     }
-}
 
     public function show($id)
     {
@@ -221,42 +218,41 @@ public function actualizarStock($detalleCompra, $request)
     }
 
     public function update(Request $request, $id)
-{
-    $compra = Compra::findOrFail($id);
+    {
+        $compra = Compra::findOrFail($id);
 
-    DB::beginTransaction();
-    try {
-        // Actualizar la compra con nuevos campos, incluyendo observaciones a nivel de compra
-        $user_id = null;
+        DB::beginTransaction();
+        try {
+            // Actualizar la compra con nuevos campos, incluyendo observaciones a nivel de compra
+            $user_id = null;
 
-        if (Auth::check())
-        {
-             $user_id = $userId = Auth::id();
+            if (Auth::check()) {
+                $user_id = $userId = Auth::id();
+            }
+            $compra->update($request->only(['fecha', 'fecha_remito', 'proveedor_id', 'numero_remito', 'obs', 'user_id']));
+
+            // Eliminar detalles de compra antiguos
+            DetalleCompra::where('compra_id', $compra->id)->delete();
+
+            // Crear nuevos detalles de compra y actualizar stock
+            foreach ($request->detalles as $detalle) {
+                $detalleCompra = new DetalleCompra([
+                    'compra_id' => $compra->id,
+                    'producto_id' => $detalle['producto_id'],
+                    'cantidad' => $detalle['cantidad'],
+                    'user_ud' => $user_id,
+                ]);
+                $detalleCompra->save();
+            }
+
+            DB::commit();
+            return response()->json(['message' => 'Compra actualizada exitosamente', 'compra' => $compra], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error("Error al actualizar la compra: {$e->getMessage()}");
+            return response()->json(['error' => 'Error interno del servidor'], 500);
         }
-        $compra->update($request->only(['fecha', 'fecha_remito', 'proveedor_id', 'numero_remito', 'obs','user_id']));
-
-        // Eliminar detalles de compra antiguos
-        DetalleCompra::where('compra_id', $compra->id)->delete();
-
-        // Crear nuevos detalles de compra y actualizar stock
-        foreach ($request->detalles as $detalle) {
-            $detalleCompra = new DetalleCompra([
-                'compra_id' => $compra->id,
-                'producto_id' => $detalle['producto_id'],
-                'cantidad' => $detalle['cantidad'],
-                'user_ud' => $user_id,
-            ]);
-            $detalleCompra->save();
-        }
-
-        DB::commit();
-        return response()->json(['message' => 'Compra actualizada exitosamente', 'compra' => $compra], 200);
-    } catch (\Exception $e) {
-        DB::rollback();
-        Log::error("Error al actualizar la compra: {$e->getMessage()}");
-        return response()->json(['error' => 'Error interno del servidor'], 500);
     }
-}
     public function destroy($id)
     {
         $stock = Stock::find($id);
@@ -275,7 +271,7 @@ public function actualizarStock($detalleCompra, $request)
         }
     }
 
-//__________________________________________________paginate__________________________________________________
+    //__________________________________________________paginate__________________________________________________
 
     public function paginate(Request $request)
     {
@@ -284,10 +280,10 @@ public function actualizarStock($detalleCompra, $request)
         $fechaFin = $request->fechaFin ? Carbon::parse($request->fechaFin)->endOfDay() : Carbon::now();
 
         $stockItems = Compra::with('proveedor')
-                            ->whereBetween('fecha', [$fechaInicio, $fechaFin])
-                            ->withSearch($filtro)
-                            ->orderBy('created_at', 'DESC')
-                            ->paginate(10);
+            ->whereBetween('fecha', [$fechaInicio, $fechaFin])
+            ->withSearch($filtro)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
 
         return response()->json($stockItems);
     }
@@ -296,39 +292,36 @@ public function actualizarStock($detalleCompra, $request)
     public function paginateStock(Request $request)
     {
         $searchTerm = $request->search;
-        // CORRECCIÓN: Recibimos el 1 o 0 y lo tratamos como un booleano
         $filtroPlacas = (bool) $request->input('placas');
         $filtroPlacas_sn = (bool) $request->input('placas_sn');
-        $perPage = 10;
+        $categoria = $request->input('categoria');
 
-        // Inicia la construcción de la consulta
         $query = Productos::query();
 
-        // ****** MODIFICACIÓN ******
-        // Se agrega la condición OBLIGATORIA para que solo filtre productos stockeables.
         $query->where('stockeable_sn', 1);
 
-        // 1. APLICA EL FILTRO DE PLACAS
-        // Si el checkbox está marcado ($filtroPlacas es true), se añade el filtro.
         if ($filtroPlacas) {
             $query->where('relacionado_a_placas_sn', 1);
         }
-        if ($filtroPlacas_sn) { // Usar la variable correcta
+
+        if ($filtroPlacas_sn) {
             $query->where('placa_sn', 1);
         }
 
-        // 2. APLICA EL FILTRO DE BÚSQUEDA POR TEXTO (si existe)
+        if ($categoria) {
+            $query->where('agrupacion_id', $categoria);
+        }
+
         if ($searchTerm) {
-            $query->where(function($subquery) use ($searchTerm) {
+            $query->where(function ($subquery) use ($searchTerm) {
                 $subquery->where('descripcion', 'like', "%{$searchTerm}%")
-                        ->orWhere('codigo', 'like', "%{$searchTerm}%");
+                    ->orWhere('codigo', 'like', "%{$searchTerm}%");
             });
         }
 
-        // 3. Ordena y pagina el resultado final.
-        $productos = $query->orderBy('codigo', 'asc')->paginate($perPage);
-
-        return response()->json($productos);
+        return response()->json(
+            $query->orderBy('codigo')->paginate(10)
+        );
     }
 
 
@@ -340,18 +333,18 @@ public function actualizarStock($detalleCompra, $request)
         $fechaInicio = $request->input('fechaInicio', Carbon::now()->subDays(30)->toDateString());
 
         $registro = Stock::where('producto_id', $id)
-                        ->leftJoin('users', 'stock.user_id', '=', 'users.id')
-                        ->whereDate('stock.created_at', '>=', $fechaInicio) // Especifica la tabla para 'created_at'
-                        ->orderBy('stock.created_at', 'DESC') // Especifica la tabla para 'created_at' en el orderBy también
-                        ->select('stock.*', DB::raw('IFNULL(users.name, "-") as user_name')) // Utiliza IFNULL para mostrar "Sin usuario" si no hay un usuario asociado
-                        ->paginate($perPage);
+            ->leftJoin('users', 'stock.user_id', '=', 'users.id')
+            ->whereDate('stock.created_at', '>=', $fechaInicio) // Especifica la tabla para 'created_at'
+            ->orderBy('stock.created_at', 'DESC') // Especifica la tabla para 'created_at' en el orderBy también
+            ->select('stock.*', DB::raw('IFNULL(users.name, "-") as user_name')) // Utiliza IFNULL para mostrar "Sin usuario" si no hay un usuario asociado
+            ->paginate($perPage);
 
         return response()->json($registro);
     }
 
 
 
-//__________________________________________________Anular__________________________________________________
+    //__________________________________________________Anular__________________________________________________
 
     public function compraAnulacion($id)
     {
@@ -365,8 +358,7 @@ public function actualizarStock($detalleCompra, $request)
             }
             $user_id = null;
 
-            if (Auth::check())
-            {
+            if (Auth::check()) {
                 $user_id = $userId = Auth::id();
             }
             foreach ($detallesCompra as $detalle) {
@@ -426,9 +418,8 @@ public function actualizarStock($detalleCompra, $request)
             $detallesCompra = DetalleCompra::where('compra_id', $id)->get();
             $user_id = null;
 
-            if (Auth::check())
-            {
-                 $user_id = $userId = Auth::id();
+            if (Auth::check()) {
+                $user_id = $userId = Auth::id();
             }
             foreach ($detallesCompra as $detalle) {
                 $producto = Productos::find($detalle->producto_id);
@@ -448,7 +439,7 @@ public function actualizarStock($detalleCompra, $request)
                     'stock' => $producto->stock,
                     'producto_id' => $detalle->producto_id,
                     'user_id' => $user_id,
-                    'tipo_movimiento' => 'Desanul. remito de compra N° '. $compra->numero_remito,
+                    'tipo_movimiento' => 'Desanul. remito de compra N° ' . $compra->numero_remito,
                 ]);
                 $stock->save();
             }
