@@ -89,12 +89,21 @@ main{
 #firmas p{
     margin: 0px 0px 0px 4px;
 }
+#firmas-imagenes td{
+    height: 100px;
+    padding: 0px;
+    vertical-align: bottom;
+}
+#firmas-imagenes p{
+    margin: 0px;
+    text-align: center;
+}
 #resaltar-borde {
     border-right: 3px solid black;
 }
 footer {
         position: fixed;
-        bottom: 110px;
+        bottom: 160px;
         width: 100%;
         border: 3px solid black;
 }
@@ -379,17 +388,18 @@ footer {
                                     <td style="width: 50mm;" >Inspector del Cliente</td>
                                     <td style="width: 48mm;" >Inspector Autorizado</td>
                                 </tr>
-                                <tr id="firmas">
-                                <td id="left">
-                <p>Firma:
-                    @if($firma)
-                        <img src="{{ public_path($firma) }}" alt="" style="max-height:45px;  margin-top:10px;">
-                    @endif
-                </p>
-            </td>
-                                    <td id="left"><p>Firma:</p></td>
-                                    <td id="left"><p>Firma:</p></td>
-                                    <td id="left"><p>Firma:</p></td>
+                                <tr id="firmas-imagenes">
+                                    <td id="left">
+                                        @if($firma)
+                                            <div style="text-align:center;">
+                                                <img src="{{ public_path($firma) }}" alt="" style="max-height:90px;">
+                                            </div>
+                                        @endif
+                                        <p>Firma</p>
+                                    </td>
+                                    <td id="left"><p>Firma</p></td>
+                                    <td id="left"><p>Firma</p></td>
+                                    <td id="left"><p>Firma</p></td>
                                 </tr>
                                 <tr id="firmas">
                                     <td>
@@ -530,17 +540,18 @@ footer {
                 <td style="width: 50mm;" >Inspector del Cliente</td>
                 <td style="width: 48mm;" >Inspector Autorizado</td>
             </tr>
-            <tr id="firmas">
-            <td id="left">
-                <p>Firma:
-                    @if($firma)
-                        <img src="{{ public_path($firma) }}" alt="" style="max-height:45px; margin-top:10px;">
-                    @endif
-                </p>
-            </td>
-                <td id="left"><p>Firma:</p></td>
-                <td id="left"><p>Firma:</p></td>
-                <td id="left"><p>Firma:</p></td>
+                            <tr id="firmas-imagenes">
+                                <td id="left">
+                                    @if($firma)
+                                        <div style="text-align:center;">
+                                            <img src="{{ public_path($firma) }}" alt="" style="max-height:90px;">
+                                        </div>
+                                    @endif
+                                    <p>Firma</p>
+                                </td>
+                                <td id="left"><p>Firma</p></td>
+                                <td id="left"><p>Firma</p></td>
+                                <td id="left"><p>Firma</p></td>
             </tr>
             <tr id="firmas">
                 <td>
