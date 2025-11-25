@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Stock de Productos</title>
     <style>
         @page {
-            /* Dejamos espacio en el margen superior para el encabezado fijo */
             margin: 85px 25px 40px 25px;
         }
 
@@ -17,130 +17,130 @@
 
         header {
             position: fixed;
-            top: -75px; /* Posicionamos el encabezado en el margen superior */
-            left: 0px;
-            right: 0px;
+            top: -75px;
+            left: 0;
+            right: 0;
             height: 70px;
         }
 
-        .header-table, .table {
+        .header-table,
+        .table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed; /* Fuerza a la tabla a respetar los anchos definidos */
+            table-layout: fixed;
         }
+
         .logo img {
-            height: auto;
             max-width: 180px;
             max-height: 60px;
         }
+
         .title {
             font-size: 18px;
             font-weight: bold;
             text-align: center;
         }
+
         .date {
             font-size: 10px;
             text-align: right;
         }
-        .table{
-            margin-top: 15px; /* Espacio entre tablas de diferentes grupos */
+
+        .table {
+            margin-top: 15px;
             border-collapse: collapse;
-            page-break-inside: auto; /* Permite que la tabla se divida entre páginas */
+            page-break-inside: auto;
         }
-        .table th, .table td {
+
+        .table th,
+        .table td {
             padding: 8px;
-            text-align: left;
-            border: none;
-            word-wrap: break-word; /* Permite que el texto largo se divida en varias líneas */
+            word-wrap: break-word;
         }
+
         .table thead .column-headers th {
-            background-color: rgb(41,128,186);
-            color: #ffffff;
+            background-color: rgb(41, 128, 186);
+            color: #fff;
         }
-        .table thead {
-            display: table-header-group;
-        }
-        .table tbody tr {
-            page-break-inside: avoid; /* Intenta no cortar una fila por la mitad */
-        }
+
         .table tbody tr:nth-child(odd) {
-            background-color: #F2F2F2;
+            background-color: #f2f2f2;
         }
+
         .group-subtitle-cell {
             font-size: 14px;
             font-weight: bold;
             padding: 10px 0;
-            background-color: #e9ecef;
-            color: #333;
-            text-align: center;
+            background: #e9ecef;
+            text-align: left;
         }
-        /* === ANCHOS DE COLUMNA DEFINIDOS === */
-        .col-codigo { width: 25%; }
-        .col-descripcion { width: 55%; }
-        .col-stock { width: 20%; text-align: right; }
+
+        .col-codigo {
+            width: 25%;
+            text-align: left;
+        }
+
+        .col-descripcion {
+            width: 55%;
+            text-align: left;
+        }
+
+        .col-stock {
+            width: 20%;
+            text-align: left;
+        }
     </style>
 </head>
+
 <body>
-    <!-- El encabezado ahora está FUERA del bucle y se repetirá en cada página gracias al CSS -->
+
     <header>
         <table class="header-table">
             <tr>
                 <td class="logo">
-                    <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="Logotipo ENOD">
+                    <img src="{{ public_path('img/logo-enod-web.jpg') }}" alt="ENOD">
                 </td>
                 <td class="title">Stock de Productos</td>
                 <td class="date"><b>FECHA:</b> {{ $fecha }}</td>
             </tr>
         </table>
-        <div style="height: 3px; background-color: rgb(255,204, 0); margin-top: 10px;"></div>
+        <div style="height:3px;background:rgb(255,204,0);margin-top:10px;"></div>
     </header>
 
     <main>
-        <!-- El bucle principal recorre los grupos -->
         @foreach ($productosAgrupados as $nombreDelGrupo => $productosDelGrupo)
-            <!-- Ahora creamos una tabla por cada grupo -->
-            <table class="table">
-                <thead>
-                    <!-- Fila 1 del encabezado: Título del Grupo -->
-                    <tr>
-                        <th colspan="3" class="group-subtitle-cell">
-                            {{ $nombreDelGrupo }}
-                        </th>
-                    </tr>
-                    <!-- Fila 2 del encabezado: Títulos de las Columnas -->
-                    <tr class="column-headers">
-                        <th class="col-codigo">Código</th>
-                        <th class="col-descripcion">Descripción</th>
-                        <th class="col-stock">Stock</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- El segundo bucle recorre los productos de este grupo específico -->
-                    @foreach ($productosDelGrupo as $producto)
-                        <tr>
-                            <td class="col-codigo">{{ $producto->codigo }}</td>
-                            <td class="col-descripcion">{{ $producto->descripcion }}</td>
-                            <td class="col-stock">{{ $producto->stock }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th colspan="3" class="group-subtitle-cell">
+                        {{ $nombreDelGrupo }}
+                    </th>
+                </tr>
+                <tr class="column-headers">
+                    <th class="col-codigo">Código</th>
+                    <th class="col-descripcion">Descripción</th>
+                    <th class="col-stock">Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($productosDelGrupo as $producto)
+                <tr>
+                    <td class="col-codigo">{{ $producto->codigo }}</td>
+                    <td class="col-descripcion">{{ $producto->descripcion }}</td>
+                    <td class="col-stock">{{ $producto->stock }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
         @endforeach
     </main>
 
     <script type="text/php">
-        if ( isset($pdf) ) {
-            $x = 492;
-            $y = 43;
-            $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
-            $font = $fontMetrics->get_font("serif", "bold");
-            $size = 8;
-            $color = array(0,0,0);
-            $word_space = 0.0;
-            $char_space = 0.0;
-            $angle = 0.0;
-            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-        }
-    </script>
+        if (isset($pdf)) {
+        $pdf->page_text(507, 40, "PAGINA : {PAGE_NUM} de {PAGE_COUNT}", $fontMetrics->get_font("serif","bold"), 8);
+}
+</script>
+
 </body>
+
 </html>
