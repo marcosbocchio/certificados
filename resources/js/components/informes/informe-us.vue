@@ -134,7 +134,7 @@
                                     <label for="espesor_chapa">Espesor Chapa </label>
                                 </div>
                                 <input type="number" class="form-control" v-model="espesor_chapa" id="espesor_chapa"
-                                    :disabled="!isChapa" step="0.1">
+                                    :disabled="!isChapa" step="0.01">
                             </div>
                         </div>
 
@@ -592,7 +592,8 @@
                     </div>
                 </div>
 
-                <div v-if="tecnica && (tecnica.codigo == 'US' || tecnica.codigo == 'PA' || tecnica.codigo == 'FMC-TFM')">
+                <div
+                    v-if="tecnica && (tecnica.codigo == 'US' || tecnica.codigo == 'PA' || tecnica.codigo == 'FMC-TFM')">
                     <div class="box box-custom-enod">
 
                         <div class="box-header with-border">
@@ -987,8 +988,8 @@
                                                                 <div v-else>
                                                                     <!-- Muestra el contenido cuando no está en modo de edición -->
                                                                     <span>{{
-                                                                        Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]
-                                                                        }}</span>
+                                                                        Tabla_me[indexPosTabla_me].mediciones[g - 1][p - 1]
+                                                                    }}</span>
                                                                 </div>
                                                             </div>
                                                             <div
@@ -1011,7 +1012,8 @@
 
                                                                 <div
                                                                     v-if="Tabla_me[indexPosTabla_me].mediciones[g - 1][p - 1] != ''">
-                                                                    {{ Tabla_me[indexPosTabla_me].mediciones[g - 1][p - 1]
+                                                                    {{ Tabla_me[indexPosTabla_me].mediciones[g - 1][p -
+                                                                        1]
                                                                     }}
                                                                 </div>
                                                                 <div v-else>

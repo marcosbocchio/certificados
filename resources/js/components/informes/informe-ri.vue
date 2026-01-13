@@ -759,7 +759,7 @@
                                                                                         <td>{{ defectoPasada.codigo }}
                                                                                         </td>
                                                                                         <td>{{ defectoPasada.descripcion
-                                                                                            }}</td>
+                                                                                        }}</td>
                                                                                         <td>{{ defectoPasada.posicion }}
                                                                                         </td>
                                                                                         <td v-if="formato == 'DUCTO'">{{
@@ -1128,7 +1128,7 @@
                                                 <input type="checkbox" :id="elemento" :value="elemento"
                                                     v-model="elemento_pasadas_a_clonar" style="float:left">
                                                 <label :for="elemento" style="float:left;margin-left: 5px;">{{ elemento
-                                                    }}</label>
+                                                }}</label>
                                             </div>
                                         </div>
                                     </div>

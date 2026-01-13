@@ -41098,6 +41098,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
 /* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -41108,50 +41114,67 @@ __webpack_require__.r(__webpack_exports__);
     return {
       productos: [],
       pagination: {},
-      searchTerm: '',
-      relacionadoAPlacas: false,
-      placa_sn: false,
+      searchTerm: "",
       isLoading: false,
       selectedFilters: [],
       filterOptions: [{
-        text: 'Rel. placa',
-        value: 'relacionado_placas'
+        text: "Rel. placa",
+        value: "relacionado_placas"
       }, {
-        text: 'Es Placa',
-        value: 'placa_sn'
+        text: "Es Placa",
+        value: "placa_sn"
       }],
-      filterActivos: false
+      categorias: []
     };
   },
   mounted: function mounted() {
+    this.loadCategorias();
     this.loadProductos();
   },
-  watch: {
-    relacionadoAPlacas: function relacionadoAPlacas() {
-      this.loadProductos();
-    }
-  },
   methods: {
-    loadProductos: function loadProductos() {
+    loadCategorias: function loadCategorias() {
       var _this = this;
+      axios.get("/api/productos/grupos").then(function (response) {
+        var categoriasMap = response.data.map(function (cat) {
+          return {
+            text: "".concat(cat.codigo),
+            value: cat.id
+          };
+        });
+        _this.filterOptions = [{
+          text: "Rel. placa",
+          value: "relacionado_placas"
+        }, {
+          text: "Es Placa",
+          value: "placa_sn"
+        }].concat(_toConsumableArray(categoriasMap));
+      })["catch"](function (error) {
+        console.error("Error al cargar categorías:", error);
+      });
+    },
+    loadProductos: function loadProductos() {
+      var _this2 = this;
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.isLoading = true;
+      var categoriaSeleccionada = this.selectedFilters.find(function (f) {
+        return typeof f === "number";
+      });
       var params = {
         page: page,
         search: this.searchTerm,
-        // CORRECCIÓN: Usamos el array 'selectedFilters' para ver qué filtros están activos
-        placas: this.selectedFilters.includes('relacionado_placas') ? 1 : 0,
-        placas_sn: this.selectedFilters.includes('placa_sn') ? 1 : 0
+        placas: this.selectedFilters.includes("relacionado_placas") ? 1 : 0,
+        placas_sn: this.selectedFilters.includes("placa_sn") ? 1 : 0,
+        categoria: categoriaSeleccionada !== null && categoriaSeleccionada !== void 0 ? categoriaSeleccionada : ""
       };
       axios.get("/api/stock/paginatestock", {
         params: params
       }).then(function (response) {
-        _this.productos = response.data.data;
-        _this.pagination = response.data;
+        _this2.productos = response.data.data;
+        _this2.pagination = response.data;
       })["catch"](function (error) {
-        console.error('API error:', error);
+        console.error("API error:", error);
       })["finally"](function () {
-        _this.isLoading = false;
+        _this2.isLoading = false;
       });
     },
     registroProducto: function registroProducto(producto) {
@@ -41161,14 +41184,17 @@ __webpack_require__.r(__webpack_exports__);
       window.location.href = "/area/enod/stock-edit/".concat(producto.id);
     },
     exportarTodoPDF: function exportarTodoPDF() {
-      // Usamos la misma lógica que en loadProductos para construir los parámetros
+      var categoriaSeleccionada = this.selectedFilters.find(function (f) {
+        return typeof f === "number";
+      });
       var params = new URLSearchParams({
         search: this.searchTerm,
-        placas: this.selectedFilters.includes('relacionado_placas') ? '1' : '0',
-        placas_sn: this.selectedFilters.includes('placa_sn') ? '1' : '0'
+        placas: this.selectedFilters.includes("relacionado_placas") ? "1" : "0",
+        placas_sn: this.selectedFilters.includes("placa_sn") ? "1" : "0",
+        categoria: categoriaSeleccionada !== null && categoriaSeleccionada !== void 0 ? categoriaSeleccionada : ""
       });
       var url = "/imprimir-todo-stock?".concat(params.toString());
-      window.open(url, '_blank');
+      window.open(url, "_blank");
     },
     getResults: function getResults() {
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
@@ -75266,7 +75292,7 @@ var render = function render() {
       type: "number",
       id: "espesor_chapa",
       disabled: !_vm.isChapa,
-      step: "0.1"
+      step: "0.01"
     },
     domProps: {
       value: _vm.espesor_chapa
@@ -76817,7 +76843,7 @@ var render = function render() {
       type: "number",
       id: "espesor_chapa",
       disabled: !_vm.isChapa,
-      step: "0.1"
+      step: "0.01"
     },
     domProps: {
       value: _vm.espesor_chapa
@@ -79335,7 +79361,7 @@ var render = function render() {
       type: "number",
       id: "espesor_chapa",
       disabled: !_vm.isChapa,
-      step: "0.1"
+      step: "0.01"
     },
     domProps: {
       value: _vm.espesor_chapa
@@ -80100,7 +80126,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                          \n                     ")]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
     staticClass: "col-sm-6"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -80337,9 +80363,9 @@ var render = function render() {
     attrs: {
       "for": "resultado_pdf_sn"
     }
-  }, [_vm._v("Mostrar resultado en PDF")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Mostrar resultado\n                                en PDF")])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                  \n             ")]), _vm._v(" "), _vm.TablaDetalle.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaDetalle.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -80384,7 +80410,7 @@ var render = function render() {
           _vm.$set(_vm.TablaDetalle[k], "densidad", $event.target.value);
         }
       }
-    })]) : _c("div", [_vm._v("\n                                                    " + _vm._s(FIlaTabla.densidad) + "\n                                                ")])]), _vm._v(" "), _c("td", {
+    })]) : _c("div", [_vm._v("\n                                                        " + _vm._s(FIlaTabla.densidad) + "\n                                                    ")])]), _vm._v(" "), _c("td", {
       on: {
         click: function click($event) {
           return _vm.selectPosDetalle(k);
@@ -80455,7 +80481,7 @@ var render = function render() {
           _vm.$set(_vm.TablaDetalle[k], "observacion", $event.target.value);
         }
       }
-    })]) : _c("div", [_vm._v("\n                                                " + _vm._s(_vm.TablaDetalle[k].observacion) + "\n                                                ")])]), _vm._v(" "), _c("td", [_c("a", {
+    })]) : _c("div", [_vm._v("\n                                                        " + _vm._s(_vm.TablaDetalle[k].observacion) + "\n                                                    ")])]), _vm._v(" "), _c("td", [_c("a", {
       on: {
         click: function click($event) {
           return _vm.RemoveDetalle(k);
@@ -80533,7 +80559,7 @@ var render = function render() {
       attrs: {
         "for": "posicionPlacaGosaducto"
       }
-    }, [_vm._v("Pos. Indicación")]), _vm._v(" "), _c("input", {
+    }, [_vm._v("Pos.\n                                                                        Indicación")]), _vm._v(" "), _c("input", {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -80600,7 +80626,7 @@ var render = function render() {
       }
     })], 1)])])]), _vm._v(" "), _c("div", {
       staticClass: "form-group"
-    }, [_vm._v("\n                                                             \n                                                        ")]), _vm._v(" "), _vm.TablaDetalle.length && _vm.TablaDetalle[_vm.indexDetalle].defectos.length ? _c("div", [_c("div", {
+    }, [_vm._v("\n                                                                 \n                                                            ")]), _vm._v(" "), _vm.TablaDetalle.length && _vm.TablaDetalle[_vm.indexDetalle].defectos.length ? _c("div", [_c("div", {
       staticClass: "col-md-8"
     }, [_c("div", {
       staticClass: "table-responsive"
@@ -80610,14 +80636,14 @@ var render = function render() {
       staticClass: "col-md-2"
     }, [_vm._v("Código")]), _vm._v(" "), _c("th", {
       staticClass: "col-md-6"
-    }, [_vm._v("Descripción")]), _vm._v(" "), _c("th", {
+    }, [_vm._v("Descripción\n                                                                                    ")]), _vm._v(" "), _c("th", {
       staticClass: "col-md-2"
-    }, [_vm._v("Posición")]), _vm._v(" "), _vm.formato == "DUCTO" ? _c("th", {
+    }, [_vm._v("Posición\n                                                                                    ")]), _vm._v(" "), _vm.formato == "DUCTO" ? _c("th", {
       staticClass: "col-md-2"
     }, [_vm._v("Sector")]) : _vm._e(), _vm._v(" "), _c("th", [_vm._v(" ")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.TablaDetalle.length > 0 ? _vm.TablaDetalle[_vm.indexDetalle].defectos : [], function (defectoPasada, k) {
       return _c("tr", {
         key: k
-      }, [_c("td", [_vm._v(_vm._s(defectoPasada.codigo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(defectoPasada.descripcion))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(defectoPasada.posicion))]), _vm._v(" "), _vm.formato == "DUCTO" ? _c("td", [_vm._v(_vm._s(defectoPasada.pasada))]) : _vm._e(), _vm._v(" "), _c("td", {
+      }, [_c("td", [_vm._v(_vm._s(defectoPasada.codigo) + "\n                                                                                    ")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(defectoPasada.descripcion))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(defectoPasada.posicion) + "\n                                                                                    ")]), _vm._v(" "), _vm.formato == "DUCTO" ? _c("td", [_vm._v(_vm._s(defectoPasada.pasada))]) : _vm._e(), _vm._v(" "), _c("td", {
         staticClass: "pointer"
       }, [_c("a", {
         on: {
@@ -80777,7 +80803,7 @@ var render = function render() {
     }
   })], 1)])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                      \n                 ")]), _vm._v(" "), _vm.TablaTramos.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaTramos.length ? _c("div", [_c("div", {
     staticClass: "col-md-11"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -81011,7 +81037,7 @@ var render = function render() {
     }
   })], 1)])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                      \n                 ")]), _vm._v(" "), _vm.TablaPasadas.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaPasadas.length ? _c("div", [_c("div", {
     staticClass: "col-md-11"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -81026,7 +81052,7 @@ var render = function render() {
           return _vm.selectPosPasadas(k);
         }
       }
-    }, [Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm._v(_vm._s(Pasada.elemento_pasada))]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm._v(_vm._s(Pasada.pasada))]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
+    }, [Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm._v(_vm._s(Pasada.elemento_pasada))]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm._v(_vm._s(Pasada.pasada) + "\n                                            ")]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
       attrs: {
         options: _vm.soldadores,
         label: "codigo"
@@ -81048,7 +81074,7 @@ var render = function render() {
         },
         expression: "TablaPasadas[indexPasada].soldador3"
       }
-    })], 1) : _c("div", [_vm._v("\n                                                     " + _vm._s(Pasada.soldador3.codigo) + "\n                                                 ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
+    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(Pasada.soldador3.codigo) + "\n                                                ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
       attrs: {
         options: _vm.soldadores,
         label: "codigo",
@@ -81071,7 +81097,7 @@ var render = function render() {
         },
         expression: "TablaPasadas[indexPasada].soldador2"
       }
-    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(Pasada.soldador2.codigo) + "\n                                                 ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
+    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(Pasada.soldador2.codigo) + "\n                                                ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_vm.indexPasada == k ? _c("div", [_c("v-select", {
       attrs: {
         options: _vm.soldadores,
         label: "codigo"
@@ -81093,7 +81119,7 @@ var render = function render() {
         },
         expression: "TablaPasadas[indexPasada].soldador1"
       }
-    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(Pasada.soldador1.codigo) + "\n                                                 ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_c("a", {
+    })], 1) : _c("div", [_vm._v("\n                                                    " + _vm._s(Pasada.soldador1.codigo) + "\n                                                ")])]) : _vm._e(), _vm._v(" "), Pasada.elemento_pasada == _vm.elemento_pasada ? _c("td", [_c("a", {
       on: {
         click: function click($event) {
           return _vm.RemovePasada(k);
@@ -81207,7 +81233,7 @@ var render = function render() {
     attrs: {
       "for": "sel_todos"
     }
-  }, [_vm._v("Seleccionar Todos")])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Seleccionar\n                                        Todos")])])])]), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-12"
@@ -81287,7 +81313,7 @@ var render = function render() {
       expression: "clonando_pasada"
     }],
     staticClass: "fa fa-spin fa-refresh"
-  }), _vm._v(" Clonar\n                 ")])])])])]), _vm._v(" "), _c("div", {
+  }), _vm._v(" Clonar\n                        ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
       tabindex: "-1",
@@ -83110,7 +83136,7 @@ var render = function render() {
       type: "number",
       id: "espesor_chapa",
       disabled: !_vm.isChapa,
-      step: "0.1"
+      step: "0.01"
     },
     domProps: {
       value: _vm.espesor_chapa
@@ -86259,7 +86285,7 @@ var render = function render() {
     staticClass: "fa fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\n                              \n                         ")]), _vm._v(" "), _vm.dataForm.detalle.length ? _c("div", [_c("div", {
+  }, [_vm._v("\n                             \n                        ")]), _vm._v(" "), _vm.dataForm.detalle.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "table-responsive"
@@ -86785,7 +86811,7 @@ var render = function render() {
       type: "number",
       id: "espesor_chapa",
       disabled: !_vm.isChapa,
-      step: "0.1"
+      step: "0.01"
     },
     domProps: {
       value: _vm.espesor_chapa
@@ -104627,14 +104653,15 @@ var render = function render() {
   }, [_c("button", {
     staticClass: "btn btn-enod exportar-todo-pdf",
     attrs: {
-      title: "Exportar PDF"
+      disabled: _vm.registro.data.length === 0,
+      title: _vm.registro.data.length === 0 ? "No hay datos para exportar" : "Exportar PDF"
     },
     on: {
       click: function click($event) {
         return _vm.exportarPDF(_vm.id);
       }
     }
-  }, [_vm._v("Exportar PDF")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                Exportar PDF\n            ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-4",
     staticStyle: {
       display: "flex",
@@ -104714,7 +104741,7 @@ var staticRenderFns = [function () {
       "font-family": "'Montserrat', sans-serif",
       "margin-right": "5px"
     }
-  }, [_vm._v("Mostar a partir de")])]);
+  }, [_vm._v("\n                    Mostar a partir de")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -105074,10 +105101,14 @@ var render = function render() {
     staticClass: "col-md-3"
   }, [_c("button", {
     staticClass: "btn btn-enod exportar-todo-pdf",
+    attrs: {
+      disabled: !_vm.productos.length,
+      title: !_vm.productos.length ? "No hay datos para exportar" : "Exportar PDF"
+    },
     on: {
       click: _vm.exportarTodoPDF
     }
-  }, [_vm._v("Exportar PDF")])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                Exportar PDF\n            ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
@@ -105151,9 +105182,18 @@ var render = function render() {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
     staticClass: "box-body"
-  }, [_vm.isLoading ? _c("div", {
-    staticClass: "text-center"
-  }) : _vm.productos.length ? _c("div", {
+  }, [_c("loading", {
+    attrs: {
+      active: _vm.isLoading,
+      loader: "bars",
+      color: "red"
+    },
+    on: {
+      "update:active": function updateActive($event) {
+        _vm.isLoading = $event;
+      }
+    }
+  }), _vm._v(" "), _vm.productos.length ? _c("div", {
     staticClass: "table-responsive"
   }, [_c("table", {
     staticClass: "table table-hover table-striped table-condensed"
@@ -105197,7 +105237,7 @@ var render = function render() {
     })])])]);
   }), 0)])]) : _c("div", {
     staticClass: "text-center"
-  }, [_c("p")])])]), _vm._v(" "), _c("pagination", {
+  }, [_c("p", [_vm._v("No hay resultados")])])], 1)]), _vm._v(" "), _c("pagination", {
     attrs: {
       data: _vm.pagination,
       limit: 4
@@ -105215,18 +105255,7 @@ var render = function render() {
       slot: "next-nav"
     },
     slot: "next-nav"
-  }, [_vm._v("Next >")])]), _vm._v(" "), _c("loading", {
-    attrs: {
-      active: _vm.isLoading,
-      loader: "bars",
-      color: "red"
-    },
-    on: {
-      "update:active": function updateActive($event) {
-        _vm.isLoading = $event;
-      }
-    }
-  })], 1)]);
+  }, [_vm._v("Next >")])])], 1)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -105239,7 +105268,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       width: "25%"
     }
-  }, [_vm._v("Codigo")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("Código")]), _vm._v(" "), _c("th", {
     staticStyle: {
       width: "45%"
     }
@@ -130995,7 +131024,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-14339980], .form-control[readonly][data-v-14339980], fieldset[disabled] .form-control[data-v-14339980] {\n      background-color: #eee;\n}\n.checkbox-inline[data-v-14339980] {\n     margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-14339980] {\n         position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-14339980] {\n         overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-14339980]:nth-child(4n+1), .tabla-detalle tr[data-v-14339980]:nth-child(4n+2) {\n background: #f2f2f2;\n}\n\n ", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-14339980],\r\n.form-control[readonly][data-v-14339980],\r\nfieldset[disabled] .form-control[data-v-14339980] {\r\n    background-color: #eee;\n}\n.checkbox-inline[data-v-14339980] {\r\n    margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-14339980] {\r\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-14339980] {\r\n        overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-14339980]:nth-child(4n+1),\r\n.tabla-detalle tr[data-v-14339980]:nth-child(4n+2) {\r\n    background: #f2f2f2;\n}\r\n", ""]);
 
 // exports
 
@@ -131014,7 +131043,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-select .vs__selected-options{\n    flex-wrap: nowrap;\n    white-space: nowrap;\n    overflow: hidden;\n}\n\n", ""]);
+exports.push([module.i, "\n.v-select .vs__selected-options {\r\n    flex-wrap: nowrap;\r\n    white-space: nowrap;\r\n    overflow: hidden;\n}\r\n", ""]);
 
 // exports
 
@@ -131033,7 +131062,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.existe[data-v-13df0c7a] {\n\n    color: blue ;\n}\n.checkbox-inline[data-v-13df0c7a] {\n    margin-left: 0px;\n}\n.centrado-label[data-v-13df0c7a] {\n    color: #685454;\n    display: inline-block;\n    text-align: right;\n    width: 130px;\n    margin-right: 40px;\n}\n.table th[data-v-13df0c7a] {\n  text-align: center;\n}\ntd[data-v-13df0c7a]:nth-child(2) { text-align: center;}\ntd[data-v-13df0c7a]:nth-child(3) { text-align: center;}\ntd[data-v-13df0c7a]:nth-child(4) { text-align: center;}\n.sinpadding [class*=\"col-\"][data-v-13df0c7a] {\n    padding-right: 0;\n}\n.form-control[disabled][data-v-13df0c7a], .form-control[readonly][data-v-13df0c7a], fieldset[disabled] .form-control[data-v-13df0c7a] {\n     background-color: #eee;\n}\n\n", ""]);
+exports.push([module.i, "\n.existe[data-v-13df0c7a] {\r\n\r\n    color: blue;\n}\n.checkbox-inline[data-v-13df0c7a] {\r\n    margin-left: 0px;\n}\n.centrado-label[data-v-13df0c7a] {\r\n    color: #685454;\r\n    display: inline-block;\r\n    text-align: right;\r\n    width: 130px;\r\n    margin-right: 40px;\n}\n.table th[data-v-13df0c7a] {\r\n    text-align: center;\n}\ntd[data-v-13df0c7a]:nth-child(2) {\r\n    text-align: center;\n}\ntd[data-v-13df0c7a]:nth-child(3) {\r\n    text-align: center;\n}\ntd[data-v-13df0c7a]:nth-child(4) {\r\n    text-align: center;\n}\n.sinpadding [class*=\"col-\"][data-v-13df0c7a] {\r\n    padding-right: 0;\n}\n.form-control[disabled][data-v-13df0c7a],\r\n.form-control[readonly][data-v-13df0c7a],\r\nfieldset[disabled] .form-control[data-v-13df0c7a] {\r\n    background-color: #eee;\n}\r\n", ""]);
 
 // exports
 
@@ -131090,7 +131119,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-0b9d46e4], .form-control[readonly][data-v-0b9d46e4], fieldset[disabled] .form-control[data-v-0b9d46e4] {\n      background-color: #eee;\n}\n.checkbox-inline[data-v-0b9d46e4] {\n     margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-0b9d46e4] {\n         position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-0b9d46e4] {\n         overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-0b9d46e4]:nth-child(4n+1), .tabla-detalle tr[data-v-0b9d46e4]:nth-child(4n+2) {\n background: #f2f2f2;\n}\n\n ", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-0b9d46e4],\r\n.form-control[readonly][data-v-0b9d46e4],\r\nfieldset[disabled] .form-control[data-v-0b9d46e4] {\r\n    background-color: #eee;\n}\n.checkbox-inline[data-v-0b9d46e4] {\r\n    margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-0b9d46e4] {\r\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-0b9d46e4] {\r\n        overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-0b9d46e4]:nth-child(4n+1),\r\n.tabla-detalle tr[data-v-0b9d46e4]:nth-child(4n+2) {\r\n    background: #f2f2f2;\n}\r\n", ""]);
 
 // exports
 
@@ -131109,7 +131138,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-select .vs__selected-options{\n    flex-wrap: nowrap;\n    white-space: nowrap;\n    overflow: hidden;\n}\n\n", ""]);
+exports.push([module.i, "\n.v-select .vs__selected-options {\r\n    flex-wrap: nowrap;\r\n    white-space: nowrap;\r\n    overflow: hidden;\n}\r\n", ""]);
 
 // exports
 
@@ -131698,7 +131727,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.exportar-todo-pdf[data-v-00add724] {\r\n  margin-bottom: 20px;\n}\r\n", ""]);
+exports.push([module.i, "\n.exportar-todo-pdf[data-v-00add724] {\r\n    margin-bottom: 20px;\n}\r\n", ""]);
 
 // exports
 
@@ -131736,7 +131765,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.exportar-todo-pdf[data-v-e92958ce] {\r\n  margin-bottom: 20px;\n}\r\n", ""]);
+exports.push([module.i, "\n.exportar-todo-pdf[data-v-e92958ce] {\r\n    margin-bottom: 20px;\n}\r\n", ""]);
 
 // exports
 
@@ -390624,8 +390653,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\laragon\www\rusoft\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\rusoft\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ }),
