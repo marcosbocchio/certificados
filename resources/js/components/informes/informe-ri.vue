@@ -200,7 +200,7 @@
                                     <label for="espesor_chapa">Espesor Chapa </label>
                                 </div>
                                 <input type="number" class="form-control" v-model="espesor_chapa" id="espesor_chapa"
-                                    :disabled="!isChapa" step="0.1">
+                                    :disabled="!isChapa" step="0.01">
                             </div>
                         </div>
 
