@@ -1713,7 +1713,7 @@ export default {
             }
 
             if (diametro.diametro == 'CHAPA') {
-                this.tecnica = this.tecnicas[this.tecnicas.findIndex(elemento => elemento.codigo == 'CHAPA')];
+                this.tecnica = this.tecnicas[this.tecnicas.findIndex(elemento => elemento.codigo == 'SWE/SWV')];
                 if (!this.isLoading) {
                     this.ActualizarDistFuentePelicula();
                 }
