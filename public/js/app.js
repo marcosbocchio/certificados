@@ -23856,7 +23856,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       axios.defaults.baseURL = this.url;
       var foco = this.interno_fuente ? this.interno_fuente.foco : this.interno_equipo.foco;
       foco = foco ? foco : 0;
-      if (this.tecnica.codigo == 'CHAPA') {
+      if (this.tecnica.codigo == 'SWE/SWV') {
         if (this.tecnica && this.medida) {
           this.$store.commit('loading', true);
           var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/medida/' + this.medida.codigo + '?api_token=' + Laravel.user.api_token;
@@ -25851,7 +25851,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       axios.defaults.baseURL = this.url;
       var foco = this.interno_fuente ? this.interno_fuente.foco : this.interno_equipo.foco;
       foco = foco ? foco : 0;
-      if (this.tecnica.codigo == 'CHAPA') {
+      if (this.tecnica.codigo == 'SWE/SWV') {
         if (this.tecnica && this.medida) {
           this.$store.commit('loading', true);
           var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/medida/' + this.medida.codigo + '?api_token=' + Laravel.user.api_token;
