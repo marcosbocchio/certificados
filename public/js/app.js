@@ -23720,7 +23720,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }
       if (diametro.diametro == 'CHAPA') {
         this.tecnica = this.tecnicas[this.tecnicas.findIndex(function (elemento) {
-          return elemento.codigo == 'CHAPA';
+          return elemento.codigo == 'SWE/SWV';
         })];
         if (!this.isLoading) {
           this.ActualizarDistFuentePelicula();
