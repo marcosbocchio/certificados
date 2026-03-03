@@ -3,100 +3,80 @@
 @section('contenido')
 
 <div class="ayuda_enod">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Creación de Partes Diarios</h2>
-            <p>Este módulo permite registrar los partes diarios de trabajo asociados a las Órdenes de Trabajo, vinculando informes y servicios realizados.</p>
-
-            <h3>1. Acceso a la Gestión de Partes</h3>
-            <p>Para crear o gestionar partes diarios para una Orden de Trabajo (OT) específica, siga los siguientes pasos desde la página principal del sistema:</p>
-            <ol>
-                <li>En la barra de búsqueda ubicada en la parte superior derecha de la tabla de "Órdenes de trabajo", ingrese el número de la OT deseada (ej. "3485").</li>
-                <li>Presione Enter o haga clic en el icono de la lupa (🔍) para filtrar los resultados.</li>
-                <li>Una vez localizada la OT en la tabla, haga clic en el recuadro de "Partes" que se encuentra en la fila de la OT seleccionada. Este icono se identifica con un calendario (Ver Fig. 1).</li>
-            </ol>
-        </div>
-        <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/partes/enod_buscar_ot_partes.gif') }}" alt="Búsqueda de OT y acceso a partes (animación)"/>
-            <p class="text-center help-block"><em>Fig. 1: Búsqueda de una Orden de Trabajo y acceso al módulo de partes.</em></p>
-        </div>
+    <div class="ayuda_panel">
+        <h1>Creacion de partes diarios</h1>
+        <p>
+            El parte diario consolida lo ejecutado en una jornada para una OT. No reemplaza al informe tecnico:
+            toma los informes disponibles, agrega responsables, servicios, vehiculos y observaciones, y deja una salida diaria formal.
+        </p>
+        <p>
+            Desde codigo, el parte normal admite varios grupos de informes por metodo y tambien informes importados.
+            Eso lo convierte en el puente entre la documentacion tecnica y la consolidacion operativa del dia.
+        </p>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>2. Vista Principal de Partes Asignados</h3>
-            <p>Al acceder a la sección de Partes, se presentará una tabla con el listado de todos los partes diarios ya registrados para la OT seleccionada. Por cada parte, se mostrará información relevante como <strong>N°</strong> (Número de Parte), <strong>Tipo Servicio</strong>, <strong>Usuario alta</strong> y <strong>Fecha</strong>.</p>
-        </div>
-        <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/partes/enod_listado_partes.PNG') }}" alt="Listado de Partes Diarios"/>
-            <p class="text-center help-block"><em>Fig. 2: Vista del listado de partes diarios asignados a una Orden de Trabajo.</em></p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>3. Creación de un Nuevo Parte Diario</h3>
-            <p>Para generar un nuevo parte diario, haga clic en el botón amarillo <strong>"+ Nuevo"</strong> ubicado en la esquina superior izquierda de la pantalla de listado de partes.</p>
-            <p>Esto abrirá el formulario de creación de partes diarios, donde deberá completar los siguientes campos:</p>
-
-            <h4>3.1. Datos Generales del Parte</h4>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Que necesita antes de crear un parte</h2>
             <ul>
-                <li><strong>Obra N°:</strong> Campo para seleccionar el número de obra.</li>
-                <li><strong>Fecha *:</strong> Seleccione la fecha del parte. Esta fecha determinará los informes sin parte diario que se mostrarán.</li>
-                <li><strong>Permitir Anteriores:</strong> Marque esta casilla si desea visualizar informes sin parte de fechas anteriores a la seleccionada.</li>
-                <li><strong>Tipo Servicio:</strong> Elija el tipo de servicio asociado al parte.</li>
-                <li><strong>Horario:</strong> Ingrese el horario de inicio del parte diario.</li>
+                <li>Una OT existente.</li>
+                <li>Informes cargados que todavia no esten vinculados a otro parte.</li>
+                <li>Responsables u operadores definidos para la jornada.</li>
+                <li>Obra, fecha y tipo de servicio claros.</li>
             </ul>
+            <p>
+                El formulario usa la fecha y la obra para traer informes pendientes y despues los guarda como parte del parte diario.
+            </p>
+        </div>
+    </section>
 
-            <h4>3.2. Responsabilidades</h4>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Que se registra en el parte</h2>
             <ul>
-                <li><strong>Operador:</strong> Seleccione los operadores responsables de los trabajos realizados en este parte.</li>
+                <li><strong>Datos generales:</strong> OT, obra, fecha, tipo de servicio, horario y observaciones.</li>
+                <li><strong>Responsables:</strong> operadores o personas vinculadas a la actividad del dia.</li>
+                <li><strong>Vehiculos:</strong> si hubo movilidad propia, con kilometraje inicial y final.</li>
+                <li><strong>Informes:</strong> RI, PM, LP, RD, US, DZ, CV, PMI, RG, TT e importados, segun corresponda.</li>
+                <li><strong>Servicios:</strong> detalle adicional de tareas o cantidades no cubiertas solo por el informe.</li>
             </ul>
-
-            <h4>3.3. Informes sin Parte Diario</h4>
-            <p>En esta sección se mostrarán automáticamente los informes que aún no han sido asociados a un parte diario, filtrados por la <strong>Fecha</strong> seleccionada previamente. Podrá seleccionar los informes que desea incluir en este parte marcando la casilla <strong>"Sel."</strong> junto a cada uno.</p>
-            <div class="col-sm-8 col-sm-offset-2">
-                <img class="img-responsive" src="{{ asset('img/ayuda/partes/enod_informes_sin_parte.PNG') }}" alt="Informes sin Parte Diario"/>
-                <p class="text-center help-block"><em>Fig. 3: Sección de informes pendientes de asignación a un parte diario.</em></p>
-            </div>
-
-            <h4>3.4. Servicios</h4>
-            <p>Aquí puede agregar los servicios específicos realizados durante el día. Puede seleccionar métodos y descripciones de servicios, así como indicar la cantidad. Esto complementa la información de los informes asociados.</p>
-
-            <h4>3.5. Observaciones</h4>
-            <p>Utilice este campo para añadir cualquier aclaración, comentario o detalle adicional relevante sobre el parte diario.</p>
+            <p>
+                El resultado no es solo administrativo: despues el parte puede alimentar certificados y reportes.
+            </p>
         </div>
-        <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/partes/enod_formulario_crear_parte.PNG') }}" alt="Formulario de Creación de Parte Diario"/>
-            <p class="text-center help-block"><em>Fig. 4: Ejemplo del formulario de creación de un nuevo parte diario.</em></p>
-        </div>
-    </div>
+    </section>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>4. Guardar Parte y Visualización del PDF</h3>
-            <p>Una vez que haya completado todos los campos necesarios en el formulario:</p>
-            <ul>
-                <li>Haga clic en el botón <strong>"Guardar"</strong> ubicado en la parte inferior de la pantalla.</li>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Parte normal y parte manual</h2>
+            <p>
+                El sistema tiene un circuito normal de parte diario y otro de parte manual. El parte manual se usa cuando la jornada
+                necesita registrarse con una estructura mas libre, incluyendo detalles por tecnica, plantas, operadores, inspectores
+                e incluso asociando informes al registro manual.
+            </p>
+            <p>
+                Conviene usar el parte normal cuando la OT ya tiene informes y estructura suficiente para consolidar la jornada
+                con el flujo estandar. El parte manual sirve como salida alternativa cuando el negocio necesita una carga especial.
+            </p>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Resultado esperado</h2>
+            <p>
+                Al guardar, el parte queda disponible en el listado de la OT, puede generar su PDF y pasa a formar parte del
+                historial diario de trabajo. Si luego se emite un certificado, ese proceso tomara partes ya registrados.
+            </p>
+            <h3>Articulos relacionados</h3>
+            <ul class="ayuda_links">
+                <li><a href="{{ route('ayuda-visualizar-parte-diario') }}">Visualizacion de partes diarios</a></li>
+                <li><a href="{{ route('ayuda-generar-informes') }}">Creacion de informes</a></li>
+                <li><a href="{{ route('ayuda-crear-certificados') }}">Creacion de certificados</a></li>
+                <li><a href="{{ route('ayuda-visualizar-ot') }}">Visualizacion general de la OT</a></li>
             </ul>
-            <p>Al guardar, el sistema realizará las siguientes acciones:</p>
-            <ol>
-                <li>Lo redirigirá de nuevo a la tabla principal de partes diarios, donde el nuevo parte creado aparecerá en el listado.</li>
-                <li>Automáticamente, se abrirá en una nueva pestaña del navegador el archivo PDF correspondiente al parte diario recién creado, permitiendo su visualización y descarga inmediata.</li>
-            </ol>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>Artículos relacionados&nbsp;</h3>
-            {{-- Aquí podrías enlazar a otros artículos de ayuda relevantes, por ejemplo: --}}
-            {{-- <ul>
-                <li><a href="{{ url('ayuda/visualizacion-informes') }}">Visualización de Informes</a></li>
-                <li><a href="{{ url('ayuda/gestion-operadores') }}">Gestión de Operadores</a></li>
-            </ul> --}}
-        </div>
-    </div>
+    </section>
 </div>
 
 @endsection

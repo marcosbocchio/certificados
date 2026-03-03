@@ -205,3 +205,17 @@ color:rgb(255, 255, 255);
     font-size: 12px;
     line-height: 1.42857;
 }
+
+.v-select {
+  --vs-font-size: 14px;
+  --vs-line-height: 1.42857143;
+}
+
+.v-select .vs__search,
+.v-select .vs__search:focus,
+.v-select .vs__selected,
+.v-select .vs__dropdown-option {
+  font-family: inherit;
+  font-size: var(--vs-font-size);
+  line-height: var(--vs-line-height);
+}

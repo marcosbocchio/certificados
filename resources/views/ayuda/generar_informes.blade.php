@@ -3,61 +3,111 @@
 @section('contenido')
 
 <div class="ayuda_enod">
-
-<div class="ayuda_enod">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Creación de informes</h2>
-            <p>A partir de una OT generada, y de acuerdo a los <strong>servicios especificados</strong> en la misma, el sistema ofrecerá qué informes pueden generarse.<br> Es muy recomentable, antes de comenzar a generar informes, asegurarse que esten los datos necesarios asociados a a la OT:</p>
-            <ul>
-                <li><strong>Operadores:</strong> Se solicitará el ejecutor de ensayo del informe</li>
-                <li><strong>Soldadores:</strong> Cuando se trate de informes de RI. Existe la alternativa de no agregarlos manualmente e importarlos desde archivo.</li>
-                <li><strong>Procedimientos:</strong>
-                    <ul>
-                        <li>Procedimientos Enod: En caso de no asociar un procedimiento particular para el ensayo, solo podrá seleccionarse el procedimiento standard del tipo de ensayo correspondiente.</li>
-                        <li>Procedimientos Clientes: Corresponde a EPS y PQR. No es posible generar ningún tipo de informe si al menos no existe un procedimeinto asociado para la obra que se desee informar.&nbsp;</li>
-                    </ul>
-                </li>
-            </ul>
-            <p>Mirá el siguiente video para ver como ingresar a generar informes:<br></p>
-        </div>
-
-            <div class="col-sm-8 col-sm-offset-2">
-            <img  class="img-responsive" src="{{ asset('img/ayuda/Generar_informe.gif') }}" alt="informe.png"/><br>
-        </div>
-
-        <div class="col-sm-12">
-            <p>A medida que se van generando los informes, aparecen listados todos los informes de la OT, como se muestra en la siguiente pantalla:</p>
-        </div>
-        <div class="col-sm-8 col-sm-offset-2">
-            <img  class="img-responsive" src="{{ asset('img/ayuda/Listado_informes.PNG') }}" alt="informe.png"/><br>
-
-        </div>
-        <div class="col-sm-12 detalle_iconos" >
-            <strong>Detalle de íconos </strong><br>
-            <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_editar.PNG') }}" />&nbsp;&nbsp;Permite editar un informe ya creado. Tener en cuenta que si el informe está firmado, se creará una nueva revisión. Para la generación de partes diarios, siempre se tiene en cuenta la última revisión, esté firmada o no.</p>
-            <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_clonar.PNG') }}"  />&nbsp;&nbsp; Clona el encabezado del informe en un nuevo informe para evitar el ingreso repetitivo de datos.</p>
-            <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_placa_diginal.PNG') }}" />
-               <img  class="img-responsive" src="{{ asset('img/ayuda/Boton_us_digital.PNG') }}" />&nbsp;&nbsp; Sólo aparecen en informes RI y US respectivamente. El primero permite subir placas digitalizadas y el segundo modelos US.</p>
-            <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_pdf.PNG') }}" />&nbsp;&nbsp;Permite acceder al pdf de la revisión actual.</p>
-            <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_escaneados.PNG') }}" />&nbsp;&nbsp;Permite subir pdf escaneados del informe.</p>
-            <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_firmar.PNG') }}" />
-               <img  class="img-responsive"  src="{{ asset('img/ayuda/Boton_firmado.PNG') }}"  />&nbsp;&nbsp; El primero permite firmar la revisión actual y automaticamente se muestra el segundo. </p>
-            <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_revisiones_anteriores.PNG') }}" />&nbsp;&nbsp;Permite acceder a todas las revisiones anteriores a la actual.</p>
-            <p><strong>Tipos de informes </strong><br></p>
-            <ul>
-                <li><a href="{{ route('ayuda-generar-informes-ri') }}">Generar informes RI</a></li>
-                <li><a href="{{ route('ayuda-generar-informes-pm') }}">Generar informes PM</a></li>
-                <li><a href="{{ route('ayuda-generar-informes-lp') }}">Generar informes LP</a></li>
-                <li><a href="{{ route('ayuda-generar-informes-us') }}">Generar informes US</a></li>
-                <li><a href="{{ route('error-404') }}">Importar informes externos</a></li>
-            </ul>
-            <h3>Artículos relacionados&nbsp;</h3>
-            <p><a href="{{ route('ayuda-asignar-operadores') }}"> Asignar operadores&nbsp;</a></p>
-            <p><a href="{{ route('ayuda-asignar-procedimientos') }}"> Asignar procedimientos&nbsp;</a></p>
-            <p><a href="{{ route('ayuda-asignar-soldadores-y-usuarios') }}"> Asignar soldadores&nbsp;</a></p>
-        </div>
+    <div class="ayuda_panel">
+        <h1>Creacion de informes</h1>
+        <p>
+            El modulo de informes permite registrar la evidencia tecnica del trabajo realizado en una OT.
+            El sistema no ofrece cualquier informe de forma libre: habilita solo los metodos que se desprenden de los servicios cargados en esa OT.
+        </p>
+        <p>
+            Segun el metodo elegido, el formulario puede pedir operadores, soldadores, procedimientos, tecnicas,
+            plantas, placas, modelos o informacion adicional. Por eso conviene entrar a esta pantalla cuando la OT ya tiene
+            bien definidos sus datos base.
+        </p>
     </div>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Que necesita una OT antes de generar informes</h2>
+            <ul>
+                <li><strong>Servicios:</strong> definen que metodos de ensayo se habilitan.</li>
+                <li><strong>Operadores:</strong> suelen intervenir como ejecutores del ensayo.</li>
+                <li><strong>Procedimientos:</strong> segun el metodo, pueden ser obligatorios para informar.</li>
+                <li><strong>Soldadores y usuarios cliente:</strong> son especialmente relevantes en RI y en circuitos donde el cliente necesita acceso posterior.</li>
+            </ul>
+            <p>
+                Desde codigo, la pantalla de informes lee los metodos disponibles a partir de la relacion
+                entre OT, servicios y metodos de ensayo. Eso explica por que un metodo no aparece si la OT no tiene el servicio correspondiente.
+            </p>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Metodos que puede ofrecer el sistema</h2>
+            <p>El flujo comun concentra RI, PM, LP y US, pero la OT tambien puede habilitar otros metodos segun su configuracion.</p>
+            <ul>
+                <li>RI</li>
+                <li>PM</li>
+                <li>LP</li>
+                <li>US</li>
+                <li>TT</li>
+                <li>CV</li>
+                <li>DZ</li>
+                <li>RG</li>
+                <li>PMI</li>
+                <li>RD</li>
+            </ul>
+            <p>Todos estos se enrutan desde un mismo punto de entrada y despues abren el formulario especifico de cada metodo.</p>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Acceso al modulo</h2>
+            <p>Desde la OT seleccionada se ingresa al bloque de Informes y se trabaja sobre el listado de esa OT.</p>
+            <div class="ayuda_media">
+                <img src="{{ asset('img/ayuda/Generar_informe.gif') }}" class="img-responsive" alt="Acceso a informes" />
+            </div>
+            <p>En ese listado se ven los informes ya creados, su metodo, numero, revision, obra, usuario y fecha.</p>
+            <div class="ayuda_media">
+                <img src="{{ asset('img/ayuda/Listado_informes.PNG') }}" class="img-responsive" alt="Listado de informes" />
+            </div>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel detalle_iconos">
+            <h2>Conceptos importantes del ciclo de informes</h2>
+            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_editar.PNG') }}" alt="Editar informe" /> Editar un informe firmado no pisa la version anterior: genera una nueva revision.</p>
+            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_clonar.PNG') }}" alt="Clonar informe" /> Clonar acelera la carga cuando el siguiente informe repite buena parte del encabezado.</p>
+            <p>
+                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_placa_diginal.PNG') }}" alt="Placa digital" />
+                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_us_digital.PNG') }}" alt="Modelo US" />
+                Algunos metodos agregan material complementario, como placas digitalizadas o modelos US.
+            </p>
+            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_pdf.PNG') }}" alt="PDF informe" /> Permite ver la revision actual en PDF.</p>
+            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_escaneados.PNG') }}" alt="Escaneados" /> Permite adjuntar documentacion escaneada relacionada con el informe.</p>
+            <p>
+                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_firmar.PNG') }}" alt="Firmar informe" />
+                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_firmado.PNG') }}" alt="Informe firmado" />
+                La firma cierra formalmente la revision actual.
+            </p>
+            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_revisiones_anteriores.PNG') }}" alt="Revisiones" /> Se pueden consultar revisiones anteriores para trazabilidad.</p>
+            <p>
+                Para partes diarios, el sistema toma siempre la ultima revision disponible del informe, este firmada o no.
+                Por eso revision y trazabilidad son conceptos centrales del modulo.
+            </p>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Resultado esperado</h2>
+            <p>
+                Al finalizar este proceso, la OT queda con informes tecnicos listos para consulta, PDF, revisiones posteriores
+                y uso en otros modulos, especialmente partes diarios y reportes.
+            </p>
+            <h3>Articulos relacionados</h3>
+            <ul class="ayuda_links">
+                <li><a href="{{ route('ayuda-visualizar-informes') }}">Visualizacion de informes</a></li>
+                <li><a href="{{ route('ayuda-asignar-operadores') }}">Asignar operadores</a></li>
+                <li><a href="{{ route('ayuda-asignar-procedimientos') }}">Asignar procedimientos</a></li>
+                <li><a href="{{ route('ayuda-asignar-soldadores-y-usuarios') }}">Asignar soldadores y usuarios de cliente</a></li>
+                <li><a href="{{ route('ayuda-crear-parte-diario') }}">Creacion de partes diarios</a></li>
+            </ul>
+        </div>
+    </section>
 </div>
 
 @endsection

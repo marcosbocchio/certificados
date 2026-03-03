@@ -3,51 +3,98 @@
 @section('contenido')
 
 <div class="ayuda_enod">
-       <div class="row">
-			<div class="col-sm-12">
-			  <h2>Visualización general de una Orden de trabajo (OT)</h2>
-			  <p>A medida que se van creando en el sistema las Ordenes de trabajo, se van listando en el Tablero principal por orden de creación en forma descendiente. Es importante aclarar, que la visualización depende del usuario conectado y nunca será posible que un cliente acceda ni visualice  una Orden de trabajo que no le corresponde.<br>
-			</div>
-
-			 <div class="col-sm-8 col-sm-offset-2">
-            	  <img src="{{ asset('img/ayuda/Listado_OT.PNG') }}"  class="img-responsive" alt="img"/><br>
-             </div>
-             <div class="col-sm-12 detalle_iconos" >
-                <strong>Detalle de íconos </strong><br>
-                  <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_editar.PNG') }}" />&nbsp;&nbsp;Permite editar una Orden de trabajo ya creada.</p>
-                  <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_usuarios.PNG') }}" />&nbsp;&nbsp; Acceso a la asignación de usuarios de clientes y soldadores.</p>
-                  <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_pdf.PNG') }}"/>&nbsp;&nbsp;Permite acceder al pdf de la Orden de trabajo.</p>
-                  <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_firmar.PNG') }}" />
-                    <img  class="img-responsive"  src="{{ asset('img/ayuda/Boton_ot_activa.PNG') }}" />
-                    <img  class="img-responsive"  src="{{ asset('img/ayuda/Boton_ot_cerrada.PNG') }}" />&nbsp;&nbsp; El primero permite firmar la OT y pasarla de <strong>editando</strong> a <strong>activa</strong>.El segundo <strong>cierra</strong> la OT y se visualiza el tercer ícono. </p>
-                Cuando seleccionamos en el listado una determinada Orden de trabajo, en los ocho íconos de la parte superior del tablero, se puede acceder y visualizar (según permisos) a la informacion específica de dicha Orden.</p>
-                <p>Íconos de acceso a la información de la OT seleccionada:<br></p>
-              </div>
-              <div class="col-sm-8 col-sm-offset-2">
-                <img  class="img-responsive" src="{{ asset('img/ayuda/Tablero_iconos_grandes.PNG') }}" alt="informe.png"/><br>
-            </div>
-			<div class="col-sm-12">
-			  	<ul>
-				<li><strong>Operadores:</strong> Asignación y visualización de documentación de cada operador asignado a la OT</li>
-				<li><strong>Equipos:</strong> Visualización de documentación de cada Equipo/Fuente asignada a la OT</li>
-				<li><strong>Procedimientos:</strong> Creación y visualización de documentación de los procedimientos de la OT</li>
-				<li><strong>Vehículo | Doc:</strong> Asignacion y visualización de documentación de cada vehículo asignado a la OT y documentación complementaria</li>
-				<li><strong>Remitos:</strong> Generación y visualizacion de remitos de la OT</li>
-				<li><strong>Informes:</strong> Generación y visualizacion de informes de la OT</li>
-				<li><strong>Partes:</strong> Generación y visualizacion de partes diarios de la OT</li>
-				<li><strong>Certificados:</strong>Generación y visualizacion de certificados de la OT</li>
-				</ul> <br>
-                <h3>Artículos relacionados&nbsp;</h3>
-                <p><a href="{{ route('ayuda-visualizar-doc-operadores') }}">Visualizar documentación de operadores asignados a una Orden de trabajo (OT) &nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}">Visualizar documentación de equipos y fuentes asignadas a una Orden de trabajo (OT) &nbsp;</a></p>
-                <p><a href="{{ route('ayuda-visualizar-procedimientos') }}"> Visualizar documentación de procedimientos asignados a una Orden de trabajo (OT)&nbsp;</a></p>
-                <p><a href="{{ route('ayuda-visualizar-vehiculos') }}"> Visualizar documentación de vehículos y documentación complementaria asignados a Orden de trabajo (OT) &nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}">Visualizar remitos generados en una Orden de trabajo (OT) &nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}">Visualizar informes generados en una Orden de trabajo (OT) &nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}"> Visualizar partes diarios generados en una Orden de trabajo (OT)&nbsp;</a></p>
-                <p><a href="{{ route('error-404') }}"> Visualizar certificados generados en una Orden de trabajo (OT) &nbsp;</a></p>
-			</div>
-        </div>
+    <div class="ayuda_panel">
+        <h1>Visualizacion general de una orden de trabajo</h1>
+        <p>
+            La OT es el contenedor principal del trabajo operativo. Desde ella se define el cliente, el alcance del servicio,
+            la obra, las personas vinculadas y los modulos que despues se habilitan para documentar la actividad.
+        </p>
+        <p>
+            El listado principal de OT muestra solo la informacion que el usuario puede consultar. Un usuario cliente no ve
+            cualquier OT del sistema: solo accede a las que le fueron asociadas.
+        </p>
     </div>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Que se ve en el listado</h2>
+            <p>
+                Las OT se listan en orden descendente de alta. Desde esa pantalla se identifica rapidamente el cliente,
+                la fecha, el estado y las acciones disponibles sobre cada registro.
+            </p>
+            <div class="ayuda_media">
+                <img src="{{ asset('img/ayuda/Listado_OT.PNG') }}" class="img-responsive" alt="Listado de ordenes de trabajo" />
+            </div>
+            <h3>Estados de la OT</h3>
+            <ul>
+                <li><strong>Editando:</strong> la OT todavia puede ajustarse antes de quedar formalmente activa.</li>
+                <li><strong>Activa:</strong> la OT ya fue firmada y habilita el circuito operativo normal.</li>
+                <li><strong>Cerrada:</strong> la OT ya no sigue en proceso operativo y queda como antecedente consultable.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel detalle_iconos">
+            <h2>Acciones principales sobre una OT</h2>
+            <p>Desde el listado y desde la barra superior de modulos se accede al resto del circuito documental.</p>
+            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_editar.PNG') }}" alt="Editar" /> Permite modificar los datos generales de la OT mientras el usuario tenga permisos.</p>
+            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_usuarios.PNG') }}" alt="Usuarios" /> Abre la asignacion de usuarios cliente y soldadores asociados.</p>
+            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_pdf.PNG') }}" alt="PDF OT" /> Genera o visualiza el PDF de la OT.</p>
+            <p>
+                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_firmar.PNG') }}" alt="Firmar OT" />
+                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_ot_activa.PNG') }}" alt="OT activa" />
+                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_ot_cerrada.PNG') }}" alt="OT cerrada" />
+                La firma cambia la OT a estado activa. Cuando el trabajo termina, puede cerrarse para dejar el circuito concluido.
+            </p>
+            <div class="ayuda_media">
+                <img src="{{ asset('img/ayuda/Tablero_iconos_grandes.PNG') }}" class="img-responsive" alt="Accesos de la OT" />
+            </div>
+            <ul>
+                <li><strong>Operadores:</strong> documentacion y personal operativo vinculado a la OT.</li>
+                <li><strong>Equipos / fuentes:</strong> internos, trazabilidad y documentacion tecnica asociada.</li>
+                <li><strong>Procedimientos:</strong> procedimientos propios o del cliente necesarios para informar.</li>
+                <li><strong>Vehiculos / documentacion:</strong> vehiculos asignados y soporte documental complementario.</li>
+                <li><strong>Remitos:</strong> movimiento de productos o equipos entre frentes.</li>
+                <li><strong>Informes:</strong> registro tecnico por metodo de ensayo.</li>
+                <li><strong>Partes:</strong> consolidacion diaria de la actividad de la OT.</li>
+                <li><strong>Certificados:</strong> documento final armado a partir de partes ya registrados.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Datos previos que conviene tener listos</h2>
+            <p>El codigo muestra que la OT se relaciona con cliente, contratista, contactos, localidad, provincia, responsable y varios subconjuntos tecnicos.</p>
+            <ul>
+                <li>Cliente y datos de contacto.</li>
+                <li>Servicios que despues habilitan metodos e informes.</li>
+                <li>Productos, EPP y riesgos si forman parte del alcance.</li>
+                <li>Responsable de OT y ubicacion de obra.</li>
+            </ul>
+            <p>
+                Cuanto mejor quede definida la OT al inicio, mas ordenado sera despues el trabajo en informes, partes,
+                certificados y remitos.
+            </p>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Articulos relacionados</h2>
+            <ul class="ayuda_links">
+                <li><a href="{{ route('ayuda-crear-ot') }}">Como crear una OT</a></li>
+                <li><a href="{{ route('ayuda-visualizar-doc-operadores') }}">Visualizar documentacion de operadores</a></li>
+                <li><a href="{{ route('ayuda-visualizar-procedimientos') }}">Visualizar procedimientos asignados</a></li>
+                <li><a href="{{ route('ayuda-visualizar-vehiculos') }}">Visualizar vehiculos y documentacion complementaria</a></li>
+                <li><a href="{{ route('ayuda-visualizar-informes') }}">Visualizar informes de la OT</a></li>
+                <li><a href="{{ route('ayuda-visualizar-parte-diario') }}">Visualizar partes diarios</a></li>
+                <li><a href="{{ route('ayuda-visualizar-certificados') }}">Visualizar certificados</a></li>
+                <li><a href="{{ route('ayuda-creacion-remito') }}">Remitos</a></li>
+            </ul>
+        </div>
+    </section>
+</div>
 
 @endsection

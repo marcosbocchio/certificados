@@ -12,3 +12,11 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 public/.htaccess
+
+# Docker local files
+docker-compose.override.yml
+docker-compose.local.yml
+.env.docker
+.env.docker.local
+docker/**/*.local
+nginx/**/*.local

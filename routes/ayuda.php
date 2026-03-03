@@ -23,7 +23,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('generar_informes_pm', 'AyudaController@generarInformesPm')->name('ayuda-generar-informes-pm');
     Route::get('generar_informes_lp', 'AyudaController@generarInformesLp')->name('ayuda-generar-informes-lp');
     Route::get('generar_informes_us', 'AyudaController@generarInformesUs')->name('ayuda-generar-informes-us');
+    Route::get('visualizar_informes', 'AyudaController@visualizarInformes')->name('ayuda-visualizar-informes');
+    Route::get('crear_parte_diario', 'AyudaController@crearParteDiario')->name('ayuda-crear-parte-diario');
+    Route::get('visualizar_parte_diario', 'AyudaController@visualizarParteDiario')->name('ayuda-visualizar-parte-diario');
+    Route::get('crear_certificados', 'AyudaController@crearCertificados')->name('ayuda-crear-certificados');
+    Route::get('visualizar_certificados', 'AyudaController@visualizarCertificados')->name('ayuda-visualizar-certificados');
     Route::get('gestionar_usuarios', 'AyudaController@VisualizarGestionUsuario')->name('ayuda-gestion-usuario');
+    Route::get('ayuda_perfil', 'AyudaController@perfil')->name('ayuda-perfil');
 
     Route::get('ayuda_creacion_remito', 'AyudaController@creacionRemito')->name('ayuda-creacion-remito');
     Route::get('ayuda_gestion_normas', 'AyudaController@gestionNormas')->name('ayuda-gestion-normas');
@@ -41,4 +47,24 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('ayuda_gestion_soldadores', 'AyudaController@gestionSoldadores')->name('ayuda-gestion-soldadores');
     Route::get('ayuda_gestion_unidades_de_medida', 'AyudaController@gestionUnidadesDeMedida')->name('ayuda-gestion-unidades-de-medida');
     Route::get('ayuda_gestionar_roles', 'AyudaController@gestionarRoles')->name('ayuda-gestionar-roles');
+    Route::get('ayuda_gestion_proveedores', 'AyudaController@gestionProveedores')->name('ayuda-gestion-proveedores');
+    Route::get('ayuda_gestion_frentes', 'AyudaController@gestionFrentes')->name('ayuda-gestion-frentes');
+    Route::get('ayuda_gestion_vehiculos', 'AyudaController@gestionVehiculos')->name('ayuda-gestion-vehiculos');
+    Route::get('ayuda_gestion_plantas', 'AyudaController@gestionPlantas')->name('ayuda-gestion-plantas');
+    Route::get('ayuda_gestion_contratistas', 'AyudaController@gestionContratistas')->name('ayuda-gestion-contratistas');
+    Route::get('ayuda_gestion_permisos', 'AyudaController@gestionPermisos')->name('ayuda-gestion-permisos');
+    Route::get('ayuda_stock', 'AyudaController@gestionStock')->name('ayuda-stock');
+    Route::get('ayuda_asistencia', 'AyudaController@asistencia')->name('ayuda-asistencia');
+    Route::get('ayuda_epp', 'AyudaController@epp')->name('ayuda-epp');
+    Route::get('ayuda_dosimetria_operador', 'AyudaController@dosimetriaOperador')->name('ayuda-dosimetria-operador');
+    Route::get('ayuda_dosimetria_rx', 'AyudaController@dosimetriaRx')->name('ayuda-dosimetria-rx');
+    Route::get('ayuda_dosimetria_estados', 'AyudaController@dosimetriaEstados')->name('ayuda-dosimetria-estados');
+    Route::get('ayuda_dosimetria_resumen', 'AyudaController@dosimetriaResumen')->name('ayuda-dosimetria-resumen');
+    Route::get('ayuda_historial_operadores', 'AyudaController@historialOperadores')->name('ayuda-historial-operadores');
+    Route::get('ayuda_reportes', 'AyudaController@reportes')->name('ayuda-reportes');
+    Route::get('ayuda_qr', 'AyudaController@qr')->name('ayuda-qr');
+    Route::get('ayuda_multimedia_gestion', 'AyudaController@multimediaGestion')->name('ayuda-multimedia-gestion');
+    Route::get('ayuda_multimedia_visualizacion', 'AyudaController@multimediaVisualizacion')->name('ayuda-multimedia-visualizacion');
+    Route::get('ayuda_notificaciones', 'AyudaController@notificaciones')->name('ayuda-notificaciones');
+    Route::get('ayuda_modelos_3d', 'AyudaController@modelos3d')->name('ayuda-modelos-3d');
 });
