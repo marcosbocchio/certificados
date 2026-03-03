@@ -26,9 +26,9 @@
             <p>{{ $paragraph }}</p>
         @endforeach
         <div class="ayuda_meta">
-            <span class="ayuda_badge">Guia funcional inicial</span>
+            <span class="ayuda_badge">Ayuda en desarrollo</span>
             @if(count($visuals))
-                <span class="ayuda_badge ayuda_badge_soft">Soporte visual sugerido</span>
+                <span class="ayuda_badge ayuda_badge_soft">Multimedia pendiente</span>
             @endif
         </div>
     </div>
