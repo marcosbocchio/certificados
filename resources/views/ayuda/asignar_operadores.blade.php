@@ -3,23 +3,56 @@
 @section('contenido')
 
 <div class="ayuda_enod">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Asignar operadores a una Orden de trabajo (OT)</h2>
-            <p>La asignación de operadores y ayudantes que realizarán los ensayos de la OT, permite que estos puedan ser seleccionandos en los informes y partes diarios. Además posibilita a que los clientes visualicen toda la documentación que estos tienen asociada.<br> A continuación, se muestra un ejemplo de asignación de operadores y ayudantes a una OT: </p>
-           </div>
-
-           <div class="col-sm-8 col-sm-offset-2">
-                <img  class="img-responsive" src="{{ asset('img/ayuda/Asignar_operador.gif') }}"/>
-           </div>
-             <div class="col-sm-12">
-              <h4>Importante:</h4>
-              <p>La documentación de cada operador, se visualiza después de hacer click en el botón actualizar.<br></p>
-                <h3>Artículos relacionados&nbsp;</h3>
-                <p><a href="{{ route('ayuda-gestion-soldadores') }}"> Gestionar soldadores&nbsp;</a></p>
-                <p><a href="{{ route('ayuda-gestion-usuario') }}"> Gestionar usuarios&nbsp;</a></p>
-                <p><a href="{{ route('ayuda-generar-informes') }}"> Creación de informes&nbsp;</a></p>
-            </div>
+    <div class="ayuda_panel">
+        <h1>Asignar operadores a una orden de trabajo (OT)</h1>
+        <p>
+            La asignacion de operadores y ayudantes permite definir que personas podran intervenir en la OT.
+            Estos operadores luego podran ser seleccionados en informes y partes diarios.
+        </p>
     </div>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <p>
+                Ademas de ordenar el trabajo operativo, esta asignacion permite que los clientes visualicen
+                la documentacion asociada a los operadores cargados en la OT.
+            </p>
+            <p>A continuacion se muestra un ejemplo de asignacion de operadores y ayudantes:</p>
+            <div class="ayuda_media">
+                <img class="img-responsive" src="{{ asset('img/ayuda/Asignar_operador.gif') }}" alt="Asignacion de operadores" />
+            </div>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Como usar esta pantalla</h2>
+            <ol>
+                <li>Ingresar a la OT correspondiente.</li>
+                <li>Abrir la seccion de operadores.</li>
+                <li>Seleccionar los usuarios que participaran en la OT.</li>
+                <li>Guardar o actualizar la asignacion.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Importante</h2>
+            <p>
+                La documentacion de cada operador se visualiza despues de hacer click en el boton de actualizar.
+            </p>
+            <p>
+                Esta asignacion impacta directamente en la seleccion de responsables dentro de informes y partes diarios.
+            </p>
+            <h3>Articulos relacionados</h3>
+            <ul class="ayuda_links">
+                <li><a href="{{ route('ayuda-gestion-usuario') }}">Gestionar usuarios</a></li>
+                <li><a href="{{ route('ayuda-visualizar-doc-operadores') }}">Visualizar documentacion de operadores</a></li>
+                <li><a href="{{ route('ayuda-generar-informes') }}">Creacion de informes</a></li>
+            </ul>
+        </div>
+    </section>
 </div>
+
 @endsection

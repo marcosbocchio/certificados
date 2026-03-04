@@ -9,15 +9,11 @@
             El parte diario consolida lo ejecutado en una jornada para una OT. No reemplaza al informe tecnico:
             toma los informes disponibles, agrega responsables, servicios, vehiculos y observaciones, y deja una salida diaria formal.
         </p>
-        <p>
-            Desde codigo, el parte normal admite varios grupos de informes por metodo y tambien informes importados.
-            Eso lo convierte en el puente entre la documentacion tecnica y la consolidacion operativa del dia.
-        </p>
     </div>
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Que necesita antes de crear un parte</h2>
+            <h2>Antes de crear un parte</h2>
             <ul>
                 <li>Una OT existente.</li>
                 <li>Informes cargados que todavia no esten vinculados a otro parte.</li>
@@ -32,7 +28,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Que se registra en el parte</h2>
+            <h2>Que se carga en la pantalla</h2>
             <ul>
                 <li><strong>Datos generales:</strong> OT, obra, fecha, tipo de servicio, horario y observaciones.</li>
                 <li><strong>Responsables:</strong> operadores o personas vinculadas a la actividad del dia.</li>
@@ -63,7 +59,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Resultado esperado</h2>
+            <h2>Importante</h2>
             <p>
                 Al guardar, el parte queda disponible en el listado de la OT, puede generar su PDF y pasa a formar parte del
                 historial diario de trabajo. Si luego se emite un certificado, ese proceso tomara partes ya registrados.

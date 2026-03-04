@@ -3,21 +3,57 @@
 @section('contenido')
 
 <div class="ayuda_enod">
-       <div class="row">
-            <div class="col-sm-12">
-                <h2>Visualizar documentación de operadores y ayudantes de Orden de la trabajo</h2>
-                <p>Un usuario con acceso al sistema, tiene la posibilidad de visualizar e incluso bajar la documentación asociada a todos los operadores asignados a la OT. La documentación listada, es documentación general que no está asociada a ningún método de ensayo y también documentación específica de los métodos de ensayo, según los servicios a realizar en la Orden de trabajo. Por ejemplo, si la OT abarca servicios de RI y US, sólo se podrán visualizar los certificados relacionados a dichas técnicas.<br> A continuación, se muestra un ejemplo de visualización de documentación: </p>
-            </div>
-
-            <div class="col-sm-8 col-sm-offset-2">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Visualizar_operador.gif') }}" />
-            </div>
-                <div class="col-sm-12">
-                    <h3>Artículos relacionados&nbsp;</h3>
-                    <p><a href="{{ route('ayuda-gestion-soldadores') }}"> Gestionar soldadores&nbsp;</a></p>
-                    <p><a href="{{ route('ayuda-gestion-usuario') }}"> Gestionar usuarios&nbsp;</a></p>
-                    <p><a href="{{ route('ayuda-generar-informes') }}"> Creación de informes&nbsp;</a></p>
-                </div>
-        </div>
+    <div class="ayuda_panel">
+        <h1>Visualizar documentacion de operadores y ayudantes de una orden de trabajo</h1>
+        <p>
+            Esta pantalla permite consultar la documentacion asociada a los operadores y ayudantes que fueron asignados a la OT.
+            Desde aqui el usuario puede revisar la informacion disponible y descargar los archivos que correspondan.
+        </p>
     </div>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <p>
+                La documentacion mostrada puede incluir documentacion general y tambien documentacion vinculada a los metodos de ensayo
+                que intervienen en la orden de trabajo. Por ejemplo, si la OT incluye determinados servicios, se mostrara la documentacion
+                relacionada con esas tecnicas.
+            </p>
+            <p>A continuacion se muestra un ejemplo de visualizacion de documentacion:</p>
+            <div class="ayuda_media">
+                <img class="img-responsive" src="{{ asset('img/ayuda/Visualizar_operador.gif') }}" alt="Visualizacion de documentacion de operadores" />
+            </div>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Como usar esta pantalla</h2>
+            <ol>
+                <li>Ingresar a la OT correspondiente.</li>
+                <li>Abrir la seccion de documentacion de operadores.</li>
+                <li>Revisar los archivos disponibles para cada operador o ayudante.</li>
+                <li>Descargar la documentacion que se necesite consultar.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Importante</h2>
+            <p>
+                El contenido disponible depende de los operadores asignados a la OT y de la documentacion cargada para cada uno.
+            </p>
+            <p>
+                Si falta informacion en esta pantalla, conviene revisar primero la asignacion de operadores y la documentacion cargada en los maestros.
+            </p>
+            <h3>Articulos relacionados</h3>
+            <ul class="ayuda_links">
+                <li><a href="{{ route('ayuda-asignar-operadores') }}">Asignar operadores</a></li>
+                <li><a href="{{ route('ayuda-gestion-usuario') }}">Gestionar usuarios</a></li>
+                <li><a href="{{ route('ayuda-generar-informes') }}">Creacion de informes</a></li>
+            </ul>
+        </div>
+    </section>
+</div>
+
 @endsection

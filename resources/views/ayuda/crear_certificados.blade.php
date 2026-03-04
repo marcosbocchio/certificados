@@ -13,22 +13,18 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Que necesita el sistema para emitir un certificado</h2>
+            <h2>Antes de crear un certificado</h2>
             <ul>
                 <li>Una OT existente.</li>
                 <li>Partes diarios ya cargados y disponibles para seleccion.</li>
                 <li>Datos generales del certificado: fecha, numero, titulo e informacion adicional si aplica.</li>
             </ul>
-            <p>
-                Desde codigo, el certificado guarda cabecera propia y ademas copia o consolida servicios y productos
-                tomados desde los partes seleccionados.
-            </p>
         </div>
     </section>
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Que se consolida dentro del certificado</h2>
+            <h2>Que se carga en la pantalla</h2>
             <ul>
                 <li><strong>Servicios:</strong> cantidades originales y finales, con combinaciones si corresponden.</li>
                 <li><strong>Productos por placa o costura:</strong> segun la forma en que se informo el trabajo previo.</li>
@@ -42,7 +38,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Resultado esperado</h2>
+            <h2>Importante</h2>
             <p>
                 Una vez guardado, el certificado queda disponible en el listado de la OT y se puede emitir en PDF.
                 Si luego hace falta corregirlo, existe tambien circuito de edicion sobre el mismo modulo.

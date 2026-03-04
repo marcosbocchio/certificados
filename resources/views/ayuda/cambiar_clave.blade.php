@@ -3,42 +3,49 @@
 @section('contenido')
 
 <div class="ayuda_enod">
-       <div class="row">
-        <div class="col-md-12">
-            <h1>Cómo cambiar o restablecer la contraseña de tu cuenta</h1>
-            <p>Para iniciar sesión en tu cuenta debes usar el <strong>correo</strong> y la <strong>contraseña</strong>&nbsp;con la que estas registrado en la aplicacion de&nbsp;&nbsp;<a href="http://sigoenod.com/" target="_blank" ><strong>Enod</strong></a>. Esta información la puedes cambiar en cualquier momento.</p>
-            <h2>Cambia la contraseña de tu cuenta</h2>
-            <p>Si deseas cambiar la contraseña de tu cuenta de <a href="http://sigoenod.com" target="_blank"><strong>Enod</strong>&nbsp;</a>, sigue estos pasos:</p>
+    <div class="ayuda_panel">
+        <h1>Como cambiar o restablecer la contrasena de tu cuenta</h1>
+        <p>
+            Para iniciar sesion en tu cuenta debes usar el correo y la contrasena con la que estas registrado en la aplicacion.
+            Esta informacion se puede cambiar cuando sea necesario.
+        </p>
+    </div>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Cambiar la contrasena de tu cuenta</h2>
+            <p>Si deseas cambiar la contrasena de tu cuenta, sigue estos pasos:</p>
             <ol>
-              <li>Dirígete al nombre de tu usuario en la parte superior derecha y haz click</li>
-              <li>Haz click en <strong>Perfil</strong></li>
-              <li>Haz click en <strong>cambiar contraseña</strong></li>
-              <li>Ingresa tu contraseña actual, luego la nueva contraseña y repite esta última</li>
-              <li>Haz click en <strong>Guardar</strong>&nbsp;</li>
+                <li>Dirigete al nombre de tu usuario en la parte superior derecha y haz click.</li>
+                <li>Haz click en <strong>Perfil</strong>.</li>
+                <li>Ubica la seccion de cambio de contrasena.</li>
+                <li>Ingresa tu contrasena actual, luego la nueva contrasena y repitela para confirmar.</li>
+                <li>Haz click en <strong>Guardar</strong>.</li>
             </ol>
+            <p>Asi:</p>
+            <div class="ayuda_media">
+                <img class="img-responsive" src="{{ asset('img/ayuda/Cambiar_clave.gif') }}" alt="Cambio de contrasena" />
+            </div>
+        </div>
+    </section>
 
-          </div>
-          <div class="col-md-12">
-            <p>Así:</p>
-          </div>
-
-          <div class="col-md-6 col-md-offset-3">
-            <img  class="img-responsive" src="{{ asset('img/ayuda/Cambiar_clave.gif') }}"  alt="img-clave"/>
-
-          </div>
-
-          <div class="col-md-12">
-            <h2>¿Olvidate tu contraseña ?&nbsp;</h2>
-            <p>Si olvidaste tu contraseña no te preocupes, puedes restablecerla siguiendo estos pasos:</p>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Olvidaste tu contrasena</h2>
+            <p>Si olvidaste tu contrasena, puedes restablecerla siguiendo estos pasos:</p>
             <ol>
-              <li>Ingresa a <a href="http://sigoenod.com" target="_blank"><strong>Enod</strong> </a></li>
-              <li>Haz Click en <strong>¿Olvidó su contraseña?</strong></li>
-              <li>Introduzca su correo y has click en <strong>Restablecer</strong></li>
-              <li>Le enviaremos un correo con el link y las instrucciones para restrablecer su contraseña</li>
-              <li>Ingrese una nueva contraseña y has click en restablecer </li>
+                <li>Ingresa a la pantalla de acceso.</li>
+                <li>Haz click en <strong>Olvido su contrasena</strong>.</li>
+                <li>Introduce tu correo y haz click en <strong>Restablecer</strong>.</li>
+                <li>Recibiras un correo con el link y las instrucciones para restablecer tu contrasena.</li>
+                <li>Ingresa una nueva contrasena y completa el proceso.</li>
             </ol>
-          </div>
-      </div>
+            <h3>Articulos relacionados</h3>
+            <ul class="ayuda_links">
+                <li><a href="{{ route('ayuda-perfil') }}">Perfil de usuario</a></li>
+            </ul>
+        </div>
+    </section>
 </div>
 
 @endsection

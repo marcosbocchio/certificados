@@ -13,7 +13,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Informacion disponible en el listado</h2>
+            <h2>Como leer el listado</h2>
             <ul>
                 <li><strong>Numero:</strong> identificador del parte.</li>
                 <li><strong>Fecha:</strong> dia al que corresponde la carga.</li>
@@ -42,7 +42,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Relacion con otros modulos</h2>
+            <h2>Importante</h2>
             <p>
                 El parte se alimenta de informes y a la vez alimenta certificados. Por eso esta vista funciona como punto intermedio
                 entre el trabajo tecnico detallado y la consolidacion final que luego se entrega o reporta.

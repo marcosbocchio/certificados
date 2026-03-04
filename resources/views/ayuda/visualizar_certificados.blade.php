@@ -13,7 +13,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Que muestra el listado</h2>
+            <h2>Como leer el listado</h2>
             <ul>
                 <li><strong>Numero:</strong> identificador del certificado.</li>
                 <li><strong>Fecha:</strong> fecha de emision o registracion.</li>
@@ -27,7 +27,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Para que sirve en el circuito</h2>
+            <h2>Importante</h2>
             <p>
                 Mientras el informe documenta el trabajo tecnico y el parte consolida la jornada, el certificado resume
                 y formaliza la salida final sobre partes ya asociados.

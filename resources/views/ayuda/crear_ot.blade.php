@@ -2,53 +2,81 @@
 
 @section('contenido')
 
-
 <div class="ayuda_enod">
-       <div class="row">
-        <div class="col-sm-12">
-          <h2>Cómo crear una Orden de trabajo (OT)&nbsp;</h2>
-            <p>Debes seguir estos pasos:</p>
-            <ol>
-              <li>Hacer click en el Menú <strong>Tablero Principal</strong></li>
-              <li>Hacer click en botón <strong>Nueva OT</strong></li>
-              <li><strong>Completar el formulario</strong> con la información solicitada. Puedes ver la explicación más abajo</li>
-              <li>Hacer click en <strong>Guardar</strong>&nbsp;</li>
-            </ol>
-			<p>En el punto tres debes completar el formulario de la siguiente manera:</p>
-			<ul>
-				<li><strong>Proyecto:</strong> Nombre del proyecto</li>
-				<li><strong>FST Nº:</strong> Nº de presupuesto</li>
-				<li><strong>OT Nº:</strong> Nº de OT</li>
-				<li><strong>Fecha:</strong> Fecha de creación de la OT</li>
-				<li><strong>Obra Nº / OC:</strong> Nº de obra asignada por el cliente. Debe ingresarse siempre para OT de obras únicas. En caso de ser una OT para múltiples obras, este campo debe quedar vacío.</li>
-				<li><strong>Fecha estimada:</strong> Fecha que se estima comenzará el ensayo </li>
-				<li><strong>Hora:</strong> Hora que se estima comenzará el ensayo</li>
-				<li><strong>Cliente:</strong> Cliente que solicita el ensayo</li>
-				<li><strong>Mostrar logo:</strong> Debe seleccionarse, si se desea que el logo sea visualizado en los informes</li>
-				<li><strong>Comitente:</strong> Comitente que solicita el ensayo </li>
-				<li><strong>Contacto n:</strong> Son los contactos del cliente que se desea aparezcan sus datos en la OT. El contacto 1 es obligato</li>
-				<li><strong>Responsable OT:</strong> Es el responsable Enod. Debe estar asignado como <a href="{{ route('ayuda-asignar-operadores') }}"><strong>Operador de la OT</strong></a></li>
-				<li><strong>Lugar de ensayo:</strong> Es la sección donde se especifica el lugar de ensayo. El campo<strong> Lugar de ensayo</strong> es descriptivo. El resto de los campos situan la ubicación en el mapa. Tener en cuenta que si se especifica latitud y longidtud, se reubicará la ubicación en el mapa independientemente de los valores seleccionados arriba.</li>
-				<li><strong>Servicios:</strong> Ingrese cada servicio presupuestado agregandolos con el boton <strong>"+".</strong> Es posible indicar norma de evaluación y de ensayo de ser necesario</li>
-				<li><strong>Productos:</strong> Ingrese cada producto presupuestado, indicando la medida correspondiente, agregandolos con el boton <strong>"+".</strong></li>
-				<li><strong>Elementos de seguridad:</strong> Son los EPP requeridos para el ensayo</li>
-				<li><strong>Riesgos:</strong> Son los Riegos detectados para el ensayo  </li>
-				<li><strong>Observaciones:</strong> Son las Observaciones de la OT</li>
-			</ul>
-			<p>Mirá un ejemplo:&nbsp;</p>
+    <div class="ayuda_panel">
+        <h1>Como crear una orden de trabajo (OT)</h1>
+        <p>
+            La orden de trabajo es el registro principal desde el cual se organiza el resto de la documentacion operativa.
+            Antes de generar informes, partes o certificados, primero debe existir una OT correctamente cargada.
+        </p>
+    </div>
 
-			 <div class="col-sm-8 col-md-offset-2">
-            	<img  class="img-responsive" src="{{ asset('img/ayuda/Nueva_ot.gif') }}" />
-         	 </div>
-			<div class="col-sm-12">
-			  <h3>Artículos relacionados&nbsp;</h3>
-			  <p><a href="{{ route('ayuda-gestion-cliente') }}"> Gestionar clientes&nbsp;</a></p>
-			  <p><a href="{{ route('ayuda-gestion-comitente') }}"> Gestionar comitentes&nbsp;</a></p>
-			  <p><a href="{{ route('ayuda-gestion-servicios') }}"> Gestionar servicios&nbsp;</a></p>
-			  <p><a href="{{ route('ayuda-gestion-productos') }}"> Gestionar productos&nbsp;</a></p>
-			</div>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Pasos para crear una OT</h2>
+            <ol>
+                <li>Hacer click en el menu <strong>Tablero Principal</strong>.</li>
+                <li>Hacer click en el boton <strong>Nueva OT</strong>.</li>
+                <li>Completar el formulario con la informacion solicitada.</li>
+                <li>Hacer click en <strong>Guardar</strong>.</li>
+            </ol>
         </div>
-      </div>
-  </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Datos principales del formulario</h2>
+            <ul>
+                <li><strong>Proyecto:</strong> nombre del proyecto.</li>
+                <li><strong>FST N°:</strong> numero de presupuesto.</li>
+                <li><strong>OT N°:</strong> numero de OT.</li>
+                <li><strong>Fecha:</strong> fecha de creacion de la OT.</li>
+                <li><strong>Obra N° / OC:</strong> numero de obra asignado por el cliente. Debe ingresarse para OT de obra unica. Si la OT es multiobra, este campo puede quedar vacio.</li>
+                <li><strong>Fecha estimada y hora:</strong> momento estimado de inicio del trabajo.</li>
+                <li><strong>Cliente:</strong> cliente que solicita el ensayo.</li>
+                <li><strong>Mostrar logo:</strong> define si el logo se visualiza en los informes.</li>
+                <li><strong>Comitente:</strong> comitente asociado al trabajo.</li>
+                <li><strong>Contacto:</strong> contactos del cliente que se desea mostrar en la OT.</li>
+                <li><strong>Responsable OT:</strong> responsable de Enod. Debe estar asignado como <a href="{{ route('ayuda-asignar-operadores') }}"><strong>operador de la OT</strong></a>.</li>
+                <li><strong>Lugar de ensayo:</strong> sector descriptivo y datos de ubicacion. Si se completa latitud y longitud, el mapa se reubica con esa informacion.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Servicios, productos y otros datos</h2>
+            <ul>
+                <li><strong>Servicios:</strong> agregar cada servicio presupuestado con el boton <strong>+</strong>. Puede indicarse norma de evaluacion y de ensayo.</li>
+                <li><strong>Productos:</strong> agregar cada producto presupuestado indicando la medida correspondiente.</li>
+                <li><strong>Elementos de seguridad:</strong> EPP requeridos para el trabajo.</li>
+                <li><strong>Riesgos:</strong> riesgos detectados para el ensayo.</li>
+                <li><strong>Observaciones:</strong> comentarios generales de la OT.</li>
+            </ul>
+            <p>Mira un ejemplo:</p>
+            <div class="ayuda_media">
+                <img class="img-responsive" src="{{ asset('img/ayuda/Nueva_ot.gif') }}" alt="Creacion de nueva OT" />
+            </div>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Importante</h2>
+            <p>
+                Cuanto mejor quede definida la OT al momento de crearla, mas ordenado sera despues el trabajo de asignaciones,
+                informes, partes, certificados y remitos.
+            </p>
+            <h3>Articulos relacionados</h3>
+            <ul class="ayuda_links">
+                <li><a href="{{ route('ayuda-visualizar-ot') }}">Visualizacion general de una OT</a></li>
+                <li><a href="{{ route('ayuda-gestion-cliente') }}">Gestionar clientes</a></li>
+                <li><a href="{{ route('ayuda-gestion-comitente') }}">Gestionar comitentes</a></li>
+                <li><a href="{{ route('ayuda-gestion-servicios') }}">Gestionar servicios</a></li>
+                <li><a href="{{ route('ayuda-gestion-productos') }}">Gestionar productos</a></li>
+            </ul>
+        </div>
+    </section>
+</div>
 
 @endsection

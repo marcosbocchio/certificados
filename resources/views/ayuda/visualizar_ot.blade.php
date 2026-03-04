@@ -6,12 +6,12 @@
     <div class="ayuda_panel">
         <h1>Visualizacion general de una orden de trabajo</h1>
         <p>
-            La OT es el contenedor principal del trabajo operativo. Desde ella se define el cliente, el alcance del servicio,
-            la obra, las personas vinculadas y los modulos que despues se habilitan para documentar la actividad.
+            La OT es el registro principal del trabajo operativo. Desde esta pantalla se puede revisar la informacion general
+            de cada orden y entrar a los modulos asociados.
         </p>
         <p>
-            El listado principal de OT muestra solo la informacion que el usuario puede consultar. Un usuario cliente no ve
-            cualquier OT del sistema: solo accede a las que le fueron asociadas.
+            El listado principal muestra solo la informacion que el usuario puede consultar. Un usuario cliente no ve cualquier
+            OT del sistema: solo accede a las que le fueron asociadas.
         </p>
     </div>
 
@@ -19,8 +19,8 @@
         <div class="ayuda_panel">
             <h2>Que se ve en el listado</h2>
             <p>
-                Las OT se listan en orden descendente de alta. Desde esa pantalla se identifica rapidamente el cliente,
-                la fecha, el estado y las acciones disponibles sobre cada registro.
+                Las OT se listan en orden descendente de alta. Desde esta pantalla se puede identificar rapidamente
+                el cliente, la fecha, el estado y las acciones disponibles sobre cada registro.
             </p>
             <div class="ayuda_media">
                 <img src="{{ asset('img/ayuda/Listado_OT.PNG') }}" class="img-responsive" alt="Listado de ordenes de trabajo" />
@@ -65,8 +65,8 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Datos previos que conviene tener listos</h2>
-            <p>El codigo muestra que la OT se relaciona con cliente, contratista, contactos, localidad, provincia, responsable y varios subconjuntos tecnicos.</p>
+            <h2>Importante</h2>
+            <p>La OT se relaciona con cliente, contactos, ubicacion, responsable y otros datos tecnicos que despues se usan en el resto del circuito.</p>
             <ul>
                 <li>Cliente y datos de contacto.</li>
                 <li>Servicios que despues habilitan metodos e informes.</li>

@@ -36,7 +36,9 @@
     @foreach($sections as $section)
         <section class="ayuda_section">
             <div class="ayuda_panel">
-                <h2>{{ $section['title'] }}</h2>
+                @if(!empty($section['manual_title']))
+                    <h2>{{ $section['manual_title'] }}</h2>
+                @endif
 
                 @if(!empty($section['paragraphs']))
                     @foreach($section['paragraphs'] as $paragraph)

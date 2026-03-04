@@ -13,7 +13,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Que se carga en un remito</h2>
+            <h2>Que se carga en la pantalla</h2>
             <ul>
                 <li><strong>Cabecera:</strong> prefijo, numero, fecha, frente origen, frente destino, receptor y destino.</li>
                 <li><strong>Productos:</strong> detalle por producto, medida y cantidad.</li>
@@ -26,7 +26,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Diferencia entre borrador y remito definitivo</h2>
+            <h2>Antes de guardar</h2>
             <ul>
                 <li><strong>Borrador:</strong> guarda el remito sin ejecutar los efectos finales del movimiento.</li>
                 <li><strong>Definitivo:</strong> si el frente origen es centro de distribucion, descuenta stock de productos y registra el movimiento.</li>
@@ -40,7 +40,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Relacion con otros modulos</h2>
+            <h2>Importante</h2>
             <ul>
                 <li><strong>Stock:</strong> puede generar egresos y movimientos historicos.</li>
                 <li><strong>Internos de equipos:</strong> actualiza ubicacion y trazabilidad.</li>

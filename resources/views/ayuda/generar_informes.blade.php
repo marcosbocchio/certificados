@@ -18,7 +18,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Que necesita una OT antes de generar informes</h2>
+            <h2>Antes de ingresar a informes</h2>
             <ul>
                 <li><strong>Servicios:</strong> definen que metodos de ensayo se habilitan.</li>
                 <li><strong>Operadores:</strong> suelen intervenir como ejecutores del ensayo.</li>
@@ -26,15 +26,14 @@
                 <li><strong>Soldadores y usuarios cliente:</strong> son especialmente relevantes en RI y en circuitos donde el cliente necesita acceso posterior.</li>
             </ul>
             <p>
-                Desde codigo, la pantalla de informes lee los metodos disponibles a partir de la relacion
-                entre OT, servicios y metodos de ensayo. Eso explica por que un metodo no aparece si la OT no tiene el servicio correspondiente.
+                Si un metodo no aparece, lo primero a revisar es que la OT tenga cargado el servicio correspondiente y sus asignaciones basicas.
             </p>
         </div>
     </section>
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Metodos que puede ofrecer el sistema</h2>
+            <h2>Metodos disponibles</h2>
             <p>El flujo comun concentra RI, PM, LP y US, pero la OT tambien puede habilitar otros metodos segun su configuracion.</p>
             <ul>
                 <li>RI</li>
@@ -54,7 +53,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Acceso al modulo</h2>
+            <h2>Como trabajar en esta pantalla</h2>
             <p>Desde la OT seleccionada se ingresa al bloque de Informes y se trabaja sobre el listado de esa OT.</p>
             <div class="ayuda_media">
                 <img src="{{ asset('img/ayuda/Generar_informe.gif') }}" class="img-responsive" alt="Acceso a informes" />
@@ -68,7 +67,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel detalle_iconos">
-            <h2>Conceptos importantes del ciclo de informes</h2>
+            <h2>Acciones principales</h2>
             <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_editar.PNG') }}" alt="Editar informe" /> Editar un informe firmado no pisa la version anterior: genera una nueva revision.</p>
             <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_clonar.PNG') }}" alt="Clonar informe" /> Clonar acelera la carga cuando el siguiente informe repite buena parte del encabezado.</p>
             <p>
@@ -93,7 +92,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Resultado esperado</h2>
+            <h2>Importante</h2>
             <p>
                 Al finalizar este proceso, la OT queda con informes tecnicos listos para consulta, PDF, revisiones posteriores
                 y uso en otros modulos, especialmente partes diarios y reportes.

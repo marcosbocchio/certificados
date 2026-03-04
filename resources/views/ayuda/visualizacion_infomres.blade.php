@@ -13,7 +13,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Que muestra el listado</h2>
+            <h2>Como leer el listado</h2>
             <p>
                 El listado se arma por OT y permite buscar por numero u otros datos visibles.
                 Tambien muestra el numero de revision, que es clave para entender si el informe tuvo correcciones posteriores.
@@ -44,7 +44,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Cuando usar esta vista</h2>
+            <h2>Importante</h2>
             <ul>
                 <li>Para revisar si una OT ya tiene toda su documentacion tecnica cargada.</li>
                 <li>Para identificar que metodo o revision esta vigente.</li>
