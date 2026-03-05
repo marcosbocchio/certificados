@@ -138,7 +138,7 @@
                             <div v-if="TablaAnalisisRechazosDiametro.length != []">
 
                                     <div class="col-lg-4">
-                                        <button @click="downloadPdf_tab1">Exportar PDF</button>
+                                        <button @click="downloadPdf_tab1" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
                                     </div>
                                     <div class="div-grafico">
                                         <pie-chart :chart-id="'img_rechazos'" :chart-data="data_indice_rechazos" :options="data_indice_rechazos.options" ></pie-chart>
@@ -165,7 +165,7 @@
                                                             :title = "excel_titulo"
                                                             worksheet = "Indices de rechazos"
                                                             name    = "filename.xls">
-                                                            <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
+                                                            <button class="btn btn-enod exportar-todo-pdf exportar-excel-btn" title="Exportar Excel"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                         </download-excel>
                                                     </div>
@@ -226,7 +226,7 @@
                                                             :title = "excel_titulo"
                                                              worksheet = "Indices de rechazos"
                                                              name    = "filename.xls">
-                                                            <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
+                                                            <button class="btn btn-enod exportar-todo-pdf exportar-excel-btn" title="Exportar Excel"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                         </download-excel>
                                                     </div>
@@ -273,7 +273,7 @@
                         <tab  v-if="$can('R_defectologia')" name="Defectología">
                             <div v-if="TablaDetalleDefectos.length">
                                 <div class="col-lg-4">
-                                    <button @click="downloadPdf_tab2">Exportar PDF</button>
+                                    <button @click="downloadPdf_tab2" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
                                 </div>
 
                                 <div class="row">
@@ -296,7 +296,7 @@
                                                             :title = "excel_titulo"
                                                              worksheet = "Defectología"
                                                              name    = "filename.xls">
-                                                            <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
+                                                            <button class="btn btn-enod exportar-todo-pdf exportar-excel-btn" title="Exportar Excel"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                         </download-excel>
                                                     </div>
@@ -361,7 +361,7 @@
                         <tab  v-if="$can('R_defectologia_produccion')" name="Defectología/Producción">
                             <div v-if="TablaDefectosSoldador.length">
                                 <div class="col-lg-4">
-                                    <button @click="downloadPdf_tab3">Exportar PDF</button>
+                                    <button @click="downloadPdf_tab3" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -383,7 +383,7 @@
                                                         :title = "excel_titulo"
                                                         worksheet = "Defectología - Producción"
                                                         name    = "filename.xls">
-                                                        <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
+                                                        <button class="btn btn-enod exportar-todo-pdf exportar-excel-btn" title="Exportar Excel"><i class="fas fa-lg fa-file-excel"></i></button>
                                                     </download-excel>
                                                 </div>
                                             </div>
@@ -435,7 +435,7 @@
                         <tab  v-if="$can('R_indicaciones')" name="Indicaciones">
                             <div v-if="TablaIndicaciones.length">
                                 <div class="col-lg-4">
-                                    <button @click="downloadPdf_tab4">Exportar PDF</button>
+                                    <button @click="downloadPdf_tab4" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -457,7 +457,7 @@
                                                         :title = "excel_titulo"
                                                         worksheet = "Indicaciones"
                                                         name    = "filename.xls">
-                                                        <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
+                                                        <button class="btn btn-enod exportar-todo-pdf exportar-excel-btn" title="Exportar Excel"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                     </download-excel>
                                                 </div>
@@ -2035,6 +2035,18 @@ ul li .titulo-li {
 
 .btn-enod {
     border: 1px solid black;
+}
+
+.exportar-todo-pdf {
+    margin-bottom: 20px;
+}
+
+.box-tools .exportar-todo-pdf {
+    margin-bottom: 0;
+}
+
+.exportar-excel-btn {
+    padding: 4px 10px;
 }
 
 .box-custom-enod {
