@@ -1860,7 +1860,7 @@ methods : {
 /* Page styles */
 
 .tabs-component {
-    margin: 0;
+    margin: 1;
 
 }
 
