@@ -523,7 +523,7 @@
                                     <div class="col-lg-12">
                                         <div class="div-grafico" style="max-width:650px;">
                                             <div>
-                                                <bar-chart :chart-data="data_indicaciones_posicion_detalle" :options="data_indicaciones_posicion_detalle.options" ></bar-chart>
+                                                <bar-chart :chart-id="'img_indicaciones_detalle'" :chart-data="data_indicaciones_posicion_detalle" :options="data_indicaciones_posicion_detalle.options" ></bar-chart>
                                             </div>
                                         </div>
                                     </div>
@@ -1538,7 +1538,7 @@ methods : {
 
     },
 
-    prepareHeaderPdf(doc){
+    prepareHeaderPdf(doc, titulo = "Indices de rechazos"){
         var pageCount = doc.internal.getNumberOfPages();
             for(let i = 0; i < pageCount; i++) {
                 doc.setPage(i);
@@ -1546,7 +1546,7 @@ methods : {
                 /* header logo */
                 doc.setFontSize(16);
                 doc.setFontType("bold");
-                doc.text("Indices de rechazos", 77,15)
+                doc.text(titulo, 77,15)
                 doc.setFontSize(8);
                 doc.text("FECHA :",165,13)
                 doc.text("PAGINA:",165,18);
@@ -1673,9 +1673,9 @@ methods : {
 
         var newCanvas = document.getElementById('img_defectologia');
         var imgData = newCanvas.toDataURL('image/png',1.0)
-        doc.addImage(imgData,'PNG',60,doc.lastAutoTable.finalY + 25,90,90)
+        doc.addImage(imgData,'PNG',60,graficoY,90,90)
 
-        this.prepareHeaderPdf(doc);
+        this.prepareHeaderPdf(doc, "Indicaciones");
 
         doc.save("defectologia.pdf")
 
@@ -1741,15 +1741,101 @@ methods : {
             margin: { top: 70 },
             })
 
-        doc.text("Diámetro: "  + this.DiametroIndicaciones, 15,doc.lastAutoTable.finalY + 14)
+        const addCanvasImageKeepingRatio = (canvas, x, y, maxWidth, maxHeight) => {
+            if (!canvas) {
+                return { width: 0, height: 0 };
+            }
+
+            const canvasWidth = canvas.width || 1;
+            const canvasHeight = canvas.height || 1;
+            const ratio = canvasWidth / canvasHeight;
+            let renderWidth = maxWidth;
+            let renderHeight = renderWidth / ratio;
+
+            if (renderHeight > maxHeight) {
+                renderHeight = maxHeight;
+                renderWidth = renderHeight * ratio;
+            }
+
+            const renderX = x + ((maxWidth - renderWidth) / 2);
+            const imgData = canvas.toDataURL('image/png',1.0);
+            doc.addImage(imgData, 'PNG', renderX, y, renderWidth, renderHeight);
+
+            return { width: renderWidth, height: renderHeight };
+        };
+
+        const MAX_FILAS_SIN_SALTO = 12;
+        const tieneGraficoDetalle = this.TablaIndicacionesPosicionDetalle.length > 0;
+        const saltoPorCantidadFilas = this.TablaIndicaciones.length > MAX_FILAS_SIN_SALTO;
+        const enviarGraficosAOtraHoja = saltoPorCantidadFilas || tieneGraficoDetalle;
+        let diametroY = doc.lastAutoTable.finalY + 14;
+        let areaGrafico = {
+            x: 25,
+            y: doc.lastAutoTable.finalY + 22,
+            width: 160,
+            height: 100
+        };
+        let areaDetalle = {
+            x: 25,
+            y: 162,
+            width: 160,
+            height: 66
+        };
+
+        if (enviarGraficosAOtraHoja) {
+            doc.addPage();
+            doc.setFontSize(11);
+            doc.text("Graficos", 15, 72)
+            diametroY = 80;
+            if (tieneGraficoDetalle) {
+                areaGrafico = {
+                    x: 20,
+                    y: 90,
+                    width: 160,
+                    height: 90
+                };
+                areaDetalle = {
+                    x: 20,
+                    y: 188,
+                    width: 160,
+                    height: 90
+                };
+            } else {
+                areaGrafico = {
+                    x: 25,
+                    y: 90,
+                    width: 160,
+                    height: 105
+                };
+            }
+        }
+
+        doc.text("Diámetro: "  + this.DiametroIndicaciones, 15,diametroY)
+        doc.text("Total Indicaciones: "  + this.total_indiciones, 15,diametroY + 6)
 
         var newCanvas = document.getElementById('img_indicaciones');
-        var imgData = newCanvas.toDataURL('image/png',1.0)
-        doc.addImage(imgData,'PNG',60,doc.lastAutoTable.finalY + 25,90,90)
+        addCanvasImageKeepingRatio(
+            newCanvas,
+            areaGrafico.x,
+            areaGrafico.y,
+            areaGrafico.width,
+            areaGrafico.height
+        );
 
-        doc.text("Total Indicaciones: "  + this.total_indiciones, 15,doc.lastAutoTable.finalY + 120)
+        if (tieneGraficoDetalle) {
+            var detalleCanvas = document.getElementById('img_indicaciones_detalle');
+            if (detalleCanvas) {
+                addCanvasImageKeepingRatio(
+                    detalleCanvas,
+                    areaDetalle.x,
+                    areaDetalle.y,
+                    areaDetalle.width,
+                    areaDetalle.height
+                );
+            }
+        }
 
-        this.prepareHeaderPdf(doc);
+        this.prepareHeaderPdf(doc, "Indicaciones");
 
         doc.save("indicaciones.pdf")
 

@@ -37854,6 +37854,7 @@ Vue.use(vue_tabs_component__WEBPACK_IMPORTED_MODULE_4___default.a);
       }))();
     },
     prepareHeaderPdf: function prepareHeaderPdf(doc) {
+      var titulo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Indices de rechazos";
       var pageCount = doc.internal.getNumberOfPages();
       for (var i = 0; i < pageCount; i++) {
         doc.setPage(i);
@@ -37861,7 +37862,7 @@ Vue.use(vue_tabs_component__WEBPACK_IMPORTED_MODULE_4___default.a);
         /* header logo */
         doc.setFontSize(16);
         doc.setFontType("bold");
-        doc.text("Indices de rechazos", 77, 15);
+        doc.text(titulo, 77, 15);
         doc.setFontSize(8);
         doc.text("FECHA :", 165, 13);
         doc.text("PAGINA:", 165, 18);
@@ -38018,8 +38019,8 @@ Vue.use(vue_tabs_component__WEBPACK_IMPORTED_MODULE_4___default.a);
               doc.text("Diámetro: " + _this19.DiametroDefecto, 14, doc.lastAutoTable.finalY + 14);
               newCanvas = document.getElementById('img_defectologia');
               imgData = newCanvas.toDataURL('image/png', 1.0);
-              doc.addImage(imgData, 'PNG', 60, doc.lastAutoTable.finalY + 25, 90, 90);
-              _this19.prepareHeaderPdf(doc);
+              doc.addImage(imgData, 'PNG', 60, graficoY, 90, 90);
+              _this19.prepareHeaderPdf(doc, "Indicaciones");
               doc.save("defectologia.pdf");
             case 11:
             case "end":
@@ -38105,7 +38106,7 @@ Vue.use(vue_tabs_component__WEBPACK_IMPORTED_MODULE_4___default.a);
     downloadPdf_tab4: function downloadPdf_tab4() {
       var _this21 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee21() {
-        var doc, newCanvas, imgData;
+        var doc, addCanvasImageKeepingRatio, MAX_FILAS_SIN_SALTO, tieneGraficoDetalle, saltoPorCantidadFilas, enviarGraficosAOtraHoja, diametroY, areaGrafico, areaDetalle, newCanvas, detalleCanvas;
         return _regeneratorRuntime().wrap(function _callee21$(_context21) {
           while (1) switch (_context21.prev = _context21.next) {
             case 0:
@@ -38133,14 +38134,87 @@ Vue.use(vue_tabs_component__WEBPACK_IMPORTED_MODULE_4___default.a);
                   top: 70
                 }
               });
-              doc.text("Diámetro: " + _this21.DiametroIndicaciones, 15, doc.lastAutoTable.finalY + 14);
+              addCanvasImageKeepingRatio = function addCanvasImageKeepingRatio(canvas, x, y, maxWidth, maxHeight) {
+                if (!canvas) {
+                  return {
+                    width: 0,
+                    height: 0
+                  };
+                }
+                var canvasWidth = canvas.width || 1;
+                var canvasHeight = canvas.height || 1;
+                var ratio = canvasWidth / canvasHeight;
+                var renderWidth = maxWidth;
+                var renderHeight = renderWidth / ratio;
+                if (renderHeight > maxHeight) {
+                  renderHeight = maxHeight;
+                  renderWidth = renderHeight * ratio;
+                }
+                var renderX = x + (maxWidth - renderWidth) / 2;
+                var imgData = canvas.toDataURL('image/png', 1.0);
+                doc.addImage(imgData, 'PNG', renderX, y, renderWidth, renderHeight);
+                return {
+                  width: renderWidth,
+                  height: renderHeight
+                };
+              };
+              MAX_FILAS_SIN_SALTO = 12;
+              tieneGraficoDetalle = _this21.TablaIndicacionesPosicionDetalle.length > 0;
+              saltoPorCantidadFilas = _this21.TablaIndicaciones.length > MAX_FILAS_SIN_SALTO;
+              enviarGraficosAOtraHoja = saltoPorCantidadFilas || tieneGraficoDetalle;
+              diametroY = doc.lastAutoTable.finalY + 14;
+              areaGrafico = {
+                x: 25,
+                y: doc.lastAutoTable.finalY + 22,
+                width: 160,
+                height: 100
+              };
+              areaDetalle = {
+                x: 25,
+                y: 162,
+                width: 160,
+                height: 66
+              };
+              if (enviarGraficosAOtraHoja) {
+                doc.addPage();
+                doc.setFontSize(11);
+                doc.text("Graficos", 15, 72);
+                diametroY = 80;
+                if (tieneGraficoDetalle) {
+                  areaGrafico = {
+                    x: 20,
+                    y: 90,
+                    width: 160,
+                    height: 90
+                  };
+                  areaDetalle = {
+                    x: 20,
+                    y: 188,
+                    width: 160,
+                    height: 90
+                  };
+                } else {
+                  areaGrafico = {
+                    x: 25,
+                    y: 90,
+                    width: 160,
+                    height: 105
+                  };
+                }
+              }
+              doc.text("Diámetro: " + _this21.DiametroIndicaciones, 15, diametroY);
+              doc.text("Total Indicaciones: " + _this21.total_indiciones, 15, diametroY + 6);
               newCanvas = document.getElementById('img_indicaciones');
-              imgData = newCanvas.toDataURL('image/png', 1.0);
-              doc.addImage(imgData, 'PNG', 60, doc.lastAutoTable.finalY + 25, 90, 90);
-              doc.text("Total Indicaciones: " + _this21.total_indiciones, 15, doc.lastAutoTable.finalY + 120);
-              _this21.prepareHeaderPdf(doc);
+              addCanvasImageKeepingRatio(newCanvas, areaGrafico.x, areaGrafico.y, areaGrafico.width, areaGrafico.height);
+              if (tieneGraficoDetalle) {
+                detalleCanvas = document.getElementById('img_indicaciones_detalle');
+                if (detalleCanvas) {
+                  addCanvasImageKeepingRatio(detalleCanvas, areaDetalle.x, areaDetalle.y, areaDetalle.width, areaDetalle.height);
+                }
+              }
+              _this21.prepareHeaderPdf(doc, "Indicaciones");
               doc.save("indicaciones.pdf");
-            case 12:
+            case 21:
             case "end":
               return _context21.stop();
           }
@@ -101334,6 +101408,7 @@ var render = function render() {
     }
   }, [_c("div", [_c("bar-chart", {
     attrs: {
+      "chart-id": "img_indicaciones_detalle",
       "chart-data": _vm.data_indicaciones_posicion_detalle,
       options: _vm.data_indicaciones_posicion_detalle.options
     }
@@ -390653,8 +390728,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\rusoft\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\rusoft\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /var/www/html/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/html/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ }),
