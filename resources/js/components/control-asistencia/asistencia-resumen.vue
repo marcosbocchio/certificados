@@ -31,7 +31,7 @@
     <!-- Tabla de Asistencia -->
     <div class="box box-custom-enod top-buffer">
       <div class="box-header">
-        <button @click="exportarTodoPDF()">Exportar PDF</button>
+        <button @click="exportarTodoPDF()" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
       </div>
       <div class="box-body table-responsive">
         <table class="table table-hover table-striped table-condensed">
@@ -570,5 +570,8 @@ formatDateToMonthYear(date) {
   .dia-semana {
     background-color: #6BB5D9; /* Color para días de semana */
   }
-  
+.exportar-todo-pdf {
+  margin-bottom: 20px;
+}
+
 </style>
