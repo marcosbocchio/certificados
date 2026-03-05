@@ -1792,13 +1792,13 @@ methods : {
                     x: 20,
                     y: 90,
                     width: 160,
-                    height: 90
+                    height: 89
                 };
                 areaDetalle = {
                     x: 20,
                     y: 188,
                     width: 160,
-                    height: 90
+                    height: 89
                 };
             } else {
                 areaGrafico = {
