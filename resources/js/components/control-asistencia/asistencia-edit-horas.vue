@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 10px;">
+                <enod-back-button fallback-url="/area/enod/asistencia/horas"></enod-back-button>
+            </div>
+        </div>
         <!-- Box 1: Frente y Fecha -->
         <div class="box box-custom-enod">
             <div class="box-body row">

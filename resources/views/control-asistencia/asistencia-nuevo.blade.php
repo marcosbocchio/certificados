@@ -3,8 +3,6 @@
 @section('contenido')
 
 <div id="app">
-   <enod-back-button fallback-url="/area/enod/asistencia/servicios"></enod-back-button>
-
 <asistencia-nuevo 
         :frentes_opciones="{{ json_encode($frente_sn) }}"
         :metodo_ensayos="{{ json_encode($metodoEnsayos) }}"
