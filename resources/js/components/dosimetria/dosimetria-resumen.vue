@@ -16,7 +16,7 @@
                     <div class="box-body">
                         <div class="col-md-12">
                            <div class="form-group" >
-                                <button @click="ExportarResumenPdf">Exportar PDF</button>
+                                <button @click="ExportarResumenPdf" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
                                 <div class="checkbox" style="display: inline-block;">
                                     <label style="margin-left: 20px;"><input type="checkbox" id="checkbox" v-model="rs">Exportar resumen cliente</label>
                                 </div>
@@ -679,6 +679,10 @@ export default {
 
     font-size: 12px;
     font-weight: bold;
+}
+
+.exportar-todo-pdf {
+    margin-bottom: 20px;
 }
 
 </style>
