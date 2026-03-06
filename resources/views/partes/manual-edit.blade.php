@@ -7,6 +7,7 @@
 
 @section('contenido')
 <div id="app">
+  <enod-back-button fallback-url="/partes/ot/{{$ot->id}}"></enod-back-button>
     <partes-manuales-edit
         :parte_manual_data="{{ $parteManual }}"
         :fecha_data="'{{ $fecha_sin_hora }}'"

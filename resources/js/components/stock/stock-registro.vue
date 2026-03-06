@@ -2,9 +2,7 @@
     <div>
         <div class="row">
             <div class="col-md-2">
-                <button type="button" class="pull-left btn-enod btn-circle" @click="goBack">
-                    <span class="fa fa-arrow-left"></span>
-                </button>
+                <enod-back-button fallback-url="/area/enod/stock-total"></enod-back-button>
             </div>
             <div class="col-md-6 text-center">
                 <button :disabled="registro.data.length === 0" @click="exportarPDF(id)"
@@ -102,9 +100,6 @@ export default {
                 .then(response => {
                     this.registro = response.data;
                 });
-        },
-        goBack() {
-            window.history.back();
         },
         aplicarFiltro() {
             this.getRegistro();

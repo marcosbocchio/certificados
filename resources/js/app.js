@@ -108,6 +108,7 @@ vSelect.props.components.default = () => ({
 
 Vue.component('loading-spin', require('./components/loading-spin.vue').default);
 Vue.component('app-icon', require('./components/app-icon.vue').default);
+Vue.component('enod-back-button', require('./components/enod-back-button.vue').default);
 Vue.component('subir-imagen', require('./components/subir-imagen.vue').default);
 Vue.component('abm-maestro', require('./components/abm-maestro/abm-maestro.vue').default);
 

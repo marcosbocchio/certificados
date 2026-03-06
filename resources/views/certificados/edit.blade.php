@@ -12,6 +12,7 @@
 @section('contenido')
  
  <div id="app">
+  <enod-back-button fallback-url="/certificados/ot/{{$ot->id}}"></enod-back-button>
 
   <certificados  
   

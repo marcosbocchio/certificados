@@ -3,9 +3,7 @@
     <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
     <div class="row">
       <div class="col-md-12">
-        <button type="button" class="pull-left btn-enod btn-circle"  @click="goBack">
-          <span class="fa fa-arrow-left"></span>
-        </button>
+        <enod-back-button fallback-url="/area/enod/reportes/resumen-epp"></enod-back-button>
       </div>
     </div>
     <!-- Input Operador y Botón de Agregar -->
@@ -120,9 +118,6 @@ export default {
         const edit = true;
         window.location.href = `/area/enod/asignacion-operador-manual/${userId}/${formattedDate}/${edit}`;
       }
-    },
-    goBack() {
-      window.history.back();
     },
     formatDate(date) {
       // Formatea la fecha a 'YYYY-MM-DD'

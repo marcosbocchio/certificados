@@ -12,6 +12,7 @@
 @section('contenido')
  
  <div id="app">
+  <enod-back-button fallback-url="/partes/ot/{{$ot_id}}"></enod-back-button>
 
  <partes-manuales :ot_id="{{ $ot_id }}"
   :cliente="'{{ $clienteNombre }}'"
