@@ -3,9 +3,7 @@
         <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
         <div class="row">
             <div class="col-md-12">
-                <button type="button" class="pull-left btn-enod btn-circle" @click="goBack">
-                    <span class="fa fa-arrow-left"></span>
-                </button>
+                <enod-back-button fallback-url="/area/enod/reportes/resumen-epp"></enod-back-button>
             </div>
         </div>
 
@@ -133,9 +131,6 @@ export default {
                     toastr.error('Error al cargar los operadores');
                     this.isLoading = false;
                 });
-        },
-        goBack() {
-            window.history.back();
         },
         otraFuncion() {
             console.log('Botón "+" presionado');

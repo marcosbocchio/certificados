@@ -12,6 +12,9 @@
 @section('contenido')
 
  <div id="app">
+  @isset($ot)
+    <enod-back-button fallback-url="/area/enod/remitos/listado"></enod-back-button>
+  @endisset
 
   <remitos></remitos>
 

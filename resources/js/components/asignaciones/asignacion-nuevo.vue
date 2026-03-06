@@ -2,9 +2,7 @@
   <div>
     <div class="row">
       <div class="col-md-12" style="margin-bottom: 10px;">
-        <button type="button" class="pull-left btn-enod btn-circle" @click="goBack">
-          <span class="fa fa-arrow-left"></span>
-        </button>
+        <enod-back-button :fallback-url="`/area/enod/asignacion-operador/${operador_selected.id}`"></enod-back-button>
       </div>
     </div>
 
@@ -229,9 +227,6 @@ export default {
         .catch(error => {
           console.error("Error al obtener los detalles de asignación EPP:", error);
         });
-    },
-    goBack() {
-      window.history.back();
     },
     confirmar() {
     this.isLoading = true;

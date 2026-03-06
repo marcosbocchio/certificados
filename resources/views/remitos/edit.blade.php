@@ -11,6 +11,7 @@
 
 @section('contenido')
  <div id="app">
+  <enod-back-button fallback-url="/area/enod/remitos/listado"></enod-back-button>
 
   <remitos
 
@@ -34,3 +35,4 @@
 <script type="text/javascript" src="{{asset('js/lodash.js')}}"></script>
 
 @endsection
+

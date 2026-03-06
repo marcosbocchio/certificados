@@ -2,9 +2,7 @@
   <div>
     <div class="row">
       <div class="col-md-12" style="margin-bottom: 10px;">
-        <button type="button" class="pull-left btn-enod btn-circle" @click="goBack">
-          <span class="fa fa-arrow-left"></span>
-        </button>
+        <enod-back-button :fallback-url="`/area/enod/asignacion-operador/${operador_selected.id}`"></enod-back-button>
       </div>
     </div>
     <div class="box box-custom-enod">
@@ -219,9 +217,6 @@ export default {
           console.error('Error al actualizar stock:', error);
           toastr.error('Error al actualizar el stock');
         });
-    },
-    goBack() {
-      window.history.back();
     },
     async obtenerAsignacionPorFecha(fecha) {
       this.isLoading = true;

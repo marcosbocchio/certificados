@@ -11,6 +11,7 @@
 
 @section('contenido')
  <div id="app">
+  <enod-back-button fallback-url="/informes/ot/{{$ot->id}}"></enod-back-button>
 
 
 
@@ -48,3 +49,4 @@
 <script type="text/javascript" src="{{asset('js/lodash.js')}}"></script>
 
 @endsection
+

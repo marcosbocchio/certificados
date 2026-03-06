@@ -3,6 +3,7 @@
 @section('contenido')
 
 <div id="app">
+   <enod-back-button fallback-url="/area/enod/asistencia/servicios"></enod-back-button>
    <asistencia-edit 
    :asistencia-id="{{ $id }}"
    :frentes_opciones="{{$frente_sn}}"
