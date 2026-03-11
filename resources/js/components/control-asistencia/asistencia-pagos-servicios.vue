@@ -32,7 +32,7 @@
 
         </div>
         <div class="col-md-2" style="margin-top: 20px;">
-          <button class="btn btn-enod exportar-todo-pdf" @click="exportExcel" title="Exportar Excel"><span class="fa fa-file-excel-o"></span> Exportar Excel</button>
+          <button class="btn btn-enod" @click="exportExcel">Exportar Excel</button>
         </div>
       </div>
     </div>
@@ -327,9 +327,5 @@ export default {
 </script>
 
 <style scoped>
-.exportar-todo-pdf {
-  margin-bottom: 20px;
-}
+/* Agregar aquí estilos adicionales si es necesario */
 </style>
-
-

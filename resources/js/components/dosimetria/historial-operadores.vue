@@ -35,7 +35,7 @@
 
                         <div class="col-md-12">
                            <div class="form-group" >
-                                <button @click="ExportarPdf" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
+                                <button @click="ExportarPdf">Exportar PDF</button>
                             </div>
                         </div>
 
@@ -257,8 +257,5 @@ export default {
     overflow: wrap;
 }
 
-.exportar-todo-pdf {
-    margin-bottom: 20px;
-}
 
 </style>

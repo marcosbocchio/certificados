@@ -1,6 +1,6 @@
 <template>
   <div class="enod-back-row">
-    <button type="button" class="pull-left btn btn-enod btn-circle" @click="goBack">
+    <button type="button" class="btn btn-enod btn-circle" @click="goBack">
       <span class="fa fa-arrow-left"></span>
       <span v-if="showLabel" class="enod-back-label">Volver</span>
     </button>
@@ -18,6 +18,16 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  mounted() {
+    const contentHeader = document.querySelector('.content-header');
+    if (!contentHeader || !this.$el) return;
+    const title = contentHeader.querySelector('h1');
+    if (!title) return;
+    if (title.contains(this.$el)) return;
+
+    title.insertBefore(this.$el, title.firstChild);
+    this.$el.classList.add('enod-back-in-header');
   },
   methods: {
     goBack() {
@@ -46,7 +56,17 @@ export default {
 
 <style scoped>
 .enod-back-row {
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-start;
+  clear: both;
+  margin: 0 0 10px 0;
+  line-height: 1;
+}
+
+.enod-back-in-header {
+  display: inline-flex;
+  vertical-align: middle;
+  margin: 0 8px 0 0;
 }
 
 .enod-back-label {

@@ -98,7 +98,7 @@
                     <div v-if="(tablaPartes.data && tablaPartes.data.length)">
                         <div class="row">
                             <div class="col-lg-4">
-                                <button @click="exportarPdf" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
+                                <button @click="exportarPdf">Exportar PDF</button>
                             </div>
                         </div>
                     </div>
@@ -442,9 +442,5 @@ export default {
 
     float: right;
     margin-right: 15px;
-}
-
-.exportar-todo-pdf {
-    margin-bottom: 20px;
 }
 </style>

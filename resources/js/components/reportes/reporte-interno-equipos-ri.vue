@@ -59,7 +59,7 @@
                     <div  v-if="(TablaInternoEquipos.data && TablaInternoEquipos.data.length)">
                         <div class="row">
                             <div class="col-lg-4">
-                                <a class="btn btn-enod exportar-todo-pdf" :href="'/pdf/reporte-interno-equipos-ri/tipo_equipamiento/' + (tipo_equipamiento ? tipo_equipamiento.id : 'null') + '/vencidas_sn/' + vencidas_sn + '/noVencidas_sn/' + noVencidas_sn + /todos_sn/ + this.todos_sn + '?&api_token=' + Laravel.user.api_token" target="_blank" title="Exportar PDF">Exportar PDF</a>
+                                <a class="btn btn-default" :href="'/pdf/reporte-interno-equipos-ri/tipo_equipamiento/' + (tipo_equipamiento ? tipo_equipamiento.id : 'null') + '/vencidas_sn/' + vencidas_sn + '/noVencidas_sn/' + noVencidas_sn + /todos_sn/ + this.todos_sn + '?&api_token=' + Laravel.user.api_token" target="_blank">Exportar PDF</a>
                             </div>
                         </div>                           
                     </div>
@@ -212,9 +212,5 @@ export default {
 
 .notificadas {
     color:blue;
-}
-
-.exportar-todo-pdf {
-    margin-bottom: 20px;
 }
 </style>

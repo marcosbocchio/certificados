@@ -138,7 +138,7 @@
                             <div v-if="TablaAnalisisRechazosDiametro.length != []">
 
                                     <div class="col-lg-4">
-                                        <button @click="downloadPdf_tab1" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
+                                        <button @click="downloadPdf_tab1">Exportar PDF</button>
                                     </div>
                                     <div class="div-grafico">
                                         <pie-chart :chart-id="'img_rechazos'" :chart-data="data_indice_rechazos" :options="data_indice_rechazos.options" ></pie-chart>
@@ -165,7 +165,7 @@
                                                             :title = "excel_titulo"
                                                             worksheet = "Indices de rechazos"
                                                             name    = "filename.xls">
-                                                            <button class="btn btn-enod exportar-todo-pdf exportar-excel-btn" title="Exportar Excel"><i class="fas fa-lg fa-file-excel"></i></button>
+                                                            <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                         </download-excel>
                                                     </div>
@@ -226,7 +226,7 @@
                                                             :title = "excel_titulo"
                                                              worksheet = "Indices de rechazos"
                                                              name    = "filename.xls">
-                                                            <button class="btn btn-enod exportar-todo-pdf exportar-excel-btn" title="Exportar Excel"><i class="fas fa-lg fa-file-excel"></i></button>
+                                                            <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                         </download-excel>
                                                     </div>
@@ -273,7 +273,7 @@
                         <tab  v-if="$can('R_defectologia')" name="Defectología">
                             <div v-if="TablaDetalleDefectos.length">
                                 <div class="col-lg-4">
-                                    <button @click="downloadPdf_tab2" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
+                                    <button @click="downloadPdf_tab2">Exportar PDF</button>
                                 </div>
 
                                 <div class="row">
@@ -296,7 +296,7 @@
                                                             :title = "excel_titulo"
                                                              worksheet = "Defectología"
                                                              name    = "filename.xls">
-                                                            <button class="btn btn-enod exportar-todo-pdf exportar-excel-btn" title="Exportar Excel"><i class="fas fa-lg fa-file-excel"></i></button>
+                                                            <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                         </download-excel>
                                                     </div>
@@ -361,7 +361,7 @@
                         <tab  v-if="$can('R_defectologia_produccion')" name="Defectología/Producción">
                             <div v-if="TablaDefectosSoldador.length">
                                 <div class="col-lg-4">
-                                    <button @click="downloadPdf_tab3" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
+                                    <button @click="downloadPdf_tab3">Exportar PDF</button>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -383,7 +383,7 @@
                                                         :title = "excel_titulo"
                                                         worksheet = "Defectología - Producción"
                                                         name    = "filename.xls">
-                                                        <button class="btn btn-enod exportar-todo-pdf exportar-excel-btn" title="Exportar Excel"><i class="fas fa-lg fa-file-excel"></i></button>
+                                                        <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
                                                     </download-excel>
                                                 </div>
                                             </div>
@@ -435,7 +435,7 @@
                         <tab  v-if="$can('R_indicaciones')" name="Indicaciones">
                             <div v-if="TablaIndicaciones.length">
                                 <div class="col-lg-4">
-                                    <button @click="downloadPdf_tab4" class="btn btn-enod exportar-todo-pdf" title="Exportar PDF">Exportar PDF</button>
+                                    <button @click="downloadPdf_tab4">Exportar PDF</button>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -457,7 +457,7 @@
                                                         :title = "excel_titulo"
                                                         worksheet = "Indicaciones"
                                                         name    = "filename.xls">
-                                                        <button class="btn btn-enod exportar-todo-pdf exportar-excel-btn" title="Exportar Excel"><i class="fas fa-lg fa-file-excel"></i></button>
+                                                        <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                     </download-excel>
                                                 </div>
@@ -523,7 +523,7 @@
                                     <div class="col-lg-12">
                                         <div class="div-grafico" style="max-width:650px;">
                                             <div>
-                                                <bar-chart :chart-id="'img_indicaciones_detalle'" :chart-data="data_indicaciones_posicion_detalle" :options="data_indicaciones_posicion_detalle.options" ></bar-chart>
+                                                <bar-chart :chart-data="data_indicaciones_posicion_detalle" :options="data_indicaciones_posicion_detalle.options" ></bar-chart>
                                             </div>
                                         </div>
                                     </div>
@@ -1538,7 +1538,7 @@ methods : {
 
     },
 
-    prepareHeaderPdf(doc, titulo = "Indices de rechazos"){
+    prepareHeaderPdf(doc){
         var pageCount = doc.internal.getNumberOfPages();
             for(let i = 0; i < pageCount; i++) {
                 doc.setPage(i);
@@ -1546,7 +1546,7 @@ methods : {
                 /* header logo */
                 doc.setFontSize(16);
                 doc.setFontType("bold");
-                doc.text(titulo, 77,15)
+                doc.text("Indices de rechazos", 77,15)
                 doc.setFontSize(8);
                 doc.text("FECHA :",165,13)
                 doc.text("PAGINA:",165,18);
@@ -1673,9 +1673,9 @@ methods : {
 
         var newCanvas = document.getElementById('img_defectologia');
         var imgData = newCanvas.toDataURL('image/png',1.0)
-        doc.addImage(imgData,'PNG',60,graficoY,90,90)
+        doc.addImage(imgData,'PNG',60,doc.lastAutoTable.finalY + 25,90,90)
 
-        this.prepareHeaderPdf(doc, "Indicaciones");
+        this.prepareHeaderPdf(doc);
 
         doc.save("defectologia.pdf")
 
@@ -1775,12 +1775,6 @@ methods : {
             width: 160,
             height: 100
         };
-        let areaDetalle = {
-            x: 25,
-            y: 162,
-            width: 160,
-            height: 66
-        };
 
         if (enviarGraficosAOtraHoja) {
             doc.addPage();
@@ -1791,12 +1785,6 @@ methods : {
                 areaGrafico = {
                     x: 20,
                     y: 90,
-                    width: 160,
-                    height: 89
-                };
-                areaDetalle = {
-                    x: 20,
-                    y: 188,
                     width: 160,
                     height: 89
                 };
@@ -1814,35 +1802,14 @@ methods : {
         doc.text("Total Indicaciones: "  + this.total_indiciones, 15,diametroY + 6)
 
         var newCanvas = document.getElementById('img_indicaciones');
-        addCanvasImageKeepingRatio(
-            newCanvas,
-            areaGrafico.x,
-            areaGrafico.y,
-            areaGrafico.width,
-            areaGrafico.height
-        );
+        addCanvasImageKeepingRatio(newCanvas, areaGrafico.x, areaGrafico.y, areaGrafico.width, areaGrafico.height)
 
-        if (tieneGraficoDetalle) {
-            var detalleCanvas = document.getElementById('img_indicaciones_detalle');
-            if (detalleCanvas) {
-                addCanvasImageKeepingRatio(
-                    detalleCanvas,
-                    areaDetalle.x,
-                    areaDetalle.y,
-                    areaDetalle.width,
-                    areaDetalle.height
-                );
-            }
-        }
-
-        this.prepareHeaderPdf(doc, "Indicaciones");
+        this.prepareHeaderPdf(doc);
 
         doc.save("indicaciones.pdf")
 
     },
-
-
-    tabClicked (selectedTab) {
+tabClicked (selectedTab) {
           console.log('Current tab re-clicked:' + selectedTab.tab.name);
     },
 
@@ -2037,18 +2004,6 @@ ul li .titulo-li {
     border: 1px solid black;
 }
 
-.exportar-todo-pdf {
-    margin-bottom: 20px;
-}
-
-.box-tools .exportar-todo-pdf {
-    margin-bottom: 0;
-}
-
-.exportar-excel-btn {
-    padding: 4px 10px;
-}
-
 .box-custom-enod {
 
     box-shadow: 0 -2px 0 #000;
@@ -2094,4 +2049,5 @@ ul li .titulo-li {
       color:red
      }
 </style>
+
 
