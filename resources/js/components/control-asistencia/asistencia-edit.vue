@@ -606,7 +606,7 @@ export default {
     margin-top: 20px;
 }
 
-.btn-primary {
+.btn-enod {
     margin-top: 15px;
 }
 
@@ -623,3 +623,4 @@ export default {
 
 /* Agrega tus propios estilos para mantener la estética de la página */
 </style>
+

@@ -87,7 +87,7 @@
                         </form>
                     </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="VideoForm" :disabled="uploading">Guardar</button>
+                    <button type="submit" class="btn btn-enod" form="VideoForm" :disabled="uploading">Guardar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
                 </div>
@@ -144,7 +144,7 @@
                         </form>
                     </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="nuevoVideoForm" :disabled="uploading">Guardar</button>
+                    <button type="submit" class="btn btn-enod" form="nuevoVideoForm" :disabled="uploading">Guardar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
                 </div>
@@ -170,7 +170,7 @@
                         </form>
                     </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="videoDeleteForm">Aceptar</button>
+                    <button type="submit" class="btn btn-enod-danger" form="videoDeleteForm">Aceptar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
                 </div>
@@ -380,3 +380,4 @@ export default {
         font-weight: bold;
     }
 </style>
+

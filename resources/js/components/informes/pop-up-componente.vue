@@ -305,9 +305,9 @@
                     </div><!-- /.modal-body -->
 
                     <!-- Pie del Modal -->
-                    <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Guardar">
+                    <div class="modal-footer enod-form-actions enod-form-actions--between">
                         <button type="button" class="btn btn-default" @click="closeModal">Cancelar</button>
+                        <input type="submit" class="btn btn-enod" value="Guardar">
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

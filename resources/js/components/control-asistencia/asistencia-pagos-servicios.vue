@@ -105,7 +105,7 @@
               </tr>
             </tbody>
           </table>
-          <button @click="mostrarPopup = true" class="btn btn-primary">Pagar</button>
+          <button @click="mostrarPopup = true" class="btn btn-enod">Pagar</button>
 
           <!-- Pop-up de Selección de Fecha -->
           <div v-if="mostrarPopup" class="modal show" tabindex="-1" role="dialog" style="display: block;">
@@ -329,3 +329,4 @@ export default {
 <style scoped>
 /* Agregar aquí estilos adicionales si es necesario */
 </style>
+

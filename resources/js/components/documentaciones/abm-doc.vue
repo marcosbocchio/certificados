@@ -265,7 +265,7 @@
                              </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" value="Guardar" :disabled="!HabilitarGuardar">
+                            <input type="submit" class="btn btn-enod" value="Guardar" :disabled="!HabilitarGuardar">
                             <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
 
                         </div>
@@ -286,7 +286,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" @click="cancelarModal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ignorar</button>
+                    <button type="button" class="btn btn-enod" data-dismiss="modal">Ignorar</button>
                 </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -814,3 +814,4 @@ export default {
 
 
 </style>
+

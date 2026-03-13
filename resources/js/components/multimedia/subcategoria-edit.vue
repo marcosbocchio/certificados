@@ -67,7 +67,7 @@
                         </form>
                     </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="subcategoriaForm">Guardar</button>
+                    <button type="submit" class="btn btn-enod" form="subcategoriaForm">Guardar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
                 </div>
@@ -110,7 +110,7 @@
                         </form>
                     </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="nuevaSubcategoriaForm">Guardar</button>
+                    <button type="submit" class="btn btn-enod" form="nuevaSubcategoriaForm">Guardar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
                 </div>
@@ -137,7 +137,7 @@
                         </form>
                     </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="subcategoriaDeleteForm">Aceptar</button>
+                    <button type="submit" class="btn btn-enod-danger" form="subcategoriaDeleteForm">Aceptar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
                 </div>
@@ -320,3 +320,4 @@ export default {
         font-weight: bold;
     }
 </style>
+

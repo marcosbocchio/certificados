@@ -1,6 +1,13 @@
 .pointer {cursor: pointer;}
 .not_allowed {cursor: not-allowed;}
 
+:root {
+  --enod-color-primary: rgb(255, 204, 0);
+  --enod-color-primary-hover: rgb(255, 219, 74);
+  --enod-color-primary-text: #000000;
+  --enod-color-danger: #dc3545;
+}
+
 .treeview-menu li a {
   margin-left: 20px;
 }
@@ -83,15 +90,76 @@ table .selected{
 
 .btn-enod {
 
-  background-color:rgb(255, 204, 0);
-  border-color: rgb(255, 204, 0);
-  color: #000000;
+  background-color: var(--enod-color-primary);
+  border-color: var(--enod-color-primary);
+  color: var(--enod-color-primary-text);
   font-weight: 600;
 }
 
 .btn-enod:hover {
 
-  background-color:rgb(255, 219, 74);
+  background-color: var(--enod-color-primary-hover);
+  border-color: var(--enod-color-primary-hover);
+  color: var(--enod-color-primary-text);
+}
+
+.btn-enod:focus,
+.btn-enod:active,
+.btn-enod:active:focus {
+  background-color: var(--enod-color-primary-hover);
+  border-color: var(--enod-color-primary-hover);
+  color: var(--enod-color-primary-text);
+  box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.35);
+}
+
+.btn-enod[disabled],
+.btn-enod.disabled {
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+.btn-enod-danger {
+  background-color: var(--enod-color-danger);
+  border-color: var(--enod-color-danger);
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-enod-danger:hover,
+.btn-enod-danger:focus {
+  background-color: #c82333;
+  border-color: #bd2130;
+  color: #fff;
+}
+
+.enod-accent-bg {
+  background-color: var(--enod-color-primary) !important;
+}
+
+.enod-action-addon {
+  background-color: var(--enod-color-primary) !important;
+  cursor: pointer;
+  border: none;
+}
+
+.enod-form-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.enod-form-actions--end {
+  justify-content: flex-end;
+}
+
+.enod-form-actions--between {
+  justify-content: space-between;
+}
+
+.enod-form-actions .btn {
+  min-width: 110px;
 }
 
 .box-custom-enod {

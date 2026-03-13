@@ -40,7 +40,7 @@
     <!-- Botón Ajustar Stock fuera del box y alineado a la izquierda -->
     <div class="row">
       <div class="col-md-12 text-left">
-        <button @click="ajustarStock" class="btn btn-primary" :disabled="ajusteEnProceso">Ajustar Stock</button>
+        <button @click="ajustarStock" class="btn btn-enod" :disabled="ajusteEnProceso">Ajustar Stock</button>
       </div>
     </div>
   </div>

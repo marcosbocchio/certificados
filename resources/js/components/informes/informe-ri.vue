@@ -1081,7 +1081,9 @@
                     </div>
                 </div>
 
-                <button class="btn btn-primary" type="submit" :disabled="isLoading">Guardar</button>
+                <div class="enod-form-actions enod-form-actions--end">
+                    <button class="btn btn-enod" type="submit" :disabled="isLoading">Guardar</button>
+                </div>
             </form>
 
             <div class="modal fade" tabindex="-1" role="dialog" id="modal-advertencia-pasadas">
@@ -1095,7 +1097,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" @click="proceed">Continuar</button>
+                            <button type="button" class="btn btn-enod" @click="proceed">Continuar</button>
                         </div>
                     </div>
                 </div>
@@ -1137,7 +1139,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" @click="ClonarSoldadores">
+                            <button type="button" class="btn btn-enod" @click="ClonarSoldadores">
                                 <i v-show="clonando_pasada" class="fa fa-spin fa-refresh"></i> Clonar
                             </button>
                         </div>

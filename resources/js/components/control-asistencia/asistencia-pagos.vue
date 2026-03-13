@@ -109,7 +109,7 @@
 
 
 
-    <button @click="mostrarPopup = true" class="btn btn-primary">Pagar</button>
+    <button @click="mostrarPopup = true" class="btn btn-enod">Pagar</button>
 
     <!-- Pop-up de Selección de Fecha -->
     <div v-if="mostrarPopup" class="modal show" tabindex="-1" role="dialog" style="display: block;">
@@ -378,3 +378,4 @@ input[type="checkbox"] {
   margin: auto; /* Para centrar el checkbox en su celda */
 }
 </style>
+

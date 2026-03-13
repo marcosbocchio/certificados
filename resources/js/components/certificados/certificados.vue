@@ -255,7 +255,9 @@
                             </div>
                         </div>
                     </div>
-                <button class="btn btn-primary" type="submit" :disabled="loading">Guardar</button>
+                <div class="enod-form-actions enod-form-actions--end">
+                    <button class="btn btn-enod" type="submit" :disabled="loading">Guardar</button>
+                </div>
             </form>
         </div>
     </div>

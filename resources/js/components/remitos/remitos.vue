@@ -73,7 +73,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Productos</label>
-                                <button type="button" class="btn btn-xs btn-primary" style="float:right" @click="newProducto()">Nuevo</button>
+                                <button type="button" class="btn btn-xs btn-enod pull-right" @click="newProducto()">Nuevo</button>
                                 <v-select v-model="producto" label="descripcion" :options="productos" id="productos" @input="getMedidasProducto()"></v-select>
                             </div>
                         </div>
@@ -245,7 +245,9 @@
                                 </div>
                             </div>
                         </div>
-                        <button :disabled="formularioEnviando || this.cargando_stop" class="btn btn-primary" type="submit">Guardar</button>
+                        <div class="enod-form-actions enod-form-actions--end">
+                            <button :disabled="formularioEnviando || this.cargando_stop" class="btn btn-enod" type="submit">Guardar</button>
+                        </div>
                 </form>
                 <nuevo-productos :modelo="'productos'" @store="getProductos"></nuevo-productos>
        </div>

@@ -1,23 +1,18 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-md-2">
-                <enod-back-button fallback-url="/area/enod/stock-total"></enod-back-button>
-            </div>
-            <div class="col-md-6 text-center">
+        <div class="stock-registro-actions">
+            <div class="stock-registro-actions__left">
                 <button :disabled="registro.data.length === 0" @click="exportarPDF(id)"
                     class="btn btn-enod exportar-todo-pdf"
                     :title="registro.data.length === 0 ? 'No hay datos para exportar' : 'Exportar PDF'">
                     Exportar PDF
                 </button>
             </div>
-            <div class="col-md-4" style="display: flex;align-items: center; justify-content: flex-end;">
-                <div>
-                    <p
-                        style="font-size: 12px; color: #6E6A6A; font-family: 'Montserrat', sans-serif; margin-right: 5px;">
-                        Mostar a partir de</p>
+            <div class="stock-registro-actions__right">
+                <div class="stock-registro-actions__label">
+                    Mostrar a partir de
                 </div>
-                <div class="form-group">
+                <div class="form-group stock-registro-actions__date">
                     <date-picker id="fechaDesde" v-model="fechaInicio" value-type="YYYY-MM-DD" format="DD-MM-YYYY"
                         placeholder="Desde" @change="aplicarFiltro" class="flex-grow-1"></date-picker>
                 </div>
@@ -116,7 +111,32 @@ export default {
 </script>
 
 <style scoped>
+.stock-registro-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 12px;
+}
+
+.stock-registro-actions__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.stock-registro-actions__label {
+    font-size: 12px;
+    color: #6E6A6A;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.stock-registro-actions__date {
+    margin-bottom: 0;
+}
+
 .exportar-todo-pdf {
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 </style>

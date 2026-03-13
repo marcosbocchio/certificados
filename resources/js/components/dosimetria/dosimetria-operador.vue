@@ -76,7 +76,7 @@
              </div>
             <div class="clearfix"></div>
         </div>
-        <button type="button" class="btn btn-primary" v-on:click.prevent="submit()" :disabled="isLoading">Actualizar</button>
+        <button type="button" class="btn btn-enod" v-on:click.prevent="submit()" :disabled="isLoading">Actualizar</button>
         </div>
 
       </div>
@@ -377,3 +377,4 @@ export default {
 
 
 </style>
+

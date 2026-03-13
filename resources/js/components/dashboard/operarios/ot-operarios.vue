@@ -115,7 +115,7 @@
     </div>
     <div class="col-md-12">
         <div v-show="$can('T_operador_actualiza')">
-            <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>
+            <button class="btn btn-enod" v-on:click.prevent="submit()">Actualizar</button>
         </div>
     </div>
    <div class="clearfix"></div>
@@ -325,4 +325,5 @@ export default {
     }
 }
 </script>
+
 

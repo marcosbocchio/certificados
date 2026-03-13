@@ -124,7 +124,7 @@
           <div class="form-group">
             <label for="search">Buscar Ubicación</label>
             <div class="input-group">
-                <div class="input-group-addon"  style="background-color: #F9CA33;">
+                <div class="input-group-addon enod-accent-bg">
                   <i class="fa fa-search"></i>
                 </div>
                 <gmap-autocomplete class="form-control"
@@ -444,7 +444,9 @@
     </div>
 
     <!--  <h1 v-if="Laravel.user.can['clientes.edit']">You have permission to manage users</h1> -->
-         <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>
+         <div class="enod-form-actions enod-form-actions--end">
+           <button class="btn btn-enod" type="submit" @click.prevent="submit">Guardar</button>
+         </div>
     </form>
   </div>
 </div>

@@ -75,9 +75,9 @@
                </div>
             </div>
             </div>
-                <div class="modal-footer">
-                    <a href="#" class="btn btn-primary" v-on:click.prevent="storeRegistro()" >Guardar</a>
+                <div class="modal-footer enod-form-actions enod-form-actions--between">
                     <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
+                    <a href="#" class="btn btn-enod" v-on:click.prevent="storeRegistro()" >Guardar</a>
                 </div>
 
 

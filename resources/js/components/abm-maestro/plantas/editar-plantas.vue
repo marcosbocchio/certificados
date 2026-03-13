@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <input type="submit" class="btn btn-primary" value="Guardar">
+                    <input type="submit" class="btn btn-enod" value="Guardar">
                     <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
                 </div>
             </div>
@@ -114,3 +114,4 @@ export default {
 
 }
 </script>
+

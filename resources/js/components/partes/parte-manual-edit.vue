@@ -221,7 +221,7 @@
             </table>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary" :disabled="isSaving" ref="saveButton">
+        <button type="submit" class="btn btn-enod" :disabled="isSaving" ref="saveButton">
           Guardar
         </button>
       </form>
@@ -563,3 +563,4 @@ export default {
     height: 100%;
   }
 </style>
+

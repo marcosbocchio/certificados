@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <button class="btn btn-primary" @click="StoreAlarmas">Actualizar</button>
+                <button class="btn btn-enod" @click="StoreAlarmas">Actualizar</button>
             </div>
         </div>
     </div>
@@ -209,3 +209,4 @@ methods : {
 
 }
 </script>
+

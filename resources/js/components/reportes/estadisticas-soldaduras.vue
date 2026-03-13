@@ -620,7 +620,7 @@ export default {
         pagination: {
             infoClass: 'pull-left',
             wrapperClass: 'vuetable-pagination pull-right',
-            activeClass: 'btn-primary',
+            activeClass: 'btn-enod',
             disabledClass: 'disabled',
             pageClass: 'btn btn-border',
             linkClass: 'btn btn-border',
@@ -2049,5 +2049,6 @@ ul li .titulo-li {
       color:red
      }
 </style>
+
 
 

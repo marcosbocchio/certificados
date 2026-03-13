@@ -1160,7 +1160,9 @@
                     </div>
                 </div>
 
-                <button class="btn btn-primary" type="submit">Guardar</button>
+                <div class="enod-form-actions enod-form-actions--end">
+                    <button class="btn btn-enod" type="submit">Guardar</button>
+                </div>
             </form>
         </div>
         <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData"

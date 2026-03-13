@@ -11,7 +11,7 @@
             <p>Está seguro de eliminar el registro "{{ this.datoDelete }}" ?</p>
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="Aceptar">
+            <input type="submit" class="btn btn-enod-danger" value="Aceptar">
             <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
           </div>
         </div>
@@ -59,5 +59,6 @@ export default {
 <style scoped>
 
 </style>
+
 
 

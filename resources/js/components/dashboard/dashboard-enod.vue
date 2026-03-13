@@ -12,6 +12,7 @@
               :cantidad_1 ="CantOperadores"
               :src_icono ="'/img/tablero/icono-enod-operador.svg'"
               :class_color_cuadro = "'bg-custom-1'"
+              :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_operador_acceder') ?  true : false"
               :class_footer_img ="'footer-oper-inf'"
           >
@@ -28,6 +29,7 @@
               :cantidad_1 ="CantInternoEquipos"
               :src_icono ="'/img/tablero/icono-enod-equipos.svg'"
               :class_color_cuadro = "'bg-custom-2'"
+              :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_equipos_acceder') ?  true : false"
               :class_footer_img ="'footer-equipos-partes'"
 
@@ -45,6 +47,7 @@
               :cantidad_1 ="CantProcedimientos"
               :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
               :class_color_cuadro = "'bg-custom-3'"
+              :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_proc_acceder') ?  true : false"
               :class_footer_img ="'footer-proc-cert'"
           >
@@ -63,6 +66,7 @@
               :cantidad_2 ="CantDocumentaciones"
               :src_icono ="'/img/tablero/icono-enod-vehiculos-doc.svg'"
               :class_color_cuadro = "'bg-custom-4'"
+              :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_doc_acceder') ?  true : false"
               :class_footer_img ="'footer-doc-remitos'"
               :invertir_cantidad_sn ="true"            >
@@ -81,6 +85,7 @@
               :cantidad_2 ="CantSoldadores"
               :src_icono ="'/img/tablero/icono-enod-soldadores.svg'"
               :class_color_cuadro = "'bg-custom-5'"
+              :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_soldadores_acceder') ?  true : false"
               :class_footer_img ="'footer-doc-remitos'"
 
@@ -98,6 +103,7 @@
               :cantidad_1 ="CantInformes"
               :src_icono ="'/img/tablero/icono-enod-informes.svg'"
               :class_color_cuadro = "'bg-custom-6'"
+              :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_informes_acceder') ?  true : false"
               :class_footer_img ="'footer-oper-inf'"
 
@@ -115,6 +121,7 @@
               :cantidad_1 ="CantPartes"
               :src_icono ="'/img/tablero/icono-enod-partes.svg'"
               :class_color_cuadro = "'bg-custom-7'"
+              :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_partes_acceder') ?  true : false"
               :class_footer_img ="'footer-equipos-partes'"
           >
@@ -131,6 +138,7 @@
               :cantidad_1 ="CantCertificados"
               :src_icono ="'/img/tablero/icono-enod-certificados.svg'"
               :class_color_cuadro = "'bg-custom-8'"
+              :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_certif_acceder') ?  true : false"
               :class_footer_img ="'footer-proc-cert'"
           >
@@ -164,8 +172,9 @@
             <div class="box-body">
                 <template>
                     <keep-alive>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped table-condensed">
+                        <div class="ot-table-loading-area">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-condensed">
                                 <thead>
                                     <tr>
                                         <th class="col-lg-1">OT N°</th>
@@ -234,7 +243,11 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>
+                                </table>
+                            </div>
+                            <div v-if="loading" class="ot-table-overlay">
+                                <i class="fa fas fa-radiation-alt fa-spin"></i>
+                            </div>
                         </div>
                     </keep-alive>
                 </template>
@@ -242,11 +255,6 @@
                 <pagination :data="ots" @pagination-change-page="getResults" :limit="3" ><span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span> </pagination>
             </div>
-
-            <div v-if="loading" class="overlay">
-               <loading-spin></loading-spin>
-            </div>
-
         </div>
       </div>
     </div>
@@ -576,5 +584,24 @@ export default {
   }
 .custom-dropdown-menu {
   margin-top: -65px; /* Ajusta este valor según sea necesario */
+}
+.ot-table-loading-area {
+  position: relative;
+  min-height: 220px;
+}
+
+.ot-table-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.35);
+  z-index: 3;
+}
+
+.ot-table-overlay i {
+  font-size: 30px;
+  color: #f9ca33;
 }
 </style>

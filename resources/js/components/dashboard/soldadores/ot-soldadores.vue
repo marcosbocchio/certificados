@@ -118,7 +118,7 @@
                 </div>
             </div>
                  <div v-show="$can('T_soldadores_actualiza')">
-                    <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>
+                    <a class="btn btn-enod" v-on:click.prevent="submit()" >Actualizar</a>
                  </div>
         </div>
         <div class="clearfix"></div>
@@ -297,3 +297,4 @@ methods : {
 }
 }
 </script>
+

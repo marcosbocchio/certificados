@@ -46,7 +46,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" value="Guardar" :disabled="!HabilitarGuardar">
+                            <input type="submit" class="btn btn-enod" value="Guardar" :disabled="!HabilitarGuardar">
                             <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
 
                         </div>
@@ -307,3 +307,4 @@ export default {
     }
 
 </style>
+

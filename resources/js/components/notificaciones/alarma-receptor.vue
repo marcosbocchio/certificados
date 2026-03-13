@@ -26,7 +26,7 @@
                 <div class="clearfix"></div>
 
                 <div class="col-sm-12">
-                    <button class="btn btn-primary" @click="Store">Actualizar</button>
+                    <button class="btn btn-enod" @click="Store">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -179,3 +179,4 @@ methods  : {
 
 }
 </script>
+

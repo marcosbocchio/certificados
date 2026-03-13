@@ -52,8 +52,8 @@
                                             <th class="col-md-2">
 
                                                 <input type="checkbox" id="checkbox" v-model="sel_checkbox" style="vertical-align:middle">
-                                                <span title="Setear Períodos" @click="SetearPeriodos()" style="display:inline-block;margin-left:11px;padding-top: 5px;" class="btn btn-xs btn-Primary"><app-icon img="edit" color="black"></app-icon></span>
-                                                <span title="Borrar Períodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;padding-top: 5px;" class="btn btn-xs btn-Primary"><app-icon img="trash" color="black"></app-icon></span>
+                                                <span title="Setear Períodos" @click="SetearPeriodos()" style="display:inline-block;margin-left:11px;padding-top: 5px;" class="btn btn-xs btn-enod"><app-icon img="edit" color="black"></app-icon></span>
+                                                <span title="Borrar Períodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;padding-top: 5px;" class="btn btn-xs btn-enod"><app-icon img="trash" color="black"></app-icon></span>
 
                                             </th>
                                         </tr>
@@ -97,7 +97,7 @@
             </div>
         </div>
         <div v-if="TablaDosimetriaRx.length">
-            <a class="btn btn-primary" v-on:click="submit()" >Actualizar</a>
+            <a class="btn btn-enod" v-on:click="submit()" >Actualizar</a>
         </div>
       </div>
     </div>
@@ -376,3 +376,4 @@ export default {
 
 
 </style>
+

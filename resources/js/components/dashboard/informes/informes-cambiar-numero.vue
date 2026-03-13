@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" @click="cambiarNumero" data-dismiss="modal" >Guardar</button>
+                        <button type="button" class="btn btn-enod" @click="cambiarNumero" data-dismiss="modal" >Guardar</button>
                         <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
                     </div>
                 </div>
@@ -121,3 +121,4 @@ export default {
      background-color: #eee;
 }
 </style>
+

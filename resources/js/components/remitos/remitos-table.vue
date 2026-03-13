@@ -13,7 +13,7 @@
            <div class="col-md-3">
                <div class="input-group">
                    <input type="text" v-model="search" class="form-control" @keyup.enter="getResults">
-                   <span class="input-group-addon btn" @click="getResults" style="background-color: rgb(255, 204, 0); cursor: pointer; border: none;">
+                   <span class="input-group-addon btn enod-action-addon" @click="getResults">
                        <i class="fa fa-search"></i>
                    </span>
                </div>

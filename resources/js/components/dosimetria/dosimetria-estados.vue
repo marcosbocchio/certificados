@@ -100,7 +100,7 @@
                 <div class="clearfix"></div>    
                 </div>
                 <div v-if="TablaDosimetriaEstados.length">        
-                    <a class="btn btn-primary" v-on:click="submit()" >Actualizar</a> 
+                    <a class="btn btn-enod" v-on:click="submit()" >Actualizar</a> 
                 </div>
             </div>
           </div>

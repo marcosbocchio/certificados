@@ -87,7 +87,7 @@
     </div>
     <div class="row">
       <div class="col-md-12 text-right">
-        <button @click="guardarCompra" class="btn btn-primary" :disabled="formularioEnviado">Guardar</button>
+        <button @click="guardarCompra" class="btn btn-enod" :disabled="formularioEnviado">Guardar</button>
       </div>
     </div>
   </div>

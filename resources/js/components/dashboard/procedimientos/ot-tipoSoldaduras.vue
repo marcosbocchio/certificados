@@ -111,7 +111,7 @@
             </div>
         </div>
         <div v-if="$can('T_proc_edita')">
-            <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>
+            <button class="btn btn-enod" v-on:click.prevent="submit()">Actualizar</button>
         </div>
 
     </div>
@@ -271,3 +271,4 @@
 
   }
 </script>
+

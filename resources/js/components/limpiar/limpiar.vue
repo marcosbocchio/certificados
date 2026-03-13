@@ -18,7 +18,7 @@
         </div>
 
         <div class="buttons-section">
-            <button @click="compararArchivosCompletos" class="btn btn-primary">
+            <button @click="compararArchivosCompletos" class="btn btn-enod">
                 <i class="fa fa-broom"></i> Limpiar y Comparar
             </button>
             <button 
@@ -232,3 +232,4 @@ export default {
     color: #2980b9;
 }
 </style>
+

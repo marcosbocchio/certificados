@@ -1010,7 +1010,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit" :disabled="isLoading">Guardar</button>
+                <button class="btn btn-enod" type="submit" :disabled="isLoading">Guardar</button>
             </form>
         </div>
         <loading :active.sync="isLoading" :is-full-page="true" :loader="'bars'" :color="'red'"></loading>
@@ -3270,3 +3270,4 @@ fieldset[disabled] .form-control {
     background-color: #eee;
 }
 </style>
+

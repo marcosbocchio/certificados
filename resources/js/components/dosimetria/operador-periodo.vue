@@ -29,7 +29,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>&nbsp;</label>
-                                <button class="btn btn-primary" style="display: block;" @click="submit()" :disabled="!permitir_alta">ALTA</button>                         
+                                <button class="btn btn-enod" style="display: block;" @click="submit()" :disabled="!permitir_alta">ALTA</button>                         
                             </div>   
                         </div> 
                    

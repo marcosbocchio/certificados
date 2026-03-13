@@ -87,7 +87,7 @@
                 </div>
 
                 <div v-show="$can('T_equipos_actualiza')">
-                    <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>
+                    <button class="btn btn-enod" v-on:click.prevent="submit()">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -333,3 +333,4 @@ data () { return {
 }
 
 </script>
+

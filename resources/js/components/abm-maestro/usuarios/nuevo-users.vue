@@ -74,7 +74,7 @@
                             <div v-if="isEnod" class="col-md-6">
                                 <div class="form-group">
                                     <label>Informes a firmar</label>
-                                    <button type="button" class="btn btn-xs btn-primary" style="float:right" @click.stop="openFirmas('new')">Firmas</button>
+                                    <button type="button" class="btn btn-xs btn-enod" style="float:right" @click.stop="openFirmas('new')">Firmas</button>
                                     <v-select multiple v-model="metodos_firmas" :options="metodos_no_importables" label='metodo'></v-select>
     
                                 </div>
@@ -183,7 +183,7 @@
                         </div>
     
                         <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" value="Guardar">
+                            <input type="submit" class="btn btn-enod" value="Guardar">
                             <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
                         </div>
                     </div>
@@ -471,3 +471,4 @@
     
     }
     </script>
+

@@ -1,6 +1,9 @@
 <template>
     <div>
         <div class="small-box zoom" :class="[class_color_cuadro ,{flash : tablero_sn},{small_box_opacity : !habilitado_sn}, {pointer : (tablero_sn && habilitado_sn)},{not_allowed : !habilitado_sn}  ] ">
+          <div v-if="loading_sn" class="cuadro-loading-badge">
+            <i class="fa fas fa-radiation-alt fa-spin"></i>
+          </div>
           <div class="inner">
             <img :src="src_icono" width="100px" />
             <p class="posicion_1 color_cant_1" >
@@ -101,6 +104,12 @@ export default {
              type: Boolean,
              required:false,
              default:false
+         },
+
+         loading_sn : {
+             type: Boolean,
+             required:false,
+             default:false
          }
 
          
@@ -112,6 +121,7 @@ export default {
 <style >
 
 .small-box {
+  position: relative;
   text-align: center !important;
   border-radius: 5px;
   -webkit-box-shadow: 1px 1px 5px -1px rgba(0,0,0,0.75);
@@ -167,6 +177,26 @@ export default {
   font-weight: 600;
   font-family: 'Montserrat',sans-serif;
   padding-bottom: 0;
+}
+
+.cuadro-loading-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.cuadro-loading-badge i {
+  font-size: 12px;
+  color: #f9ca33;
 }
 
 .zoom:hover  {

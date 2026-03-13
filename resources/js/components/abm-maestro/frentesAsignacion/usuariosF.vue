@@ -44,7 +44,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="guardarUsuariosAsociados" :disabled="loading">
+          <button type="button" class="btn btn-enod" @click="guardarUsuariosAsociados" :disabled="loading">
             <span v-if="loading" class="fa fa-spinner fa-spin"></span>
             Guardar
           </button>
