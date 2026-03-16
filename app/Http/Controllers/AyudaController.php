@@ -44,6 +44,46 @@ public function __construct()
       ));
   }
 
+  private function functionalSections(array $managedData, array $actions, array $usage, $result, array $checks = [], array $buttons = [])
+  {
+      $sections = [
+          [
+              'title' => 'Que datos se cargan o gestionan',
+              'items' => $managedData,
+          ],
+          [
+              'title' => 'Que acciones permite',
+              'items' => $actions,
+          ],
+      ];
+
+      if (!empty($buttons)) {
+          $sections[] = [
+              'title' => 'Botones y acciones disponibles',
+              'items' => $buttons,
+          ];
+      }
+
+      $sections[] = [
+          'title' => 'Como se usa en la practica',
+          'items' => $usage,
+      ];
+
+      if (!empty($checks)) {
+          $sections[] = [
+              'title' => 'Que revisar antes de guardar o cerrar',
+              'items' => $checks,
+          ];
+      }
+
+      $sections[] = [
+          'title' => 'Resultado esperado',
+          'paragraphs' => is_array($result) ? $result : [$result],
+      ];
+
+      return $sections;
+  }
+
   public function openAyuda(){
 
     return $this->returnAyudaView('ayuda.ayuda_general', "", "");
@@ -163,33 +203,39 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar normas',
           [
-              'Este grupo organiza normas de ensayo, fabricacion y evaluacion que despues se reutilizan en formularios tecnicos y documentos del sistema.',
-              'Su importancia no esta solo en el alta del maestro: mantener estas referencias consistentes evita encabezados ambiguos y criterios desalineados en informes.',
+              'Esta seccion administra las normas de ensayo, fabricacion y evaluacion que despues aparecen en servicios, OT e informes del sistema.',
+              'Su uso es operativo: desde aqui se consultan registros existentes, se crean nuevas referencias y se corrigen codigos o descripciones antes de reutilizarlas en documentacion tecnica.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Normas de ensayo para metodos y servicios.',
-                      'Normas de fabricacion ligadas a productos, componentes o referencias constructivas.',
-                      'Normas de evaluacion usadas como criterio tecnico de aceptacion o rechazo.',
-                  ],
+                  'Listados separados de normas de ensayo, normas de fabricacion y normas de evaluacion.',
+                  'Codigo y descripcion de cada norma para que quede identificada de forma clara.',
+                  'Referencias tecnicas que despues se seleccionan en servicios, productos e informes.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de cargar o ajustar configuraciones tecnicas del sistema.',
-                      'Al preparar maestros que despues alimentan informes.',
-                      'Cuando se necesita corregir codigos, descripciones o referencias normativas.',
-                  ],
+                  'Consultar normas existentes desde el listado principal.',
+                  'Crear nuevas normas cuando hace falta una referencia tecnica que todavia no existe.',
+                  'Editar registros para corregir codigo, descripcion o criterio visible.',
+                  'Eliminar normas que quedaron duplicadas o ya no deben usarse, segun permisos y relaciones existentes.',
+                  'Buscar o paginar el listado cuando la cantidad de normas lo requiere.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Las normas quedan disponibles como referencia estable para que informes y otros modulos trabajen con criterios tecnicos consistentes.',
-                  ],
+                  'Se entra al listado del tipo de norma y se revisa si la referencia ya existe antes de darla de alta.',
+                  'Si falta una norma, se usa Nuevo para cargar codigo y descripcion y dejarla disponible para seleccion posterior.',
+                  'Si una referencia esta mal definida, se la edita desde el listado para unificar criterios en informes y maestros relacionados.',
               ],
-          ],
+              'La norma queda registrada y lista para reutilizarse en servicios, informes y otros documentos sin volver a escribirla manualmente.',
+              [
+                  'Que no exista otra norma equivalente con distinto codigo o descripcion.',
+                  'Que el tipo de norma elegido sea el correcto para el uso posterior.',
+              ],
+              [
+                  'Nuevo: crea una norma de ensayo, fabricacion o evaluacion segun la pantalla en la que se este trabajando.',
+                  'Editar: permite corregir codigo o descripcion de una norma ya existente.',
+                  'Eliminar: quita una norma del listado, previa confirmacion y siempre que no tenga relaciones bloqueantes.',
+                  'Buscar: ayuda a localizar una norma puntual dentro del listado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-servicios'), 'label' => 'Gestionar servicios'],
               ['href' => route('ayuda-generar-informes'), 'label' => 'Creacion de informes'],
@@ -210,33 +256,36 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar medidas',
           [
-              'El maestro de medidas define valores o referencias que despues se seleccionan en productos, servicios o formularios tecnicos donde hace falta una parametrizacion previa.',
-              'Su funcion es evitar carga manual repetida y mantener un criterio uniforme cuando distintas pantallas trabajan con las mismas dimensiones o referencias.',
+              'Esta seccion administra las medidas que despues se seleccionan en productos y otros registros donde hace falta una referencia dimensional o tecnica repetible.',
+              'La pantalla funciona como maestro base: permite consultar medidas cargadas, crear nuevas, corregirlas o depurarlas para que el resto del sistema trabaje con opciones consistentes.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que resuelve',
-                  'items' => [
-                      'Normaliza opciones de medida usadas en otros maestros.',
-                      'Reduce errores de carga libre en formularios dependientes.',
-                      'Facilita filtros y seleccion repetida de valores compatibles.',
-                  ],
+                  'Listado de medidas disponibles para productos u otras configuraciones.',
+                  'Codigo, descripcion o referencia visible de cada medida.',
+                  'Valores reutilizables para evitar carga libre repetida.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de crear productos o configuraciones que dependen de una medida.',
-                      'Cuando se detectan valores duplicados o inconsistentes.',
-                      'Al ajustar catalogos tecnicos que comparten una misma estructura de medida.',
-                  ],
+                  'Consultar medidas existentes desde la grilla del maestro.',
+                  'Crear nuevas medidas cuando un producto o configuracion necesita una referencia que todavia no existe.',
+                  'Editar medidas para corregir nombre o identificacion.',
+                  'Eliminar registros duplicados o fuera de uso, si el sistema lo permite.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Las medidas quedan disponibles como maestro reutilizable para mantener orden y consistencia en el resto del sistema.',
-                  ],
+                  'Antes de crear una medida nueva se revisa el listado para no duplicar opciones equivalentes.',
+                  'La medida se carga una sola vez y despues se reutiliza desde los selectores de otros modulos.',
+                  'Cuando una medida cambia de criterio o nombre, se actualiza desde el mismo listado para mantener consistencia.',
               ],
-          ],
+              'La medida queda disponible como opcion reutilizable y evita diferencias de carga entre productos, formularios y maestros relacionados.',
+              [
+                  'Que la descripcion sea clara y no repita una medida ya existente.',
+              ],
+              [
+                  'Nuevo: crea una medida para dejarla disponible en selectores y maestros relacionados.',
+                  'Editar: modifica el nombre o identificacion de una medida existente.',
+                  'Eliminar: quita una medida cuando ya no debe usarse o quedo duplicada.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-productos'), 'label' => 'Gestionar productos'],
               ['href' => route('ayuda-gestion-unidades-de-medida'), 'label' => 'Gestionar unidades de medida'],
@@ -256,33 +305,39 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar internos de fuente',
           [
-              'Los internos de fuente individualizan cada fuente disponible dentro del circuito operativo y la vinculan con su seguimiento documental o tecnico.',
-              'No reemplazan al maestro general de fuentes: sirven para controlar cada unidad concreta que despues puede asignarse, consultarse o trazarse.',
+              'Esta seccion administra cada fuente individual del sistema, no solo el maestro general. Aqui se controla la unidad concreta que despues se consulta, se documenta o se traza.',
+              'La pantalla permite revisar internos ya cargados, crear nuevos, editar datos operativos y eliminar registros cuando corresponde.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Identificacion unica de cada fuente.',
-                      'Relacion con la fuente base y sus datos tecnicos.',
-                      'Base para trazabilidad, documentacion y ubicacion operativa.',
-                  ],
+                  'Identificacion unica de cada interno de fuente.',
+                  'Vinculo con la fuente base y sus datos tecnicos.',
+                  'Informacion util para trazabilidad, documentacion y consulta operativa.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Al incorporar una nueva unidad al circuito.',
-                      'Cuando cambia su estado, ubicacion o informacion asociada.',
-                      'Antes de necesitarla en consultas QR, trazabilidad o control tecnico.',
-                  ],
+                  'Consultar internos existentes en el listado.',
+                  'Crear un nuevo interno cuando ingresa una fuente concreta al circuito.',
+                  'Editar el interno para actualizar numero, estado o datos asociados.',
+                  'Eliminar registros que no deben permanecer activos, segun permisos y relaciones existentes.',
+                  'Buscar por identificacion o datos visibles del interno.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Cada fuente queda individualizada y lista para integrarse con documentacion, consultas y circuitos operativos relacionados.',
-                  ],
+                  'Primero se verifica si la fuente base ya existe y luego se da de alta el interno individual.',
+                  'Desde el listado se localiza cada unidad para corregir datos o revisar su estado antes de usarla en otro circuito.',
+                  'La informacion del interno se mantiene actualizada para que QR, documentacion y reportes no queden desalineados.',
               ],
-          ],
+              'Cada fuente individual queda identificada y lista para integrarse con documentacion, trazabilidad y consultas posteriores.',
+              [
+                  'Que el interno este vinculado a la fuente correcta.',
+                  'Que el identificador no se repita con otro registro activo.',
+              ],
+              [
+                  'Nuevo: da de alta un interno de fuente nuevo.',
+                  'Editar: actualiza numero, estado o datos operativos del interno.',
+                  'Eliminar: quita el interno si ya no debe seguir activo y no tiene relaciones bloqueantes.',
+                  'Buscar: localiza rapidamente una fuente individual dentro del listado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-fuentes'), 'label' => 'Gestionar fuentes'],
               ['href' => route('ayuda-qr'), 'label' => 'QR y documentacion asociada'],
@@ -303,33 +358,39 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar clientes',
           [
-              'El maestro de clientes concentra la informacion comercial y operativa de las entidades para las que se trabaja dentro del sistema.',
-              'Su carga impacta despues en OT, usuarios cliente, documentacion y referencias visibles en otros circuitos del negocio.',
+              'Esta seccion administra los clientes con los que despues se trabaja en OT, usuarios cliente y documentacion del sistema.',
+              'Desde el listado se consultan registros existentes, se crean clientes nuevos, se editan datos generales y contactos, y se eliminan registros cuando no tienen restricciones asociadas.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Datos identificatorios y administrativos del cliente.',
-                      'Informacion de contacto reutilizable en otros modulos.',
-                      'Base de seleccion para OT, certificados y documentacion.',
-                  ],
+                  'Codigo, nombre, razon social y datos administrativos del cliente.',
+                  'Provincia, localidad, direccion, telefono, email y logo cuando aplica.',
+                  'Contactos del cliente con nombre, cargo, telefono y correo.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de crear una nueva OT para un cliente no registrado.',
-                      'Cuando cambian contactos, razon social o datos de referencia.',
-                      'Al revisar que informacion comercial usa el resto del circuito documental.',
-                  ],
+                  'Buscar y filtrar clientes desde el listado principal.',
+                  'Crear un cliente nuevo con sus datos generales y contactos.',
+                  'Editar informacion existente para mantenerla actualizada.',
+                  'Eliminar clientes cuando el perfil lo permite y no hay bloqueos por uso en otros circuitos.',
+                  'Consultar el listado como base para futuras OT o usuarios cliente.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El cliente queda disponible como entidad confiable para usarse en OT y documentos sin repetir carga manual en cada pantalla.',
-                  ],
+                  'Se revisa primero si el cliente ya existe para evitar duplicados.',
+                  'Cuando falta, se usa Nuevo para completar datos generales y contactos de referencia.',
+                  'Si cambia razon social, email o telefono, se corrige desde el mismo formulario para que OT y documentos usen informacion vigente.',
               ],
-          ],
+              'El cliente queda listo para seleccionarse en OT, documentacion y usuarios asociados sin volver a cargar datos en cada pantalla.',
+              [
+                  'Que los contactos principales esten completos y vigentes.',
+                  'Que no exista otro cliente duplicado con nombre o razon social equivalente.',
+              ],
+              [
+                  'Nuevo: crea un cliente con sus datos generales y contactos.',
+                  'Editar: modifica razon social, direccion, telefono, email, logo o contactos del cliente.',
+                  'Eliminar: quita un cliente del maestro si no tiene restricciones por uso en otros circuitos.',
+                  'Buscar: filtra el listado por nombre, razon social u otros datos visibles.',
+              ]
+          ),
           [
               ['href' => route('ayuda-crear-ot'), 'label' => 'Como crear una OT'],
               ['href' => route('ayuda-gestion-comitente'), 'label' => 'Gestionar comitentes'],
@@ -351,33 +412,37 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar comitentes',
           [
-              'El maestro de comitentes define entidades que despues pueden aparecer asociadas a OT, certificados u otra documentacion del circuito.',
-              'Su funcion principal es separar correctamente la referencia de comitente del cliente cuando el negocio necesita distinguir ambos roles.',
+              'Esta seccion administra los comitentes que despues se usan en OT, certificados y otros documentos donde hace falta distinguirlos del cliente.',
+              'La pantalla permite consultar registros existentes, crear nuevos comitentes, editar datos visibles y eliminar aquellos que no deban seguir activos.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que resuelve',
-                  'items' => [
-                      'Alta y mantenimiento de comitentes.',
-                      'Referencia reutilizable en documentos y formularios.',
-                      'Diferenciacion clara entre cliente y comitente cuando no son la misma entidad.',
-                  ],
+                  'Nombre o identificacion visible del comitente.',
+                  'Datos administrativos basicos que luego se muestran en cabeceras documentales.',
+                  'Referencia diferenciada del cliente cuando ambas entidades no coinciden.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de crear OT o documentos que requieren comitente.',
-                      'Cuando cambia la razon social o la identificacion visible.',
-                      'Al revisar datos de cabecera usados en certificados y otros documentos.',
-                  ],
+                  'Consultar comitentes existentes desde el listado.',
+                  'Crear nuevos registros para usarlos en futuras OT o certificados.',
+                  'Editar razon social, descripcion o datos visibles cuando cambian.',
+                  'Eliminar comitentes si ya no corresponden y no tienen relaciones bloqueantes.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El comitente queda disponible como maestro estable para vincularlo con otros registros sin duplicar informacion.',
-                  ],
+                  'Se revisa el listado para confirmar si el comitente ya existe antes de darlo de alta.',
+                  'Si el circuito documental necesita diferenciar cliente y comitente, se lo registra para dejar esa seleccion disponible.',
+                  'Cuando cambia la entidad visible en cabeceras o certificados, se actualiza desde este maestro.',
               ],
-          ],
+              'El comitente queda disponible como referencia estable en OT, certificados y documentos relacionados, sin mezclarlo con el cliente cuando ambos roles son distintos.',
+              [
+                  'Que el comitente no este duplicado bajo otra razon social o nombre equivalente.',
+              ],
+              [
+                  'Nuevo: crea un comitente nuevo para futuras OT o certificados.',
+                  'Editar: corrige razon social o datos visibles del comitente.',
+                  'Eliminar: quita un comitente si no debe seguir disponible.',
+                  'Buscar: ayuda a localizar rapidamente un registro existente.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-cliente'), 'label' => 'Gestionar clientes'],
               ['href' => route('ayuda-crear-ot'), 'label' => 'Como crear una OT'],
@@ -398,33 +463,41 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar documentaciones',
           [
-              'Este maestro ordena tipos o referencias documentales que despues se usan para asociar vencimientos, soportes o requisitos dentro del sistema.',
-              'Su valor aparece cuando otros modulos necesitan clasificar correctamente la documentacion vinculada a vehiculos, equipos u otras entidades.',
+              'Esta seccion administra la documentacion del sistema y permite cargar archivos, clasificarlos, filtrarlos y mantener vigente la informacion asociada.',
+              'Desde aqui se consulta el listado documental, se crean registros nuevos, se editan documentos existentes, se eliminan cuando corresponde y se descargan archivos para uso operativo.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Tipos de documentacion reutilizables.',
-                      'Base para vigencias, controles o clasificaciones posteriores.',
-                      'Referencia comun para distintos circuitos operativos.',
-                  ],
+                  'Tipo de documento, titulo, descripcion y fecha de vencimiento.',
+                  'Entidad asociada segun el documento: OT, usuario, equipo, fuente, vehiculo u otro circuito soportado.',
+                  'Archivo digital y datos de visibilidad o clasificacion.',
               ],
               [
-                  'title' => 'Dependencias',
-                  'items' => [
-                      'Vehiculos y documentacion complementaria.',
-                      'Internos de equipos o recursos con soporte documental.',
-                      'Consultas y controles que dependen de documentacion vigente.',
-                  ],
+                  'Consultar el listado de documentos cargados.',
+                  'Buscar por texto, filtrar por tipo y mostrar documentacion vencida.',
+                  'Crear documentos nuevos con su archivo asociado.',
+                  'Editar registros existentes para corregir datos, archivo o vencimiento.',
+                  'Eliminar documentos cuando ya no corresponden.',
+                  'Descargar uno o varios documentos desde el listado.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'La documentacion queda clasificada bajo un criterio comun y reutilizable para que los modulos relacionados trabajen con la misma referencia.',
-                  ],
+                  'Se usa el listado para localizar documentacion por tipo o por entidad asociada.',
+                  'Cuando falta un archivo, se crea un registro nuevo y se adjunta el documento correspondiente.',
+                  'Si cambia un vencimiento o una descripcion, se corrige desde el mismo modulo para que controles y consultas queden actualizados.',
               ],
-          ],
+              'La documentacion queda clasificada, accesible y alineada con equipos, vehiculos, usuarios u OT que dependen de ella.',
+              [
+                  'Que el tipo de documento y la entidad asociada sean los correctos.',
+                  'Que el vencimiento este bien cargado cuando aplica control documental.',
+              ],
+              [
+                  'Nuevo: crea un documento nuevo y permite adjuntar el archivo correspondiente.',
+                  'Editar: corrige tipo, descripcion, vencimiento, entidad asociada o archivo del documento.',
+                  'Eliminar: quita documentacion cuando ya no debe permanecer en el sistema.',
+                  'Buscar y filtrar: localiza documentos por texto, tipo o vencimiento.',
+                  'Descargar: permite bajar uno o varios documentos desde el listado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-vehiculos'), 'label' => 'Gestionar vehiculos'],
               ['href' => route('ayuda-visualizar-vehiculos'), 'label' => 'Visualizar vehiculos y documentacion complementaria'],
@@ -444,33 +517,38 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar equipos',
           [
-              'El maestro de equipos define las referencias base sobre las que despues se crean internos, trazabilidad y documentacion asociada.',
-              'No representa una unidad operativa individual. Su funcion es ordenar el catalogo general de equipos disponibles para el negocio.',
+              'Esta seccion administra el maestro general de equipos que despues alimenta internos, informes y documentacion tecnica.',
+              'La pantalla permite consultar equipos existentes, darlos de alta, editar su definicion tecnica y eliminar registros cuando ya no deben formar parte del catalogo.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Catalogo general de equipos.',
-                      'Datos base para internos y seguimiento tecnico.',
-                      'Referencia comun para modulos de trazabilidad y documentacion.',
-                  ],
+                  'Codigo y descripcion del equipo.',
+                  'Metodo de ensayo, tipo de equipamiento e instrumento de medicion.',
+                  'Condiciones especiales del equipo, como marcacion para US cuando corresponde.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de dar de alta un interno de equipo.',
-                      'Cuando cambia la definicion o clasificacion del equipo base.',
-                      'Al revisar consistencia del catalogo tecnico general.',
-                  ],
+                  'Consultar el listado general de equipos.',
+                  'Buscar equipos por codigo, descripcion o datos visibles.',
+                  'Crear un equipo nuevo desde el formulario de alta.',
+                  'Editar informacion tecnica de un equipo existente.',
+                  'Eliminar equipos del maestro, segun permisos y uso posterior.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El equipo queda disponible como maestro base para posteriores altas operativas y consultas de trazabilidad.',
-                  ],
+                  'Primero se revisa el listado para evitar duplicar equipos que ya existen.',
+                  'Si hace falta una referencia nueva, se usa Nuevo y se completan los datos tecnicos que luego consumen otros modulos.',
+                  'Cuando cambia un criterio tecnico, se actualiza el maestro para que informes e internos trabajen con la misma definicion.',
               ],
-          ],
+              'El equipo queda disponible como referencia base para internos, documentacion e informes sin necesidad de recrearlo en cada circuito.',
+              [
+                  'Que el metodo de ensayo y el tipo de equipamiento sean los correctos.',
+              ],
+              [
+                  'Nuevo: crea un equipo nuevo dentro del maestro general.',
+                  'Editar: modifica datos tecnicos del equipo existente.',
+                  'Eliminar: quita un equipo del catalogo si no debe seguir disponible.',
+                  'Buscar: ayuda a ubicar equipos por codigo o descripcion.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-interno-equipos'), 'label' => 'Gestionar internos de equipos'],
               ['href' => route('ayuda-qr'), 'label' => 'QR y documentacion asociada'],
@@ -491,33 +569,35 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar fuentes',
           [
-              'El maestro de fuentes concentra las referencias base de fuentes que despues pueden individualizarse mediante internos y asociarse a circuitos de control tecnico.',
-              'Su uso es similar al de equipos: prepara la estructura general sobre la que despues se monta la operatoria concreta.',
+              'Esta seccion administra el maestro general de fuentes que despues se individualizan mediante internos y se vinculan con documentacion o trazabilidad.',
+              'Funciona como catalogo base: desde el listado se consultan fuentes cargadas, se crean nuevas referencias, se editan datos tecnicos y se eliminan registros cuando corresponde.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Catalogo general de fuentes.',
-                      'Informacion tecnica base para seguimiento posterior.',
-                      'Referencia comun para internos, consultas y trazabilidad.',
-                  ],
+                  'Catalogo general de fuentes con sus datos identificatorios y tecnicos.',
+                  'Informacion base que despues se reutiliza en internos de fuente.',
+                  'Referencias necesarias para consultas, QR y documentacion asociada.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de crear internos de fuente.',
-                      'Cuando cambia una referencia tecnica del maestro.',
-                      'Al revisar consistencia de las fuentes disponibles en el sistema.',
-                  ],
+                  'Consultar el listado de fuentes ya registradas.',
+                  'Crear nuevas fuentes cuando hace falta una referencia base para el circuito.',
+                  'Editar datos tecnicos o identificatorios.',
+                  'Eliminar fuentes del maestro si no deben seguir activas y no estan bloqueadas por relaciones.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'La fuente queda cargada como maestro base y lista para vincularse con internos, documentacion y circuitos de consulta.',
-                  ],
+                  'Se revisa el maestro para verificar si la fuente ya fue cargada antes de crear otra.',
+                  'La referencia base se completa una sola vez y luego se usa para dar de alta internos individuales.',
+                  'Cuando cambia la definicion tecnica de la fuente, se ajusta aqui para mantener trazabilidad consistente.',
               ],
-          ],
+              'La fuente queda disponible como base para internos, documentacion y consultas operativas posteriores.',
+              [],
+              [
+                  'Nuevo: crea una fuente base nueva para el catalogo.',
+                  'Editar: corrige datos tecnicos o identificatorios de la fuente.',
+                  'Eliminar: quita una fuente del maestro cuando ya no corresponde seguir usandola.',
+                  'Buscar: localiza rapidamente una fuente dentro del listado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-interno-fuente'), 'label' => 'Gestionar internos de fuente'],
               ['href' => route('ayuda-qr'), 'label' => 'QR y documentacion asociada'],
@@ -538,33 +618,36 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar internos de equipos',
           [
-              'Los internos de equipos representan unidades concretas del maestro de equipos y permiten seguir su ubicacion, documentacion y trazabilidad.',
-              'Son la pieza operativa real que se consulta despues en QR, reportes, documentacion o movimientos entre frentes.',
+              'Esta seccion administra cada unidad concreta de equipo dentro del sistema, a partir del maestro general de equipos.',
+              'Desde aqui se consultan internos existentes, se crean nuevas unidades, se editan sus datos operativos y se eliminan registros cuando corresponde.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Identificacion unica de cada equipo operativo.',
-                      'Relacion con el equipo base y su documentacion.',
-                      'Ubicacion o referencia para trazabilidad posterior.',
-                  ],
+                  'Identificacion unica del interno de equipo.',
+                  'Relacion con el equipo base del cual depende.',
+                  'Datos visibles para documentacion, QR y trazabilidad.',
               ],
               [
-                  'title' => 'Dependencias',
-                  'items' => [
-                      'Maestro de equipos correctamente cargado.',
-                      'Documentacion asociada cuando el circuito lo requiere.',
-                      'Consultas QR, reportes o trazabilidad interna.',
-                  ],
+                  'Consultar el listado de internos ya cargados.',
+                  'Crear un interno nuevo cuando se incorpora una unidad operativa concreta.',
+                  'Editar datos del interno para actualizar su identificacion o estado.',
+                  'Eliminar registros cuando ya no correspondan y el sistema lo permita.',
+                  'Buscar internos por numero o datos visibles.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Cada equipo queda individualizado y listo para usarse en consultas, movimientos o seguimiento tecnico del sistema.',
-                  ],
+                  'Primero se confirma que el equipo base exista en el maestro general.',
+                  'Despues se da de alta el interno con su identificacion particular para diferenciar esa unidad del resto.',
+                  'El listado se usa luego para corregir datos o localizar rapidamente el interno antes de consultar documentacion o QR.',
               ],
-          ],
+              'Cada interno queda individualizado y listo para integrarse con documentacion, consultas QR y trazabilidad.',
+              [],
+              [
+                  'Nuevo: da de alta una unidad operativa concreta a partir del equipo base.',
+                  'Editar: actualiza identificacion o datos del interno.',
+                  'Eliminar: quita el interno cuando ya no debe permanecer activo.',
+                  'Buscar: ayuda a encontrar rapidamente el interno en el listado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-equipos'), 'label' => 'Gestionar equipos'],
               ['href' => route('ayuda-qr'), 'label' => 'QR y documentacion asociada'],
@@ -586,33 +669,36 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar materiales',
           [
-              'El maestro de materiales organiza insumos o referencias tecnicas que despues pueden intervenir en formularios, informes o configuraciones internas.',
-              'Su objetivo es dejar un catalogo consistente para evitar carga libre y mantener trazabilidad tecnica en los modulos que lo consumen.',
+              'Esta seccion administra el maestro de materiales que despues aparece en informes, procedimientos y otras referencias tecnicas del sistema.',
+              'La pantalla permite consultar materiales existentes, crear nuevos, editar descripciones y eliminar registros cuando ya no deben usarse.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Catalogo de materiales reutilizable.',
-                      'Base de seleccion para formularios tecnicos.',
-                      'Referencia comun para documentos o configuraciones asociadas.',
-                  ],
+                  'Codigo y descripcion de cada material.',
+                  'Referencias tecnicas reutilizables en distintos formularios.',
+                  'Catalogo base para informes y procedimientos relacionados.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de completar formularios que requieren materiales definidos.',
-                      'Cuando se incorporan nuevos materiales al circuito.',
-                      'Al corregir nombres, codigos o clasificaciones del catalogo.',
-                  ],
+                  'Consultar el listado de materiales cargados.',
+                  'Buscar materiales por codigo o descripcion.',
+                  'Crear nuevos materiales cuando hace falta una referencia que no existe.',
+                  'Editar registros para corregir nombre o codigo.',
+                  'Eliminar materiales duplicados o fuera de uso, segun permisos.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Los materiales quedan disponibles como maestro estable para que otros modulos seleccionen referencias tecnicas ya normalizadas.',
-                  ],
+                  'Se usa el listado para verificar si el material ya existe antes de cargarlo nuevamente.',
+                  'Si falta, se crea desde el formulario simple del maestro y queda disponible para futuras selecciones.',
+                  'Cuando aparece una diferencia de nomenclatura, se corrige en este modulo para unificar el criterio tecnico.',
               ],
-          ],
+              'El material queda listo para reutilizarse en informes y otras configuraciones sin variantes innecesarias.',
+              [],
+              [
+                  'Nuevo: crea un material nuevo dentro del maestro.',
+                  'Editar: modifica codigo o descripcion del material.',
+                  'Eliminar: quita materiales duplicados o fuera de uso.',
+                  'Buscar: localiza materiales por codigo o descripcion.',
+              ]
+          ),
           [
               ['href' => route('ayuda-generar-informes'), 'label' => 'Creacion de informes'],
               ['href' => route('ayuda-gestion-productos'), 'label' => 'Gestionar productos'],
@@ -632,33 +718,41 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar productos',
           [
-              'El maestro de productos define insumos, consumibles o articulos que despues se usan en OT, stock, remitos y otros circuitos internos.',
-              'No todos los productos cumplen el mismo rol: algunos impactan en inventario, otros se usan como referencia tecnica o como elemento visible en una OT.',
+              'Esta seccion administra el catalogo general de productos que despues pueden intervenir en stock, OT, remitos y otros circuitos operativos.',
+              'La pantalla no solo registra productos: tambien define si son stockeables, si se muestran en OT y como se comportan frente a placas u otros usos relacionados.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Catalogo general de productos.',
-                      'Productos inventariables o vinculados a stock.',
-                      'Referencias seleccionables en OT y remitos cuando el circuito lo necesita.',
-                  ],
+                  'Codigo, descripcion, metros totales y unidad de medida del producto.',
+                  'Definicion de si el producto es visible en OT, stockeable o relacionado a placas.',
+                  'Grupo o criterio de clasificacion cuando el circuito lo usa.',
+                  'Stock actual si el producto participa del modulo de stock.',
               ],
               [
-                  'title' => 'Que necesita antes',
-                  'items' => [
-                      'Unidades de medida definidas.',
-                      'Criterio claro sobre si el producto impacta en stock o en otros circuitos.',
-                      'Consistencia con servicios, materiales o remitos cuando se relacionan entre si.',
-                  ],
+                  'Consultar el listado de productos existentes.',
+                  'Buscar por codigo o descripcion y aplicar filtros como stockeable o relacionado a placas.',
+                  'Crear productos nuevos desde el formulario de alta.',
+                  'Editar registros existentes para corregir propiedades o datos base.',
+                  'Eliminar productos cuando no deben seguir activos y no hay restricciones por uso o stock.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El producto queda listo para usarse como referencia operativa y, si corresponde, para integrarse con stock y movimientos.',
-                  ],
+                  'Se usa el listado para revisar si el producto ya existe y para entender como esta configurado dentro del circuito.',
+                  'Cuando falta un producto, se crea indicando si debe impactar en stock y si tiene que ser visible en OT.',
+                  'Si cambia su comportamiento operativo, se edita desde el maestro para que stock, remitos y OT lean la misma configuracion.',
               ],
-          ],
+              'El producto queda listo para usarse como referencia operativa y, si corresponde, para integrarse con stock, movimientos, OT y remitos.',
+              [
+                  'Que la unidad de medida sea la correcta.',
+                  'Que el criterio de stockeable o visible OT refleje el uso real del producto.',
+              ],
+              [
+                  'Nuevo: crea un producto y define si es visible en OT, stockeable o relacionado a placas.',
+                  'Editar: modifica propiedades y datos base del producto.',
+                  'Eliminar: quita un producto cuando no tiene restricciones por stock o relaciones vigentes.',
+                  'Buscar: filtra el listado por codigo o descripcion.',
+                  'Filtros: permiten ver solo productos stockeables o relacionados a placas.',
+              ]
+          ),
           [
               ['href' => route('ayuda-stock'), 'label' => 'Gestion de stock'],
               ['href' => route('ayuda-creacion-remito'), 'label' => 'Remitos'],
@@ -680,33 +774,38 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar servicios',
           [
-              'El maestro de servicios define las prestaciones que despues se cargan en OT y habilitan metodos o circuitos documentales relacionados.',
-              'Es un maestro critico porque conecta la parte comercial con la operativa: un servicio mal definido repercute despues en informes y configuraciones de trabajo.',
+              'Esta seccion administra el catalogo de servicios que despues se usa en OT, informes y otros circuitos del sistema.',
+              'Desde aqui se consultan servicios existentes, se crean nuevos, se editan sus datos y se eliminan registros cuando dejan de ser validos para la operacion.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Catalogo de servicios disponibles.',
-                      'Relacion entre servicio, unidad de medida y metodo de ensayo.',
-                      'Base de seleccion para OT y configuraciones tecnicas posteriores.',
-                  ],
+                  'Codigo, descripcion y abreviatura del servicio.',
+                  'Unidad de medida con la que se cuantifica.',
+                  'Metodo de ensayo asociado, que despues impacta en informes y circuitos tecnicos.',
               ],
               [
-                  'title' => 'Que necesita antes',
-                  'items' => [
-                      'Unidades de medida consistentes.',
-                      'Metodos o referencias tecnicas asociadas correctamente.',
-                      'Criterio claro sobre como el servicio impacta en la OT.',
-                  ],
+                  'Consultar el listado de servicios cargados.',
+                  'Buscar por codigo, descripcion, unidad o metodo de ensayo.',
+                  'Crear un servicio nuevo desde el formulario de alta.',
+                  'Editar un servicio para ajustar codigo, descripcion, unidad o metodo.',
+                  'Eliminar servicios cuando ya no deben usarse y no hay restricciones por relaciones vigentes.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El servicio queda disponible para cargarse en una OT y habilitar luego el circuito documental correspondiente.',
-                  ],
+                  'Se verifica primero si el servicio ya existe para no duplicar prestaciones equivalentes.',
+                  'Cuando hace falta uno nuevo, se carga con su unidad y metodo para que despues pueda seleccionarse correctamente en la OT.',
+                  'Si cambia el criterio tecnico o comercial del servicio, se actualiza aqui para que el resto del circuito consuma la misma definicion.',
               ],
-          ],
+              'El servicio queda listo para seleccionarse en OT y habilitar luego informes, partes y otros documentos vinculados.',
+              [
+                  'Que la unidad de medida y el metodo de ensayo correspondan al servicio real.',
+              ],
+              [
+                  'Nuevo: crea un servicio nuevo con su unidad de medida y metodo de ensayo.',
+                  'Editar: corrige codigo, descripcion, abreviatura, unidad o metodo.',
+                  'Eliminar: quita un servicio cuando ya no debe usarse y no tiene bloqueos por relaciones.',
+                  'Buscar: localiza servicios por codigo, descripcion o metodo.',
+              ]
+          ),
           [
               ['href' => route('ayuda-crear-ot'), 'label' => 'Como crear una OT'],
               ['href' => route('ayuda-generar-informes'), 'label' => 'Creacion de informes'],
@@ -728,33 +827,36 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar soldadores',
           [
-              'Este maestro concentra soldadores que despues pueden asociarse a OT y participar en circuitos donde hace falta trazabilidad por persona o identificacion tecnica.',
-              'Su correcta carga permite seleccionarlos en las pantallas operativas sin depender de registros manuales externos.',
+              'Esta seccion administra el maestro de soldadores que despues puede asignarse a OT e informes cuando el circuito lo necesita.',
+              'Desde el listado se consultan soldadores existentes, se crean nuevos registros, se editan datos visibles y se eliminan referencias cuando corresponde.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Listado de soldadores disponibles.',
-                      'Datos de identificacion reutilizables en la operacion.',
-                      'Base para asignaciones y relacion con informes o consultas posteriores.',
-                  ],
+                  'Identificacion y datos visibles del soldador.',
+                  'Listado base para asignaciones posteriores en OT o informes.',
+                  'Referencia operativa reutilizable en trazabilidad tecnica.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de asignar soldadores a una OT.',
-                      'Cuando cambian datos de identificacion o vigencia.',
-                      'Al revisar trazabilidad operativa vinculada a personas tecnicas.',
-                  ],
+                  'Consultar soldadores cargados en el maestro.',
+                  'Buscar por nombre, codigo o datos visibles si la pantalla lo permite.',
+                  'Crear nuevos soldadores.',
+                  'Editar datos existentes para mantenerlos actualizados.',
+                  'Eliminar registros cuando ya no deban estar disponibles.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El soldador queda disponible como maestro confiable para asignaciones y circuitos documentales que dependan de su referencia.',
-                  ],
+                  'Se revisa primero si el soldador ya existe antes de cargarlo nuevamente.',
+                  'Si falta en el maestro, se registra para que quede disponible en asignaciones y formularios dependientes.',
+                  'Cuando cambian datos identificatorios, se corrige desde el maestro para no arrastrar diferencias en informes.',
               ],
-          ],
+              'El soldador queda listo para seleccionarse en OT y para sostener trazabilidad en los modulos que lo utilizan.',
+              [],
+              [
+                  'Nuevo: crea un soldador nuevo en el maestro.',
+                  'Editar: actualiza datos identificatorios del soldador.',
+                  'Eliminar: quita una referencia que ya no debe usarse.',
+                  'Buscar: ayuda a ubicar soldadores dentro del listado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-asignar-soldadores-y-usuarios'), 'label' => 'Asignar soldadores y usuarios de cliente'],
               ['href' => route('ayuda-generar-informes'), 'label' => 'Creacion de informes'],
@@ -775,33 +877,34 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar unidades de medida',
           [
-              'El maestro de unidades de medida define las unidades que despues reutilizan productos, servicios y otros formularios del sistema.',
-              'Su importancia es transversal: si este maestro queda desordenado, despues se replica la inconsistencia en varios modulos al mismo tiempo.',
+              'Esta seccion administra las unidades de medida reutilizables en productos, servicios y otros maestros del sistema.',
+              'La pantalla permite consultar unidades existentes, crear nuevas, editar sus datos y eliminar registros cuando no corresponde seguir utilizandolos.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que organiza',
-                  'items' => [
-                      'Unidades reutilizables para productos y servicios.',
-                      'Base comun para catalogos y formularios.',
-                      'Referencia consistente para cantidades, medidas o consumos.',
-                  ],
+                  'Codigo y descripcion de cada unidad de medida.',
+                  'Catalogo base para productos, servicios y otros registros que manejan cantidades.',
+                  'Referencias uniformes para evitar variantes de escritura.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de crear productos o servicios nuevos.',
-                      'Cuando hace falta corregir unidades duplicadas o mal nombradas.',
-                      'Al ordenar maestros que comparten criterios de medicion.',
-                  ],
+                  'Consultar el listado de unidades cargadas.',
+                  'Crear nuevas unidades desde el formulario del maestro.',
+                  'Editar unidades existentes para corregir codigo o descripcion.',
+                  'Eliminar registros duplicados o fuera de uso, segun permisos.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Las unidades quedan disponibles como base comun y consistente para los modulos que las necesitan.',
-                  ],
+                  'Antes de crear una unidad nueva se revisa el listado para no duplicar abreviaturas o nombres.',
+                  'La unidad se carga una sola vez y luego se reutiliza desde otros formularios.',
+                  'Si cambia una descripcion o se necesita ordenar el catalogo, se actualiza desde esta pantalla.',
               ],
-          ],
+              'La unidad queda disponible como opcion estable para productos, servicios y otros modulos que trabajan con cantidades.',
+              [],
+              [
+                  'Nuevo: crea una unidad de medida nueva.',
+                  'Editar: corrige codigo o descripcion de la unidad.',
+                  'Eliminar: quita unidades duplicadas o fuera de uso.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-productos'), 'label' => 'Gestionar productos'],
               ['href' => route('ayuda-gestion-servicios'), 'label' => 'Gestionar servicios'],
@@ -821,33 +924,39 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar roles',
           [
-              'Los roles agrupan permisos y definen perfiles de acceso para distintos tipos de usuario dentro del sistema.',
-              'No se trata solo de una clasificacion administrativa: un rol bien definido ordena que pantallas y acciones puede usar cada persona.',
+              'Esta seccion administra los roles del sistema y define que puede ver o hacer cada tipo de usuario a traves del conjunto de permisos asignados.',
+              'Desde el listado se consultan roles existentes, se crean nuevos, se editan permisos y configuraciones, y se eliminan roles cuando ya no deben seguir usandose.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que resuelve',
-                  'items' => [
-                      'Agrupa permisos por perfil de trabajo.',
-                      'Facilita asignar acceso a nuevos usuarios sin configurar accion por accion.',
-                      'Sirve como base para ordenar seguridad funcional y responsabilidades.',
-                  ],
+                  'Nombre del rol y guard correspondiente.',
+                  'Conjunto de permisos que define accesos a modulos y acciones.',
+                  'Configuracion base que despues se asigna a usuarios.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Al crear o ajustar perfiles de acceso.',
-                      'Cuando un grupo de usuarios necesita un nuevo alcance funcional.',
-                      'Al auditar diferencias entre lo que un usuario deberia ver y lo que efectivamente ve.',
-                  ],
+                  'Consultar el listado de roles definidos.',
+                  'Crear roles nuevos con su nombre, guard y permisos asociados.',
+                  'Editar roles para ajustar permisos o datos del perfil.',
+                  'Eliminar roles cuando dejan de ser necesarios y no hay riesgos de uso incorrecto.',
+                  'Revisar desde el listado que roles existen antes de crear uno nuevo.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Cada rol queda definido como perfil reutilizable para ordenar accesos sin mantener permisos dispersos de forma manual.',
-                  ],
+                  'Se usa la pantalla para agrupar permisos bajo un perfil coherente, en vez de asignarlos usuario por usuario.',
+                  'Cuando un puesto nuevo necesita otro alcance, se crea o ajusta un rol desde este modulo.',
+                  'Si un usuario no accede a una accion esperada, este maestro sirve para revisar si el rol tiene los permisos correctos.',
               ],
-          ],
+              'El rol queda listo para asignarse a usuarios y sostener accesos coherentes dentro del sistema.',
+              [
+                  'Que el rol no replique otro perfil ya existente con los mismos permisos.',
+                  'Que los permisos marcados respondan al alcance real del usuario final.',
+              ],
+              [
+                  'Nuevo: crea un rol nuevo con su nombre, guard y permisos.',
+                  'Editar: ajusta permisos o datos del rol existente.',
+                  'Eliminar: quita un rol cuando ya no debe seguir en uso y la operacion lo permite.',
+                  'Consultar listado: sirve para revisar perfiles antes de asignarlos a usuarios.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-permisos'), 'label' => 'Gestionar permisos'],
               ['href' => route('ayuda-gestion-usuario'), 'label' => 'Gestionar usuarios'],
@@ -893,36 +1002,31 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Perfil de usuario',
           [
-              'El perfil concentra las acciones personales del usuario dentro de la plataforma: revision de datos, configuracion basica y acceso a opciones que impactan en el uso diario.',
-              'No es un modulo operativo aislado. Sirve para mantener la cuenta consistente y evitar problemas de acceso, identificacion o notificaciones.',
+              'Esta seccion concentra las acciones personales del usuario dentro del sistema: revisar sus datos, mantener la cuenta actualizada y validar informacion de uso diario.',
+              'No es solo una vista informativa. Desde aqui se consultan datos propios, se editan campos disponibles y se corrigen inconsistencias que impactan en acceso o identificacion.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que resuelve',
-                  'paragraphs' => [
-                      'Desde esta pantalla el usuario revisa la informacion con la que trabaja en el sistema y confirma que sus datos de identificacion y contacto esten vigentes.',
-                  ],
-                  'items' => [
-                      'Revision de datos personales y de acceso.',
-                      'Actualizacion de informacion visible para otros modulos.',
-                      'Control de configuraciones ligadas a la cuenta.',
-                  ],
+                  'Datos personales y de identificacion visibles para la cuenta.',
+                  'Informacion de contacto y datos que otros circuitos usan como referencia.',
+                  'Configuraciones basicas asociadas al usuario actual.',
               ],
               [
-                  'title' => 'Cuando conviene usarlo',
-                  'items' => [
-                      'Al ingresar por primera vez o despues de un cambio de rol.',
-                      'Cuando se detecta informacion desactualizada.',
-                      'Antes de revisar problemas de acceso o de notificaciones.',
-                  ],
+                  'Consultar la informacion personal cargada en la cuenta.',
+                  'Editar datos disponibles desde el propio perfil.',
+                  'Validar que la informacion visible y de contacto este actualizada.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El usuario deja su cuenta alineada con el uso real del sistema y reduce inconsistencias en circuitos que dependen de sus datos o permisos.',
-                  ],
+                  'Se usa al ingresar por primera vez o cuando cambia algun dato personal relevante.',
+                  'Tambien sirve para revisar si la cuenta esta alineada con el uso real antes de analizar un problema de acceso o identificacion.',
               ],
-          ],
+              'El usuario deja su cuenta actualizada y reduce inconsistencias en modulos que dependen de sus datos.',
+              [],
+              [
+                  'Editar perfil: permite modificar datos disponibles de la cuenta.',
+                  'Guardar: aplica los cambios cargados en el perfil.',
+              ]
+          ),
           [
               ['href' => route('ayuda-cambiar-clave'), 'label' => 'Como cambiar o restablecer la contrasena'],
               ['href' => route('ayuda-buscar-formularios'), 'label' => 'Buscar en los formularios de la aplicacion'],
@@ -940,33 +1044,35 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar proveedores',
           [
-              'El maestro de proveedores ordena las entidades externas con las que se trabajan productos, entregas o abastecimiento interno.',
-              'Su valor no esta solo en el alta. Tambien impacta en stock, movimientos y futuras consultas administrativas.',
+              'Esta seccion administra los proveedores vinculados al circuito de productos, stock y movimientos internos.',
+              'La pantalla permite consultar proveedores existentes, crear nuevos, editar datos de contacto o razon social y eliminar registros cuando corresponde.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que informacion organiza',
-                  'items' => [
-                      'Datos identificatorios del proveedor.',
-                      'Informacion de contacto y referencia.',
-                      'Base de seleccion para circuitos de stock o compras.',
-                  ],
+                  'Datos identificatorios y de contacto del proveedor.',
+                  'Referencia reutilizable para compras, stock o movimientos asociados.',
+                  'Base de seleccion en circuitos donde el origen del producto importa.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de registrar productos o movimientos asociados a un proveedor nuevo.',
-                      'Cuando se necesita corregir datos de contacto o razon social.',
-                      'Al revisar historicos o reportes por origen de insumos.',
-                  ],
+                  'Consultar el listado de proveedores cargados.',
+                  'Crear proveedores nuevos.',
+                  'Editar razon social, telefono, email u otros datos visibles.',
+                  'Eliminar proveedores cuando ya no deben seguir activos y no hay relaciones bloqueantes.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El sistema deja disponible un listado confiable para vincular proveedores con otros modulos sin tener que repetir datos manualmente.',
-                  ],
+                  'Se revisa el listado antes de crear un proveedor para evitar duplicados.',
+                  'Si el abastecimiento o el movimiento necesita asociar origen, el proveedor debe quedar cargado previamente.',
+                  'Cuando cambia un dato de contacto o razon social, se ajusta desde este modulo para no replicar errores en otras pantallas.',
               ],
-          ],
+              'El proveedor queda disponible como referencia operativa y administrativa para stock, movimientos y consultas posteriores.',
+              [],
+              [
+                  'Nuevo: crea un proveedor nuevo para usarlo en stock o movimientos.',
+                  'Editar: corrige razon social, telefono, email u otros datos visibles.',
+                  'Eliminar: quita un proveedor que ya no debe estar activo.',
+                  'Buscar: ayuda a localizar proveedores dentro del listado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-stock'), 'label' => 'Gestion de stock'],
               ['href' => route('ayuda-gestion-productos'), 'label' => 'Gestionar productos'],
@@ -984,33 +1090,33 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar frentes',
           [
-              'Los frentes ordenan el destino u origen operativo de recursos, remitos y otros movimientos internos.',
-              'Funcionan como un dato organizador para saber donde se encuentra cada elemento y como se distribuye la operacion.',
+              'Esta seccion administra los frentes que se usan como origen, destino o ubicacion operativa de recursos y movimientos.',
+              'La pantalla permite consultar frentes cargados, crear nuevos, editar referencias visibles y eliminar registros cuando ya no deben usarse.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Para que sirve este maestro',
-                  'items' => [
-                      'Identificar sectores, bases o destinos operativos.',
-                      'Facilitar la seleccion en remitos y movimientos.',
-                      'Separar recursos por contexto de trabajo.',
-                  ],
+                  'Nombre o identificacion del frente.',
+                  'Referencia operativa para ubicar recursos, remitos o movimientos.',
+                  'Dato organizador para trazabilidad interna.',
               ],
               [
-                  'title' => 'Impacto en otros modulos',
-                  'items' => [
-                      'Remitos y movimientos de materiales.',
-                      'Ubicacion de internos de equipos.',
-                      'Consultas internas sobre trazabilidad.',
-                  ],
+                  'Consultar frentes existentes.',
+                  'Crear frentes nuevos.',
+                  'Editar referencias visibles del frente.',
+                  'Eliminar registros cuando no deben seguir disponibles.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Cada frente queda disponible como referencia estable para evitar movimientos ambiguos o asignaciones sin ubicacion clara.',
-                  ],
+                  'Se usa este maestro para dejar definido el destino u origen antes de registrar movimientos.',
+                  'Tambien sirve para ordenar consultas internas cuando hace falta saber donde quedo un recurso o desde donde salio.',
               ],
-          ],
+              'Cada frente queda disponible como referencia estable para evitar movimientos ambiguos y asignaciones sin ubicacion clara.',
+              [],
+              [
+                  'Nuevo: crea un frente nuevo.',
+                  'Editar: modifica la referencia visible del frente.',
+                  'Eliminar: quita frentes que ya no deben usarse.',
+              ]
+          ),
           [
               ['href' => route('ayuda-creacion-remito'), 'label' => 'Remitos'],
               ['href' => route('ayuda-stock'), 'label' => 'Gestion de stock'],
@@ -1027,33 +1133,34 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar vehiculos',
           [
-              'Este maestro concentra los vehiculos disponibles para la operacion y la informacion necesaria para poder asignarlos y consultarlos despues desde las OT.',
-              'No reemplaza la vista operativa dentro de la orden de trabajo: prepara los datos base para que ese circuito sea trazable.',
+              'Esta seccion administra los vehiculos disponibles para la operacion y su informacion base antes de asignarlos a una OT.',
+              'Desde aqui se consultan vehiculos existentes, se crean nuevos, se editan sus datos y se elimina un registro cuando ya no debe formar parte del circuito.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que datos conviene mantener al dia',
-                  'items' => [
-                      'Identificacion del vehiculo.',
-                      'Informacion documental o de vigencia asociada.',
-                      'Datos necesarios para asignaciones y controles posteriores.',
-                  ],
+                  'Identificacion del vehiculo y datos visibles del registro.',
+                  'Informacion documental o de vigencia asociada.',
+                  'Datos necesarios para asignacion y control posterior.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Al incorporar un vehiculo nuevo al circuito operativo.',
-                      'Cuando se modifican datos o documentacion.',
-                      'Antes de asignarlo a una OT.',
-                  ],
+                  'Consultar el listado de vehiculos cargados.',
+                  'Crear vehiculos nuevos.',
+                  'Editar informacion existente o documentacion asociada.',
+                  'Eliminar registros cuando ya no deben estar disponibles.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El vehiculo queda disponible para asignacion y consulta con una referencia consistente dentro del sistema.',
-                  ],
+                  'Se usa este maestro antes de asignar un vehiculo a una OT.',
+                  'Cuando cambia la documentacion o la identificacion del vehiculo, se corrige aqui para que la OT use datos vigentes.',
               ],
-          ],
+              'El vehiculo queda listo para asignacion y consulta posterior con una referencia consistente dentro del sistema.',
+              [],
+              [
+                  'Nuevo: crea un vehiculo nuevo dentro del maestro.',
+                  'Editar: actualiza identificacion, datos o documentacion asociada.',
+                  'Eliminar: quita vehiculos que ya no deben seguir disponibles.',
+                  'Buscar: ayuda a ubicar rapidamente el vehiculo dentro del listado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-asignar-vehiculos'), 'label' => 'Asignar vehiculos y documentacion complementaria'],
               ['href' => route('ayuda-visualizar-vehiculos'), 'label' => 'Visualizar vehiculos y documentacion complementaria'],
@@ -1071,32 +1178,33 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar plantas',
           [
-              'Las plantas permiten ubicar operaciones, clientes u otras referencias de negocio en una estructura mas ordenada.',
-              'Es un maestro de apoyo que cobra valor cuando otros modulos necesitan identificar la planta asociada a una operacion o entidad.',
+              'Esta seccion administra plantas o sedes que despues pueden asociarse a clientes, operaciones u otras referencias del sistema.',
+              'La pantalla permite consultar plantas existentes, crear nuevas, editar datos visibles y eliminar registros cuando dejan de ser necesarios.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Cuando conviene cargar una planta',
-                  'items' => [
-                      'Al dar de alta clientes o entidades que trabajan con sedes diferenciadas.',
-                      'Cuando la operacion necesita distinguir ubicaciones concretas.',
-                      'Antes de usarla como filtro o referencia en otros modulos.',
-                  ],
+                  'Nombre o identificacion de la planta.',
+                  'Referencia de ubicacion para clientes u operaciones.',
+                  'Dato util para filtros y seleccion en otros modulos.',
               ],
               [
-                  'title' => 'Dependencias',
-                  'items' => [
-                      'Clientes o comitentes asociados.',
-                      'Consultas y formularios que exigen una ubicacion mas precisa.',
-                  ],
+                  'Consultar el listado de plantas.',
+                  'Crear plantas nuevas.',
+                  'Editar registros existentes.',
+                  'Eliminar plantas cuando ya no corresponden.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'La planta queda disponible como referencia estable para seleccion y filtrado en pantallas relacionadas.',
-                  ],
+                  'Se carga una planta cuando hace falta distinguir sedes o ubicaciones concretas en otros circuitos.',
+                  'Tambien se usa para ordenar filtros o referencias visibles en pantallas relacionadas.',
               ],
-          ],
+              'La planta queda disponible como referencia estable para seleccion y filtrado en modulos relacionados.',
+              [],
+              [
+                  'Nuevo: crea una planta nueva.',
+                  'Editar: modifica datos visibles de la planta.',
+                  'Eliminar: quita una planta que ya no debe usarse.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-cliente'), 'label' => 'Gestionar clientes'],
               ['href' => route('ayuda-gestion-comitente'), 'label' => 'Gestionar comitentes'],
@@ -1113,33 +1221,34 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar contratistas',
           [
-              'El maestro de contratistas concentra terceros o equipos externos que participan en tareas operativas del sistema.',
-              'Su correcta carga facilita asistencia, asignaciones y consultas posteriores por responsable externo.',
+              'Esta seccion administra los contratistas o terceros que participan en tareas operativas del sistema.',
+              'La pantalla permite consultar registros existentes, crear nuevos, editar datos visibles y eliminar contratistas cuando corresponde.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que resuelve',
-                  'items' => [
-                      'Alta y mantenimiento de contratistas.',
-                      'Base de seleccion para asistencia y otras cargas operativas.',
-                      'Trazabilidad de participacion externa en trabajos.',
-                  ],
+                  'Datos identificatorios y de contacto del contratista.',
+                  'Referencia reutilizable para asistencia y otras cargas operativas.',
+                  'Base para trazabilidad de intervencion externa.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Antes de registrar asistencia vinculada a un contratista.',
-                      'Cuando cambia la informacion administrativa o de contacto.',
-                      'Al consolidar consultas por empresa o cuadrilla externa.',
-                  ],
+                  'Consultar contratistas existentes.',
+                  'Crear nuevos registros.',
+                  'Editar datos administrativos o de contacto.',
+                  'Eliminar contratistas cuando ya no deben figurar en el maestro.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El contratista queda disponible como entidad reutilizable en los modulos donde interviene personal o servicio externo.',
-                  ],
+                  'Se usa este maestro antes de registrar asistencia o tareas vinculadas a terceros.',
+                  'Cuando cambia la informacion visible de la empresa externa, se actualiza aqui para mantener las consultas consistentes.',
               ],
-          ],
+              'El contratista queda disponible como entidad reutilizable en los modulos donde interviene personal o servicio externo.',
+              [],
+              [
+                  'Nuevo: crea un contratista nuevo.',
+                  'Editar: corrige datos administrativos o de contacto.',
+                  'Eliminar: quita contratistas que ya no deben seguir activos.',
+                  'Buscar: ayuda a localizar registros dentro del listado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-asistencia'), 'label' => 'Control de asistencia'],
               ['href' => route('ayuda-epp'), 'label' => 'Asignacion de EPP'],
@@ -1156,33 +1265,31 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar permisos',
           [
-              'Los permisos definen acciones puntuales a las que un usuario o rol puede acceder dentro del sistema.',
-              'Su administracion debe leerse junto con roles, porque ambos modulos forman la base del esquema de acceso.',
+              'Esta seccion administra los permisos puntuales del sistema, es decir, las acciones y pantallas a las que un rol o usuario puede acceder.',
+              'La pantalla se usa para consultar permisos existentes y entender la base con la que despues se configuran roles y accesos.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que informacion controla',
-                  'items' => [
-                      'Accesos a pantallas o acciones puntuales.',
-                      'Restricciones finas que complementan los roles.',
-                      'Base para revisar seguridad funcional del sistema.',
-                  ],
+                  'Listado de permisos disponibles en el sistema.',
+                  'Acciones puntuales que despues se agrupan en roles.',
+                  'Base de seguridad funcional para modulos y operaciones.',
               ],
               [
-                  'title' => 'Cuando intervenir en este modulo',
-                  'items' => [
-                      'Al crear un nuevo esquema de acceso.',
-                      'Cuando un rol necesita ajustar permisos especificos.',
-                      'Al auditar accesos o revisar usuarios con demasiadas facultades.',
-                  ],
+                  'Consultar permisos existentes.',
+                  'Revisar que permisos hay disponibles antes de configurar o ajustar roles.',
+                  'Usar el modulo como referencia para entender accesos finos del sistema.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Los accesos quedan delimitados de forma consistente y alineada con los roles existentes.',
-                  ],
+                  'Se consulta junto con roles cuando hace falta definir o auditar accesos.',
+                  'Tambien sirve para entender por que una accion existe o no dentro del alcance de un perfil.',
               ],
-          ],
+              'Los permisos quedan claros como base del esquema de acceso y pueden usarse para ordenar configuraciones de roles.',
+              [],
+              [
+                  'Consultar listado: permite revisar permisos existentes antes de configurar roles.',
+                  'Buscar: ayuda a ubicar rapidamente un permiso puntual si la pantalla lo permite.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestionar-roles'), 'label' => 'Gestionar roles'],
               ['href' => route('ayuda-gestion-usuario'), 'label' => 'Gestionar usuarios'],
@@ -1199,34 +1306,41 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestion de stock',
           [
-              'Stock concentra la disponibilidad, los movimientos y los ajustes sobre productos que se usan en la operacion.',
-              'No es solo una consulta de cantidades: tambien registra ingresos, egresos, correcciones e impacto de remitos o asignaciones.',
+              'Esta seccion administra disponibilidad, movimientos y ajustes de productos que participan del circuito operativo.',
+              'No es solo una consulta de cantidades: desde stock se revisan existencias, se registran movimientos, se corrigen valores y se exportan salidas cuando el modulo lo permite.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que tareas incluye',
-                  'items' => [
-                      'Consulta general y stock total.',
-                      'Ajustes manuales y correcciones.',
-                      'Revision de movimientos historicos.',
-                      'Impresion o consulta de salidas relacionadas.',
-                  ],
+                  'Productos stockeables y su cantidad disponible.',
+                  'Movimientos de ingreso, egreso o ajuste.',
+                  'Referencias de origen o destino como proveedores, frentes o remitos cuando aplican.',
+                  'Historial de movimientos por producto.',
               ],
               [
-                  'title' => 'Que necesita antes',
-                  'items' => [
-                      'Productos correctamente dados de alta.',
-                      'Proveedores o frentes si el circuito los usa como referencia.',
-                      'Criterio claro sobre ingreso, egreso y destino del movimiento.',
-                  ],
+                  'Consultar stock total y movimientos existentes.',
+                  'Crear movimientos o ajustes manuales segun el circuito habilitado.',
+                  'Editar o corregir datos del movimiento cuando la pantalla lo permite.',
+                  'Filtrar por producto, fecha o criterio disponible.',
+                  'Exportar PDF o consultar detalle historico en vistas relacionadas.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El sistema deja trazabilidad de cantidades y movimientos para que otros modulos trabajen con informacion confiable.',
-                  ],
+                  'Se parte del listado general para revisar existencias antes de mover o asignar productos.',
+                  'Cuando hay un ingreso, egreso o correccion, se registra el movimiento para dejar trazabilidad.',
+                  'El historial se usa despues para entender de donde vino una diferencia o reconstruir el recorrido del producto.',
               ],
-          ],
+              'El sistema deja trazabilidad de cantidades y movimientos para que stock, remitos y otros modulos trabajen con informacion confiable.',
+              [
+                  'Que el producto sea el correcto y tenga configuracion stockeable.',
+                  'Que el tipo de movimiento refleje ingreso, egreso o ajuste real.',
+              ],
+              [
+                  'Nuevo movimiento o ajuste: registra ingresos, egresos o correcciones de stock.',
+                  'Editar: corrige un movimiento cuando el circuito lo permite.',
+                  'Eliminar: quita movimientos o registros si el perfil y la pantalla lo habilitan.',
+                  'Buscar y filtrar: localiza movimientos por producto, fecha u otros criterios.',
+                  'Exportar PDF: genera la salida documental del registro o historial cuando la vista lo ofrece.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-productos'), 'label' => 'Gestionar productos'],
               ['href' => route('ayuda-gestion-proveedores'), 'label' => 'Gestionar proveedores'],
@@ -1245,33 +1359,37 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Control de asistencia',
           [
-              'El modulo de asistencia registra presencia, horas o servicios asociados a personal, cuadrillas u otros participantes de la operacion.',
-              'Tambien sirve para consolidar resumenes, pagos y documentos de respaldo segun el circuito interno definido.',
+              'Esta seccion administra la asistencia vinculada a personas, contratistas, horas o servicios segun el circuito operativo disponible.',
+              'La pantalla permite registrar asistencia, consultar registros existentes, editarlos, copiarlos, resumir informacion y emitir salidas documentales cuando corresponde.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Durante la carga diaria o periodica de asistencia.',
-                      'Al corregir una asistencia ya registrada.',
-                      'Cuando se necesita consolidar pagos o emitir un PDF.',
-                  ],
+                  'Registros de asistencia por persona, contratista, servicio o cantidad de horas.',
+                  'Datos necesarios para resumenes, pagos y controles posteriores.',
+                  'Historial o listados de asistencia cargada.',
               ],
               [
-                  'title' => 'Flujo general',
-                  'items' => [
-                      'Alta de registro por servicio u horas.',
-                      'Edicion, copia o ajustes segun necesidad.',
-                      'Consulta de resumenes y salida documental.',
-                  ],
+                  'Consultar registros existentes.',
+                  'Crear asistencia nueva.',
+                  'Editar o copiar asistencia cuando el circuito lo permite.',
+                  'Revisar resumenes o pagos asociados.',
+                  'Emitir PDF u otras salidas disponibles.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'La asistencia queda registrada con la granularidad necesaria para control interno y seguimiento administrativo.',
-                  ],
+                  'Se carga asistencia en el momento operativo o en cortes periodicos segun el uso del modulo.',
+                  'Si un registro quedo mal o debe repetirse una base similar, se usa edicion o copia para ahorrar carga manual.',
+                  'Despues se consulta el resumen para control interno y salida administrativa.',
               ],
-          ],
+              'La asistencia queda registrada con suficiente detalle para control interno, resumenes y seguimiento administrativo.',
+              [],
+              [
+                  'Nuevo: crea un registro de asistencia.',
+                  'Editar: corrige una asistencia ya cargada.',
+                  'Copiar: reutiliza una base similar cuando la pantalla lo permite.',
+                  'Buscar y filtrar: localiza registros por fecha, persona o servicio.',
+                  'PDF o resumen: genera salidas documentales y de control cuando corresponden.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-contratistas'), 'label' => 'Gestionar contratistas'],
               ['href' => route('ayuda-epp'), 'label' => 'Asignacion de EPP'],
@@ -1289,33 +1407,32 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Asignacion de EPP',
           [
-              'El circuito de EPP registra la entrega de elementos de proteccion personal y deja trazabilidad por operador, remito o carga manual.',
-              'Su valor esta en saber que se entrego, cuando y bajo que referencia operativa se hizo la asignacion.',
+              'Esta seccion administra la asignacion de elementos de proteccion personal y deja trazabilidad por operador, remito o carga manual.',
+              'El modulo permite consultar entregas existentes, cargar nuevas asignaciones y reconstruir que se entrego, a quien y bajo que referencia operativa.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Formas de asignacion',
-                  'items' => [
-                      'Desde un remito existente.',
-                      'Directamente a un operador.',
-                      'Por carga manual cuando el circuito lo requiere.',
-                  ],
+                  'Asignaciones de elementos de proteccion por operador o referencia operativa.',
+                  'Productos o elementos entregados y su cantidad.',
+                  'Vinculo con remitos cuando la entrega nace desde ese circuito.',
               ],
               [
-                  'title' => 'Dependencias',
-                  'items' => [
-                      'Usuarios u operadores existentes.',
-                      'Productos o elementos correctamente definidos.',
-                      'Remitos cuando la entrega nace desde ese modulo.',
-                  ],
+                  'Consultar asignaciones existentes.',
+                  'Crear entregas nuevas desde remito, operador o carga manual segun el flujo disponible.',
+                  'Revisar historial o resumen de entregas.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Cada entrega queda registrada y luego puede consultarse en reportes o resumenes internos.',
-                  ],
+                  'Se define primero el origen de la asignacion y luego se cargan los elementos entregados.',
+                  'El modulo se usa para dejar evidencia operativa de la entrega y para poder consultarla despues sin registros externos.',
               ],
-          ],
+              'Cada entrega queda registrada y luego puede consultarse en reportes, resumenes o controles internos.',
+              [],
+              [
+                  'Nueva asignacion: registra una entrega de EPP por operador, remito o carga manual.',
+                  'Consultar historial: revisa entregas ya realizadas.',
+                  'Buscar: ayuda a localizar entregas por operador o referencia disponible.',
+              ]
+          ),
           [
               ['href' => route('ayuda-creacion-remito'), 'label' => 'Remitos'],
               ['href' => route('ayuda-gestion-usuario'), 'label' => 'Gestionar usuarios'],
@@ -1333,33 +1450,32 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Dosimetria de operador',
           [
-              'Este modulo concentra la carga y el seguimiento de informacion dosimetrica asociada a operadores.',
-              'La utilidad principal es mantener un historial consultable y controlado para cada persona involucrada.',
+              'Esta seccion administra la informacion dosimetrica asociada a cada operador.',
+              'La pantalla permite consultar historial, cargar o actualizar datos y sostener seguimiento individual dentro del circuito de dosimetria.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que informacion organiza',
-                  'items' => [
-                      'Registro por operador.',
-                      'Seguimiento de valores o estados asociados.',
-                      'Base para resumenes y consultas historicas.',
-                  ],
+                  'Registro dosimetrico por operador.',
+                  'Valores, estados o referencias asociadas al seguimiento individual.',
+                  'Base para historial y resumenes posteriores.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Al cargar o actualizar informacion dosimetrica.',
-                      'Al revisar el estado de un operador.',
-                      'Antes de emitir resumenes o controles internos.',
-                  ],
+                  'Consultar registros por operador.',
+                  'Cargar o actualizar informacion dosimetrica.',
+                  'Revisar el historial individual antes de consolidar reportes.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El operador queda trazado con un historial consultable dentro del modulo de dosimetria.',
-                  ],
+                  'Se usa cuando hace falta cargar o corregir informacion de un operador puntual.',
+                  'Tambien sirve para revisar antecedentes sin pasar por el resumen general.',
               ],
-          ],
+              'El operador queda trazado con un historial consultable dentro del modulo de dosimetria.',
+              [],
+              [
+                  'Nuevo o cargar: registra informacion dosimetrica del operador cuando la pantalla lo permite.',
+                  'Editar: actualiza datos ya cargados.',
+                  'Buscar y filtrar: localiza rapidamente un operador o periodo.',
+              ]
+          ),
           [
               ['href' => route('ayuda-dosimetria-resumen'), 'label' => 'Resumen de dosimetria'],
               ['href' => route('ayuda-historial-operadores'), 'label' => 'Historial de operadores'],
@@ -1377,33 +1493,32 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Dosimetria RX',
           [
-              'Dosimetria RX cubre la parte del seguimiento dosimetrico vinculada al circuito RX dentro del sistema.',
-              'Debe leerse como un submodulo especializado, relacionado con estados, resumenes y consultas historicas.',
+              'Esta seccion cubre la parte del seguimiento dosimetrico vinculada al circuito RX.',
+              'El modulo se usa para consultar datos, registrar resultados y cruzarlos con estados o resumenes del mismo circuito.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que tareas incluye',
-                  'items' => [
-                      'Registro de datos o resultados RX.',
-                      'Consulta historica por periodo o referencia.',
-                      'Cruce con resumenes y estados asociados.',
-                  ],
+                  'Resultados o datos RX asociados al circuito dosimetrico.',
+                  'Referencias por periodo, estado o criterio disponible.',
+                  'Informacion reutilizable en resumenes e historicos.',
               ],
               [
-                  'title' => 'Cuando conviene revisarlo',
-                  'items' => [
-                      'Durante la carga periodica del modulo.',
-                      'Cuando se valida un seguimiento o retraso.',
-                      'Al preparar reportes internos.',
-                  ],
+                  'Consultar informacion RX cargada.',
+                  'Registrar o actualizar datos del periodo.',
+                  'Cruzar informacion con estados y resumenes relacionados.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'La informacion RX queda integrada al resto del circuito dosimetrico y disponible para consulta.',
-                  ],
+                  'Se usa durante la carga periodica o cuando hace falta revisar una situacion puntual del circuito RX.',
+                  'El listado y los filtros sirven para validar seguimiento, demoras o inconsistencias antes de reportar.',
               ],
-          ],
+              'La informacion RX queda integrada al resto del circuito dosimetrico y disponible para consulta.',
+              [],
+              [
+                  'Nuevo o cargar: registra informacion RX del periodo si la pantalla lo permite.',
+                  'Editar: corrige datos ya cargados.',
+                  'Buscar y filtrar: localiza resultados por criterio disponible.',
+              ]
+          ),
           [
               ['href' => route('ayuda-dosimetria-estados'), 'label' => 'Estados de film'],
               ['href' => route('ayuda-dosimetria-resumen'), 'label' => 'Resumen de dosimetria'],
@@ -1421,32 +1536,28 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Estados de film',
           [
-              'Estados de film funciona como apoyo para clasificar y seguir situaciones dentro del circuito de dosimetria.',
-              'Al tratarse de un tema operativo especifico, conviene mantenerlo separado del resto para que el criterio de uso quede claro.',
+              'Esta seccion administra los estados que se usan para clasificar situaciones dentro del circuito de dosimetria.',
+              'Funciona como maestro de apoyo para que los registros y resumenes trabajen con estados consistentes.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Para que sirve',
-                  'items' => [
-                      'Definir estados posibles dentro del seguimiento.',
-                      'Evitar clasificaciones manuales o inconsistentes.',
-                      'Mejorar lectura de listados y resumenes.',
-                  ],
+                  'Listado de estados disponibles para clasificar registros.',
+                  'Referencias comunes para resumenes y consultas.',
+                  'Base de apoyo para modulos de dosimetria.',
               ],
               [
-                  'title' => 'Dependencias',
-                  'items' => [
-                      'Carga o consulta en los modulos de dosimetria.',
-                      'Reportes o resumenes que interpretan estos estados.',
-                  ],
+                  'Consultar estados existentes.',
+                  'Usar el maestro como referencia para interpretar listados y resumenes.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'Los estados quedan normalizados y reutilizables dentro del circuito dosimetrico.',
-                  ],
+                  'Se revisa este modulo cuando hace falta entender que significa un estado o mantener criterio comun en el circuito.',
               ],
-          ],
+              'Los estados quedan normalizados y reutilizables dentro del circuito dosimetrico.',
+              [],
+              [
+                  'Consultar listado: permite revisar estados disponibles dentro del circuito.',
+              ]
+          ),
           [
               ['href' => route('ayuda-dosimetria-rx'), 'label' => 'Dosimetria RX'],
               ['href' => route('ayuda-dosimetria-resumen'), 'label' => 'Resumen de dosimetria'],
@@ -1462,33 +1573,30 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Resumen de dosimetria',
           [
-              'El resumen de dosimetria concentra la informacion ya cargada para leer el estado general del modulo sin entrar registro por registro.',
-              'Es una pantalla de consulta y seguimiento, no de carga inicial. Por eso su valor esta en los filtros, el contexto y la interpretacion.',
+              'Esta seccion consolida la informacion ya cargada para leer el estado general del modulo de dosimetria sin entrar registro por registro.',
+              'Es una pantalla de consulta y seguimiento: su valor esta en filtros, contexto y lectura operativa del resumen.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que permite revisar',
-                  'items' => [
-                      'Situacion consolidada del modulo.',
-                      'Datos por operador, periodo o criterio disponible.',
-                      'Base para decisiones o controles internos.',
-                  ],
+                  'Situacion consolidada del modulo por operador, periodo o criterio disponible.',
+                  'Datos resumidos para control interno.',
+                  'Base para profundizar luego en historicos puntuales.',
               ],
               [
-                  'title' => 'Cuando conviene usarlo',
-                  'items' => [
-                      'Al revisar cierres periodicos.',
-                      'Cuando se detectan demoras o desfasajes.',
-                      'Antes de emitir reportes o responder consultas internas.',
-                  ],
+                  'Consultar el estado general del circuito.',
+                  'Filtrar y revisar resumenes segun el criterio disponible.',
+                  'Usar la pantalla como punto de partida antes de entrar a un historial individual.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El usuario obtiene una lectura consolidada del estado dosimetrico y puede profundizar despues en historicos o registros puntuales.',
-                  ],
+                  'Se usa para cierres periodicos, controles internos y consultas que no requieren abrir cada registro individual.',
               ],
-          ],
+              'El usuario obtiene una lectura consolidada del estado dosimetrico y puede profundizar despues en historicos o registros puntuales.',
+              [],
+              [
+                  'Buscar y filtrar: permite consolidar la lectura del resumen por operador, periodo o criterio disponible.',
+                  'Ver detalle: sirve como paso previo para entrar a historiales o registros puntuales.',
+              ]
+          ),
           [
               ['href' => route('ayuda-dosimetria-operador'), 'label' => 'Dosimetria de operador'],
               ['href' => route('ayuda-dosimetria-rx'), 'label' => 'Dosimetria RX'],
@@ -1505,33 +1613,30 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Historial de operadores',
           [
-              'El historial de operadores permite reconstruir informacion pasada vinculada a cada operador dentro del modulo de dosimetria.',
-              'Es la vista indicada cuando no alcanza con el resumen general y se necesita rastrear evolucion o antecedentes.',
+              'Esta seccion permite reconstruir informacion historica vinculada a cada operador dentro del modulo de dosimetria.',
+              'Se usa cuando el resumen general no alcanza y hace falta rastrear antecedentes, periodos o evolucion individual.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que consultas habilita',
-                  'items' => [
-                      'Busqueda por operador.',
-                      'Revision por periodos.',
-                      'Cruce con resumenes o datos complementarios.',
-                  ],
+                  'Historial por operador.',
+                  'Consultas por periodo o criterio disponible.',
+                  'Base para rastrear antecedentes y compararlos con el resumen general.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Al investigar antecedentes.',
-                      'Cuando se necesita responder una consulta puntual.',
-                      'Al validar informacion previa antes de una decision operativa.',
-                  ],
+                  'Buscar por operador.',
+                  'Consultar antecedentes por periodo.',
+                  'Cruzar la lectura con resumenes o datos complementarios.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El usuario puede reconstruir el recorrido historico del operador sin depender de registros manuales externos.',
-                  ],
+                  'Se usa al investigar antecedentes o validar informacion previa a una decision operativa.',
               ],
-          ],
+              'El usuario puede reconstruir el recorrido historico del operador sin depender de registros manuales externos.',
+              [],
+              [
+                  'Buscar: localiza el operador dentro del historial.',
+                  'Filtrar por periodo: acota la consulta al tramo que se necesita revisar.',
+              ]
+          ),
           [
               ['href' => route('ayuda-dosimetria-operador'), 'label' => 'Dosimetria de operador'],
               ['href' => route('ayuda-dosimetria-resumen'), 'label' => 'Resumen de dosimetria'],
@@ -1547,33 +1652,31 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Reportes',
           [
-              'El modulo de reportes agrupa consultas consolidadas que sirven para control tecnico, seguimiento operativo y lectura administrativa.',
-              'No todos los reportes responden a la misma necesidad, por eso conviene usar esta pagina como puerta de entrada al conjunto.',
+              'Esta seccion agrupa reportes y consultas consolidadas para control tecnico, seguimiento operativo y lectura administrativa.',
+              'No reemplaza los modulos operativos: sirve para revisar informacion resumida, filtrarla y exportarla sin recorrer cada pantalla de origen.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que tipos de reportes incluye',
-                  'items' => [
-                      'Reportes de certificados y partes.',
-                      'Consultas de placas, informes sin parte o trazabilidad documental.',
-                      'Reportes tecnicos o estadisticos segun el modulo.',
-                  ],
+                  'Reportes de certificados, partes, placas, trazabilidad y otras salidas consolidadas.',
+                  'Filtros por periodo, cliente, OT u otros criterios disponibles segun el reporte.',
+                  'Resultados listos para consulta o exportacion.',
               ],
               [
-                  'title' => 'Cuando conviene usarlos',
-                  'items' => [
-                      'Al consolidar informacion para control interno.',
-                      'Cuando se necesita responder una consulta de gestion.',
-                      'Antes de exportar o compartir informacion resumida.',
-                  ],
+                  'Consultar salidas consolidadas.',
+                  'Aplicar filtros para acotar resultados.',
+                  'Exportar o compartir informacion resumida cuando el reporte lo permite.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El usuario obtiene una salida consolidada con filtros que le evita recorrer modulos operativos uno por uno.',
-                  ],
+                  'Se entra al reporte adecuado segun la pregunta operativa o administrativa que se quiere responder.',
+                  'Despues se filtra por el criterio disponible para obtener una salida acotada sin recorrer modulos de origen uno por uno.',
               ],
-          ],
+              'El usuario obtiene una salida consolidada con filtros que le evita recorrer modulos operativos uno por uno.',
+              [],
+              [
+                  'Buscar y filtrar: permite acotar resultados segun cliente, OT, fecha u otros criterios del reporte.',
+                  'Exportar: genera la salida resumida en el formato disponible para cada reporte.',
+              ]
+          ),
           [
               ['href' => route('ayuda-visualizar-informes'), 'label' => 'Visualizacion de informes'],
               ['href' => route('ayuda-visualizar-parte-diario'), 'label' => 'Visualizacion de partes diarios'],
@@ -1592,33 +1695,30 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'QR y documentacion asociada',
           [
-              'Los modulos QR sirven para acceder rapido a informacion y documentacion asociada a internos de equipos o vehiculos.',
-              'Su principal valor es evitar busquedas manuales largas cuando se necesita consultar algo desde el terreno o desde una referencia fisica.',
+              'Esta seccion concentra las consultas por QR para acceder rapido a informacion y documentacion asociada a equipos o vehiculos.',
+              'La funcionalidad apunta a abrir fichas o documentos desde una referencia fisica sin pasar por busquedas manuales largas.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que consultas cubre',
-                  'items' => [
-                      'QR de internos de equipos.',
-                      'QR de vehiculos.',
-                      'Acceso a documentacion vinculada o historica.',
-                  ],
+                  'QR de internos de equipos y vehiculos.',
+                  'Documentacion vinculada o historica que se abre desde la referencia fisica.',
+                  'Datos utiles para trazabilidad rapida.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Al escanear un codigo desde una unidad o equipo.',
-                      'Cuando se necesita validar documentacion rapidamente.',
-                      'Al revisar trazabilidad sin entrar al circuito completo del maestro.',
-                  ],
+                  'Escanear o consultar un QR disponible.',
+                  'Abrir la ficha o documentacion asociada.',
+                  'Usar la pantalla como acceso rapido a informacion tecnica o documental.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'La consulta devuelve informacion util y acorta el tiempo de acceso a documentos o referencias asociadas.',
-                  ],
+                  'Se usa en terreno o en controles rapidos donde conviene resolver una consulta desde la referencia fisica del equipo o vehiculo.',
               ],
-          ],
+              'La consulta devuelve informacion util y acorta el tiempo de acceso a documentos o referencias asociadas.',
+              [],
+              [
+                  'Consultar QR: abre la ficha asociada a la referencia fisica escaneada o seleccionada.',
+                  'Abrir documentacion: da acceso rapido a archivos o antecedentes vinculados.',
+              ]
+          ),
           [
               ['href' => route('ayuda-gestion-interno-equipos'), 'label' => 'Gestionar internos de equipos'],
               ['href' => route('ayuda-gestion-vehiculos'), 'label' => 'Gestionar vehiculos'],
@@ -1639,30 +1739,28 @@ public function __construct()
               'La gestion de multimedia concentra la administracion del contenido que luego se publica para consulta de usuarios.',
               'Incluye la organizacion por categorias o subcategorias y la carga de piezas disponibles para visualizacion.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que tareas abarca',
-                  'items' => [
-                      'Gestion de categorias.',
-                      'Gestion de subcategorias.',
-                      'Alta, baja o reordenamiento del contenido publicado.',
-                  ],
+                  'Categorias, subcategorias y contenido multimedia publicado.',
+                  'Estructura de navegacion que despues ve el usuario final.',
+                  'Piezas disponibles para visualizacion posterior.',
               ],
               [
-                  'title' => 'Cuando intervenir en este modulo',
-                  'items' => [
-                      'Al crear una nueva estructura de contenido.',
-                      'Cuando se suben piezas nuevas o se retiran existentes.',
-                      'Al ordenar la navegacion que ve el usuario final.',
-                  ],
+                  'Consultar contenido y estructura publicada.',
+                  'Crear o reorganizar categorias y subcategorias.',
+                  'Dar de alta, retirar o reordenar contenido multimedia.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El contenido queda clasificado y listo para su posterior consulta desde la vista de visualizacion.',
-                  ],
+                  'Se usa cuando hace falta cargar material nuevo o reorganizar la forma en que se presenta.',
               ],
-          ],
+              'El contenido queda clasificado y listo para su posterior consulta desde la vista de visualizacion.',
+              [],
+              [
+                  'Nuevo: crea categorias, subcategorias o contenido nuevo.',
+                  'Editar o reordenar: ajusta estructura y posicion del contenido publicado.',
+                  'Eliminar: retira material que ya no debe quedar visible.',
+              ]
+          ),
           [
               ['href' => route('ayuda-multimedia-visualizacion'), 'label' => 'Visualizacion de multimedia'],
               ['href' => route('ayuda-modelos-3d'), 'label' => 'Modelos 3D'],
@@ -1682,30 +1780,27 @@ public function __construct()
               'Esta vista permite recorrer el contenido multimedia ya publicado y consumido por el usuario final.',
               'A diferencia de la gestion, aqui el foco esta en navegar, filtrar y abrir contenido disponible.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que permite hacer',
-                  'items' => [
-                      'Acceder al listado de contenido disponible.',
-                      'Navegar por categoria o subcategoria.',
-                      'Abrir el material publicado y recorrerlo.',
-                  ],
+                  'Contenido multimedia ya publicado.',
+                  'Categorias y subcategorias para navegar el material.',
+                  'Piezas disponibles para apertura y consulta.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Al consultar material de apoyo o comunicacion.',
-                      'Cuando un usuario necesita encontrar una pieza especifica.',
-                      'Al validar que el contenido publicado quedo visible correctamente.',
-                  ],
+                  'Consultar el listado de contenido disponible.',
+                  'Navegar por categoria o subcategoria.',
+                  'Abrir y recorrer el material publicado.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El usuario llega al contenido correcto sin depender del modulo de administracion.',
-                  ],
+                  'Se usa cuando un usuario necesita encontrar material ya cargado sin entrar al modulo de administracion.',
               ],
-          ],
+              'El usuario llega al contenido correcto sin depender del modulo de administracion.',
+              [],
+              [
+                  'Buscar o navegar: recorre contenido por categoria o subcategoria.',
+                  'Abrir: muestra el material multimedia publicado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-multimedia-gestion'), 'label' => 'Gestion de multimedia'],
               ['href' => route('ayuda-modelos-3d'), 'label' => 'Modelos 3D'],
@@ -1724,30 +1819,27 @@ public function __construct()
               'Esta seccion agrupa los avisos del sistema, las alarmas configuradas y los receptores que participan del circuito de notificacion.',
               'Su objetivo es que el usuario entienda que eventos requieren seguimiento y como se distribuyen esas alertas.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que cubre el modulo',
-                  'items' => [
-                      'Consulta de notificaciones recibidas.',
-                      'Revision de alarmas activas o configurables.',
-                      'Relacion con receptores o destinatarios.',
-                  ],
+                  'Notificaciones recibidas, alarmas activas y destinatarios relacionados.',
+                  'Eventos del sistema que requieren lectura o seguimiento.',
+                  'Base de consulta para entender el circuito de avisos.',
               ],
               [
-                  'title' => 'Cuando se usa',
-                  'items' => [
-                      'Al revisar avisos pendientes.',
-                      'Cuando se investiga el origen de una alerta.',
-                      'Al validar quien recibe una notificacion determinada.',
-                  ],
+                  'Consultar avisos pendientes.',
+                  'Revisar alarmas o configuraciones relacionadas.',
+                  'Entender quien recibe una alerta y por que motivo.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El usuario comprende que eventos debe seguir y que configuraciones sostienen ese circuito de avisos.',
-                  ],
+                  'Se usa cuando aparece una notificacion, cuando hace falta investigar una alerta o cuando se valida la distribucion de avisos.',
               ],
-          ],
+              'El usuario comprende que eventos debe seguir y que configuraciones sostienen ese circuito de avisos.',
+              [],
+              [
+                  'Ver notificacion: abre el aviso o contexto relacionado.',
+                  'Consultar alarmas: revisa el origen y estado de una alerta.',
+              ]
+          ),
           [
               ['href' => route('ayuda-perfil'), 'label' => 'Perfil de usuario'],
               ['href' => route('ayuda-gestion-usuario'), 'label' => 'Gestionar usuarios'],
@@ -1767,30 +1859,27 @@ public function __construct()
               'El modulo de modelos 3D permite gestionar o consultar representaciones visuales dentro del sistema.',
               'Su documentacion tiene sentido separada porque mezcla carga de contenido con visualizacion interactiva.',
           ],
-          [
+          $this->functionalSections(
               [
-                  'title' => 'Que flujo cubre',
-                  'items' => [
-                      'Listado de modelos disponibles.',
-                      'Acceso al visualizador 3D.',
-                      'Consulta de material asociado segun el uso del modulo.',
-                  ],
+                  'Listado de modelos disponibles.',
+                  'Acceso al visualizador 3D.',
+                  'Material o referencia asociada al modelo cuando aplica.',
               ],
               [
-                  'title' => 'Cuando conviene usarlo',
-                  'items' => [
-                      'Al revisar representaciones visuales publicadas.',
-                      'Cuando se necesita validar el acceso al visualizador.',
-                      'Como apoyo para contenido tecnico o multimedia.',
-                  ],
+                  'Consultar modelos disponibles.',
+                  'Abrir el visualizador 3D.',
+                  'Usar el modulo como apoyo visual o tecnico segun el contenido publicado.',
               ],
               [
-                  'title' => 'Resultado esperado',
-                  'paragraphs' => [
-                      'El usuario puede localizar el modelo correcto y abrir su visualizacion sin depender de rutas internas no documentadas.',
-                  ],
+                  'Se usa para localizar una representacion visual y abrirla sin depender de rutas internas del sistema.',
               ],
-          ],
+              'El usuario puede localizar el modelo correcto y abrir su visualizacion sin depender de rutas internas no documentadas.',
+              [],
+              [
+                  'Consultar listado: permite revisar los modelos disponibles.',
+                  'Abrir visualizador: muestra el modelo 3D seleccionado.',
+              ]
+          ),
           [
               ['href' => route('ayuda-multimedia-gestion'), 'label' => 'Gestion de multimedia'],
               ['href' => route('ayuda-multimedia-visualizacion'), 'label' => 'Visualizacion de multimedia'],

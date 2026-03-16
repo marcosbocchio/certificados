@@ -36,7 +36,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel detalle_iconos">
-            <h2>Acciones principales sobre una OT</h2>
+            <h2>Botones y acciones disponibles</h2>
             <p>Desde el listado y desde la barra superior de modulos se accede al resto del circuito documental.</p>
             <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_editar.PNG') }}" alt="Editar" /> Permite modificar los datos generales de la OT mientras el usuario tenga permisos.</p>
             <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_usuarios.PNG') }}" alt="Usuarios" /> Abre la asignacion de usuarios cliente y soldadores asociados.</p>

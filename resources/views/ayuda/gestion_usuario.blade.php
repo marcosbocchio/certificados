@@ -55,7 +55,7 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel detalle_iconos">
-            <h2>Importante</h2>
+            <h2>Botones y acciones disponibles</h2>
             <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_editar_usuario.PNG') }}" alt="Editar usuario" /> Permite modificar la informacion del usuario seleccionado.</p>
             <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eep_usuario.PNG') }}" alt="Asignacion EPP" /> Permite consultar o gestionar la asignacion de EPP del usuario.</p>
             <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eliminar_usuario.PNG') }}" alt="Eliminar usuario" /> Permite eliminar el usuario, si el perfil tiene permisos para hacerlo.</p>
