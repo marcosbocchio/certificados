@@ -25,7 +25,7 @@ public function __construct()
       return view($viewName, compact('user', 'header_titulo', 'header_descripcion'));
   }
 
-  private function returnAyudaIntroView($title, array $summary = [], array $sections = [], array $related = [], array $visuals = [])
+  private function returnAyudaIntroView($title, array $summary = [], array $sections = [], array $related = [], array $visuals = [], array $meta = [])
   {
       $user = auth()->user();
       $header_titulo = $title;
@@ -39,7 +39,8 @@ public function __construct()
           'summary',
           'sections',
           'related',
-          'visuals'
+          'visuals',
+          'meta'
       ));
   }
 
@@ -159,77 +160,707 @@ public function __construct()
 
   public function gestionNormas()
   {
-      return $this->returnAyudaView('ayuda.gesiton_normas');
+      return $this->returnAyudaIntroView(
+          'Gestionar normas',
+          [
+              'Este grupo organiza normas de ensayo, fabricacion y evaluacion que despues se reutilizan en formularios tecnicos y documentos del sistema.',
+              'Su importancia no esta solo en el alta del maestro: mantener estas referencias consistentes evita encabezados ambiguos y criterios desalineados en informes.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Normas de ensayo para metodos y servicios.',
+                      'Normas de fabricacion ligadas a productos, componentes o referencias constructivas.',
+                      'Normas de evaluacion usadas como criterio tecnico de aceptacion o rechazo.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Antes de cargar o ajustar configuraciones tecnicas del sistema.',
+                      'Al preparar maestros que despues alimentan informes.',
+                      'Cuando se necesita corregir codigos, descripciones o referencias normativas.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'Las normas quedan disponibles como referencia estable para que informes y otros modulos trabajen con criterios tecnicos consistentes.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-gestion-servicios'), 'label' => 'Gestionar servicios'],
+              ['href' => route('ayuda-generar-informes'), 'label' => 'Creacion de informes'],
+              ['href' => route('ayuda-gestion-medidas'), 'label' => 'Gestionar medidas'],
+          ],
+          [
+              'Captura del listado de normas por tipo.',
+              'GIF de alta o edicion de una norma.',
+          ],
+          [
+              'audience' => 'Operacion tecnica y administracion ENOD',
+          ]
+      );
   }
 
   public function gestionMedidas()
   {
-      return $this->returnAyudaView('ayuda.gestiona_medidas');
+      return $this->returnAyudaIntroView(
+          'Gestionar medidas',
+          [
+              'El maestro de medidas define valores o referencias que despues se seleccionan en productos, servicios o formularios tecnicos donde hace falta una parametrizacion previa.',
+              'Su funcion es evitar carga manual repetida y mantener un criterio uniforme cuando distintas pantallas trabajan con las mismas dimensiones o referencias.',
+          ],
+          [
+              [
+                  'title' => 'Que resuelve',
+                  'items' => [
+                      'Normaliza opciones de medida usadas en otros maestros.',
+                      'Reduce errores de carga libre en formularios dependientes.',
+                      'Facilita filtros y seleccion repetida de valores compatibles.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Antes de crear productos o configuraciones que dependen de una medida.',
+                      'Cuando se detectan valores duplicados o inconsistentes.',
+                      'Al ajustar catalogos tecnicos que comparten una misma estructura de medida.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'Las medidas quedan disponibles como maestro reutilizable para mantener orden y consistencia en el resto del sistema.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-gestion-productos'), 'label' => 'Gestionar productos'],
+              ['href' => route('ayuda-gestion-unidades-de-medida'), 'label' => 'Gestionar unidades de medida'],
+              ['href' => route('ayuda-gestion-normas'), 'label' => 'Gestionar normas'],
+          ],
+          [
+              'Captura del listado de medidas.',
+          ],
+          [
+              'audience' => 'Operacion tecnica y configuracion de maestros',
+          ]
+      );
   }
 
   public function gestionarInternoFuente()
   {
-      return $this->returnAyudaView('ayuda.gestionar_internofuente');
+      return $this->returnAyudaIntroView(
+          'Gestionar internos de fuente',
+          [
+              'Los internos de fuente individualizan cada fuente disponible dentro del circuito operativo y la vinculan con su seguimiento documental o tecnico.',
+              'No reemplazan al maestro general de fuentes: sirven para controlar cada unidad concreta que despues puede asignarse, consultarse o trazarse.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Identificacion unica de cada fuente.',
+                      'Relacion con la fuente base y sus datos tecnicos.',
+                      'Base para trazabilidad, documentacion y ubicacion operativa.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Al incorporar una nueva unidad al circuito.',
+                      'Cuando cambia su estado, ubicacion o informacion asociada.',
+                      'Antes de necesitarla en consultas QR, trazabilidad o control tecnico.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'Cada fuente queda individualizada y lista para integrarse con documentacion, consultas y circuitos operativos relacionados.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-gestion-fuentes'), 'label' => 'Gestionar fuentes'],
+              ['href' => route('ayuda-qr'), 'label' => 'QR y documentacion asociada'],
+              ['href' => route('ayuda-reportes'), 'label' => 'Reportes'],
+          ],
+          [
+              'Captura del listado de internos de fuente.',
+              'GIF de alta o edicion del interno.',
+          ],
+          [
+              'audience' => 'Operacion tecnica y trazabilidad',
+          ]
+      );
   }
 
   public function gestionCliente()
   {
-      return $this->returnAyudaView('ayuda.gestion_cliente');
+      return $this->returnAyudaIntroView(
+          'Gestionar clientes',
+          [
+              'El maestro de clientes concentra la informacion comercial y operativa de las entidades para las que se trabaja dentro del sistema.',
+              'Su carga impacta despues en OT, usuarios cliente, documentacion y referencias visibles en otros circuitos del negocio.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Datos identificatorios y administrativos del cliente.',
+                      'Informacion de contacto reutilizable en otros modulos.',
+                      'Base de seleccion para OT, certificados y documentacion.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Antes de crear una nueva OT para un cliente no registrado.',
+                      'Cuando cambian contactos, razon social o datos de referencia.',
+                      'Al revisar que informacion comercial usa el resto del circuito documental.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'El cliente queda disponible como entidad confiable para usarse en OT y documentos sin repetir carga manual en cada pantalla.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-crear-ot'), 'label' => 'Como crear una OT'],
+              ['href' => route('ayuda-gestion-comitente'), 'label' => 'Gestionar comitentes'],
+              ['href' => route('ayuda-gestion-usuario'), 'label' => 'Gestionar usuarios'],
+              ['href' => route('ayuda-visualizar-ot'), 'label' => 'Visualizacion general de la OT'],
+          ],
+          [
+              'Captura del listado con buscador y acciones.',
+              'GIF de alta o edicion de cliente.',
+          ],
+          [
+              'audience' => 'Operacion comercial y administracion ENOD',
+          ]
+      );
   }
 
   public function gestionComitente()
   {
-      return $this->returnAyudaView('ayuda.gestion_comitente');
+      return $this->returnAyudaIntroView(
+          'Gestionar comitentes',
+          [
+              'El maestro de comitentes define entidades que despues pueden aparecer asociadas a OT, certificados u otra documentacion del circuito.',
+              'Su funcion principal es separar correctamente la referencia de comitente del cliente cuando el negocio necesita distinguir ambos roles.',
+          ],
+          [
+              [
+                  'title' => 'Que resuelve',
+                  'items' => [
+                      'Alta y mantenimiento de comitentes.',
+                      'Referencia reutilizable en documentos y formularios.',
+                      'Diferenciacion clara entre cliente y comitente cuando no son la misma entidad.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Antes de crear OT o documentos que requieren comitente.',
+                      'Cuando cambia la razon social o la identificacion visible.',
+                      'Al revisar datos de cabecera usados en certificados y otros documentos.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'El comitente queda disponible como maestro estable para vincularlo con otros registros sin duplicar informacion.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-gestion-cliente'), 'label' => 'Gestionar clientes'],
+              ['href' => route('ayuda-crear-ot'), 'label' => 'Como crear una OT'],
+              ['href' => route('ayuda-crear-certificados'), 'label' => 'Creacion de certificados'],
+          ],
+          [
+              'Captura del listado de comitentes.',
+              'GIF de alta o edicion de comitente.',
+          ],
+          [
+              'audience' => 'Operacion comercial y documentacion',
+          ]
+      );
   }
 
   public function gestionDocumentaciones()
   {
-      return $this->returnAyudaView('ayuda.gestion_documentaciones');
+      return $this->returnAyudaIntroView(
+          'Gestionar documentaciones',
+          [
+              'Este maestro ordena tipos o referencias documentales que despues se usan para asociar vencimientos, soportes o requisitos dentro del sistema.',
+              'Su valor aparece cuando otros modulos necesitan clasificar correctamente la documentacion vinculada a vehiculos, equipos u otras entidades.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Tipos de documentacion reutilizables.',
+                      'Base para vigencias, controles o clasificaciones posteriores.',
+                      'Referencia comun para distintos circuitos operativos.',
+                  ],
+              ],
+              [
+                  'title' => 'Dependencias',
+                  'items' => [
+                      'Vehiculos y documentacion complementaria.',
+                      'Internos de equipos o recursos con soporte documental.',
+                      'Consultas y controles que dependen de documentacion vigente.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'La documentacion queda clasificada bajo un criterio comun y reutilizable para que los modulos relacionados trabajen con la misma referencia.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-gestion-vehiculos'), 'label' => 'Gestionar vehiculos'],
+              ['href' => route('ayuda-visualizar-vehiculos'), 'label' => 'Visualizar vehiculos y documentacion complementaria'],
+              ['href' => route('ayuda-gestion-equipos'), 'label' => 'Gestionar equipos'],
+          ],
+          [
+              'Captura del listado de documentaciones.',
+          ],
+          [
+              'audience' => 'Operacion tecnica y control documental',
+          ]
+      );
   }
 
   public function gestionEquipos()
   {
-      return $this->returnAyudaView('ayuda.gestion_equipos');
+      return $this->returnAyudaIntroView(
+          'Gestionar equipos',
+          [
+              'El maestro de equipos define las referencias base sobre las que despues se crean internos, trazabilidad y documentacion asociada.',
+              'No representa una unidad operativa individual. Su funcion es ordenar el catalogo general de equipos disponibles para el negocio.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Catalogo general de equipos.',
+                      'Datos base para internos y seguimiento tecnico.',
+                      'Referencia comun para modulos de trazabilidad y documentacion.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Antes de dar de alta un interno de equipo.',
+                      'Cuando cambia la definicion o clasificacion del equipo base.',
+                      'Al revisar consistencia del catalogo tecnico general.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'El equipo queda disponible como maestro base para posteriores altas operativas y consultas de trazabilidad.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-gestion-interno-equipos'), 'label' => 'Gestionar internos de equipos'],
+              ['href' => route('ayuda-qr'), 'label' => 'QR y documentacion asociada'],
+              ['href' => route('ayuda-reportes'), 'label' => 'Reportes'],
+          ],
+          [
+              'Captura del listado de equipos.',
+              'GIF de alta o edicion del maestro.',
+          ],
+          [
+              'audience' => 'Operacion tecnica y trazabilidad',
+          ]
+      );
   }
 
   public function gestionFuentes()
   {
-      return $this->returnAyudaView('ayuda.gestion_fuentes');
+      return $this->returnAyudaIntroView(
+          'Gestionar fuentes',
+          [
+              'El maestro de fuentes concentra las referencias base de fuentes que despues pueden individualizarse mediante internos y asociarse a circuitos de control tecnico.',
+              'Su uso es similar al de equipos: prepara la estructura general sobre la que despues se monta la operatoria concreta.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Catalogo general de fuentes.',
+                      'Informacion tecnica base para seguimiento posterior.',
+                      'Referencia comun para internos, consultas y trazabilidad.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Antes de crear internos de fuente.',
+                      'Cuando cambia una referencia tecnica del maestro.',
+                      'Al revisar consistencia de las fuentes disponibles en el sistema.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'La fuente queda cargada como maestro base y lista para vincularse con internos, documentacion y circuitos de consulta.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-gestion-interno-fuente'), 'label' => 'Gestionar internos de fuente'],
+              ['href' => route('ayuda-qr'), 'label' => 'QR y documentacion asociada'],
+              ['href' => route('ayuda-reportes'), 'label' => 'Reportes'],
+          ],
+          [
+              'Captura del listado de fuentes.',
+              'GIF de alta o edicion del maestro.',
+          ],
+          [
+              'audience' => 'Operacion tecnica y trazabilidad',
+          ]
+      );
   }
 
   public function gestionInternoEquipos()
   {
-      return $this->returnAyudaView('ayuda.gestion_internoequipos');
+      return $this->returnAyudaIntroView(
+          'Gestionar internos de equipos',
+          [
+              'Los internos de equipos representan unidades concretas del maestro de equipos y permiten seguir su ubicacion, documentacion y trazabilidad.',
+              'Son la pieza operativa real que se consulta despues en QR, reportes, documentacion o movimientos entre frentes.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Identificacion unica de cada equipo operativo.',
+                      'Relacion con el equipo base y su documentacion.',
+                      'Ubicacion o referencia para trazabilidad posterior.',
+                  ],
+              ],
+              [
+                  'title' => 'Dependencias',
+                  'items' => [
+                      'Maestro de equipos correctamente cargado.',
+                      'Documentacion asociada cuando el circuito lo requiere.',
+                      'Consultas QR, reportes o trazabilidad interna.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'Cada equipo queda individualizado y listo para usarse en consultas, movimientos o seguimiento tecnico del sistema.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-gestion-equipos'), 'label' => 'Gestionar equipos'],
+              ['href' => route('ayuda-qr'), 'label' => 'QR y documentacion asociada'],
+              ['href' => route('ayuda-gestion-documentaciones'), 'label' => 'Gestionar documentaciones'],
+              ['href' => route('ayuda-reportes'), 'label' => 'Reportes'],
+          ],
+          [
+              'Captura del listado de internos de equipos.',
+              'GIF de alta o edicion del interno.',
+          ],
+          [
+              'audience' => 'Operacion tecnica y trazabilidad',
+          ]
+      );
   }
 
   public function gestionMateriales()
   {
-      return $this->returnAyudaView('ayuda.gestion_materiales');
+      return $this->returnAyudaIntroView(
+          'Gestionar materiales',
+          [
+              'El maestro de materiales organiza insumos o referencias tecnicas que despues pueden intervenir en formularios, informes o configuraciones internas.',
+              'Su objetivo es dejar un catalogo consistente para evitar carga libre y mantener trazabilidad tecnica en los modulos que lo consumen.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Catalogo de materiales reutilizable.',
+                      'Base de seleccion para formularios tecnicos.',
+                      'Referencia comun para documentos o configuraciones asociadas.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Antes de completar formularios que requieren materiales definidos.',
+                      'Cuando se incorporan nuevos materiales al circuito.',
+                      'Al corregir nombres, codigos o clasificaciones del catalogo.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'Los materiales quedan disponibles como maestro estable para que otros modulos seleccionen referencias tecnicas ya normalizadas.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-generar-informes'), 'label' => 'Creacion de informes'],
+              ['href' => route('ayuda-gestion-productos'), 'label' => 'Gestionar productos'],
+              ['href' => route('ayuda-gestion-normas'), 'label' => 'Gestionar normas'],
+          ],
+          [
+              'Captura del listado de materiales.',
+          ],
+          [
+              'audience' => 'Operacion tecnica y configuracion de maestros',
+          ]
+      );
   }
 
   public function gestionProductos()
   {
-      return $this->returnAyudaView('ayuda.gestion_productos');
+      return $this->returnAyudaIntroView(
+          'Gestionar productos',
+          [
+              'El maestro de productos define insumos, consumibles o articulos que despues se usan en OT, stock, remitos y otros circuitos internos.',
+              'No todos los productos cumplen el mismo rol: algunos impactan en inventario, otros se usan como referencia tecnica o como elemento visible en una OT.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Catalogo general de productos.',
+                      'Productos inventariables o vinculados a stock.',
+                      'Referencias seleccionables en OT y remitos cuando el circuito lo necesita.',
+                  ],
+              ],
+              [
+                  'title' => 'Que necesita antes',
+                  'items' => [
+                      'Unidades de medida definidas.',
+                      'Criterio claro sobre si el producto impacta en stock o en otros circuitos.',
+                      'Consistencia con servicios, materiales o remitos cuando se relacionan entre si.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'El producto queda listo para usarse como referencia operativa y, si corresponde, para integrarse con stock y movimientos.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-stock'), 'label' => 'Gestion de stock'],
+              ['href' => route('ayuda-creacion-remito'), 'label' => 'Remitos'],
+              ['href' => route('ayuda-gestion-unidades-de-medida'), 'label' => 'Gestionar unidades de medida'],
+              ['href' => route('ayuda-crear-ot'), 'label' => 'Como crear una OT'],
+          ],
+          [
+              'Captura del listado de productos.',
+              'GIF de alta o edicion de producto.',
+          ],
+          [
+              'audience' => 'Operacion interna, stock y administracion tecnica',
+          ]
+      );
   }
 
   public function gestionServicios()
   {
-      return $this->returnAyudaView('ayuda.gestion_servicios');
+      return $this->returnAyudaIntroView(
+          'Gestionar servicios',
+          [
+              'El maestro de servicios define las prestaciones que despues se cargan en OT y habilitan metodos o circuitos documentales relacionados.',
+              'Es un maestro critico porque conecta la parte comercial con la operativa: un servicio mal definido repercute despues en informes y configuraciones de trabajo.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Catalogo de servicios disponibles.',
+                      'Relacion entre servicio, unidad de medida y metodo de ensayo.',
+                      'Base de seleccion para OT y configuraciones tecnicas posteriores.',
+                  ],
+              ],
+              [
+                  'title' => 'Que necesita antes',
+                  'items' => [
+                      'Unidades de medida consistentes.',
+                      'Metodos o referencias tecnicas asociadas correctamente.',
+                      'Criterio claro sobre como el servicio impacta en la OT.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'El servicio queda disponible para cargarse en una OT y habilitar luego el circuito documental correspondiente.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-crear-ot'), 'label' => 'Como crear una OT'],
+              ['href' => route('ayuda-generar-informes'), 'label' => 'Creacion de informes'],
+              ['href' => route('ayuda-gestion-unidades-de-medida'), 'label' => 'Gestionar unidades de medida'],
+              ['href' => route('ayuda-gestion-normas'), 'label' => 'Gestionar normas'],
+          ],
+          [
+              'Captura del listado de servicios.',
+              'GIF de alta o edicion de servicio.',
+          ],
+          [
+              'audience' => 'Operacion comercial y tecnica',
+          ]
+      );
   }
 
   public function gestionSoldadores()
   {
-      return $this->returnAyudaView('ayuda.gestion_soldadores');
+      return $this->returnAyudaIntroView(
+          'Gestionar soldadores',
+          [
+              'Este maestro concentra soldadores que despues pueden asociarse a OT y participar en circuitos donde hace falta trazabilidad por persona o identificacion tecnica.',
+              'Su correcta carga permite seleccionarlos en las pantallas operativas sin depender de registros manuales externos.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Listado de soldadores disponibles.',
+                      'Datos de identificacion reutilizables en la operacion.',
+                      'Base para asignaciones y relacion con informes o consultas posteriores.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Antes de asignar soldadores a una OT.',
+                      'Cuando cambian datos de identificacion o vigencia.',
+                      'Al revisar trazabilidad operativa vinculada a personas tecnicas.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'El soldador queda disponible como maestro confiable para asignaciones y circuitos documentales que dependan de su referencia.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-asignar-soldadores-y-usuarios'), 'label' => 'Asignar soldadores y usuarios de cliente'],
+              ['href' => route('ayuda-generar-informes'), 'label' => 'Creacion de informes'],
+              ['href' => route('ayuda-visualizar-ot'), 'label' => 'Visualizacion general de la OT'],
+          ],
+          [
+              'Captura del listado de soldadores.',
+              'GIF de alta o edicion del maestro.',
+          ],
+          [
+              'audience' => 'Operacion tecnica',
+          ]
+      );
   }
 
   public function gestionUnidadesDeMedida()
   {
-      return $this->returnAyudaView('ayuda.gestion_unidadesdemedida');
+      return $this->returnAyudaIntroView(
+          'Gestionar unidades de medida',
+          [
+              'El maestro de unidades de medida define las unidades que despues reutilizan productos, servicios y otros formularios del sistema.',
+              'Su importancia es transversal: si este maestro queda desordenado, despues se replica la inconsistencia en varios modulos al mismo tiempo.',
+          ],
+          [
+              [
+                  'title' => 'Que organiza',
+                  'items' => [
+                      'Unidades reutilizables para productos y servicios.',
+                      'Base comun para catalogos y formularios.',
+                      'Referencia consistente para cantidades, medidas o consumos.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Antes de crear productos o servicios nuevos.',
+                      'Cuando hace falta corregir unidades duplicadas o mal nombradas.',
+                      'Al ordenar maestros que comparten criterios de medicion.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'Las unidades quedan disponibles como base comun y consistente para los modulos que las necesitan.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-gestion-productos'), 'label' => 'Gestionar productos'],
+              ['href' => route('ayuda-gestion-servicios'), 'label' => 'Gestionar servicios'],
+              ['href' => route('ayuda-gestion-medidas'), 'label' => 'Gestionar medidas'],
+          ],
+          [
+              'Captura del listado de unidades de medida.',
+          ],
+          [
+              'audience' => 'Configuracion de maestros y operacion tecnica',
+          ]
+      );
   }
 
   public function gestionarRoles()
   {
-      return $this->returnAyudaView('ayuda.gesitonar_roles');
+      return $this->returnAyudaIntroView(
+          'Gestionar roles',
+          [
+              'Los roles agrupan permisos y definen perfiles de acceso para distintos tipos de usuario dentro del sistema.',
+              'No se trata solo de una clasificacion administrativa: un rol bien definido ordena que pantallas y acciones puede usar cada persona.',
+          ],
+          [
+              [
+                  'title' => 'Que resuelve',
+                  'items' => [
+                      'Agrupa permisos por perfil de trabajo.',
+                      'Facilita asignar acceso a nuevos usuarios sin configurar accion por accion.',
+                      'Sirve como base para ordenar seguridad funcional y responsabilidades.',
+                  ],
+              ],
+              [
+                  'title' => 'Cuando se usa',
+                  'items' => [
+                      'Al crear o ajustar perfiles de acceso.',
+                      'Cuando un grupo de usuarios necesita un nuevo alcance funcional.',
+                      'Al auditar diferencias entre lo que un usuario deberia ver y lo que efectivamente ve.',
+                  ],
+              ],
+              [
+                  'title' => 'Resultado esperado',
+                  'paragraphs' => [
+                      'Cada rol queda definido como perfil reutilizable para ordenar accesos sin mantener permisos dispersos de forma manual.',
+                  ],
+              ],
+          ],
+          [
+              ['href' => route('ayuda-gestion-permisos'), 'label' => 'Gestionar permisos'],
+              ['href' => route('ayuda-gestion-usuario'), 'label' => 'Gestionar usuarios'],
+              ['href' => route('ayuda-perfil'), 'label' => 'Perfil de usuario'],
+          ],
+          [
+              'Captura del listado de roles.',
+              'GIF de alta o ajuste de un rol.',
+          ],
+          [
+              'audience' => 'Administracion y sistemas ENOD',
+          ]
+      );
   }
 
   public function visualizarInformes()

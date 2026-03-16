@@ -32,6 +32,18 @@
     </section>
 
     <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Cuando conviene revisar esta pantalla</h2>
+            <ul>
+                <li>Cuando se necesita confirmar si un metodo ya fue documentado dentro de la OT.</li>
+                <li>Cuando se quiere saber que revision esta vigente antes de abrir el PDF o seguir con partes diarios.</li>
+                <li>Cuando hace falta revisar antecedentes o detectar si un informe fue corregido mas de una vez.</li>
+                <li>Cuando se prepara una consolidacion posterior y se necesita saber que informes siguen pendientes o utilizables.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
         <div class="ayuda_panel detalle_iconos">
             <h2>Acciones desde el listado</h2>
             <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_pdf.PNG') }}" alt="PDF" /> Abre el PDF de la revision actual.</p>
@@ -44,12 +56,12 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Importante</h2>
+            <h2>Que conviene revisar</h2>
             <ul>
-                <li>Para revisar si una OT ya tiene toda su documentacion tecnica cargada.</li>
-                <li>Para identificar que metodo o revision esta vigente.</li>
-                <li>Para abrir el PDF correcto antes de emitir o compartir documentacion.</li>
-                <li>Para detectar informes pendientes de incluir en partes diarios.</li>
+                <li>Que el PDF que se abra corresponda a la revision vigente y no a una version previa.</li>
+                <li>Que los informes necesarios para la jornada ya esten disponibles antes de crear partes.</li>
+                <li>Que una eventual edicion no arrastre una revision equivocada al circuito posterior.</li>
+                <li>Que los documentos escaneados o antecedentes necesarios esten accesibles cuando el caso lo requiera.</li>
             </ul>
             <h3>Articulos relacionados</h3>
             <ul class="ayuda_links">

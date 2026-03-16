@@ -24,6 +24,19 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
+            <h2>Flujo recomendado</h2>
+            <ol>
+                <li>Entrar a la OT correcta y abrir el bloque de <strong>Certificados</strong>.</li>
+                <li>Completar los datos generales del certificado.</li>
+                <li>Seleccionar los partes que deben integrarse en el documento final.</li>
+                <li>Revisar servicios, productos o combinaciones que el sistema arma a partir de esos partes.</li>
+                <li>Guardar y validar que el certificado quede listo para consulta, PDF y trazabilidad posterior.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
             <h2>Que se carga en la pantalla</h2>
             <ul>
                 <li><strong>Servicios:</strong> cantidades originales y finales, con combinaciones si corresponden.</li>
@@ -38,10 +51,25 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Importante</h2>
+            <h2>Que revisar antes de emitir</h2>
+            <ul>
+                <li>Que los partes seleccionados correspondan al alcance real que se quiere certificar.</li>
+                <li>Que las cantidades, servicios y productos consolidados reflejen correctamente lo registrado en partes.</li>
+                <li>Que el certificado no omita jornadas relevantes ni mezcle partes de otro contexto.</li>
+                <li>Que los datos generales del documento sean coherentes con la OT y con la salida final que se va a compartir.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Resultado esperado</h2>
             <p>
                 Una vez guardado, el certificado queda disponible en el listado de la OT y se puede emitir en PDF.
                 Si luego hace falta corregirlo, existe tambien circuito de edicion sobre el mismo modulo.
+            </p>
+            <p>
+                El certificado debe funcionar como salida final trazable del trabajo ya consolidado en partes, sin perder la relacion con la OT y los registros previos que le dieron origen.
             </p>
             <h3>Articulos relacionados</h3>
             <ul class="ayuda_links">

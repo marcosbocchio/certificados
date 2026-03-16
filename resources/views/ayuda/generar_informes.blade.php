@@ -33,6 +33,30 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
+            <h2>Flujo recomendado</h2>
+            <ol>
+                <li>Entrar a la OT correcta y abrir el bloque de <strong>Informes</strong>.</li>
+                <li>Verificar que el metodo de ensayo esperado este habilitado.</li>
+                <li>Crear el informe nuevo o clonar uno existente si comparte encabezado.</li>
+                <li>Completar el formulario del metodo elegido y guardar.</li>
+                <li>Firmar cuando la revision actual quede cerrada y lista para su uso operativo.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Como decidir entre nuevo, clonar o editar</h2>
+            <ul>
+                <li><strong>Nuevo:</strong> conviene cuando el informe no comparte base con otro ya existente.</li>
+                <li><strong>Clonar:</strong> acelera la carga si el siguiente informe repite encabezado, contexto o parte de la informacion tecnica.</li>
+                <li><strong>Editar:</strong> sirve para corregir una revision. Si el informe ya estaba firmado, el sistema conserva trazabilidad mediante una nueva revision.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
             <h2>Metodos disponibles</h2>
             <p>El flujo comun concentra RI, PM, LP y US, pero la OT tambien puede habilitar otros metodos segun su configuracion.</p>
             <ul>
@@ -53,6 +77,18 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
+            <h2>Si algo no aparece o no deja avanzar</h2>
+            <ul>
+                <li>Revisar que la OT tenga cargado el servicio correspondiente.</li>
+                <li>Confirmar que operadores, procedimientos o soldadores necesarios ya esten asignados si el metodo los necesita.</li>
+                <li>Verificar que la OT este siendo trabajada sobre la obra o contexto correcto.</li>
+                <li>Revisar si falta completar algun dato obligatorio propio del metodo antes de intentar firmar o cerrar la revision.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
             <h2>Como trabajar en esta pantalla</h2>
             <p>Desde la OT seleccionada se ingresa al bloque de Informes y se trabaja sobre el listado de esa OT.</p>
             <div class="ayuda_media">
@@ -62,6 +98,9 @@
             <div class="ayuda_media">
                 <img src="{{ asset('img/ayuda/Listado_informes.PNG') }}" class="img-responsive" alt="Listado de informes" />
             </div>
+            <p>
+                El listado es la referencia principal para ver que ya fue creado, que revision esta vigente y que acciones siguen disponibles para cada informe.
+            </p>
         </div>
     </section>
 
@@ -92,10 +131,25 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Importante</h2>
+            <h2>Que revisar antes de firmar</h2>
+            <ul>
+                <li>Que el metodo y la obra correspondan al trabajo real.</li>
+                <li>Que el encabezado no arrastre datos incorrectos de una clonacion previa.</li>
+                <li>Que la revision actual refleje la version que debe quedar disponible para PDF, partes y consultas.</li>
+                <li>Que la documentacion complementaria, si existe, ya este adjunta o controlada.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Resultado esperado</h2>
             <p>
                 Al finalizar este proceso, la OT queda con informes tecnicos listos para consulta, PDF, revisiones posteriores
                 y uso en otros modulos, especialmente partes diarios y reportes.
+            </p>
+            <p>
+                El objetivo no es solo guardar un formulario: es dejar una revision trazable y utilizable por el resto del circuito documental.
             </p>
             <h3>Articulos relacionados</h3>
             <ul class="ayuda_links">

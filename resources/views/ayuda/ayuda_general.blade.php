@@ -10,8 +10,8 @@
             por secciones funcionales para que cada modulo tenga un punto de entrada claro.
         </p>
         <p>
-            En esta primera etapa se prioriza el flujo central del negocio: ordenes de trabajo, informes, partes, certificados
-            y remitos. El resto de los modulos queda publicado con una introduccion funcional para seguir completandolo por etapas.
+            Usa este indice para entrar al modulo que necesitas segun el tipo de tarea: gestion de datos base, trabajo operativo,
+            documentacion diaria o consulta final de resultados.
         </p>
     </div>
 

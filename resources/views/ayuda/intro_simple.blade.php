@@ -8,6 +8,9 @@
         $sections = $sections ?? [];
         $related = $related ?? [];
         $visuals = $visuals ?? [];
+        $meta = $meta ?? [];
+        $prerequisites = $meta['prerequisites'] ?? [];
+        $articleAudience = $meta['audience'] ?? null;
 
         if ($sections && isset($sections[0]) && !is_array($sections[0])) {
             $sections = [
@@ -25,13 +28,32 @@
         @foreach($summary as $paragraph)
             <p>{{ $paragraph }}</p>
         @endforeach
-        <div class="ayuda_meta">
-            <span class="ayuda_badge">Ayuda en desarrollo</span>
+    </div>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            @if($articleAudience || count($prerequisites) || count($visuals))
+                <h2>Antes de seguir</h2>
+            @endif
+
+            @if($articleAudience)
+                <p><strong>Perfil de uso:</strong> {{ $articleAudience }}.</p>
+            @endif
+
+            @if(count($prerequisites))
+                <h3>Prerequisitos</h3>
+                <ul>
+                    @foreach($prerequisites as $prerequisite)
+                        <li>{{ $prerequisite }}</li>
+                    @endforeach
+                </ul>
+            @endif
+
             @if(count($visuals))
-                <span class="ayuda_badge ayuda_badge_soft">Multimedia pendiente</span>
+                <p><strong>Multimedia pendiente.</strong></p>
             @endif
         </div>
-    </div>
+    </section>
 
     @foreach($sections as $section)
         <section class="ayuda_section">
@@ -60,11 +82,7 @@
     @if(count($visuals))
         <section class="ayuda_section">
             <div class="ayuda_panel">
-                <h2>Soporte visual recomendado</h2>
-                <p>
-                    Esta pagina ya queda util para orientacion funcional. Para cerrarla como ayuda operativa conviene
-                    sumar capturas o GIFs en estos puntos:
-                </p>
+                <h2>Multimedia pendiente</h2>
                 <ul>
                     @foreach($visuals as $visual)
                         <li>{{ $visual }}</li>
@@ -87,10 +105,6 @@
         </section>
     @endif
 
-    <div class="ayuda_notice">
-        Esta guia introductoria ya queda publicada dentro de la ayuda general. El detalle paso a paso se puede ampliar
-        despues sin perder la estructura de navegacion ni los vinculos con otros modulos.
-    </div>
 </div>
 
 @endsection

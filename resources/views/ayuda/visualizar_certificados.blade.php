@@ -27,15 +27,27 @@
 
     <section class="ayuda_section">
         <div class="ayuda_panel">
-            <h2>Importante</h2>
+            <h2>Cuando conviene revisar esta pantalla</h2>
+            <ul>
+                <li>Cuando se necesita ubicar la salida final emitida para una OT.</li>
+                <li>Cuando se quiere confirmar que un conjunto de partes ya fue certificado.</li>
+                <li>Cuando hace falta abrir el PDF correcto antes de compartir o controlar documentacion final.</li>
+                <li>Cuando se revisa si un certificado todavia requiere edicion o si ya puede tomarse como referencia final del circuito.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Que conviene revisar</h2>
             <p>
                 Mientras el informe documenta el trabajo tecnico y el parte consolida la jornada, el certificado resume
                 y formaliza la salida final sobre partes ya asociados.
             </p>
             <ul>
-                <li>Permite verificar que un conjunto de partes ya fue certificado.</li>
-                <li>Facilita la consulta posterior del PDF final.</li>
-                <li>Ordena la relacion entre OT, partes y documento emitido.</li>
+                <li>Que el certificado encontrado corresponda efectivamente al conjunto de partes que se queria cerrar.</li>
+                <li>Que el PDF visible sea la salida final correcta para esa OT.</li>
+                <li>Que la relacion entre OT, partes y certificado quede clara antes de seguir con controles o entrega documental.</li>
             </ul>
             <h3>Articulos relacionados</h3>
             <ul class="ayuda_links">
