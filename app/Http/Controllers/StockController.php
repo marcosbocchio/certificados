@@ -97,7 +97,7 @@ class StockController extends Controller
         $producto = Productos::where('id', $id)->first();
         $productoName = $producto->descripcion;
         $user = auth()->user();
-        $header_titulo = "Ajuste" . $productoName;
+        $header_titulo = "Ajuste " . $productoName;
         $header_descripcion = ".";
         $producto = Productos::where('id', $id)->first();
         return view('stock.edit', compact('user', 'header_titulo', 'header_descripcion', 'producto',));
