@@ -52,9 +52,23 @@
         </section>
     @endif
 
-    @foreach($sections as $section)
+    @for($i = 0; $i < count($sections); $i++)
+        @php
+            $section = $sections[$i];
+            $sectionTypeClass = '';
+
+            if (!empty($section['title'])) {
+                if ($section['title'] === 'Ruta de uso') {
+                    $sectionTypeClass = 'ayuda_panel--route';
+                } elseif ($section['title'] === 'Campos obligatorios') {
+                    $sectionTypeClass = 'ayuda_panel--required';
+                } elseif ($section['title'] === 'Acciones bloqueadas por estado o permiso') {
+                    $sectionTypeClass = 'ayuda_panel--blocked';
+                }
+            }
+        @endphp
         <section class="ayuda_section">
-            <div class="ayuda_panel">
+            <div class="ayuda_panel {{ $sectionTypeClass }}">
                 @if(!empty($section['title']))
                     <h2>{{ $section['title'] }}</h2>
                 @elseif(!empty($section['manual_title']))
@@ -67,9 +81,9 @@
                     @endforeach
                 @endif
 
-                    @if(!empty($section['items']))
+                @if(!empty($section['items']))
                     @if(!empty($section['title']) && $section['title'] === 'Botones y acciones disponibles')
-                        <p>Los ejemplos de abajo representan como se ven las acciones reales en la pantalla o en la tabla correspondiente.</p>
+                        <p class="ayuda_intro_hint">Los ejemplos de abajo representan como se ven las acciones reales en la pantalla o en la tabla correspondiente.</p>
                         <ul class="ayuda_action_list">
                             @include('ayuda.partials.action_items', ['items' => $section['items']])
                         </ul>
@@ -81,9 +95,13 @@
                         </ul>
                     @endif
                 @endif
+
+                @if(!empty($section['demo_table']))
+                    @include('ayuda.partials.demo_table', ['demoTable' => $section['demo_table']])
+                @endif
             </div>
         </section>
-    @endforeach
+    @endfor
 
     @if($showVisuals && count($visuals))
         <section class="ayuda_section">

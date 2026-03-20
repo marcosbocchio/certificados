@@ -56,16 +56,8 @@
     </section>
 
     <section class="ayuda_section">
-        <div class="ayuda_panel detalle_iconos">
-            <h2>Botones y acciones disponibles</h2>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_editar_usuario.PNG') }}" alt="Editar usuario" /> Permite modificar la informacion del usuario seleccionado.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eep_usuario.PNG') }}" alt="Asignacion EPP" /> Permite consultar o gestionar la asignacion de EPP del usuario.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eliminar_usuario.PNG') }}" alt="Eliminar usuario" /> Permite eliminar el usuario, si el perfil tiene permisos para hacerlo.</p>
-            <p>
-                Antes de guardar conviene revisar el tipo de usuario, su estado activo, el cliente asociado cuando corresponda
-                y los roles o permisos definidos.
-            </p>
-            <h3>Articulos relacionados</h3>
+        <div class="ayuda_panel">
+            <h2>Articulos relacionados</h2>
             <ul class="ayuda_links">
                 <li><a href="{{ route('ayuda-perfil') }}">Perfil de usuario</a></li>
                 <li><a href="{{ route('ayuda-gestion-cliente') }}">Gestionar clientes</a></li>

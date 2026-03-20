@@ -46,17 +46,6 @@
     </section>
 
     <section class="ayuda_section">
-        <div class="ayuda_panel detalle_iconos">
-            <h2>Botones y acciones disponibles</h2>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_pdf.PNG') }}" alt="PDF" /> Abre el PDF de la revision actual.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_editar.PNG') }}" alt="Editar" /> Reabre el informe para corregir o continuar la carga. Si la revision ya esta firmada, la edicion genera una nueva revision.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_clonar.PNG') }}" alt="Clonar" /> Replica el encabezado para agilizar informes similares.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_revisiones_anteriores.PNG') }}" alt="Revisiones" /> Permite consultar el historial documental del mismo informe.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_escaneados.PNG') }}" alt="Escaneados" /> Da acceso a documentos escaneados vinculados.</p>
-        </div>
-    </section>
-
-    <section class="ayuda_section">
         <div class="ayuda_panel">
             <h2>Que conviene revisar</h2>
             <ul>

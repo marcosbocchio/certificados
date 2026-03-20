@@ -107,31 +107,6 @@
     </section>
 
     <section class="ayuda_section">
-        <div class="ayuda_panel detalle_iconos">
-            <h2>Acciones principales</h2>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_editar.PNG') }}" alt="Editar informe" /> Editar un informe firmado no pisa la version anterior: genera una nueva revision.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_clonar.PNG') }}" alt="Clonar informe" /> Clonar acelera la carga cuando el siguiente informe repite buena parte del encabezado.</p>
-            <p>
-                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_placa_diginal.PNG') }}" alt="Placa digital" />
-                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_us_digital.PNG') }}" alt="Modelo US" />
-                Algunos metodos agregan material complementario, como placas digitalizadas o modelos US.
-            </p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_pdf.PNG') }}" alt="PDF informe" /> Permite ver la revision actual en PDF.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_escaneados.PNG') }}" alt="Escaneados" /> Permite adjuntar documentacion escaneada relacionada con el informe.</p>
-            <p>
-                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_firmar.PNG') }}" alt="Firmar informe" />
-                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_firmado.PNG') }}" alt="Informe firmado" />
-                La firma cierra formalmente la revision actual.
-            </p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_revisiones_anteriores.PNG') }}" alt="Revisiones" /> Se pueden consultar revisiones anteriores para trazabilidad.</p>
-            <p>
-                Para partes diarios, el sistema toma siempre la ultima revision disponible del informe, este firmada o no.
-                Por eso revision y trazabilidad son conceptos centrales del modulo.
-            </p>
-        </div>
-    </section>
-
-    <section class="ayuda_section">
         <div class="ayuda_panel">
             <h2>Que revisar antes de firmar</h2>
             <ul>

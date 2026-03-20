@@ -47,7 +47,7 @@ public function __construct()
       ));
   }
 
-  private function functionalSections(array $managedData, array $actions, array $usage, $result, array $checks = [], array $buttons = [], array $dependencies = [])
+  private function functionalSections(array $managedData, array $actions, array $usage, $result, array $checks = [], array $buttons = [], array $dependencies = [], array $demoTables = [], array $routeUsage = [], array $requiredFields = [], array $blockedActions = [])
   {
       $tableItems = [];
       $fieldItems = [];
@@ -67,10 +67,10 @@ public function __construct()
 
       $sections = [];
 
-      if (!empty($tableItems)) {
+      if (!empty($routeUsage)) {
           $sections[] = [
-              'title' => 'Que muestra la tabla',
-              'items' => $tableItems,
+              'title' => 'Ruta de uso',
+              'items' => $routeUsage,
           ];
       }
 
@@ -78,6 +78,13 @@ public function __construct()
           $sections[] = [
               'title' => 'Que campos se cargan',
               'items' => $fieldItems,
+          ];
+      }
+
+      if (!empty($requiredFields)) {
+          $sections[] = [
+              'title' => 'Campos obligatorios',
+              'items' => $requiredFields,
           ];
       }
 
@@ -97,6 +104,21 @@ public function __construct()
           $sections[] = [
               'title' => 'Botones y acciones disponibles',
               'items' => $buttons,
+          ];
+      }
+
+      if (!empty($blockedActions)) {
+          $sections[] = [
+              'title' => 'Acciones bloqueadas por estado o permiso',
+              'items' => $blockedActions,
+          ];
+      }
+
+      if (!empty($tableItems)) {
+          $sections[] = [
+              'title' => 'Que muestra la tabla',
+              'items' => $tableItems,
+              'demo_table' => $demoTables['Que muestra la tabla'] ?? null,
           ];
       }
 
@@ -127,14 +149,14 @@ public function __construct()
       return $sections;
   }
 
-  private function legacyFunctionalSummary(array $table = [], array $fields = [], array $actions = [], array $buttons = [], array $usage = [], array $dependencies = [], array $checks = [], $result = null)
+  private function legacyFunctionalSummary(array $table = [], array $fields = [], array $actions = [], array $buttons = [], array $usage = [], array $dependencies = [], array $checks = [], $result = null, array $demoTables = [], array $routeUsage = [], array $requiredFields = [], array $blockedActions = [])
   {
       $sections = [];
 
-      if (!empty($table)) {
+      if (!empty($routeUsage)) {
           $sections[] = [
-              'title' => 'Que muestra la tabla',
-              'items' => $table,
+              'title' => 'Ruta de uso',
+              'items' => $routeUsage,
           ];
       }
 
@@ -142,6 +164,13 @@ public function __construct()
           $sections[] = [
               'title' => 'Que campos se cargan',
               'items' => $fields,
+          ];
+      }
+
+      if (!empty($requiredFields)) {
+          $sections[] = [
+              'title' => 'Campos obligatorios',
+              'items' => $requiredFields,
           ];
       }
 
@@ -156,6 +185,21 @@ public function __construct()
           $sections[] = [
               'title' => 'Botones y acciones disponibles',
               'items' => $buttons,
+          ];
+      }
+
+      if (!empty($blockedActions)) {
+          $sections[] = [
+              'title' => 'Acciones bloqueadas por estado o permiso',
+              'items' => $blockedActions,
+          ];
+      }
+
+      if (!empty($table)) {
+          $sections[] = [
+              'title' => 'Que muestra la tabla',
+              'items' => $table,
+              'demo_table' => $demoTables['Que muestra la tabla'] ?? null,
           ];
       }
 
@@ -363,7 +407,16 @@ public function __construct()
             [
                 'Que el estado de la OT corresponda al avance real del trabajo.',
             ],
-            'La OT queda lista para servir como nodo central del circuito documental y operativo.'
+            'La OT queda lista para servir como nodo central del circuito documental y operativo.',
+            [],
+            [
+                'Tablero ENOD > Ordenes de trabajo > Listado.',
+            ],
+            [],
+            [
+                'Firmar o cerrar puede quedar bloqueado segun el estado actual de la OT y el permiso del usuario.',
+                'Algunos accesos laterales del circuito no aparecen o no habilitan acciones hasta que la OT esta activa o correctamente configurada.',
+            ]
         )
     ]);
 
@@ -399,7 +452,18 @@ public function __construct()
             [
                 'Que cliente, comitente, responsable y servicios reflejen el trabajo real.',
             ],
-            'La orden de trabajo queda creada y lista para iniciar el resto del circuito operativo.'
+            'La orden de trabajo queda creada y lista para iniciar el resto del circuito operativo.',
+            [],
+            [
+                'Tablero ENOD > Ordenes de trabajo > Nuevo.',
+            ],
+            [
+                'Numero de OT, fecha, cliente/comitente y al menos un servicio o producto segun el alcance del trabajo.',
+            ],
+            [
+                'No deja guardar si faltan datos centrales de cabecera o si la configuracion base de maestros no permite completar el formulario.',
+                'Algunas acciones posteriores de asignacion o informes no aparecen hasta que la OT esta creada correctamente.',
+            ]
         )
     ]);
 
@@ -432,7 +496,17 @@ public function __construct()
             [
                 'Que las personas asignadas sean las que realmente intervienen en la orden.',
             ],
-            'La OT queda con operadores y ayudantes disponibles para el resto del circuito.'
+            'La OT queda con operadores y ayudantes disponibles para el resto del circuito.',
+            [],
+            [
+                'OT > Operadores.',
+            ],
+            [
+                'Al menos un operador o ayudante cuando la OT necesita ese personal para informes y partes.',
+            ],
+            [
+                'Actualizar puede quedar bloqueado si la OT no fue creada correctamente o si el perfil no tiene permiso de asignacion.',
+            ]
         )
     ]);
 
@@ -466,7 +540,17 @@ public function __construct()
             [
                 'Que los usuarios cliente realmente deban ver la documentacion de esa OT.',
             ],
-            'La OT queda con acceso cliente definido y con soldadores disponibles para informes.'
+            'La OT queda con acceso cliente definido y con soldadores disponibles para informes.',
+            [],
+            [
+                'OT > Usuarios y soldadores.',
+            ],
+            [
+                'Al menos un usuario cliente o soldador cuando el circuito de la OT realmente los requiere.',
+            ],
+            [
+                'Actualizar puede quedar bloqueado si faltan maestros base o si el usuario no tiene permiso de asignacion.',
+            ]
         )
     ]);
 
@@ -506,7 +590,18 @@ public function __construct()
             [
                 'Que la revision a firmar o usar en partes sea la correcta.',
             ],
-            'La OT queda con informes tecnicos trazables, listos para PDF, partes diarios y reportes.'
+            'La OT queda con informes tecnicos trazables, listos para PDF, partes diarios y reportes.',
+            [],
+            [
+                'OT > Informes > Nuevo / Editar / Clonar segun el metodo.',
+            ],
+            [
+                'Encabezado tecnico y los datos obligatorios propios del metodo elegido.',
+            ],
+            [
+                'Editar puede quedar bloqueado si el informe ya fue firmado, pasando a trabajar por revision nueva.',
+                'Firmar, anular o desanular dependen del estado del informe y del permiso del usuario.',
+            ]
         )
     ]);
 
@@ -671,7 +766,17 @@ public function __construct()
                 'Depende de vehiculos y documentaciones previamente cargados en sus maestros.',
             ],
             [],
-            'La OT queda con vehiculos y documentacion complementaria asociados para consulta posterior.'
+            'La OT queda con vehiculos y documentacion complementaria asociados para consulta posterior.',
+            [],
+            [
+                'OT > Vehiculos.',
+            ],
+            [
+                'Al menos un vehiculo o un documento complementario cuando la OT necesita soporte de movilidad o consulta documental.',
+            ],
+            [
+                'Actualizar puede quedar bloqueado si no existen vehiculos/documentaciones cargados o si el perfil no tiene permiso de asignacion.',
+            ]
         )
     ]);
 
@@ -700,7 +805,15 @@ public function __construct()
                 'Depende de la asignacion previa de vehiculos y documentacion complementaria.',
             ],
             [],
-            'La OT queda con consulta documental clara sobre vehiculos y archivos vinculados.'
+            'La OT queda con consulta documental clara sobre vehiculos y archivos vinculados.',
+            [],
+            [
+                'OT > Vehiculos > Visualizacion.',
+            ],
+            [],
+            [
+                'La consulta depende de que existan vehiculos y documentos ya asignados; si no, el listado no mostrara archivos.',
+            ]
         )
     ]);
 
@@ -731,7 +844,17 @@ public function __construct()
                 'Depende de documentacion/procedimientos previamente cargados en el sistema.',
             ],
             [],
-            'La OT queda con procedimientos disponibles para el circuito de informes.'
+            'La OT queda con procedimientos disponibles para el circuito de informes.',
+            [],
+            [
+                'OT > Procedimientos.',
+            ],
+            [
+                'Al menos un procedimiento ENOD o del cliente cuando el metodo de informe lo necesita.',
+            ],
+            [
+                'Actualizar puede quedar bloqueado si no existen procedimientos disponibles o si el perfil no tiene permiso de asignacion.',
+            ]
         )
     ]);
 
@@ -760,7 +883,15 @@ public function __construct()
                 'Depende de la asignacion previa de procedimientos a la OT.',
             ],
             [],
-            'La OT queda con consulta clara de los procedimientos documentales ya asociados.'
+            'La OT queda con consulta clara de los procedimientos documentales ya asociados.',
+            [],
+            [
+                'OT > Procedimientos > Visualizacion.',
+            ],
+            [],
+            [
+                'La descarga o consulta depende de que el procedimiento ya este asignado y tenga documentacion disponible.',
+            ]
         )
     ]);
 
@@ -770,7 +901,7 @@ public function __construct()
   {
       return $this->returnAyudaView('ayuda.creacion_remito', 'Ayuda', '', [
           'functionalSummaryTitle' => 'Resumen funcional',
-          'functionalSummarySections' => $this->legacyFunctionalSummary(
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
               [
                   'En el listado de remitos se ven origen, destino, numero, estado y acciones por fila.',
               ],
@@ -790,6 +921,7 @@ public function __construct()
               [
                   'Nuevo: abre un remito nuevo.',
                   'Editar: corrige cabecera, productos o internos.',
+                  'EPP: abre el enlace de asignacion cuando el remito ya no esta en borrador.',
                   'PDF: abre el remito en PDF.',
                   'Imprimir: abre la salida de impresion.',
                   'Anular: deja sin efecto un remito.',
@@ -805,7 +937,48 @@ public function __construct()
               [
                   'Que origen, destino, cantidades e internos reflejen el movimiento real antes de guardarlo como definitivo.',
               ],
-              'El movimiento queda trazado en remitos y puede impactar en stock o ubicacion de equipos segun su contenido.'
+              'El movimiento queda trazado en remitos y puede impactar en stock o ubicacion de equipos segun su contenido.',
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado principal de remitos.',
+                      'columns' => ['Origen', 'Destino', 'Numero', 'Estado', 'Acciones'],
+                      'rows' => [
+                          [
+                              'Planta central',
+                              'Frente Norte',
+                              'R-000145',
+                              ['type' => 'badge', 'text' => 'Definitivo', 'class' => 'ayuda_demo_badge--success'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'style' => 'warning', 'icon' => 'fa fa-edit'],
+                                  ['label' => 'EPP', 'style' => 'default', 'icon' => 'fa fa-shield'],
+                                  ['label' => 'PDF', 'style' => 'default', 'icon' => 'fa fa-file-pdf-o'],
+                                  ['label' => 'Imprimir', 'style' => 'default', 'icon' => 'fa fa-print'],
+                              ]],
+                          ],
+                          [
+                              'Frente Oeste',
+                              'Deposito auxiliar',
+                              'R-000146',
+                              ['type' => 'badge', 'text' => 'Borrador', 'class' => 'ayuda_demo_badge--warning'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'style' => 'warning', 'icon' => 'fa fa-edit'],
+                                  ['label' => 'PDF', 'style' => 'default', 'icon' => 'fa fa-file-pdf-o'],
+                                  ['label' => 'Anular', 'style' => 'default', 'icon' => 'fa fa-ban'],
+                              ]],
+                          ],
+                      ],
+                  ],
+              ],
+              [
+                  'Operacion interna > Remitos > Listado / Nuevo / Editar.',
+              ],
+              [
+                  'Origen, destino, fecha y al menos un producto o interno para reflejar el movimiento real.',
+              ],
+              [
+                  'Editar, asignar EPP o cambiar estado puede quedar bloqueado si el remito ya no esta en borrador o si el usuario no tiene permiso de edicion.',
+                  'Anular y desanular solo aparecen cuando el estado del remito lo permite.',
+              ]
           )
       ]);
   }
@@ -900,6 +1073,31 @@ public function __construct()
               [
                   'Depende de unidades de medida cargadas previamente para poder completar el alta.',
                   'Productos y otros maestros relacionados usan estas medidas como referencia reutilizable.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado de medidas con su unidad asociada.',
+                      'columns' => ['Codigo', 'Descripcion', 'Unidad', 'Acciones'],
+                      'rows' => [
+                          [
+                              'MED-01',
+                              '3/8',
+                              'in',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'MED-07',
+                              '1/2',
+                              'in',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -952,6 +1150,34 @@ public function __construct()
                   'Editar: actualiza numero, estado o datos operativos del interno.',
                   'Eliminar: quita el interno si ya no debe seguir activo y no tiene relaciones bloqueantes.',
                   'Buscar: localiza rapidamente una fuente individual dentro del listado.',
+              ],
+              [],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado de internos de fuente.',
+                      'columns' => ['Interno', 'Fuente base', 'Estado', 'Trazabilidad', 'Acciones'],
+                      'rows' => [
+                          [
+                              'FTE-08',
+                              'Ir-192',
+                              ['type' => 'badge', 'text' => 'Activo', 'class' => 'ayuda_demo_badge--success'],
+                              'Control vigente',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'FTE-12',
+                              'Se-75',
+                              ['type' => 'badge', 'text' => 'Baja', 'class' => 'ayuda_demo_badge--warning'],
+                              'Sin uso',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1010,6 +1236,33 @@ public function __construct()
               [
                   'Plantas y usuarios cliente dependen de que el cliente exista previamente en este maestro.',
                   'Las OT y cabeceras documentales consumen estos datos para no volver a cargarlos manualmente.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado de clientes con sus acciones principales.',
+                      'columns' => ['Nombre', 'Razon social', 'Email', 'Localidad', 'Acciones'],
+                      'rows' => [
+                          [
+                              'ENOD',
+                              'ENOD S.A.',
+                              'contacto@enod.com',
+                              'Neuquen',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'Sierra Chata',
+                              'Sierra Chata S.R.L.',
+                              'obras@sierrachata.com',
+                              'Añelo',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1066,6 +1319,29 @@ public function __construct()
               [
                   'Se usa como dato complementario de cliente cuando el circuito documental necesita diferenciarlos.',
                   'OT y certificados consumen este maestro una vez que el comitente esta dado de alta.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado de comitentes.',
+                      'columns' => ['Codigo', 'Descripcion', 'Acciones'],
+                      'rows' => [
+                          [
+                              'COM-01',
+                              'Operadora principal',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'COM-07',
+                              'Inspeccion externa',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1125,6 +1401,37 @@ public function __construct()
               [
                   'Depende de que existan usuarios, internos de equipo, internos de fuente o vehiculos para poder asociar documentacion especifica.',
                   'La documentacion cargada despues se consulta desde QR, visualizaciones tecnicas y otros modulos que muestran vigencias.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado documental con filtros y acciones por fila.',
+                      'columns' => ['Tipo', 'Titulo', 'Entidad', 'Caducidad', 'Estado', 'Acciones'],
+                      'rows' => [
+                          [
+                              'Vehiculo',
+                              'Seguro flota',
+                              'Camion 14',
+                              '12/06/2026',
+                              ['type' => 'badge', 'text' => 'Vigente', 'class' => 'ayuda_demo_badge--success'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Descargar', 'description' => '', 'icon' => 'fa fa-download', 'class' => 'btn btn-default btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'Usuario',
+                              'Apto fisico',
+                              'Juan Perez',
+                              '04/04/2025',
+                              ['type' => 'badge', 'text' => 'Vencido', 'class' => 'ayuda_demo_badge--warning'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1180,6 +1487,36 @@ public function __construct()
               [
                   'Depende de metodos de ensayo y tipos de equipamiento cargados para completar el alta.',
                   'Los internos de equipo dependen de este maestro para poder crear unidades concretas.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del maestro de equipos con sus datos tecnicos principales.',
+                      'columns' => ['Codigo', 'Descripcion', 'Metodo', 'Tipo', 'Instrumento', 'Acciones'],
+                      'rows' => [
+                          [
+                              'EQ-021',
+                              'Medidor US Krautkramer',
+                              'US',
+                              'Equipo portatil',
+                              'Calibrador',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'EQ-044',
+                              'Equipo radiografico fijo',
+                              'RI',
+                              'Fuente',
+                              '-',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1233,6 +1570,31 @@ public function __construct()
               [
                   'Los internos de fuente dependen de que la fuente base exista previamente en este maestro.',
                   'QR y documentacion despues usan esa relacion base para mostrar trazabilidad.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del maestro de fuentes base.',
+                      'columns' => ['Codigo', 'Descripcion', 'T 1/2', 'Acciones'],
+                      'rows' => [
+                          [
+                              'F-001',
+                              'Iridio 192',
+                              '74 dias',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'F-002',
+                              'Selenio 75',
+                              '120 dias',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1291,6 +1653,37 @@ public function __construct()
               [
                   'Depende de equipos cargados previamente y, para ciertos metodos, tambien de internos de fuente disponibles.',
                   'QR, documentacion tecnica e informes consumen despues los internos creados en este modulo.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado de internos de equipos con trazabilidad basica.',
+                      'columns' => ['Interno', 'Equipo', 'Metodo', 'Fuente', 'Estado', 'Acciones'],
+                      'rows' => [
+                          [
+                              'INT-103',
+                              'Medidor US Krautkramer',
+                              'US',
+                              '-',
+                              ['type' => 'badge', 'text' => 'Activo', 'class' => 'ayuda_demo_badge--success'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Historial', 'description' => '', 'icon' => 'fa fa-table', 'class' => 'btn btn-default btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'INT-212',
+                              'Equipo radiografico fijo',
+                              'RI',
+                              'FTE-08',
+                              ['type' => 'badge', 'text' => 'Baja', 'class' => 'ayuda_demo_badge--warning'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Historial', 'description' => '', 'icon' => 'fa fa-table', 'class' => 'btn btn-default btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1344,6 +1737,29 @@ public function __construct()
               ],
               [
                   'Los informes y otros formularios tecnicos dependen de este maestro para ofrecer materiales consistentes en sus selectores.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado de materiales.',
+                      'columns' => ['Codigo', 'Descripcion', 'Acciones'],
+                      'rows' => [
+                          [
+                              'MAT-01',
+                              'Acero ASTM A106',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'MAT-12',
+                              'Inoxidable 316',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1407,6 +1823,37 @@ public function __construct()
                   'El grupo solo se puede elegir si existen grupos de productos definidos.',
                   'Si se marca como stockeable, el producto pasa a participar del modulo de stock.',
                   'Si se marca como visible OT, queda disponible dentro de la carga de una orden de trabajo.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo simplificado del listado real de productos.',
+                      'columns' => ['Codigo', 'Descripcion', 'Unidad', 'Visible OT', 'Stock', 'Acciones'],
+                      'rows' => [
+                          [
+                              'PR-001',
+                              'Placa 3/8',
+                              'm',
+                              ['type' => 'badge', 'text' => 'Si', 'class' => 'ayuda_demo_badge--success'],
+                              '245',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Ver Detalles', 'description' => '', 'icon' => 'fa fa-list-alt', 'class' => 'btn btn-default btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'PR-018',
+                              'Pintura alta temperatura',
+                              'lt',
+                              ['type' => 'badge', 'text' => 'No', 'class' => 'ayuda_demo_badge--default'],
+                              '-',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1466,6 +1913,34 @@ public function __construct()
                   'Depende de unidades de medida cargadas para poder seleccionar la unidad.',
                   'Depende de metodos de ensayo disponibles para asociar correctamente el servicio al circuito tecnico.',
                   'Los servicios definidos aqui se consumen despues en OT e informes.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo simplificado del listado real de servicios.',
+                      'columns' => ['Codigo', 'Descripcion', 'Unidad', 'Metodo', 'Acciones'],
+                      'rows' => [
+                          [
+                              'US-01',
+                              'Ultrasonido industrial',
+                              'm',
+                              'US',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'LP-02',
+                              'Liquidos penetrantes',
+                              'un',
+                              'LP',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1520,6 +1995,29 @@ public function __construct()
               ],
               [
                   'Las asignaciones de soldadores en OT e informes dependen de que el registro exista previamente en este maestro.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado de soldadores disponibles.',
+                      'columns' => ['Codigo', 'Nombre', 'Acciones'],
+                      'rows' => [
+                          [
+                              'S-101',
+                              'Carlos Ruiz',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'S-118',
+                              'Mariano Sosa',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1571,6 +2069,29 @@ public function __construct()
               ],
               [
                   'Productos, servicios y medidas dependen de este maestro para cargar unidades consistentes.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del maestro de unidades de medida.',
+                      'columns' => ['Codigo', 'Descripcion', 'Acciones'],
+                      'rows' => [
+                          [
+                              'm',
+                              'Metro',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'un',
+                              'Unidad',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -1627,6 +2148,40 @@ public function __construct()
               [
                   'Depende de que los permisos esten definidos previamente para poder armar un rol consistente.',
                   'Los usuarios dependen de este maestro para recibir accesos agrupados por perfil.',
+              ],
+          [
+              'Que muestra la tabla' => [
+                  'caption' => 'Ejemplo del listado de roles.',
+                      'columns' => ['Rol', 'Guard', 'Acciones'],
+                      'rows' => [
+                          [
+                              'Supervisor ENOD',
+                              'web',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'Cliente consulta',
+                              'web',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
+              ]
+          ,
+              [
+                  'Configuracion > Roles.',
+              ],
+              [
+                  'Nombre del rol y al menos un permiso coherente con el perfil que se quiere crear.',
+              ],
+              [
+                  'Eliminar puede quedar bloqueado si el rol ya esta en uso o si el perfil actual no tiene permiso para administrar acceso.',
+                  'Editar permisos depende del alcance del usuario que administra roles.',
               ]
           ),
           [
@@ -1664,16 +2219,24 @@ public function __construct()
                   'Revisiones: consulta versiones anteriores.',
                   'Escaneados: abre documentacion complementaria.',
               ],
-              [
-                  'Se usa para verificar que revision esta vigente antes de compartir PDF o seguir con partes diarios.',
-              ],
-              [
-                  'Depende de informes previamente generados dentro de la OT.',
-              ],
-              [],
-              'La OT queda con un punto de consulta central para revisar revisiones y salidas PDF de informes.'
-          )
-      ]);
+            [
+                'Se usa para verificar que revision esta vigente antes de compartir PDF o seguir con partes diarios.',
+            ],
+            [
+                'Depende de informes previamente generados dentro de la OT.',
+            ],
+            [],
+            'La OT queda con un punto de consulta central para revisar revisiones y salidas PDF de informes.',
+            [],
+            [
+                'OT > Informes > Listado.',
+            ],
+            [],
+            [
+                'Editar, clonar, firmar o abrir ciertos adjuntos depende del estado del informe y de los permisos del usuario.',
+            ]
+        )
+    ]);
   }
 
   public function crearParteDiario()
@@ -1681,7 +2244,9 @@ public function __construct()
       return $this->returnAyudaView('ayuda.crear_parte_diario', 'Ayuda', '', [
           'functionalSummaryTitle' => 'Resumen funcional',
           'functionalSummarySections' => $this->legacyFunctionalSummary(
-              [],
+              [
+                  'Durante la carga se muestran tablas internas para informes pendientes, responsables, vehiculos y servicios de la jornada.',
+              ],
               [
                   'OT, obra, fecha, tipo de servicio, horario y observaciones.',
                   'Responsables, vehiculos, servicios adicionales e informes pendientes del contexto.',
@@ -1692,6 +2257,7 @@ public function __construct()
                   'Guardar el parte para PDF y futura certificacion.',
               ],
               [
+                  'Nuevo: inicia un parte diario o parte manual desde la OT.',
                   'Guardar: registra el parte diario.',
                   'PDF: abre la salida del parte ya guardado.',
               ],
@@ -1704,7 +2270,42 @@ public function __construct()
               [
                   'Que fecha, obra e informes asociados correspondan a la jornada correcta.',
               ],
-              'La jornada queda consolidada en un parte diario listo para PDF, consulta y certificacion.'
+              'La jornada queda consolidada en un parte diario listo para PDF, consulta y certificacion.',
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo de la tabla de informes pendientes que se consolida dentro del parte.',
+                      'columns' => ['Tipo', 'Numero', 'Fecha', 'Estado', 'Accion'],
+                      'rows' => [
+                          [
+                              'RI',
+                              'RI-00452',
+                              '18/03/2026',
+                              ['type' => 'badge', 'text' => 'Pendiente', 'class' => 'ayuda_demo_badge--warning'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Incluir', 'style' => 'default', 'icon' => 'fa fa-check-square-o'],
+                              ]],
+                          ],
+                          [
+                              'PM',
+                              'PM-00118',
+                              '18/03/2026',
+                              ['type' => 'badge', 'text' => 'Pendiente', 'class' => 'ayuda_demo_badge--warning'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Incluir', 'style' => 'default', 'icon' => 'fa fa-check-square-o'],
+                              ]],
+                          ],
+                      ],
+                  ],
+              ],
+              [
+                  'OT > Partes > Nuevo / Parte manual.',
+              ],
+              [
+                  'Fecha, obra, tipo de servicio y la jornada a consolidar con sus informes asociados.',
+              ],
+              [
+                  'Guardar puede quedar bloqueado si faltan datos de jornada o si no hay contexto suficiente para consolidar el parte.',
+              ]
           )
       ]);
   }
@@ -1721,10 +2322,15 @@ public function __construct()
               [
                   'Consultar partes ya registrados para una OT.',
                   'Abrir el PDF correcto y editar el parte cuando el estado y permiso lo permiten.',
+                  'Firmar el parte o revisar sus adjuntos cuando el circuito documental lo habilita.',
               ],
               [
+                  'Nuevo: crea un parte diario o parte manual desde la cabecera del modulo.',
                   'PDF: abre el parte diario.',
+                  'PDF original: consulta la salida original del parte.',
                   'Editar: permite corregir el registro cuando sigue habilitado.',
+                  'Escaneados: abre adjuntos o documentacion complementaria.',
+                  'Firmar: confirma documentalmente el parte.',
               ],
               [
                   'Se usa para revisar si una jornada ya quedo consolidada y si esta disponible para certificados o reportes.',
@@ -1733,7 +2339,46 @@ public function __construct()
                   'Depende de partes diarios previamente cargados en la OT.',
               ],
               [],
-              'La OT queda con consulta clara de jornadas consolidadas y listas para cierre documental.'
+              'La OT queda con consulta clara de jornadas consolidadas y listas para cierre documental.',
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado de partes diarios de una OT.',
+                      'columns' => ['Numero', 'Fecha', 'Tipo de servicio', 'Usuario alta', 'Firma', 'Acciones'],
+                      'rows' => [
+                          [
+                              'PD-00124',
+                              '18/03/2026',
+                              'END',
+                              'sgquinteros',
+                              ['type' => 'badge', 'text' => 'Pendiente', 'class' => 'ayuda_demo_badge--warning'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'style' => 'warning', 'icon' => 'fa fa-edit'],
+                                  ['label' => 'PDF', 'style' => 'default', 'icon' => 'fa fa-file-pdf-o'],
+                                  ['label' => 'Adjuntos', 'style' => 'default', 'icon' => 'fa fa-cloud-upload'],
+                                  ['label' => 'Firmar', 'style' => 'default', 'icon' => 'glyphicon glyphicon-pencil'],
+                              ]],
+                          ],
+                          [
+                              'PD-00125',
+                              '19/03/2026',
+                              'PM',
+                              'sgquinteros',
+                              ['type' => 'badge', 'text' => 'Firmado', 'class' => 'ayuda_demo_badge--success'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'PDF', 'style' => 'default', 'icon' => 'fa fa-file-pdf-o'],
+                                  ['label' => 'Final', 'style' => 'default', 'icon' => 'fa fa-file-pdf-o'],
+                              ]],
+                          ],
+                      ],
+                  ],
+              ],
+              [
+                  'OT > Partes > Listado.',
+              ],
+              [],
+              [
+                  'Editar o firmar puede quedar bloqueado cuando el parte ya esta firmado o cuando el perfil no tiene permiso de modificacion.',
+              ]
           )
       ]);
   }
@@ -1743,7 +2388,9 @@ public function __construct()
       return $this->returnAyudaView('ayuda.crear_certificados', 'Ayuda', '', [
           'functionalSummaryTitle' => 'Resumen funcional',
           'functionalSummarySections' => $this->legacyFunctionalSummary(
-              [],
+              [
+                  'Durante la carga se muestra una tabla de partes pendientes de certificado y tablas de servicios o productos consolidados.',
+              ],
               [
                   'Datos generales del certificado y seleccion de partes que lo componen.',
                   'Servicios, productos por placa o costura y consolidaciones resultantes del certificado.',
@@ -1754,6 +2401,7 @@ public function __construct()
                   'Guardar el documento para PDF y trazabilidad final.',
               ],
               [
+                  'Limpiar todo: reinicia la seleccion y los calculos cargados.',
                   'Guardar: registra el certificado.',
                   'PDF: abre la salida final u opciones agrupadas cuando corresponda.',
               ],
@@ -1766,7 +2414,42 @@ public function __construct()
               [
                   'Que los partes seleccionados y las cantidades consolidadas reflejen exactamente el alcance certificado.',
               ],
-              'La OT queda con un certificado final trazable, listo para PDF y control documental.'
+              'La OT queda con un certificado final trazable, listo para PDF y control documental.',
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo de la tabla de partes disponibles para integrar en el certificado.',
+                      'columns' => ['Sel.', 'Numero', 'Obra', 'Fecha', 'Accion'],
+                      'rows' => [
+                          [
+                              ['type' => 'badge', 'text' => 'Si', 'class' => 'ayuda_demo_badge--success'],
+                              'PD-00124',
+                              'Planta compresora',
+                              '18/03/2026',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Integrado', 'style' => 'default', 'icon' => 'fa fa-check-square-o'],
+                              ]],
+                          ],
+                          [
+                              ['type' => 'badge', 'text' => 'No', 'class' => 'ayuda_demo_badge--muted'],
+                              'PD-00125',
+                              'Planta compresora',
+                              '19/03/2026',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Seleccionar', 'style' => 'default', 'icon' => 'fa fa-square-o'],
+                              ]],
+                          ],
+                      ],
+                  ],
+              ],
+              [
+                  'OT > Certificados > Nuevo.',
+              ],
+              [
+                  'Datos generales del certificado y al menos un parte seleccionado para consolidar la salida final.',
+              ],
+              [
+                  'Guardar puede quedar bloqueado si no se seleccionan partes o si la consolidacion no deja una salida documental valida.',
+              ]
           )
       ]);
   }
@@ -1783,10 +2466,16 @@ public function __construct()
               [
                   'Consultar certificados emitidos para una OT.',
                   'Abrir el PDF correcto y revisar si un certificado ya fue emitido o todavia requiere ajuste.',
+                  'Firmar, revisar adjuntos o exportar salidas complementarias cuando el circuito lo permite.',
               ],
               [
-                  'PDF: abre la salida final del certificado.',
+                  'Nuevo: inicia un certificado nuevo desde la OT.',
                   'Editar: reabre el certificado cuando el circuito lo permite.',
+                  'PDF original: consulta la salida original.',
+                  'PDF final: abre la salida final del certificado.',
+                  'Escaneados: abre adjuntos o documentacion escaneada.',
+                  'Excel: exporta una salida complementaria.',
+                  'Firmar: confirma el certificado cuando corresponde.',
               ],
               [
                   'Se usa para ubicar rapidamente la salida final de una OT y verificar si un conjunto de partes ya fue certificado.',
@@ -1795,7 +2484,43 @@ public function __construct()
                   'Depende de certificados previamente generados a partir de partes diarios.',
               ],
               [],
-              'La OT queda con un punto final de consulta documental sobre certificados emitidos.'
+              'La OT queda con un punto final de consulta documental sobre certificados emitidos.',
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado de certificados emitidos para una OT.',
+                      'columns' => ['Numero', 'Fecha', 'Firma', 'Acciones'],
+                      'rows' => [
+                          [
+                              'C-00087',
+                              '18/03/2026',
+                              ['type' => 'badge', 'text' => 'Pendiente', 'class' => 'ayuda_demo_badge--warning'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'style' => 'warning', 'icon' => 'fa fa-edit'],
+                                  ['label' => 'Original', 'style' => 'default', 'icon' => 'fa fa-file-pdf-o'],
+                                  ['label' => 'Final', 'style' => 'default', 'icon' => 'fa fa-file-pdf-o'],
+                                  ['label' => 'Firmar', 'style' => 'default', 'icon' => 'glyphicon glyphicon-pencil'],
+                              ]],
+                          ],
+                          [
+                              'C-00088',
+                              '19/03/2026',
+                              ['type' => 'badge', 'text' => 'Firmado', 'class' => 'ayuda_demo_badge--success'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Final', 'style' => 'default', 'icon' => 'fa fa-file-pdf-o'],
+                                  ['label' => 'Adjuntos', 'style' => 'default', 'icon' => 'fa fa-cloud-upload'],
+                                  ['label' => 'Excel', 'style' => 'default', 'icon' => 'fa fa-file-excel-o'],
+                              ]],
+                          ],
+                      ],
+                  ],
+              ],
+              [
+                  'OT > Certificados > Listado.',
+              ],
+              [],
+              [
+                  'Editar o firmar puede quedar bloqueado segun el estado documental del certificado y los permisos del usuario.',
+              ]
           )
       ]);
   }
@@ -1968,6 +2693,33 @@ public function __construct()
               ],
               [
                   'Las asignaciones de vehiculos y la documentacion complementaria dependen de que el vehiculo exista en este maestro.',
+              ],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo del listado de vehiculos con sus acciones base.',
+                      'columns' => ['Interno', 'Patente', 'Descripcion', 'Estado', 'Acciones'],
+                      'rows' => [
+                          [
+                              'VH-14',
+                              'AB123CD',
+                              'Camion con hidrogrua',
+                              ['type' => 'badge', 'text' => 'Activo', 'class' => 'ayuda_demo_badge--success'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'VH-22',
+                              'AE456FG',
+                              'Utilitario',
+                              ['type' => 'badge', 'text' => 'Baja', 'class' => 'ayuda_demo_badge--warning'],
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [
@@ -2115,6 +2867,39 @@ public function __construct()
               ],
               [
                   'Los roles dependen de este maestro para agrupar accesos y despues asignarlos a usuarios.',
+              ],
+          [
+              'Que muestra la tabla' => [
+                  'caption' => 'Ejemplo del listado de permisos.',
+                      'columns' => ['Permiso', 'Guard', 'Acciones'],
+                      'rows' => [
+                          [
+                              'enod',
+                              'web',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              'certificados.ver',
+                              'web',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
+              ]
+          ,
+              [
+                  'Configuracion > Permisos.',
+              ],
+              [
+                  'Nombre del permiso y guard asociado.',
+              ],
+              [
+                  'Eliminar o editar puede quedar bloqueado si el perfil actual no tiene permiso de administracion o si ese permiso ya forma parte de configuraciones activas que no deben tocarse sin control.',
               ]
           ),
           [
@@ -2166,6 +2951,37 @@ public function __construct()
                   'Eliminar: quita movimientos o registros si el perfil y la pantalla lo habilitan.',
                   'Buscar y filtrar: localiza movimientos por producto, fecha u otros criterios.',
                   'Exportar PDF: genera la salida documental del registro o historial cuando la vista lo ofrece.',
+              ],
+              [],
+              [
+                  'Que muestra la tabla' => [
+                      'caption' => 'Ejemplo de movimientos y disponibilidad en una vista de stock.',
+                      'columns' => ['Fecha', 'Producto', 'Tipo', 'Cantidad', 'Referencia', 'Acciones'],
+                      'rows' => [
+                          [
+                              '20/03/2026',
+                              'Placa 3/8',
+                              'Ingreso',
+                              '+50',
+                              'Proveedor Aceros',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Exportar PDF', 'description' => '', 'icon' => 'fa fa-file-pdf-o', 'class' => 'btn btn-default btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                          [
+                              '19/03/2026',
+                              'Placa 3/8',
+                              'Egreso',
+                              '-12',
+                              'Remito R-104',
+                              ['type' => 'actions', 'items' => [
+                                  ['label' => 'Exportar PDF', 'description' => '', 'icon' => 'fa fa-file-pdf-o', 'class' => 'btn btn-default btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
+                              ]],
+                          ],
+                      ],
+                  ],
               ]
           ),
           [

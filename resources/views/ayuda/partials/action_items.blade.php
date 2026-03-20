@@ -68,8 +68,24 @@
             $buttonIcon = 'glyphicon glyphicon-pencil';
             $buttonText = '';
             $buttonMode = 'icon';
+        } elseif (str_contains($actionKey, 'usuarios')) {
+            $buttonIcon = 'fa fa-users';
+            $buttonText = '';
+            $buttonMode = 'icon';
         } elseif (str_contains($actionKey, 'historial')) {
             $buttonIcon = 'fa fa-table';
+            $buttonText = '';
+            $buttonMode = 'icon';
+        } elseif (str_contains($actionKey, 'revisiones')) {
+            $buttonIcon = 'fa fa-history';
+            $buttonText = '';
+            $buttonMode = 'icon';
+        } elseif (str_contains($actionKey, 'escaneados')) {
+            $buttonIcon = 'fa fa-paperclip';
+            $buttonText = '';
+            $buttonMode = 'icon';
+        } elseif (str_contains($actionKey, 'ver detalles')) {
+            $buttonIcon = 'fa fa-list-alt';
             $buttonText = '';
             $buttonMode = 'icon';
         } elseif (str_contains($actionKey, 'abrir visualizador')) {
@@ -100,7 +116,7 @@
             @endif
         </button>
         @if($actionDescription)
-            <span>{{ $actionDescription }}</span>
+            <span class="ayuda_action_description">{{ $actionDescription }}</span>
         @endif
     </li>
 @endforeach

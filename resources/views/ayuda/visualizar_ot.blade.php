@@ -37,35 +37,6 @@
     </section>
 
     <section class="ayuda_section">
-        <div class="ayuda_panel detalle_iconos">
-            <h2>Botones y acciones disponibles</h2>
-            <p>Desde el listado y desde la barra superior de modulos se accede al resto del circuito documental.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_editar.PNG') }}" alt="Editar" /> Permite modificar los datos generales de la OT mientras el usuario tenga permisos.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_usuarios.PNG') }}" alt="Usuarios" /> Abre la asignacion de usuarios cliente y soldadores asociados.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/Boton_pdf.PNG') }}" alt="PDF OT" /> Genera o visualiza el PDF de la OT.</p>
-            <p>
-                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_firmar.PNG') }}" alt="Firmar OT" />
-                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_ot_activa.PNG') }}" alt="OT activa" />
-                <img class="img-responsive" src="{{ asset('img/ayuda/Boton_ot_cerrada.PNG') }}" alt="OT cerrada" />
-                La firma cambia la OT a estado activa. Cuando el trabajo termina, puede cerrarse para dejar el circuito concluido.
-            </p>
-            <div class="ayuda_media">
-                <img src="{{ asset('img/ayuda/Tablero_iconos_grandes.PNG') }}" class="img-responsive" alt="Accesos de la OT" />
-            </div>
-            <ul>
-                <li><strong>Operadores:</strong> documentacion y personal operativo vinculado a la OT.</li>
-                <li><strong>Equipos / fuentes:</strong> internos, trazabilidad y documentacion tecnica asociada.</li>
-                <li><strong>Procedimientos:</strong> procedimientos propios o del cliente necesarios para informar.</li>
-                <li><strong>Vehiculos / documentacion:</strong> vehiculos asignados y soporte documental complementario.</li>
-                <li><strong>Remitos:</strong> movimiento de productos o equipos entre frentes.</li>
-                <li><strong>Informes:</strong> registro tecnico por metodo de ensayo.</li>
-                <li><strong>Partes:</strong> consolidacion diaria de la actividad de la OT.</li>
-                <li><strong>Certificados:</strong> documento final armado a partir de partes ya registrados.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="ayuda_section">
         <div class="ayuda_panel">
             <h2>Importante</h2>
             <p>La OT se relaciona con cliente, contactos, ubicacion, responsable y otros datos tecnicos que despues se usan en el resto del circuito.</p>
