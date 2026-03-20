@@ -28,7 +28,7 @@
             <div class="ayuda_panel {{ $sectionTypeClass }}">
                 <div class="ayuda_summary_block">
                     @if(!empty($section['title']))
-                        <h3>{{ $section['title'] }}</h3>
+                        <h2 class="ayuda_panel_title">{{ $section['title'] }}</h2>
                     @endif
 
                     @if(!empty($section['paragraphs']))
@@ -64,7 +64,7 @@
         <section class="ayuda_section">
             <div class="ayuda_panel">
                 <div class="ayuda_summary_block">
-                    <h3>Articulos relacionados</h3>
+                    <h2 class="ayuda_panel_title">Articulos relacionados</h2>
                     <ul class="ayuda_links">
                         @foreach($functionalSummaryRelated as $link)
                             <li><a href="{{ $link['href'] }}">{{ $link['label'] }}</a></li>
