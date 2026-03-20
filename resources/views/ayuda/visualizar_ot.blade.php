@@ -15,6 +15,8 @@
         </p>
     </div>
 
+    @include('ayuda.partials.functional_summary')
+
     <section class="ayuda_section">
         <div class="ayuda_panel">
             <h2>Que se ve en el listado</h2>

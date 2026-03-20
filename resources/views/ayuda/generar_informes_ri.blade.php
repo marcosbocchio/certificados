@@ -11,6 +11,8 @@
         </p>
     </div>
 
+    @include('ayuda.partials.functional_summary')
+
     <section class="ayuda_section">
         <div class="ayuda_panel">
             <h2>Encabezado del informe</h2>

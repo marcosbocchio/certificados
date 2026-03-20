@@ -16,6 +16,8 @@
         </p>
     </div>
 
+    @include('ayuda.partials.functional_summary')
+
     <section class="ayuda_section">
         <div class="ayuda_panel">
             <h2>Antes de ingresar a informes</h2>

@@ -104,6 +104,14 @@
     margin-bottom: 18px;
 }
 
+.ayuda_summary_block {
+    margin-bottom: 18px;
+}
+
+.ayuda_summary_block:last-child {
+    margin-bottom: 0;
+}
+
 .ayuda_panel {
     background-color: #ffffff;
     border: 1px solid #e6eaf0;

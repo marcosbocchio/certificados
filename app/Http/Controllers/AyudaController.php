@@ -17,12 +17,15 @@ public function __construct()
 
 }
 
-  private function returnAyudaView($viewName, $titulo = "Ayuda", $descripcion = '')
+  private function returnAyudaView($viewName, $titulo = "Ayuda", $descripcion = '', array $viewData = [])
   {
       $user = auth()->user();
       $header_titulo = $titulo;
       $header_descripcion = $descripcion;
-      return view($viewName, compact('user', 'header_titulo', 'header_descripcion'));
+      return view($viewName, array_merge(
+          compact('user', 'header_titulo', 'header_descripcion'),
+          $viewData
+      ));
   }
 
   private function returnAyudaIntroView($title, array $summary = [], array $sections = [], array $related = [], array $visuals = [], array $meta = [])
@@ -44,17 +47,50 @@ public function __construct()
       ));
   }
 
-  private function functionalSections(array $managedData, array $actions, array $usage, $result, array $checks = [], array $buttons = [])
+  private function functionalSections(array $managedData, array $actions, array $usage, $result, array $checks = [], array $buttons = [], array $dependencies = [])
   {
-      $sections = [
-          [
+      $tableItems = [];
+      $fieldItems = [];
+      $generalItems = [];
+
+      foreach ($managedData as $item) {
+          $normalized = mb_strtolower($item);
+
+          if (str_contains($normalized, 'en la tabla') || str_contains($normalized, 'en el listado') || str_contains($normalized, 'la tabla')) {
+              $tableItems[] = $item;
+          } elseif (str_contains($normalized, 'en el formulario') || str_contains($normalized, 'se cargan') || str_contains($normalized, 'se carga')) {
+              $fieldItems[] = $item;
+          } else {
+              $generalItems[] = $item;
+          }
+      }
+
+      $sections = [];
+
+      if (!empty($tableItems)) {
+          $sections[] = [
+              'title' => 'Que muestra la tabla',
+              'items' => $tableItems,
+          ];
+      }
+
+      if (!empty($fieldItems)) {
+          $sections[] = [
+              'title' => 'Que campos se cargan',
+              'items' => $fieldItems,
+          ];
+      }
+
+      if (!empty($generalItems)) {
+          $sections[] = [
               'title' => 'Que datos se cargan o gestionan',
-              'items' => $managedData,
-          ],
-          [
-              'title' => 'Que acciones permite',
-              'items' => $actions,
-          ],
+              'items' => $generalItems,
+          ];
+      }
+
+      $sections[] = [
+          'title' => 'Que acciones permite',
+          'items' => $actions,
       ];
 
       if (!empty($buttons)) {
@@ -69,6 +105,13 @@ public function __construct()
           'items' => $usage,
       ];
 
+      if (!empty($dependencies)) {
+          $sections[] = [
+              'title' => 'De que depende',
+              'items' => $dependencies,
+          ];
+      }
+
       if (!empty($checks)) {
           $sections[] = [
               'title' => 'Que revisar antes de guardar o cerrar',
@@ -77,9 +120,72 @@ public function __construct()
       }
 
       $sections[] = [
-          'title' => 'Resultado esperado',
+          'title' => 'Que deja listo',
           'paragraphs' => is_array($result) ? $result : [$result],
       ];
+
+      return $sections;
+  }
+
+  private function legacyFunctionalSummary(array $table = [], array $fields = [], array $actions = [], array $buttons = [], array $usage = [], array $dependencies = [], array $checks = [], $result = null)
+  {
+      $sections = [];
+
+      if (!empty($table)) {
+          $sections[] = [
+              'title' => 'Que muestra la tabla',
+              'items' => $table,
+          ];
+      }
+
+      if (!empty($fields)) {
+          $sections[] = [
+              'title' => 'Que campos se cargan',
+              'items' => $fields,
+          ];
+      }
+
+      if (!empty($actions)) {
+          $sections[] = [
+              'title' => 'Que acciones permite',
+              'items' => $actions,
+          ];
+      }
+
+      if (!empty($buttons)) {
+          $sections[] = [
+              'title' => 'Botones y acciones disponibles',
+              'items' => $buttons,
+          ];
+      }
+
+      if (!empty($usage)) {
+          $sections[] = [
+              'title' => 'Como se usa en la practica',
+              'items' => $usage,
+          ];
+      }
+
+      if (!empty($dependencies)) {
+          $sections[] = [
+              'title' => 'De que depende',
+              'items' => $dependencies,
+          ];
+      }
+
+      if (!empty($checks)) {
+          $sections[] = [
+              'title' => 'Que revisar antes de guardar o cerrar',
+              'items' => $checks,
+          ];
+      }
+
+      if (!is_null($result)) {
+          $sections[] = [
+              'title' => 'Que deja listo',
+              'paragraphs' => is_array($result) ? $result : [$result],
+          ];
+      }
 
       return $sections;
   }
@@ -92,55 +198,317 @@ public function __construct()
 
   public function cambiarClave(){
 
-    return $this->returnAyudaView('ayuda.cambiar_clave');
+    return $this->returnAyudaView('ayuda.cambiar_clave', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [],
+            [
+                'Clave actual, nueva clave y confirmacion de la nueva clave.',
+            ],
+            [
+                'Permite cambiar la contrasena del usuario autenticado.',
+                'Valida que la clave actual sea correcta y que la nueva quede confirmada.',
+            ],
+            [
+                'Guardar: aplica el cambio de contrasena.',
+            ],
+            [
+                'Se usa cuando el usuario necesita renovar su clave o corregir un acceso comprometido.',
+            ],
+            [],
+            [
+                'Que la nueva clave quede bien escrita y confirmada.',
+            ],
+            'La cuenta queda con una nueva contrasena y el usuario puede seguir operando con acceso actualizado.'
+        ),
+        'functionalSummaryRelated' => [
+            ['href' => route('ayuda-perfil'), 'label' => 'Perfil de usuario'],
+            ['href' => route('ayuda-gestion-usuario'), 'label' => 'Gestionar usuarios'],
+        ],
+    ]);
 
   }
 
   public function BuscarFormularios(){
 
-    return $this->returnAyudaView('ayuda.buscar_formularios');
+    return $this->returnAyudaView('ayuda.buscar_formularios', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'Filtra listados por cualquiera de los datos visibles en la grilla activa.',
+            ],
+            [
+                'No carga un formulario nuevo: usa el campo de busqueda ya visible en la parte superior derecha del listado.',
+            ],
+            [
+                'Buscar registros parciales o exactos dentro de listados como OT, maestros y otras tablas del sistema.',
+            ],
+            [
+                'Buscar: filtra la tabla segun el texto ingresado.',
+            ],
+            [
+                'Se escribe el dato a localizar y el listado se acota sin recorrer manualmente todas las filas.',
+            ],
+            [],
+            [],
+            'El usuario encuentra mas rapido registros dentro de tablas extensas sin salir del modulo actual.'
+        )
+    ]);
 
   }
 
   public function VisualizarDocOperadores(){
 
-    return $this->returnAyudaView('ayuda.visualizar_doc_operadores');
+    return $this->returnAyudaView('ayuda.visualizar_doc_operadores', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'Muestra la documentacion disponible para operadores y ayudantes ya asignados a la OT.',
+                'Permite identificar archivos por operador y descargar PDFs o documentos relacionados.',
+            ],
+            [],
+            [
+                'Consultar documentacion de operadores por OT.',
+                'Descargar archivos disponibles para cada operador o ayudante.',
+            ],
+            [
+                'Abrir PDF: descarga o abre la documentacion asociada al operador.',
+            ],
+            [
+                'Se usa despues de asignar operadores para validar que la documentacion necesaria este disponible para consulta del cliente o del equipo interno.',
+            ],
+            [
+                'Depende de operadores asignados a la OT y de documentacion cargada en usuarios/documentaciones.',
+            ],
+            [
+                'Que los operadores correctos ya esten asociados a la OT.',
+            ],
+            'La OT queda con acceso documental claro sobre operadores y ayudantes, listo para consulta y control.'
+        )
+    ]);
 
   }
 
   public function VisualizarGestionUsuario(){
 
-    return $this->returnAyudaView('ayuda.gestion_usuario');
+    return $this->returnAyudaView('ayuda.gestion_usuario', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'Muestra el listado de usuarios del sistema con sus datos base y perfil asignado.',
+            ],
+            [
+                'Datos de usuario, correo, perfil o rol y otros datos de acceso segun el formulario disponible.',
+            ],
+            [
+                'Crear usuarios nuevos.',
+                'Editar usuarios existentes.',
+                'Asignar o corregir perfiles, accesos y datos visibles.',
+                'Eliminar o desactivar usuarios segun permisos del sistema.',
+            ],
+            [
+                'Nuevo: crea un usuario.',
+                'Editar: corrige datos o accesos.',
+                'Eliminar: quita o da de baja un usuario.',
+                'Buscar: filtra el listado.',
+            ],
+            [
+                'Se usa cuando hay que habilitar acceso, corregir datos de cuenta o revisar permisos de un usuario.',
+            ],
+            [
+                'Depende del maestro de roles y permisos para definir el alcance real de cada cuenta.',
+            ],
+            [
+                'Que el rol asignado refleje el alcance real del usuario.',
+            ],
+            'El usuario queda listo para operar con el acceso, perfil y datos correctos dentro del sistema.'
+        ),
+        'functionalSummaryRelated' => [
+            ['href' => route('ayuda-gestionar-roles'), 'label' => 'Gestionar roles'],
+            ['href' => route('ayuda-gestion-permisos'), 'label' => 'Gestionar permisos'],
+            ['href' => route('ayuda-perfil'), 'label' => 'Perfil de usuario'],
+        ],
+    ]);
 
   }
 
   public function visualizarOt(){
 
-    return $this->returnAyudaView('ayuda.visualizar_ot');
+    return $this->returnAyudaView('ayuda.visualizar_ot', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'El listado de OT muestra cliente, fecha, estado y accesos al resto del circuito documental.',
+                'Cada fila concentra acciones sobre la OT y la barra de iconos abre modulos asociados como operadores, informes, partes, certificados y remitos.',
+            ],
+            [],
+            [
+                'Consultar el estado general de una OT.',
+                'Editar, firmar, cerrar o abrir el PDF de la OT segun permisos y estado.',
+                'Entrar a operadores, procedimientos, vehiculos, informes, partes, certificados y remitos.',
+            ],
+            [
+                'Editar: modifica la cabecera de la OT.',
+                'PDF: abre el documento de la OT.',
+                'Firmar: cambia la OT a estado activa.',
+                'Cerrar: deja la OT como concluida.',
+                'Usuarios: abre la asignacion de usuarios cliente y soldadores.',
+            ],
+            [
+                'Se usa como punto de entrada a toda la documentacion operativa de una orden de trabajo.',
+            ],
+            [
+                'Depende de que la OT haya sido creada previamente y de que sus maestros base esten correctos.',
+            ],
+            [
+                'Que el estado de la OT corresponda al avance real del trabajo.',
+            ],
+            'La OT queda lista para servir como nodo central del circuito documental y operativo.'
+        )
+    ]);
 
   }
 
   public function crearOt(){
 
-    return $this->returnAyudaView('ayuda.crear_ot');
+    return $this->returnAyudaView('ayuda.crear_ot', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [],
+            [
+                'Proyecto, FST, numero de OT, fecha, obra u OC, fecha estimada y hora.',
+                'Cliente, comitente, contactos, responsable OT y lugar de ensayo.',
+                'Servicios con normas, productos con medida, EPP, riesgos y observaciones.',
+            ],
+            [
+                'Crear una OT nueva.',
+                'Cargar cabecera, servicios, productos y contexto operativo del trabajo.',
+                'Dejar lista la base para asignaciones, informes, partes, certificados y remitos.',
+            ],
+            [
+                'Guardar: crea la OT.',
+                'Agregar servicio: suma una fila de servicio con norma de ensayo y evaluacion.',
+                'Agregar producto: suma una fila de producto y medida.',
+            ],
+            [
+                'Se completa primero la cabecera y despues se cargan servicios, productos y contexto operativo para dejar preparada la OT.',
+            ],
+            [
+                'Depende de clientes, comitentes, servicios, productos, medidas y usuarios previamente cargados.',
+            ],
+            [
+                'Que cliente, comitente, responsable y servicios reflejen el trabajo real.',
+            ],
+            'La orden de trabajo queda creada y lista para iniciar el resto del circuito operativo.'
+        )
+    ]);
 
   }
 
   public function asignarOperadores(){
 
-    return $this->returnAyudaView('ayuda.asignar_operadores');
+    return $this->returnAyudaView('ayuda.asignar_operadores', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'Muestra operadores y ayudantes ya asociados a la OT y la documentacion visible para ellos.',
+            ],
+            [
+                'Seleccion de operador y ayudante desde listas de usuarios disponibles.',
+            ],
+            [
+                'Asignar operadores y ayudantes a la OT.',
+                'Actualizar la asociacion para que queden disponibles en informes y partes.',
+            ],
+            [
+                'Actualizar: guarda la asignacion actual de operadores y ayudantes.',
+            ],
+            [
+                'Se usa despues de crear la OT para dejar disponible el personal operativo que intervendra en informes y partes.',
+            ],
+            [
+                'Depende de usuarios cargados y de una OT ya creada.',
+            ],
+            [
+                'Que las personas asignadas sean las que realmente intervienen en la orden.',
+            ],
+            'La OT queda con operadores y ayudantes disponibles para el resto del circuito.'
+        )
+    ]);
 
   }
 
   public function asignarSoldadoresUsuarios(){
 
-    return $this->returnAyudaView('ayuda.asignar_soldadores_usuarios');
+    return $this->returnAyudaView('ayuda.asignar_soldadores_usuarios', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'Muestra la seleccion de usuarios cliente y soldadores asociados a la OT.',
+            ],
+            [
+                'Usuarios cliente que podran visualizar la documentacion de la OT.',
+                'Soldadores que quedaran disponibles para informes donde corresponda, especialmente RI.',
+            ],
+            [
+                'Asignar usuarios cliente y soldadores.',
+                'Actualizar la OT para habilitar acceso documental y seleccion posterior en informes.',
+            ],
+            [
+                'Actualizar: guarda la asignacion de usuarios cliente y soldadores.',
+            ],
+            [
+                'Se usa despues de crear la OT cuando hay que abrir acceso documental al cliente y dejar preparados los soldadores de trabajo.',
+            ],
+            [
+                'Depende de usuarios y soldadores previamente cargados en sus maestros.',
+            ],
+            [
+                'Que los usuarios cliente realmente deban ver la documentacion de esa OT.',
+            ],
+            'La OT queda con acceso cliente definido y con soldadores disponibles para informes.'
+        )
+    ]);
 
   }
 
   public function generarInformes(){
 
-    return $this->returnAyudaView('ayuda.generar_informes');
+    return $this->returnAyudaView('ayuda.generar_informes', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'El listado muestra informes de la OT con metodo, numero, revision, obra, usuario y fecha.',
+            ],
+            [
+                'Cada formulario pide encabezado tecnico, datos del metodo y detalle del ensayo segun el tipo de informe.',
+            ],
+            [
+                'Crear informes nuevos por metodo habilitado en la OT.',
+                'Editar revisiones existentes.',
+                'Clonar informes para acelerar cargas similares.',
+                'Firmar, anular, desanular y abrir PDF del informe.',
+            ],
+            [
+                'Nuevo: crea un informe del metodo seleccionado.',
+                'Editar: corrige el informe; si esta firmado, genera nueva revision.',
+                'Clonar: replica encabezado o contenido segun el tipo de clonacion.',
+                'PDF: abre la revision actual.',
+                'Firmar: cierra la revision actual.',
+                'Anular: marca el informe como anulado.',
+            ],
+            [
+                'Se entra desde la OT, se elige el metodo habilitado y se trabaja sobre el listado para crear, corregir o firmar revisiones.',
+            ],
+            [
+                'Depende de una OT bien configurada, servicios correctos y asignaciones previas de operadores, procedimientos o soldadores segun metodo.',
+            ],
+            [
+                'Que la revision a firmar o usar en partes sea la correcta.',
+            ],
+            'La OT queda con informes tecnicos trazables, listos para PDF, partes diarios y reportes.'
+        )
+    ]);
 
   }
 
@@ -148,54 +516,298 @@ public function __construct()
 
   public function generarInformesRi(){
 
-    return $this->returnAyudaView('ayuda.generar_informes_ri');
+    return $this->returnAyudaView('ayuda.generar_informes_ri', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [],
+            [
+                'Encabezado principal, obra, tipo Planta o Ducto, PK y tipo de soldadura cuando aplica.',
+                'Espesor, EPS, PQR, equipo, tecnica, modelos 3D, costuras, indicaciones y pasadas de soldadores.',
+            ],
+            [
+                'Crear informes RI de planta o ducto.',
+                'Cargar costuras, indicaciones, rechazos y pasadas manuales o por archivo.',
+            ],
+            [
+                'Guardar: registra el informe RI.',
+                'Agregar costura: suma posiciones inspeccionadas.',
+                'Agregar indicacion: registra indicaciones o rechazos.',
+                'Importar pasadas: carga soldadores desde archivo cuando corresponde.',
+            ],
+            [
+                'Se usa cuando el metodo habilitado es RI y la OT ya tiene servicios, procedimientos y soldadores preparados.',
+            ],
+            [
+                'Depende de soldadores, procedimientos, equipos y tipos de soldadura disponibles en la OT.',
+            ],
+            [
+                'Que el encabezado sea correcto y que las costuras/pasadas correspondan al trabajo real.',
+            ],
+            'El informe RI queda listo para revision, PDF y trazabilidad posterior.'
+        )
+    ]);
 
   }
 
   public function generarInformesUs(){
 
-    return $this->returnAyudaView('ayuda.generar_informes_us');
+    return $this->returnAyudaView('ayuda.generar_informes_us', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [],
+            [
+                'Encabezado del informe US, tecnica, equipo, calibraciones, mediciones y modelos 3D cuando aplica.',
+            ],
+            [
+                'Crear informes de ultrasonido convencional, phase array o medicion de espesores.',
+                'Cargar calibraciones y mediciones segun la tecnica elegida.',
+            ],
+            [
+                'Guardar: registra el informe US.',
+                'Agregar calibracion: suma una calibracion al informe.',
+                'Agregar medicion: incorpora una medicion o matriz segun tecnica.',
+            ],
+            [
+                'Se selecciona la tecnica y luego se completa la calibracion y el detalle medido correspondiente.',
+            ],
+            [
+                'Depende de equipos US, palpadores, procedimientos y OT correctamente configurada.',
+            ],
+            [
+                'Que tecnica, calibraciones y mediciones coincidan con el trabajo real.',
+            ],
+            'El informe US queda listo para revision, PDF y uso documental posterior.'
+        )
+    ]);
 
   }
 
   public function generarInformesPm(){
 
-    return $this->returnAyudaView('ayuda.generar_informes_pm');
+    return $this->returnAyudaView('ayuda.generar_informes_pm', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [],
+            [
+                'Encabezado PM, configuracion tecnica, equipo, instrumento de medicion, particulas y elementos inspeccionados.',
+            ],
+            [
+                'Crear informes de particulas magneticas.',
+                'Cargar configuracion tecnica y elementos inspeccionados con su estado.',
+            ],
+            [
+                'Guardar: registra el informe PM.',
+                'Agregar elemento: suma una pieza o sector inspeccionado.',
+            ],
+            [
+                'Se completa primero el encabezado y luego los elementos inspeccionados junto con su configuracion tecnica.',
+            ],
+            [
+                'Depende de equipos PM, procedimientos y configuracion correcta de la OT.',
+            ],
+            [
+                'Que el equipo, particulas y elementos cargados correspondan al ensayo real.',
+            ],
+            'El informe PM queda listo para revision, PDF y trazabilidad.'
+        )
+    ]);
 
   }
 
   public function generarInformesLp(){
 
-    return $this->returnAyudaView('ayuda.generar_informes_lp');
+    return $this->returnAyudaView('ayuda.generar_informes_lp', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [],
+            [
+                'Encabezado LP, metodo de trabajo, instrumento, liquidos, reveladores, removedores y elementos inspeccionados.',
+            ],
+            [
+                'Crear informes de liquidos penetrantes.',
+                'Cargar configuracion tecnica y elementos inspeccionados.',
+            ],
+            [
+                'Guardar: registra el informe LP.',
+                'Agregar elemento: suma una pieza o sector inspeccionado.',
+            ],
+            [
+                'Se completa el encabezado tecnico y luego se registran los elementos inspeccionados del ensayo.',
+            ],
+            [
+                'Depende de procedimientos, configuracion tecnica y maestros de la OT.',
+            ],
+            [
+                'Que el metodo de trabajo y los insumos seleccionados sean los correctos.',
+            ],
+            'El informe LP queda listo para revision, PDF y uso documental posterior.'
+        )
+    ]);
 
   }
   public function asignarVehiculos(){
 
-    return $this->returnAyudaView('ayuda.asignar_vehiculos');
+    return $this->returnAyudaView('ayuda.asignar_vehiculos', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'Muestra vehiculos y documentacion complementaria ya asociados a la OT.',
+            ],
+            [
+                'Seleccion de vehiculos y documentacion complementaria disponible para la OT.',
+            ],
+            [
+                'Asociar vehiculos a la orden.',
+                'Asociar documentacion complementaria a la OT.',
+                'Actualizar la relacion para consulta posterior.',
+            ],
+            [
+                'Actualizar: guarda la asociacion de vehiculos y documentacion.',
+            ],
+            [
+                'Se usa cuando la OT necesita dejar vehiculos y soporte documental disponibles para consulta del cliente o del equipo interno.',
+            ],
+            [
+                'Depende de vehiculos y documentaciones previamente cargados en sus maestros.',
+            ],
+            [],
+            'La OT queda con vehiculos y documentacion complementaria asociados para consulta posterior.'
+        )
+    ]);
 
   }
 
   public function visualizarVehiculos(){
 
-    return $this->returnAyudaView('ayuda.visualizar_vehiculos');
+    return $this->returnAyudaView('ayuda.visualizar_vehiculos', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'Muestra la documentacion disponible de vehiculos y documentos complementarios asociados a la OT.',
+            ],
+            [],
+            [
+                'Consultar archivos asociados a vehiculos de la OT.',
+                'Descargar documentacion complementaria.',
+            ],
+            [
+                'Abrir PDF: consulta o descarga la documentacion disponible.',
+            ],
+            [
+                'Se usa para validar la documentacion disponible de vehiculos ya asociados a la orden.',
+            ],
+            [
+                'Depende de la asignacion previa de vehiculos y documentacion complementaria.',
+            ],
+            [],
+            'La OT queda con consulta documental clara sobre vehiculos y archivos vinculados.'
+        )
+    ]);
 
   }
 
   public function AsignarProcedimientos(){
 
-    return $this->returnAyudaView('ayuda.asignar_procedimientos');
+    return $this->returnAyudaView('ayuda.asignar_procedimientos', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'Muestra los procedimientos disponibles y los ya asociados a la OT.',
+            ],
+            [
+                'Seleccion de procedimientos propios de Enod y procedimientos del cliente.',
+            ],
+            [
+                'Asignar procedimientos a la OT.',
+                'Actualizar la relacion para que queden disponibles en informes.',
+            ],
+            [
+                'Actualizar: guarda la asignacion de procedimientos.',
+            ],
+            [
+                'Se usa cuando la OT necesita dejar definidos los procedimientos que despues podran elegirse en informes.',
+            ],
+            [
+                'Depende de documentacion/procedimientos previamente cargados en el sistema.',
+            ],
+            [],
+            'La OT queda con procedimientos disponibles para el circuito de informes.'
+        )
+    ]);
 
   }
 
   public function visualizarProcedimientos(){
 
-    return $this->returnAyudaView('ayuda.visualizar_procedimientos');
+    return $this->returnAyudaView('ayuda.visualizar_procedimientos', 'Ayuda', '', [
+        'functionalSummaryTitle' => 'Resumen funcional',
+        'functionalSummarySections' => $this->legacyFunctionalSummary(
+            [
+                'Muestra el listado de procedimientos asignados a la OT y su documentacion asociada.',
+            ],
+            [],
+            [
+                'Consultar procedimientos disponibles para la OT.',
+                'Descargar la documentacion del procedimiento.',
+            ],
+            [
+                'Abrir PDF: consulta o descarga el procedimiento asignado.',
+            ],
+            [
+                'Se usa para revisar que la OT tenga disponibles los procedimientos correctos antes o durante la carga de informes.',
+            ],
+            [
+                'Depende de la asignacion previa de procedimientos a la OT.',
+            ],
+            [],
+            'La OT queda con consulta clara de los procedimientos documentales ya asociados.'
+        )
+    ]);
 
   }
 
   public function creacionRemito()
   {
-      return $this->returnAyudaView('ayuda.creacion_remito');
+      return $this->returnAyudaView('ayuda.creacion_remito', 'Ayuda', '', [
+          'functionalSummaryTitle' => 'Resumen funcional',
+          'functionalSummarySections' => $this->legacyFunctionalSummary(
+              [
+                  'En el listado de remitos se ven origen, destino, numero, estado y acciones por fila.',
+              ],
+              [
+                  'Cabecera del remito: prefijo, numero, fecha, frente origen, frente destino, receptor y destino.',
+                  'Productos con medida y cantidad.',
+                  'Internos de equipos a trasladar y observaciones.',
+                  'Opcion para guardar como borrador.',
+              ],
+              [
+                  'Crear remitos nuevos.',
+                  'Editar remitos existentes.',
+                  'Emitir PDF o imprimir.',
+                  'Anular o desanular remitos.',
+                  'Registrar traslados de productos e internos entre frentes.',
+              ],
+              [
+                  'Nuevo: abre un remito nuevo.',
+                  'Editar: corrige cabecera, productos o internos.',
+                  'PDF: abre el remito en PDF.',
+                  'Imprimir: abre la salida de impresion.',
+                  'Anular: deja sin efecto un remito.',
+                  'Desanular: restablece un remito anulado.',
+                  'Guardar: registra el remito en borrador o definitivo.',
+              ],
+              [
+                  'Se define origen y destino, luego se cargan productos o internos involucrados y finalmente se guarda como borrador o definitivo segun el estado del movimiento.',
+              ],
+              [
+                  'Depende de frentes, productos, medidas, internos de equipo y stock previamente configurados.',
+              ],
+              [
+                  'Que origen, destino, cantidades e internos reflejen el movimiento real antes de guardarlo como definitivo.',
+              ],
+              'El movimiento queda trazado en remitos y puede impactar en stock o ubicacion de equipos segun su contenido.'
+          )
+      ]);
   }
 
   public function gestionNormas()
@@ -261,9 +873,9 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Listado de medidas disponibles para productos u otras configuraciones.',
-                  'Codigo, descripcion o referencia visible de cada medida.',
-                  'Valores reutilizables para evitar carga libre repetida.',
+                  'En la tabla se muestran codigo, descripcion y unidad de medida asociada a cada medida.',
+                  'En el formulario se cargan codigo, descripcion y la unidad de medida correspondiente.',
+                  'Son valores reutilizables para evitar carga libre repetida en productos y otras configuraciones.',
               ],
               [
                   'Consultar medidas existentes desde la grilla del maestro.',
@@ -281,9 +893,13 @@ public function __construct()
                   'Que la descripcion sea clara y no repita una medida ya existente.',
               ],
               [
-                  'Nuevo: crea una medida para dejarla disponible en selectores y maestros relacionados.',
+                  'Nuevo: abre el modal para cargar codigo, descripcion y unidad de medida.',
                   'Editar: modifica el nombre o identificacion de una medida existente.',
                   'Eliminar: quita una medida cuando ya no debe usarse o quedo duplicada.',
+              ],
+              [
+                  'Depende de unidades de medida cargadas previamente para poder completar el alta.',
+                  'Productos y otros maestros relacionados usan estas medidas como referencia reutilizable.',
               ]
           ),
           [
@@ -358,37 +974,42 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar clientes',
           [
-              'Esta seccion administra los clientes con los que despues se trabaja en OT, usuarios cliente y documentacion del sistema.',
-              'Desde el listado se consultan registros existentes, se crean clientes nuevos, se editan datos generales y contactos, y se eliminan registros cuando no tienen restricciones asociadas.',
+              'Esta seccion administra el maestro de clientes que despues se reutiliza en OT, plantas, usuarios cliente y circuitos documentales.',
+              'La UI actual combina un listado con busqueda y un formulario modal donde se cargan datos administrativos, ubicacion, logo y contactos del cliente.',
           ],
           $this->functionalSections(
               [
-                  'Codigo, nombre, razon social y datos administrativos del cliente.',
-                  'Provincia, localidad, direccion, telefono, email y logo cuando aplica.',
-                  'Contactos del cliente con nombre, cargo, telefono y correo.',
+                  'En la tabla se muestran nombre, razon social, email y localidad para ubicar rapidamente cada cliente.',
+                  'En el formulario se cargan codigo, nombre, razon social, provincia, localidad, codigo postal, direccion, telefono, email y logo.',
+                  'Tambien se cargan contactos asociados con nombre, cargo, telefono y correo para usar como referencia operativa o administrativa.',
               ],
               [
-                  'Buscar y filtrar clientes desde el listado principal.',
-                  'Crear un cliente nuevo con sus datos generales y contactos.',
-                  'Editar informacion existente para mantenerla actualizada.',
-                  'Eliminar clientes cuando el perfil lo permite y no hay bloqueos por uso en otros circuitos.',
-                  'Consultar el listado como base para futuras OT o usuarios cliente.',
+                  'Consultar el listado de clientes existentes y localizar registros por el buscador general del maestro.',
+                  'Crear un cliente nuevo con sus datos generales y uno o varios contactos.',
+                  'Editar un cliente para corregir razon social, ubicacion, telefono, email, logo o contactos.',
+                  'Eliminar clientes desde la tabla cuando el perfil lo permite y el registro no esta bloqueado por relaciones posteriores.',
+                  'Usar el maestro como base para OT, plantas y otras secciones que piden cliente.',
               ],
               [
-                  'Se revisa primero si el cliente ya existe para evitar duplicados.',
-                  'Cuando falta, se usa Nuevo para completar datos generales y contactos de referencia.',
-                  'Si cambia razon social, email o telefono, se corrige desde el mismo formulario para que OT y documentos usen informacion vigente.',
+                  'Primero se revisa el listado para evitar duplicar clientes ya existentes.',
+                  'Cuando hace falta uno nuevo, se usa Nuevo y se completan datos generales, ubicacion y contactos en el mismo modal.',
+                  'Desde la tabla se puede volver a editar el registro si cambia razon social, localidad, email o personas de contacto.',
               ],
-              'El cliente queda listo para seleccionarse en OT, documentacion y usuarios asociados sin volver a cargar datos en cada pantalla.',
+              'El cliente queda listo para seleccionarse en OT, plantas, usuarios cliente y otros circuitos donde se necesite una referencia comercial estable.',
               [
-                  'Que los contactos principales esten completos y vigentes.',
-                  'Que no exista otro cliente duplicado con nombre o razon social equivalente.',
+                  'Que nombre, razon social y localidad no dupliquen otro cliente ya cargado.',
+                  'Que al menos los contactos principales y el correo de referencia esten vigentes.',
               ],
               [
-                  'Nuevo: crea un cliente con sus datos generales y contactos.',
-                  'Editar: modifica razon social, direccion, telefono, email, logo o contactos del cliente.',
+                  'Nuevo: abre el modal para cargar datos generales, logo y contactos del cliente.',
+                  'Agregar contacto: suma una fila de contacto dentro del formulario antes de guardar.',
+                  'Editar: modifica datos administrativos, ubicacion, logo o contactos desde la tabla.',
                   'Eliminar: quita un cliente del maestro si no tiene restricciones por uso en otros circuitos.',
-                  'Buscar: filtra el listado por nombre, razon social u otros datos visibles.',
+                  'Buscar: filtra el listado por nombre, razon social, email o localidad.',
+              ],
+              [
+                  'Plantas y usuarios cliente dependen de que el cliente exista previamente en este maestro.',
+                  'Las OT y cabeceras documentales consumen estos datos para no volver a cargarlos manualmente.',
               ]
           ),
           [
@@ -412,35 +1033,39 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar comitentes',
           [
-              'Esta seccion administra los comitentes que despues se usan en OT, certificados y otros documentos donde hace falta distinguirlos del cliente.',
-              'La pantalla permite consultar registros existentes, crear nuevos comitentes, editar datos visibles y eliminar aquellos que no deban seguir activos.',
+              'Esta seccion administra los comitentes que se usan cuando la entidad contratante debe diferenciarse del cliente en OT, partes y certificados.',
+              'Funciona como maestro simple: muestra un listado con busqueda y permite altas, ediciones y bajas desde el mismo circuito ABM.',
           ],
           $this->functionalSections(
               [
-                  'Nombre o identificacion visible del comitente.',
-                  'Datos administrativos basicos que luego se muestran en cabeceras documentales.',
-                  'Referencia diferenciada del cliente cuando ambas entidades no coinciden.',
+                  'Codigo y descripcion visible del comitente dentro del listado.',
+                  'Referencia administrativa que despues puede aparecer en cabeceras o filtros documentales.',
+                  'Entidad separada del cliente cuando ambos roles no coinciden.',
               ],
               [
-                  'Consultar comitentes existentes desde el listado.',
-                  'Crear nuevos registros para usarlos en futuras OT o certificados.',
-                  'Editar razon social, descripcion o datos visibles cuando cambian.',
-                  'Eliminar comitentes si ya no corresponden y no tienen relaciones bloqueantes.',
+                  'Consultar el listado de comitentes existentes y buscarlos por codigo o descripcion.',
+                  'Crear nuevos registros para que queden disponibles en futuras OT o certificados.',
+                  'Editar codigo o descripcion visible cuando la referencia cambia.',
+                  'Eliminar comitentes cuando ya no deben seguir activos y el circuito lo permite.',
               ],
               [
-                  'Se revisa el listado para confirmar si el comitente ya existe antes de darlo de alta.',
-                  'Si el circuito documental necesita diferenciar cliente y comitente, se lo registra para dejar esa seleccion disponible.',
-                  'Cuando cambia la entidad visible en cabeceras o certificados, se actualiza desde este maestro.',
+                  'Antes de crear uno nuevo se revisa el listado para no duplicar referencias equivalentes.',
+                  'Cuando una OT o un certificado necesita distinguir cliente y comitente, la referencia debe quedar cargada aqui.',
+                  'Si cambia el nombre visible o el codigo, se corrige desde Editar para que los documentos siguientes tomen el dato correcto.',
               ],
               'El comitente queda disponible como referencia estable en OT, certificados y documentos relacionados, sin mezclarlo con el cliente cuando ambos roles son distintos.',
               [
                   'Que el comitente no este duplicado bajo otra razon social o nombre equivalente.',
               ],
               [
-                  'Nuevo: crea un comitente nuevo para futuras OT o certificados.',
-                  'Editar: corrige razon social o datos visibles del comitente.',
+                  'Nuevo: abre el modal para cargar codigo y descripcion del comitente.',
+                  'Editar: corrige codigo o descripcion visible del comitente.',
                   'Eliminar: quita un comitente si no debe seguir disponible.',
                   'Buscar: ayuda a localizar rapidamente un registro existente.',
+              ],
+              [
+                  'Se usa como dato complementario de cliente cuando el circuito documental necesita diferenciarlos.',
+                  'OT y certificados consumen este maestro una vez que el comitente esta dado de alta.',
               ]
           ),
           [
@@ -463,39 +1088,43 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar documentaciones',
           [
-              'Esta seccion administra la documentacion del sistema y permite cargar archivos, clasificarlos, filtrarlos y mantener vigente la informacion asociada.',
-              'Desde aqui se consulta el listado documental, se crean registros nuevos, se editan documentos existentes, se eliminan cuando corresponde y se descargan archivos para uso operativo.',
+              'Esta seccion administra la documentacion digital del sistema y permite cargar archivos, asociarlos a usuarios, equipos, fuentes, vehiculos u OT, y mantener sus datos vigentes.',
+              'La UI actual tiene filtros de tipo, busqueda, opcion para ver vencidos, seleccion multiple y un formulario modal que cambia segun el tipo documental elegido.',
           ],
           $this->functionalSections(
               [
-                  'Tipo de documento, titulo, descripcion y fecha de vencimiento.',
-                  'Entidad asociada segun el documento: OT, usuario, equipo, fuente, vehiculo u otro circuito soportado.',
-                  'Archivo digital y datos de visibilidad o clasificacion.',
+                  'En la tabla se ve tipo, titulo, descripcion, metodo, usuario, interno asociado, caducidad y baja del equipo cuando aplica.',
+                  'En el formulario se cargan tipo, titulo, descripcion, fecha de caducidad, visibilidad y archivo PDF o imagen.',
+                  'Segun el tipo se asocia usuario, tipo de documento de usuario, metodo de ensayo, interno de equipo, interno de fuente, vehiculo u OT.',
               ],
               [
-                  'Consultar el listado de documentos cargados.',
-                  'Buscar por texto, filtrar por tipo y mostrar documentacion vencida.',
-                  'Crear documentos nuevos con su archivo asociado.',
-                  'Editar registros existentes para corregir datos, archivo o vencimiento.',
+                  'Consultar el listado documental y ubicar registros por texto, tipo o estado de vencimiento.',
+                  'Crear documentos nuevos con archivo adjunto y asociacion al item correcto.',
+                  'Editar documentos para corregir datos, archivo, vencimiento o entidad asociada.',
                   'Eliminar documentos cuando ya no corresponden.',
-                  'Descargar uno o varios documentos desde el listado.',
+                  'Seleccionar varios registros y descargar un ZIP con la documentacion marcada.',
               ],
               [
-                  'Se usa el listado para localizar documentacion por tipo o por entidad asociada.',
-                  'Cuando falta un archivo, se crea un registro nuevo y se adjunta el documento correspondiente.',
-                  'Si cambia un vencimiento o una descripcion, se corrige desde el mismo modulo para que controles y consultas queden actualizados.',
+                  'Se usa el filtro por tipo y el buscador para ubicar rapidamente documentacion institucional, de usuario, equipo, fuente o vehiculo.',
+                  'Cuando falta un archivo, se usa Nuevo, se selecciona el tipo correcto y el formulario pide solo los datos necesarios para esa relacion.',
+                  'Desde la tabla se puede editar el registro o seleccionar varios documentos para descargarlos juntos.',
+                  'Si un vencimiento cambia o un archivo debe reemplazarse, se corrige desde el mismo modulo para mantener controles y consultas actualizados.',
               ],
               'La documentacion queda clasificada, accesible y alineada con equipos, vehiculos, usuarios u OT que dependen de ella.',
               [
                   'Que el tipo de documento y la entidad asociada sean los correctos.',
-                  'Que el vencimiento este bien cargado cuando aplica control documental.',
+                  'Que el archivo cargado sea el definitivo y el vencimiento este bien informado cuando aplica control documental.',
               ],
               [
-                  'Nuevo: crea un documento nuevo y permite adjuntar el archivo correspondiente.',
+                  'Nuevo: abre el modal para cargar un documento y adjuntar el archivo correspondiente.',
                   'Editar: corrige tipo, descripcion, vencimiento, entidad asociada o archivo del documento.',
                   'Eliminar: quita documentacion cuando ya no debe permanecer en el sistema.',
                   'Buscar y filtrar: localiza documentos por texto, tipo o vencimiento.',
-                  'Descargar: permite bajar uno o varios documentos desde el listado.',
+                  'Descargar: genera un ZIP con los documentos seleccionados en la tabla.',
+              ],
+              [
+                  'Depende de que existan usuarios, internos de equipo, internos de fuente o vehiculos para poder asociar documentacion especifica.',
+                  'La documentacion cargada despues se consulta desde QR, visualizaciones tecnicas y otros modulos que muestran vigencias.',
               ]
           ),
           [
@@ -517,36 +1146,40 @@ public function __construct()
       return $this->returnAyudaIntroView(
           'Gestionar equipos',
           [
-              'Esta seccion administra el maestro general de equipos que despues alimenta internos, informes y documentacion tecnica.',
-              'La pantalla permite consultar equipos existentes, darlos de alta, editar su definicion tecnica y eliminar registros cuando ya no deben formar parte del catalogo.',
+              'Esta seccion administra el maestro general de equipos que despues alimenta internos, documentacion tecnica, QR e informes.',
+              'La UI actual muestra un listado tecnico y un modal donde se define metodo de ensayo, tipo de equipamiento, instrumento de medicion y opciones especiales como palpador para US.',
           ],
           $this->functionalSections(
               [
-                  'Codigo y descripcion del equipo.',
-                  'Metodo de ensayo, tipo de equipamiento e instrumento de medicion.',
-                  'Condiciones especiales del equipo, como marcacion para US cuando corresponde.',
+                  'En la tabla se muestran codigo, descripcion, metodo, tipo de equipamiento e instrumento de medicion.',
+                  'En el formulario se cargan codigo, descripcion, metodo de ensayo, tipo de equipamiento e instrumento de medicion.',
+                  'Para equipos US tambien puede marcarse la opcion de palpador.',
               ],
               [
-                  'Consultar el listado general de equipos.',
-                  'Buscar equipos por codigo, descripcion o datos visibles.',
-                  'Crear un equipo nuevo desde el formulario de alta.',
+                  'Consultar el listado general de equipos y filtrarlos por el buscador del maestro.',
+                  'Crear un equipo nuevo desde el modal de alta.',
                   'Editar informacion tecnica de un equipo existente.',
-                  'Eliminar equipos del maestro, segun permisos y uso posterior.',
+                  'Eliminar equipos del maestro segun permisos y uso posterior.',
               ],
               [
-                  'Primero se revisa el listado para evitar duplicar equipos que ya existen.',
-                  'Si hace falta una referencia nueva, se usa Nuevo y se completan los datos tecnicos que luego consumen otros modulos.',
-                  'Cuando cambia un criterio tecnico, se actualiza el maestro para que informes e internos trabajen con la misma definicion.',
+                  'Primero se revisa el listado para evitar duplicar equipos con el mismo codigo.',
+                  'Si hace falta una referencia nueva, se usa Nuevo y se completan los datos tecnicos que luego consumen internos e informes.',
+                  'Cuando cambia un criterio tecnico, se actualiza el maestro para que internos, QR y documentacion trabajen con la misma definicion.',
               ],
               'El equipo queda disponible como referencia base para internos, documentacion e informes sin necesidad de recrearlo en cada circuito.',
               [
                   'Que el metodo de ensayo y el tipo de equipamiento sean los correctos.',
+                  'Que el instrumento de medicion solo se use cuando corresponde al metodo configurado.',
               ],
               [
-                  'Nuevo: crea un equipo nuevo dentro del maestro general.',
+                  'Nuevo: abre el modal para cargar codigo, descripcion, metodo, tipo e instrumento.',
                   'Editar: modifica datos tecnicos del equipo existente.',
                   'Eliminar: quita un equipo del catalogo si no debe seguir disponible.',
                   'Buscar: ayuda a ubicar equipos por codigo o descripcion.',
+              ],
+              [
+                  'Depende de metodos de ensayo y tipos de equipamiento cargados para completar el alta.',
+                  'Los internos de equipo dependen de este maestro para poder crear unidades concretas.',
               ]
           ),
           [
@@ -574,28 +1207,32 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Catalogo general de fuentes con sus datos identificatorios y tecnicos.',
-                  'Informacion base que despues se reutiliza en internos de fuente.',
-                  'Referencias necesarias para consultas, QR y documentacion asociada.',
+                  'En la tabla se muestran codigo y descripcion de cada fuente.',
+                  'En el formulario se cargan codigo, descripcion y el valor T 1/2 de la fuente.',
+                  'La fuente funciona como catalogo base para despues crear internos de fuente con datos particulares.',
               ],
               [
                   'Consultar el listado de fuentes ya registradas.',
                   'Crear nuevas fuentes cuando hace falta una referencia base para el circuito.',
-                  'Editar datos tecnicos o identificatorios.',
+                  'Editar codigo, descripcion o T 1/2.',
                   'Eliminar fuentes del maestro si no deben seguir activas y no estan bloqueadas por relaciones.',
               ],
               [
                   'Se revisa el maestro para verificar si la fuente ya fue cargada antes de crear otra.',
                   'La referencia base se completa una sola vez y luego se usa para dar de alta internos individuales.',
-                  'Cuando cambia la definicion tecnica de la fuente, se ajusta aqui para mantener trazabilidad consistente.',
+                  'Cuando cambia la definicion tecnica, se corrige aqui para mantener trazabilidad consistente.',
               ],
               'La fuente queda disponible como base para internos, documentacion y consultas operativas posteriores.',
               [],
               [
-                  'Nuevo: crea una fuente base nueva para el catalogo.',
+                  'Nuevo: abre el modal para cargar codigo, descripcion y T 1/2.',
                   'Editar: corrige datos tecnicos o identificatorios de la fuente.',
                   'Eliminar: quita una fuente del maestro cuando ya no corresponde seguir usandola.',
                   'Buscar: localiza rapidamente una fuente dentro del listado.',
+              ],
+              [
+                  'Los internos de fuente dependen de que la fuente base exista previamente en este maestro.',
+                  'QR y documentacion despues usan esa relacion base para mostrar trazabilidad.',
               ]
           ),
           [
@@ -623,29 +1260,37 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Identificacion unica del interno de equipo.',
-                  'Relacion con el equipo base del cual depende.',
-                  'Datos visibles para documentacion, QR y trazabilidad.',
+                  'En la tabla se muestran numero interno, tipo de equipamiento, equipo asociado, metodo, fuente vinculada, actividad, frente y fecha de baja.',
+                  'En el formulario se cargan numero de serie, numero interno, equipo, estado activo y datos tecnicos que cambian segun el metodo del equipo.',
+                  'Para RI y RD puede asociarse un interno de fuente y completar foco, voltaje y amperaje; para DZ se cargan probeta y dureza de calibracion.',
               ],
               [
-                  'Consultar el listado de internos ya cargados.',
+                  'Consultar el listado de internos ya cargados y distinguir activos de dados de baja.',
                   'Crear un interno nuevo cuando se incorpora una unidad operativa concreta.',
-                  'Editar datos del interno para actualizar su identificacion o estado.',
+                  'Editar datos del interno para actualizar su identificacion, equipo, fuente asociada o estado.',
                   'Eliminar registros cuando ya no correspondan y el sistema lo permita.',
-                  'Buscar internos por numero o datos visibles.',
+                  'Abrir el historial de fuentes desde la accion por fila cuando hace falta revisar trazabilidad.',
               ],
               [
                   'Primero se confirma que el equipo base exista en el maestro general.',
-                  'Despues se da de alta el interno con su identificacion particular para diferenciar esa unidad del resto.',
-                  'El listado se usa luego para corregir datos o localizar rapidamente el interno antes de consultar documentacion o QR.',
+                  'Despues se da de alta el interno con su identificacion particular y, si corresponde, se vincula una fuente o se cargan datos tecnicos del metodo.',
+                  'El listado se usa luego para corregir datos, revisar si el interno esta activo o abrir su trazabilidad de fuente.',
               ],
               'Cada interno queda individualizado y listo para integrarse con documentacion, consultas QR y trazabilidad.',
-              [],
               [
-                  'Nuevo: da de alta una unidad operativa concreta a partir del equipo base.',
+                  'Que el equipo seleccionado sea el correcto y que el metodo asociado coincida con los datos tecnicos cargados.',
+                  'Que frente, fuente y estado activo reflejen la situacion real del interno.',
+              ],
+              [
+                  'Nuevo: abre el modal para cargar la unidad concreta y sus datos tecnicos.',
+                  'Historial de fuentes: abre la trazabilidad asociada al interno desde la tabla.',
                   'Editar: actualiza identificacion o datos del interno.',
                   'Eliminar: quita el interno cuando ya no debe permanecer activo.',
                   'Buscar: ayuda a encontrar rapidamente el interno en el listado.',
+              ],
+              [
+                  'Depende de equipos cargados previamente y, para ciertos metodos, tambien de internos de fuente disponibles.',
+                  'QR, documentacion tecnica e informes consumen despues los internos creados en este modulo.',
               ]
           ),
           [
@@ -674,13 +1319,12 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Codigo y descripcion de cada material.',
-                  'Referencias tecnicas reutilizables en distintos formularios.',
-                  'Catalogo base para informes y procedimientos relacionados.',
+                  'En la tabla se muestran codigo y descripcion de cada material.',
+                  'En el formulario se cargan codigo y descripcion como referencia tecnica reutilizable.',
+                  'El maestro funciona como catalogo base para informes y otros formularios tecnicos.',
               ],
               [
-                  'Consultar el listado de materiales cargados.',
-                  'Buscar materiales por codigo o descripcion.',
+                  'Consultar el listado de materiales cargados y localizarlos por el buscador del maestro.',
                   'Crear nuevos materiales cuando hace falta una referencia que no existe.',
                   'Editar registros para corregir nombre o codigo.',
                   'Eliminar materiales duplicados o fuera de uso, segun permisos.',
@@ -693,10 +1337,13 @@ public function __construct()
               'El material queda listo para reutilizarse en informes y otras configuraciones sin variantes innecesarias.',
               [],
               [
-                  'Nuevo: crea un material nuevo dentro del maestro.',
+                  'Nuevo: abre el modal para cargar codigo y descripcion del material.',
                   'Editar: modifica codigo o descripcion del material.',
                   'Eliminar: quita materiales duplicados o fuera de uso.',
                   'Buscar: localiza materiales por codigo o descripcion.',
+              ],
+              [
+                  'Los informes y otros formularios tecnicos dependen de este maestro para ofrecer materiales consistentes en sus selectores.',
               ]
           ),
           [
@@ -723,22 +1370,24 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Codigo, descripcion, metros totales y unidad de medida del producto.',
-                  'Definicion de si el producto es visible en OT, stockeable o relacionado a placas.',
-                  'Grupo o criterio de clasificacion cuando el circuito lo usa.',
-                  'Stock actual si el producto participa del modulo de stock.',
+                  'En la tabla se muestran codigo, descripcion, unidad de medida, visible OT y stock actual cuando el producto es stockeable.',
+                  'En el formulario se cargan codigo, descripcion, grupo, metros totales y unidad de medida.',
+                  'Opciones operativas del producto: visible OT, stock, relacionado a placas y es placa.',
+                  'Cuando el producto ya tiene movimientos, la tabla tambien permite abrir su registro detallado de stock.',
               ],
               [
-                  'Consultar el listado de productos existentes.',
-                  'Buscar por codigo o descripcion y aplicar filtros como stockeable o relacionado a placas.',
+                  'Consultar el listado de productos existentes con columnas de codigo, descripcion, unidad, visible OT y stock.',
+                  'Buscar por codigo o descripcion y aplicar filtros de stock, relacionado a placa o es placa.',
                   'Crear productos nuevos desde el formulario de alta.',
                   'Editar registros existentes para corregir propiedades o datos base.',
                   'Eliminar productos cuando no deben seguir activos y no hay restricciones por uso o stock.',
+                  'Abrir el registro de movimientos del producto cuando es stockeable.',
               ],
               [
                   'Se usa el listado para revisar si el producto ya existe y para entender como esta configurado dentro del circuito.',
-                  'Cuando falta un producto, se crea indicando si debe impactar en stock y si tiene que ser visible en OT.',
+                  'Cuando falta un producto, se crea indicando si debe impactar en stock, si tiene que ser visible en OT y si se relaciona con placas.',
                   'Si cambia su comportamiento operativo, se edita desde el maestro para que stock, remitos y OT lean la misma configuracion.',
+                  'Si el producto es stockeable, desde la tabla puede abrirse el detalle de stock para revisar movimientos y exportaciones.',
               ],
               'El producto queda listo para usarse como referencia operativa y, si corresponde, para integrarse con stock, movimientos, OT y remitos.',
               [
@@ -746,11 +1395,18 @@ public function __construct()
                   'Que el criterio de stockeable o visible OT refleje el uso real del producto.',
               ],
               [
-                  'Nuevo: crea un producto y define si es visible en OT, stockeable o relacionado a placas.',
+                  'Nuevo: abre el modal de alta para cargar codigo, descripcion, grupo, metros, unidad y opciones.',
+                  'Ver Detalles: abre el registro de stock del producto cuando el item es stockeable.',
                   'Editar: modifica propiedades y datos base del producto.',
                   'Eliminar: quita un producto cuando no tiene restricciones por stock o relaciones vigentes.',
                   'Buscar: filtra el listado por codigo o descripcion.',
-                  'Filtros: permiten ver solo productos stockeables o relacionados a placas.',
+                  'Filtros: permiten ver solo productos stockeables, relacionados a placa o marcados como placa.',
+              ],
+              [
+                  'Depende de unidades de medida cargadas para poder seleccionar la unidad.',
+                  'El grupo solo se puede elegir si existen grupos de productos definidos.',
+                  'Si se marca como stockeable, el producto pasa a participar del modulo de stock.',
+                  'Si se marca como visible OT, queda disponible dentro de la carga de una orden de trabajo.',
               ]
           ),
           [
@@ -779,20 +1435,21 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Codigo, descripcion y abreviatura del servicio.',
+                  'En la tabla se muestran codigo, descripcion, unidad de medida y metodo de ensayo.',
+                  'En el formulario se cargan abreviatura o codigo, descripcion, unidad de medida y metodo de ensayo.',
                   'Unidad de medida con la que se cuantifica.',
                   'Metodo de ensayo asociado, que despues impacta en informes y circuitos tecnicos.',
               ],
               [
-                  'Consultar el listado de servicios cargados.',
-                  'Buscar por codigo, descripcion, unidad o metodo de ensayo.',
+                  'Consultar el listado de servicios cargados con codigo, descripcion, unidad y metodo de ensayo.',
+                  'Buscar por codigo, descripcion, unidad o metodo de ensayo desde el buscador general del maestro.',
                   'Crear un servicio nuevo desde el formulario de alta.',
                   'Editar un servicio para ajustar codigo, descripcion, unidad o metodo.',
                   'Eliminar servicios cuando ya no deben usarse y no hay restricciones por relaciones vigentes.',
               ],
               [
                   'Se verifica primero si el servicio ya existe para no duplicar prestaciones equivalentes.',
-                  'Cuando hace falta uno nuevo, se carga con su unidad y metodo para que despues pueda seleccionarse correctamente en la OT.',
+                  'Cuando hace falta uno nuevo, se usa Nuevo y se completa codigo, descripcion, unidad y metodo de ensayo.',
                   'Si cambia el criterio tecnico o comercial del servicio, se actualiza aqui para que el resto del circuito consuma la misma definicion.',
               ],
               'El servicio queda listo para seleccionarse en OT y habilitar luego informes, partes y otros documentos vinculados.',
@@ -800,10 +1457,15 @@ public function __construct()
                   'Que la unidad de medida y el metodo de ensayo correspondan al servicio real.',
               ],
               [
-                  'Nuevo: crea un servicio nuevo con su unidad de medida y metodo de ensayo.',
+                  'Nuevo: abre el modal de alta para cargar codigo, descripcion, unidad y metodo de ensayo.',
                   'Editar: corrige codigo, descripcion, abreviatura, unidad o metodo.',
                   'Eliminar: quita un servicio cuando ya no debe usarse y no tiene bloqueos por relaciones.',
                   'Buscar: localiza servicios por codigo, descripcion o metodo.',
+              ],
+              [
+                  'Depende de unidades de medida cargadas para poder seleccionar la unidad.',
+                  'Depende de metodos de ensayo disponibles para asociar correctamente el servicio al circuito tecnico.',
+                  'Los servicios definidos aqui se consumen despues en OT e informes.',
               ]
           ),
           [
@@ -832,9 +1494,9 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Identificacion y datos visibles del soldador.',
-                  'Listado base para asignaciones posteriores en OT o informes.',
-                  'Referencia operativa reutilizable en trazabilidad tecnica.',
+                  'En la tabla se muestran codigo y nombre del soldador.',
+                  'En el formulario se cargan codigo y nombre como referencia operativa del soldador.',
+                  'El maestro se usa como base para asignaciones posteriores en OT o informes cuando el circuito lo pide.',
               ],
               [
                   'Consultar soldadores cargados en el maestro.',
@@ -851,10 +1513,13 @@ public function __construct()
               'El soldador queda listo para seleccionarse en OT y para sostener trazabilidad en los modulos que lo utilizan.',
               [],
               [
-                  'Nuevo: crea un soldador nuevo en el maestro.',
+                  'Nuevo: abre el modal para cargar codigo y nombre del soldador.',
                   'Editar: actualiza datos identificatorios del soldador.',
                   'Eliminar: quita una referencia que ya no debe usarse.',
                   'Buscar: ayuda a ubicar soldadores dentro del listado.',
+              ],
+              [
+                  'Las asignaciones de soldadores en OT e informes dependen de que el registro exista previamente en este maestro.',
               ]
           ),
           [
@@ -882,9 +1547,9 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Codigo y descripcion de cada unidad de medida.',
-                  'Catalogo base para productos, servicios y otros registros que manejan cantidades.',
-                  'Referencias uniformes para evitar variantes de escritura.',
+                  'En la tabla se muestran codigo y descripcion de cada unidad.',
+                  'En el formulario se cargan codigo y descripcion como base comun para cantidades.',
+                  'El catalogo se reutiliza en productos, servicios, medidas y otros registros que manejan cantidades.',
               ],
               [
                   'Consultar el listado de unidades cargadas.',
@@ -900,9 +1565,12 @@ public function __construct()
               'La unidad queda disponible como opcion estable para productos, servicios y otros modulos que trabajan con cantidades.',
               [],
               [
-                  'Nuevo: crea una unidad de medida nueva.',
+                  'Nuevo: abre el modal para cargar codigo y descripcion de la unidad.',
                   'Editar: corrige codigo o descripcion de la unidad.',
                   'Eliminar: quita unidades duplicadas o fuera de uso.',
+              ],
+              [
+                  'Productos, servicios y medidas dependen de este maestro para cargar unidades consistentes.',
               ]
           ),
           [
@@ -929,9 +1597,9 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Nombre del rol y guard correspondiente.',
-                  'Conjunto de permisos que define accesos a modulos y acciones.',
-                  'Configuracion base que despues se asigna a usuarios.',
+                  'En la tabla se muestran nombre del rol y guard asociado.',
+                  'En el formulario se cargan nombre, guard y una lista de permisos para marcar.',
+                  'La configuracion resultante se usa despues para asignar accesos a usuarios.',
               ],
               [
                   'Consultar el listado de roles definidos.',
@@ -951,10 +1619,14 @@ public function __construct()
                   'Que los permisos marcados respondan al alcance real del usuario final.',
               ],
               [
-                  'Nuevo: crea un rol nuevo con su nombre, guard y permisos.',
+                  'Nuevo: abre el modal para cargar nombre, guard y marcar permisos.',
                   'Editar: ajusta permisos o datos del rol existente.',
                   'Eliminar: quita un rol cuando ya no debe seguir en uso y la operacion lo permite.',
                   'Consultar listado: sirve para revisar perfiles antes de asignarlos a usuarios.',
+              ],
+              [
+                  'Depende de que los permisos esten definidos previamente para poder armar un rol consistente.',
+                  'Los usuarios dependen de este maestro para recibir accesos agrupados por perfil.',
               ]
           ),
           [
@@ -974,27 +1646,158 @@ public function __construct()
 
   public function visualizarInformes()
   {
-      return $this->returnAyudaView('ayuda.visualizacion_infomres');
+      return $this->returnAyudaView('ayuda.visualizacion_infomres', 'Ayuda', '', [
+          'functionalSummaryTitle' => 'Resumen funcional',
+          'functionalSummarySections' => $this->legacyFunctionalSummary(
+              [
+                  'Muestra metodo, numero, revision, obra, usuario de alta y fecha de cada informe de la OT.',
+              ],
+              [],
+              [
+                  'Consultar el historial documental de informes de una OT.',
+                  'Abrir PDF, editar, clonar, revisar antecedentes y ver escaneados segun el caso.',
+              ],
+              [
+                  'Editar: reabre el informe o genera nueva revision si estaba firmado.',
+                  'Clonar: replica encabezado o contenido del informe.',
+                  'PDF: abre la revision actual.',
+                  'Revisiones: consulta versiones anteriores.',
+                  'Escaneados: abre documentacion complementaria.',
+              ],
+              [
+                  'Se usa para verificar que revision esta vigente antes de compartir PDF o seguir con partes diarios.',
+              ],
+              [
+                  'Depende de informes previamente generados dentro de la OT.',
+              ],
+              [],
+              'La OT queda con un punto de consulta central para revisar revisiones y salidas PDF de informes.'
+          )
+      ]);
   }
 
   public function crearParteDiario()
   {
-      return $this->returnAyudaView('ayuda.crear_parte_diario');
+      return $this->returnAyudaView('ayuda.crear_parte_diario', 'Ayuda', '', [
+          'functionalSummaryTitle' => 'Resumen funcional',
+          'functionalSummarySections' => $this->legacyFunctionalSummary(
+              [],
+              [
+                  'OT, obra, fecha, tipo de servicio, horario y observaciones.',
+                  'Responsables, vehiculos, servicios adicionales e informes pendientes del contexto.',
+              ],
+              [
+                  'Crear partes diarios normales o manuales.',
+                  'Consolidar la jornada a partir de informes e informacion complementaria.',
+                  'Guardar el parte para PDF y futura certificacion.',
+              ],
+              [
+                  'Guardar: registra el parte diario.',
+                  'PDF: abre la salida del parte ya guardado.',
+              ],
+              [
+                  'Se define la jornada, se revisan informes pendientes y luego se completa el complemento operativo antes de guardar.',
+              ],
+              [
+                  'Depende de una OT existente, informes ya cargados y operadores/vehiculos disponibles para la jornada.',
+              ],
+              [
+                  'Que fecha, obra e informes asociados correspondan a la jornada correcta.',
+              ],
+              'La jornada queda consolidada en un parte diario listo para PDF, consulta y certificacion.'
+          )
+      ]);
   }
 
   public function visualizarParteDiario()
   {
-      return $this->returnAyudaView('ayuda.visualizar_parte_diario');
+      return $this->returnAyudaView('ayuda.visualizar_parte_diario', 'Ayuda', '', [
+          'functionalSummaryTitle' => 'Resumen funcional',
+          'functionalSummarySections' => $this->legacyFunctionalSummary(
+              [
+                  'Muestra numero, fecha, tipo de servicio, usuario alta y estado de firma de cada parte de la OT.',
+              ],
+              [],
+              [
+                  'Consultar partes ya registrados para una OT.',
+                  'Abrir el PDF correcto y editar el parte cuando el estado y permiso lo permiten.',
+              ],
+              [
+                  'PDF: abre el parte diario.',
+                  'Editar: permite corregir el registro cuando sigue habilitado.',
+              ],
+              [
+                  'Se usa para revisar si una jornada ya quedo consolidada y si esta disponible para certificados o reportes.',
+              ],
+              [
+                  'Depende de partes diarios previamente cargados en la OT.',
+              ],
+              [],
+              'La OT queda con consulta clara de jornadas consolidadas y listas para cierre documental.'
+          )
+      ]);
   }
 
   public function crearCertificados()
   {
-      return $this->returnAyudaView('ayuda.crear_certificados');
+      return $this->returnAyudaView('ayuda.crear_certificados', 'Ayuda', '', [
+          'functionalSummaryTitle' => 'Resumen funcional',
+          'functionalSummarySections' => $this->legacyFunctionalSummary(
+              [],
+              [
+                  'Datos generales del certificado y seleccion de partes que lo componen.',
+                  'Servicios, productos por placa o costura y consolidaciones resultantes del certificado.',
+              ],
+              [
+                  'Crear certificados a partir de partes diarios ya existentes.',
+                  'Consolidar servicios y productos del trabajo certificado.',
+                  'Guardar el documento para PDF y trazabilidad final.',
+              ],
+              [
+                  'Guardar: registra el certificado.',
+                  'PDF: abre la salida final u opciones agrupadas cuando corresponda.',
+              ],
+              [
+                  'Se seleccionan partes ya consolidados y luego se revisa la combinacion final antes de guardar el certificado.',
+              ],
+              [
+                  'Depende de partes diarios ya cargados y disponibles para seleccion dentro de la OT.',
+              ],
+              [
+                  'Que los partes seleccionados y las cantidades consolidadas reflejen exactamente el alcance certificado.',
+              ],
+              'La OT queda con un certificado final trazable, listo para PDF y control documental.'
+          )
+      ]);
   }
 
   public function visualizarCertificados()
   {
-      return $this->returnAyudaView('ayuda.visualizar_certificados');
+      return $this->returnAyudaView('ayuda.visualizar_certificados', 'Ayuda', '', [
+          'functionalSummaryTitle' => 'Resumen funcional',
+          'functionalSummarySections' => $this->legacyFunctionalSummary(
+              [
+                  'Muestra numero, fecha y estado de firma de los certificados generados para la OT.',
+              ],
+              [],
+              [
+                  'Consultar certificados emitidos para una OT.',
+                  'Abrir el PDF correcto y revisar si un certificado ya fue emitido o todavia requiere ajuste.',
+              ],
+              [
+                  'PDF: abre la salida final del certificado.',
+                  'Editar: reabre el certificado cuando el circuito lo permite.',
+              ],
+              [
+                  'Se usa para ubicar rapidamente la salida final de una OT y verificar si un conjunto de partes ya fue certificado.',
+              ],
+              [
+                  'Depende de certificados previamente generados a partir de partes diarios.',
+              ],
+              [],
+              'La OT queda con un punto final de consulta documental sobre certificados emitidos.'
+          )
+      ]);
   }
 
   public function perfil()
@@ -1049,9 +1852,9 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Datos identificatorios y de contacto del proveedor.',
-                  'Referencia reutilizable para compras, stock o movimientos asociados.',
-                  'Base de seleccion en circuitos donde el origen del producto importa.',
+                  'En la tabla se muestran razon social, CUIT, email y telefono del proveedor.',
+                  'En el formulario se cargan CUIT, razon social, email y telefono.',
+                  'El proveedor funciona como referencia reutilizable para compras, stock o movimientos asociados.',
               ],
               [
                   'Consultar el listado de proveedores cargados.',
@@ -1067,10 +1870,13 @@ public function __construct()
               'El proveedor queda disponible como referencia operativa y administrativa para stock, movimientos y consultas posteriores.',
               [],
               [
-                  'Nuevo: crea un proveedor nuevo para usarlo en stock o movimientos.',
+                  'Nuevo: abre el modal para cargar CUIT, razon social, email y telefono.',
                   'Editar: corrige razon social, telefono, email u otros datos visibles.',
                   'Eliminar: quita un proveedor que ya no debe estar activo.',
                   'Buscar: ayuda a localizar proveedores dentro del listado.',
+              ],
+              [
+                  'El circuito de stock depende de este maestro para asociar origen o proveedor a cada ingreso.',
               ]
           ),
           [
@@ -1138,9 +1944,9 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Identificacion del vehiculo y datos visibles del registro.',
-                  'Informacion documental o de vigencia asociada.',
-                  'Datos necesarios para asignacion y control posterior.',
+                  'En la tabla se muestran numero interno, marca, modelo, patente y tipo.',
+                  'En el formulario se cargan numero interno, marca, modelo, patente, tipo, chasis, motor y estado activo.',
+                  'El registro sirve como base para asignacion, control documental y seguimiento posterior.',
               ],
               [
                   'Consultar el listado de vehiculos cargados.',
@@ -1155,10 +1961,13 @@ public function __construct()
               'El vehiculo queda listo para asignacion y consulta posterior con una referencia consistente dentro del sistema.',
               [],
               [
-                  'Nuevo: crea un vehiculo nuevo dentro del maestro.',
+                  'Nuevo: abre el modal para cargar identificacion, datos tecnicos y estado activo del vehiculo.',
                   'Editar: actualiza identificacion, datos o documentacion asociada.',
                   'Eliminar: quita vehiculos que ya no deben seguir disponibles.',
                   'Buscar: ayuda a ubicar rapidamente el vehiculo dentro del listado.',
+              ],
+              [
+                  'Las asignaciones de vehiculos y la documentacion complementaria dependen de que el vehiculo exista en este maestro.',
               ]
           ),
           [
@@ -1183,9 +1992,9 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Nombre o identificacion de la planta.',
-                  'Referencia de ubicacion para clientes u operaciones.',
-                  'Dato util para filtros y seleccion en otros modulos.',
+                  'En la tabla se muestran codigo y nombre de cada planta.',
+                  'En el formulario se cargan codigo y nombre para asociar la planta a un cliente determinado.',
+                  'La planta funciona como referencia de ubicacion o sede para clientes y operaciones relacionadas.',
               ],
               [
                   'Consultar el listado de plantas.',
@@ -1200,9 +2009,12 @@ public function __construct()
               'La planta queda disponible como referencia estable para seleccion y filtrado en modulos relacionados.',
               [],
               [
-                  'Nuevo: crea una planta nueva.',
+                  'Nuevo: abre el modal para cargar codigo y nombre de la planta.',
                   'Editar: modifica datos visibles de la planta.',
                   'Eliminar: quita una planta que ya no debe usarse.',
+              ],
+              [
+                  'Depende de un cliente seleccionado, porque las plantas se cargan dentro del contexto de ese cliente.',
               ]
           ),
           [
@@ -1226,9 +2038,9 @@ public function __construct()
           ],
           $this->functionalSections(
               [
-                  'Datos identificatorios y de contacto del contratista.',
-                  'Referencia reutilizable para asistencia y otras cargas operativas.',
-                  'Base para trazabilidad de intervencion externa.',
+                  'En la tabla se muestra nombre del contratista y desde el formulario se cargan nombre, razon social y logo.',
+                  'El registro funciona como referencia reutilizable para asistencia y otras cargas operativas con terceros.',
+                  'Tambien sirve para sostener trazabilidad de intervencion externa dentro de la operacion.',
               ],
               [
                   'Consultar contratistas existentes.',
@@ -1243,10 +2055,13 @@ public function __construct()
               'El contratista queda disponible como entidad reutilizable en los modulos donde interviene personal o servicio externo.',
               [],
               [
-                  'Nuevo: crea un contratista nuevo.',
+                  'Nuevo: abre el modal para cargar nombre, razon social y logo del contratista.',
                   'Editar: corrige datos administrativos o de contacto.',
                   'Eliminar: quita contratistas que ya no deben seguir activos.',
                   'Buscar: ayuda a localizar registros dentro del listado.',
+              ],
+              [
+                  'Asistencia y otros modulos con terceros dependen de este maestro para reutilizar contratistas ya definidos.',
               ]
           ),
           [
@@ -1266,28 +2081,40 @@ public function __construct()
           'Gestionar permisos',
           [
               'Esta seccion administra los permisos puntuales del sistema, es decir, las acciones y pantallas a las que un rol o usuario puede acceder.',
-              'La pantalla se usa para consultar permisos existentes y entender la base con la que despues se configuran roles y accesos.',
+              'La UI actual no es solo de consulta: muestra un listado con nombre y guard, y permite crear, editar y eliminar permisos cuando el perfil tiene alcance para hacerlo.',
           ],
           $this->functionalSections(
               [
-                  'Listado de permisos disponibles en el sistema.',
-                  'Acciones puntuales que despues se agrupan en roles.',
-                  'Base de seguridad funcional para modulos y operaciones.',
+                  'En la tabla se muestran nombre del permiso y guard asociado.',
+                  'En el formulario se cargan nombre y guard como base del permiso puntual.',
+                  'Cada permiso representa una accion o acceso fino que despues se agrupa dentro de roles.',
               ],
               [
                   'Consultar permisos existentes.',
+                  'Crear nuevos permisos cuando hace falta cubrir una accion o modulo nuevo.',
+                  'Editar permisos para corregir nombre o guard.',
+                  'Eliminar permisos que no deban seguir disponibles.',
                   'Revisar que permisos hay disponibles antes de configurar o ajustar roles.',
                   'Usar el modulo como referencia para entender accesos finos del sistema.',
               ],
               [
                   'Se consulta junto con roles cuando hace falta definir o auditar accesos.',
                   'Tambien sirve para entender por que una accion existe o no dentro del alcance de un perfil.',
+                  'Si aparece un modulo nuevo o cambia el criterio de acceso, primero se revisa este maestro y luego se ajustan los roles afectados.',
               ],
               'Los permisos quedan claros como base del esquema de acceso y pueden usarse para ordenar configuraciones de roles.',
-              [],
               [
+                  'Que el nombre del permiso siga un criterio claro y no duplique otro acceso equivalente.',
+              ],
+              [
+                  'Nuevo: abre el modal para cargar nombre y guard del permiso.',
+                  'Editar: corrige nombre o guard del permiso existente.',
+                  'Eliminar: quita un permiso que ya no debe estar disponible.',
                   'Consultar listado: permite revisar permisos existentes antes de configurar roles.',
                   'Buscar: ayuda a ubicar rapidamente un permiso puntual si la pantalla lo permite.',
+              ],
+              [
+                  'Los roles dependen de este maestro para agrupar accesos y despues asignarlos a usuarios.',
               ]
           ),
           [
