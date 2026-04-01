@@ -1127,10 +1127,39 @@ methods : {
 
     },
 
+    async postEstadisticas(url, payload = {}){
+
+        return axios.post(url, Object.assign({
+            informes_ids: this.informes.map(item => item.id)
+        }, payload));
+
+    },
+
+    resetEstadisticasData(){
+
+        this.informes_ids = '';
+        this.valores_indice_rechazos = [];
+        this.TablaAnalisisRechazosEspesor = [];
+        this.TablaAnalisisRechazosDiametro = [];
+        this.TablaDefectosPosicion = [];
+        this.TablaDetalleDefectos = [];
+        this.TablaDDSTemp = [];
+        this.TablaDefectosSoldador = [];
+        this.TablaDetalletDefectosSoldador = [];
+        this.TablaIndicaciones = [];
+        this.TablaIndicacionesPosicion = [];
+        this.TablaIndicacionesPosicionDetalle = [];
+        this.DiametrosDefectos = [];
+        this.DiametroDefecto = '';
+        this.DiametrosIndicaciones = [];
+        this.DiametroIndicaciones = '';
+
+    },
+
     async Buscar(){
 
      this.$store.commit('loading', true);
-     this.TablaAnalisisRechazosEspesor = [];
+     this.resetEstadisticasData();
      this.selCliente = false;
      this.selOt = false;
      this.selObra = false;
@@ -1144,11 +1173,13 @@ methods : {
         this.informes = res.data;
         this.informes_ids = this.informes.map(item => item.id).toString();
         console.log(this.informes_ids);
+        if (!this.informes.length) {
+            return;
+        }
         this.informes.forEach(function(item) {
             let informeDescrip = item.gasoducto_sn ? (item.km + '-' + item.tipo_soldadura_codigo + '-' + item.numero_formateado + ' ' + item.componente) : (item.numero_formateado + ' ' + item.componente) ;
             Object.defineProperty(item,'informeDescrip',{ value: informeDescrip})
         }.bind(this))
-        this.valores_indice_rechazos= [];
         await this.getIndicesDeRechazos();
         await this.getDefectologia();
         await this.getDefectologiaProduccion();
@@ -1304,12 +1335,12 @@ methods : {
 
         this.$store.commit('loading', true);
         try {
-            let url = 'estadisticas-soldaduras/analisis_rechazos_espesor/' + this.informes_ids;
-            let res= await axios.get(url);
+            let url = 'estadisticas-soldaduras/analisis_rechazos_espesor';
+            let res= await this.postEstadisticas(url);
             this.TablaAnalisisRechazosEspesor =  res.data;
             this.TablaAnalisisRechazosEspesor.forEach(function(item){item.espesor = item.espesor + ' mm'})
-            url = 'estadisticas-soldaduras/analisis_rechazos_diametro/' + this.informes_ids;
-            res= await axios.get(url);
+            url = 'estadisticas-soldaduras/analisis_rechazos_diametro';
+            res= await this.postEstadisticas(url);
             this.TablaAnalisisRechazosDiametro =  res.data;
             this.TablaAnalisisRechazosDiametro.forEach(function(item){item.diametro = item.diametro + ' "'})
             await this.calcularIndicesRechazosSoldaduras(this.TablaAnalisisRechazosEspesor);
@@ -1326,11 +1357,11 @@ methods : {
         this.$store.commit('loading', true);
         try {
 
-            let url = 'estadisticas-soldaduras/analisis_defectos_posicion/' + this.informes_ids;
-            let res= await axios.get(url);
+            let url = 'estadisticas-soldaduras/analisis_defectos_posicion';
+            let res= await this.postEstadisticas(url);
             this.TablaDefectosPosicion = res.data;
-            url = 'estadisticas-soldaduras/analisis_detalle_defectos/' + this.informes_ids;
-            res= await axios.get(url);
+            url = 'estadisticas-soldaduras/analisis_detalle_defectos';
+            res= await this.postEstadisticas(url);
             this.TablaDetalleDefectos = res.data;
             this.total_defectos = this.TablaDetalleDefectos.map(item =>parseInt(item.cantidad)).reduce((a,b) => a + b,0);
             this.TablaDetalleDefectos.forEach(function(item){
@@ -1352,8 +1383,8 @@ methods : {
 
         this.$store.commit('loading', true);
         try {
-            let url = 'estadisticas-soldaduras/analisis_defectos_soldador/' + this.informes_ids;
-            let res = await axios.get(url);
+            let url = 'estadisticas-soldaduras/analisis_defectos_soldador';
+            let res = await this.postEstadisticas(url);
             this.TablaDDSTemp = res.data;
             await this.GenerarTablaDefectosSoldador()
             this.total_defectos_soldador = this.TablaDefectosSoldador.map(item =>parseInt(item.cantidad)).reduce((a,b) => a + b,0);
@@ -1486,11 +1517,11 @@ methods : {
         this.$store.commit('loading', true);
         try {
 
-            let url = 'estadisticas-soldaduras/analisis_indicaciones/' + this.informes_ids;
-            let res= await axios.get(url);
+            let url = 'estadisticas-soldaduras/analisis_indicaciones';
+            let res= await this.postEstadisticas(url);
             this.TablaIndicaciones = res.data;
-            url = 'estadisticas-soldaduras/analisis_detalle_indicaciones/' + this.informes_ids;
-            res= await axios.get(url);
+            url = 'estadisticas-soldaduras/analisis_detalle_indicaciones';
+            res= await this.postEstadisticas(url);
             this.TablaIndicacionesPosicion = res.data;
             this.total_indiciones = this.TablaIndicaciones.map(item =>parseInt(item.cantidad)).reduce((a,b) => a + b,0);
             this.TablaIndicaciones.forEach(function(item){
@@ -1526,9 +1557,9 @@ methods : {
         this.$store.commit('loading', true);
         try {
 
-            let url = 'estadisticas-soldaduras/analisis_indicaciones_posicion/posicion/' + posicion + '/diametro/'+ this.DiametroIndicaciones.replace('/','--') + '/' + this.informes_ids ;
+            let url = 'estadisticas-soldaduras/analisis_indicaciones_posicion/posicion/' + posicion + '/diametro/'+ this.DiametroIndicaciones.replace('/','--');
             console.log(url);
-            let res= await axios.get(url);
+            let res= await this.postEstadisticas(url);
             this.TablaIndicacionesPosicionDetalle = res.data;
             await this.GenerarGraficoIndicacionesSoldadorDetalle(posicion);
 

@@ -249,7 +249,7 @@ export default {
 
   },
 
-    data () { return {
+  data () { return {
 
       ot_informes :{},
       indexPosTabla:-1,
@@ -299,6 +299,8 @@ export default {
   },
 
   mounted : function(){
+      this.$store.commit('loading', false);
+      window.addEventListener('pageshow', this.handlePageShow);
 
       this.getResults();
       this.ContarInformes();
@@ -309,6 +311,10 @@ export default {
     }
     document.cookie = 'nroInformeFormateado=' + '' + ';path=/;';},
 
+  beforeDestroy : function(){
+      window.removeEventListener('pageshow', this.handlePageShow);
+  },
+
 
   computed :{
 
@@ -316,6 +322,9 @@ export default {
      },
 
     methods : {
+        handlePageShow : function(){
+            this.$store.commit('loading', false);
+        },
 
         getResults :function(page = 1){
 
@@ -383,7 +392,7 @@ export default {
         },
         EditInforme : function(informe){
 
-            this.$store.commit('loading', true);
+            this.$store.commit('loading', false);
             window.location.href =  '/area/enod/ot/' + this.ot_data.id + '/informe/' + this.informe_id_select + '/edit';
 
         },

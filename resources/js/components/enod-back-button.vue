@@ -31,6 +31,10 @@ export default {
   },
   methods: {
     goBack() {
+      if (this.$store) {
+        this.$store.commit('loading', false);
+      }
+
       const hasHistory = window.history.length > 1;
       const referrer = document.referrer || '';
       let isSameOriginReferrer = false;
