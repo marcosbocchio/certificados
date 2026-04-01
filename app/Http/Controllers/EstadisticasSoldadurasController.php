@@ -11,6 +11,24 @@ use Illuminate\Support\Str;
 use PDO;
 class EstadisticasSoldadurasController extends Controller
 {
+    protected function resolveInformesIds(Request $request, $informes_ids = null)
+    {
+        if ($informes_ids !== null && $informes_ids !== '') {
+            return $informes_ids;
+        }
+
+        $payload = $request->input('informes_ids', []);
+
+        if (is_array($payload)) {
+            $payload = array_values(array_filter($payload, function ($item) {
+                return $item !== null && $item !== '';
+            }));
+
+            return implode(',', $payload);
+        }
+
+        return (string) $payload;
+    }
 
     public function __construct()
     {
@@ -30,7 +48,8 @@ class EstadisticasSoldadurasController extends Controller
     }
     /* TAB  INDICES DE RECHAZOS*/
 
-    public function AnalisisRechazosEspesor($informes_ids){
+    public function AnalisisRechazosEspesor(Request $request, $informes_ids = null){
+        $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
         $items = DB::select('CALL AnalisisSoldadurasRechazosEspesor(?)',array($informes_ids));
 
@@ -38,7 +57,8 @@ class EstadisticasSoldadurasController extends Controller
 
     }
 
-    public function AnalisisRechazosDiametro($informes_ids){
+    public function AnalisisRechazosDiametro(Request $request, $informes_ids = null){
+        $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
         return DB::select('CALL AnalisisSoldadurasRechazosDiametro(?)',array($informes_ids));
 
@@ -46,13 +66,15 @@ class EstadisticasSoldadurasController extends Controller
 
      /* TAB DEFECTOLOGIA*/
 
-    public function AnalisisDefectosPosicion($informes_ids){
+    public function AnalisisDefectosPosicion(Request $request, $informes_ids = null){
+        $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
         return DB::select('CALL AnalisisSoldadurasDefectosPosicion(?)',array($informes_ids));
 
     }
 
-    public function AnalisisSoldadurasDetalleDefectos($informes_ids){
+    public function AnalisisSoldadurasDetalleDefectos(Request $request, $informes_ids = null){
+        $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
         return DB::select('CALL AnalisisSoldadurasDetalleDefectos(?)',array($informes_ids));
 
@@ -61,7 +83,8 @@ class EstadisticasSoldadurasController extends Controller
 
     /* TAB DEFECTOLOGIA/PRODUCCION*/
 
-    public function AnalisisSoldadurasDefectosSoldador($informes_ids){
+    public function AnalisisSoldadurasDefectosSoldador(Request $request, $informes_ids = null){
+        $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
         DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
 
@@ -72,7 +95,8 @@ class EstadisticasSoldadurasController extends Controller
     }
 
 
-    public function CantRechazosSoldaduras($informes_ids){
+    public function CantRechazosSoldaduras(Request $request, $informes_ids = null){
+        $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
         $total = DB::select('select CantRechazosSoldaduras(?) as valor',array($informes_ids));
 
@@ -81,7 +105,8 @@ class EstadisticasSoldadurasController extends Controller
 
      /* TAB INDICACIONES */
 
-    public function AnalisisSoldadurasIndicaciones($informes_ids){
+    public function AnalisisSoldadurasIndicaciones(Request $request, $informes_ids = null){
+        $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
         DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
 
@@ -93,7 +118,8 @@ class EstadisticasSoldadurasController extends Controller
 
     }
 
-    public function AnalisisSoldadurasDetalleIndicaciones($informes_ids){
+    public function AnalisisSoldadurasDetalleIndicaciones(Request $request, $informes_ids = null){
+        $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
         DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
 
@@ -106,7 +132,8 @@ class EstadisticasSoldadurasController extends Controller
     }
 
 
-    public function AnalisisSoldadurasIndicacionesPosicion($posicion, $diametro,$informes_ids){
+    public function AnalisisSoldadurasIndicacionesPosicion(Request $request, $posicion, $diametro, $informes_ids = null){
+        $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
         $diametro_formateado = str_replace('--','/',$diametro);
 
@@ -120,7 +147,8 @@ class EstadisticasSoldadurasController extends Controller
 
     }
 
-    public function CantSoldadurasInformes($informes_ids){
+    public function CantSoldadurasInformes(Request $request, $informes_ids = null){
+        $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
         $total = DB::select('select CantSoldadurasInformes(?) as valor',array($informes_ids));
 

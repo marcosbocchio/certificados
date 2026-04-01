@@ -708,40 +708,80 @@ Route::group(['middleware' => 'auth:api'], function () {
         'estadisticas-soldaduras/total_soldaduras_informes/{informes_ids}',
         'EstadisticasSoldadurasController@CantSoldadurasInformes'
     );
+    Route::post(
+        'estadisticas-soldaduras/total_soldaduras_informes',
+        'EstadisticasSoldadurasController@CantSoldadurasInformes'
+    );
     Route::get(
         'estadisticas-soldaduras/total_rechazos_soldaduras/{informes_ids}',
+        'EstadisticasSoldadurasController@CantRechazosSoldaduras'
+    );
+    Route::post(
+        'estadisticas-soldaduras/total_rechazos_soldaduras',
         'EstadisticasSoldadurasController@CantRechazosSoldaduras'
     );
     Route::get(
         'estadisticas-soldaduras/analisis_rechazos_espesor/{informes_ids}',
         'EstadisticasSoldadurasController@AnalisisRechazosEspesor'
     );
+    Route::post(
+        'estadisticas-soldaduras/analisis_rechazos_espesor',
+        'EstadisticasSoldadurasController@AnalisisRechazosEspesor'
+    );
     Route::get(
         'estadisticas-soldaduras/analisis_rechazos_diametro/{informes_ids}',
+        'EstadisticasSoldadurasController@AnalisisRechazosDiametro'
+    );
+    Route::post(
+        'estadisticas-soldaduras/analisis_rechazos_diametro',
         'EstadisticasSoldadurasController@AnalisisRechazosDiametro'
     );
     Route::get(
         'estadisticas-soldaduras/analisis_defectos_posicion/{informes_ids}',
         'EstadisticasSoldadurasController@AnalisisDefectosPosicion'
     );
+    Route::post(
+        'estadisticas-soldaduras/analisis_defectos_posicion',
+        'EstadisticasSoldadurasController@AnalisisDefectosPosicion'
+    );
     Route::get(
         'estadisticas-soldaduras/analisis_detalle_defectos/{informes_ids}',
+        'EstadisticasSoldadurasController@AnalisisSoldadurasDetalleDefectos'
+    );
+    Route::post(
+        'estadisticas-soldaduras/analisis_detalle_defectos',
         'EstadisticasSoldadurasController@AnalisisSoldadurasDetalleDefectos'
     );
     Route::get(
         'estadisticas-soldaduras/analisis_defectos_soldador/{informes_ids}',
         'EstadisticasSoldadurasController@AnalisisSoldadurasDefectosSoldador'
     );
+    Route::post(
+        'estadisticas-soldaduras/analisis_defectos_soldador',
+        'EstadisticasSoldadurasController@AnalisisSoldadurasDefectosSoldador'
+    );
     Route::get(
         'estadisticas-soldaduras/analisis_indicaciones/{informes_ids}',
+        'EstadisticasSoldadurasController@AnalisisSoldadurasIndicaciones'
+    );
+    Route::post(
+        'estadisticas-soldaduras/analisis_indicaciones',
         'EstadisticasSoldadurasController@AnalisisSoldadurasIndicaciones'
     );
     Route::get(
         'estadisticas-soldaduras/analisis_detalle_indicaciones/{informes_ids}',
         'EstadisticasSoldadurasController@AnalisisSoldadurasDetalleIndicaciones'
     );
+    Route::post(
+        'estadisticas-soldaduras/analisis_detalle_indicaciones',
+        'EstadisticasSoldadurasController@AnalisisSoldadurasDetalleIndicaciones'
+    );
     Route::get(
         'estadisticas-soldaduras/analisis_indicaciones_posicion/posicion/{posicion}/diametro/{diametro}/{informes_ids}',
+        'EstadisticasSoldadurasController@AnalisisSoldadurasIndicacionesPosicion'
+    );
+    Route::post(
+        'estadisticas-soldaduras/analisis_indicaciones_posicion/posicion/{posicion}/diametro/{diametro}',
         'EstadisticasSoldadurasController@AnalisisSoldadurasIndicacionesPosicion'
     );
 
