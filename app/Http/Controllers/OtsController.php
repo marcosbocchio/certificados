@@ -18,7 +18,7 @@ use App\Provincias;
 use App\Localidades;
 use Illuminate\Support\Facades\Auth;
 use \stdClass;
-use \carbon;
+use Carbon\Carbon;
 use App\Informe;
 use App\OtTipoSoldaduras;
 
