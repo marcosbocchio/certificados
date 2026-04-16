@@ -21,7 +21,11 @@ use App\InternoFuentes;
 use App\Tecnicas;
 use App\TecnicasGraficos;
 use App\TipoPeliculas;
+use App\DimensionesDetector;
 use App\Icis;
+use App\TiposCentellador;
+use App\FiltrosAplicadosRd;
+use App\SoftwaresAdquisicionRd;
 use App\NormaEvaluaciones;
 use App\NormaEnsayos;
 use App\OtOperarios;
@@ -133,7 +137,11 @@ class InformesRdController extends Controller
         $documetacionesRepository = new DocumentacionesRepository;
         $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);
         $infome_tipo_pelicula = TipoPeliculas::find($informe_rd->tipo_pelicula_id);
+        $informe_dimension_detector = DimensionesDetector::find($informe_rd->dimension_detector_id);
         $informe_ici = Icis::find($informe_rd->ici_id);
+        $informe_tipo_centellador = TiposCentellador::find($informe_rd->tipo_centellador_id);
+        $informe_filtro_aplicado_rd = FiltrosAplicadosRd::find($informe_rd->filtro_aplicado_rd_id);
+        $informe_software_adquisicion_rd = SoftwaresAdquisicionRd::find($informe_rd->software_adquisicion_rd_id);
         $informe_norma_evaluacion = NormaEvaluaciones::find($informe->norma_evaluacion_id);
         $informe_norma_ensayo = NormaEnsayos::find($informe->norma_ensayo_id);
         $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
@@ -153,6 +161,18 @@ class InformesRdController extends Controller
         if ($informe_diametro == null)
           $informe_diametro = new DiametroView();
 
+        if ($informe_dimension_detector == null)
+          $informe_dimension_detector = new DimensionesDetector();
+
+        if ($informe_tipo_centellador == null)
+          $informe_tipo_centellador = new TiposCentellador();
+
+        if ($informe_filtro_aplicado_rd == null)
+          $informe_filtro_aplicado_rd = new FiltrosAplicadosRd();
+
+        if ($informe_software_adquisicion_rd == null)
+          $informe_software_adquisicion_rd = new SoftwaresAdquisicionRd();
+
         return view('informes.rd.edit', compact('ot',
                                                  'metodo',
                                                  'user',
@@ -168,7 +188,11 @@ class InformesRdController extends Controller
                                                  'informe_interno_equipo',
                                                  'informe_procedimiento',
                                                  'infome_tipo_pelicula',
+                                                 'informe_dimension_detector',
                                                  'informe_ici',
+                                                 'informe_tipo_centellador',
+                                                 'informe_filtro_aplicado_rd',
+                                                 'informe_software_adquisicion_rd',
                                                  'informe_norma_evaluacion',
                                                  'informe_norma_ensayo',
                                                  'informe_ejecutor_ensayo',
@@ -191,6 +215,9 @@ class InformesRdController extends Controller
                                ->select('juntas_rd.codigo as junta',
                                       'posicion_rd.descripcion as observacion',
                                       'posicion_rd.densidad as densidad',
+                                      'posicion_rd.r_densidad as r_densidad',
+                                      'posicion_rd.mng as mng',
+                                      'posicion_rd.snrn as snrn',
                                       'posicion_rd.aceptable_sn as aceptable_sn',
                                       'posicion_rd.codigo as posicion',
                                       'posicion_rd.id as posicion_id')
@@ -345,11 +372,17 @@ class InformesRdController extends Controller
         $informeRd->ma = $request->ma;
         $informeRd->interno_fuente_id =  $request->interno_fuente ? $request->interno_fuente['id'] : null;
         $informeRd->tipo_pelicula_id = $request->tipo_pelicula['id'];
+        $informeRd->dimension_detector_id = $request->dimension_detector ? $request->dimension_detector['id'] : null;
         $informeRd->medida = $request->medida['codigo'];
         $informeRd->ici_id  = $request->ici['id'];
+        $informeRd->tipo_centellador_id = $request->tipo_centellador ? $request->tipo_centellador['id'] : null;
         $informeRd->gasoducto_sn = $request->gasoducto_sn;
         $informeRd->perfil_sn = $request->perfil_sn;
         $informeRd->pantalla = $request->pantalla;
+        $informeRd->pitch = $request->pitch;
+        $informeRd->srb_dwi = $request->srb_dwi;
+        $informeRd->filtro_aplicado_rd_id = $request->filtro_aplicado_rd ? $request->filtro_aplicado_rd['id'] : null;
+        $informeRd->software_adquisicion_rd_id = $request->software_adquisicion_rd ? $request->software_adquisicion_rd['id'] : null;
         $informeRd->pos_ant = $request->pos_ant;
         $informeRd->pos_pos = $request->pos_pos;
         $informeRd->lado    = $request->lado;
@@ -488,6 +521,9 @@ class InformesRdController extends Controller
         $posicion->junta_id = $junta['id'];
         $posicion->codigo = $detalle['posicion'];
         $posicion->densidad = $detalle['densidad'];
+        $posicion->r_densidad = $detalle['r_densidad'];
+        $posicion->mng = $detalle['mng'];
+        $posicion->snrn = $detalle['snrn'];
         $posicion->descripcion = $detalle['observacion'] ;
         $posicion->aceptable_sn = $detalle['aceptable_sn'];
         $posicion->save();

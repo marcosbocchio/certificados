@@ -236,4 +236,48 @@ class OtsController extends Controller
         ->orderBy('informes.componente','asc')
         ->get();
     }
+
+    public function getServiciosEliminadosEnUso(Request $request, $ot_id)
+    {
+        $servicioIds = collect($request->input('servicio_ids', []))
+            ->filter(function ($id) {
+                return !is_null($id) && $id !== '';
+            })
+            ->map(function ($id) {
+                return (int) $id;
+            })
+            ->unique()
+            ->values()
+            ->all();
+
+        if (empty($servicioIds)) {
+            return response()->json([]);
+        }
+
+        $serviciosEnUso = DB::table('parte_servicios as ps')
+            ->join('partes as p', 'p.id', '=', 'ps.parte_id')
+            ->join('servicios as s', 's.id', '=', 'ps.servicio_id')
+            ->leftJoin('certificado_servicios as cs', function ($join) {
+                $join->on('cs.parte_id', '=', 'ps.parte_id')
+                    ->on('cs.servicio_id', '=', 'ps.servicio_id');
+            })
+            ->leftJoin('certificados as c', 'c.id', '=', 'cs.certificado_id')
+            ->where('p.ot_id', $ot_id)
+            ->whereIn('ps.servicio_id', $servicioIds)
+            ->selectRaw('
+                ps.servicio_id,
+                s.descripcion as servicio_descripcion,
+                p.id as parte_id,
+                LPAD(p.id, 8, "0") as parte_numero,
+                DATE_FORMAT(p.fecha, "%d/%m/%Y") as parte_fecha,
+                c.id as certificado_id,
+                LPAD(c.numero, 8, "0") as certificado_numero
+            ')
+            ->distinct()
+            ->orderBy('s.descripcion', 'asc')
+            ->orderBy('p.id', 'asc')
+            ->get();
+
+        return response()->json($serviciosEnUso);
+    }
 }

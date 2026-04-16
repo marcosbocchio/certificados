@@ -116,6 +116,14 @@
                             @endif
                             </td>
                         </tr>
+                        <tr>
+                            <th colspan="2">Dimensión detector</th>
+                            <th colspan="2">Tipo centellador</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{ $dimension_detector ? $dimension_detector->descripcion : '' }}</td>
+                            <td colspan="2">{{ $tipo_centellador ? $tipo_centellador->descripcion : '' }}</td>
+                        </tr>
 
                         <tr>
                             <th colspan="2">Actividad Fuente</th>
@@ -131,12 +139,32 @@
                                 @endif
                             </td>
                         </tr>
+                        <tr>
+                            <th colspan="2">Pitch</th>
+                            <th colspan="2">SRb DWI</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{ $informe_rd->pitch }}</td>
+                            <td colspan="2">{{ $informe_rd->srb_dwi }}</td>
+                        </tr>
 
                         <tr>
                            <th colspan="4">Norma Evaluación</th>
                         </tr>
                         <tr>
                             <td colspan="4">{{$norma_evaluacion->codigo}}</td>
+                        </tr>
+                        <tr>
+                           <th colspan="4">Filtros aplicados</th>
+                        </tr>
+                        <tr>
+                            <td colspan="4">{{ $filtro_aplicado_rd ? $filtro_aplicado_rd->descripcion : '' }}</td>
+                        </tr>
+                        <tr>
+                           <th colspan="4">Soft. de Adq.</th>
+                        </tr>
+                        <tr>
+                            <td colspan="4">{{ $software_adquisicion_rd ? $software_adquisicion_rd->descripcion : '' }}</td>
                         </tr>
 
                         <tr>

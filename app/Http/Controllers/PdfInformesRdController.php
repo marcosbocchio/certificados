@@ -16,11 +16,15 @@ use App\Documentaciones;
 use App\Equipos;
 use App\Fuentes;
 use App\TipoPeliculas;
+use App\DimensionesDetector;
 use App\DiametrosEspesor;
 use App\InternoEquipos;
 use App\InternoFuentes;
 use App\Icis;
 use App\Tecnicas;
+use App\TiposCentellador;
+use App\FiltrosAplicadosRd;
+use App\SoftwaresAdquisicionRd;
 use App\EjecutorEnsayo;
 use App\User;
 use App\TecnicasGraficos;
@@ -42,6 +46,30 @@ use App\InformesRdElementosView;
 
 class PdfInformesRdController extends Controller
 {
+    protected function enrichJuntasPosiciones($juntas_posiciones)
+    {
+        $posiciones = collect($juntas_posiciones);
+        $posicionIds = $posiciones->pluck('posicion_id')->filter()->unique()->values();
+
+        if ($posicionIds->isEmpty()) {
+            return $juntas_posiciones;
+        }
+
+        $posicionesRd = DB::table('posicion_rd')
+            ->whereIn('id', $posicionIds)
+            ->select('id', 'r_densidad', 'mng', 'snrn')
+            ->get()
+            ->keyBy('id');
+
+        foreach ($juntas_posiciones as $junta_posicion) {
+            $detalle = $posicionesRd->get($junta_posicion->posicion_id);
+            $junta_posicion->r_densidad = $detalle ? $detalle->r_densidad : null;
+            $junta_posicion->mng = $detalle ? $detalle->mng : null;
+            $junta_posicion->snrn = $detalle ? $detalle->snrn : null;
+        }
+
+        return $juntas_posiciones;
+    }
 
     public function imprimir($id){
        /* header */
@@ -66,8 +94,12 @@ class PdfInformesRdController extends Controller
         $interno_fuente = InternoFuentes::where('id',$informe_rd->interno_fuente_id)->first();
         $actividad = $interno_fuente ? curie($interno_fuente->id,$informe->fecha) : '';
         $tipo_pelicula = TipoPeliculas::findOrFail($informe_rd->tipo_pelicula_id);
+        $dimension_detector = DimensionesDetector::find($informe_rd->dimension_detector_id);
         $diametro_espesor = $informe->diametro_espesor_id ? DiametrosEspesor::findOrFail($informe->diametro_espesor_id) : null;
         $ici = Icis::findOrFail($informe_rd->ici_id);
+        $tipo_centellador = TiposCentellador::find($informe_rd->tipo_centellador_id);
+        $filtro_aplicado_rd = FiltrosAplicadosRd::find($informe_rd->filtro_aplicado_rd_id);
+        $software_adquisicion_rd = SoftwaresAdquisicionRd::find($informe_rd->software_adquisicion_rd_id);
         $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
         $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
@@ -106,8 +138,12 @@ class PdfInformesRdController extends Controller
                                                                         'actividad',
                                                                         'interno_fuente',
                                                                         'tipo_pelicula',
+                                                                        'dimension_detector',
                                                                         'diametro_espesor',
                                                                         'ici',
+                                                                        'tipo_centellador',
+                                                                        'filtro_aplicado_rd',
+                                                                        'software_adquisicion_rd',
                                                                         'tecnica',
                                                                         'ejecutor_ensayo',
                                                                         'cliente',
@@ -138,6 +174,7 @@ class PdfInformesRdController extends Controller
         $plantilla = ($max_pasadas > 6) ? 'rd-gasoducto-12-v2' : 'rd-gasoducto-6-v2';
 
         $juntas_posiciones = DB::select('CALL InformeRdGasoductoJuntaPosicion(?)',array($informe_rd->id));
+        $juntas_posiciones = $this->enrichJuntasPosiciones($juntas_posiciones);
         $pasadas_juntas = DB::select('CALL InformeRdGasoductoPasadasJuntas(?)',array($informe_rd->id));
         $defectos_posiciones = DB::select('CALL InformeRdGasoductoDefectosPasadasPosicion(?)',array($informe_rd->id));
         Log::debug($plantilla);
@@ -155,8 +192,12 @@ class PdfInformesRdController extends Controller
                                                                         'actividad',
                                                                         'interno_fuente',
                                                                         'tipo_pelicula',
+                                                                        'dimension_detector',
                                                                         'diametro_espesor',
                                                                         'ici',
+                                                                        'tipo_centellador',
+                                                                        'filtro_aplicado_rd',
+                                                                        'software_adquisicion_rd',
                                                                         'tecnica',
                                                                         'ejecutor_ensayo',
                                                                         'cliente',
@@ -185,6 +226,7 @@ class PdfInformesRdController extends Controller
           /* Detalle */
 
           $juntas_posiciones = DB::select('CALL InformeRdPlantaJuntaPosicion(?)',array($informe_rd->id));
+          $juntas_posiciones = $this->enrichJuntasPosiciones($juntas_posiciones);
           $defectos_posiciones = DB::select('CALL InformeRdPlantaDefectosPasadaPosicion(?)',array($informe_rd->id));
 
         // dd($juntas_posiciones,$defectos_posiciones);
@@ -200,8 +242,12 @@ class PdfInformesRdController extends Controller
                                                               'actividad',
                                                               'interno_fuente',
                                                               'tipo_pelicula',
+                                                              'dimension_detector',
                                                               'diametro_espesor',
                                                               'ici',
+                                                              'tipo_centellador',
+                                                              'filtro_aplicado_rd',
+                                                              'software_adquisicion_rd',
                                                               'tecnica',
                                                               'ejecutor_ensayo',
                                                               'cliente',

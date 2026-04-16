@@ -364,7 +364,12 @@ footer {
 
                     <!-- Densidad  -->
 
-                    <td style="font-size: 11px;width:21.5px; text-align: center" class="bordered-td">{{$junta_posiciones->densidad}}</td>
+                    <td style="font-size: 11px;width:21.5px; text-align: center" class="bordered-td">
+                        {{$junta_posiciones->densidad}}
+                        <br>rD: {{$junta_posiciones->r_densidad}}
+                        <br>Mng: {{$junta_posiciones->mng}}
+                        <br>SNRn: {{$junta_posiciones->snrn}}
+                    </td>
 
                     <!-- Tipo -->
 
