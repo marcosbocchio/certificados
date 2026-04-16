@@ -139,7 +139,12 @@ footer {
                             @endif
                         </td>
                         <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
-                        <td style="font-size: 11px;  width:23.5px;text-align: center" class="bordered-td">{{$junta_posicion->densidad}}</td>
+                        <td style="font-size: 11px;  width:23.5px;text-align: center" class="bordered-td">
+                            {{$junta_posicion->densidad}}
+                            <br>rD: {{$junta_posicion->r_densidad}}
+                            <br>Mng: {{$junta_posicion->mng}}
+                            <br>SNRn: {{$junta_posicion->snrn}}
+                        </td>
                         <td style="font-size: 9px;   width:385px; " class="bordered-td">&nbsp;
                         @php $primero = true; @endphp
                             @foreach ($defectos_posiciones as $key => $defecto_posicion)

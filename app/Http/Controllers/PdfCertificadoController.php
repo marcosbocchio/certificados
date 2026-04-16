@@ -452,6 +452,7 @@ class PdfCertificadoController extends Controller
     public function getCombinados($servicios_parte){
 
         $array_fechas = [];
+        $fechas = [];
 
         foreach ($servicios_parte as $item) {
 

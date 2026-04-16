@@ -155,6 +155,14 @@
                                 @endif
                             </td>
                         </tr>
+                        <tr>
+                            <th colspan="2">Dimensión detector</th>
+                            <th colspan="2">Tipo centellador</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{ $dimension_detector ? $dimension_detector->descripcion : '' }}</td>
+                            <td colspan="2">{{ $tipo_centellador ? $tipo_centellador->descripcion : '' }}</td>
+                        </tr>
 
                         <tr>
                             <th colspan="2">Equipo</th>
@@ -185,6 +193,14 @@
                                 @endif
                             </td>
                         </tr>
+                        <tr>
+                            <th colspan="2">Pitch</th>
+                            <th colspan="2">SRb DWI</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{ $informe_rd->pitch }}</td>
+                            <td colspan="2">{{ $informe_rd->srb_dwi }}</td>
+                        </tr>
 
                         <tr>
                             <th colspan="2">ICI</th>
@@ -202,6 +218,14 @@
                         <tr>
                             <td colspan="2">{{$norma_evaluacion->codigo}}</td>
                             <td colspan="2">{{$norma_ensayo->codigo}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Filtros aplicados</th>
+                            <th colspan="2">Soft. de Adq.</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{ $filtro_aplicado_rd ? $filtro_aplicado_rd->descripcion : '' }}</td>
+                            <td colspan="2">{{ $software_adquisicion_rd ? $software_adquisicion_rd->descripcion : '' }}</td>
                         </tr>
                         @if($informe_rd->perfil_sn)
                             <tr>

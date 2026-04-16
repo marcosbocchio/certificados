@@ -229,6 +229,22 @@
                             </div>
                         </div>
 
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Dimensión detector</label>
+                                <v-select v-model="dimension_detector" :options="dimensiones_detector"
+                                    label="descripcion"></v-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Tipo centellador</label>
+                                <v-select v-model="tipo_centellador" :options="tipos_centellador"
+                                    label="descripcion"></v-select>
+                            </div>
+                        </div>
+
                         <div class="clearfix"></div>
 
                         <div class="col-md-3">
@@ -270,6 +286,21 @@
                             <div class="form-group">
                                 <label for="actividad">Actividad</label>
                                 <input type="text" v-model="actividad" class="form-control" id="actividad" disabled>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="pitch">Pitch</label>
+                                <input type="number" class="form-control" v-model="pitch" id="pitch" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="srb_dwi">SRb DWI</label>
+                                <input type="number" class="form-control" v-model="srb_dwi" id="srb_dwi"
+                                    step="0.01">
                             </div>
                         </div>
 
@@ -354,6 +385,13 @@
                                         </v-select>
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Filtros aplicados</label>
+                                        <v-select v-model="filtro_aplicado_rd" label="descripcion"
+                                            :options="filtros_aplicados_rd"></v-select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -385,6 +423,13 @@
                                                 <span class="downSelect"> {{ option.descripcion }} </span>
                                             </template>
                                         </v-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Soft. de Adq.</label>
+                                        <v-select v-model="software_adquisicion_rd" label="descripcion"
+                                            :options="softwares_adquisicion_rd"></v-select>
                                     </div>
                                 </div>
                             </div>
@@ -539,8 +584,30 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
+                                <label for="r_densidad">rDensidad</label>
+                                <input type="number" v-model="r_densidad" class="form-control" id="r_densidad"
+                                    step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
                                 <label for="posicion">Posición</label>
                                 <input type="text" v-model="posicion" class="form-control" id="posicion">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="mng">Mng</label>
+                                <input type="number" v-model="mng" class="form-control" id="mng" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="snrn">SNRn</label>
+                                <input type="number" v-model="snrn" class="form-control" id="snrn" step="0.1">
                             </div>
                         </div>
 
@@ -576,9 +643,12 @@
                                             <tr>
                                                 <th class="col-md-2">Elemento</th>
                                                 <th class="col-md-2">Densidad</th>
+                                                <th class="col-md-2">rDensidad</th>
                                                 <th class="col-md-2">Pos.</th>
+                                                <th class="col-md-1">Mng</th>
+                                                <th class="col-md-1">SNRn</th>
                                                 <th class="col-md-1">Aceptable</th>
-                                                <th class="col-md-5">Observación</th>
+                                                <th class="col-md-3">Observación</th>
                                                 <th> &nbsp;</th>
                                             </tr>
                                         </thead>
@@ -595,7 +665,34 @@
                                                             {{ FIlaTabla.densidad }}
                                                         </div>
                                                     </td>
+                                                    <td @click="selectPosDetalle(k)">
+                                                        <div v-if="indexDetalle == k">
+                                                            <input type="number" v-model="TablaDetalle[k].r_densidad"
+                                                                step="0.1">
+                                                        </div>
+                                                        <div v-else>
+                                                            {{ FIlaTabla.r_densidad }}
+                                                        </div>
+                                                    </td>
                                                     <td @click="selectPosDetalle(k)">{{ FIlaTabla.posicion }} </td>
+                                                    <td @click="selectPosDetalle(k)">
+                                                        <div v-if="indexDetalle == k">
+                                                            <input type="number" v-model="TablaDetalle[k].mng"
+                                                                step="0.1">
+                                                        </div>
+                                                        <div v-else>
+                                                            {{ FIlaTabla.mng }}
+                                                        </div>
+                                                    </td>
+                                                    <td @click="selectPosDetalle(k)">
+                                                        <div v-if="indexDetalle == k">
+                                                            <input type="number" v-model="TablaDetalle[k].snrn"
+                                                                step="0.1">
+                                                        </div>
+                                                        <div v-else>
+                                                            {{ FIlaTabla.snrn }}
+                                                        </div>
+                                                    </td>
                                                     <td @click="selectPosDetalle(k)"> <input type="checkbox"
                                                             id="checkbox" v-model="TablaDetalle[k].aceptable_sn"> </td>
                                                     <td @click="selectPosDetalle(k)">
@@ -612,7 +709,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td v-if="k == indexDetalle && indicaciones_sn" colspan="6"
+                                                    <td v-if="k == indexDetalle && indicaciones_sn" colspan="9"
                                                         style="background-color: #ECF0F5;">
 
                                                         <div class="box box-custom-enod"
@@ -1185,8 +1282,24 @@ export default {
             type: [Object],
             required: false
         },
+        dimension_detectordata: {
+            type: [Object, Array],
+            required: false
+        },
         icidata: {
             type: [Object],
+            required: false
+        },
+        tipo_centelladordata: {
+            type: [Object, Array],
+            required: false
+        },
+        filtro_aplicado_rddata: {
+            type: [Object, Array],
+            required: false
+        },
+        software_adquisicion_rddata: {
+            type: [Object, Array],
             required: false
         },
         norma_evaluaciondata: {
@@ -1266,14 +1379,20 @@ export default {
             ma: '',
             fuente: '',
             tipo_pelicula: '',
+            dimension_detector: '',
             pantalla: 'Pb',
+            tipo_centellador: '',
             pos_ant: 0.10,
             pos_pos: 0.10,
+            pitch: '',
+            srb_dwi: '',
             lado: '',
             distancia_fuente_pelicula: '',
             norma_evaluacion: '',
+            filtro_aplicado_rd: '',
             ici: '',
             norma_ensayo: '',
+            software_adquisicion_rd: '',
             tecnica: '',
             exposicion: '',
             actividad: '',
@@ -1287,13 +1406,16 @@ export default {
             pk: '',
             pasada: 0,
             densidad: '',
+            r_densidad: '',
             junta: '',
             junta_reparacion: '',
             juntas_reparacion: [],
             soldador1: '',
             soldador2: '',
             soldador3: '',
+            mng: '',
             posicion: '',
+            snrn: '',
             defectoObs: '',
             defectoRiPlanta: '',
             defectoRiGasoducto: '',
@@ -1312,7 +1434,11 @@ export default {
             equipos: [],
             fuentes: [],
             tipo_peliculas: [],
+            dimensiones_detector: [],
             icis: [],
+            tipos_centellador: [],
+            filtros_aplicados_rd: [],
+            softwares_adquisicion_rd: [],
             tecnicas: [],
             soldadores: [],
             posiciones: [],
@@ -1357,10 +1483,14 @@ export default {
         this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadInternoEquipos', { 'metodo': this.metodo, 'activo_sn': 1, 'tipo_penetrante': 'null' });
         this.getTipoPeliculas();
+        this.getDimensionesDetector();
         this.$store.dispatch('loadNormaEvaluaciones');
         this.$store.dispatch('loadNormaEnsayos');
         this.$store.dispatch('loadModelos3d');
         this.getIcis();
+        this.getTiposCentellador();
+        this.getFiltrosAplicadosRd();
+        this.getSoftwaresAdquisicionRd();
         this.$store.dispatch('loadMedidasPlaca');
         this.getTecnicas();
         this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
@@ -1513,18 +1643,29 @@ export default {
                 this.fuente = this.interno_fuentedata.fuente ? this.interno_fuentedata.fuente : '';
                 this.procedimiento = this.procedimientodata;
                 this.ici = this.icidata;
+                this.dimension_detector = this.dimension_detectordata;
+                this.tipo_centellador = this.tipo_centelladordata;
+                this.filtro_aplicado_rd = this.filtro_aplicado_rddata;
+                this.software_adquisicion_rd = this.software_adquisicion_rddata;
                 this.norma_evaluacion = this.norma_evaluaciondata;
                 this.norma_ensayo = this.norma_ensayodata;
                 this.tipo_pelicula = this.tipo_peliculadata;
                 this.medida = { codigo: this.informe_rddata.medida };
                 this.espesor_chapa = this.informedata.espesor_chapa;
+                this.pitch = this.informe_rddata.pitch;
+                this.srb_dwi = this.informe_rddata.srb_dwi;
                 this.pos_ant = this.informe_rddata.pos_ant;
                 this.pos_pos = this.informe_rddata.pos_pos;
                 this.lado = this.informe_rddata.lado;
                 this.exposicion = this.informe_rddata.exposicion;
                 this.distancia_fuente_pelicula = this.informe_rddata.distancia_fuente_pelicula;
                 this.ejecutor_ensayo = this.ejecutor_ensayodata;
-                this.TablaDetalle = this.detalledata,
+                this.TablaDetalle = this.detalledata.map(function (item) {
+                    item.r_densidad = item.r_densidad || '';
+                    item.mng = item.mng || '';
+                    item.snrn = item.snrn || '';
+                    return item;
+                }),
                     this.TablaPasadas = this.pasada_juntas_data;
                 this.InicializarElementosPasadas();
                 this.observaciones = this.informedata.observaciones
@@ -1709,12 +1850,40 @@ export default {
 
             });
         },
+        getDimensionesDetector: function () {
+            axios.defaults.baseURL = this.url;
+            var urlRegistros = 'dimensiones_detector' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response => {
+                this.dimensiones_detector = response.data
+            });
+        },
         getIcis: function () {
 
             axios.defaults.baseURL = this.url;
             var urlRegistros = 'icis' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response => {
                 this.icis = response.data
+            });
+        },
+        getTiposCentellador: function () {
+            axios.defaults.baseURL = this.url;
+            var urlRegistros = 'tipos_centellador' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response => {
+                this.tipos_centellador = response.data
+            });
+        },
+        getFiltrosAplicadosRd: function () {
+            axios.defaults.baseURL = this.url;
+            var urlRegistros = 'filtros_aplicados_rd' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response => {
+                this.filtros_aplicados_rd = response.data
+            });
+        },
+        getSoftwaresAdquisicionRd: function () {
+            axios.defaults.baseURL = this.url;
+            var urlRegistros = 'softwares_adquisicion_rd' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response => {
+                this.softwares_adquisicion_rd = response.data
             });
         },
         getTecnicas: function () {
@@ -1875,7 +2044,10 @@ export default {
             this.TablaDetalle.push({
                 junta: aux_junta,
                 densidad: this.densidad,
+                r_densidad: this.r_densidad,
+                mng: this.mng,
                 posicion: (typeof (posicion) !== 'undefined') ? posicion : this.posicion,
+                snrn: this.snrn,
                 aceptable_sn: 1,
                 observacion: '',
                 defectos: []
@@ -2431,15 +2603,21 @@ export default {
                     'ma': this.ma,
                     'interno_fuente': this.interno_fuente,
                     'tipo_pelicula': this.tipo_pelicula,
+                    'dimension_detector': this.dimension_detector,
                     'medida': this.medida,
                     'pantalla': this.pantalla,
+                    'tipo_centellador': this.tipo_centellador,
                     'pos_ant': this.pos_ant,
                     'pos_pos': this.pos_pos,
+                    'pitch': this.pitch,
+                    'srb_dwi': this.srb_dwi,
                     'lado': this.lado,
                     'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
                     'norma_evaluacion': this.norma_evaluacion,
+                    'filtro_aplicado_rd': this.filtro_aplicado_rd,
                     'ici': this.ici,
                     'norma_ensayo': this.norma_ensayo,
+                    'software_adquisicion_rd': this.software_adquisicion_rd,
                     'tecnica': this.tecnica,
                     'tecnicas_grafico': this.tecnica_grafico,
                     'exposicion': this.exposicion,
@@ -2528,15 +2706,21 @@ export default {
                     'ma': this.ma,
                     'interno_fuente': this.interno_fuente,
                     'tipo_pelicula': this.tipo_pelicula,
+                    'dimension_detector': this.dimension_detector,
                     'medida': this.medida,
                     'pantalla': this.pantalla,
+                    'tipo_centellador': this.tipo_centellador,
                     'pos_ant': this.pos_ant,
                     'pos_pos': this.pos_pos,
+                    'pitch': this.pitch,
+                    'srb_dwi': this.srb_dwi,
                     'lado': this.lado,
                     'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
                     'norma_evaluacion': this.norma_evaluacion,
+                    'filtro_aplicado_rd': this.filtro_aplicado_rd,
                     'ici': this.ici,
                     'norma_ensayo': this.norma_ensayo,
+                    'software_adquisicion_rd': this.software_adquisicion_rd,
                     'tecnica': this.tecnica,
                     'tecnicas_grafico': this.tecnica_grafico,
                     'exposicion': this.exposicion,

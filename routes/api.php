@@ -62,6 +62,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('servicios/paginate', 'ServiciosController@paginate');
     Route::resource('servicios', 'ServiciosController');
     Route::resource('tipo_peliculas', 'TipoPeliculasController');
+    Route::resource('dimensiones_detector', 'DimensionesDetectorController');
+    Route::resource('tipos_centellador', 'TiposCentelladorController');
+    Route::resource('filtros_aplicados_rd', 'FiltrosAplicadosRdController');
+    Route::resource('softwares_adquisicion_rd', 'SoftwaresAdquisicionRdController');
     Route::resource('metodo_ensayos', 'MetodoEnsayosController');
     Route::get('norma_ensayos/paginate', 'NormaEnsayosController@paginate');
     Route::resource('norma_ensayos', 'NormaEnsayosController');
@@ -82,6 +86,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get(
         'ots/{ot_id}/obras_por_tipo_soldaduras',
         'OtsController@getObrasTipoSoldaduras'
+    );
+    Route::post(
+        'ots/{ot_id}/servicios-eliminados-en-uso',
+        'OtsController@getServiciosEliminadosEnUso'
     );
     Route::resource('ots', 'OtsController');
     Route::get(

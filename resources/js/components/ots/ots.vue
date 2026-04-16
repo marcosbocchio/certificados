@@ -459,7 +459,7 @@ import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import 'vue2-datepicker/locale/es';
 import Timeselector from 'vue-timeselector';
-import { eventSetReferencia } from '../event-bus';
+import { eventSetReferencia, eventModal } from '../event-bus';
 import moment from 'moment';
 
 
@@ -627,6 +627,9 @@ export default {
           index_referencias:'',
           tabla:'',
           inputs:{},
+          originalServiciosIds: [],
+          serviciosEliminadosEnUso: [],
+          submitPendienteConfirmacion: false,
 
           t:'',
           d:''
@@ -649,7 +652,11 @@ export default {
         this.setEdit();
         this.sync();
         this.accion = this.acciondata;
+        eventModal.$on('confirmar_accion', this.onConfirmarAccion);
       },
+    beforeDestroy : function(){
+        eventModal.$off('confirmar_accion', this.onConfirmarAccion);
+    },
     mounted : function(){
 
 
@@ -738,6 +745,7 @@ export default {
                 this.localidad.lat   = this.otdata.lat;
                 this.localidad.lon   = this.otdata.lon;
                 this.inputsServicios = this.ot_serviciosdata;
+                this.originalServiciosIds = this.ot_serviciosdata.map(item => item.id);
                 this.peliculas_selected = this.ot_calidad_placasdata;
                 this.inputsProductos = this.ot_productosdata;
                 this.inputsRiesgos   = this.ot_riesgosdata;
@@ -1063,7 +1071,142 @@ export default {
           });
       },
 
-      submit()
+      onConfirmarAccion: function(accion, tipo) {
+        if (accion === 'guardar_ot_servicios_eliminados' && tipo === 'ot_servicios') {
+          this.submitPendienteConfirmacion = true;
+          this.executeUpdate();
+        }
+      },
+
+      getServiciosEliminadosIds: function() {
+        if (this.accion !== 'edit') {
+          return [];
+        }
+
+        const actuales = this.inputsServicios.map(item => item.id);
+        return this.originalServiciosIds.filter(id => actuales.indexOf(id) === -1);
+      },
+
+      getPayload: function() {
+        return {
+          'id'                  : this.otdata.id,
+          'updated_at'          : this.otdata.updated_at,
+          'cliente'             : this.cliente.id,
+          'logo_cliente_sn'     : this.logo_cliente_sn,
+          'contratista'         : this.contratista,
+          'logo_contratista_sn' : this.logo_contratista_sn,
+          'proyecto'            : this.proyecto,
+          'fecha'               : this.fecha,
+          'hora'                : this.hora,
+          'ot'                  : this.ot,
+          'fst'                 : this.fst,
+          'obra'                : this.obra,
+          'contacto1'           : (this.contacto1 ? this.contacto1.id : null ),
+          'contacto2'           : (this.contacto2 ? this.contacto2.id : null ),
+          'contacto3'           : (this.contacto3 ? this.contacto3.id : null ),
+          'user_empresa'        : (this.user_empresa ? this.user_empresa.id : null),
+          'provincia'           : (this.provincia ? this.provincia.id : null),
+          'localidad'           : (this.localidad ? this.localidad.id : null),
+          'fecha_ensayo'        : this.fecha_ensayo,
+          'lugar_ensayo'        : this.lugar_ensayo,
+          'tipo_peliculas'      : this.peliculas_selected,
+          'lat'                 : this.localidad.lat,
+          'lon'                 : this.localidad.lon,
+          'observaciones'       : this.observaciones,
+          'servicios'           : this.inputsServicios,
+          'productos'           : this.inputsProductos,
+          'epps'                : this.inputsEpps,
+          'riesgos'             : this.inputsRiesgos
+        };
+      },
+
+      getMensajeServiciosEliminados: function(serviciosEnUso) {
+        const previews = serviciosEnUso.slice(0, 3).map(item => {
+          let referencia = item.servicio_descripcion + ' en parte ' + item.parte_numero;
+          if (item.certificado_numero) {
+            referencia += ' / certificado ' + item.certificado_numero;
+          }
+          return referencia;
+        });
+
+        let mensaje = 'Se eliminaron servicios correspondientes a ';
+        mensaje += previews.join(', ');
+
+        if (serviciosEnUso.length > 3) {
+          mensaje += ' y ' + (serviciosEnUso.length - 3) + ' más';
+        }
+
+        mensaje += '. ¿Desea continuar?';
+
+        return mensaje;
+      },
+
+      validarServiciosEliminadosAntesDeGuardar: async function() {
+        const serviciosEliminadosIds = this.getServiciosEliminadosIds();
+
+        if (!serviciosEliminadosIds.length || this.submitPendienteConfirmacion) {
+          return true;
+        }
+
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'ots/' + this.otdata.id + '/servicios-eliminados-en-uso' + '?api_token=' + Laravel.user.api_token;
+        let response = await axios.post(urlRegistros, {
+          'servicio_ids': serviciosEliminadosIds
+        });
+
+        let serviciosEnUso = response.data || [];
+        this.serviciosEliminadosEnUso = serviciosEnUso;
+
+        if (!serviciosEnUso.length) {
+          return true;
+        }
+
+        eventModal.$emit(
+          'abrir_confirmar_accion',
+          this.getMensajeServiciosEliminados(serviciosEnUso),
+          'guardar_ot_servicios_eliminados',
+          'ot_servicios'
+        );
+
+        return false;
+      },
+
+      executeUpdate: function() {
+
+        this.errors =[];
+        var urlRegistros = 'ots/' + this.otdata.id;
+        axios({
+              method: 'put',
+              url : urlRegistros ,
+              data : this.getPayload()
+          }
+          ).then( () => {
+
+            toastr.success('OT NÂ° ' + this.ot + ' fue editada con Ã©xito ');
+            window.open(  '/pdf/ot/' + this.otdata.id,'_blank');
+            window.location.href ='/';
+
+        }).catch(error => {
+
+               this.errors = error.response.data.errors;
+                console.log(error.response);
+               $.each( this.errors, function( key, value ) {
+                   toastr.error(value);
+                   console.log( key + ": " + value );
+               });
+
+               if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("OcurriÃ³ un error al procesar la solicitud");
+
+                }
+
+           }).finally(() => {
+                this.submitPendienteConfirmacion = false;
+           });
+      },
+
+      async submit()
        {
 
 
@@ -1133,6 +1276,13 @@ export default {
       }
       else if (this.accion =='edit')
       {
+        const puedeGuardar = await this.validarServiciosEliminadosAntesDeGuardar();
+        if (!puedeGuardar) {
+          return;
+        }
+
+        this.executeUpdate();
+        return;
 
 
         this.errors =[];
