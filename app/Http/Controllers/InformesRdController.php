@@ -391,7 +391,7 @@ class InformesRdController extends Controller
         $informeRd->tecnicas_grafico_id = $request->tecnica['grafico_id'];
         Log::debug($informeRd->tecnicas_grafico_id);
         $informeRd->exposicion = $request->exposicion;
-        $informeRd->resultado_pdf_sn = $request->resultado_pdf_sn;
+        $informeRd->resultado_pdf_sn = true;
         $informeRd->save();
 
       }

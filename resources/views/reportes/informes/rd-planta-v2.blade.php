@@ -104,12 +104,12 @@ footer {
                     <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $junta_posicion->snrn }}</td>
                     <td style="font-size: 9px;" class="bordered-td">{{ $formatIndicaciones($junta_posicion->posicion_id) }}</td>
                     <td style="font-size: 11px; text-align: center" class="bordered-td">
-                        @if ($informe_rd->resultado_pdf_sn && $junta_posicion->aceptable_sn)
+                        @if ($junta_posicion->aceptable_sn)
                             X
                         @endif
                     </td>
                     <td style="font-size: 11px; text-align: center" class="bordered-td">
-                        @if ($informe_rd->resultado_pdf_sn && !$junta_posicion->aceptable_sn)
+                        @if (!$junta_posicion->aceptable_sn)
                             X
                         @endif
                     </td>

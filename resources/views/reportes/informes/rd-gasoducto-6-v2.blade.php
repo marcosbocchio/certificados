@@ -145,12 +145,12 @@ footer {
                     <td style="font-size: 9px; text-align: center" class="bordered-td">{{ $formatTipos($junta_posicion->posicion_id) }}</td>
                     <td style="font-size: 9px; text-align: center" class="bordered-td">{{ $formatUbicaciones($junta_posicion->posicion_id) }}</td>
                     <td style="font-size: 11px; text-align: center" class="bordered-td">
-                        @if ($informe_rd->resultado_pdf_sn && $junta_posicion->aceptable_sn)
+                        @if ($junta_posicion->aceptable_sn)
                             X
                         @endif
                     </td>
                     <td style="font-size: 11px; text-align: center" class="bordered-td">
-                        @if ($informe_rd->resultado_pdf_sn && !$junta_posicion->aceptable_sn)
+                        @if (!$junta_posicion->aceptable_sn)
                             X
                         @endif
                     </td>

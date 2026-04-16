@@ -87,7 +87,7 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
+                        <div class="clearfix visible-md-block visible-lg-block"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -129,7 +129,7 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
+                        <div class="clearfix visible-md-block visible-lg-block"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -163,7 +163,7 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
+                        <div class="clearfix visible-md-block visible-lg-block"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -229,6 +229,8 @@
                             </div>
                         </div>
 
+                        <div class="clearfix visible-md-block visible-lg-block"></div>
+
                         <div class="col-md-3">
                             <div class="form-group size-pqr-eps">
                                 <label>Dimensión detector</label>
@@ -244,8 +246,6 @@
                                     label="descripcion"></v-select>
                             </div>
                         </div>
-
-                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -266,6 +266,8 @@
                                 <input type="text" v-model="fuente.codigo" class="form-control" id="fuente" disabled>
                             </div>
                         </div>
+
+                        <div class="clearfix visible-md-block visible-lg-block"></div>
 
                         <div v-if="(fuente)" class="col-md-3">
                             <div class="form-group">
@@ -304,6 +306,8 @@
                             </div>
                         </div>
 
+                        <div class="clearfix visible-md-block visible-lg-block"></div>
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="kv">Kv</label>
@@ -339,7 +343,7 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
+                        <div class="clearfix visible-md-block visible-lg-block"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -369,7 +373,7 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
+                        <div class="clearfix visible-md-block visible-lg-block"></div>
 
                         <div class="col-md-3">
                             <div class="row">
@@ -506,7 +510,7 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
+                        <div class="clearfix visible-md-block visible-lg-block"></div>
 
                         <div class="col-md-1">
                             <span>
@@ -612,15 +616,6 @@
                                     img="clone" color="black"></app-icon></button>
                             <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash"
                                     color="black"></app-icon></button>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="resultado_pdf_label" style="display:block">&nbsp;</label>
-                                <input type="checkbox" id="checkbox" v-model="resultado_pdf_sn" style="float:right">
-                                <label for="resultado_pdf_sn" style="float:right;margin-right: 5px;">Mostrar resultado
-                                    en PDF</label>
-                            </div>
                         </div>
 
                         <div class="form-group">
@@ -1444,7 +1439,6 @@ export default {
             observacion_tramo: '',
             tramo: '',
             TablaTramos: [],
-            resultado_pdf_sn: true,
             appendToBody: false,
             inputsData: {},
             dist_fuente_pel_edit_sn: false,
@@ -1654,7 +1648,6 @@ export default {
                 this.TablaModelos3d = this.tablamodelos3d_data;
                 this.solicitado_por = this.solicitado_pordata;
                 this.TablaTramos = this.tablatramos_data;
-                this.resultado_pdf_sn = this.informe_rddata.resultado_pdf_sn;
 
                 if (this.informe_rddata.reparacion_sn) {
                     this.getElementosReparacion();
@@ -2608,7 +2601,6 @@ export default {
                     'TablaModelos3d': this.TablaModelos3d,
                     'solicitado_por': this.solicitado_por,
                     'tramos': this.TablaTramos,
-                    'resultado_pdf_sn': this.resultado_pdf_sn,
                 }
             }
 
@@ -2711,7 +2703,6 @@ export default {
                     'TablaModelos3d': this.TablaModelos3d,
                     'solicitado_por': this.solicitado_por,
                     'tramos': this.TablaTramos,
-                    'resultado_pdf_sn': this.resultado_pdf_sn,
 
                 }
             }
