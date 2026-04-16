@@ -24082,16 +24082,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }.bind(this));
     },
     AddDetalle: function AddDetalle(posicion) {
-      var match = this.posicion.match(/^([0-9]{1,4}[-][0-9]{1,4})$|^([a-zA-Z]{1})$|^(GAP){3}$/);
-      if (!match && this.posicion != 'GAP') {
-        toastr.error('Ingrese un rango separado por un guion o una letra', 'Formato inválido');
+      var match = this.posicion ? this.posicion.match(/^([0-9]{1,4}[-][0-9]{1,4})$|^([a-zA-Z]{1})$|^(GAP){3}$/) : true;
+      if (this.posicion && !match && this.posicion != 'GAP') {
+        toastr.error('Ingrese un rango separado por un guion o una letra', 'Formato inv??lido');
         return;
       }
       if (this.reparacion_sn && this.junta_reparacion == '' || !this.reparacion_sn && this.junta == '') {
         toastr.error('Campo Elemento es obligatorio');
-        return;
-      } else if (this.posicion == '' && this.clonando == false) {
-        toastr.error('Campo posición es obligatorio');
         return;
       } else if (this.densidad == '') {
         toastr.error('Campo densidad es obligatorio');
@@ -79894,7 +79891,7 @@ var render = function render() {
   }, [_vm._m(0)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
-    staticClass: "form-group"
+    staticClass: "form-group size-pqr-eps"
   }, [_c("label", [_vm._v("Dimensión detector")]), _vm._v(" "), _c("v-select", {
     attrs: {
       options: _vm.dimensiones_detector,
@@ -79910,7 +79907,7 @@ var render = function render() {
   })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
-    staticClass: "form-group"
+    staticClass: "form-group size-pqr-eps"
   }, [_c("label", [_vm._v("Tipo centellador")]), _vm._v(" "), _c("v-select", {
     attrs: {
       options: _vm.tipos_centellador,
@@ -80710,336 +80707,7 @@ var render = function render() {
     staticClass: "table-responsive"
   }, [_c("table", {
     staticClass: "table table-hover table-striped table-bordered table-condensed"
-  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.TablaModelos3d, function (item, k) {
-    return _c("tr", {
-      key: k,
-      staticClass: "pointer"
-    }, [_c("td", [_vm._v("\n                                                " + _vm._s(item.codigo) + "\n                                            ")]), _vm._v(" "), _c("td", [_c("a", {
-      on: {
-        click: function click($event) {
-          return _vm.RemoveModelo(k);
-        }
-      }
-    }, [_c("app-icon", {
-      attrs: {
-        img: "minus-circle",
-        color: "black"
-      }
-    })], 1)])]);
-  }), 0)])])])]) : _vm._e()])]), _vm._v(" "), _vm.formato != "PERFILES" ? _c("div", {
-    staticClass: "box box-custom-enod"
-  }, [_vm._m(2), _vm._v(" "), _c("div", {
-    staticClass: "box-body"
-  }, [!_vm.reparacion_sn ? _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "junta"
-    }
-  }, [_vm._v("Elemento")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.junta,
-      expression: "junta"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      id: "junta",
-      maxlength: "10"
-    },
-    domProps: {
-      value: _vm.junta
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.junta = $event.target.value;
-      }
-    }
-  })])]) : _c("div", [_c("div", {
-    staticClass: "col-md-3"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "juntas_reparacion"
-    }
-  }, [_vm._v("Elemento a Reparar")]), _vm._v(" "), _c("v-select", {
-    attrs: {
-      label: "codigo",
-      options: _vm.juntas_reparacion,
-      id: "defecto_sector"
-    },
-    model: {
-      value: _vm.junta_reparacion,
-      callback: function callback($$v) {
-        _vm.junta_reparacion = $$v;
-      },
-      expression: "junta_reparacion"
-    }
-  })], 1)])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "densidad"
-    }
-  }, [_vm._v("Densidad")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.densidad,
-      expression: "densidad"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      id: "densidad",
-      step: "0.1"
-    },
-    domProps: {
-      value: _vm.densidad
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.densidad = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "r_densidad"
-    }
-  }, [_vm._v("rDensidad")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.r_densidad,
-      expression: "r_densidad"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      id: "r_densidad",
-      step: "0.1"
-    },
-    domProps: {
-      value: _vm.r_densidad
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.r_densidad = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "posicion"
-    }
-  }, [_vm._v("Posición")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.posicion,
-      expression: "posicion"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      id: "posicion"
-    },
-    domProps: {
-      value: _vm.posicion
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.posicion = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "mng"
-    }
-  }, [_vm._v("Mng")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.mng,
-      expression: "mng"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      id: "mng",
-      step: "0.1"
-    },
-    domProps: {
-      value: _vm.mng
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.mng = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "snrn"
-    }
-  }, [_vm._v("SNRn")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.snrn,
-      expression: "snrn"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      id: "snrn",
-      step: "0.1"
-    },
-    domProps: {
-      value: _vm.snrn
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.snrn = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("p", [_vm._v(" ")]), _vm._v(" "), _c("button", {
-    attrs: {
-      type: "button",
-      title: "Agregar Junta/Posición"
-    },
-    on: {
-      click: function click($event) {
-        return _vm.AddDetalle();
-      }
-    }
-  }, [_c("app-icon", {
-    attrs: {
-      img: "plus-circle",
-      color: "black"
-    }
-  })], 1), _vm._v(" "), _c("button", {
-    attrs: {
-      type: "button",
-      title: "Clonar Posición"
-    },
-    on: {
-      click: function click($event) {
-        return _vm.ClonarPosPlanta();
-      }
-    }
-  }, [_c("app-icon", {
-    attrs: {
-      img: "clone",
-      color: "black"
-    }
-  })], 1), _vm._v(" "), _c("button", {
-    attrs: {
-      type: "button",
-      title: "Limpiar Todo"
-    },
-    on: {
-      click: function click($event) {
-        return _vm.resetDetalle();
-      }
-    }
-  }, [_c("app-icon", {
-    attrs: {
-      img: "trash",
-      color: "black"
-    }
-  })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    staticStyle: {
-      display: "block"
-    },
-    attrs: {
-      "for": "resultado_pdf_label"
-    }
-  }, [_vm._v(" ")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.resultado_pdf_sn,
-      expression: "resultado_pdf_sn"
-    }],
-    staticStyle: {
-      "float": "right"
-    },
-    attrs: {
-      type: "checkbox",
-      id: "checkbox"
-    },
-    domProps: {
-      checked: Array.isArray(_vm.resultado_pdf_sn) ? _vm._i(_vm.resultado_pdf_sn, null) > -1 : _vm.resultado_pdf_sn
-    },
-    on: {
-      change: function change($event) {
-        var $$a = _vm.resultado_pdf_sn,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && (_vm.resultado_pdf_sn = $$a.concat([$$v]));
-          } else {
-            $$i > -1 && (_vm.resultado_pdf_sn = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.resultado_pdf_sn = $$c;
-        }
-      }
-    }
-  }), _vm._v(" "), _c("label", {
-    staticStyle: {
-      "float": "right",
-      "margin-right": "5px"
-    },
-    attrs: {
-      "for": "resultado_pdf_sn"
-    }
-  }, [_vm._v("Mostrar resultado\n                                en PDF")])])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group"
-  }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaDetalle.length ? _c("div", [_c("div", {
-    staticClass: "col-md-12"
-  }, [_c("div", {
-    staticClass: "table-responsive"
-  }, [_c("table", {
-    staticClass: "table table-hover table-bordered table-condensed"
-  }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.TablaDetalle, function (FIlaTabla, k) {
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.TablaDetalle, function (FIlaTabla, k) {
     return [_c("tr", {
       key: k,
       staticClass: "pointer",
@@ -81079,38 +80747,6 @@ var render = function render() {
         }
       }
     })]) : _c("div", [_vm._v("\n                                                        " + _vm._s(FIlaTabla.densidad) + "\n                                                    ")])]), _vm._v(" "), _c("td", {
-      on: {
-        click: function click($event) {
-          return _vm.selectPosDetalle(k);
-        }
-      }
-    }, [_vm.indexDetalle == k ? _c("div", [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: _vm.TablaDetalle[k].r_densidad,
-        expression: "TablaDetalle[k].r_densidad"
-      }],
-      attrs: {
-        type: "number",
-        step: "0.1"
-      },
-      domProps: {
-        value: _vm.TablaDetalle[k].r_densidad
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(_vm.TablaDetalle[k], "r_densidad", $event.target.value);
-        }
-      }
-    })]) : _c("div", [_vm._v("\n                                                        " + _vm._s(FIlaTabla.r_densidad) + "\n                                                    ")])]), _vm._v(" "), _c("td", {
-      on: {
-        click: function click($event) {
-          return _vm.selectPosDetalle(k);
-        }
-      }
-    }, [_vm._v(_vm._s(FIlaTabla.posicion) + " ")]), _vm._v(" "), _c("td", {
       on: {
         click: function click($event) {
           return _vm.selectPosDetalle(k);
@@ -81243,7 +80879,7 @@ var render = function render() {
         "background-color": "#ECF0F5"
       },
       attrs: {
-        colspan: "9"
+        colspan: "7"
       }
     }, [_c("div", {
       staticClass: "box box-custom-enod",
@@ -81404,9 +81040,9 @@ var render = function render() {
         }
       })], 1)])]);
     }), 0)])])])]) : _vm._e()])])]) : _vm._e()])];
-  })], 2)])])])]) : _vm._e()])]) : _vm._e(), _vm._v(" "), _vm.formato == "PERFILES" ? _c("div", {
+  })], 2)])])])]) : _vm._e()])]), _vm._v(" "), _vm.formato == "PERFILES" ? _c("div", {
     staticClass: "box box-custom-enod"
-  }, [_vm._m(4), _vm._v(" "), _c("div", {
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
     staticClass: "box-body"
   }, [_c("div", {
     staticClass: "col-md-2"
@@ -81555,7 +81191,7 @@ var render = function render() {
     staticClass: "table-responsive"
   }, [_c("table", {
     staticClass: "table table-hover table-striped table-bordered table-condensed"
-  }, [_vm._m(5), _vm._v(" "), _c("tbody", _vm._l(_vm.TablaTramos.length > 0 ? _vm.TablaTramos : [], function (tramos, k) {
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.TablaTramos.length > 0 ? _vm.TablaTramos : [], function (tramos, k) {
     return _c("tr", {
       key: k
     }, [_c("td", [_vm._v(_vm._s(tramos.tramo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(tramos.bola_comparadora))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(tramos.espesor_tramo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(tramos.espesor_real))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(tramos.observacion_tramo))]), _vm._v(" "), k === 0 ? _c("td", {
@@ -81588,7 +81224,7 @@ var render = function render() {
     })], 1)])]);
   }), 0)])])])]) : _vm._e()])]) : _vm._e(), _vm._v(" "), _vm.formato != "PERFILES" ? _c("div", {
     staticClass: "box box-custom-enod"
-  }, [_vm._m(6), _vm._v(" "), _c("div", {
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
     staticClass: "box-body"
   }, [_c("div", {
     staticClass: "col-md-2"
@@ -81789,7 +81425,7 @@ var render = function render() {
     staticClass: "table-responsive"
   }, [_c("table", {
     staticClass: "table table-hover table-striped table-bordered table-condensed"
-  }, [_vm._m(7), _vm._v(" "), _c("tbody", _vm._l(_vm.TablaPasadas, function (Pasada, k) {
+  }, [_vm._m(5), _vm._v(" "), _c("tbody", _vm._l(_vm.TablaPasadas, function (Pasada, k) {
     return _c("tr", {
       key: k,
       staticClass: "pointer",
@@ -81929,7 +81565,7 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(8), _vm._v(" "), _c("div", {
+  }, [_vm._m(6), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row"
@@ -82077,7 +81713,7 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "modal-content"
-  }, [_vm._m(9), _vm._v(" "), _c("div", {
+  }, [_vm._m(7), _vm._v(" "), _c("div", {
     staticClass: "modal-body"
   }, [_c("div", {
     staticClass: "row"
@@ -82112,7 +81748,7 @@ var render = function render() {
     attrs: {
       "for": "sheetjs-input"
     }
-  }), _vm._v(" "), _c("p", [_vm._v("Formato soportado : csv")])])])])]), _vm._v(" "), _vm._m(10)])])]), _vm._v(" "), _c("loading", {
+  }), _vm._v(" "), _c("p", [_vm._v("Formato soportado : csv")])])])])]), _vm._v(" "), _vm._m(8)])])]), _vm._v(" "), _c("loading", {
     attrs: {
       active: _vm.isLoading,
       loader: "bars",
@@ -82155,38 +81791,10 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("thead", [_c("tr", [_c("th", {
-    staticClass: "col-sm-12"
-  }, [_vm._v("Modelo")]), _vm._v(" "), _c("th", [_vm._v(" ")])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "box-header with-border"
-  }, [_c("h3", {
-    staticClass: "box-title"
-  }, [_vm._v("ELEMENTOS/POSICIONES")]), _vm._v(" "), _c("div", {
-    staticClass: "box-tools pull-right"
-  }, [_c("button", {
-    staticClass: "btn btn-box-tool",
-    attrs: {
-      type: "button",
-      "data-widget": "collapse"
-    }
-  }, [_c("i", {
-    staticClass: "fa fa-minus"
-  })])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("thead", [_c("tr", [_c("th", {
     staticClass: "col-md-2"
   }, [_vm._v("Elemento")]), _vm._v(" "), _c("th", {
     staticClass: "col-md-2"
   }, [_vm._v("Densidad")]), _vm._v(" "), _c("th", {
-    staticClass: "col-md-2"
-  }, [_vm._v("rDensidad")]), _vm._v(" "), _c("th", {
-    staticClass: "col-md-2"
-  }, [_vm._v("Pos.")]), _vm._v(" "), _c("th", {
     staticClass: "col-md-1"
   }, [_vm._v("Mng")]), _vm._v(" "), _c("th", {
     staticClass: "col-md-1"
@@ -82194,7 +81802,7 @@ var staticRenderFns = [function () {
     staticClass: "col-md-1"
   }, [_vm._v("Aceptable")]), _vm._v(" "), _c("th", {
     staticClass: "col-md-3"
-  }, [_vm._v("Observación")]), _vm._v(" "), _c("th", [_vm._v("  ")])])]);
+  }, [_vm._v("Observaci??n")]), _vm._v(" "), _c("th", [_vm._v("  ")])])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

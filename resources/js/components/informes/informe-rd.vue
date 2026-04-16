@@ -230,7 +230,7 @@
                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-group">
+                            <div class="form-group size-pqr-eps">
                                 <label>Dimensión detector</label>
                                 <v-select v-model="dimension_detector" :options="dimensiones_detector"
                                     label="descripcion"></v-select>
@@ -238,7 +238,7 @@
                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-group">
+                            <div class="form-group size-pqr-eps">
                                 <label>Tipo centellador</label>
                                 <v-select v-model="tipo_centellador" :options="tipos_centellador"
                                     label="descripcion"></v-select>
@@ -584,14 +584,6 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="r_densidad">rDensidad</label>
-                                <input type="number" v-model="r_densidad" class="form-control" id="r_densidad"
-                                    step="0.1">
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group">
                                 <label for="posicion">Posición</label>
                                 <input type="text" v-model="posicion" class="form-control" id="posicion">
                             </div>
@@ -643,7 +635,6 @@
                                             <tr>
                                                 <th class="col-md-2">Elemento</th>
                                                 <th class="col-md-2">Densidad</th>
-                                                <th class="col-md-2">rDensidad</th>
                                                 <th class="col-md-2">Pos.</th>
                                                 <th class="col-md-1">Mng</th>
                                                 <th class="col-md-1">SNRn</th>
@@ -663,15 +654,6 @@
                                                         </div>
                                                         <div v-else>
                                                             {{ FIlaTabla.densidad }}
-                                                        </div>
-                                                    </td>
-                                                    <td @click="selectPosDetalle(k)">
-                                                        <div v-if="indexDetalle == k">
-                                                            <input type="number" v-model="TablaDetalle[k].r_densidad"
-                                                                step="0.1">
-                                                        </div>
-                                                        <div v-else>
-                                                            {{ FIlaTabla.r_densidad }}
                                                         </div>
                                                     </td>
                                                     <td @click="selectPosDetalle(k)">{{ FIlaTabla.posicion }} </td>
@@ -709,7 +691,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td v-if="k == indexDetalle && indicaciones_sn" colspan="9"
+                                                    <td v-if="k == indexDetalle && indicaciones_sn" colspan="8"
                                                         style="background-color: #ECF0F5;">
 
                                                         <div class="box box-custom-enod"
