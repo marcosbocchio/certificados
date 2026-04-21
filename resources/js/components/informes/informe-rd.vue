@@ -474,9 +474,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div v-if="!isLoading" class="col-md-3">
-                            <div class="row">
+                            <div v-if="!isLoading" class="row">
                                 <div class="col-md-12">
                                     <label>&nbsp;</label>
                                     <div v-if="tecnica.path" class="thumbnail" style="border:solid 1px">

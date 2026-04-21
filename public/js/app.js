@@ -80750,9 +80750,7 @@ var render = function render() {
         _vm.distancia_fuente_pelicula = $event.target.value;
       }
     }
-  })])])])]), _vm._v(" "), !_vm.isLoading ? _c("div", {
-    staticClass: "col-md-3"
-  }, [_c("div", {
+  })])])]), _vm._v(" "), !_vm.isLoading ? _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-12"
@@ -80776,7 +80774,7 @@ var render = function render() {
       src: "/img/tecnicas/imagen_no_disponible.jpg",
       alt: "..."
     }
-  })])])])]) : _vm._e()])]), _vm._v(" "), _c("div", {
+  })])])]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
     staticClass: "box-body"
