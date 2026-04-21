@@ -577,21 +577,6 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="densidad">Densidad</label>
-                                <input type="number" v-model="densidad" class="form-control" id="densidad" step="0.1">
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="r_densidad">rDensidad</label>
-                                <input type="number" v-model="r_densidad" class="form-control" id="r_densidad"
-                                    step="0.1">
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="form-group">
                                 <label for="posicion">Posición</label>
                                 <input type="text" v-model="posicion" class="form-control" id="posicion">
                             </div>
@@ -622,15 +607,6 @@
                                     color="black"></app-icon></button>
                         </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="resultado_pdf_label" style="display:block">&nbsp;</label>
-                                <input type="checkbox" id="checkbox" v-model="resultado_pdf_sn" style="float:right">
-                                <label for="resultado_pdf_sn" style="float:right;margin-right: 5px;">Mostrar resultado
-                                    en PDF</label>
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             &nbsp;
                         </div>
@@ -642,8 +618,6 @@
                                         <thead>
                                             <tr>
                                                 <th class="col-md-2">Elemento</th>
-                                                <th class="col-md-2">Densidad</th>
-                                                <th class="col-md-2">rDensidad</th>
                                                 <th class="col-md-2">Pos.</th>
                                                 <th class="col-md-1">Mng</th>
                                                 <th class="col-md-1">SNRn</th>
@@ -656,24 +630,6 @@
                                             <template v-for="(FIlaTabla, k) in (TablaDetalle)">
                                                 <tr :key="k" :class="{ selected: indexDetalle === k }" class="pointer">
                                                     <td @click="selectPosDetalle(k)">{{ FIlaTabla.junta }}</td>
-                                                    <td @click="selectPosDetalle(k)">
-                                                        <div v-if="indexDetalle == k">
-                                                            <input type="number" v-model="TablaDetalle[k].densidad"
-                                                                step="0.1">
-                                                        </div>
-                                                        <div v-else>
-                                                            {{ FIlaTabla.densidad }}
-                                                        </div>
-                                                    </td>
-                                                    <td @click="selectPosDetalle(k)">
-                                                        <div v-if="indexDetalle == k">
-                                                            <input type="number" v-model="TablaDetalle[k].r_densidad"
-                                                                step="0.1">
-                                                        </div>
-                                                        <div v-else>
-                                                            {{ FIlaTabla.r_densidad }}
-                                                        </div>
-                                                    </td>
                                                     <td @click="selectPosDetalle(k)">{{ FIlaTabla.posicion }} </td>
                                                     <td @click="selectPosDetalle(k)">
                                                         <div v-if="indexDetalle == k">
@@ -2033,9 +1989,6 @@ export default {
                 return;
             } else if (this.posicion == '' && this.clonando == false) {
                 toastr.error('Campo posición es obligatorio');
-                return;
-            } else if (this.densidad == '') {
-                toastr.error('Campo densidad es obligatorio');
                 return;
             }
 

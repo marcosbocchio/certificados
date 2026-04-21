@@ -51,7 +51,7 @@
        </div>
         <div class="col-md-12">
             <div class="row" style="margin-bottom: 8px;">
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-2 col-md-offset-4 col-sm-4 col-xs-12">
                     <div class="form-group" style="margin-bottom:0">
                         <label style="font-size:12px;">Tipo</label>
                         <v-select v-model="filtro_tipo" :options="tipos_opciones" label="metodo" placeholder="Todos" @input="aplicarFiltro" :clearable="true">
@@ -61,13 +61,13 @@
                         </v-select>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-2 col-sm-4 col-xs-12">
                     <div class="form-group" style="margin-bottom:0">
                         <label style="font-size:12px;">Obra</label>
                         <v-select v-model="filtro_obra" :options="obras_opciones" placeholder="Todas" @input="aplicarFiltro" :clearable="true"></v-select>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="col-md-2 col-sm-4 col-xs-12">
                     <div class="form-group" style="margin-bottom:0">
                         <label style="font-size:12px;">N° Informe</label>
                         <div class="input-group">
@@ -75,11 +75,6 @@
                             <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: rgb(255, 204, 0);"><i class="fa fa-search"></i></span>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3 col-sm-12 col-xs-12" style="padding-top:18px;">
-                    <button class="btn btn-default btn-sm" @click="limpiarFiltros" title="Limpiar filtros">
-                        <span class="fa fa-times"></span> Limpiar
-                    </button>
                 </div>
             </div>
         </div>

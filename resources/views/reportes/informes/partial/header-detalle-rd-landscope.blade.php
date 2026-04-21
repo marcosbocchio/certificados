@@ -117,15 +117,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <th colspan="2">Dimensión detector</th>
-                            <th colspan="2">Tipo centellador</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2">{{ $dimension_detector ? $dimension_detector->descripcion : '' }}</td>
-                            <td colspan="2">{{ $tipo_centellador ? $tipo_centellador->descripcion : '' }}</td>
-                        </tr>
-
-                        <tr>
                             <th colspan="2">Actividad Fuente</th>
                             <th colspan="2">Foco</th>
                         </tr>
@@ -140,31 +131,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <th colspan="2">Pitch</th>
-                            <th colspan="2">SRb DWI</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2">{{ $informe_rd->pitch }}</td>
-                            <td colspan="2">{{ $informe_rd->srb_dwi }}</td>
-                        </tr>
-
-                        <tr>
                            <th colspan="4">Norma Evaluación</th>
                         </tr>
                         <tr>
                             <td colspan="4">{{$norma_evaluacion->codigo}}</td>
-                        </tr>
-                        <tr>
-                           <th colspan="4">Filtros aplicados</th>
-                        </tr>
-                        <tr>
-                            <td colspan="4">{{ $filtro_aplicado_rd ? $filtro_aplicado_rd->descripcion : '' }}</td>
-                        </tr>
-                        <tr>
-                           <th colspan="4">Soft. de Adq.</th>
-                        </tr>
-                        <tr>
-                            <td colspan="4">{{ $software_adquisicion_rd ? $software_adquisicion_rd->descripcion : '' }}</td>
                         </tr>
 
                         <tr>
@@ -223,27 +193,36 @@
                             </td>
                         </tr>
 
-                        @if($tipo_pelicula)
                         <tr>
-                            <th colspan="2">Película</th>
-                            <th colspan="2">Tipo</th>
+                            <th colspan="2">Dimensión detector</th>
+                            <th colspan="2">Tipo centellador</th>
                         </tr>
                         <tr>
-                            <td colspan="2">{{$tipo_pelicula->fabricante}}</td>
-                            <td colspan="2">{{$tipo_pelicula->codigo}}</td>
+                            <td colspan="2">{{ $dimension_detector ? $dimension_detector->descripcion : '' }}</td>
+                            <td colspan="2">{{ $tipo_centellador ? $tipo_centellador->descripcion : '' }}</td>
                         </tr>
 
                         <tr>
-                            <th colspan="2">Pantalla</th>
-                            <th colspan="1">Ant</th>
-                            <th colspan="1">Pos</th>
-                       </tr>
-                       <tr>
-                            <td colspan="2">Pb</td>
-                            <td colspan="1">{{$informe_rd->pos_ant}}</td>
-                            <td colspan="1">{{$informe_rd->pos_pos}}</td>
-                       </tr>
-                       @endif
+                            <th colspan="2">Pitch</th>
+                            <th colspan="2">SRb DWI</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{ $informe_rd->pitch }}</td>
+                            <td colspan="2">{{ $informe_rd->srb_dwi }}</td>
+                        </tr>
+
+                        <tr>
+                           <th colspan="4">Filtros aplicados</th>
+                        </tr>
+                        <tr>
+                            <td colspan="4">{{ $filtro_aplicado_rd ? $filtro_aplicado_rd->descripcion : '' }}</td>
+                        </tr>
+                        <tr>
+                           <th colspan="4">Soft. de Adq.</th>
+                        </tr>
+                        <tr>
+                            <td colspan="4">{{ $software_adquisicion_rd ? $software_adquisicion_rd->descripcion : '' }}</td>
+                        </tr>
 
                         <tr>
                             <th colspan="4">Norma Ensayo</th>

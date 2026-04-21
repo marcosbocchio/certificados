@@ -40,28 +40,6 @@
                        </tr>
 
 
-                       @if($tipo_pelicula)
-                       <tr>
-                            <th colspan="2">Película</th>
-                            <th colspan="2">Tipo</th>
-                       </tr>
-                       <tr>
-                            <td colspan="2">{{$tipo_pelicula->fabricante}}</td>
-                            <td colspan="2">{{$tipo_pelicula->codigo}}</td>
-                       </tr>
-
-                       <tr>
-                            <th colspan="2">Pantalla</th>
-                            <th colspan="1">Ant</th>
-                            <th colspan="1">Pos</th>
-                       </tr>
-                       <tr>
-                            <td colspan="2">Pb</td>
-                            <td colspan="1">{{$informe_rd->pos_ant}}</td>
-                            <td colspan="1">{{$informe_rd->pos_pos}}</td>
-                       </tr>
-                       @endif
-
                        <tr>
                             <th colspan="2">Lado</th>
                             <th colspan="2">Dist. Fuente / Film</th>

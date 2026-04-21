@@ -24125,9 +24125,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       } else if (this.posicion == '' && this.clonando == false) {
         toastr.error('Campo posición es obligatorio');
         return;
-      } else if (this.densidad == '') {
-        toastr.error('Campo densidad es obligatorio');
-        return;
       }
       var aux_junta = this.reparacion_sn ? this.junta_reparacion.codigo + 'R' : this.junta;
       this.addElementosPasadas(aux_junta);
@@ -66283,7 +66280,7 @@ var render = function render() {
       "margin-bottom": "8px"
     }
   }, [_c("div", {
-    staticClass: "col-md-3 col-sm-6 col-xs-12"
+    staticClass: "col-md-2 col-md-offset-4 col-sm-4 col-xs-12"
   }, [_c("div", {
     staticClass: "form-group",
     staticStyle: {
@@ -66317,7 +66314,7 @@ var render = function render() {
       expression: "filtro_tipo"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3 col-sm-6 col-xs-12"
+    staticClass: "col-md-2 col-sm-4 col-xs-12"
   }, [_c("div", {
     staticClass: "form-group",
     staticStyle: {
@@ -66344,7 +66341,7 @@ var render = function render() {
       expression: "filtro_obra"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3 col-sm-12 col-xs-12"
+    staticClass: "col-md-2 col-sm-4 col-xs-12"
   }, [_c("div", {
     staticClass: "form-group",
     staticStyle: {
@@ -66393,22 +66390,7 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fa fa-search"
-  })])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3 col-sm-12 col-xs-12",
-    staticStyle: {
-      "padding-top": "18px"
-    }
-  }, [_c("button", {
-    staticClass: "btn btn-default btn-sm",
-    attrs: {
-      title: "Limpiar filtros"
-    },
-    on: {
-      click: _vm.limpiarFiltros
-    }
-  }, [_c("span", {
-    staticClass: "fa fa-times"
-  }), _vm._v(" Limpiar\n                ")])])])]), _vm._v(" "), _c("div", {
+  })])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "box box-custom-enod top-buffer"
@@ -80930,66 +80912,6 @@ var render = function render() {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
-      "for": "densidad"
-    }
-  }, [_vm._v("Densidad")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.densidad,
-      expression: "densidad"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      id: "densidad",
-      step: "0.1"
-    },
-    domProps: {
-      value: _vm.densidad
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.densidad = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "r_densidad"
-    }
-  }, [_vm._v("rDensidad")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.r_densidad,
-      expression: "r_densidad"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      id: "r_densidad",
-      step: "0.1"
-    },
-    domProps: {
-      value: _vm.r_densidad
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.r_densidad = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-2"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
       "for": "posicion"
     }
   }, [_vm._v("Posición")]), _vm._v(" "), _c("input", {
@@ -81121,60 +81043,6 @@ var render = function render() {
       color: "black"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    staticStyle: {
-      display: "block"
-    },
-    attrs: {
-      "for": "resultado_pdf_label"
-    }
-  }, [_vm._v(" ")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.resultado_pdf_sn,
-      expression: "resultado_pdf_sn"
-    }],
-    staticStyle: {
-      "float": "right"
-    },
-    attrs: {
-      type: "checkbox",
-      id: "checkbox"
-    },
-    domProps: {
-      checked: Array.isArray(_vm.resultado_pdf_sn) ? _vm._i(_vm.resultado_pdf_sn, null) > -1 : _vm.resultado_pdf_sn
-    },
-    on: {
-      change: function change($event) {
-        var $$a = _vm.resultado_pdf_sn,
-          $$el = $event.target,
-          $$c = $$el.checked ? true : false;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && (_vm.resultado_pdf_sn = $$a.concat([$$v]));
-          } else {
-            $$i > -1 && (_vm.resultado_pdf_sn = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.resultado_pdf_sn = $$c;
-        }
-      }
-    }
-  }), _vm._v(" "), _c("label", {
-    staticStyle: {
-      "float": "right",
-      "margin-right": "5px"
-    },
-    attrs: {
-      "for": "resultado_pdf_sn"
-    }
-  }, [_vm._v("Mostrar resultado\n                                en PDF")])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaDetalle.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
@@ -81196,58 +81064,6 @@ var render = function render() {
         }
       }
     }, [_vm._v(_vm._s(FIlaTabla.junta))]), _vm._v(" "), _c("td", {
-      on: {
-        click: function click($event) {
-          return _vm.selectPosDetalle(k);
-        }
-      }
-    }, [_vm.indexDetalle == k ? _c("div", [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: _vm.TablaDetalle[k].densidad,
-        expression: "TablaDetalle[k].densidad"
-      }],
-      attrs: {
-        type: "number",
-        step: "0.1"
-      },
-      domProps: {
-        value: _vm.TablaDetalle[k].densidad
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(_vm.TablaDetalle[k], "densidad", $event.target.value);
-        }
-      }
-    })]) : _c("div", [_vm._v("\n                                                        " + _vm._s(FIlaTabla.densidad) + "\n                                                    ")])]), _vm._v(" "), _c("td", {
-      on: {
-        click: function click($event) {
-          return _vm.selectPosDetalle(k);
-        }
-      }
-    }, [_vm.indexDetalle == k ? _c("div", [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: _vm.TablaDetalle[k].r_densidad,
-        expression: "TablaDetalle[k].r_densidad"
-      }],
-      attrs: {
-        type: "number",
-        step: "0.1"
-      },
-      domProps: {
-        value: _vm.TablaDetalle[k].r_densidad
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(_vm.TablaDetalle[k], "r_densidad", $event.target.value);
-        }
-      }
-    })]) : _c("div", [_vm._v("\n                                                        " + _vm._s(FIlaTabla.r_densidad) + "\n                                                    ")])]), _vm._v(" "), _c("td", {
       on: {
         click: function click($event) {
           return _vm.selectPosDetalle(k);
@@ -82324,10 +82140,6 @@ var staticRenderFns = [function () {
   return _c("thead", [_c("tr", [_c("th", {
     staticClass: "col-md-2"
   }, [_vm._v("Elemento")]), _vm._v(" "), _c("th", {
-    staticClass: "col-md-2"
-  }, [_vm._v("Densidad")]), _vm._v(" "), _c("th", {
-    staticClass: "col-md-2"
-  }, [_vm._v("rDensidad")]), _vm._v(" "), _c("th", {
     staticClass: "col-md-2"
   }, [_vm._v("Pos.")]), _vm._v(" "), _c("th", {
     staticClass: "col-md-1"
