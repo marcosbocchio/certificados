@@ -32,18 +32,19 @@ class InformesView extends Model
         }
 
     }
-    public function scopeFiltro($query, $filtro='') {
-        
-        if (trim($filtro) != '') {
-            $query->WhereRaw("numero LIKE '%" . $filtro . "%'")
-                  ->orWhereRaw("obra LIKE '%" . $filtro . "%'")
-                  ->orWhereRaw("metodo LIKE '%" . $filtro . "%'")
-                  ->orWhereRaw("informe_completo LIKE '%" . $filtro . "%'")
-                  ->orWhereRaw("name LIKE '%" . $filtro . "%'")
-                  ->orWhereRaw("fecha_formateada LIKE '%" . $filtro . "%'")
-                  ->orWhereRaw("numero_formateado LIKE '%" . $filtro . "%'")
-                  ->orWhereRaw("solicitado_por LIKE '%" . $filtro . "%'");
+    public function scopeMetodo($query, $metodo = '') {
+        if (trim($metodo) != '') {
+            $query->where('metodo', $metodo);
         }
+    }
 
+    public function scopeFiltro($query, $filtro = '') {
+        if (trim($filtro) != '') {
+            $query->where(function($q) use ($filtro) {
+                $q->WhereRaw("numero_formateado LIKE '%" . $filtro . "%'")
+                  ->orWhereRaw("informe_completo LIKE '%" . $filtro . "%'")
+                  ->orWhereRaw("numero LIKE '%" . $filtro . "%'");
+            });
+        }
     }
 }

@@ -223,6 +223,7 @@
                             </td>
                         </tr>
 
+                        @if($tipo_pelicula)
                         <tr>
                             <th colspan="2">Película</th>
                             <th colspan="2">Tipo</th>
@@ -242,6 +243,7 @@
                             <td colspan="1">{{$informe_rd->pos_ant}}</td>
                             <td colspan="1">{{$informe_rd->pos_pos}}</td>
                        </tr>
+                       @endif
 
                         <tr>
                             <th colspan="4">Norma Ensayo</th>

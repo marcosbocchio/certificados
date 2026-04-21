@@ -371,9 +371,9 @@ class InformesRdController extends Controller
         $informeRd->kv = $request->kv;
         $informeRd->ma = $request->ma;
         $informeRd->interno_fuente_id =  $request->interno_fuente ? $request->interno_fuente['id'] : null;
-        $informeRd->tipo_pelicula_id = $request->tipo_pelicula['id'];
+        $informeRd->tipo_pelicula_id = $request->tipo_pelicula ? $request->tipo_pelicula['id'] : null;
         $informeRd->dimension_detector_id = $request->dimension_detector ? $request->dimension_detector['id'] : null;
-        $informeRd->medida = $request->medida['codigo'];
+        $informeRd->medida = $request->medida ? $request->medida['codigo'] : null;
         $informeRd->ici_id  = $request->ici['id'];
         $informeRd->tipo_centellador_id = $request->tipo_centellador ? $request->tipo_centellador['id'] : null;
         $informeRd->gasoducto_sn = $request->gasoducto_sn;

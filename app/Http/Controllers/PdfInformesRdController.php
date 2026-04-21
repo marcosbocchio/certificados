@@ -93,7 +93,7 @@ class PdfInformesRdController extends Controller
         $interno_equipo = InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
         $interno_fuente = InternoFuentes::where('id',$informe_rd->interno_fuente_id)->first();
         $actividad = $interno_fuente ? curie($interno_fuente->id,$informe->fecha) : '';
-        $tipo_pelicula = TipoPeliculas::findOrFail($informe_rd->tipo_pelicula_id);
+        $tipo_pelicula = TipoPeliculas::find($informe_rd->tipo_pelicula_id);
         $dimension_detector = DimensionesDetector::find($informe_rd->dimension_detector_id);
         $diametro_espesor = $informe->diametro_espesor_id ? DiametrosEspesor::findOrFail($informe->diametro_espesor_id) : null;
         $ici = Icis::findOrFail($informe_rd->ici_id);

@@ -76,13 +76,23 @@ class InformesController extends Controller
     }
     public function paginate(Request $request, $id)
     {
-
-        $filtro = $request->search;
         return InformesView::where('ot_id', $id)
-            ->Filtro($filtro)
+            ->Filtro($request->search)
+            ->Metodo($request->tipo)
+            ->Obra($request->obra)
             ->orderBy('fecha', 'DESC')
             ->orderBy('id', 'DESC')
             ->paginate(10);
+    }
+
+    public function getObras($id)
+    {
+        return InformesView::where('ot_id', $id)
+            ->whereNotNull('obra')
+            ->where('obra', '!=', '')
+            ->distinct()
+            ->orderBy('obra')
+            ->pluck('obra');
     }
 
     public function OtInformesTotal($ot_id)

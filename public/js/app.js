@@ -16799,6 +16799,12 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -16841,9 +16847,20 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       informe_id_select: 0,
       index_informe: 0,
       loading_table: false,
-      search: ''
+      search: '',
+      filtro_tipo: null,
+      filtro_obra: null,
+      obras_opciones: []
     };
   },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'CantInformes', 'DDPPI', 'ParametroGeneral', 'isLoading'])), {}, {
+    tipos_opciones: function tipos_opciones() {
+      return [{
+        metodo: 'Todos',
+        descripcion: ''
+      }].concat(_toConsumableArray(this.ot_metodos_ensayos_data));
+    }
+  }),
   watch: {
     metodo_ensayo: function metodo_ensayo(val) {
       if (val == null) this.metodo_ensayo = '';else this.metodo_selected = val == '' ? false : true;
@@ -16877,6 +16894,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     window.addEventListener('pageshow', this.handlePageShow);
     this.getResults();
     this.ContarInformes();
+    this.cargarObras();
     if (this.numero_informe_formateado_xc !== '') {
       this.search = this.numero_informe_formateado_xc;
       this.aplicarFiltro();
@@ -16886,7 +16904,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   beforeDestroy: function beforeDestroy() {
     window.removeEventListener('pageshow', this.handlePageShow);
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'CantInformes', 'DDPPI', 'ParametroGeneral', 'isLoading'])),
   methods: {
     handlePageShow: function handlePageShow() {
       this.$store.commit('loading', false);
@@ -16894,33 +16911,48 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     getResults: function getResults() {
       var _this = this;
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.loading_table = true, axios.defaults.baseURL = this.url;
-      var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page=' + page + '&search=' + this.search;
+      this.loading_table = true;
+      axios.defaults.baseURL = this.url;
+      var tipo = this.filtro_tipo && this.filtro_tipo.metodo !== 'Todos' ? this.filtro_tipo.metodo : '';
+      var obra = this.filtro_obra || '';
+      var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page=' + page + '&search=' + encodeURIComponent(this.search) + '&tipo=' + encodeURIComponent(tipo) + '&obra=' + encodeURIComponent(obra);
       axios.get(urlRegistros).then(function (response) {
-        console.log('data', response.data);
         _this.ot_informes = response.data;
       })["finally"](function () {
         return _this.loading_table = false;
       });
     },
+    cargarObras: function cargarObras() {
+      var _this2 = this;
+      axios.defaults.baseURL = this.url;
+      axios.get('informes/ot/' + this.ot_data.id + '/obras').then(function (response) {
+        _this2.obras_opciones = response.data;
+      });
+    },
+    limpiarFiltros: function limpiarFiltros() {
+      this.filtro_tipo = null;
+      this.filtro_obra = null;
+      this.search = '';
+      this.getResults();
+    },
     aplicarFiltro: function aplicarFiltro() {
       this.getResults();
     },
     NuevoInforme: function NuevoInforme() {
-      var _this2 = this;
+      var _this3 = this;
       this.$store.commit('loading', true);
       this.$store.dispatch('loadParametrosGenerales', 'ddppi').then(function (response) {
-        _this2.$store.dispatch('loadDDPPI', _this2.ot_data.id).then(function (response) {
-          if (_this2.DDPPI) {
-            if (_this2.metodo_ensayo.importable_sn) {
-              _this2.$store.commit('loading', false);
-              _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$emit('open', _this2.modelo);
+        _this3.$store.dispatch('loadDDPPI', _this3.ot_data.id).then(function (response) {
+          if (_this3.DDPPI) {
+            if (_this3.metodo_ensayo.importable_sn) {
+              _this3.$store.commit('loading', false);
+              _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$emit('open', _this3.modelo);
             } else {
-              window.location.href = '/area/enod/ot/' + _this2.ot_data.id + '/informe/metodo/' + _this2.metodo_ensayo.metodo + '/create';
+              window.location.href = '/area/enod/ot/' + _this3.ot_data.id + '/informe/metodo/' + _this3.metodo_ensayo.metodo + '/create';
             }
           } else {
-            toastr.error('No se puede crear el informe. Existen informes de hace ' + _this2.ParametroGeneral.valor + ' días' + ' sin parte asociado');
-            _this2.$store.commit('loading', false);
+            toastr.error('No se puede crear el informe. Existen informes de hace ' + _this3.ParametroGeneral.valor + ' días' + ' sin parte asociado');
+            _this3.$store.commit('loading', false);
           }
         });
       });
@@ -16963,50 +16995,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventModal"].$emit('abrir_confirmar_accion', 'Está seguro que quiere desanular el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' ?', 'desanular');
     },
     desanularInforme: function desanularInforme() {
-      var _this3 = this;
+      var _this4 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var urlRegistros;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              _this3.loading_table = true;
-              axios.defaults.baseURL = _this3.url;
-              urlRegistros = 'informes/' + _this3.ot_informes.data[_this3.index_informe].id + '/desanular';
-              _context.next = 5;
-              return axios.put(urlRegistros).then(function (response) {
-                _this3.getResults();
-                _this3.ContarInformes();
-                toastr.success('El Informe N° ' + _this3.ot_informes.data[_this3.index_informe].numero_formateado + ' fue anulado con exito');
-              })["catch"](function (error) {
-                _this3.errors = error.response.data.errors;
-                $.each(_this3.errors, function (key, value) {
-                  toastr.error(value);
-                  console.log(key + ": " + value);
-                });
-                if (typeof _this3.errors == 'undefined' && error) {
-                  toastr.error("Ocurrió un error al procesar la solicitud");
-                }
-              })["finally"](function () {
-                _this3.loading_table = false;
-              });
-            case 5:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee);
-      }))();
-    },
-    anularInforme: function anularInforme() {
-      var _this4 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var urlRegistros;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
-            case 0:
               _this4.loading_table = true;
               axios.defaults.baseURL = _this4.url;
-              urlRegistros = 'informes/' + _this4.ot_informes.data[_this4.index_informe].id + '/anular';
-              _context2.next = 5;
+              urlRegistros = 'informes/' + _this4.ot_informes.data[_this4.index_informe].id + '/desanular';
+              _context.next = 5;
               return axios.put(urlRegistros).then(function (response) {
                 _this4.getResults();
                 _this4.ContarInformes();
@@ -17025,31 +17023,26 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               });
             case 5:
             case "end":
-              return _context2.stop();
+              return _context.stop();
           }
-        }, _callee2);
+        }, _callee);
       }))();
     },
-    confirmarfirma: function confirmarfirma(k) {
-      this.index_informe = k;
-      _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventModal"].$emit('abrir_confirmar_accion', 'Está seguro de firmar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' ?', 'firmar');
-    },
-    ClonarInforme: function ClonarInforme(tipo) {
+    anularInforme: function anularInforme() {
       var _this5 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var urlRegistros;
-        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-          while (1) switch (_context3.prev = _context3.next) {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
             case 0:
               _this5.loading_table = true;
               axios.defaults.baseURL = _this5.url;
-              // La URL ahora depende del tipo de clonación
-              urlRegistros = "informes/".concat(_this5.ot_informes.data[_this5.index_informe].id, "/clonar/").concat(tipo);
-              _context3.next = 5;
+              urlRegistros = 'informes/' + _this5.ot_informes.data[_this5.index_informe].id + '/anular';
+              _context2.next = 5;
               return axios.put(urlRegistros).then(function (response) {
                 _this5.getResults();
                 _this5.ContarInformes();
-                toastr.success('El Informe N° ' + _this5.ot_informes.data[_this5.index_informe].numero_formateado + ' fue clonado con éxito');
+                toastr.success('El Informe N° ' + _this5.ot_informes.data[_this5.index_informe].numero_formateado + ' fue anulado con exito');
               })["catch"](function (error) {
                 _this5.errors = error.response.data.errors;
                 $.each(_this5.errors, function (key, value) {
@@ -17064,25 +17057,31 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
               });
             case 5:
             case "end":
-              return _context3.stop();
+              return _context2.stop();
           }
-        }, _callee3);
+        }, _callee2);
       }))();
     },
-    firmar: function firmar() {
+    confirmarfirma: function confirmarfirma(k) {
+      this.index_informe = k;
+      _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventModal"].$emit('abrir_confirmar_accion', 'Está seguro de firmar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' ?', 'firmar');
+    },
+    ClonarInforme: function ClonarInforme(tipo) {
       var _this6 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var urlRegistros;
-        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-          while (1) switch (_context4.prev = _context4.next) {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
             case 0:
               _this6.loading_table = true;
               axios.defaults.baseURL = _this6.url;
-              urlRegistros = 'informes/' + _this6.ot_informes.data[_this6.index_informe].id + '/firmar';
-              _context4.next = 5;
+              // La URL ahora depende del tipo de clonación
+              urlRegistros = "informes/".concat(_this6.ot_informes.data[_this6.index_informe].id, "/clonar/").concat(tipo);
+              _context3.next = 5;
               return axios.put(urlRegistros).then(function (response) {
-                _this6.ot_informes.data[_this6.index_informe].firma = response.data.firma;
-                toastr.success('El Informe N° ' + _this6.ot_informes.data[_this6.index_informe].numero_formateado + '  fue firmado con éxito');
+                _this6.getResults();
+                _this6.ContarInformes();
+                toastr.success('El Informe N° ' + _this6.ot_informes.data[_this6.index_informe].numero_formateado + ' fue clonado con éxito');
               })["catch"](function (error) {
                 _this6.errors = error.response.data.errors;
                 $.each(_this6.errors, function (key, value) {
@@ -17094,6 +17093,39 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
                 }
               })["finally"](function () {
                 _this6.loading_table = false;
+              });
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3);
+      }))();
+    },
+    firmar: function firmar() {
+      var _this7 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var urlRegistros;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              _this7.loading_table = true;
+              axios.defaults.baseURL = _this7.url;
+              urlRegistros = 'informes/' + _this7.ot_informes.data[_this7.index_informe].id + '/firmar';
+              _context4.next = 5;
+              return axios.put(urlRegistros).then(function (response) {
+                _this7.ot_informes.data[_this7.index_informe].firma = response.data.firma;
+                toastr.success('El Informe N° ' + _this7.ot_informes.data[_this7.index_informe].numero_formateado + '  fue firmado con éxito');
+              })["catch"](function (error) {
+                _this7.errors = error.response.data.errors;
+                $.each(_this7.errors, function (key, value) {
+                  toastr.error(value);
+                  console.log(key + ": " + value);
+                });
+                if (typeof _this7.errors == 'undefined' && error) {
+                  toastr.error("Ocurrió un error al procesar la solicitud");
+                }
+              })["finally"](function () {
+                _this7.loading_table = false;
               });
             case 5:
             case "end":
@@ -66244,10 +66276,85 @@ var render = function render() {
   }, [_c("span", {
     staticClass: "fa fa-plus-circle"
   }), _vm._v("\n                                        Nuevo\n                                ")])])])])])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3 col-md-offset-9 col-sm-12 col-xs-12"
+    staticClass: "col-md-12"
   }, [_c("div", {
-    staticClass: "form-group"
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "8px"
+    }
   }, [_c("div", {
+    staticClass: "col-md-3 col-sm-6 col-xs-12"
+  }, [_c("div", {
+    staticClass: "form-group",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_c("label", {
+    staticStyle: {
+      "font-size": "12px"
+    }
+  }, [_vm._v("Tipo")]), _vm._v(" "), _c("v-select", {
+    attrs: {
+      options: _vm.tipos_opciones,
+      label: "metodo",
+      placeholder: "Todos",
+      clearable: true
+    },
+    on: {
+      input: _vm.aplicarFiltro
+    },
+    scopedSlots: _vm._u([{
+      key: "option",
+      fn: function fn(option) {
+        return [_c("span", [_vm._v(_vm._s(option.metodo))]), _vm._v(" — "), _c("small", [_vm._v(_vm._s(option.descripcion))])];
+      }
+    }]),
+    model: {
+      value: _vm.filtro_tipo,
+      callback: function callback($$v) {
+        _vm.filtro_tipo = $$v;
+      },
+      expression: "filtro_tipo"
+    }
+  })], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3 col-sm-6 col-xs-12"
+  }, [_c("div", {
+    staticClass: "form-group",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_c("label", {
+    staticStyle: {
+      "font-size": "12px"
+    }
+  }, [_vm._v("Obra")]), _vm._v(" "), _c("v-select", {
+    attrs: {
+      options: _vm.obras_opciones,
+      placeholder: "Todas",
+      clearable: true
+    },
+    on: {
+      input: _vm.aplicarFiltro
+    },
+    model: {
+      value: _vm.filtro_obra,
+      callback: function callback($$v) {
+        _vm.filtro_obra = $$v;
+      },
+      expression: "filtro_obra"
+    }
+  })], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3 col-sm-12 col-xs-12"
+  }, [_c("div", {
+    staticClass: "form-group",
+    staticStyle: {
+      "margin-bottom": "0"
+    }
+  }, [_c("label", {
+    staticStyle: {
+      "font-size": "12px"
+    }
+  }, [_vm._v("N° Informe")]), _vm._v(" "), _c("div", {
     staticClass: "input-group"
   }, [_c("input", {
     directives: [{
@@ -66259,7 +66366,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      placeholder: "Buscar..."
+      placeholder: "Buscar N°..."
     },
     domProps: {
       value: _vm.search
@@ -66287,6 +66394,21 @@ var render = function render() {
   }, [_c("i", {
     staticClass: "fa fa-search"
   })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3 col-sm-12 col-xs-12",
+    staticStyle: {
+      "padding-top": "18px"
+    }
+  }, [_c("button", {
+    staticClass: "btn btn-default btn-sm",
+    attrs: {
+      title: "Limpiar filtros"
+    },
+    on: {
+      click: _vm.limpiarFiltros
+    }
+  }, [_c("span", {
+    staticClass: "fa fa-times"
+  }), _vm._v(" Limpiar\n                ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "box box-custom-enod top-buffer"
@@ -80137,7 +80259,10 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-3",
+    staticStyle: {
+      display: "none"
+    }
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
@@ -80169,7 +80294,10 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-3",
+    staticStyle: {
+      display: "none"
+    }
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
@@ -80201,10 +80329,13 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-3",
+    staticStyle: {
+      display: "none"
+    }
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("label", [_vm._v("Calidad de placas *")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Calidad de placas")]), _vm._v(" "), _c("v-select", {
     attrs: {
       options: _vm.tipo_peliculas,
       label: "codigo"
@@ -80227,14 +80358,17 @@ var render = function render() {
       expression: "tipo_pelicula"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-3",
+    staticStyle: {
+      display: "none"
+    }
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
       "for": "cm"
     }
-  }, [_vm._v("Medida de Placa*")]), _vm._v(" "), _c("v-select", {
+  }, [_vm._v("Medida de Placa")]), _vm._v(" "), _c("v-select", {
     staticStyle: {
       display: "block"
     },
@@ -80278,7 +80412,10 @@ var render = function render() {
       expression: "ici"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-3",
+    staticStyle: {
+      display: "none"
+    }
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
@@ -80308,14 +80445,17 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-3",
+    staticStyle: {
+      display: "none"
+    }
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
       "for": "pos_ant"
     }
-  }, [_vm._v("Ant *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Ant")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -80338,14 +80478,17 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
+    staticClass: "col-md-3",
+    staticStyle: {
+      display: "none"
+    }
   }, [_c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
       "for": "pos_pos"
     }
-  }, [_vm._v("Pos *")]), _vm._v(" "), _c("input", {
+  }, [_vm._v("Pos")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -391523,8 +391666,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/html/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\laragon\www\rusoft\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\rusoft\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ }),
