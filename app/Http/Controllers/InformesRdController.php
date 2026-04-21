@@ -459,6 +459,7 @@ class InformesRdController extends Controller
 
             }
 
+            $posicion = null;
             try {
 
               $posicion = $this->savePosicion($detalle,$junta);
@@ -477,7 +478,7 @@ class InformesRdController extends Controller
 
              try {
 
-              $this->saveDefectos($detalle['defectos'],$posicion);
+              if ($posicion) $this->saveDefectos($detalle['defectos'],$posicion);
 
              }
              catch(Exception $z){
@@ -520,8 +521,6 @@ class InformesRdController extends Controller
         $posicion = new PosicionRd;
         $posicion->junta_id = $junta['id'];
         $posicion->codigo = $detalle['posicion'];
-        $posicion->densidad = $detalle['densidad'];
-        $posicion->r_densidad = $detalle['r_densidad'];
         $posicion->mng = $detalle['mng'];
         $posicion->snrn = $detalle['snrn'];
         $posicion->descripcion = $detalle['observacion'] ;
