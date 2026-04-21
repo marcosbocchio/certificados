@@ -2136,10 +2136,9 @@ export default {
                     let array_pos_placa = this.TablaDetalle[this.indexDetalle].posicion.split("-");
                     let pos_inicial_placa = parseInt(array_pos_placa[0].trim());
                     let pos_final_placa = parseInt(array_pos_placa[1].trim());
-                    let longitud_placa = Math.abs(parseInt(this.TablaDetalle[0].posicion.split("-")[1].trim()) - parseInt(this.TablaDetalle[0].posicion.split("-")[0].trim()));
 
-                    if (!(((pos_inicial_defecto >= pos_inicial_placa && (pos_final_defecto <= (pos_inicial_placa + longitud_placa))) || ((pos_inicial_defecto == pos_inicial_placa) && (pos_final_defecto == pos_final_placa))))) {
-                        toastr.error('Valores en posición indicación incorrectos');
+                    if (pos_inicial_defecto < pos_inicial_placa || pos_final_defecto > pos_final_placa) {
+                        toastr.error('La posición indicada debe estar dentro del rango ' + pos_inicial_placa + '-' + pos_final_placa);
                         return;
                     }
                 }
