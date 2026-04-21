@@ -28,7 +28,7 @@
      :tecnicadata="{{$informe_tecnica_grafico}}"
      :interno_equipodata="{{$informe_interno_equipo}}"
      :procedimientodata="{{$informe_procedimiento}}"
-     :tipo_peliculadata="{{$infome_tipo_pelicula}}"
+     :tipo_peliculadata="{{$infome_tipo_pelicula ?? 'null'}}"
      :dimension_detectordata="{{$informe_dimension_detector}}"
      :icidata="{{$informe_ici}}"
      :tipo_centelladordata="{{$informe_tipo_centellador}}"
