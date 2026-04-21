@@ -39,6 +39,23 @@
                             <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
                        </tr>
 
+                       <tr>
+                            <th colspan="2">Dimensión detector</th>
+                            <th colspan="2">Tipo centellador</th>
+                       </tr>
+                       <tr>
+                            <td colspan="2">{{ $dimension_detector ? $dimension_detector->descripcion : '' }}</td>
+                            <td colspan="2">{{ $tipo_centellador ? $tipo_centellador->descripcion : '' }}</td>
+                       </tr>
+
+                       <tr>
+                            <th colspan="2">Pitch</th>
+                            <th colspan="2">SRb DWI</th>
+                       </tr>
+                       <tr>
+                            <td colspan="2">{{ $informe_rd->pitch }}</td>
+                            <td colspan="2">{{ $informe_rd->srb_dwi }}</td>
+                       </tr>
 
                        <tr>
                             <th colspan="2">Lado</th>
@@ -124,15 +141,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <th colspan="2">Dimensión detector</th>
-                            <th colspan="2">Tipo centellador</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2">{{ $dimension_detector ? $dimension_detector->descripcion : '' }}</td>
-                            <td colspan="2">{{ $tipo_centellador ? $tipo_centellador->descripcion : '' }}</td>
-                        </tr>
-
-                        <tr>
                             <th colspan="2">Equipo</th>
                             <th colspan="2">Fuente</th>
                         </tr>
@@ -153,15 +161,6 @@
                         <tr>
                             <td colspan="4">{{$actividad}}</td>
                         </tr>
-                        <tr>
-                            <th colspan="2">Pitch</th>
-                            <th colspan="2">SRb DWI</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2">{{ $informe_rd->pitch }}</td>
-                            <td colspan="2">{{ $informe_rd->srb_dwi }}</td>
-                        </tr>
-
                         <tr>
                             <th colspan="2">ICI</th>
                             <th colspan="2">Nº de exposiciones</th>
