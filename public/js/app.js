@@ -80368,26 +80368,6 @@ var render = function render() {
       expression: "medida"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "ici"
-    }
-  }, [_vm._v("Ici *")]), _vm._v(" "), _c("v-select", {
-    attrs: {
-      label: "codigo",
-      options: _vm.icis
-    },
-    model: {
-      value: _vm.ici,
-      callback: function callback($$v) {
-        _vm.ici = $$v;
-      },
-      expression: "ici"
-    }
-  })], 1)]), _vm._v(" "), _c("div", {
     staticStyle: {
       display: "none"
     }
@@ -80491,27 +80471,21 @@ var render = function render() {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("label", [_vm._v("Norma Evaluación *")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", {
+    attrs: {
+      "for": "ici"
+    }
+  }, [_vm._v("Ici *")]), _vm._v(" "), _c("v-select", {
     attrs: {
       label: "codigo",
-      options: _vm.norma_evaluaciones
+      options: _vm.icis
     },
-    scopedSlots: _vm._u([{
-      key: "option",
-      fn: function fn(option) {
-        return [_c("span", {
-          staticClass: "upSelect"
-        }, [_vm._v(_vm._s(option.codigo))]), _vm._v(" "), _c("br"), _vm._v(" "), _c("span", {
-          staticClass: "downSelect"
-        }, [_vm._v(" " + _vm._s(option.descripcion) + " ")])];
-      }
-    }]),
     model: {
-      value: _vm.norma_evaluacion,
+      value: _vm.ici,
       callback: function callback($$v) {
-        _vm.norma_evaluacion = $$v;
+        _vm.ici = $$v;
       },
-      expression: "norma_evaluacion"
+      expression: "ici"
     }
   })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
@@ -80537,7 +80511,7 @@ var render = function render() {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
-      "for": "pos_pos"
+      "for": "lado"
     }
   }, [_vm._v("Lado *")]), _vm._v(" "), _c("input", {
     directives: [{
@@ -80590,10 +80564,10 @@ var render = function render() {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("label", [_vm._v("Norma Ensayo *")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Norma Evaluación *")]), _vm._v(" "), _c("v-select", {
     attrs: {
       label: "codigo",
-      options: _vm.norma_ensayos
+      options: _vm.norma_evaluaciones
     },
     scopedSlots: _vm._u([{
       key: "option",
@@ -80606,11 +80580,11 @@ var render = function render() {
       }
     }]),
     model: {
-      value: _vm.norma_ensayo,
+      value: _vm.norma_evaluacion,
       callback: function callback($$v) {
-        _vm.norma_ensayo = $$v;
+        _vm.norma_evaluacion = $$v;
       },
-      expression: "norma_ensayo"
+      expression: "norma_evaluacion"
     }
   })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
@@ -80665,11 +80639,7 @@ var render = function render() {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "ejecutor_ensayo"
-    }
-  }, [_vm._v("Solicitante ")]), _vm._v(" "), _c("v-select", {
+  }, [_c("label", [_vm._v("Solicitante")]), _vm._v(" "), _c("v-select", {
     attrs: {
       label: "name",
       options: _vm.usuarios_cliente
@@ -80682,6 +80652,69 @@ var render = function render() {
       expression: "solicitado_por"
     }
   })], 1)])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Norma Ensayo *")]), _vm._v(" "), _c("v-select", {
+    attrs: {
+      label: "codigo",
+      options: _vm.norma_ensayos
+    },
+    scopedSlots: _vm._u([{
+      key: "option",
+      fn: function fn(option) {
+        return [_c("span", {
+          staticClass: "upSelect"
+        }, [_vm._v(_vm._s(option.codigo))]), _vm._v(" "), _c("br"), _vm._v(" "), _c("span", {
+          staticClass: "downSelect"
+        }, [_vm._v(" " + _vm._s(option.descripcion) + " ")])];
+      }
+    }]),
+    model: {
+      value: _vm.norma_ensayo,
+      callback: function callback($$v) {
+        _vm.norma_ensayo = $$v;
+      },
+      expression: "norma_ensayo"
+    }
+  })], 1)])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "distancia_fuente_pelicula"
+    }
+  }, [_vm._v("Dist. Fuente/Film *")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.distancia_fuente_pelicula,
+      expression: "distancia_fuente_pelicula"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      step: "0.01",
+      disabled: _vm.diametro.diametro != "VARIOS" && !_vm.dist_fuente_pel_edit_sn,
+      id: "distancia_fuente_pelicula"
+    },
+    domProps: {
+      value: _vm.distancia_fuente_pelicula
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.distancia_fuente_pelicula = $event.target.value;
+      }
+    }
+  })])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "row"
@@ -80717,40 +80750,7 @@ var render = function render() {
       },
       expression: "tecnica"
     }
-  })], 1)])]), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-md-12"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "distancia_fuente_pelicula"
-    }
-  }, [_vm._v("Dist. Fuente/Film *")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.distancia_fuente_pelicula,
-      expression: "distancia_fuente_pelicula"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      step: "0.01",
-      disabled: _vm.diametro.diametro != "VARIOS" && !_vm.dist_fuente_pel_edit_sn,
-      id: "distancia_fuente_pelicula"
-    },
-    domProps: {
-      value: _vm.distancia_fuente_pelicula
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.distancia_fuente_pelicula = $event.target.value;
-      }
-    }
-  })])])]), _vm._v(" "), !_vm.isLoading ? _c("div", {
+  })], 1)])]), _vm._v(" "), !_vm.isLoading ? _c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-12"

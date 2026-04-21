@@ -339,27 +339,18 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="ici">Ici *</label>
-                                <v-select v-model="ici" label="codigo" :options="icis"></v-select>
-                            </div>
-                        </div>
-
                         <div style="display:none">
                             <div class="form-group">
                                 <label for="pantalla">Pantalla</label>
                                 <input type="text" v-model="pantalla" class="form-control" id="pantalla" disabled>
                             </div>
                         </div>
-
                         <div style="display:none">
                             <div class="form-group">
                                 <label for="pos_ant">Ant</label>
                                 <input type="number" v-model="pos_ant" class="form-control" id="pos_ant" step=".01">
                             </div>
                         </div>
-
                         <div style="display:none">
                             <div class="form-group">
                                 <label for="pos_pos">Pos</label>
@@ -367,18 +358,13 @@
                             </div>
                         </div>
 
+                        <!-- Col 1: ICI + Filtros + Lado + Ejecutor -->
                         <div class="col-md-3">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Norma Evaluación *</label>
-                                        <v-select v-model="norma_evaluacion" label="codigo"
-                                            :options="norma_evaluaciones">
-                                            <template slot="option" slot-scope="option">
-                                                <span class="upSelect">{{ option.codigo }}</span> <br>
-                                                <span class="downSelect"> {{ option.descripcion }} </span>
-                                            </template>
-                                        </v-select>
+                                        <label for="ici">Ici *</label>
+                                        <v-select v-model="ici" label="codigo" :options="icis"></v-select>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -392,7 +378,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="pos_pos">Lado *</label>
+                                        <label for="lado">Lado *</label>
                                         <input type="text" v-model="lado" class="form-control" id="lado">
                                     </div>
                                 </div>
@@ -408,12 +394,14 @@
                             </div>
                         </div>
 
+                        <!-- Col 2: Norma Evaluación + Soft + Exposiciones + Solicitante -->
                         <div class="col-md-3">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Norma Ensayo *</label>
-                                        <v-select v-model="norma_ensayo" label="codigo" :options="norma_ensayos">
+                                        <label>Norma Evaluación *</label>
+                                        <v-select v-model="norma_evaluacion" label="codigo"
+                                            :options="norma_evaluaciones">
                                             <template slot="option" slot-scope="option">
                                                 <span class="upSelect">{{ option.codigo }}</span> <br>
                                                 <span class="downSelect"> {{ option.descripcion }} </span>
@@ -440,7 +428,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="ejecutor_ensayo">Solicitante </label>
+                                        <label>Solicitante</label>
                                         <v-select v-model="solicitado_por" label="name"
                                             :options="usuarios_cliente"></v-select>
                                     </div>
@@ -448,13 +436,13 @@
                             </div>
                         </div>
 
+                        <!-- Col 3: Norma Ensayo + Dist. Fuente/Film -->
                         <div class="col-md-3">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Técnica *</label>
-                                        <v-select v-model="tecnica" label="codigo" :options="tecnicas"
-                                            @input="ActualizarDistFuentePelicula()" :disabled="isChapa">
+                                        <label>Norma Ensayo *</label>
+                                        <v-select v-model="norma_ensayo" label="codigo" :options="norma_ensayos">
                                             <template slot="option" slot-scope="option">
                                                 <span class="upSelect">{{ option.codigo }}</span> <br>
                                                 <span class="downSelect"> {{ option.descripcion }} </span>
@@ -471,6 +459,24 @@
                                             class="form-control"
                                             :disabled="diametro.diametro != 'VARIOS' && !dist_fuente_pel_edit_sn"
                                             id="distancia_fuente_pelicula">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Col 4: Técnica + Imagen -->
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Técnica *</label>
+                                        <v-select v-model="tecnica" label="codigo" :options="tecnicas"
+                                            @input="ActualizarDistFuentePelicula()" :disabled="isChapa">
+                                            <template slot="option" slot-scope="option">
+                                                <span class="upSelect">{{ option.codigo }}</span> <br>
+                                                <span class="downSelect"> {{ option.descripcion }} </span>
+                                            </template>
+                                        </v-select>
                                     </div>
                                 </div>
                             </div>
