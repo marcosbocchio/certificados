@@ -79,22 +79,10 @@
                 <table style="font-size: 12px;float:right;" width="100%" class="header-detalle">
                     <tbody>
                         <tr>
-                            <th colspan="2">Material</th>
-                            <th width="50%" colspan="2">
-                                @if($material2)
-                                    Material ( {{ $informe->material2_tipo }})
-                                 @else
-                                      &nbsp;
-                                  @endif
-                             </th>
+                            <th colspan="4">Material</th>
                         </tr>
                         <tr>
-                            <td colspan="2">{{$material->codigo}}</td>
-                            <td colspan="2">
-                                 @if($material2)
-                                      {{$material2->codigo}}
-                                 @endif
-                            </td>
+                            <td colspan="4">{{$material->codigo}}</td>
                         </tr>
 
                         <tr>
@@ -117,18 +105,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <th colspan="2">Actividad Fuente</th>
-                            <th colspan="2">Foco</th>
+                            <th colspan="4">Actividad Fuente</th>
                         </tr>
                         <tr>
-                            <td colspan="2">{{$actividad}}</td>
-                            <td colspan="2">
-                                @if ($interno_fuente)
-                                    {{$interno_fuente->foco}}
-                                @else
-                                    {{$interno_equipo->foco}}
-                                @endif
-                            </td>
+                            <td colspan="4">{{$actividad}}</td>
                         </tr>
                         <tr>
                            <th colspan="4">Norma Evaluación</th>
@@ -212,23 +192,12 @@
                         </tr>
 
                         <tr>
-                           <th colspan="4">Filtros aplicados</th>
+                            <th colspan="2">Norma Ensayo</th>
+                            <th colspan="2">Soft. de Adq.</th>
                         </tr>
                         <tr>
-                            <td colspan="4">{{ $filtro_aplicado_rd ? $filtro_aplicado_rd->descripcion : '' }}</td>
-                        </tr>
-                        <tr>
-                           <th colspan="4">Soft. de Adq.</th>
-                        </tr>
-                        <tr>
-                            <td colspan="4">{{ $software_adquisicion_rd ? $software_adquisicion_rd->descripcion : '' }}</td>
-                        </tr>
-
-                        <tr>
-                            <th colspan="4">Norma Ensayo</th>
-                        </tr>
-                        <tr>
-                            <td colspan="4" class="borderFilabottom">{{$norma_ensayo->codigo}}</td>
+                            <td colspan="2">{{$norma_ensayo->codigo}}</td>
+                            <td colspan="2">{{ $software_adquisicion_rd ? $software_adquisicion_rd->descripcion : '' }}</td>
                         </tr>
 
                         <tr>
