@@ -229,6 +229,8 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Dimensión detector</label>
