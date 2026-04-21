@@ -51,7 +51,7 @@
        </div>
         <div class="col-md-12">
             <div class="row" style="margin-bottom: 8px;">
-                <div class="col-md-2 col-md-offset-4 col-sm-4 col-xs-12">
+                <div class="col-md-2 col-md-offset-6 col-sm-4 col-xs-12">
                     <div class="form-group" style="margin-bottom:0">
                         <label style="font-size:12px;">Tipo</label>
                         <v-select v-model="filtro_tipo" :options="tipos_opciones" label="metodo" placeholder="Todos" @input="aplicarFiltro" :clearable="true">

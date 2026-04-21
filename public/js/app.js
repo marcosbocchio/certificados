@@ -66280,7 +66280,7 @@ var render = function render() {
       "margin-bottom": "8px"
     }
   }, [_c("div", {
-    staticClass: "col-md-2 col-md-offset-4 col-sm-4 col-xs-12"
+    staticClass: "col-md-2 col-md-offset-6 col-sm-4 col-xs-12"
   }, [_c("div", {
     staticClass: "form-group",
     staticStyle: {
