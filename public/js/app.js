@@ -24126,7 +24126,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         toastr.error('Campo posición es obligatorio');
         return;
       }
-      var aux_junta = this.reparacion_sn ? this.junta_reparacion.codigo + 'R' : this.junta;
+      var aux_junta = this.reparacion_sn ? this.junta_reparacion + 'R' : this.junta;
       this.addElementosPasadas(aux_junta);
       this.TablaDetalle.push({
         junta: aux_junta,
@@ -80878,22 +80878,31 @@ var render = function render() {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
-      "for": "juntas_reparacion"
+      "for": "junta_reparacion"
     }
-  }, [_vm._v("Elemento a Reparar")]), _vm._v(" "), _c("v-select", {
-    attrs: {
-      label: "codigo",
-      options: _vm.juntas_reparacion,
-      id: "defecto_sector"
-    },
-    model: {
+  }, [_vm._v("Elemento")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
       value: _vm.junta_reparacion,
-      callback: function callback($$v) {
-        _vm.junta_reparacion = $$v;
-      },
       expression: "junta_reparacion"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "junta_reparacion",
+      maxlength: "10"
+    },
+    domProps: {
+      value: _vm.junta_reparacion
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.junta_reparacion = $event.target.value;
+      }
     }
-  })], 1)])]), _vm._v(" "), _c("div", {
+  })])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-2"
   }, [_c("div", {
     staticClass: "form-group"

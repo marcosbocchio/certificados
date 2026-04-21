@@ -568,9 +568,9 @@
                         <div v-else>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="juntas_reparacion">Elemento a Reparar</label>
-                                    <v-select v-model="junta_reparacion" label="codigo" :options="juntas_reparacion"
-                                        id="defecto_sector"></v-select>
+                                    <label for="junta_reparacion">Elemento</label>
+                                    <input type="text" v-model="junta_reparacion" class="form-control"
+                                        id="junta_reparacion" maxlength="10">
                                 </div>
                             </div>
                         </div>
@@ -1992,7 +1992,7 @@ export default {
                 return;
             }
 
-            let aux_junta = this.reparacion_sn ? this.junta_reparacion.codigo + 'R' : this.junta;
+            let aux_junta = this.reparacion_sn ? this.junta_reparacion + 'R' : this.junta;
             this.addElementosPasadas(aux_junta);
             this.TablaDetalle.push({
                 junta: aux_junta,
