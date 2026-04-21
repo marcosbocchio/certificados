@@ -87,7 +87,7 @@
                             </div>
                         </div>
 
-                        <div class="clearfix visible-md-block visible-lg-block"></div>
+                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -129,7 +129,7 @@
                             </div>
                         </div>
 
-                        <div class="clearfix visible-md-block visible-lg-block"></div>
+                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -163,7 +163,7 @@
                             </div>
                         </div>
 
-                        <div class="clearfix visible-md-block visible-lg-block"></div>
+                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -229,10 +229,8 @@
                             </div>
                         </div>
 
-                        <div class="clearfix visible-md-block visible-lg-block"></div>
-
                         <div class="col-md-3">
-                            <div class="form-group size-pqr-eps">
+                            <div class="form-group">
                                 <label>Dimensión detector</label>
                                 <v-select v-model="dimension_detector" :options="dimensiones_detector"
                                     label="descripcion"></v-select>
@@ -240,12 +238,14 @@
                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-group size-pqr-eps">
+                            <div class="form-group">
                                 <label>Tipo centellador</label>
                                 <v-select v-model="tipo_centellador" :options="tipos_centellador"
                                     label="descripcion"></v-select>
                             </div>
                         </div>
+
+                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -266,8 +266,6 @@
                                 <input type="text" v-model="fuente.codigo" class="form-control" id="fuente" disabled>
                             </div>
                         </div>
-
-                        <div class="clearfix visible-md-block visible-lg-block"></div>
 
                         <div v-if="(fuente)" class="col-md-3">
                             <div class="form-group">
@@ -306,16 +304,14 @@
                             </div>
                         </div>
 
-                        <div class="clearfix visible-md-block visible-lg-block"></div>
-
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="display:none">
                             <div class="form-group">
                                 <label for="kv">Kv</label>
                                 <input type="number" class="form-control" v-model="kv" id="kv"
                                     :disabled="interno_equipo.interno_fuente" max="9999" step="0.1">
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="display:none">
                             <div class="form-group">
                                 <label for="ma">mA</label>
                                 <input type="number" class="form-control" v-model="ma" id="ma"
@@ -323,9 +319,9 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="display:none">
                             <div class="form-group">
-                                <label>Calidad de placas *</label>
+                                <label>Calidad de placas</label>
                                 <v-select v-model="tipo_pelicula" :options="tipo_peliculas" label="codigo">
                                     <template slot="option" slot-scope="option">
                                         <span class="upSelect">{{ option.codigo }}</span> <br>
@@ -335,15 +331,15 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="display:none">
                             <div class="form-group">
-                                <label for="cm">Medida de Placa*</label>
+                                <label for="cm">Medida de Placa</label>
                                 <v-select type="text" v-model="medida" label="codigo" id="cm" :options="medidas_placa"
                                     style="display: block" taggable @input="cambioMedida"></v-select>
                             </div>
                         </div>
 
-                        <div class="clearfix visible-md-block visible-lg-block"></div>
+                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -352,28 +348,28 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="display:none">
                             <div class="form-group">
                                 <label for="pantalla">Pantalla</label>
                                 <input type="text" v-model="pantalla" class="form-control" id="pantalla" disabled>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="display:none">
                             <div class="form-group">
-                                <label for="pos_ant">Ant *</label>
+                                <label for="pos_ant">Ant</label>
                                 <input type="number" v-model="pos_ant" class="form-control" id="pos_ant" step=".01">
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" style="display:none">
                             <div class="form-group">
-                                <label for="pos_pos">Pos *</label>
+                                <label for="pos_pos">Pos</label>
                                 <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
                             </div>
                         </div>
 
-                        <div class="clearfix visible-md-block visible-lg-block"></div>
+                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="row">
@@ -510,7 +506,7 @@
                             </div>
                         </div>
 
-                        <div class="clearfix visible-md-block visible-lg-block"></div>
+                        <div class="clearfix"></div>
 
                         <div class="col-md-1">
                             <span>
@@ -588,6 +584,14 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
+                                <label for="r_densidad">rDensidad</label>
+                                <input type="number" v-model="r_densidad" class="form-control" id="r_densidad"
+                                    step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
                                 <label for="posicion">Posición</label>
                                 <input type="text" v-model="posicion" class="form-control" id="posicion">
                             </div>
@@ -618,6 +622,15 @@
                                     color="black"></app-icon></button>
                         </div>
 
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="resultado_pdf_label" style="display:block">&nbsp;</label>
+                                <input type="checkbox" id="checkbox" v-model="resultado_pdf_sn" style="float:right">
+                                <label for="resultado_pdf_sn" style="float:right;margin-right: 5px;">Mostrar resultado
+                                    en PDF</label>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             &nbsp;
                         </div>
@@ -630,6 +643,7 @@
                                             <tr>
                                                 <th class="col-md-2">Elemento</th>
                                                 <th class="col-md-2">Densidad</th>
+                                                <th class="col-md-2">rDensidad</th>
                                                 <th class="col-md-2">Pos.</th>
                                                 <th class="col-md-1">Mng</th>
                                                 <th class="col-md-1">SNRn</th>
@@ -649,6 +663,15 @@
                                                         </div>
                                                         <div v-else>
                                                             {{ FIlaTabla.densidad }}
+                                                        </div>
+                                                    </td>
+                                                    <td @click="selectPosDetalle(k)">
+                                                        <div v-if="indexDetalle == k">
+                                                            <input type="number" v-model="TablaDetalle[k].r_densidad"
+                                                                step="0.1">
+                                                        </div>
+                                                        <div v-else>
+                                                            {{ FIlaTabla.r_densidad }}
                                                         </div>
                                                     </td>
                                                     <td @click="selectPosDetalle(k)">{{ FIlaTabla.posicion }} </td>
@@ -686,7 +709,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td v-if="k == indexDetalle && indicaciones_sn" colspan="8"
+                                                    <td v-if="k == indexDetalle && indicaciones_sn" colspan="9"
                                                         style="background-color: #ECF0F5;">
 
                                                         <div class="box box-custom-enod"
@@ -1439,6 +1462,7 @@ export default {
             observacion_tramo: '',
             tramo: '',
             TablaTramos: [],
+            resultado_pdf_sn: true,
             appendToBody: false,
             inputsData: {},
             dist_fuente_pel_edit_sn: false,
@@ -1648,6 +1672,7 @@ export default {
                 this.TablaModelos3d = this.tablamodelos3d_data;
                 this.solicitado_por = this.solicitado_pordata;
                 this.TablaTramos = this.tablatramos_data;
+                this.resultado_pdf_sn = this.informe_rddata.resultado_pdf_sn;
 
                 if (this.informe_rddata.reparacion_sn) {
                     this.getElementosReparacion();
@@ -2601,6 +2626,7 @@ export default {
                     'TablaModelos3d': this.TablaModelos3d,
                     'solicitado_por': this.solicitado_por,
                     'tramos': this.TablaTramos,
+                    'resultado_pdf_sn': this.resultado_pdf_sn,
                 }
             }
 
@@ -2703,6 +2729,7 @@ export default {
                     'TablaModelos3d': this.TablaModelos3d,
                     'solicitado_por': this.solicitado_por,
                     'tramos': this.TablaTramos,
+                    'resultado_pdf_sn': this.resultado_pdf_sn,
 
                 }
             }

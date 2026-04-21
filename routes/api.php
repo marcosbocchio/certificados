@@ -241,6 +241,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'InformesController@OtInformesTotal'
     );
     Route::get('informes/ot/{ot_id}/paginate', 'InformesController@paginate');
+    Route::get('informes/ot/{ot_id}/obras', 'InformesController@getObras');
     Route::get(
         'informes/{id}/importado_sn/{importado_sn}',
         'InformesController@getObraInforme'

@@ -49,13 +49,39 @@
                 </div>
            </div>
        </div>
-        <div class="col-md-3 col-md-offset-9 col-sm-12 col-xs-12">
-        <div class="form-group">
-            <div class="input-group">
-                <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
-                <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: rgb(255, 204, 0);"><i class="fa fa-search"></i></span>
+        <div class="col-md-12">
+            <div class="row" style="margin-bottom: 8px;">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="form-group" style="margin-bottom:0">
+                        <label style="font-size:12px;">Tipo</label>
+                        <v-select v-model="filtro_tipo" :options="tipos_opciones" label="metodo" placeholder="Todos" @input="aplicarFiltro" :clearable="true">
+                            <template slot="option" slot-scope="option">
+                                <span>{{ option.metodo }}</span> &mdash; <small>{{ option.descripcion }}</small>
+                            </template>
+                        </v-select>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="form-group" style="margin-bottom:0">
+                        <label style="font-size:12px;">Obra</label>
+                        <v-select v-model="filtro_obra" :options="obras_opciones" placeholder="Todas" @input="aplicarFiltro" :clearable="true"></v-select>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="form-group" style="margin-bottom:0">
+                        <label style="font-size:12px;">N° Informe</label>
+                        <div class="input-group">
+                            <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar N°...">
+                            <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: rgb(255, 204, 0);"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12" style="padding-top:18px;">
+                    <button class="btn btn-default btn-sm" @click="limpiarFiltros" title="Limpiar filtros">
+                        <span class="fa fa-times"></span> Limpiar
+                    </button>
+                </div>
             </div>
-        </div>
         </div>
        <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
@@ -259,7 +285,17 @@ export default {
       index_informe:0,
       loading_table : false,
       search:'',
+      filtro_tipo: null,
+      filtro_obra: null,
+      obras_opciones: [],
     }
+  },
+
+  computed: {
+      ...mapState(['url','CantInformes','DDPPI','ParametroGeneral','isLoading']),
+      tipos_opciones() {
+          return [{ metodo: 'Todos', descripcion: '' }, ...this.ot_metodos_ensayos_data];
+      }
   },
 
   watch :{
@@ -304,9 +340,9 @@ export default {
 
       this.getResults();
       this.ContarInformes();
+      this.cargarObras();
     if (this.numero_informe_formateado_xc !== '') {
         this.search = this.numero_informe_formateado_xc;
-
         this.aplicarFiltro();
     }
     document.cookie = 'nroInformeFormateado=' + '' + ';path=/;';},
@@ -316,26 +352,39 @@ export default {
   },
 
 
-  computed :{
-
-       ...mapState(['url','CantInformes','DDPPI','ParametroGeneral','isLoading'])
-     },
-
     methods : {
         handlePageShow : function(){
             this.$store.commit('loading', false);
         },
 
         getResults :function(page = 1){
-
-            this.loading_table = true,
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page='+ page + '&search=' + this.search ;
-            axios.get(urlRegistros).then(response =>{
-                console.log('data', response.data);
-                this.ot_informes = response.data
-            }).finally(() => this.loading_table = false)
+            this.loading_table = true;
+            axios.defaults.baseURL = this.url;
+            const tipo = this.filtro_tipo && this.filtro_tipo.metodo !== 'Todos' ? this.filtro_tipo.metodo : '';
+            const obra = this.filtro_obra || '';
+            var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate'
+                + '?page=' + page
+                + '&search=' + encodeURIComponent(this.search)
+                + '&tipo=' + encodeURIComponent(tipo)
+                + '&obra=' + encodeURIComponent(obra);
+            axios.get(urlRegistros).then(response => {
+                this.ot_informes = response.data;
+            }).finally(() => this.loading_table = false);
        },
+
+        cargarObras: function() {
+            axios.defaults.baseURL = this.url;
+            axios.get('informes/ot/' + this.ot_data.id + '/obras').then(response => {
+                this.obras_opciones = response.data;
+            });
+        },
+
+        limpiarFiltros: function() {
+            this.filtro_tipo = null;
+            this.filtro_obra = null;
+            this.search = '';
+            this.getResults();
+        },
 
         aplicarFiltro : function(){
 
