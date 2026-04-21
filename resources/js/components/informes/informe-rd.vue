@@ -245,8 +245,6 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
-
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Equipo *</label>
@@ -304,14 +302,14 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3" style="display:none">
+                        <div style="display:none">
                             <div class="form-group">
                                 <label for="kv">Kv</label>
                                 <input type="number" class="form-control" v-model="kv" id="kv"
                                     :disabled="interno_equipo.interno_fuente" max="9999" step="0.1">
                             </div>
                         </div>
-                        <div class="col-md-3" style="display:none">
+                        <div style="display:none">
                             <div class="form-group">
                                 <label for="ma">mA</label>
                                 <input type="number" class="form-control" v-model="ma" id="ma"
@@ -319,7 +317,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3" style="display:none">
+                        <div style="display:none">
                             <div class="form-group">
                                 <label>Calidad de placas</label>
                                 <v-select v-model="tipo_pelicula" :options="tipo_peliculas" label="codigo">
@@ -331,15 +329,13 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3" style="display:none">
+                        <div style="display:none">
                             <div class="form-group">
                                 <label for="cm">Medida de Placa</label>
                                 <v-select type="text" v-model="medida" label="codigo" id="cm" :options="medidas_placa"
                                     style="display: block" taggable @input="cambioMedida"></v-select>
                             </div>
                         </div>
-
-                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -348,28 +344,26 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3" style="display:none">
+                        <div style="display:none">
                             <div class="form-group">
                                 <label for="pantalla">Pantalla</label>
                                 <input type="text" v-model="pantalla" class="form-control" id="pantalla" disabled>
                             </div>
                         </div>
 
-                        <div class="col-md-3" style="display:none">
+                        <div style="display:none">
                             <div class="form-group">
                                 <label for="pos_ant">Ant</label>
                                 <input type="number" v-model="pos_ant" class="form-control" id="pos_ant" step=".01">
                             </div>
                         </div>
 
-                        <div class="col-md-3" style="display:none">
+                        <div style="display:none">
                             <div class="form-group">
                                 <label for="pos_pos">Pos</label>
                                 <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
                             </div>
                         </div>
-
-                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="row">

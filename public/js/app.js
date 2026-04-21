@@ -80028,8 +80028,6 @@ var render = function render() {
       expression: "tipo_centellador"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "clearfix"
-  }), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
@@ -80241,7 +80239,6 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3",
     staticStyle: {
       display: "none"
     }
@@ -80276,7 +80273,6 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3",
     staticStyle: {
       display: "none"
     }
@@ -80311,7 +80307,6 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3",
     staticStyle: {
       display: "none"
     }
@@ -80340,7 +80335,6 @@ var render = function render() {
       expression: "tipo_pelicula"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3",
     staticStyle: {
       display: "none"
     }
@@ -80372,8 +80366,6 @@ var render = function render() {
       expression: "medida"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "clearfix"
-  }), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
@@ -80394,7 +80386,6 @@ var render = function render() {
       expression: "ici"
     }
   })], 1)]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3",
     staticStyle: {
       display: "none"
     }
@@ -80427,7 +80418,6 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3",
     staticStyle: {
       display: "none"
     }
@@ -80460,7 +80450,6 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3",
     staticStyle: {
       display: "none"
     }
@@ -80493,8 +80482,6 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "clearfix"
-  }), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "row"
