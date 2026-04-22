@@ -587,14 +587,14 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="mng">Mng</label>
-                                <input type="number" v-model.number="mng" class="form-control" id="mng" step="1">
+                                <input type="number" v-model.number="mng" class="form-control" id="mng" step="1" @keydown="bloquearDecimal">
                             </div>
                         </div>
 
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="snrn">SNRn</label>
-                                <input type="number" v-model.number="snrn" class="form-control" id="snrn" step="1">
+                                <input type="number" v-model.number="snrn" class="form-control" id="snrn" step="1" @keydown="bloquearDecimal">
                             </div>
                         </div>
 
@@ -636,7 +636,7 @@
                                                     <td @click="selectPosDetalle(k)">
                                                         <div v-if="indexDetalle == k">
                                                             <input type="number" v-model.number="TablaDetalle[k].mng"
-                                                                step="1">
+                                                                step="1" @keydown="bloquearDecimal">
                                                         </div>
                                                         <div v-else>
                                                             {{ FIlaTabla.mng }}
@@ -645,7 +645,7 @@
                                                     <td @click="selectPosDetalle(k)">
                                                         <div v-if="indexDetalle == k">
                                                             <input type="number" v-model.number="TablaDetalle[k].snrn"
-                                                                step="1">
+                                                                step="1" @keydown="bloquearDecimal">
                                                         </div>
                                                         <div v-else>
                                                             {{ FIlaTabla.snrn }}
@@ -1836,6 +1836,9 @@ export default {
             axios.get(urlRegistros).then(response => {
                 this.filtros_aplicados_rd = response.data
             });
+        },
+        bloquearDecimal: function (e) {
+            if (e.key === '.' || e.key === ',') e.preventDefault();
         },
         resolverNuevosOpciones: async function () {
             axios.defaults.baseURL = this.url;

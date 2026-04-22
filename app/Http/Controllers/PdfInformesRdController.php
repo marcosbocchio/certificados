@@ -55,17 +55,21 @@ class PdfInformesRdController extends Controller
             return $juntas_posiciones;
         }
 
-        $posicionesRd = DB::table('posicion_rd')
-            ->whereIn('id', $posicionIds)
-            ->select('id', 'r_densidad', 'mng', 'snrn')
-            ->get()
-            ->keyBy('id');
+        try {
+            $posicionesRd = DB::table('posicion_rd')
+                ->whereIn('id', $posicionIds)
+                ->select('id', 'r_densidad', 'mng', 'snrn')
+                ->get()
+                ->keyBy('id');
 
-        foreach ($juntas_posiciones as $junta_posicion) {
-            $detalle = $posicionesRd->get($junta_posicion->posicion_id);
-            $junta_posicion->r_densidad = $detalle ? $detalle->r_densidad : null;
-            $junta_posicion->mng = $detalle ? $detalle->mng : null;
-            $junta_posicion->snrn = $detalle ? $detalle->snrn : null;
+            foreach ($juntas_posiciones as $junta_posicion) {
+                $detalle = $posicionesRd->get($junta_posicion->posicion_id);
+                $junta_posicion->r_densidad = $detalle ? $detalle->r_densidad : null;
+                $junta_posicion->mng = $detalle ? $detalle->mng : null;
+                $junta_posicion->snrn = $detalle ? $detalle->snrn : null;
+            }
+        } catch (\Exception $e) {
+            // columnas aún no migradas — continúa sin mng/snrn/r_densidad
         }
 
         return $juntas_posiciones;

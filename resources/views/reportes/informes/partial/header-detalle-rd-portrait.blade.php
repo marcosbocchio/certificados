@@ -159,7 +159,7 @@
                             <th colspan="4">Actividad</th>
                         </tr>
                         <tr>
-                            <td colspan="4">{{$actividad ? $actividad . ' Ci' : ''}}</td>
+                            <td colspan="4">{{$actividad !== '' ? $actividad . ' Ci' : ''}}</td>
                         </tr>
                         <tr>
                             <th colspan="2">ICI</th>
