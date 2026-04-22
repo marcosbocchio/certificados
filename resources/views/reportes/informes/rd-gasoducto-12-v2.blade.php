@@ -142,8 +142,8 @@ footer {
                     @endfor
 
                     <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $junta_posicion->codigo }}</td>
-                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $junta_posicion->mng }}</td>
-                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $junta_posicion->snrn }}</td>
+                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $junta_posicion->mng !== null ? intval($junta_posicion->mng) : '' }}</td>
+                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $junta_posicion->snrn !== null ? intval($junta_posicion->snrn) : '' }}</td>
                     <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $formatTipos($junta_posicion->posicion_id) }}</td>
                     <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $formatUbicaciones($junta_posicion->posicion_id) }}</td>
                     <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">

@@ -105,16 +105,18 @@
                             </td>
                         </tr>
                         <tr>
-                            <th colspan="4">Actividad Fuente</th>
+                            <th colspan="4">Actividad</th>
                         </tr>
                         <tr>
-                            <td colspan="4">{{$actividad}}</td>
+                            <td colspan="4">{{$actividad ? $actividad . ' Ci' : ''}}</td>
                         </tr>
                         <tr>
-                           <th colspan="4">Norma Evaluación</th>
+                            <th colspan="2">Norma Evaluación</th>
+                            <th colspan="2">Filtros Aplicados</th>
                         </tr>
                         <tr>
-                            <td colspan="4">{{$norma_evaluacion->codigo}}</td>
+                            <td colspan="2">{{$norma_evaluacion->codigo}}</td>
+                            <td colspan="2">{{ $filtro_aplicado_rd ? $filtro_aplicado_rd->descripcion : '' }}</td>
                         </tr>
 
                         <tr>
@@ -178,7 +180,7 @@
                             <th colspan="2">Tipo centellador</th>
                         </tr>
                         <tr>
-                            <td colspan="2">{{ $dimension_detector ? $dimension_detector->descripcion : '' }}</td>
+                            <td colspan="2">{{ $dimension_detector ? $dimension_detector->descripcion . ' cm' : '' }}</td>
                             <td colspan="2">{{ $tipo_centellador ? $tipo_centellador->descripcion : '' }}</td>
                         </tr>
 
@@ -187,8 +189,8 @@
                             <th colspan="2">SRb DWI</th>
                         </tr>
                         <tr>
-                            <td colspan="2">{{ $informe_rd->pitch }}</td>
-                            <td colspan="2">{{ $informe_rd->srb_dwi }}</td>
+                            <td colspan="2">{{ $informe_rd->pitch ? $informe_rd->pitch . ' µm' : '' }}</td>
+                            <td colspan="2">{{ $informe_rd->srb_dwi ? $informe_rd->srb_dwi . ' µm' : '' }}</td>
                         </tr>
 
                         <tr>
@@ -205,8 +207,8 @@
                             <th colspan="2">Solicitante</th>
                         </tr>
                         <tr>
-                            <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
-                            <td colspan="2" class="borderFilabottom">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
+                            <td colspan="2" class="">{{$ejecutor_ensayo->name}}</td>
+                            <td colspan="2" class="">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
                         </tr>
                     </tbody>
                 </table>

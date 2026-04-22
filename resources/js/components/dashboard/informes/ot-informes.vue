@@ -51,27 +51,10 @@
        </div>
         <div class="col-md-12">
             <div class="row" style="margin-bottom: 8px;">
-                <div class="col-md-2 col-md-offset-6 col-sm-4 col-xs-12">
-                    <div class="form-group" style="margin-bottom:0">
-                        <label style="font-size:12px;">Tipo</label>
-                        <v-select v-model="filtro_tipo" :options="tipos_opciones" label="metodo" placeholder="Todos" @input="aplicarFiltro" :clearable="true">
-                            <template slot="option" slot-scope="option">
-                                <span>{{ option.metodo }}</span> &mdash; <small>{{ option.descripcion }}</small>
-                            </template>
-                        </v-select>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-4 col-xs-12">
-                    <div class="form-group" style="margin-bottom:0">
-                        <label style="font-size:12px;">Obra</label>
-                        <v-select v-model="filtro_obra" :options="obras_opciones" placeholder="Todas" @input="aplicarFiltro" :clearable="true"></v-select>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-4 col-xs-12">
-                    <div class="form-group" style="margin-bottom:0">
-                        <label style="font-size:12px;">N° Informe</label>
+                <div class="col-md-3 col-md-offset-9 col-sm-4 col-xs-12">
+                    <div class="form-group" style="margin-bottom:0;">
                         <div class="input-group">
-                            <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar N°...">
+                            <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar">
                             <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: rgb(255, 204, 0);"><i class="fa fa-search"></i></span>
                         </div>
                     </div>

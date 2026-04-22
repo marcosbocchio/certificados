@@ -100,8 +100,8 @@ footer {
                         @endif
                     </td>
                     <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $junta_posicion->posicion }}</td>
-                    <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $junta_posicion->mng }}</td>
-                    <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $junta_posicion->snrn }}</td>
+                    <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $junta_posicion->mng !== null ? intval($junta_posicion->mng) : '' }}</td>
+                    <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $junta_posicion->snrn !== null ? intval($junta_posicion->snrn) : '' }}</td>
                     <td style="font-size: 9px;" class="bordered-td">{{ $formatIndicaciones($junta_posicion->posicion_id) }}</td>
                     <td style="font-size: 11px; text-align: center" class="bordered-td">
                         @if ($junta_posicion->aceptable_sn)
