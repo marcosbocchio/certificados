@@ -19,7 +19,9 @@ class FiltrosAplicadosRdController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $descripcion = trim($request->input('descripcion'));
+        $registro = FiltrosAplicadosRd::firstOrCreate(['descripcion' => $descripcion]);
+        return response()->json($registro, 201);
     }
 
     public function show($id)

@@ -19,7 +19,9 @@ class TiposCentelladorController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $descripcion = trim($request->input('descripcion'));
+        $registro = TiposCentellador::firstOrCreate(['descripcion' => $descripcion]);
+        return response()->json($registro, 201);
     }
 
     public function show($id)

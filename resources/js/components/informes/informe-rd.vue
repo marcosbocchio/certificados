@@ -243,7 +243,8 @@
                             <div class="form-group">
                                 <label>Tipo centellador</label>
                                 <v-select v-model="tipo_centellador" :options="tipos_centellador"
-                                    label="descripcion"></v-select>
+                                    label="descripcion" taggable
+                                    :create-option="desc => ({ descripcion: desc, _nuevo: true })"></v-select>
                             </div>
                         </div>
 
@@ -371,7 +372,8 @@
                                     <div class="form-group">
                                         <label>Filtros aplicados</label>
                                         <v-select v-model="filtro_aplicado_rd" label="descripcion"
-                                            :options="filtros_aplicados_rd"></v-select>
+                                            :options="filtros_aplicados_rd" taggable
+                                            :create-option="desc => ({ descripcion: desc, _nuevo: true })"></v-select>
                                     </div>
                                 </div>
                             </div>
@@ -1835,6 +1837,32 @@ export default {
                 this.filtros_aplicados_rd = response.data
             });
         },
+        resolverNuevosOpciones: async function () {
+            axios.defaults.baseURL = this.url;
+            const token = '?api_token=' + Laravel.user.api_token;
+            const promises = [];
+            if (this.tipo_centellador && this.tipo_centellador._nuevo) {
+                promises.push(
+                    axios.post('tipos_centellador' + token, { descripcion: this.tipo_centellador.descripcion })
+                        .then(r => {
+                            if (!this.tipos_centellador.find(o => o.id === r.data.id))
+                                this.tipos_centellador.push(r.data);
+                            this.tipo_centellador = r.data;
+                        })
+                );
+            }
+            if (this.filtro_aplicado_rd && this.filtro_aplicado_rd._nuevo) {
+                promises.push(
+                    axios.post('filtros_aplicados_rd' + token, { descripcion: this.filtro_aplicado_rd.descripcion })
+                        .then(r => {
+                            if (!this.filtros_aplicados_rd.find(o => o.id === r.data.id))
+                                this.filtros_aplicados_rd.push(r.data);
+                            this.filtro_aplicado_rd = r.data;
+                        })
+                );
+            }
+            await Promise.all(promises);
+        },
         getSoftwaresAdquisicionRd: function () {
             axios.defaults.baseURL = this.url;
             var urlRegistros = 'softwares_adquisicion_rd' + '?api_token=' + Laravel.user.api_token;
@@ -2502,8 +2530,9 @@ export default {
 
         },
 
-        Store: function () {
+        Store: async function () {
             this.errors = [];
+            await this.resolverNuevosOpciones();
             console.log(this.TablaDetalle);
             let gasoducto_sn;
             if (this.formato == 'DUCTO')
@@ -2603,8 +2632,9 @@ export default {
             }).finally(() => this.$store.commit('loading', false))
 
         },
-        Update: function () {
+        Update: async function () {
             this.errors = [];
+            await this.resolverNuevosOpciones();
             console.log(this.TablaDetalle);
             let gasoducto_sn;
             if (this.formato == 'DUCTO')
