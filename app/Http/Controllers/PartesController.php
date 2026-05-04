@@ -309,7 +309,9 @@ class PartesController extends Controller
 
             $parteDetalle  = new ParteDetalles;
             $parteDetalle->parte_id = $parte->id;
-            $parteDetalle->informe_id =$informe['id'];
+            $parteDetalle->informe_id = $informe['id'];
+            $parteDetalle->costura_original = $informe['costura_original'] ?? null;
+            $parteDetalle->costura_final = $informe['costura_final'] ?? null;
             $parteDetalle->save();
 
             (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
@@ -541,11 +543,13 @@ class PartesController extends Controller
                               ->join('informes','informes.id','=','parte_detalles.informe_id')
                               ->join('informes_view','informes_view.informe_id','=','informes.id')
                               ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                              ->join('informes_rd','informes_rd.informe_id','=','informes.id')
                               ->leftjoin('diametros_espesor','diametros_espesor.id','=','informes.diametro_espesor_id')
+                              ->leftJoin(DB::raw('(SELECT informe_rd_id, COUNT(DISTINCT codigo) as costuras_count FROM juntas_rd GROUP BY informe_rd_id) as jrd_count'), 'jrd_count.informe_rd_id', '=', 'informes_rd.id')
                               ->where('metodo_ensayos.metodo','RD')
                               ->where('parte_detalles.parte_id',$id)
                               ->where('informes_view.importable_sn',0)
-                              ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente,diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico ')
+                              ->selectRaw('parte_detalles.*, COALESCE(parte_detalles.costura_final, jrd_count.costuras_count) as costura_final, COALESCE(parte_detalles.costura_original, jrd_count.costuras_count) as costura_original, 0 as informe_sel, informes_view.numero_formateado, DATE_FORMAT(informes.fecha,"%d/%m/%Y") as fecha_formateada, informes.componente as componente, diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico')
                               ->get();
 
 
@@ -670,6 +674,7 @@ class PartesController extends Controller
     public function getInformeRdParte($id){
 
         $informe_rd = DB::select('select
+                                    COUNT(DISTINCT(juntas_rd.codigo)) as costuras,
                                     informes.componente,
                                     diametros_espesor.diametro,
                                     informes.diametro_especifico,
@@ -677,9 +682,11 @@ class PartesController extends Controller
                                     FROM informes
 
                                     inner join informes_rd on informes.id = informes_rd.informe_id
+                                    left join juntas_rd on juntas_rd.informe_rd_id = informes_rd.id
                                     left join diametros_espesor on diametros_espesor.id = informes.diametro_espesor_id
                                     WHERE
-                                    informes.id =:id',['id' => $id ]);
+                                    informes.id =:id
+                                    group by informes.id',['id' => $id ]);
 
       return $informe_rd;
 

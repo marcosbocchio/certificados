@@ -353,6 +353,7 @@ footer {
                     <td style="font-size: 12px;width: 85px; text-align: center;"><b>Planta</b></td>
                     <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
                     <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
+                    <td style="font-size: 12px;width: 40px; text-align: center;"><b>Costuras</b></td>
                     <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
                     <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
                 </tr>
@@ -365,6 +366,7 @@ footer {
                                     <td style="font-size: 12px;text-align: center; ">{{$item->planta ? $item->planta : ''}}</td>
                                     <td style="font-size: 12px;text-align: center;">{{$item->componente}}</td>
                                     <td style="font-size: 12px;text-align: center;">{{$item->diametro_especifico ? $item->diametro_especifico : ($item->diametro ? $item->diametro : '') }}</td>
+                                    <td style="font-size: 12px;text-align: center;">{{$item_rd->costura ? $item_rd->costura : ''}}</td>
                                     <td style="font-size: 12px;text-align: center;">{{$item->solicitado_por ? $item->solicitado_por : ''}}</td>
                                     <td style="font-size: 12px;text-align: center;">&nbsp;</td>
                                 </tr>

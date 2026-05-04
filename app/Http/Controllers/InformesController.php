@@ -530,7 +530,7 @@ class InformesController extends Controller
 
         $obra = str_replace('--', '/', $obra);
         $componente = str_replace('--', '/', $componente);
-        $informes =  InformesView::where('metodo', 'RI')
+        $informes =  InformesView::whereIn('metodo', ['RI', 'RD'])
             ->where('ot_id', $ot_id)
             ->whereRaw("componente LIKE '%" . $componente . "%'")
             ->Obra($obra)

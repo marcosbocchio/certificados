@@ -594,28 +594,32 @@
                                                 <th>Informe</th>
                                                 <th>Componente</th>
                                                 <th>Diámetro</th>
-                                                <th colspan="2">&nbsp;</th>
+                                                <th>Costuras</th>
+                                                <th>&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(item, k) in TablaInformesRd" :key="k">
+                                            <tr v-for="(item, k) in TablaInformesRd" :key="k"
+                                                @click="selectPosTablaInformesRd(k)">
                                                 <td> {{ item.numero_formateado }}</td>
+                                                <td>{{ item.componente }}</td>
+                                                <td>{{ item.diametro_especifico ? item.diametro_especifico : item.diametro }}</td>
                                                 <td>
-                                                    <div>
-                                                        {{ item.componente }}
+                                                    <div v-if="indexTablaInformesRd == k">
+                                                        <input type="number"
+                                                            v-model.number="TablaInformesRd[k].costura_final"
+                                                            maxlength="4" min="0"
+                                                            @change="validarCantidad(TablaInformesRd, k, 'costura_final')">
                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        {{ item.diametro_especifico ? item.diametro_especifico :
-                                                            item.diametro }}
+                                                    <div v-else>
+                                                        {{ item.costura_final }}
                                                     </div>
                                                 </td>
                                                 <td style="text-align:center"> <a @click="RemoveTablaRd(k)"> <app-icon
                                                             img="minus-circle" color="black"></app-icon> </a></td>
                                             </tr>
                                             <tr v-for="fila in 4">
-                                                <td colspan="6" style="background: #FFFFFF"> &nbsp;</td>
+                                                <td colspan="5" style="background: #FFFFFF"> &nbsp;</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1704,16 +1708,16 @@ export default {
 
                     this.informes_rd_data.forEach(function (item) {
 
-                        let visible_sn = true;
-
                         this.TablaInformesRd.push({
 
                             numero_formateado: item.numero_formateado,
                             id: item.informe_id,
-                            visible: visible_sn,
+                            visible: true,
                             componente: item.componente,
                             diametro_especifico: item.diametro_especifico,
-                            diametro: item.diametro
+                            diametro: item.diametro,
+                            costura_original: item.costura_original,
+                            costura_final: item.costura_final,
                         });
                     }.bind(this));
 
@@ -2867,7 +2871,6 @@ export default {
             var urlRegistros = 'partes/informe_rd/' + id + '?api_token=' + Laravel.user.api_token;
             let res = await axios.get(urlRegistros);
             let informe_rd_parte = await res.data;
-            console.log(informe_rd_parte)
 
             informe_rd_parte.forEach(function (item) {
 
@@ -2880,6 +2883,8 @@ export default {
                     diametro_especifico: item.diametro_especifico,
                     diametro: item.diametro,
                     metodo: item.metodo,
+                    costura_original: item.costuras,
+                    costura_final: item.costuras,
                 });
 
             }.bind(this));

@@ -270,7 +270,7 @@
                                 <h4>No hay datos para mostrar</h4>
                             </div>
                         </tab>
-                        <tab  v-if="$can('R_defectologia')" name="Defectología">
+                        <tab  v-if="$can('R_defectologia')" name="Defectología" id="defectologia">
                             <div v-if="TablaDetalleDefectos.length">
                                 <div class="col-lg-4">
                                     <button @click="downloadPdf_tab2">Exportar PDF</button>
@@ -358,7 +358,7 @@
                                 <h4>No hay datos para mostrar</h4>
                             </div>
                         </tab>
-                        <tab  v-if="$can('R_defectologia_produccion')" name="Defectología/Producción">
+                        <tab  v-if="$can('R_defectologia_produccion')" name="Defectología/Producción" id="defectologia-produccion">
                             <div v-if="TablaDefectosSoldador.length">
                                 <div class="col-lg-4">
                                     <button @click="downloadPdf_tab3">Exportar PDF</button>
@@ -432,7 +432,7 @@
                             </div>
 
                         </tab>
-                        <tab  v-if="$can('R_indicaciones')" name="Indicaciones">
+                        <tab  v-if="$can('R_indicaciones')" name="Indicaciones" id="indicaciones">
                             <div v-if="TablaIndicaciones.length">
                                 <div class="col-lg-4">
                                     <button @click="downloadPdf_tab4">Exportar PDF</button>
