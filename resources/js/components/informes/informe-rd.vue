@@ -605,6 +605,8 @@
                                     img="plus-circle" color="black"></app-icon></button>
                             <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon
                                     img="clone" color="black"></app-icon></button>
+                            <button type="button" @click="OpenClonacionMasiva()" title="Clonación masiva"><app-icon
+                                    img="clone" color="black"></app-icon></button>
                             <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash"
                                     color="black"></app-icon></button>
                         </div>
@@ -1150,6 +1152,7 @@
         </div>
         <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData"
             @setReferencia="AddReferencia"></create-referencias>
+        <clonacion-masiva @actualizarTabla="ClonacionMasiva"></clonacion-masiva>
     </div>
 </template>
 
@@ -1158,7 +1161,7 @@
 import uniq from 'lodash/uniq';
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
-import { eventSetReferencia } from '../event-bus';
+import { eventSetReferencia, eventModal } from '../event-bus';
 import 'vue2-datepicker/locale/es'; import { mapState } from 'vuex';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
@@ -1167,13 +1170,14 @@ import { toastrInfo, toastrDefault } from '../toastrConfig';
 import { isInt } from '../../functions/isInt.js';
 import { isFloat } from '../../functions/isFloat.js';
 import { sprintf } from '../../functions/sprintf.js'
+import ClonacionMasiva from '../dashboard/informes/clonacion-masiva.vue';
 
 export default {
 
     components: {
         DatePicker,
-        Loading
-
+        Loading,
+        ClonacionMasiva,
     },
     props: {
         editmode: {
@@ -2258,6 +2262,16 @@ export default {
         insertarClonacion: function (posicion) {
             this.AddDetalle(posicion);
         },
+        ClonacionMasiva($desde, $hasta) {
+            while ($desde <= $hasta) {
+                this.junta = $desde.toString();
+                this.ClonarPosPlanta();
+                $desde++;
+            }
+        },
+        OpenClonacionMasiva: function () {
+            eventModal.$emit('open_clonacion_masiva');
+        },
         ClonarPosPlanta: function () {
             this.clonando = true;
             if (this.TablaDetalle.length > 0) {
@@ -2266,11 +2280,13 @@ export default {
                 let juntaAux = TablaDetalleReverse[x].junta;
                 let posicionJunta = [];
                 while ((x >= 0) && (juntaAux == TablaDetalleReverse[x].junta)) {
-                    posicionJunta.unshift(TablaDetalleReverse[x].posicion);
+                    posicionJunta.unshift(TablaDetalleReverse[x]);
                     x = x - 1;
                 }
                 posicionJunta.forEach(function (pos) {
-                    this.AddDetalle(pos);
+                    this.mng = pos.mng;
+                    this.snrn = pos.snrn;
+                    this.AddDetalle(pos.posicion);
                 }.bind(this));
             }
             this.clonando = false;
