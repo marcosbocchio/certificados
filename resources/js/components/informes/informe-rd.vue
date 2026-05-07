@@ -606,7 +606,7 @@
                             <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon
                                     img="clone" color="black"></app-icon></button>
                             <button type="button" @click="OpenClonacionMasiva()" title="Clonación masiva"><app-icon
-                                    img="clone" color="black"></app-icon></button>
+                                    img="list-ol" color="black"></app-icon></button>
                             <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash"
                                     color="black"></app-icon></button>
                         </div>
@@ -641,7 +641,7 @@
                                                                 step="1" @keydown="bloquearDecimal">
                                                         </div>
                                                         <div v-else>
-                                                            {{ FIlaTabla.mng }}
+                                                            {{ FIlaTabla.mng !== null ? parseInt(FIlaTabla.mng) : '' }}
                                                         </div>
                                                     </td>
                                                     <td @click="selectPosDetalle(k)">
@@ -650,7 +650,7 @@
                                                                 step="1" @keydown="bloquearDecimal">
                                                         </div>
                                                         <div v-else>
-                                                            {{ FIlaTabla.snrn }}
+                                                            {{ FIlaTabla.snrn !== null ? parseInt(FIlaTabla.snrn) : '' }}
                                                         </div>
                                                     </td>
                                                     <td @click="selectPosDetalle(k)"> <input type="checkbox"
