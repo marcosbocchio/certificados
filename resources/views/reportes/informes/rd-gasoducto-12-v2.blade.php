@@ -7,22 +7,25 @@
 </head>
 
 <style>
-
     @page {
         margin: 240px 40px 255px 40px !important;
         padding: 0px 0px 0px 0px !important;
     }
 
-header {
-    position:fixed;
-    top: -230px;
-}
+    header {
+        position: fixed;
+        top: -230px;
+    }
 
-footer {
-    position: fixed; bottom:0px;
-    padding-top: 0px;
-}
+    footer {
+        position: fixed;
+        bottom: 0px;
+        padding-top: 0px;
+    }
 
+    .page-break {
+        page-break-before: always;
+    }
 </style>
 
 <body>
@@ -35,7 +38,6 @@ footer {
     @include('reportes.partial.linea-amarilla')
 </header>
 <footer>
-
     @include('reportes.partial.linea-amarilla')
     @include('reportes.informes.partial.rd-diccionario', ['dictionaryFontSize' => 11, 'showObservaciones' => true])
     @include('reportes.partial.linea-amarilla')
@@ -46,39 +48,9 @@ footer {
 <main>
     @include('reportes.informes.partial.header-detalle-rd-landscope')
 
-    @php
-        $pasadasPorJunta = collect($pasadas_juntas)->groupBy('junta_id');
-        $defectosPorPosicion = collect($defectos_posiciones)->groupBy('posicion_id');
-        $getPasada = function ($juntaId, $numero) use ($pasadasPorJunta) {
-            return optional($pasadasPorJunta->get($juntaId, collect())->first(function ($pasada) use ($numero) {
-                return (int) $pasada->numero === (int) $numero;
-            }));
-        };
-        $formatTipos = function ($posicionId) use ($defectosPorPosicion) {
-            return $defectosPorPosicion->get($posicionId, collect())->pluck('codigo')->filter()->implode('/');
-        };
-        $formatUbicaciones = function ($posicionId) use ($defectosPorPosicion) {
-            return $defectosPorPosicion->get($posicionId, collect())->map(function ($defecto) {
-                if (!$defecto->pasada) {
-                    return null;
-                }
-
-                if ($defecto->pasada == 'RAIZ') {
-                    $sector = 'R';
-                } elseif ($defecto->pasada == 'RELLENO') {
-                    $sector = 'Y';
-                } elseif ($defecto->pasada == 'SOBREMONTA') {
-                    $sector = 'S';
-                } else {
-                    $sector = '';
-                }
-
-                return $defecto->codigo . '(' . $defecto->posicion . ')' . $sector;
-            })->filter()->implode('/');
-        };
-    @endphp
-
-    <table width="100%" style="border-collapse: collapse;">
+    {{-- Agrupar las juntas en bloques de 4 --}}
+    @foreach (collect($juntas_posiciones)->chunk(4) as $bloque)
+    <table width="100%" style="border-collapse: collapse; page-break-inside: avoid; margin-bottom: 15px;">
         <thead>
             <tr>
                 <td colspan="23"><strong style="font-size: 14px;">Indicaciones</strong></td>
@@ -91,97 +63,48 @@ footer {
                 <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">Resultados</td>
             </tr>
             <tr>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">Pk</td>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">Elem.</td>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">Tipo</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">P</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">L</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">Z</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">P</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">Z</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">P</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">Z</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">P</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">Z</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">P</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">Z</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">P</td>
-                <td style="font-size: 11px; text-align: center" class="bordered-td">Z</td>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">Posicion</td>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">Mng</td>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">SNRn</td>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">Tipo</td>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">Posicion</td>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">AP</td>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">RZ</td>
-            </tr>
-            <tr>
-                <td style="font-size: 11px; text-align: center" colspan="3" class="bordered-td">1&deg; Pasada</td>
-                <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">2&deg; Pasada</td>
-                <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">3&deg; Pasada</td>
-                <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">4&deg; Pasada</td>
-                <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">5&deg; Pasada</td>
-                <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">6&deg; Pasada</td>
+                <td style="font-size: 11px; text-align: center" class="bordered-td">Pk</td>
+                <td style="font-size: 11px; text-align: center" class="bordered-td">Elem.</td>
+                <td style="font-size: 11px; text-align: center" class="bordered-td">Tipo</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">L</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:28px; text-align: center" class="bordered-td">Z</td>
+                <td style="font-size: 11px; text-align: center" class="bordered-td">Posicion</td>
+                <td style="font-size: 11px; text-align: center" class="bordered-td">Mng</td>
+                <td style="font-size: 11px; text-align: center" class="bordered-td">SNRn</td>
+                <td style="font-size: 11px; text-align: center" class="bordered-td">Tipo</td>
+                <td style="font-size: 11px; text-align: center" class="bordered-td">Posicion</td>
+                <td style="font-size: 11px; text-align: center" class="bordered-td">AP</td>
+                <td style="font-size: 11px; text-align: center" class="bordered-td">RZ</td>
             </tr>
         </thead>
         <tbody>
-            @foreach ($juntas_posiciones as $junta_posicion)
-                <tr>
-                    <td style="font-size: 10px; text-align: center" rowspan="3" class="bordered-td">{{ $informe->km ?: '' }}</td>
-                    <td style="font-size: 10px; text-align: center" rowspan="3" class="bordered-td">{{ $junta_posicion->junta }}</td>
-                    <td style="font-size: 10px; text-align: center" rowspan="3" class="bordered-td">{{ $ot_tipo_soldadura->TipoSoldadura->codigo }}</td>
-
-                    @for ($numero = 1; $numero <= 6; $numero++)
-                        @php
-                            $pasada = $getPasada($junta_posicion->id, $numero);
-                            $campos = $numero === 1 ? ['soldadorp', 'soldadorl', 'soldadorz'] : ['soldadorp', 'soldadorz'];
-                        @endphp
-                        @foreach ($campos as $campo)
-                            <td style="font-size: 9px; text-align: center" class="bordered-td">{{ $pasada->$campo ?? '' }}</td>
-                        @endforeach
-                    @endfor
-
-                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $junta_posicion->codigo }}</td>
-                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $junta_posicion->mng !== null ? intval($junta_posicion->mng) : '' }}</td>
-                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $junta_posicion->snrn !== null ? intval($junta_posicion->snrn) : '' }}</td>
-                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $formatTipos($junta_posicion->posicion_id) }}</td>
-                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">{{ $formatUbicaciones($junta_posicion->posicion_id) }}</td>
-                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">
-                        @if ($junta_posicion->aceptable_sn)
-                            X
-                        @endif
-                    </td>
-                    <td style="font-size: 9px; text-align: center" rowspan="3" class="bordered-td">
-                        @if (!$junta_posicion->aceptable_sn)
-                            X
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 11px; text-align: center" colspan="3" class="bordered-td">7&deg; Pasada</td>
-                    <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">8&deg; Pasada</td>
-                    <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">9&deg; Pasada</td>
-                    <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">10&deg; Pasada</td>
-                    <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">11&deg; Pasada</td>
-                    <td style="font-size: 11px; text-align: center" colspan="2" class="bordered-td">12&deg; Pasada</td>
-                </tr>
-                <tr>
-                    @for ($numero = 7; $numero <= 12; $numero++)
-                        @php
-                            $pasada = $getPasada($junta_posicion->id, $numero);
-                            $campos = $numero === 7 ? ['soldadorp', 'soldadorl', 'soldadorz'] : ['soldadorp', 'soldadorz'];
-                        @endphp
-                        @foreach ($campos as $campo)
-                            <td style="font-size: 9px; text-align: center" class="bordered-td">{{ $pasada->$campo ?? '' }}</td>
-                        @endforeach
-                    @endfor
-                </tr>
+            @foreach ($bloque as $junta_posicion)
+                @include('reportes.informes.partial.junta-completa-rd-v12', [
+                    'junta_posicion'    => $junta_posicion,
+                    'pasadas_juntas'    => $pasadas_juntas,
+                    'defectos_posiciones' => $defectos_posiciones,
+                    'informe'           => $informe,
+                    'ot_tipo_soldadura' => $ot_tipo_soldadura,
+                ])
             @endforeach
-
         </tbody>
     </table>
+    @endforeach
 
-    @include('reportes.informes.partial.modelos3d-landscope')
+    <div style="page-break-inside: avoid;">
+        @include('reportes.informes.partial.modelos3d-landscope')
+    </div>
 
 </main>
 
@@ -198,8 +121,6 @@ footer {
             $char_space = 0.0;  //  default
             $angle = 0.0;   //  default
             $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-
-        /*    $pdf->line(44,180,819,180,array(0,0,0),1.5);  */
         }
 
     </script>
@@ -217,7 +138,6 @@ footer {
             $char_space = 0.0;  //  default
             $angle = 0.0;   //  default
             $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-
         }
 
     </script>
