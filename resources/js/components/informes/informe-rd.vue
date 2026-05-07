@@ -1074,6 +1074,23 @@
                 </div>
             </form>
 
+            <div class="modal fade" tabindex="-1" role="dialog" id="modal-advertencia-pasadas">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Advertencia</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>No se cargaron pasadas. ¿Desea continuar de todas formas?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-enod" @click="proceed">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal fade " tabindex="-1" role="dialog" id="modal-clonar" data-keyboard="false"
                 data-backdrop="static">
                 <div class="modal-dialog modal-md" role="document">
@@ -1415,6 +1432,7 @@ export default {
             clonando: false,
             clonando_pasada: false,
             importado_pasadas: false,
+            actionToConfirm: '',
             parseCsv: [],
             TablaImportada: [],
             sel_todos_clonar: false,
@@ -2549,7 +2567,21 @@ export default {
 
         },
 
-        Store: async function () {
+        proceed: function () {
+            if (this.actionToConfirm === 'store') {
+                this.Store(true);
+            } else if (this.actionToConfirm === 'update') {
+                this.Update(true);
+            }
+        },
+
+        Store: async function (forzar = false) {
+            if (this.TablaPasadas.length === 0 && !forzar) {
+                this.actionToConfirm = 'store';
+                $('#modal-advertencia-pasadas').modal('show');
+                return;
+            }
+            $('#modal-advertencia-pasadas').modal('hide');
             this.errors = [];
             await this.resolverNuevosOpciones();
             console.log(this.TablaDetalle);
@@ -2651,7 +2683,13 @@ export default {
             }).finally(() => this.$store.commit('loading', false))
 
         },
-        Update: async function () {
+        Update: async function (forzar = false) {
+            if (this.TablaPasadas.length === 0 && !forzar) {
+                this.actionToConfirm = 'update';
+                $('#modal-advertencia-pasadas').modal('show');
+                return;
+            }
+            $('#modal-advertencia-pasadas').modal('hide');
             this.errors = [];
             await this.resolverNuevosOpciones();
             console.log(this.TablaDetalle);

@@ -17,7 +17,7 @@ header {
 }
 
 footer {
-    position: fixed; bottom:0px;
+    position: fixed; bottom:20px;
     padding-top: 0px;
 }
 

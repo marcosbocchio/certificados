@@ -19,7 +19,7 @@
 
     footer {
         position: fixed;
-        bottom: 0px;
+        bottom: 20px;
         padding-top: 0px;
     }
 
