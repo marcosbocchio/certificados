@@ -5,37 +5,18 @@
             <i class="fa fas fa-radiation-alt fa-spin"></i>
           </div>
           <div class="inner">
-            <img :src="src_icono" width="100px" />
-            <p class="posicion_1 color_cant_1" >
-              <div v-if="!invertir_cantidad_sn">
-                 <p class="posicion_1 color_cant_1" > {{ cantidad_1 }} </p>    
-              </div>
-              <div v-else>
-                  <p class="posicion_1 color_cant_1" > {{ cantidad_2}} </p>    
-              </div>
-                    
-            <div v-if="cantidad_2 >= 0">
-              <div v-if="!invertir_cantidad_sn">
-                 <p class="posicion_2 color_cant_2" > {{ cantidad_2 }} </p>    
-              </div>
-              <div v-else>
-                  <p class="posicion_2 color_cant_2" > {{ cantidad_1}} </p>    
-              </div>
+            <div v-if="icono" class="card-icon-badge">
+              <i :class="icono"></i>
+            </div>
+            <div class="card-nums">
+              <span class="num-primary">{{ !invertir_cantidad_sn ? cantidad_1 : cantidad_2 }}</span>
+              <span class="num-secondary" v-if="cantidad_2 >= 0">{{ !invertir_cantidad_sn ? cantidad_2 : cantidad_1 }}</span>
             </div>
           </div>
-            <div :class="class_footer_img">
-              <a href="#" class="small-box-footer" >
-                <div v-if="tablero_sn"  :class="class_color_sub_titulo" style="line-height: 1.9;">                      
-                     {{ titulo }}           
-                     <div v-if="titulo_2" style="display:inline-block" class="color_cant_1">
-                       <span style="color:#535353;font-weight: bold;"> | </span> {{ titulo_2 }}
-                     </div> 
-                </div>
-                <div v-else>
-                    &nbsp;
-                </div>
-                </a> 
-            </div>  
+          <div class="card-footer-enod">
+            <span v-if="tablero_sn">{{ titulo }}<span v-if="titulo_2" class="footer-sep"> | {{ titulo_2 }}</span></span>
+            <span v-else>&nbsp;</span>
+          </div>
         </div>     
     </div>
 </template>
@@ -110,73 +91,92 @@ export default {
              type: Boolean,
              required:false,
              default:false
+         },
+
+         icono : {
+             type: String,
+             required: false,
+             default: ''
          }
 
-         
          }
 }
 </script>
 
 
-<style >
+<style>
 
 .small-box {
   position: relative;
-  text-align: center !important;
-  border-radius: 5px;
-  -webkit-box-shadow: 1px 1px 5px -1px rgba(0,0,0,0.75);
-  -moz-box-shadow: 1px 1px 5px -1px rgba(0,0,0,0.75);
-   box-shadow: 1px 1px 5px -1px rgba(0,0,0,0.75);
-}
-
-.small-box .inner .titulo {
-
-  font-size: 12px;
-  font-weight: bold;
-  margin-top: -10px;
-  
-}
-
-.color_1, .color_cant_1  {
-  color: rgb(255, 255, 255);
-}
-  
-.color_2 {
-  color: rgb(32, 32, 32);
-}
-
-.color_3, .color_cant_2 {
-  color: rgb(255, 204, 0);
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  overflow: hidden;
 }
 
 .small-box .inner {
-
-    padding-bottom: 0px;
+  padding: 18px 16px 10px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-
-.small-box .inner .posicion_1 {
-  position: absolute;;
-  font-size: 26px; 
-  top: 0;
-  right: 20px;
-  color: white;
+.card-icon-badge {
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
 }
 
+.bg-custom-1 .card-icon-badge { background: #D0E8FF; color: #2E80E0; }
+.bg-custom-2 .card-icon-badge { background: #C8EFD9; color: #2E9A61; }
+.bg-custom-3 .card-icon-badge { background: #DDD8FF; color: #6C56E5; }
+.bg-custom-4 .card-icon-badge { background: #C8EEF6; color: #239AB5; }
+.bg-custom-5 .card-icon-badge { background: #FFE8C4; color: #D4892A; }
+.bg-custom-6 .card-icon-badge { background: #FFD9E6; color: #C9527A; }
+.bg-custom-7 .card-icon-badge { background: #D0E8FF; color: #2E80E0; }
+.bg-custom-8 .card-icon-badge { background: #DDD8FF; color: #6C56E5; }
 
-.small-box .inner .posicion_2 {
-  position: absolute;;
-  font-size: 26px; 
-  bottom: 15px;
-  right: 20px;
-  color: rgb(255, 204, 0);
+.card-nums {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
-.small-box .small-box-footer {
-  font-size: 11px;
+.num-primary {
+  font-size: 30px;
+  font-weight: 700;
+  color: #2D3748;
+  line-height: 1.1;
+}
+
+.num-secondary {
+  font-size: 18px;
   font-weight: 600;
-  font-family: 'Montserrat',sans-serif;
-  padding-bottom: 0;
+  color: #7A8594;
+  line-height: 1.2;
+}
+
+.card-footer-enod {
+  background-color: rgba(0,0,0,0.04);
+  border-top: 1px solid rgba(0,0,0,0.07);
+  padding: 7px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  color: #7A8594;
+  text-align: center;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.footer-sep {
+  color: #b0b8c6;
+  font-weight: 400;
 }
 
 .cuadro-loading-badge {
@@ -186,7 +186,7 @@ export default {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255,255,255,0.9);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,78 +196,29 @@ export default {
 
 .cuadro-loading-badge i {
   font-size: 12px;
-  color: #f9ca33;
+  color: #4F8CFF;
 }
 
-.zoom:hover  {
-
-  -ms-transform: scale(1.03); /* IE 9 */
-  -webkit-transform: scale(1.03); /* Safari 3-8 */
-  transform: scale(1.03); 
-  transition: 0.99s;
-
+.zoom:hover {
+  transform: scale(1.03);
+  transition: 0.2s;
 }
 
 .flash:hover {
-
   opacity: 1;
-	-webkit-animation: flash 1.5s;
-	animation: flash 1.5s;
-
+  -webkit-animation: flash 1.5s;
+  animation: flash 1.5s;
 }
 
 @-webkit-keyframes flash {
-	0% {
-		opacity: .4;
-	}
-	100% {
-		opacity: 1;
-	}
+  0% { opacity: .4; }
+  100% { opacity: 1; }
 }
 @keyframes flash {
-	0% {
-		opacity: .4;
-	}
-	100% {
-		opacity: 1;
-	}
+  0% { opacity: .4; }
+  100% { opacity: 1; }
 }
 
-.small_box_opacity {  
-    
-    opacity: 0.5;
-}
+.small_box_opacity { opacity: 0.5; }
 
-  .footer-oper-inf {
-
-    background-image: url("/img/tablero/barra-oper-inf.svg") !important;
-    background-size:     cover;                   
-    background-repeat:   no-repeat;
-    background-position: center center;
-    
-    }
-
-  .footer-equipos-partes {
-
-    background-image: url("/img/tablero/barra-equipos-partes.svg") !important;
-    background-size:     cover;                   
-    background-repeat:   no-repeat;
-    background-position: center center;  
-  }
-
-  .footer-proc-cert {
-
-    background-image: url("/img/tablero/barra-proc-cert.svg") !important;
-    background-size:     cover;                   
-    background-repeat:   no-repeat;
-    background-position: center center;  
-   }
-
-   .footer-doc-remitos {
-
-    background-image: url("/img/tablero/barra-doc-remitos.svg") !important;
-    background-size:     cover;                   
-    background-repeat:   no-repeat;
-    background-position: center center;  
-    }
 </style>

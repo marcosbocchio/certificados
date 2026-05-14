@@ -19,12 +19,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css')}}">
+    <!-- Font Awesome 6 Free -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <!-- Ionicons -->
-    <link  rel="stylesheet" href="{{asset('adminlte/bower_components/Ionicons/css/ionicons.min.css')}}">
-
-    <script src="https://kit.fontawesome.com/2740e8ca64.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{asset('adminlte/bower_components/Ionicons/css/ionicons.min.css')}}">
 
     <!-- message -->
     <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
@@ -55,7 +53,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 </head>
 
-<body class="hold-transition skin-yellow fixed sidebar-mini">
+<body class="hold-transition skin-black fixed sidebar-mini">
 
 @include('layouts.enod.partials.sidebar-menu')
 @include('layouts.enod.partials.header')

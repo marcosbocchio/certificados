@@ -6,10 +6,10 @@
         <!-- Logo -->
         <a href="{{ route('dashboard') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>E</b>nod</span>
+            <span class="logo-mini"><img src="{{asset('img/logo-enod-t.png')}}" height="38px" alt="Logo"></span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
-                 <img src="{{asset('img/logo-enod.png')}}" style="margin-top: -10px;" height="70px" alt="Logo Enod">
+                 <img src="{{asset('img/logo-enod-t.png')}}" style="margin-top: -10px;" height="70px" alt="Logo">
             </span>
         </a>
 
@@ -30,7 +30,7 @@
                     <li class="dropdown notifications-menu">
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-bell-o"></i>
+                            <i class="far fa-bell"></i>
                             @php
                                  $total_notificaciones =  0;
                                  foreach ($user->notificaciones_resumen as $item){
@@ -109,7 +109,7 @@
                                     <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
-                                        <i class="fa fa-power -off"></i>
+                                        <i class="fas fa-power-off"></i>
                                         {{ __('Cerrar sesión') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

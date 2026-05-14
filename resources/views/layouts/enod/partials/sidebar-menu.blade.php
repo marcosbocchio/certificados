@@ -8,20 +8,20 @@
         </div>
         <div class="pull-left info">
           <p>{{ $user->name}}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="#"><i class="fas fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li><a href="{{ route('dashboard')}}" ><i class="fa fa-dashboard"></i> <span>TABLERO PRINCIPAL</span></a></li>
+        <li><a href="{{ route('dashboard')}}" ><i class="fas fa-gauge-high"></i> <span>TABLERO PRINCIPAL</span></a></li>
 
         @can('MAESTROS')
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-th"></i> <span>MAESTROS</span>
+              <i class="fas fa-table-cells"></i> <span>MAESTROS</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fas fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
@@ -144,9 +144,9 @@
         @can('REMITOS')
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-file-text-o"></i> <span>REMISIONES</span>
+              <i class="fas fa-file-lines"></i> <span>REMISIONES</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fas fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
@@ -160,9 +160,9 @@
         @can('STOCK'){{-- Nueva opción de menú agregada --}}
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-cubes"></i> <span>STOCK</span>
+            <i class="fas fa-cubes"></i> <span>STOCK</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fas fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
@@ -179,7 +179,7 @@
           <a href="#">
           <i class="fas fa-calendar-alt"></i> <span>ASISTENCIAS</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fas fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
@@ -207,9 +207,9 @@
         @can('DOSIMETRIA')
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-bar-chart"></i> <span>DOSIMETRIA</span>
+              <i class="fas fa-radiation"></i> <span>DOSIMETRIA</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fas fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
@@ -240,9 +240,9 @@
         @can('NOTIFICACIONES')
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-bell-o"></i> <span>NOTIFICACIONES</span>
+              <i class="far fa-bell"></i> <span>NOTIFICACIONES</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fas fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
@@ -262,9 +262,9 @@
         @can('REPORTES')
           <li class="treeview">
             <a href="#">
-              <i class="glyphicon glyphicon-stats"></i> <span>REPORTES</span>
+              <i class="fas fa-chart-bar"></i> <span>REPORTES</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fas fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
@@ -316,9 +316,9 @@
 
         <li class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-qrcode"></i> <span>QR CODE</span>
+            <i class="fas fa-qrcode"></i> <span>QR CODE</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fas fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
@@ -335,9 +335,9 @@
         @can('CURSOS')
           <li class="treeview">
             <a href="#">
-              <i class="glyphicon glyphicon-film"></i> <span>MULTIMEDIA</span>
+              <i class="fas fa-film"></i> <span>MULTIMEDIA</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fas fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
@@ -353,9 +353,9 @@
 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-book"></i> <span>INSTITUCIONALES</span>
+            <i class="fas fa-book"></i> <span>INSTITUCIONALES</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fas fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
@@ -364,7 +364,7 @@
 
                 @if ($documento->tipo == 'INSTITUCIONAL')
 
-                <li><a href="{{ route('institucionales',$documento->id)  }}" target='_blank' ><i class="fa fa-file-pdf-o"></i> {{ $documento->titulo }}</a></li>
+                <li><a href="{{ route('institucionales',$documento->id)  }}" target='_blank' ><i class="far fa-file-pdf"></i> {{ $documento->titulo }}</a></li>
 
                 @endif
             @endforeach
@@ -374,19 +374,19 @@
 
         <li class="treeview">
           <a href="#">
-            <i class="fa  fa-cloud-download"></i>
+            <i class="fas fa-cloud-arrow-down"></i>
             <span>DOWNLOAD</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fas fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('software_download','INDUSTREX V4.2 Lite Setup.exe') }}"><i class="fa fa-download"></i>INDUSTREX V4.2 Lite</a></li>
+            <li><a href="{{ route('software_download','INDUSTREX V4.2 Lite Setup.exe') }}"><i class="fas fa-download"></i>INDUSTREX V4.2 Lite</a></li>
 
-                <li title="Formato Importación Soldadores CSV"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fa fa-download"></i>SOLDADORES CSV</a></li>
+                <li title="Formato Importación Soldadores CSV"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fas fa-download"></i>SOLDADORES CSV</a></li>
 
 
-                <li title="Importación Medición de espesores"><a href="{{ route('software_download','importacion_me.xlsx') }}"><i class="fa fa-download"></i>MEDICION DE ESPESORES</a></li>
+                <li title="Importación Medición de espesores"><a href="{{ route('software_download','importacion_me.xlsx') }}"><i class="fas fa-download"></i>MEDICION DE ESPESORES</a></li>
 
           </ul>
 
@@ -394,9 +394,9 @@
 
         <li>
             <a href="{{ route('ayuda-general') }}">
-              <i class="fa fa-question-circle"></i> <span>AYUDA GENERAL</span>
+              <i class="fas fa-circle-question"></i> <span>AYUDA GENERAL</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fas fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">

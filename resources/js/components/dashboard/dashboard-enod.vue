@@ -11,6 +11,7 @@
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantOperadores"
               :src_icono ="'/img/tablero/icono-enod-operador.svg'"
+              :icono ="'fas fa-hard-hat'"
               :class_color_cuadro = "'bg-custom-1'"
               :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_operador_acceder') ?  true : false"
@@ -28,6 +29,7 @@
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantInternoEquipos"
               :src_icono ="'/img/tablero/icono-enod-equipos.svg'"
+              :icono ="'fas fa-cogs'"
               :class_color_cuadro = "'bg-custom-2'"
               :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_equipos_acceder') ?  true : false"
@@ -46,6 +48,7 @@
               :class_color_sub_titulo = "'color_1'"
               :cantidad_1 ="CantProcedimientos"
               :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
+              :icono ="'fas fa-file-alt'"
               :class_color_cuadro = "'bg-custom-3'"
               :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_proc_acceder') ?  true : false"
@@ -65,6 +68,7 @@
               :cantidad_1 ="CantVehiculos"
               :cantidad_2 ="CantDocumentaciones"
               :src_icono ="'/img/tablero/icono-enod-vehiculos-doc.svg'"
+              :icono ="'fas fa-truck'"
               :class_color_cuadro = "'bg-custom-4'"
               :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_doc_acceder') ?  true : false"
@@ -84,6 +88,7 @@
               :cantidad_1 ="CantUsuariosCliente"
               :cantidad_2 ="CantSoldadores"
               :src_icono ="'/img/tablero/icono-enod-soldadores.svg'"
+              :icono ="'fas fa-stamp'"
               :class_color_cuadro = "'bg-custom-5'"
               :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_soldadores_acceder') ?  true : false"
@@ -102,6 +107,7 @@
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantInformes"
               :src_icono ="'/img/tablero/icono-enod-informes.svg'"
+              :icono ="'fas fa-chart-pie'"
               :class_color_cuadro = "'bg-custom-6'"
               :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_informes_acceder') ?  true : false"
@@ -120,6 +126,7 @@
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantPartes"
               :src_icono ="'/img/tablero/icono-enod-partes.svg'"
+              :icono ="'fas fa-calendar-day'"
               :class_color_cuadro = "'bg-custom-7'"
               :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_partes_acceder') ?  true : false"
@@ -137,6 +144,7 @@
               :class_color_sub_titulo = "'color_1'"
               :cantidad_1 ="CantCertificados"
               :src_icono ="'/img/tablero/icono-enod-certificados.svg'"
+              :icono ="'fas fa-certificate'"
               :class_color_cuadro = "'bg-custom-8'"
               :loading_sn ="contador_loading > 0"
               :habilitado_sn =" $can('T_certif_acceder') ?  true : false"
@@ -157,7 +165,7 @@
       <div class="form-group">
           <div class="input-group">
               <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
-              <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: rgb(255, 204, 0);"><i class="fa fa-search"></i></span>
+              <span class="input-group-addon btn btn-enod" @click="aplicarFiltro()"><i class="fa fa-search"></i></span>
           </div>
       </div>
     </div>

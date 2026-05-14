@@ -31,7 +31,16 @@
       "Bash(mysql -u root -e \"USE sigo_ENOD; SHOW CREATE PROCEDURE InformeRdPlantaJuntaPosicion\\\\G\")",
       "Bash(mysql -u root -h 127.0.0.1 -P 3306 sigo_ENOD -e \"SELECT ROUTINE_NAME FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='sigo_ENOD' AND ROUTINE_NAME LIKE '%InformeRd%';\")",
       "Bash(C:/laragon/bin/mysql/mysql-8.0.30-winx64/bin/mysql.exe -u root -h 127.0.0.1 sigo_ENOD -e \"SELECT ROUTINE_NAME FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='sigo_ENOD' AND ROUTINE_NAME LIKE '%InformeRd%';\")",
-      "Bash(\"C:/laragon/bin/mysql/mysql-8.4.3-winx64/bin/mysql.exe\" -u root -h 127.0.0.1 sigo_ENOD -e \"SELECT ROUTINE_NAME FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='sigo_ENOD' AND ROUTINE_NAME LIKE '%InformeRd%';\")"
+      "Bash(\"C:/laragon/bin/mysql/mysql-8.4.3-winx64/bin/mysql.exe\" -u root -h 127.0.0.1 sigo_ENOD -e \"SELECT ROUTINE_NAME FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='sigo_ENOD' AND ROUTINE_NAME LIKE '%InformeRd%';\")",
+      "mcp__Claude_in_Chrome__select_browser",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__navigate",
+      "mcp__Claude_in_Chrome__computer",
+      "PowerShell(head -5)",
+      "Bash(cat /c/Windows/System32/drivers/etc/hosts 2>/dev/null | grep -i \"certif\\\\|rusoft\\\\|laragon\" | head -10)",
+      "Bash(grep -v \"^$\")",
+      "PowerShell(Start-Sleep -Seconds 2; Invoke-WebRequest -Uri \"http://localhost:8080/login\" -UseBasicParsing -TimeoutSec 20 | Select-Object StatusCode, @{N='Size';E={$_.RawContentLength}})",
+      "PowerShell(docker exec certificados-app-1 sh -c \"php /var/www/html/artisan tinker --execute=\\\\\"echo config\\('database.connections.mysql.host'\\).':'.config\\('database.connections.mysql.port'\\).':'.config\\('database.connections.mysql.username'\\);\\\\\"\" 2>&1)"
     ]
   }
 }

@@ -28,20 +28,27 @@
     <link href="{{ asset('adminlte/plugins/iCheck/square/yellow.css')}}" rel="stylesheet">
 
     <style>
-
-          input:focus {
-            border-color:#F9CA33 !important;
+        input:focus {
+            border-color: #4F8CFF !important;
+            outline: none;
         }
-
-        button {
-            border-color:  #F9CA33 !important;
-            background-color: #F9CA33 !important;
+        button, .btn-primary {
+            border-color: #4F8CFF !important;
+            background-color: #4F8CFF !important;
+            color: #fff !important;
+        }
+        button:hover, .btn-primary:hover {
+            background-color: #3a7ae8 !important;
+            border-color: #3a7ae8 !important;
         }
         .login-box-body {
-
-              border : solid 1px;
-          }
-
+            background: rgba(255,255,255,0.82) !important;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.5) !important;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(31,45,70,0.18);
+        }
         .login-box {
             margin-top: 10%;
             padding-bottom: 0px;
@@ -52,7 +59,27 @@
             overflow: hidden;
             right:24px;
         }
-
+        .redes-card {
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 8px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(31,45,70,0.12);
+        }
+        .logos-soft {
+            background: rgba(255,255,255,0.75) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.4) !important;
+            border-radius: 10px !important;
+            padding: 8px !important;
+            margin-top: 8px !important;
+            box-shadow: 0 4px 16px rgba(31,45,70,0.12);
+        }
     </style>
 </head>
 <body class="{{ Request::path() == 'login' || strpos(Request::path(),'password/reset') !== false  ? 'background-image hold-transition login-page' : '' }} ">

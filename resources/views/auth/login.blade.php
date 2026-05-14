@@ -68,8 +68,8 @@
           <img src="{{asset('img/logos-soft-ram.png')}}" width="100%" alt="...">
       </div>
       <!-- /.login-box-body -->
-      <div class="login-logo">
-        <a href="http://www.enodndt.com.ar/"><img src="{{asset('img/redes.png')}}"  height="90px"  alt="Redes Enod"> </a>
+      <div class="redes-card">
+        <img src="{{asset('img/redes.png')}}" height="80px" alt="Redes">
       </div>
     </div>
 

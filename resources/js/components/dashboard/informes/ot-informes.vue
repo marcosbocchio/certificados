@@ -171,8 +171,8 @@
                                     <td v-if="ot_informe.metodo == 'RD'">
                                         <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" :disabled="ot_informe.anulado_sn === 1" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
                                     </td>
-                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="'/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
-                                    <td v-else><a :href="'/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td>
+                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="'/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="far fa-file-pdf"></span></a></td>
+                                    <td v-else><a :href="'/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="far fa-file-pdf"></span></a></td>
                                     <td v-if="!ot_informe.importable_sn" width="10px">
                                         <button @click="informesEscaneados(ot_informe.id)" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
                                     </td>
