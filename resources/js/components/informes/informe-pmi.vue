@@ -162,7 +162,7 @@
                             <div class="form-group" >
                                 <label for="iconos">PDF Equipo </label>
                                     <div ref="iconos">
-                                        <a :href="'/' + this.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
+                                        <a :href="'/' + this.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="far fa-file-pdf"></span></a>
                                         <a style="margin-left:3px" class="btn btn-default btn-xs mt-3" @click="DeleteArchivo"><span>X</span ></a><br>
                                     </div>
                             </div>
@@ -186,7 +186,7 @@
                             <span>
                             </span>
                             <span>
-                              <button type="button" @click="addModelo()"><span class="fa fa-plus-circle"></span></button>
+                              <button type="button" @click="addModelo()"><span class="fas fa-plus-circle"></span></button>
                             </span>
                          </div>
 
@@ -242,7 +242,7 @@
                          </div>
                          <div class="col-md-1">
                             <span>
-                              <button type="button" @click="GenerarMuestras()"><span class="fa fa-plus-circle"></span></button>
+                              <button type="button" @click="GenerarMuestras()"><span class="fas fa-plus-circle"></span></button>
                             </span>
                         </div>
 
@@ -274,7 +274,7 @@
                                                     {{ TablaPmi[k].material.codigo }}
                                                     </div>
                                                 </td>
-                                                <td style="text-align:center"><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>
+                                                <td style="text-align:center"><span class="fas fa-circle-minus" @click="removeDetalle(k)"></span></td>
 
                                             </tr>
                                         </tbody>

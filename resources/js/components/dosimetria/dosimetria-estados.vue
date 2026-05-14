@@ -21,7 +21,7 @@
                             <label>Operador / Film</label>
                             <div class="input-group">
                                 <input type="text" v-model="search" class="form-control">
-                                <span class="input-group-addon"  style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+                                <span class="input-group-btn"><button class="btn btn-enod" type="button"  ><i class="fas fa-search"></i></button></span>
                             </div>  
                         </div>
                      </div>

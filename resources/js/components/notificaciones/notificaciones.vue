@@ -11,7 +11,7 @@
                                         <i class="fas fa-ellipsis-v" style="color: gray;"></i>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#" @click="BorrarTodos()"><span class="fa fa-trash"></span> Borrar todos</a></li>
+                                        <li><a href="#" @click="BorrarTodos()"><span class="fas fa-trash"></span> Borrar todos</a></li>
                                         <li><a href="#" @click="MarcarTodos()"><span class="fas fa-check-circle"></span> Marcar todos como leídos</a></li>
                                         <li><a href="#" @click="DesmarcarTodos()"><span class="far fa-check-circle"></span> Desmarcar todos como leídos</a></li>
                                     </ul>
@@ -28,9 +28,9 @@
 
                             <li v-for="(item,k) in notificaciones" :key="k" >
 
-                                <i class="fa fa-bell-o bg-blue"></i>
+                                <i class="fas fa-bell-o bg-blue"></i>
                                     <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> {{  fecha_formateada(item.fecha) }} </span>
+                                        <span class="time"><i class="fas fa-clock-o"></i> {{  fecha_formateada(item.fecha) }} </span>
 
                                         <h3 v-if="item.documentacion" class="timeline-header" ><a href="#">Vencimiento documentación de {{ item.documentacion.tipo }}</a></h3>
                                         <h3 v-if="!item.documentacion" class="timeline-header" ><a href="#">Aviso demora en carga de dosimetría</a></h3>
@@ -48,7 +48,7 @@
                                 </li>
 
                             <li>
-                                <i class="fa fa-clock-o bg-gray"></i>
+                                <i class="fas fa-clock-o bg-gray"></i>
                             </li>
                          </ul>
                     </div>
@@ -178,7 +178,7 @@ export default {
            let notificaciones_resumen = response.data;
            let html_temp='';
            notificaciones_resumen.forEach(function(item){
-               html_temp  += '<li><a href="#"><i class="fa fa-bell-o text-red"></i><span>' + item.total + '</span> notificaciones de <span>' + item.tipo + '</span></a></li>' ;
+               html_temp  += '<li><a href="#"><i class="fas fa-bell-o text-red"></i><span>' + item.total + '</span> notificaciones de <span>' + item.tipo + '</span></a></li>' ;
            });
            document.getElementById('menu-notificaciones').innerHTML=html_temp;
 

@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <span>
-                            <button type="button" @click="addVehiculo(vehiculo.id)"><span class="fa fa-plus-circle"></span></button>
+                            <button type="button" @click="addVehiculo(vehiculo.id)"><span class="fas fa-plus-circle"></span></button>
                             </span>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                 <h3 class="box-title">Vehículos asignados a la orden de trabajo</h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                     </button>
                 </div>
                 </div>
@@ -75,7 +75,7 @@
                                     <td> {{item.modelo}}</td>
                                     <td> {{item.patente}}</td>
                                     <td> {{item.tipo}}</td>
-                                    <td> <i class="fa fa-minus-circle" @click="removeVehiculo(k)" ></i></td>
+                                    <td> <i class="fas fa-circle-minus" @click="removeVehiculo(k)" ></i></td>
                                 </tr>
 
                             </tbody>
@@ -92,7 +92,7 @@
                 <h3 class="box-title">Documentaciones del vehículo</h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                     </button>
                 </div>
                 </div>
@@ -110,7 +110,7 @@
                                 <tr v-for="(item,k) in vehiculos_documentaciones" :key="k">
                                     <td> {{item.titulo}}</td>
                                     <td> {{item.descripcion}}</td>
-                                    <td width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
+                                    <td width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="far fa-file-image"></span></a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -137,7 +137,7 @@
                         </div>
                         <div class="form-group">
                             <span>
-                            <button type="button" @click="addDocumentacion(documentacion.id)"><span class="fa fa-plus-circle"></span></button>
+                            <button type="button" @click="addDocumentacion(documentacion.id)"><span class="fas fa-plus-circle"></span></button>
                             </span>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                 <h3 class="box-title">Documentaciones asignadas a la orden de trabajo</h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                     </button>
                 </div>
                 </div>
@@ -170,8 +170,8 @@
                                 <tr v-for="(ot_documentacion,k) in ot_documentaciones" :key="k">
                                     <td> {{ot_documentacion.titulo}}</td>
                                     <td> {{ot_documentacion.descripcion}}</td>
-                                    <td width="10px"> <a :href="'/' + ot_documentacion.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
-                                    <td> <i class="fa fa-minus-circle" @click="removeDocumentacion(k)" ></i></td>
+                                    <td width="10px"> <a :href="'/' + ot_documentacion.path " target="_blank" title="Imagen"><span class="far fa-file-image"></span></a></td>
+                                    <td> <i class="fas fa-circle-minus" @click="removeDocumentacion(k)" ></i></td>
                                 </tr>
 
                             </tbody>

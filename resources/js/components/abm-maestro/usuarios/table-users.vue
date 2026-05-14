@@ -22,7 +22,7 @@
                 </div>         
               </td>
               <td width="10px">
-                <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_usuarios_edita')"><span class="fa fa-edit"></span></button>
+                <button class="btn btn-enod btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_usuarios_edita')"><span class="fas fa-edit"></span></button>
               </td>
               <td width="10px">
                 <button @click="AsignacionO(registro)" class="btn btn-default btn-sm" title="EEP" :disabled="!$can('M_usuarios_edita')">
@@ -30,7 +30,7 @@
                 </button>
               </td>
               <td width="10px">
-                <button class="btn btn-danger btn-sm" title="Eliminar " v-on:click.prevent="$emit('confirmarDelete',registro,registro.name)" :disabled="!$can('M_usuarios_edita')"><span class="fa fa-trash"></span></button>
+                <button class="btn btn-danger btn-sm" title="Eliminar " v-on:click.prevent="$emit('confirmarDelete',registro,registro.name)" :disabled="!$can('M_usuarios_edita')"><span class="fas fa-trash"></span></button>
               </td>
             </tr>
           </tbody>

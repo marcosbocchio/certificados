@@ -19,9 +19,7 @@
                         <div class="form-group">
                             <label for="fecha">Período</label>
                             <div class="input-group date">
-                                <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                                </div>
+                                <span class="input-group-btn"><button class="btn btn-enod" type="button"><i class="fas fa-calendar"></i></button></span>
                                     <Datepicker v-model="periodo" :minimumView="'month'" :maximumView="'month'" :input-class="'form-control pull-right'" :language="es"></Datepicker>
                             </div>
                         </div>
@@ -31,7 +29,7 @@
                             <label>Operador / Film</label>
                             <div class="input-group">
                                 <input type="text" v-model="search" class="form-control">
-                                <span class="input-group-addon"  style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+                                <span class="input-group-btn"><button class="btn btn-enod" type="button"  ><i class="fas fa-search"></i></button></span>
                             </div>
                         </div>
                      </div>

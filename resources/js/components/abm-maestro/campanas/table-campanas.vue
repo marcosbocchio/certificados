@@ -13,10 +13,10 @@
           <tr v-for="registro in registros" :key="registro.id">
             <td>{{ registro.designacion }}</td>
             <td width="10px">
-              <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_fuentes_edita')"><span class="fa fa-edit"></span></button>
+              <button class="btn btn-enod btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_fuentes_edita')"><span class="fas fa-edit"></span></button>
             </td>
             <td width="10px">
-              <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.titulo)" :disabled="!$can('M_fuentes_edita')"><span class="fa fa-trash"></span></button>
+              <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.titulo)" :disabled="!$can('M_fuentes_edita')"><span class="fas fa-trash"></span></button>
             </td>
           </tr>
         </tbody>

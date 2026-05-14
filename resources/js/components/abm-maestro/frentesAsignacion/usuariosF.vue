@@ -21,7 +21,7 @@
             <div class="col-md-3">
               <div style="display: flex; justify-content: flex-start; align-items: center;">
                 <button type="button">
-                  <span @click="agregarUsuario" class="fa fa-plus-circle"></span>
+                  <span @click="agregarUsuario" class="fas fa-plus-circle"></span>
                 </button>
               </div>
             </div>
@@ -37,7 +37,7 @@
               <tr v-for="usuario in usuariosAsociados" :key="usuario.id">
                 <td>{{ usuario.name }}</td>
                 <td>
-                  <span class="fa fa-minus-circle" @click="eliminarUsuario(usuario)"></span>
+                  <span class="fas fa-circle-minus" @click="eliminarUsuario(usuario)"></span>
                 </td>
               </tr>
             </tbody>
@@ -45,7 +45,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-enod" @click="guardarUsuariosAsociados" :disabled="loading">
-            <span v-if="loading" class="fa fa-spinner fa-spin"></span>
+            <span v-if="loading" class="fas fa-spinner fa-spin"></span>
             Guardar
           </button>
         </div>

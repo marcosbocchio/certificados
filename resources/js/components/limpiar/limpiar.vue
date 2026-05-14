@@ -4,35 +4,35 @@
 
         <div class="info-section">
             <p>
-                <i class="fa fa-database"></i> Registros encontrados en la base de datos: 
+                <i class="fas fa-database"></i> Registros encontrados en la base de datos: 
                 <span class="highlight">{{ totalRegistros }}</span>
             </p>
             <p>
-                <i class="fa fa-folder"></i> Archivos encontrados en storage: 
+                <i class="fas fa-folder"></i> Archivos encontrados en storage: 
                 <span class="highlight">{{ totalEncontrados }}</span>
             </p>
             <p>
-                <i class="fa fa-trash"></i> Archivos sobrantes en storage: 
+                <i class="fas fa-trash"></i> Archivos sobrantes en storage: 
                 <span class="highlight">{{ totalSobrantes }}</span>
             </p>
         </div>
 
         <div class="buttons-section">
             <button @click="compararArchivosCompletos" class="btn btn-enod">
-                <i class="fa fa-broom"></i> Limpiar y Comparar
+                <i class="fas fa-broom"></i> Limpiar y Comparar
             </button>
             <button 
                 @click="borrarSobrantes" 
                 class="btn btn-danger" 
                 :disabled="sobrantes.length === 0"
             >
-                <i class="fa fa-trash"></i> Borrar Sobrantes
+                <i class="fas fa-trash"></i> Borrar Sobrantes
             </button>
         </div>
 
         <div v-if="sobrantes.length > 0" class="sobrantes-section">
             <h4>
-                <i class="fa fa-exclamation-circle"></i> Archivos sobrantes:
+                <i class="fas fa-exclamation-circle"></i> Archivos sobrantes:
             </h4>
             <button @click="toggleSobrantes" class="btn btn-secondary">
                 <i class="fa" :class="mostrarSobrantes ? 'fa-eye-slash' : 'fa-eye'"></i>
@@ -48,7 +48,7 @@
                             target="_blank"
                             class="btn btn-link btn-sm"
                         >
-                            <i class="fa fa-eye"></i> Ver
+                            <i class="fas fa-eye"></i> Ver
                         </a>
                     </li>
                 </ul>

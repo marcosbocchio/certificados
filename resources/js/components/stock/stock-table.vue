@@ -4,8 +4,8 @@
   <tr>
     <!-- Botón Nuevo -->
     <td class="td-mobile-stack" style="width: 8%;">
-      <button class="btn btn-enod" @click="nuevoStock" style="background-color: rgb(255, 204, 0); color: rgb(0, 0, 0);" :disabled="!$can('S_compras_edita')">
-        <span class="fa fa-plus-circle"></span> Nuevo 
+      <button class="btn btn-enod" @click="nuevoStock"  :disabled="!$can('S_compras_edita')">
+        <span class="fas fa-plus-circle"></span> Nuevo 
       </button>
     </td>
     <td class="td-mobile-stack" style="width: 9%;">
@@ -41,9 +41,8 @@
     <td class="td-mobile-stack" style="width: 20%;">
       <div class="input-group">
         <input type="text" v-model="search" class="form-control" @keyup.enter="aplicarFiltro" placeholder="Buscar...">
-        <span class="input-group-addon btn" @click="aplicarFiltro" style="background-color: rgb(255, 204, 0); cursor: pointer; border: none;">
-          <i class="fa fa-search"></i>
-        </span>
+        <span class="input-group-btn"><button class="btn btn-enod" type="button" @click="aplicarFiltro" >
+          <i class="fas fa-search"></i></button></span>
       </div>
     </td>
   </tr>

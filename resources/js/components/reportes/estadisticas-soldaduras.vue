@@ -73,7 +73,7 @@
                     </ul>
 
                     <a  @click="Buscar()">
-                        <button class="btn btn-enod  btn-block" :disabled="!cliente || !ot "><span class="fa fa-search"></span>
+                        <button class="btn btn-enod  btn-block" :disabled="!cliente || !ot "><span class="fas fa-search"></span>
                             Buscar
                         </button>
                     </a>
@@ -101,7 +101,7 @@
                             </ul>
                         </div>
                         <ul class="list-group list-group-unbordered">
-                            <span class="fa fa-book"><p style="margin-left:15px;display:inline-block;margin-bottom:20x">Informes incluidos</p></span>
+                            <span class="fas fa-book"><p style="margin-left:15px;display:inline-block;margin-bottom:20x">Informes incluidos</p></span>
                             <vuetable
                             ref="vuetable"
                             :api-mode="false"
@@ -2011,8 +2011,8 @@ body {
     }
 .is-active{
 
-    border-top:3px solid rgb(255, 204, 0) !important;
-    box-shadow: 0 -2px 0 #000;
+    border-top:3px solid #4F8CFF !important;
+    box-shadow: 0 -2px 0 rgba(79,140,255,0.3);
 }
 
 ul li .titulo-li {

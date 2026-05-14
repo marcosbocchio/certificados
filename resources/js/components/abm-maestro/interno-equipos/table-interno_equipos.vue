@@ -28,7 +28,7 @@
             <td>{{ registro.equipo.codigo }}</td>
             <td>{{ registro.equipo.metodo_ensayos.metodo }}</td>
             <th>
-                <button class="btn btn-xs" style="color: black !important;margin-top: 3px;" title="Historial de fuentes" v-on:click.prevent="TrazabilidadFuente(registro)"><span class="fa fa-table"></span></button>
+                <button class="btn btn-xs" style="color: black !important;margin-top: 3px;" title="Historial de fuentes" v-on:click.prevent="TrazabilidadFuente(registro)"><span class="fas fa-table"></span></button>
             </th>
             <td v-if="registro.interno_fuente" >{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>
             <td v-else >&nbsp;</td>
@@ -37,10 +37,10 @@
             <td>{{ registro.frente.codigo }}</td>
             <td>{{ formatearFecha(registro.fecha_anul) }}</td>
             <td width="10px">
-              <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_interno_equipos_edita')"><span class="fa fa-edit"></span></button>
+              <button class="btn btn-enod btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_interno_equipos_edita')"><span class="fas fa-edit"></span></button>
             </td>
             <td width="10px">
-              <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.codigo)" :disabled="!$can('M_interno_equipos_edita')"><span class="fa fa-trash"></span></button>
+              <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.codigo)" :disabled="!$can('M_interno_equipos_edita')"><span class="fas fa-trash"></span></button>
             </td>
           </tr>
         </tbody>

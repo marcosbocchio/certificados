@@ -18,13 +18,13 @@
                 <td style="text-align: center;">{{ registro.descripcion || '-' }}</td>
                 <td style="text-align: center;">{{ formatHoras(registro.horas_diarias_laborables) || '-' }}</td>
                 <td width="10px">
-                  <button class="btn btn-warning btn-sm" title="Editar" @click.prevent="updateValue(registro)">
-                    <span class="fa fa-edit"></span>
+                  <button class="btn btn-enod btn-sm" title="Editar" @click.prevent="updateValue(registro)">
+                    <span class="fas fa-edit"></span>
                   </button>
                 </td>
                 <td width="10px">
                   <button class="btn btn-info btn-sm" title="Usuarios" @click.prevent="goToUsuarios(registro)">
-                    <span class="fa fa-user"></span>
+                    <span class="fas fa-user"></span>
                   </button>
                 </td>
               </tr>

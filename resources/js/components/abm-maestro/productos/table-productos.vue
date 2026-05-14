@@ -32,15 +32,15 @@
                 <span v-else>{{ registro.stock }}</span>
               </td>
               <td width="10px">
-                <button class="btn btn-warning btn-sm" title="Ver Detalles" @click.prevent="registroProducto(registro.id)" :disabled="registro.stockeable_sn === 0">
-                    <span class="fa fa-list"></span>
+                <button class="btn btn-enod btn-sm" title="Ver Detalles" @click.prevent="registroProducto(registro.id)" :disabled="registro.stockeable_sn === 0">
+                    <span class="fas fa-list"></span>
                 </button>
               </td>
               <td width="10px">
-                <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_productos_edita')"><span class="fa fa-edit"></span></button>
+                <button class="btn btn-enod btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_productos_edita')"><span class="fas fa-edit"></span></button>
               </td>
               <td width="10px">
-                <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.codigo)" :disabled="!$can('M_productos_edita')"><span class="fa fa-trash"></span></button>
+                <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.codigo)" :disabled="!$can('M_productos_edita')"><span class="fas fa-trash"></span></button>
               </td>
             </tr>
           </tbody>

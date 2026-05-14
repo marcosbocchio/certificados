@@ -1,7 +1,7 @@
 <template>
   <div class="enod-back-row">
     <button type="button" class="btn btn-enod btn-circle" @click="goBack">
-      <span class="fa fa-arrow-left"></span>
+      <span class="fas fa-arrow-left"></span>
       <span v-if="showLabel" class="enod-back-label">Volver</span>
     </button>
   </div>

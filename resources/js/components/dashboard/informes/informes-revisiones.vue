@@ -46,7 +46,7 @@
                                                     <td>{{ registro.revision}}</td>
                                                     <td>{{ registro.name }}</td>
                                                     <td>{{moment(registro.fecha)}}</td>
-                                                    <td width="10px"> <a :href="'/pdf/informe/' + registro.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
+                                                    <td width="10px"> <a :href="'/pdf/informe/' + registro.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="far fa-file-pdf"></span></a></td>
                                                 </tr>
                                             </tbody>
                                             </table>

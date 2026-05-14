@@ -3,7 +3,7 @@
     <div class="filters row">
       <div class="col-md-3">
         <button class="btn btn-enod" @click="agregarNuevo" :disabled="!$can('ASISTENCIA')">
-          <span class="fa fa-plus-circle"></span> Nuevo
+          <span class="fas fa-plus-circle"></span> Nuevo
         </button>
       </div>
       <div class="col-md-1"></div>
@@ -52,12 +52,12 @@
                     <td>{{ item.fecha }}</td>
                     <td width="10px">
                       <button 
-                        class="btn btn-warning btn-sm" 
+                        class="btn btn-enod btn-sm" 
                         @click="editar(item)" 
                         title="Editar"
                         :disabled="!puedeEditar(item)"
                       >
-                        <i class="fa fa-pencil"></i>
+                        <i class="fas fa-pencil"></i>
                       </button>
                     </td>
                   </tr>

@@ -175,6 +175,17 @@ table .selected{
 .bg-custom-7 { background-color: #EAF3FF; border-top: 4px solid #5DA9FF !important; }
 .bg-custom-8 { background-color: #EEEAFF; border-top: 4px solid #9B8AFB !important; }
 
+/* ── Search bar two-tone ── */
+.search-enod {
+  border-color: #a8c8ff !important;
+  background-color: #f0f6ff !important;
+}
+.search-enod:focus {
+  border-color: #4F8CFF !important;
+  background-color: #ffffff !important;
+  box-shadow: inset 0 1px 3px rgba(79,140,255,0.15) !important;
+}
+
 .mx-datepicker {
 
   position: relative !important;
@@ -259,6 +270,16 @@ color:rgb(255, 255, 255);
   font-family: inherit;
   font-size: var(--vs-font-size);
   line-height: var(--vs-line-height);
+}
+
+/* ── Content header breadcrumb ── */
+.content-header > .breadcrumb > li > a,
+.content-header > .breadcrumb > li.active {
+  color: #6E6A6A !important;
+}
+.skin-yellow .content-header h1,
+.skin-black .content-header h1 {
+  color: #6E6A6A !important;
 }
 
 /* ── Navbar dividers ── */

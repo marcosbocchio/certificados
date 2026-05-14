@@ -4,7 +4,7 @@
        <div class="row">
            <div class="col-md-3">
                <div v-show="$can('T_remitos_edita')">
-                   <a :href="'/area/enod/remitos'" class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
+                   <a :href="'/area/enod/remitos'" class="btn btn-enod pull-left"><span class="fas fa-plus-circle"></span> Nuevo</a>
                </div>
            </div>
            <div class="col-md-6">
@@ -14,7 +14,7 @@
                <div class="input-group">
                    <input type="text" v-model="search" class="form-control" @keyup.enter="getResults">
                    <span class="input-group-addon btn enod-action-addon" @click="getResults">
-                       <i class="fa fa-search"></i>
+                       <i class="fas fa-search"></i>
                    </span>
                </div>
            </div>
@@ -27,7 +27,7 @@
                    <div class="box-header with-border">
                        <h3 class="box-title">Remitos</h3>
                        <div class="box-tools pull-right">
-                           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i></button>
                        </div>
                    </div>
                    
@@ -62,9 +62,9 @@
                                            <app-icon v-if="remito.borrador_sn === 1" img="check" color="black"></app-icon>
                                        </td>
                                        <td width="10px">
-                                            <button @click="editRemito(k)" class="btn btn-warning btn-sm" title="Editar" 
+                                            <button @click="editRemito(k)" class="btn btn-enod btn-sm" title="Editar" 
                                             :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 0">
-                                                <span class="fa fa-edit"></span>
+                                                <span class="fas fa-edit"></span>
                                             </button>
                                         </td>
                                         <td width="10px">
@@ -73,10 +73,10 @@
                                             </button>
                                         </td>
                                        <td v-if="remito.interno_sn" width="10px"> 
-                                           <a :href="'/pdf/remito/' + remito.id" target="_blank" class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a>
+                                           <a :href="'/pdf/remito/' + remito.id" target="_blank" class="btn btn-default btn-sm" title="Informe"><span class="far fa-file-pdf"></span></a>
                                        </td>
                                        <td v-else width="10px"> 
-                                           <a :href="'/pdf/remito/' + remito.id" target="_blank" class="btn btn-default btn-sm" title="Imprimir"><span class="fa fa-print"></span></a>
+                                           <a :href="'/pdf/remito/' + remito.id" target="_blank" class="btn btn-default btn-sm" title="Imprimir"><span class="fas fa-print"></span></a>
                                        </td>
                                        <td width="10px" v-if="remito.aunulado_sn !== 1" style="text-align: center;">
                                             <button @click="confirmarAnulacion(remito)" class="btn btn-default btn-sm" title="Anular" 

@@ -47,7 +47,7 @@
                                 <button type="button" class="btn btn-default btn-sm" @click="limpiarTodo" :disabled="loading" title="Limpiar Todo">
                                     <app-icon img="trash" color="black"></app-icon>
                                 </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                                 <h3 class="box-title">Servicios</h3>
 
                                 <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                                     </button>
                                 </div>
                             </div>
@@ -126,7 +126,7 @@
                                                         <span class="input-group-btn">
                                                             <button type="button" class="btn btn-md btn-default" v-if="!TablaPartesServicios[k].manual_uncombined_sn && Number(TablaPartesServicios[k].nro_combinacion) > 0" @click="borrarCombinacionIndex(k)">X</button>
                                                             <button type="button" class="btn btn-md btn-default" v-else @click="revertirCombinacionIndex(k)" title="Volver a combinación">
-                                                                <i class="fa fa-undo"></i>
+                                                                <i class="fas fa-undo"></i>
                                                             </button>
                                                         </span>
 
@@ -170,7 +170,7 @@
                                 <h3 class="box-title">Productos</h3>
 
                                 <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                                     </button>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@
                                 <h3 class="box-title">Productos</h3>
 
                                 <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                                     </button>
                                 </div>
                             </div>

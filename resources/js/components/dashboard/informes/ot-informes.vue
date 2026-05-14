@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <span>
                                     <a  @click="NuevoInforme">
-                                        <button class="btn btn-enod" :disabled="!metodo_selected"><span class="fa fa-plus-circle"></span>
+                                        <button class="btn btn-enod" :disabled="!metodo_selected"><span class="fas fa-plus-circle"></span>
                                             Nuevo
                                     </button>
                                     </a>
@@ -54,8 +54,8 @@
                 <div class="col-md-3 col-md-offset-9 col-sm-4 col-xs-12">
                     <div class="form-group" style="margin-bottom:0;">
                         <div class="input-group">
-                            <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar">
-                            <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: rgb(255, 204, 0);"><i class="fa fa-search"></i></span>
+                            <input type="text" v-model="search" class="form-control search-enod" v-on:keyup.13="aplicarFiltro" placeholder="Buscar">
+                            <span class="input-group-btn" @click="aplicarFiltro()"><button class="btn btn-enod" type="button"><i class="fas fa-search"></i></button></span>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                     <h3 class="box-title">Informes asignados a la orden de trabajo</h3>
 
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                         </button>
                     </div>
                 </div>
@@ -141,10 +141,10 @@
                                     <td> {{ot_informe.fecha_formateada}}</td>
                                     <td style="text-align: center;"><app-icon v-show="ot_informe.anulado_sn === 1" img="check" color="black"></app-icon></td>
                                     <td v-if="!ot_informe.importable_sn" width="10px">
-                                        <button  @click.prevent="VerificarRevision(ot_informe)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><span class="fa fa-edit"></span></button>
+                                        <button  @click.prevent="VerificarRevision(ot_informe)" class="btn btn-enod btn-sm" title="Editar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><span class="fas fa-edit"></span></button>
                                     </td>
                                     <td v-else width="10px">
-                                        <button @click.prevent="EditInformeImportable(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><span class="fa fa-edit"></span></button>
+                                        <button @click.prevent="EditInformeImportable(ot_informe.id)" class="btn btn-enod btn-sm" title="Editar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><span class="fas fa-edit"></span></button>
                                     </td>
                                     <td v-if="!ot_informe.importable_sn && (ot_informe.metodo == 'LP' || ot_informe.metodo == 'PM' || ot_informe.metodo == 'US'|| ot_informe.metodo == 'RI'|| ot_informe.metodo == 'RD'|| ot_informe.metodo == 'CV' || ot_informe.metodo == 'TT' || ot_informe.metodo == 'PMI')" width="10px">
                                         <div class="dropdown">
@@ -174,14 +174,14 @@
                                     <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="'/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="far fa-file-pdf"></span></a></td>
                                     <td v-else><a :href="'/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="far fa-file-pdf"></span></a></td>
                                     <td v-if="!ot_informe.importable_sn" width="10px">
-                                        <button @click="informesEscaneados(ot_informe.id)" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
+                                        <button @click="informesEscaneados(ot_informe.id)" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fas fa-cloud-arrow-up"></span></button>
                                     </td>
                                     <td v-if="!ot_informe.firma && !ot_informe.importable_sn" width="10px">
                                         <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!Permitefirmar(ot_informe.metodo)||ot_informe.anulado_sn === 1"><span class="glyphicon glyphicon-pencil"></span></button>
                                     </td>
                                     <td v-else-if="!ot_informe.importable_sn"><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="'/img/firma.png'"></a></td>
                                     <td>
-                                        <button class="btn btn-default btn-sm" title="Revisiones" :disabled="ot_informe.anulado_sn === 1" v-on:click.prevent="RevisionesInforme(ot_informe)"><span class="fa fa-table"></span></button>
+                                        <button class="btn btn-default btn-sm" title="Revisiones" :disabled="ot_informe.anulado_sn === 1" v-on:click.prevent="RevisionesInforme(ot_informe)"><span class="fas fa-table"></span></button>
                                     </td>
                                     <td v-if="ot_informe.anulado_sn !== 1" width="10px">
                                         <button @click="confirmarAnulacion(k)" class="btn btn-default btn-sm" title="Anular" :disabled="!$can('T_informes_edita')"><app-icon img="remove" color="black"></app-icon></button>

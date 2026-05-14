@@ -32,10 +32,10 @@
                 <div v-if="isPdf && path">
 
                     <a v-if="!path_requerido_sn"  class="btn btn-default btn-xs" @click="DeleteArchivo"><span>x</span ></a><br>
-                    <a style="margin-top: 5px;" :href="'/' + path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
+                    <a style="margin-top: 5px;" :href="'/' + path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="far fa-file-pdf"></span></a>
                 </div>
                 <div v-else-if="!esImagen() && path">
-                      <a  style="margin-top: 5px;" :href="'/' + path" target="_blank" class="btn btn-default btn-xs" title="descargar"><span class="fa fa-download"></span></a>
+                      <a  style="margin-top: 5px;" :href="'/' + path" target="_blank" class="btn btn-default btn-xs" title="descargar"><span class="fas fa-download"></span></a>
                 </div>
                 <div v-else-if="path">
                     <img :src="'/' + path" class="margin zoom-in"  @click="openGallery()" alt="..." width="140" >

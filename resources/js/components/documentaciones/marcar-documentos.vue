@@ -6,8 +6,8 @@
                 <div class="box-header with-border">
                     <div class="box-tools" style="position: absolute;left:15px;top:5px">
                         <button type="button" class="btn btn-box-tool" @click="expandirTipo = !expandirTipo">
-                            <i v-if="expandirTipo" class="fa fa-minus"></i>
-                            <i v-if="!expandirTipo" class="fa fa-plus"></i>
+                            <i v-if="expandirTipo" class="fas fa-minus"></i>
+                            <i v-if="!expandirTipo" class="fas fa-plus"></i>
                         </button>
                     </div>
                     <h3 class="box-title" style="margin-left: 30px;">{{ titulo }}</h3>
@@ -23,7 +23,7 @@
                                     <template v-for="(item,k) in header">
                                         <tr :key="k">
                                             <td width="5%">
-                                                <button type="button" @click="item.expandir = !item.expandir" class="btn btn-box-tool"><i v-if="!item.expandir" class="fa fa-plus"></i><i v-if="item.expandir" class="fa fa-minus"></i></button>
+                                                <button type="button" @click="item.expandir = !item.expandir" class="btn btn-box-tool"><i v-if="!item.expandir" class="fas fa-plus"></i><i v-if="item.expandir" class="fas fa-minus"></i></button>
                                                 </td>
                                             <td width="90%"> {{ item.codigo }}</td>
                                             <td width="5%"><input class="pointer" type="checkbox" id="checkbox" @change="clickHeader(item.item_id,k)" v-model="item.check"> </td>

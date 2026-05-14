@@ -40,7 +40,10 @@
       "Bash(cat /c/Windows/System32/drivers/etc/hosts 2>/dev/null | grep -i \"certif\\\\|rusoft\\\\|laragon\" | head -10)",
       "Bash(grep -v \"^$\")",
       "PowerShell(Start-Sleep -Seconds 2; Invoke-WebRequest -Uri \"http://localhost:8080/login\" -UseBasicParsing -TimeoutSec 20 | Select-Object StatusCode, @{N='Size';E={$_.RawContentLength}})",
-      "PowerShell(docker exec certificados-app-1 sh -c \"php /var/www/html/artisan tinker --execute=\\\\\"echo config\\('database.connections.mysql.host'\\).':'.config\\('database.connections.mysql.port'\\).':'.config\\('database.connections.mysql.username'\\);\\\\\"\" 2>&1)"
+      "PowerShell(docker exec certificados-app-1 sh -c \"php /var/www/html/artisan tinker --execute=\\\\\"echo config\\('database.connections.mysql.host'\\).':'.config\\('database.connections.mysql.port'\\).':'.config\\('database.connections.mysql.username'\\);\\\\\"\" 2>&1)",
+      "Bash(sed -i 's|<i class=\"fas fa-search\">\\\\n\\\\s*</span>|<i class=\"fas fa-search\"></i></button></span>|g' resources/js/components/abm-maestro/abm-maestro.vue)",
+      "Bash(perl -i -0pe 's|\\(<i class=\"fas fa-search\"></i>\\\\n\\\\s*</span>\\)|<\\\\/i><\\\\/button><\\\\/span>\\\\n|g' resources/js/components/abm-maestro/abm-maestro.vue)",
+      "Bash(xargs sed -i 's/class=\"btn btn-warning btn-sm\"/class=\"btn btn-enod btn-sm\"/g')"
     ]
   }
 }

@@ -15,7 +15,7 @@
                                     <label for="fecha">Fecha *</label>
                                     <div class="input-group date">
                                         <div class="input-group-addon">
-                                              <i class="fa fa-calendar"></i>
+                                              <i class="fas fa-calendar"></i>
                                         </div>
                                             <Datepicker v-model="Registro.fecha" :input-class="'form-control pull-right'" :language="es" ></Datepicker>
                                     </div>

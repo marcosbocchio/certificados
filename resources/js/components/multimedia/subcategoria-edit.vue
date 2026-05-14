@@ -16,9 +16,9 @@
                             <div class="col-md-3 col-md-offset-3" >
                                 <div class="row">
                                     <div class="pull-right" style="margin: 0 15px 0 0">
-                                        <button v-if="subcategoriaSelec" title="Editar" class="btn btn-warning btn-sm" @click="showSubcatModal"><span class="fa fa-edit" aria-hidden="true" ></span></button>
-                                        <button v-if="subcategoriaSelec" title="Eliminar " class="btn btn-danger btn-sm" @click="showSubcatDeleteModal"><span class="fa fa-trash" aria-hidden="true"></span></button>
-                                        <button class="btn btn-success btn-sm" @click="shownuevaSubcatModal"><span class="fa fa-plus-circle" aria-hidden="true" ></span></button>
+                                        <button v-if="subcategoriaSelec" title="Editar" class="btn btn-enod btn-sm" @click="showSubcatModal"><span class="fas fa-edit" aria-hidden="true" ></span></button>
+                                        <button v-if="subcategoriaSelec" title="Eliminar " class="btn btn-danger btn-sm" @click="showSubcatDeleteModal"><span class="fas fa-trash" aria-hidden="true"></span></button>
+                                        <button class="btn btn-success btn-sm" @click="shownuevaSubcatModal"><span class="fas fa-plus-circle" aria-hidden="true" ></span></button>
                                     </div>
                                 </div>
                             </div>

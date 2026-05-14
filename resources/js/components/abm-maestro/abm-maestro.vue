@@ -5,7 +5,7 @@
         <!-- Botón "Nuevo" -->
         <div class="col-md-1 col-xs-2">
             <button class="btn btn-enod" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)">
-                <span class="fa fa-plus-circle"></span> Nuevo
+                <span class="fas fa-plus-circle"></span> Nuevo
             </button>
         </div>
 
@@ -25,9 +25,8 @@
             <div class="col-md-3 col-xs-9 p-0">
                 <div class="input-group">
                     <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
-                    <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;">
-                        <i class="fa fa-search"></i>
-                    </span>
+                    <span class="input-group-btn" @click="aplicarFiltro()"><button class="btn btn-enod" type="button"><i class="fas fa-search"></i></button></span>
+
                 </div>
             </div>
         </div>
@@ -41,9 +40,8 @@
             <div class="col-md-3 col-xs-9 p-0">
                 <div class="input-group">
                     <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
-                    <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;">
-                        <i class="fa fa-search"></i>
-                    </span>
+                    <span class="input-group-btn" @click="aplicarFiltro()"><button class="btn btn-enod" type="button"><i class="fas fa-search"></i></button></span>
+
                 </div>
             </div>
         </div>
@@ -52,9 +50,8 @@
             <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
                 <div class="input-group">
                     <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
-                    <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;">
-                        <i class="fa fa-search"></i>
-                    </span>
+                    <span class="input-group-btn" @click="aplicarFiltro()"><button class="btn btn-enod" type="button"><i class="fas fa-search"></i></button></span>
+
                 </div>
             </div>
         </div>

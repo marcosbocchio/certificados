@@ -513,7 +513,7 @@
                         <div class="col-md-1">
                             <span>
                                 <button type="button" @click="addModelo()"><span
-                                        class="fa fa-plus-circle"></span></button>
+                                        class="fas fa-plus-circle"></span></button>
                             </span>
                         </div>
                         <div class="form-group">
@@ -555,7 +555,7 @@
                         <h3 class="box-title">ELEMENTOS/POSICIONES</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
+                                    class="fas fa-minus"></i>
                             </button>
                         </div>
                     </div>
@@ -679,7 +679,7 @@
                                                                 <div class="box-tools pull-right">
                                                                     <button type="button" class="btn btn-box-tool"
                                                                         @click="indicaciones_sn = false"><i
-                                                                            class="fa fa-times"></i>
+                                                                            class="fas fa-times"></i>
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -803,7 +803,7 @@
                         <h3 class="box-title">TRAMOS</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
+                                    class="fas fa-minus"></i>
                             </button>
                         </div>
                     </div>
@@ -879,7 +879,7 @@
                                                             tramos.path2 ||
                                                             tramos.path3 ||
                                                             tramos.path4)
-                                                    }" class="fa fa-file-archive-o"
+                                                    }" class="fas fa-file-archive-o"
                                                         @click="OpenReferencias($event, k, 'Informe RI', tramos)"></span>
                                                 </td>
                                                 <td v-else-if="k != 0">&nbsp;</td>
@@ -902,7 +902,7 @@
                         <h3 class="box-title">PASADAS</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
+                                    class="fas fa-minus"></i>
                             </button>
                         </div>
                     </div>
@@ -1128,7 +1128,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <button type="button" class="btn btn-enod" @click="ClonarSoldadores">
-                                <i v-show="clonando_pasada" class="fa fa-spin fa-refresh"></i> Clonar
+                                <i v-show="clonando_pasada" class="fas fa-spin fa-refresh"></i> Clonar
                             </button>
                         </div>
                     </div>
@@ -1149,7 +1149,7 @@
                                     <div class="form-group">
                                         <input style="display: inline;" type="file" multiple="false" id="sheetjs-input"
                                             :accept="SheetJSFT" @change="onchange" />
-                                        <label v-show="importado_pasadas" class="fa fa-spin fa-refresh"
+                                        <label v-show="importado_pasadas" class="fas fa-spin fa-refresh"
                                             for="sheetjs-input"></label>
                                         <p>Formato soportado : csv</p>
                                     </div>

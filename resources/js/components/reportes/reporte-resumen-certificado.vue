@@ -82,7 +82,7 @@
 
                     <a @click="Buscar()">
                         <button class="btn btn-enod  btn-block">
-                            <span class="fa fa-plus-circle"></span>
+                            <span class="fas fa-plus-circle"></span>
                             Buscar
                         </button>
                     </a>

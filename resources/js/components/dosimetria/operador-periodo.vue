@@ -20,7 +20,7 @@
                                 <label for="fecha">Fecha Alta</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
+                                    <i class="fas fa-calendar"></i>
                                     </div>
                                         <Datepicker v-model="fecha_alta" :minimumView="'month'" :maximumView="'month'" :input-class="'form-control pull-right'" :language="es" :disabled="!$can('D_activa_operador_Admin')" ></Datepicker>   
                                 </div>

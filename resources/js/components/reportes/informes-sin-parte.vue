@@ -64,7 +64,7 @@
             </li>
           </ul>
           <button @click="BuscarInformes(1)" class="btn btn-enod btn-block">
-            <span class="fa fa-search"></span> Buscar
+            <span class="fas fa-search"></span> Buscar
           </button>
         </div>
       </div>

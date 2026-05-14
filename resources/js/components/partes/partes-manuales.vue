@@ -124,7 +124,7 @@
               <div class="form-group col-md-3 boton-centrado">
                 <label></label>
                 <button type="button" @click="agregarDetalle">
-                  <span class="fa fa-plus-circle"></span>
+                  <span class="fas fa-plus-circle"></span>
                 </button>
               </div>
             </div>

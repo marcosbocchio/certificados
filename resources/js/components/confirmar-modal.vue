@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <label class="control-label" style="font-size: 17px;" for="inputSuccess"><i class="fa fa-exclamation-triangle" style="color: red;"></i>  Alerta</label>
+                    <label class="control-label" style="font-size: 17px;" for="inputSuccess"><i class="fas fa-exclamation-triangle" style="color: red;"></i>  Alerta</label>
                 </div>
             <div class="modal-body">
             <p> {{ mensaje }}</p>

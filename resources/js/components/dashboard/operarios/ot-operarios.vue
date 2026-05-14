@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <span>
-                            <button type="button" @click="addOperario(operador.id,'operador')"><span class="fa fa-plus-circle"></span></button>
+                            <button type="button" @click="addOperario(operador.id,'operador')"><span class="fas fa-plus-circle"></span></button>
                         </span>
                     </div>
                  </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-group">
                         <span>
-                            <button type="button" @click="addOperario(ayudante.id,'ayudante')"><span class="fa fa-plus-circle"></span></button>
+                            <button type="button" @click="addOperario(ayudante.id,'ayudante')"><span class="fas fa-plus-circle"></span></button>
                         </span>
                     </div>
                  </div>
@@ -58,7 +58,7 @@
             <h3 class="box-title">Operadores asignados a la orden de trabajo</h3>
 
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
             </div>
             </div>
@@ -74,7 +74,7 @@
                         <tbody>
                             <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" :class="{selected: index == k}" class="pointer">
                                 <td v-if="users_ot_operario.ayudante_sn == 0" @click="selectDoc(k)"> {{users_ot_operario.name}}</td>
-                                <td v-if="users_ot_operario.ayudante_sn == 0"> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
+                                <td v-if="users_ot_operario.ayudante_sn == 0"> <i class="fas fa-circle-minus" @click="removeOperarios(k)" ></i></td>
                             </tr>
                         </tbody>
                     </table>
@@ -88,7 +88,7 @@
             <h3 class="box-title">Ayudantes asignados a la orden de trabajo</h3>
 
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
             </div>
             </div>
@@ -104,7 +104,7 @@
                         <tbody>
                             <tr v-for="(users_ot_ayudante,k) in users_ot_operarios" :key="k" :class="{selected: index == k}" class="pointer">
                                 <td v-if="users_ot_ayudante.ayudante_sn == 1" @click="selectDoc(k)"> {{users_ot_ayudante.name}}</td>
-                                <td v-if="users_ot_ayudante.ayudante_sn == 1"> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
+                                <td v-if="users_ot_ayudante.ayudante_sn == 1"> <i class="fas fa-circle-minus" @click="removeOperarios(k)" ></i></td>
                             </tr>
 
                         </tbody>
@@ -126,7 +126,7 @@
                     <h3 class="box-title">Documentación</h3>
 
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                         </button>
                     </div>
                     </div>
@@ -145,7 +145,7 @@
 
                                         <td> {{documentacion.titulo}}</td>
                                         <td> {{documentacion.descripcion}}</td>
-                                        <td width="10px"> <a :href="'/documentaciones/operador/' + documentacion.id" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>
+                                        <td width="10px"> <a :href="'/documentaciones/operador/' + documentacion.id" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="far fa-file-pdf"></span></a></td>
 
                                     </tr>
 

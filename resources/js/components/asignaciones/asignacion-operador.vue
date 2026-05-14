@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="col-md-4" style="margin-top: 29px;">
-          <button @click="redireccionAsignacion()"><span class="fa fa-plus-circle"></span></button>
+          <button @click="redireccionAsignacion()"><span class="fas fa-plus-circle"></span></button>
         </div>
       </div>
     </div>

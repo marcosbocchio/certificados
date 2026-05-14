@@ -22,7 +22,7 @@
 
         <div class="col-md-12">
            <div v-show="$can('T_partes_edita')">
-                <a :href="'/area/enod/ot/' + ot_id_data + '/parte-manual' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
+                <a :href="'/area/enod/ot/' + ot_id_data + '/parte-manual' " class="btn btn-enod pull-left"><span class="fas fa-plus-circle"></span> Nuevo</a>
            </div>
         </div>
         <div class="col-md-12">
@@ -31,7 +31,7 @@
                     <h3 class="box-title">Parte manual</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
+                            <i class="fas fa-minus"></i>
                         </button>
                     </div>
                 </div>
@@ -54,17 +54,17 @@
                                     <td>{{ parte.fecha_formateada }}</td>
                                     <td width="10px">
                                         <!-- Botón de editar -->
-                                        <button @click="editParteManual(parte.id)" class="btn btn-warning btn-sm">
-                                            <span class="fa fa-edit"></span>
+                                        <button @click="editParteManual(parte.id)" class="btn btn-enod btn-sm">
+                                            <span class="fas fa-edit"></span>
                                         </button>
                                     </td>
                                     <td width="10px">
-                                        <button @click="informesEscaneadosManual(parte.id)" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
+                                        <button @click="informesEscaneadosManual(parte.id)" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fas fa-cloud-arrow-up"></span></button>
                                     </td>
                                     <td width="10px">
                                         <!-- Botón de PDF -->
                                         <button @click="generatePDFManual(parte.id)" class="btn btn-default btn-sm">
-                                            <span class="fa fa-file-pdf-o"></span>
+                                            <span class="far fa-file-pdf"></span>
                                         </button>
                                     </td>
                                 </tr>
@@ -87,7 +87,7 @@
                 <div class="col-md-3">
                     <div v-show="$can('T_partes_edita')">
                         <a :href="'/area/enod/ot/' + ot_id_data + '/parte'" class="btn btn-enod pull-left">
-                            <span class="fa fa-plus-circle"></span> Nuevo
+                            <span class="fas fa-plus-circle"></span> Nuevo
                         </a>
                     </div>
                 </div>
@@ -96,9 +96,8 @@
                 <div class="col-md-3">
                     <div class="input-group">
                         <input type="text" v-model="search" class="form-control" @keyup.enter="getResults(1)" placeholder="Buscar...">
-                        <span class="input-group-addon btn" @click="getResults(1)" style="background-color: rgb(255, 204, 0); cursor: pointer; border: none;">
-                            <i class="fa fa-search"></i>
-                        </span>
+                        <span class="input-group-btn"><button class="btn btn-enod" type="button" @click="getResults(1)" >
+                            <i class="fas fa-search"></i></button></span>
                     </div>
                 </div>
             </div>
@@ -110,7 +109,7 @@
                     <h3 class="box-title">Partes asignados a la orden de trabajo</h3>
 
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                         </button>
                     </div>
                 </div>
@@ -133,18 +132,18 @@
                                     <td>{{ ot_parte.name }}</td>
                                     <td> {{ot_parte.fecha}}</td>
                                     <td width="10px">
-                                        <button @click.prevent="editParte(ot_parte.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_partes_edita')"><span class="fa fa-edit"></span></button>
+                                        <button @click.prevent="editParte(ot_parte.id)" class="btn btn-enod btn-sm" title="Editar" :disabled="!$can('T_partes_edita')"><span class="fas fa-edit"></span></button>
                                     </td>
 
                                     <td width="10px" v-show="$can('T_partes_edita')">
-                                        <a :href="'/pdf/parte/' + ot_parte.id + '/original' " target="_blank"  class="btn btn-default btn-sm" title="Informe original"><span class="fa fa-file-pdf-o"></span></a>
+                                        <a :href="'/pdf/parte/' + ot_parte.id + '/original' " target="_blank"  class="btn btn-default btn-sm" title="Informe original"><span class="far fa-file-pdf"></span></a>
                                     </td>
 
                                     <td width="10px">
-                                        <a :href="'/pdf/parte/' + ot_parte.id + '/final' " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a>
+                                        <a :href="'/pdf/parte/' + ot_parte.id + '/final' " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="far fa-file-pdf"></span></a>
                                     </td>
                                     <td width="10px">
-                                        <button @click="informesEscaneados(ot_parte.id)" :disabled="!$can('T_partes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
+                                        <button @click="informesEscaneados(ot_parte.id)" :disabled="!$can('T_partes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fas fa-cloud-arrow-up"></span></button>
                                     </td>
                                     <td v-if="!ot_parte.firma" width="10px">
                                         <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_partes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>

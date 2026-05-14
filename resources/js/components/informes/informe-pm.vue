@@ -362,7 +362,7 @@
 
                          <div class="col-md-1">
                             <span>
-                              <button type="button" @click="addModelo()"><span class="fa fa-plus-circle"></span></button>
+                              <button type="button" @click="addModelo()"><span class="fas fa-plus-circle"></span></button>
                             </span>
                          </div>
 
@@ -417,7 +417,7 @@
 
                         <div class="col-md-1">
                             <span>
-                              <button type="button" @click="addDetalle()"><span class="fa fa-plus-circle"></span></button>
+                              <button type="button" @click="addDetalle()"><span class="fas fa-plus-circle"></span></button>
                             </span>
                         </div>
 
@@ -460,11 +460,11 @@
                                                                                 item.path2 ||
                                                                                 item.path3 ||
                                                                                 item.path4 )
-                                                }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',item)" ></span>
+                                                }" class="fas fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',item)" ></span>
                                                 </td>
 
 
-                                                <td style="text-align:center"><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>
+                                                <td style="text-align:center"><span class="fas fa-circle-minus" @click="removeDetalle(k)"></span></td>
 
                                             </tr>
                                         </tbody>

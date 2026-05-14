@@ -100,7 +100,7 @@
 
                         <div class="col-md-1">
                             <span>
-                              <button type="button" @click="addProducto()"><span class="fa fa-plus-circle"></span></button>
+                              <button type="button" @click="addProducto()"><span class="fas fa-plus-circle"></span></button>
                             </span>
                         </div>
 
@@ -125,7 +125,7 @@
                                                     <td> {{ inputsProducto.producto.descripcion}}</td>
                                                     <td> {{ inputsProducto.medida.descripcion}}&nbsp; &nbsp; {{inputsProducto.medida.codigo }}</td>
                                                     <td> {{ inputsProducto.cantidad_productos}}</td>
-                                                    <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
+                                                    <td style="text-align:center"> <i class="fas fa-circle-minus" @click="removeProducto(k)" ></i></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -153,7 +153,7 @@
 
                                 <div class="col-md-1">
                                     <span>
-                                    <button type="button" @click="addEquipo(interno_equipo.id)"><span class="fa fa-plus-circle"></span></button>
+                                    <button type="button" @click="addEquipo(interno_equipo.id)"><span class="fas fa-plus-circle"></span></button>
                                     </span>
                                 </div>
 
@@ -176,7 +176,7 @@
                                                 <tr v-for="(inputsEquipo,k) in inputsEquipos" :key="k">
                                                     <td> {{ inputsEquipo.nro_interno}}</td>
                                                     <td> {{ inputsEquipo.equipo.codigo}}</td>
-                                                    <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeEquipo(k)" ></i></td>
+                                                    <td style="text-align:center"> <i class="fas fa-circle-minus" @click="removeEquipo(k)" ></i></td>
                                                 </tr>
                                             </tbody>
                                             </table>
@@ -204,7 +204,7 @@
 
                                 <!-- Botón para agregar observación -->
                                 <div class="col-md-12" style="padding-top: 10px;">
-                                    <button type="button" @click="agregarObservacion"><span class="fa fa-plus-circle"></span></button>
+                                    <button type="button" @click="agregarObservacion"><span class="fas fa-plus-circle"></span></button>
                                 </div>
 
                                 <!-- Tabla de Observaciones -->
@@ -222,7 +222,7 @@
                                                 <tr v-for="(obs, index) in listaObservaciones" :key="index">
                                                     <td>{{ obs.observaciones }}</td>
                                                     <td>{{ obs.cantidad }}</td>
-                                                    <td style="text-align: center;"><span class="fa fa-minus-circle" @click="quitarObservacion(index)"></span></td>
+                                                    <td style="text-align: center;"><span class="fas fa-circle-minus" @click="quitarObservacion(index)"></span></td>
                                                 </tr>
                                             </tbody>
                                         </table>

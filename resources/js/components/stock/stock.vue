@@ -60,7 +60,7 @@
         <div class="row">
           <div class="col-md-12">
             <!-- Botón para agregar producto con solo un icono de cruz -->
-            <button type="button" @click="addProducto()"><span class="fa fa-plus-circle"></span></button>
+            <button type="button" @click="addProducto()"><span class="fas fa-plus-circle"></span></button>
           </div>
         </div>
         <div v-show="productosAgregados.length" style="margin-top: 10px;">
@@ -77,7 +77,7 @@
                 <tr v-for="(productoAgregado, index) in productosAgregados" :key="index">
                   <td>{{ descripcionDelProducto(productoAgregado.producto) }}</td>
                   <td>{{ productoAgregado.cantidad }}</td>
-                  <td class="text-center"><i @click="removeProducto(index)" class="fa fa-minus-circle"></i></td>
+                  <td class="text-center"><i @click="removeProducto(index)" class="fas fa-circle-minus"></i></td>
                 </tr>
               </tbody>
             </table>

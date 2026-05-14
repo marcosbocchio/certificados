@@ -4,7 +4,7 @@
         <h3 class="box-title">Procedimientos Enod</h3>
 
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                 </button>                       
             </div>
         </div>
@@ -26,12 +26,12 @@
                 <td>{{ registro.titulo}}</td>
                 <td>{{ registro.descripcion }}</td>
                 <td>{{ registro.metodo_ensayo['metodo']}}</td>    
-                <td width="10px"> <a :href="'/' + registro.path " target="_blank" title="Imagen" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td>
+                <td width="10px"> <a :href="'/' + registro.path " target="_blank" title="Imagen" class="btn btn-default btn-sm"><span class="far fa-file-pdf"></span></a></td>
                 <td width="10px">
-                  <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('T_proc_edita')"><span class="fa fa-edit"></span> </button>                  
+                  <button class="btn btn-enod btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('T_proc_edita')"><span class="fas fa-edit"></span> </button>                  
                 </td>
                 <td width="10px">
-                  <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.titulo)" :disabled="!$can('T_proc_edita')"><span class="fa fa-trash"></span></button>
+                  <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.titulo)" :disabled="!$can('T_proc_edita')"><span class="fas fa-trash"></span></button>
                 </td>
               </tr>
             </tbody>

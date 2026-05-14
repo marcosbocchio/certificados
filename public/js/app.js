@@ -9904,20 +9904,20 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this4.partes = JSON.parse(JSON.stringify(response.data));
 
         /*  this.servicios_data.forEach(function(item){
-                if(this.partes.map(x => x.id).indexOf(item.parte_id) !== -1){
-                    this.partes[this.partes.map(x => x.id).indexOf(item.parte_id)].parte_sel = true;
+               if(this.partes.map(x => x.id).indexOf(item.parte_id) !== -1){
+                   this.partes[this.partes.map(x => x.id).indexOf(item.parte_id)].parte_sel = true;
               }
-              }.bind(this));
-            this.productos_costura_data.forEach(function(item){
-                if(this.partes.map(x => x.id).indexOf(item.parte_id) !== -1){
-                    this.partes[this.partes.map(x => x.id).indexOf(item.parte_id)].parte_sel = true;
+            }.bind(this));
+           this.productos_costura_data.forEach(function(item){
+               if(this.partes.map(x => x.id).indexOf(item.parte_id) !== -1){
+                   this.partes[this.partes.map(x => x.id).indexOf(item.parte_id)].parte_sel = true;
               }
-              }.bind(this));
-            this.productos_placas_data.forEach(function(item){
-                if(this.partes.map(x => x.id).indexOf(item.parte_id) !== -1){
-                    this.partes[this.partes.map(x => x.id).indexOf(item.parte_id)].parte_sel = true;
+            }.bind(this));
+           this.productos_placas_data.forEach(function(item){
+               if(this.partes.map(x => x.id).indexOf(item.parte_id) !== -1){
+                   this.partes[this.partes.map(x => x.id).indexOf(item.parte_id)].parte_sel = true;
               }
-              }.bind(this));
+            }.bind(this));
          */
       });
     },
@@ -29181,7 +29181,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
                         );
                         this.modelo = nuevoModelo;
                       }
-                        if (!this.fluido.id) {
+                       if (!this.fluido.id) {
                         // Validar que el código exista y no sea sólo espacios
                         if (!this.fluido.codigo || this.fluido.codigo.trim() === "") {
                           toastr.error("Campo fluido obligatorio");
@@ -31113,7 +31113,7 @@ var mo = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
                 var notificaciones_resumen = response.data;
                 var html_temp = '';
                 notificaciones_resumen.forEach(function (item) {
-                  html_temp += '<li><a href="#"><i class="fa fa-bell-o text-red"></i><span>' + item.total + '</span> notificaciones de <span>' + item.tipo + '</span></a></li>';
+                  html_temp += '<li><a href="#"><i class="fas fa-bell-o text-red"></i><span>' + item.total + '</span> notificaciones de <span>' + item.tipo + '</span></a></li>';
                 });
                 document.getElementById('menu-notificaciones').innerHTML = html_temp;
               });
@@ -42284,7 +42284,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v(" Nuevo\n          ")])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
@@ -42344,18 +42344,13 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "input-group-addon btn",
-    staticStyle: {
-      "background-color": "#F9CA33"
-    },
+    staticClass: "input-group-btn",
     on: {
       click: function click($event) {
         return _vm.aplicarFiltro();
       }
     }
-  }, [_c("i", {
-    staticClass: "fa fa-search"
-  })])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(0)])])])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -42425,18 +42420,13 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "input-group-addon btn",
-    staticStyle: {
-      "background-color": "#F9CA33"
-    },
+    staticClass: "input-group-btn",
     on: {
       click: function click($event) {
         return _vm.aplicarFiltro();
       }
     }
-  }, [_c("i", {
-    staticClass: "fa fa-search"
-  })])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(1)])])])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -42473,18 +42463,13 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "input-group-addon btn",
-    staticStyle: {
-      "background-color": "#F9CA33"
-    },
+    staticClass: "input-group-btn",
     on: {
       click: function click($event) {
         return _vm.aplicarFiltro();
       }
     }
-  }, [_c("i", {
-    staticClass: "fa fa-search"
-  })])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(2)])])])])]), _vm._v(" "), _c("div", {
     staticClass: "clearfix"
   }), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
@@ -42546,7 +42531,40 @@ var render = function render() {
     staticClass: "clearfix"
   })]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-search"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-search"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-search"
+  })]);
+}];
 render._withStripped = true;
 
 
@@ -42844,7 +42862,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_agente_ac_edita")
@@ -42856,7 +42874,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -42874,7 +42892,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -43288,7 +43306,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_fuentes_edita")
@@ -43300,7 +43318,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -43318,7 +43336,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -43975,7 +43993,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_fuentes_edita")
@@ -43987,7 +44005,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -44005,7 +44023,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -44547,7 +44565,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -44690,7 +44708,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -45272,7 +45290,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -45415,7 +45433,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -45507,7 +45525,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_clientes_edita")
@@ -45519,7 +45537,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -45537,7 +45555,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -45981,7 +45999,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_contratistas_edita")
@@ -45993,7 +46011,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -46011,7 +46029,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -46312,7 +46330,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-calendar"
+    staticClass: "fas fa-calendar"
   })]);
 }, function () {
   var _vm = this,
@@ -46452,7 +46470,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_documentaciones_edita")
@@ -46464,7 +46482,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -46482,7 +46500,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])], 1)]);
 };
@@ -47048,7 +47066,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_equipos_edita")
@@ -47060,7 +47078,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -47078,7 +47096,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -47654,7 +47672,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar"
       },
@@ -47665,7 +47683,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -47682,7 +47700,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-user"
+      staticClass: "fas fa-user"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -47791,7 +47809,7 @@ var render = function render() {
       type: "button"
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle",
+    staticClass: "fas fa-plus-circle",
     on: {
       click: _vm.agregarUsuario
     }
@@ -47801,7 +47819,7 @@ var render = function render() {
     return _c("tr", {
       key: usuario.id
     }, [_c("td", [_vm._v(_vm._s(usuario.name))]), _vm._v(" "), _c("td", [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.eliminarUsuario(usuario);
@@ -47820,7 +47838,7 @@ var render = function render() {
       click: _vm.guardarUsuariosAsociados
     }
   }, [_vm.loading ? _c("span", {
-    staticClass: "fa fa-spinner fa-spin"
+    staticClass: "fas fa-spinner fa-spin"
   }) : _vm._e(), _vm._v("\n          Guardar\n        ")])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
   }, [_c("loading-spin")], 1) : _vm._e()])])]);
@@ -48179,7 +48197,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_fuentes_edita")
@@ -48191,7 +48209,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -48209,7 +48227,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -49201,7 +49219,7 @@ var render = function render() {
       "class": {
         "fila-roja": registro.activo_sn != 1
       }
-    }, [_c("td", [_vm._v(_vm._s(registro.nro_interno))]), _vm._v(" "), registro.equipo.tipo_equipamiento ? _c("td", [_vm._v("\r\n                " + _vm._s(registro.equipo.tipo_equipamiento.codigo) + "\r\n            ")]) : _c("td", [_vm._v(" ")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(registro.equipo.codigo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(registro.equipo.metodo_ensayos.metodo))]), _vm._v(" "), _c("th", [_c("button", {
+    }, [_c("td", [_vm._v(_vm._s(registro.nro_interno))]), _vm._v(" "), registro.equipo.tipo_equipamiento ? _c("td", [_vm._v("\n                " + _vm._s(registro.equipo.tipo_equipamiento.codigo) + "\n            ")]) : _c("td", [_vm._v(" ")]), _vm._v(" "), _c("td", [_vm._v(_vm._s(registro.equipo.codigo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(registro.equipo.metodo_ensayos.metodo))]), _vm._v(" "), _c("th", [_c("button", {
       staticClass: "btn btn-xs",
       staticStyle: {
         color: "black !important",
@@ -49217,13 +49235,13 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-table"
+      staticClass: "fas fa-table"
     })])]), _vm._v(" "), registro.interno_fuente ? _c("td", [_vm._v(_vm._s(registro.interno_fuente.nro_serie) + " - " + _vm._s(registro.interno_fuente.fuente.codigo))]) : _c("td", [_vm._v(" ")]), _vm._v(" "), registro.interno_fuente ? _c("td", [_vm._v(_vm._s(registro.interno_fuente.curie_actual) + "  Ci")]) : _c("td"), _vm._v(" "), _c("td", [_vm._v(_vm._s(registro.frente.codigo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatearFecha(registro.fecha_anul)))]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_interno_equipos_edita")
@@ -49235,7 +49253,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -49253,7 +49271,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -49847,12 +49865,12 @@ var render = function render() {
       staticStyle: {
         "text-align": "center"
       }
-    }, [registro.activo_sn ? _c("div", [_vm._v("\r\n                  SI\r\n              ")]) : _c("div", [_vm._v("\r\n                  NO   \r\n              ")])]), _vm._v(" "), _c("td", {
+    }, [registro.activo_sn ? _c("div", [_vm._v("\n                  SI\n              ")]) : _c("div", [_vm._v("\n                  NO   \n              ")])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_interno_fuentes_edita")
@@ -49864,7 +49882,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -49882,7 +49900,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -50198,7 +50216,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_materiales_edita")
@@ -50210,7 +50228,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -50228,7 +50246,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -50572,7 +50590,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_medidas_edita")
@@ -50584,7 +50602,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -50602,7 +50620,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -51035,7 +51053,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_modelos_3d_edita")
@@ -51047,7 +51065,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -51065,7 +51083,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -51375,7 +51393,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_normas_ensayo_edita")
@@ -51387,7 +51405,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -51405,7 +51423,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -51715,7 +51733,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_normas_eval_edita")
@@ -51727,7 +51745,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -51745,7 +51763,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -52059,7 +52077,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_normas_fabricacion_edita")
@@ -52071,7 +52089,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -52089,7 +52107,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -52377,7 +52395,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_permisos_edita")
@@ -52389,7 +52407,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -52407,7 +52425,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -52769,7 +52787,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_soldadores_edita")
@@ -52781,7 +52799,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -52799,7 +52817,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -53344,7 +53362,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Ver Detalles",
         disabled: registro.stockeable_sn === 0
@@ -53356,13 +53374,13 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-list"
+      staticClass: "fas fa-list"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_productos_edita")
@@ -53374,7 +53392,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -53392,7 +53410,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -53849,7 +53867,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_proveedores_edita")
@@ -53861,7 +53879,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -53879,7 +53897,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -54303,7 +54321,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_roles_edita")
@@ -54315,7 +54333,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -54333,7 +54351,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -54771,7 +54789,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_servicios_edita")
@@ -54783,7 +54801,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -54801,7 +54819,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -55178,7 +55196,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_soldadores_edita")
@@ -55190,7 +55208,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -55208,7 +55226,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -55520,7 +55538,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_tipos_equipamiento_edita")
@@ -55532,7 +55550,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -55550,7 +55568,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -55862,7 +55880,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_unidades_medida_edita")
@@ -55874,7 +55892,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -55892,7 +55910,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -57832,12 +57850,12 @@ var render = function render() {
   }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.registros, function (registro) {
     return _c("tr", {
       key: registro.id
-    }, [_c("td", [_vm._v(_vm._s(registro.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(registro.email))]), _vm._v(" "), _c("td", [registro.cliente ? _c("div", [_vm._v("\r\n                " + _vm._s(registro.cliente.nombre_fantasia) + "\r\n                ")]) : _vm._e()]), _vm._v(" "), _c("td", {
+    }, [_c("td", [_vm._v(_vm._s(registro.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(registro.email))]), _vm._v(" "), _c("td", [registro.cliente ? _c("div", [_vm._v("\n                " + _vm._s(registro.cliente.nombre_fantasia) + "\n                ")]) : _vm._e()]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_usuarios_edita")
@@ -57849,7 +57867,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -57884,7 +57902,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -58629,7 +58647,7 @@ var render = function render() {
         disabled: _vm.$can("M_vehiculos_edita")
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("M_vehiculos_edita")
@@ -58641,7 +58659,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -58659,7 +58677,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -58861,7 +58879,7 @@ var render = function render() {
       click: _vm.agregarDetalle
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "box-body"
   }, [_c("table", {
@@ -58874,7 +58892,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.eliminarDetalle(index);
@@ -59083,7 +59101,7 @@ var render = function render() {
       click: _vm.agregarDetalle
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "box-body"
   }, [_c("table", {
@@ -59096,7 +59114,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.eliminarDetalle(index);
@@ -59260,7 +59278,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod top-buffer"
   }, [_c("div", {
@@ -59386,7 +59404,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod top-buffer"
   }, [_c("div", {
@@ -59401,14 +59419,14 @@ var render = function render() {
         "text-align": "right"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       on: {
         click: function click($event) {
           return _vm.editarOperador(index);
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.mostrarPopup ? _c("div", {
     staticClass: "modal show",
@@ -59930,7 +59948,7 @@ var render = function render() {
         }
       }
     }, [_c("i", {
-      staticClass: "fa fa-undo"
+      staticClass: "fas fa-undo"
     })])])])]) : _vm._e(), _vm._v(" "), item.visible ? _c("td", [_c("span", {
       staticStyle: {
         display: "inline-block"
@@ -60096,7 +60114,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })]);
 }, function () {
   var _vm = this,
@@ -60126,7 +60144,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -60166,7 +60184,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -60194,7 +60212,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -60278,7 +60296,7 @@ var staticRenderFns = [function () {
       "for": "inputSuccess"
     }
   }, [_c("i", {
-    staticClass: "fa fa-exclamation-triangle",
+    staticClass: "fas fa-exclamation-triangle",
     staticStyle: {
       color: "red"
     }
@@ -60502,7 +60520,7 @@ var render = function render() {
       click: _vm.agregarDetalle
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
@@ -60543,7 +60561,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.eliminarDetalle(index);
@@ -60578,7 +60596,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -60586,7 +60604,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -60828,7 +60846,7 @@ var render = function render() {
       click: _vm.agregarDetalle
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
@@ -61007,7 +61025,7 @@ var render = function render() {
         }
       }
     }), _vm._v(" "), _c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       staticStyle: {
         cursor: "pointer",
         width: "10px",
@@ -61103,7 +61121,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -61111,7 +61129,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -61389,7 +61407,7 @@ var render = function render() {
       click: _vm.agregarDetalle
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
@@ -61553,7 +61571,7 @@ var render = function render() {
         }
       }
     }), _vm._v(" "), _c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       staticStyle: {
         cursor: "pointer",
         width: "10px",
@@ -61649,7 +61667,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -61657,7 +61675,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -61927,7 +61945,7 @@ var render = function render() {
       click: _vm.agregarDetalle
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
@@ -62110,7 +62128,7 @@ var render = function render() {
         }
       }
     }), _vm._v(" "), _c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       staticStyle: {
         cursor: "pointer",
         width: "10px",
@@ -62206,7 +62224,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -62214,7 +62232,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -62493,7 +62511,7 @@ var render = function render() {
       click: _vm.agregarDetalle
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
@@ -62657,7 +62675,7 @@ var render = function render() {
         }
       }
     }), _vm._v(" "), _c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       staticStyle: {
         cursor: "pointer",
         width: "10px",
@@ -62753,7 +62771,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -62761,7 +62779,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -63842,7 +63860,7 @@ var render = function render() {
       click: _vm.agregarNuevo
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v(" Nuevo\n      ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-1"
   }), _vm._v(" "), _c("div", {
@@ -63917,7 +63935,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.puedeEditar(item)
@@ -63928,7 +63946,7 @@ var render = function render() {
         }
       }
     }, [_c("i", {
-      staticClass: "fa fa-pencil"
+      staticClass: "fas fa-pencil"
     })])])]);
   }), 0)])]), _vm._v(" "), _c("pagination", {
     attrs: {
@@ -63993,7 +64011,7 @@ var render = function render() {
       click: _vm.agregarNuevo
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v(" Nuevo\n      ")])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-1"
   }), _vm._v(" "), _c("div", {
@@ -64068,7 +64086,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.puedeEditar(item)
@@ -64079,7 +64097,7 @@ var render = function render() {
         }
       }
     }, [_c("i", {
-      staticClass: "fa fa-pencil"
+      staticClass: "fas fa-pencil"
     })])])]);
   }), 0)])]), _vm._v(" "), _c("pagination", {
     attrs: {
@@ -64148,7 +64166,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-arrow-left"
+    staticClass: "fas fa-arrow-left"
   })])])]);
 };
 var staticRenderFns = [];
@@ -64208,7 +64226,7 @@ var render = function render() {
       href: "/area/enod/ot/" + _vm.ot_id_data + "/certificado"
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v(" Nuevo")])])]), _vm._v(" "), _c("div", {
     staticClass: "clearfix"
   }), _vm._v(" "), _c("div", {
@@ -64229,7 +64247,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("T_certif_edita")
@@ -64241,7 +64259,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       directives: [{
         name: "show",
@@ -64260,7 +64278,7 @@ var render = function render() {
         title: "certificado original"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-pdf-o"
+      staticClass: "far fa-file-pdf"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -64278,7 +64296,7 @@ var render = function render() {
         title: "Opciones de Certificado"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-pdf-o"
+      staticClass: "far fa-file-pdf"
     })]), _vm._v(" "), _c("ul", {
       staticClass: "dropdown-menu",
       attrs: {
@@ -64310,7 +64328,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-cloud-upload"
+      staticClass: "fas fa-cloud-arrow-up"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -64326,7 +64344,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-excel-o"
+      staticClass: "far fa-file-excel"
     })])]), _vm._v(" "), !ot_certificado.firma ? _c("td", {
       attrs: {
         width: "10px"
@@ -64393,7 +64411,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -64739,7 +64757,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v(" Nueva OT")])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3 col-md-offset-7 col-sm-12 col-xs-12"
   }, [_c("div", {
@@ -64753,7 +64771,7 @@ var render = function render() {
       value: _vm.search,
       expression: "search"
     }],
-    staticClass: "form-control",
+    staticClass: "form-control search-enod",
     attrs: {
       type: "text",
       placeholder: "Buscar..."
@@ -64772,21 +64790,19 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "input-group-addon btn btn-enod",
+    staticClass: "input-group-btn",
     on: {
       click: function click($event) {
         return _vm.aplicarFiltro();
       }
     }
-  }, [_c("i", {
-    staticClass: "fa fa-search"
-  })])])])])]), _vm._v(" "), _vm.ots.data && _vm.ots.data.length || _vm.loading ? _c("div", [_c("div", {
+  }, [_vm._m(0)])])])])]), _vm._v(" "), _vm.ots.data && _vm.ots.data.length || _vm.loading ? _c("div", [_c("div", {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "box box-custom-enod"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "box-body"
   }, [[_c("keep-alive", [_c("div", {
     staticClass: "ot-table-loading-area"
@@ -64875,13 +64891,13 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-cloud-upload"
+      staticClass: "fas fa-cloud-arrow-up"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("T_edita")
@@ -64892,7 +64908,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -64905,7 +64921,7 @@ var render = function render() {
         title: "Informe"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-pdf-o"
+      staticClass: "far fa-file-pdf"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -64972,6 +64988,17 @@ var render = function render() {
   }), _vm._v(" "), _c("confirmar-modal")], 1);
 };
 var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-search"
+  })]);
+}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
@@ -65069,7 +65096,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -65093,7 +65120,7 @@ var render = function render() {
         }
       }
     }, [_c("td", [_vm._v(" " + _vm._s(item.nro_interno))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(item.marca))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(item.modelo))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(item.patente))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(item.tipo))]), _vm._v(" "), _c("td", [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeVehiculo(k);
@@ -65124,7 +65151,7 @@ var render = function render() {
         title: "Imagen"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-image-o"
+      staticClass: "far fa-file-image"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.isLoadingC ? _c("div", {
     staticClass: "overlay"
@@ -65177,7 +65204,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -65202,9 +65229,9 @@ var render = function render() {
         title: "Imagen"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-image-o"
+      staticClass: "far fa-file-image"
     })])]), _vm._v(" "), _c("td", [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeDocumentacion(k);
@@ -65244,7 +65271,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -65270,7 +65297,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -65298,7 +65325,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -65536,7 +65563,7 @@ var render = function render() {
   }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.registros, function (registro) {
     return _c("tr", {
       key: registro.id
-    }, [_c("td", [_vm._v(" \r\n              " + _vm._s(registro.descripcion) + " "), _c("a", {
+    }, [_c("td", [_vm._v(" \n              " + _vm._s(registro.descripcion) + " "), _c("a", {
       staticClass: "btn btn-default btn-xs",
       attrs: {
         href: "/" + registro.path,
@@ -65544,13 +65571,13 @@ var render = function render() {
         title: "descargar"
       }
     }, [_c("span", {
-      staticClass: "fa fa-download"
-    })])]), _vm._v(" "), _c("td", [_vm._v("\r\n              " + _vm._s(registro.usuario.name) + "\r\n            ")]), _vm._v(" "), _c("td", [_vm._v(" \r\n            " + _vm._s(_vm.fecha_formateada(registro.updated_at)) + "\r\n            ")]), _vm._v(" "), _c("td", {
+      staticClass: "fas fa-download"
+    })])]), _vm._v(" "), _c("td", [_vm._v("\n              " + _vm._s(registro.usuario.name) + "\n            ")]), _vm._v(" "), _c("td", [_vm._v(" \n            " + _vm._s(_vm.fecha_formateada(registro.updated_at)) + "\n            ")]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("T_informes_edita")
@@ -65562,7 +65589,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -65580,7 +65607,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])])]);
 };
@@ -66069,7 +66096,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-calendar"
+    staticClass: "fas fa-calendar"
   })]);
 }, function () {
   var _vm = this,
@@ -66222,7 +66249,7 @@ var render = function render() {
         title: "Informe"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-pdf-o"
+      staticClass: "far fa-file-pdf"
     })])])]);
   }), 0)]), _vm._v(" "), _vm.loading ? _c("div", {
     staticClass: "overlay"
@@ -66388,7 +66415,7 @@ var render = function render() {
       disabled: !_vm.metodo_selected
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v("\n                                        Nuevo\n                                ")])])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -66412,7 +66439,7 @@ var render = function render() {
       value: _vm.search,
       expression: "search"
     }],
-    staticClass: "form-control",
+    staticClass: "form-control search-enod",
     attrs: {
       type: "text",
       placeholder: "Buscar"
@@ -66431,28 +66458,23 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "input-group-addon btn",
-    staticStyle: {
-      "background-color": "rgb(255, 204, 0)"
-    },
+    staticClass: "input-group-btn",
     on: {
       click: function click($event) {
         return _vm.aplicarFiltro();
       }
     }
-  }, [_c("i", {
-    staticClass: "fa fa-search"
-  })])])])])])]), _vm._v(" "), _c("div", {
+  }, [_vm._m(0)])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "box box-custom-enod top-buffer"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "box-body"
   }, [_c("div", {
     staticClass: "table-responsive"
   }, [_c("table", {
     staticClass: "table table-hover table-striped table-condensed"
-  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.ot_informes.data, function (ot_informe, k) {
+  }, [_vm._m(2), _vm._v(" "), _c("tbody", _vm._l(_vm.ot_informes.data, function (ot_informe, k) {
     return _c("tr", {
       key: k,
       "class": {
@@ -66543,7 +66565,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("T_informes_edita") || ot_informe.anulado_sn === 1
@@ -66555,13 +66577,13 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]) : _c("td", {
       attrs: {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("T_informes_edita") || ot_informe.anulado_sn === 1
@@ -66573,7 +66595,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), !ot_informe.importable_sn && (ot_informe.metodo == "LP" || ot_informe.metodo == "PM" || ot_informe.metodo == "US" || ot_informe.metodo == "RI" || ot_informe.metodo == "RD" || ot_informe.metodo == "CV" || ot_informe.metodo == "TT" || ot_informe.metodo == "PMI") ? _c("td", {
       attrs: {
         width: "10px"
@@ -66708,7 +66730,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-cloud-upload"
+      staticClass: "fas fa-cloud-arrow-up"
     })])]) : _vm._e(), _vm._v(" "), !ot_informe.firma && !ot_informe.importable_sn ? _c("td", {
       attrs: {
         width: "10px"
@@ -66749,7 +66771,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-table"
+      staticClass: "fas fa-table"
     })])]), _vm._v(" "), ot_informe.anulado_sn !== 1 ? _c("td", {
       attrs: {
         width: "10px"
@@ -66845,6 +66867,17 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
+  return _c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-search"
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
   return _c("div", {
     staticClass: "box-header with-border"
   }, [_c("h3", {
@@ -66858,7 +66891,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -66979,7 +67012,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -67018,7 +67051,7 @@ var render = function render() {
         }
       }
     }, [_vm._v(" " + _vm._s(interno_equipo.equipo.codigo))]), _vm._v(" "), _c("td", [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeInternoEquipos(k);
@@ -67066,7 +67099,7 @@ var render = function render() {
         title: "Imagen"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-image-o"
+      staticClass: "far fa-file-image"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.isLoadingIED ? _c("div", {
     staticClass: "overlay"
@@ -67094,7 +67127,7 @@ var render = function render() {
         title: "Imagen"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-image-o"
+      staticClass: "far fa-file-image"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.isLoadingIFD ? _c("div", {
     staticClass: "overlay"
@@ -67116,7 +67149,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -67146,7 +67179,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -67174,7 +67207,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -67267,7 +67300,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
@@ -67307,7 +67340,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
@@ -67332,7 +67365,7 @@ var render = function render() {
         }
       }
     }, [_vm._v(" " + _vm._s(users_ot_operario.name))]) : _vm._e(), _vm._v(" "), users_ot_operario.ayudante_sn == 0 ? _c("td", [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeOperarios(k);
@@ -67363,7 +67396,7 @@ var render = function render() {
         }
       }
     }, [_vm._v(" " + _vm._s(users_ot_ayudante.name))]) : _vm._e(), _vm._v(" "), users_ot_ayudante.ayudante_sn == 1 ? _c("td", [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeOperarios(k);
@@ -67416,7 +67449,7 @@ var render = function render() {
         title: "pdf"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-pdf-o"
+      staticClass: "far fa-file-pdf"
     })])])]);
   }), 0)])])]), _vm._v(" "), _vm.isLoadingC ? _c("div", {
     staticClass: "overlay"
@@ -67451,7 +67484,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -67475,7 +67508,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -67499,7 +67532,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -67569,7 +67602,7 @@ var render = function render() {
       href: "/area/enod/ot/" + _vm.ot_id_data + "/parte-manual"
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v(" Nuevo")])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -67588,14 +67621,14 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       on: {
         click: function click($event) {
           return _vm.editParteManual(parte.id);
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -67611,7 +67644,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-cloud-upload"
+      staticClass: "fas fa-cloud-arrow-up"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -67624,7 +67657,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-pdf-o"
+      staticClass: "far fa-file-pdf"
     })])])]);
   }), 0)])]), _vm._v(" "), _c("pagination", {
     attrs: {
@@ -67663,7 +67696,7 @@ var render = function render() {
       href: "/area/enod/ot/" + _vm.ot_id_data + "/parte"
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v(" Nuevo\n                       ")])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }), _vm._v(" "), _c("div", {
@@ -67696,11 +67729,11 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "input-group-addon btn",
-    staticStyle: {
-      "background-color": "rgb(255, 204, 0)",
-      cursor: "pointer",
-      border: "none"
+    staticClass: "input-group-btn"
+  }, [_c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
     },
     on: {
       click: function click($event) {
@@ -67708,8 +67741,8 @@ var render = function render() {
       }
     }
   }, [_c("i", {
-    staticClass: "fa fa-search"
-  })])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "fas fa-search"
+  })])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "clearfix"
   }), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
@@ -67729,7 +67762,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("T_partes_edita")
@@ -67741,7 +67774,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       directives: [{
         name: "show",
@@ -67760,7 +67793,7 @@ var render = function render() {
         title: "Informe original"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-pdf-o"
+      staticClass: "far fa-file-pdf"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -67773,7 +67806,7 @@ var render = function render() {
         title: "Informe"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-pdf-o"
+      staticClass: "far fa-file-pdf"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -67790,7 +67823,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-cloud-upload"
+      staticClass: "fas fa-cloud-arrow-up"
     })])]), _vm._v(" "), !ot_parte.firma ? _c("td", {
       attrs: {
         width: "10px"
@@ -67859,7 +67892,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -67889,7 +67922,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -68102,13 +68135,13 @@ var render = function render() {
         title: "descargar"
       }
     }, [_c("span", {
-      staticClass: "fa fa-download"
+      staticClass: "fas fa-download"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("T_informes_edita")
@@ -68120,7 +68153,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -68138,7 +68171,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])])]);
 };
@@ -68350,7 +68383,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])])]) : _vm._e(), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
@@ -68439,7 +68472,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeTipoSoldadura(k);
@@ -68472,7 +68505,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -68531,13 +68564,13 @@ var render = function render() {
         title: "Imagen"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-pdf-o"
+      staticClass: "far fa-file-pdf"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("T_proc_edita")
@@ -68549,7 +68582,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -68567,7 +68600,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-trash"
+      staticClass: "fas fa-trash"
     })])])]);
   }), 0)])])])]);
 };
@@ -68587,7 +68620,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -68686,7 +68719,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod top-buffer"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
@@ -68699,7 +68732,7 @@ var render = function render() {
     return _c("tr", {
       key: k
     }, [_c("td", [_vm._v(" " + _vm._s(ot_soldador.codigo))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(ot_soldador.nombre))]), _vm._v(" "), _c("td", [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeSoldador(k);
@@ -68743,7 +68776,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "box box-custom-enod top-buffer"
   }, [_vm._m(2), _vm._v(" "), _c("div", {
@@ -68756,7 +68789,7 @@ var render = function render() {
     return _c("tr", {
       key: k
     }, [_c("td", [_vm._v(" " + _vm._s(ot_usuario_cliente.name))]), _vm._v(" "), _c("td", [_vm._v(" " + _vm._s(ot_usuario_cliente.email))]), _vm._v(" "), _c("td", [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeUsuarioCliente(k);
@@ -68798,7 +68831,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -68824,7 +68857,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -68908,7 +68941,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v(" Nuevo")])])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
@@ -69013,9 +69046,11 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "input-group-addon btn",
-    staticStyle: {
-      "background-color": "#F9CA33"
+    staticClass: "input-group-btn"
+  }, [_c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
     },
     on: {
       click: function click($event) {
@@ -69023,8 +69058,8 @@ var render = function render() {
       }
     }
   }, [_c("i", {
-    staticClass: "fa fa-search"
-  })])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "fas fa-search"
+  })])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "clearfix"
   }), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
@@ -69596,7 +69631,7 @@ var render = function render() {
       title: "pdf"
     }
   }, [_c("span", {
-    staticClass: "fa fa-file-pdf-o"
+    staticClass: "far fa-file-pdf"
   })])]) : _vm.newRegistro.path != "" ? _c("div", [_c("img", {
     staticClass: "margin zoom-in",
     attrs: {
@@ -69685,7 +69720,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "modal-header"
   }, [_c("h4", [_c("span", {
-    staticClass: "fa fa-warning",
+    staticClass: "fas fa-warning",
     staticStyle: {
       color: "#FBCA19"
     }
@@ -69831,9 +69866,9 @@ var render = function render() {
       }
     }
   }, [_vm.expandirTipo ? _c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   }) : _vm._e(), _vm._v(" "), !_vm.expandirTipo ? _c("i", {
-    staticClass: "fa fa-plus"
+    staticClass: "fas fa-plus"
   }) : _vm._e()])]), _vm._v(" "), _c("h3", {
     staticClass: "box-title",
     staticStyle: {
@@ -69908,9 +69943,9 @@ var render = function render() {
         }
       }
     }, [!item.expandir ? _c("i", {
-      staticClass: "fa fa-plus"
+      staticClass: "fas fa-plus"
     }) : _vm._e(), item.expandir ? _c("i", {
-      staticClass: "fa fa-minus"
+      staticClass: "fas fa-minus"
     }) : _vm._e()])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "90%"
@@ -70066,7 +70101,7 @@ var render = function render() {
       "for": "inputSuccess"
     }
   }, [_c("i", {
-    staticClass: "fa fa-file-zip-o",
+    staticClass: "fas fa-file-zip-o",
     staticStyle: {
       color: "red"
     }
@@ -70252,11 +70287,11 @@ var render = function render() {
       attrs: {
         bgcolor: "#bee5eb"
       }
-    }, [_vm._v("\r\n                                                    " + _vm._s(item.operador) + "\r\n                                                ")]) : _vm._e(), _vm._v(" "), !_vm.filtro(k) ? _c("td", {
+    }, [_vm._v("\n                                                    " + _vm._s(item.operador) + "\n                                                ")]) : _vm._e(), _vm._v(" "), !_vm.filtro(k) ? _c("td", {
       attrs: {
         bgcolor: "#bee5eb"
       }
-    }, [_vm._v("\r\n                                                    " + _vm._s(item.film) + "\r\n                                                ")]) : _vm._e(), _vm._v(" "), !_vm.filtro(k) ? _c("td", {
+    }, [_vm._v("\n                                                    " + _vm._s(item.film) + "\n                                                ")]) : _vm._e(), _vm._v(" "), !_vm.filtro(k) ? _c("td", {
       staticStyle: {
         "text-align": "center"
       }
@@ -70277,7 +70312,7 @@ var render = function render() {
         },
         expression: "TablaDosimetriaEstados[k].fecha_envio"
       }
-    })], 1)])]) : _c("div", [_vm._v("\r\n                                                      " + _vm._s(_vm.fecha_formateada(item.fecha_envio)) + "\r\n                                                      ")])]) : _vm._e(), _vm._v(" "), !_vm.filtro(k) ? _c("td", {
+    })], 1)])]) : _c("div", [_vm._v("\n                                                      " + _vm._s(_vm.fecha_formateada(item.fecha_envio)) + "\n                                                      ")])]) : _vm._e(), _vm._v(" "), !_vm.filtro(k) ? _c("td", {
       staticStyle: {
         "text-align": "center"
       }
@@ -70301,7 +70336,7 @@ var render = function render() {
         },
         expression: "TablaDosimetriaEstados[k].estado"
       }
-    })], 1) : item.estado ? _c("div", [_vm._v("\r\n                                                        " + _vm._s(item.estado.descripcion) + "\r\n                                                    ")]) : _c("div", [_vm._v("\r\n                                                        " + _vm._s(item.estado) + "\r\n                                                    ")])]) : _vm._e(), _vm._v(" "), !_vm.filtro(k) ? _c("td", {
+    })], 1) : item.estado ? _c("div", [_vm._v("\n                                                        " + _vm._s(item.estado.descripcion) + "\n                                                    ")]) : _c("div", [_vm._v("\n                                                        " + _vm._s(item.estado) + "\n                                                    ")])]) : _vm._e(), _vm._v(" "), !_vm.filtro(k) ? _c("td", {
       staticStyle: {
         "text-align": "center"
       }
@@ -70322,7 +70357,7 @@ var render = function render() {
         },
         expression: "TablaDosimetriaEstados[k].fecha_devolucion"
       }
-    })], 1)])]) : _c("div", [_vm._v("\r\n                                                      " + _vm._s(_vm.fecha_formateada(item.fecha_devolucion)) + "\r\n                                                      ")])]) : _vm._e()]);
+    })], 1)])]) : _c("div", [_vm._v("\n                                                      " + _vm._s(_vm.fecha_formateada(item.fecha_devolucion)) + "\n                                                      ")])]) : _vm._e()]);
   }), _vm._v(" "), _vm._l(8, function (fila) {
     return _c("tr", [_c("td", {
       staticStyle: {
@@ -70347,13 +70382,15 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("span", {
-    staticClass: "input-group-addon",
-    staticStyle: {
-      "background-color": "#F9CA33"
+    staticClass: "input-group-btn"
+  }, [_c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
     }
   }, [_c("i", {
-    staticClass: "fa fa-search"
-  })]);
+    staticClass: "fas fa-search"
+  })])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -72645,22 +72682,29 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "input-group-addon"
+  return _c("span", {
+    staticClass: "input-group-btn"
+  }, [_c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
+    }
   }, [_c("i", {
-    staticClass: "fa fa-calendar"
-  })]);
+    staticClass: "fas fa-calendar"
+  })])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("span", {
-    staticClass: "input-group-addon",
-    staticStyle: {
-      "background-color": "#F9CA33"
+    staticClass: "input-group-btn"
+  }, [_c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
     }
   }, [_c("i", {
-    staticClass: "fa fa-search"
-  })]);
+    staticClass: "fas fa-search"
+  })])]);
 }];
 render._withStripped = true;
 
@@ -72964,7 +73008,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-calendar"
+    staticClass: "fas fa-calendar"
   })]);
 }, function () {
   var _vm = this,
@@ -73005,7 +73049,7 @@ var render = function render() {
       click: _vm.goBack
     }
   }, [_c("span", {
-    staticClass: "fa fa-arrow-left"
+    staticClass: "fas fa-arrow-left"
   }), _vm._v(" "), _vm.showLabel ? _c("span", {
     staticClass: "enod-back-label"
   }, [_vm._v("Volver")]) : _vm._e()])]);
@@ -73902,7 +73946,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -74014,7 +74058,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaCv.length ? _c("div", [_c("div", {
@@ -74070,7 +74114,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-archive-o",
+      staticClass: "fas fa-file-archive-o",
       "class": {
         existe: item.observaciones || item.path1 || item.path2 || item.path3 || item.path4
       },
@@ -74084,7 +74128,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeDetalle(k);
@@ -74890,7 +74934,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -75161,7 +75205,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                             \n                        ")]), _vm._v(" "), _vm.TablaDz.length ? _c("div", [_c("div", {
@@ -75181,7 +75225,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-archive-o",
+      staticClass: "fas fa-file-archive-o",
       "class": {
         existe: item.observaciones || item.path1 || item.path2 || item.path3 || item.path4
       },
@@ -75195,7 +75239,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeDetalle(k);
@@ -76645,7 +76689,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -76792,7 +76836,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaLp.length ? _c("div", [_c("div", {
@@ -76930,7 +76974,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-archive-o",
+      staticClass: "fas fa-file-archive-o",
       "class": {
         existe: item.observaciones || item.path1 || item.path2 || item.path3 || item.path4
       },
@@ -76944,7 +76988,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeDetalle(k);
@@ -78172,7 +78216,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -78271,7 +78315,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                           \n                      ")]), _vm._v(" "), _vm.TablaLp.length ? _c("div", [_c("div", {
@@ -78353,7 +78397,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-archive-o",
+      staticClass: "fas fa-file-archive-o",
       "class": {
         existe: item.observaciones || item.path1 || item.path2 || item.path3 || item.path4
       },
@@ -78367,7 +78411,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeDetalle(k);
@@ -79044,7 +79088,7 @@ var render = function render() {
       title: "pdf"
     }
   }, [_c("span", {
-    staticClass: "fa fa-file-pdf-o"
+    staticClass: "far fa-file-pdf"
   })]), _vm._v(" "), _c("a", {
     staticClass: "btn btn-default btn-xs mt-3",
     staticStyle: {
@@ -79092,7 +79136,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -79202,7 +79246,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaPmi.length ? _c("div", [_c("div", {
@@ -79239,7 +79283,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeDetalle(k);
@@ -80879,7 +80923,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
@@ -81331,7 +81375,7 @@ var render = function render() {
         }
       }
     }, [_c("i", {
-      staticClass: "fa fa-times"
+      staticClass: "fas fa-times"
     })])])]), _vm._v(" "), _c("div", {
       staticClass: "box-body"
     }, [_c("div", {
@@ -81627,7 +81671,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-archive-o",
+      staticClass: "fas fa-file-archive-o",
       "class": {
         existe: tramos.observaciones || tramos.path1 || tramos.path2 || tramos.path3 || tramos.path4
       },
@@ -82154,7 +82198,7 @@ var render = function render() {
       value: _vm.clonando_pasada,
       expression: "clonando_pasada"
     }],
-    staticClass: "fa fa-spin fa-refresh"
+    staticClass: "fas fa-spin fa-refresh"
   }), _vm._v(" Clonar\n                        ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
@@ -82202,7 +82246,7 @@ var render = function render() {
       value: _vm.importado_pasadas,
       expression: "importado_pasadas"
     }],
-    staticClass: "fa fa-spin fa-refresh",
+    staticClass: "fas fa-spin fa-refresh",
     attrs: {
       "for": "sheetjs-input"
     }
@@ -82271,7 +82315,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -82305,7 +82349,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -82339,7 +82383,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -83032,7 +83076,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -83183,7 +83227,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaRg.length ? _c("div", [_c("div", {
@@ -83203,7 +83247,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-archive-o",
+      staticClass: "fas fa-file-archive-o",
       "class": {
         existe: item.observaciones || item.path1 || item.path2 || item.path3 || item.path4
       },
@@ -83217,7 +83261,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeDetalle(k);
@@ -84886,7 +84930,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                         \n                    ")]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
@@ -85299,7 +85343,7 @@ var render = function render() {
         }
       }
     }, [_c("i", {
-      staticClass: "fa fa-times"
+      staticClass: "fas fa-times"
     })])])]), _vm._v(" "), _c("div", {
       staticClass: "box-body"
     }, [_c("div", {
@@ -85595,7 +85639,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-archive-o",
+      staticClass: "fas fa-file-archive-o",
       "class": {
         existe: tramos.observaciones || tramos.path1 || tramos.path2 || tramos.path3 || tramos.path4
       },
@@ -86165,7 +86209,7 @@ var render = function render() {
       value: _vm.clonando_pasada,
       expression: "clonando_pasada"
     }],
-    staticClass: "fa fa-spin fa-refresh"
+    staticClass: "fas fa-spin fa-refresh"
   }), _vm._v(" Clonar\n                        ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "modal fade",
     attrs: {
@@ -86213,7 +86257,7 @@ var render = function render() {
       value: _vm.importado_pasadas,
       expression: "importado_pasadas"
     }],
-    staticClass: "fa fa-spin fa-refresh",
+    staticClass: "fas fa-spin fa-refresh",
     attrs: {
       "for": "sheetjs-input"
     }
@@ -86282,7 +86326,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -86314,7 +86358,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -86348,7 +86392,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -87148,7 +87192,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                             \n                        ")]), _vm._v(" "), _vm.dataForm.detalle.length ? _c("div", [_c("div", {
@@ -87173,7 +87217,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeDetalle(k);
@@ -87376,7 +87420,7 @@ var render = function render() {
       click: _vm.openModal
     }
   }, [_c("i", {
-    staticClass: "fa fa-list"
+    staticClass: "fas fa-list"
   })]) : _vm._e()]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
@@ -88037,7 +88081,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _vm.TablaModelos3d.length ? _c("div", [_c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
@@ -88606,7 +88650,7 @@ var render = function render() {
       click: _vm.addCalibraciones
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                             \n                        ")]), _vm._v(" "), _vm.calibraciones.length ? _c("div", [_c("div", {
@@ -89149,7 +89193,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                             \n                        ")]), _vm._v(" "), _vm.Tabla_us_pa.length ? _c("div", [_c("div", {
@@ -89202,7 +89246,7 @@ var render = function render() {
         }
       }
     })]), _vm._v(" "), _c("td", [_c("span", {
-      staticClass: "fa fa-file-archive-o",
+      staticClass: "fas fa-file-archive-o",
       "class": {
         existe: item.observaciones || item.path1 || item.path2 || item.path3 || item.path4
       },
@@ -89212,7 +89256,7 @@ var render = function render() {
         }
       }
     })]), _vm._v(" "), _c("td", [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeTabla_us_pa(k);
@@ -89556,9 +89600,9 @@ var render = function render() {
         }
       }
     }, [_c("i", {
-      staticClass: "fa fa-file-excel-o"
+      staticClass: "far fa-file-excel"
     })])]), _vm._v(" "), _c("td", [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeTabla_me(k);
@@ -89585,7 +89629,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-1"
   }, [_c("div", {
@@ -89603,7 +89647,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-file-excel-o"
+    staticClass: "far fa-file-excel"
   })])])])])]), _vm._v(" "), _c("div", {
     staticClass: "clearfix"
   }), _vm._v(" "), _c("div", {
@@ -89964,7 +90008,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -90057,7 +90101,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -90149,7 +90193,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -90167,7 +90211,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -90667,7 +90711,7 @@ var render = function render() {
       click: _vm.addDetalle
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _vm.detallesList.length ? _c("div", {
     staticClass: "row"
   }, [_c("div", {
@@ -90678,7 +90722,7 @@ var render = function render() {
     return _c("tr", {
       key: index
     }, [_vm.tipo !== "Linea" ? _c("td", [_vm._v(_vm._s(item.descripcion))]) : _vm._e(), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.material.codigo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(+item.grado !== 0 ? item.grado : ""))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(+item.espNominal !== 0 ? item.espNominal : ""))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(+item.espMinMedido !== 0 ? item.espMinMedido : ""))]), _vm._v(" "), _c("td", [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeDetalle(index);
@@ -91159,15 +91203,15 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "info-section"
   }, [_c("p", [_c("i", {
-    staticClass: "fa fa-database"
+    staticClass: "fas fa-database"
   }), _vm._v(" Registros encontrados en la base de datos: \n            "), _c("span", {
     staticClass: "highlight"
   }, [_vm._v(_vm._s(_vm.totalRegistros))])]), _vm._v(" "), _c("p", [_c("i", {
-    staticClass: "fa fa-folder"
+    staticClass: "fas fa-folder"
   }), _vm._v(" Archivos encontrados en storage: \n            "), _c("span", {
     staticClass: "highlight"
   }, [_vm._v(_vm._s(_vm.totalEncontrados))])]), _vm._v(" "), _c("p", [_c("i", {
-    staticClass: "fa fa-trash"
+    staticClass: "fas fa-trash"
   }), _vm._v(" Archivos sobrantes en storage: \n            "), _c("span", {
     staticClass: "highlight"
   }, [_vm._v(_vm._s(_vm.totalSobrantes))])])]), _vm._v(" "), _c("div", {
@@ -91178,7 +91222,7 @@ var render = function render() {
       click: _vm.compararArchivosCompletos
     }
   }, [_c("i", {
-    staticClass: "fa fa-broom"
+    staticClass: "fas fa-broom"
   }), _vm._v(" Limpiar y Comparar\n        ")]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-danger",
     attrs: {
@@ -91188,7 +91232,7 @@ var render = function render() {
       click: _vm.borrarSobrantes
     }
   }, [_c("i", {
-    staticClass: "fa fa-trash"
+    staticClass: "fas fa-trash"
   }), _vm._v(" Borrar Sobrantes\n        ")])]), _vm._v(" "), _vm.sobrantes.length > 0 ? _c("div", {
     staticClass: "sobrantes-section"
   }, [_vm._m(0), _vm._v(" "), _c("button", {
@@ -91217,7 +91261,7 @@ var render = function render() {
         target: "_blank"
       }
     }, [_c("i", {
-      staticClass: "fa fa-eye"
+      staticClass: "fas fa-eye"
     }), _vm._v(" Ver\n                    ")])]);
   }), 0)])]) : _vm._e()], 1);
 };
@@ -91225,7 +91269,7 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("h4", [_c("i", {
-    staticClass: "fa fa-exclamation-circle"
+    staticClass: "fas fa-exclamation-circle"
   }), _vm._v(" Archivos sobrantes:\n        ")]);
 }];
 render._withStripped = true;
@@ -91384,7 +91428,7 @@ var render = function render() {
       margin: "0 15px 0 0"
     }
   }, [_vm.categoriaSelec ? _c("button", {
-    staticClass: "btn btn-warning btn-sm",
+    staticClass: "btn btn-enod btn-sm",
     attrs: {
       title: "Editar"
     },
@@ -91392,7 +91436,7 @@ var render = function render() {
       click: _vm.showCatModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-edit",
+    staticClass: "fas fa-edit",
     attrs: {
       "aria-hidden": "true"
     }
@@ -91405,7 +91449,7 @@ var render = function render() {
       click: _vm.showCatDeleteModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-trash",
+    staticClass: "fas fa-trash",
     attrs: {
       "aria-hidden": "true"
     }
@@ -91415,7 +91459,7 @@ var render = function render() {
       click: _vm.showCatNuevaModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle",
+    staticClass: "fas fa-plus-circle",
     attrs: {
       "aria-hidden": "true"
     }
@@ -91918,7 +91962,7 @@ var render = function render() {
       margin: "0 15px 0 0"
     }
   }, [_vm.seccionSelec ? _c("button", {
-    staticClass: "btn btn-warning btn-sm",
+    staticClass: "btn btn-enod btn-sm",
     attrs: {
       title: "Editar"
     },
@@ -91926,7 +91970,7 @@ var render = function render() {
       click: _vm.showSeccionModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-edit",
+    staticClass: "fas fa-edit",
     attrs: {
       "aria-hidden": "true"
     }
@@ -91939,7 +91983,7 @@ var render = function render() {
       click: _vm.showSeccionDeleteModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-trash",
+    staticClass: "fas fa-trash",
     attrs: {
       "aria-hidden": "true"
     }
@@ -91949,7 +91993,7 @@ var render = function render() {
       click: _vm.shownuevaSeccionModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle",
+    staticClass: "fas fa-plus-circle",
     attrs: {
       "aria-hidden": "true"
     }
@@ -92380,7 +92424,7 @@ var render = function render() {
       margin: "0 15px 0 0"
     }
   }, [_vm.subcategoriaSelec ? _c("button", {
-    staticClass: "btn btn-warning btn-sm",
+    staticClass: "btn btn-enod btn-sm",
     attrs: {
       title: "Editar"
     },
@@ -92388,7 +92432,7 @@ var render = function render() {
       click: _vm.showSubcatModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-edit",
+    staticClass: "fas fa-edit",
     attrs: {
       "aria-hidden": "true"
     }
@@ -92401,7 +92445,7 @@ var render = function render() {
       click: _vm.showSubcatDeleteModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-trash",
+    staticClass: "fas fa-trash",
     attrs: {
       "aria-hidden": "true"
     }
@@ -92411,7 +92455,7 @@ var render = function render() {
       click: _vm.shownuevaSubcatModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle",
+    staticClass: "fas fa-plus-circle",
     attrs: {
       "aria-hidden": "true"
     }
@@ -92995,7 +93039,7 @@ var render = function render() {
           title: "pdf"
         }
       }, [_c("span", {
-        staticClass: "fa fa-file-pdf-o"
+        staticClass: "far fa-file-pdf"
       })])]) : _vm._e()])])]);
     }), 0)])])])]);
   }), 0), _vm._v(" "), _c("div", {
@@ -93027,7 +93071,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-plus"
+    staticClass: "fas fa-plus"
   })])]);
 }];
 render._withStripped = true;
@@ -93086,7 +93130,7 @@ var render = function render() {
       margin: "0 15px 0 0"
     }
   }, [_vm.videoSelec ? _c("button", {
-    staticClass: "btn btn-warning btn-sm",
+    staticClass: "btn btn-enod btn-sm",
     attrs: {
       title: "Editar"
     },
@@ -93094,7 +93138,7 @@ var render = function render() {
       click: _vm.showVideoModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-edit",
+    staticClass: "fas fa-edit",
     attrs: {
       "aria-hidden": "true"
     }
@@ -93107,7 +93151,7 @@ var render = function render() {
       click: _vm.showVideoDeleteModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-trash",
+    staticClass: "fas fa-trash",
     attrs: {
       "aria-hidden": "true"
     }
@@ -93117,7 +93161,7 @@ var render = function render() {
       click: _vm.showNuevoVideoModal
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle",
+    staticClass: "fas fa-plus-circle",
     attrs: {
       "aria-hidden": "true"
     }
@@ -93691,7 +93735,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "clearfix"
   }), _vm._v(" "), _c("div", {
@@ -93717,7 +93761,7 @@ var render = function render() {
     }, [_c("td", {
       staticClass: "col-sm-12"
     }, [_vm._v(" " + _vm._s(receptor.name))]), _vm._v(" "), _c("td", [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeReceptor(k);
@@ -94102,7 +94146,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-trash"
+    staticClass: "fas fa-trash"
   }), _vm._v(" Borrar todos")])]), _vm._v(" "), _c("li", [_c("a", {
     attrs: {
       href: "#"
@@ -94133,13 +94177,13 @@ var render = function render() {
     return _c("li", {
       key: k
     }, [_c("i", {
-      staticClass: "fa fa-bell-o bg-blue"
+      staticClass: "fas fa-bell-o bg-blue"
     }), _vm._v(" "), _c("div", {
       staticClass: "timeline-item"
     }, [_c("span", {
       staticClass: "time"
     }, [_c("i", {
-      staticClass: "fa fa-clock-o"
+      staticClass: "fas fa-clock-o"
     }), _vm._v(" " + _vm._s(_vm.fecha_formateada(item.fecha)) + " ")]), _vm._v(" "), item.documentacion ? _c("h3", {
       staticClass: "timeline-header"
     }, [_c("a", {
@@ -94221,7 +94265,7 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("li", [_c("i", {
-    staticClass: "fa fa-clock-o bg-gray"
+    staticClass: "fas fa-clock-o bg-gray"
   })]);
 }, function () {
   var _vm = this,
@@ -94744,7 +94788,7 @@ var render = function render() {
     on: {
       place_changed: _vm.setPlace
     }
-  }, [_vm._v("\r\n                  >\r\n              ")])], 1)]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                  >\n              ")])], 1)]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", {
     attrs: {
@@ -94958,10 +95002,10 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n           \r\n        ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n           \n        ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -94982,7 +95026,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-archive-o",
+      staticClass: "fas fa-file-archive-o",
       "class": {
         existe: inputsServicio.observaciones || inputsServicio.path1 || inputsServicio.path2 || inputsServicio.path3 || inputsServicio.path4
       },
@@ -95068,7 +95112,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeServicio(k);
@@ -95206,10 +95250,10 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n             \r\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n             \n          ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -95230,7 +95274,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-archive-o",
+      staticClass: "fas fa-file-archive-o",
       "class": {
         existe: inputsProducto.observaciones || inputsProducto.path1 || inputsProducto.path2 || inputsProducto.path3 || inputsProducto.path4
       },
@@ -95244,7 +95288,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeProducto(k);
@@ -95285,10 +95329,10 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n             \r\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n             \n          ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -95307,7 +95351,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeEpp(k);
@@ -95344,10 +95388,10 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_vm._v("\r\n             \r\n          ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n             \n          ")]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -95366,7 +95410,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeRiesgo(k);
@@ -95431,7 +95475,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon"
   }, [_c("i", {
-    staticClass: "fa fa-clock-o"
+    staticClass: "fas fa-clock-o"
   })]);
 }, function () {
   var _vm = this,
@@ -95439,7 +95483,7 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "input-group-addon enod-accent-bg"
   }, [_c("i", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   })]);
 }, function () {
   var _vm = this,
@@ -96268,7 +96312,7 @@ var render = function render() {
       click: _vm.agregarDetalle
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-row"
   }, [_c("div", {
@@ -96747,7 +96791,7 @@ var render = function render() {
       click: _vm.agregarDetalle
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-row"
   }, [_c("div", {
@@ -97173,7 +97217,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
@@ -97246,7 +97290,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
@@ -97392,7 +97436,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _vm._m(8)]), _vm._v(" "), _c("div", {
     staticClass: "box-body"
   }, [_c("div", {
@@ -98402,7 +98446,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98440,7 +98484,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98468,7 +98512,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98507,7 +98551,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])]);
 }, function () {
   var _vm = this,
@@ -98537,7 +98581,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98586,7 +98630,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98612,7 +98656,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98638,7 +98682,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98660,7 +98704,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98690,7 +98734,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98716,7 +98760,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98742,7 +98786,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98768,7 +98812,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98794,7 +98838,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -98816,7 +98860,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])]);
 }, function () {
   var _vm = this,
@@ -98917,7 +98961,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-box-tool",
     attrs: {
@@ -98925,7 +98969,7 @@ var staticRenderFns = [function () {
       "data-widget": "remove"
     }
   }, [_c("i", {
-    staticClass: "fa fa-times"
+    staticClass: "fas fa-times"
   })])])]);
 }];
 render._withStripped = true;
@@ -99140,7 +99184,7 @@ var render = function render() {
       click: _vm.exportarQr
     }
   }, [_c("i", {
-    staticClass: "fa fa-qrcode"
+    staticClass: "fas fa-qrcode"
   }), _vm._v("  Exportar QR")])])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "row",
     staticStyle: {
@@ -99277,7 +99321,7 @@ var staticRenderFns = [function () {
   return _c("button", {
     staticClass: "btn btn-enod btn-block"
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v("\n                        Buscar\n                    ")]);
 }];
 render._withStripped = true;
@@ -99391,7 +99435,7 @@ var render = function render() {
       click: _vm.exportarQr
     }
   }, [_c("i", {
-    staticClass: "fa fa-qrcode"
+    staticClass: "fas fa-qrcode"
   }), _vm._v("  Exportar QR")])])])]) : undefined, _vm._v(" "), _c("div", {
     staticClass: "row",
     staticStyle: {
@@ -99542,7 +99586,7 @@ var render = function render() {
       href: "/area/enod/remitos"
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v(" Nuevo")])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }), _vm._v(" "), _c("div", {
@@ -99579,7 +99623,7 @@ var render = function render() {
       click: _vm.getResults
     }
   }, [_c("i", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   })])])])]), _vm._v(" "), _c("div", {
     staticClass: "row"
   }, [_c("div", {
@@ -99618,7 +99662,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("T_remitos_edita") || remito.borrador_sn === 0
@@ -99629,7 +99673,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
@@ -99659,7 +99703,7 @@ var render = function render() {
         title: "Informe"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-pdf-o"
+      staticClass: "far fa-file-pdf"
     })])]) : _c("td", {
       attrs: {
         width: "10px"
@@ -99672,7 +99716,7 @@ var render = function render() {
         title: "Imprimir"
       }
     }, [_c("span", {
-      staticClass: "fa fa-print"
+      staticClass: "fas fa-print"
     })])]), _vm._v(" "), remito.aunulado_sn !== 1 ? _c("td", {
       staticStyle: {
         "text-align": "center"
@@ -99756,7 +99800,7 @@ var staticRenderFns = [function () {
       "data-widget": "collapse"
     }
   }, [_c("i", {
-    staticClass: "fa fa-minus"
+    staticClass: "fas fa-minus"
   })])])]);
 }, function () {
   var _vm = this,
@@ -100161,7 +100205,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                            \n                       ")]), _vm._v(" "), _c("div", {
@@ -100185,7 +100229,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeProducto(k);
@@ -100236,7 +100280,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_vm._v("\n                                    \n                               ")]), _vm._v(" "), _c("div", {
@@ -100260,7 +100304,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeEquipo(k);
@@ -100344,7 +100388,7 @@ var render = function render() {
       click: _vm.agregarObservacion
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
@@ -100368,7 +100412,7 @@ var render = function render() {
         "text-align": "center"
       }
     }, [_c("span", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.quitarObservacion(index);
@@ -100886,7 +100930,7 @@ var render = function render() {
       disabled: !_vm.ot
     }
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v("\n                        Buscar\n                    ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-9"
   }, [_c("tabs", {
@@ -101266,7 +101310,7 @@ var render = function render() {
       disabled: !_vm.ot
     }
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v("\n                        Buscar\n                    ")])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-9"
   }, [_c("tabs", {
@@ -101654,7 +101698,7 @@ var render = function render() {
       disabled: !_vm.cliente || !_vm.ot
     }
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v("\n                        Buscar\n                    ")])])])]), _vm._v(" "), _vm.ot ? _c("div", [_c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
@@ -102255,7 +102299,7 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("span", {
-    staticClass: "fa fa-book"
+    staticClass: "fas fa-book"
   }, [_c("p", {
     staticStyle: {
       "margin-left": "15px",
@@ -102435,7 +102479,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v(" Buscar\n        ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-9"
   }, [_vm.informes.data && _vm.informes.data.length ? _c("div", [_c("div", {
@@ -102805,7 +102849,7 @@ var staticRenderFns = [function () {
   return _c("button", {
     staticClass: "btn btn-enod btn-block"
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v("\n                        Buscar\n                    ")]);
 }];
 render._withStripped = true;
@@ -103194,7 +103238,7 @@ var staticRenderFns = [function () {
   return _c("button", {
     staticClass: "btn btn-enod btn-block"
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v(" Buscar")]);
 }];
 render._withStripped = true;
@@ -103309,7 +103353,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v(" Buscar\n        ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-9"
   }, [_vm.tablaAsignaciones.data && _vm.tablaAsignaciones.data.length ? _c("div", [_c("div", {
@@ -103655,7 +103699,7 @@ var render = function render() {
         title: "Imagen"
       }
     }, [_c("span", {
-      staticClass: "fa fa-file-image-o"
+      staticClass: "far fa-file-image"
     })])])]);
   })], 2)])])]), _vm._v(" "), _c("table", {
     staticClass: "bordered",
@@ -103722,7 +103766,7 @@ var staticRenderFns = [function () {
   return _c("button", {
     staticClass: "btn btn-enod btn-block"
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v("\n                        Buscar\n                    ")]);
 }, function () {
   var _vm = this,
@@ -104172,7 +104216,7 @@ var staticRenderFns = [function () {
   return _c("button", {
     staticClass: "btn btn-enod btn-block"
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v("\n                        Buscar\n                    ")]);
 }];
 render._withStripped = true;
@@ -104328,7 +104372,7 @@ var render = function render() {
       click: _vm.Buscar
     }
   }, [_c("span", {
-    staticClass: "fa fa-search"
+    staticClass: "fas fa-search"
   }), _vm._v(" Buscar\n        ")])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-9"
   }, [_vm.productos.length > 0 ? _c("div", [_c("div", {
@@ -105123,7 +105167,7 @@ var staticRenderFns = [function () {
   return _c("button", {
     staticClass: "btn btn-enod btn-block"
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v("\n                        Buscar\n                    ")]);
 }];
 render._withStripped = true;
@@ -105685,10 +105729,6 @@ var render = function render() {
     }
   }, [_c("button", {
     staticClass: "btn btn-enod",
-    staticStyle: {
-      "background-color": "rgb(255, 204, 0)",
-      color: "rgb(0, 0, 0)"
-    },
     attrs: {
       disabled: !_vm.$can("S_compras_edita")
     },
@@ -105696,7 +105736,7 @@ var render = function render() {
       click: _vm.nuevoStock
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   }), _vm._v(" Nuevo \n      ")])]), _vm._v(" "), _c("td", {
     staticClass: "td-mobile-stack",
     staticStyle: {
@@ -105788,18 +105828,18 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "input-group-addon btn",
-    staticStyle: {
-      "background-color": "rgb(255, 204, 0)",
-      cursor: "pointer",
-      border: "none"
+    staticClass: "input-group-btn"
+  }, [_c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
     },
     on: {
       click: _vm.aplicarFiltro
     }
   }, [_c("i", {
-    staticClass: "fa fa-search"
-  })])])])])]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "fas fa-search"
+  })])])])])])]), _vm._v(" "), _c("div", [_c("div", {
     staticClass: "box box-custom-enod top-buffer"
   }, [_c("div", {
     staticClass: "box-body"
@@ -106042,18 +106082,18 @@ var render = function render() {
       }
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "input-group-addon btn",
-    staticStyle: {
-      "background-color": "rgb(255, 204, 0)",
-      cursor: "pointer",
-      border: "none"
+    staticClass: "input-group-btn"
+  }, [_c("button", {
+    staticClass: "btn btn-enod",
+    attrs: {
+      type: "button"
     },
     on: {
       click: _vm.applySearch
     }
   }, [_c("i", {
-    staticClass: "fa fa-search"
-  })])])])]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "fas fa-search"
+  })])])])])]), _vm._v(" "), _c("div", [_c("div", {
     staticClass: "box box-custom-enod"
   }, [_c("div", {
     staticClass: "box-body"
@@ -106080,7 +106120,7 @@ var render = function render() {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Editar",
         disabled: !_vm.$can("S_stock_edita")
@@ -106091,13 +106131,13 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-edit"
+      staticClass: "fas fa-edit"
     })])]), _vm._v(" "), _c("td", {
       attrs: {
         width: "10px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm",
+      staticClass: "btn btn-enod btn-sm",
       attrs: {
         title: "Ver Detalles"
       },
@@ -106108,7 +106148,7 @@ var render = function render() {
         }
       }
     }, [_c("span", {
-      staticClass: "fa fa-list"
+      staticClass: "fas fa-list"
     })])])]);
   }), 0)])]) : _c("div", {
     staticClass: "text-center"
@@ -106394,7 +106434,7 @@ var render = function render() {
       }
     }
   }, [_c("span", {
-    staticClass: "fa fa-plus-circle"
+    staticClass: "fas fa-plus-circle"
   })])])]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
@@ -106415,7 +106455,7 @@ var render = function render() {
     }, [_c("td", [_vm._v(_vm._s(_vm.descripcionDelProducto(productoAgregado.producto)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(productoAgregado.cantidad))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_c("i", {
-      staticClass: "fa fa-minus-circle",
+      staticClass: "fas fa-circle-minus",
       on: {
         click: function click($event) {
           return _vm.removeProducto(index);
@@ -106537,7 +106577,7 @@ var render = function render() {
       title: "pdf"
     }
   }, [_c("span", {
-    staticClass: "fa fa-file-pdf-o"
+    staticClass: "far fa-file-pdf"
   })])]) : !_vm.esImagen() && _vm.path ? _c("div", [_c("a", {
     staticClass: "btn btn-default btn-xs",
     staticStyle: {
@@ -106549,7 +106589,7 @@ var render = function render() {
       title: "descargar"
     }
   }, [_c("span", {
-    staticClass: "fa fa-download"
+    staticClass: "fas fa-download"
   })])]) : _vm.path ? _c("div", [_c("img", {
     staticClass: "margin zoom-in",
     attrs: {
@@ -130968,7 +131008,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.overlay {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background: rgba(255, 255, 255, 0.7);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.table-danger{\r\n  background-color: #dc3545 !important; /* Rojo Bootstrap */\r\n  color: white; /* Texto blanco para contraste */\n}\r\n", ""]);
+exports.push([module.i, "\n.overlay {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: rgba(255, 255, 255, 0.7);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.table-danger{\n  background-color: #dc3545 !important; /* Rojo Bootstrap */\n  color: white; /* Texto blanco para contraste */\n}\n", ""]);
 
 // exports
 
@@ -130987,7 +131027,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-6dc3336e], .form-control[readonly][data-v-6dc3336e], fieldset[disabled] .form-control[data-v-6dc3336e] {\r\n     background-color: #eee;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-6dc3336e], .form-control[readonly][data-v-6dc3336e], fieldset[disabled] .form-control[data-v-6dc3336e] {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -131006,7 +131046,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-4e376807], .form-control[readonly][data-v-4e376807], fieldset[disabled] .form-control[data-v-4e376807] {\r\n     background-color: #eee;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-4e376807], .form-control[readonly][data-v-4e376807], fieldset[disabled] .form-control[data-v-4e376807] {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -131025,7 +131065,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\r\n/* Tu CSS aquí */\r\n", ""]);
+exports.push([module.i, "\n/* Tu CSS aquí */\n", ""]);
 
 // exports
 
@@ -131044,7 +131084,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\r\n/* Tu CSS aquí */\r\n", ""]);
+exports.push([module.i, "\n/* Tu CSS aquí */\n", ""]);
 
 // exports
 
@@ -131063,7 +131103,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\r\n/* Tu CSS aquí */\r\n", ""]);
+exports.push([module.i, "\n/* Tu CSS aquí */\n", ""]);
 
 // exports
 
@@ -131082,7 +131122,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.overlay[data-v-c27e276a] {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background: rgba(255, 255, 255, 0.8);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\n}\r\n", ""]);
+exports.push([module.i, "\n.overlay[data-v-c27e276a] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: rgba(255, 255, 255, 0.8);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n", ""]);
 
 // exports
 
@@ -131101,7 +131141,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-66c0b052], .form-control[readonly][data-v-66c0b052], fieldset[disabled] .form-control[data-v-66c0b052] {\r\n     background-color: #eee;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-66c0b052], .form-control[readonly][data-v-66c0b052], fieldset[disabled] .form-control[data-v-66c0b052] {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -131120,7 +131160,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-0114f535], .form-control[readonly][data-v-0114f535], fieldset[disabled] .form-control[data-v-0114f535] {\r\n     background-color: #eee;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-0114f535], .form-control[readonly][data-v-0114f535], fieldset[disabled] .form-control[data-v-0114f535] {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -131139,7 +131179,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.fila-roja {\r\n  background-color: #dc3545 !important; /* Rojo Bootstrap */\r\n  color: white; /* Texto blanco para contraste */\n}\r\n", ""]);
+exports.push([module.i, "\n.fila-roja {\n  background-color: #dc3545 !important; /* Rojo Bootstrap */\n  color: white; /* Texto blanco para contraste */\n}\n", ""]);
 
 // exports
 
@@ -131158,7 +131198,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-37ebe717], .form-control[readonly][data-v-37ebe717], fieldset[disabled] .form-control[data-v-37ebe717]  {\r\n     background-color: #eee;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-37ebe717], .form-control[readonly][data-v-37ebe717], fieldset[disabled] .form-control[data-v-37ebe717]  {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -131177,7 +131217,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.block-model{\r\n\r\n    position: relative;\n}\n.block-captura{\r\n\r\n    position: absolute;\r\n    right: 40px;\r\n    top: 20px;\r\n    border: 1px solid black;\r\n    padding: 5px;\n}\n.model-botton {\r\n\r\n    position: absolute;\r\n    left: 40px;\r\n    top : 20px;\r\n    z-index: 999;\n}\r\n", ""]);
+exports.push([module.i, "\n.block-model{\n\n    position: relative;\n}\n.block-captura{\n\n    position: absolute;\n    right: 40px;\n    top: 20px;\n    border: 1px solid black;\n    padding: 5px;\n}\n.model-botton {\n\n    position: absolute;\n    left: 40px;\n    top : 20px;\n    z-index: 999;\n}\n", ""]);
 
 // exports
 
@@ -131234,7 +131274,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.box.box-custom-enod[data-v-6d04582b] {\r\n  padding: 20px;\n}\r\n", ""]);
+exports.push([module.i, "\n.box.box-custom-enod[data-v-6d04582b] {\n  padding: 20px;\n}\n", ""]);
 
 // exports
 
@@ -131253,7 +131293,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.box.box-custom-enod[data-v-0a1313be] {\r\n    padding: 20px;\n}\n.modal.show[data-v-0a1313be] {\r\n    display: block;\r\n    z-index: 1050;\r\n    background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-content[data-v-0a1313be] {\r\n    background-color: white;\r\n    padding: 20px;\r\n    border-radius: 5px;\n}\r\n", ""]);
+exports.push([module.i, "\n.box.box-custom-enod[data-v-0a1313be] {\n    padding: 20px;\n}\n.modal.show[data-v-0a1313be] {\n    display: block;\n    z-index: 1050;\n    background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-content[data-v-0a1313be] {\n    background-color: white;\n    padding: 20px;\n    border-radius: 5px;\n}\n", ""]);
 
 // exports
 
@@ -131272,7 +131312,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-7fc0e00a], .form-control[readonly][data-v-7fc0e00a], fieldset[disabled] .form-control[data-v-7fc0e00a] {\r\n     background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-7fc0e00a], .form-control[readonly][data-v-7fc0e00a], fieldset[disabled] .form-control[data-v-7fc0e00a] {\n     background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -131291,7 +131331,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-5cfb3c98], .form-control[readonly][data-v-5cfb3c98], fieldset[disabled] .form-control[data-v-5cfb3c98] {\r\n     background-color: #eee;\n}\ninput[type='number'][data-v-5cfb3c98]::-webkit-inner-spin-button,\r\ninput[type='number'][data-v-5cfb3c98]::-webkit-outer-spin-button {\r\n    -webkit-appearance: none;\r\n    margin: 0;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-5cfb3c98], .form-control[readonly][data-v-5cfb3c98], fieldset[disabled] .form-control[data-v-5cfb3c98] {\n     background-color: #eee;\n}\ninput[type='number'][data-v-5cfb3c98]::-webkit-inner-spin-button,\ninput[type='number'][data-v-5cfb3c98]::-webkit-outer-spin-button {\n    -webkit-appearance: none;\n    margin: 0;\n}\n\n", ""]);
 
 // exports
 
@@ -131310,7 +131350,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-3f931013] {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 20px;\n}\n.btn-enod[data-v-3f931013] {\r\n  margin-top: 15px;\n}\n.v-select.disabled[data-v-3f931013], .date-picker.disabled[data-v-3f931013] {\r\n  background-color: #6c757d; /* Gris claro, ajusta según tu tema */\r\n  cursor: not-allowed;\n}\r\n\r\n/* Agrega tus propios estilos para mantener la estética de la página */\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-3f931013] {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 20px;\n}\n.btn-enod[data-v-3f931013] {\n  margin-top: 15px;\n}\n.v-select.disabled[data-v-3f931013], .date-picker.disabled[data-v-3f931013] {\n  background-color: #6c757d; /* Gris claro, ajusta según tu tema */\n  cursor: not-allowed;\n}\n\n/* Agrega tus propios estilos para mantener la estética de la página */\n", ""]);
 
 // exports
 
@@ -131329,7 +131369,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-28a89753] {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-top: 20px;\n}\n.btn-enod[data-v-28a89753] {\r\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753],\r\n.date-picker.disabled[data-v-28a89753] {\r\n    background-color: #6c757d;\r\n    /* Gris claro, ajusta según tu tema */\r\n    cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\r\n    display: none;\n}\r\n\r\n/* Agrega tus propios estilos para mantener la estética de la página */\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-28a89753] {\n    display: flex;\n    justify-content: flex-end;\n    margin-top: 20px;\n}\n.btn-enod[data-v-28a89753] {\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-28a89753],\n.date-picker.disabled[data-v-28a89753] {\n    background-color: #6c757d;\n    /* Gris claro, ajusta según tu tema */\n    cursor: not-allowed;\n}\n.hidden[data-v-28a89753] {\n    display: none;\n}\n\n/* Agrega tus propios estilos para mantener la estética de la página */\n", ""]);
 
 // exports
 
@@ -131348,7 +131388,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-bcf3f43a] {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-top: 20px;\n}\n.btn-enod[data-v-bcf3f43a] {\r\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-bcf3f43a],\r\n.date-picker.disabled[data-v-bcf3f43a] {\r\n    background-color: #6c757d;\r\n    /* Gris claro, ajusta según tu tema */\r\n    cursor: not-allowed;\n}\n.hidden[data-v-bcf3f43a] {\r\n    display: none;\n}\r\n\r\n/* Agrega tus propios estilos para mantener la estética de la página */\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-bcf3f43a] {\n    display: flex;\n    justify-content: flex-end;\n    margin-top: 20px;\n}\n.btn-enod[data-v-bcf3f43a] {\n    margin-top: 15px;\n}\n.v-select.disabled[data-v-bcf3f43a],\n.date-picker.disabled[data-v-bcf3f43a] {\n    background-color: #6c757d;\n    /* Gris claro, ajusta según tu tema */\n    cursor: not-allowed;\n}\n.hidden[data-v-bcf3f43a] {\n    display: none;\n}\n\n/* Agrega tus propios estilos para mantener la estética de la página */\n", ""]);
 
 // exports
 
@@ -131367,7 +131407,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-ba112644] {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-top: 20px;\n}\n.btn-enod[data-v-ba112644] {\r\n    background-color: rgb(255, 204, 0);\r\n    color: rgb(0, 0, 0);\n}\n.btn-danger[data-v-ba112644] {\r\n    background-color: #dc3545;\r\n    color: #fff;\n}\n.btn-sm[data-v-ba112644] {\r\n    padding: 0.25rem 0.5rem;\r\n    font-size: 0.875rem;\r\n    line-height: 1.5;\r\n    border-radius: 0.2rem;\n}\n.custom-modal[data-v-ba112644] {\r\n    border-radius: 0.5rem;\r\n    background-color: #f8f9fa;\r\n    border: 1px solid #dee2e6;\n}\n.custom-textarea[data-v-ba112644] {\r\n    border-radius: 0.5rem;\r\n    border: 1px solid #ced4da;\r\n    resize: none;\r\n    padding: 0.5rem;\n}\n.modal-header[data-v-ba112644] {\r\n    border-bottom: 1px solid #dee2e6;\r\n    padding: 1rem;\n}\n.modal-title[data-v-ba112644] {\r\n    font-size: 1.25rem;\r\n    font-weight: 500;\n}\n.modal-footer[data-v-ba112644] {\r\n    border-top: 1px solid #dee2e6;\r\n    padding: 1rem;\r\n    display: flex;\r\n    justify-content: flex-end;\n}\n.modal-content[data-v-ba112644] {\r\n    border-radius: 0.5rem;\n}\n.hidden[data-v-ba112644] {\r\n    display: none;\n}\n.modal-body[data-v-ba112644] {\r\n    padding: 1rem;\n}\n.modal-footer .btn[data-v-ba112644] {\r\n    margin-left: 0.5rem;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-ba112644] {\n    display: flex;\n    justify-content: flex-end;\n    margin-top: 20px;\n}\n.btn-enod[data-v-ba112644] {\n    background-color: rgb(255, 204, 0);\n    color: rgb(0, 0, 0);\n}\n.btn-danger[data-v-ba112644] {\n    background-color: #dc3545;\n    color: #fff;\n}\n.btn-sm[data-v-ba112644] {\n    padding: 0.25rem 0.5rem;\n    font-size: 0.875rem;\n    line-height: 1.5;\n    border-radius: 0.2rem;\n}\n.custom-modal[data-v-ba112644] {\n    border-radius: 0.5rem;\n    background-color: #f8f9fa;\n    border: 1px solid #dee2e6;\n}\n.custom-textarea[data-v-ba112644] {\n    border-radius: 0.5rem;\n    border: 1px solid #ced4da;\n    resize: none;\n    padding: 0.5rem;\n}\n.modal-header[data-v-ba112644] {\n    border-bottom: 1px solid #dee2e6;\n    padding: 1rem;\n}\n.modal-title[data-v-ba112644] {\n    font-size: 1.25rem;\n    font-weight: 500;\n}\n.modal-footer[data-v-ba112644] {\n    border-top: 1px solid #dee2e6;\n    padding: 1rem;\n    display: flex;\n    justify-content: flex-end;\n}\n.modal-content[data-v-ba112644] {\n    border-radius: 0.5rem;\n}\n.hidden[data-v-ba112644] {\n    display: none;\n}\n.modal-body[data-v-ba112644] {\n    padding: 1rem;\n}\n.modal-footer .btn[data-v-ba112644] {\n    margin-left: 0.5rem;\n}\n", ""]);
 
 // exports
 
@@ -131386,7 +131426,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-actions[data-v-424ac0a4] {\r\n    display: flex;\r\n    justify-content: flex-end;\r\n    margin-top: 20px;\n}\n.btn-enod[data-v-424ac0a4] {\r\n    background-color: rgb(255, 204, 0);\r\n    color: rgb(0, 0, 0);\n}\n.btn-danger[data-v-424ac0a4] {\r\n    background-color: #dc3545;\r\n    color: #fff;\n}\n.btn-sm[data-v-424ac0a4] {\r\n    padding: 0.25rem 0.5rem;\r\n    font-size: 0.875rem;\r\n    line-height: 1.5;\r\n    border-radius: 0.2rem;\n}\n.custom-modal[data-v-424ac0a4] {\r\n    border-radius: 0.5rem;\r\n    background-color: #f8f9fa;\r\n    border: 1px solid #dee2e6;\n}\n.custom-textarea[data-v-424ac0a4] {\r\n    border-radius: 0.5rem;\r\n    border: 1px solid #ced4da;\r\n    resize: none;\r\n    padding: 0.5rem;\n}\n.modal-header[data-v-424ac0a4] {\r\n    border-bottom: 1px solid #dee2e6;\r\n    padding: 1rem;\n}\n.modal-title[data-v-424ac0a4] {\r\n    font-size: 1.25rem;\r\n    font-weight: 500;\n}\n.modal-footer[data-v-424ac0a4] {\r\n    border-top: 1px solid #dee2e6;\r\n    padding: 1rem;\r\n    display: flex;\r\n    justify-content: flex-end;\n}\n.modal-content[data-v-424ac0a4] {\r\n    border-radius: 0.5rem;\n}\n.hidden[data-v-424ac0a4] {\r\n    display: none;\n}\n.modal-body[data-v-424ac0a4] {\r\n    padding: 1rem;\n}\n.modal-footer .btn[data-v-424ac0a4] {\r\n    margin-left: 0.5rem;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-actions[data-v-424ac0a4] {\n    display: flex;\n    justify-content: flex-end;\n    margin-top: 20px;\n}\n.btn-enod[data-v-424ac0a4] {\n    background-color: rgb(255, 204, 0);\n    color: rgb(0, 0, 0);\n}\n.btn-danger[data-v-424ac0a4] {\n    background-color: #dc3545;\n    color: #fff;\n}\n.btn-sm[data-v-424ac0a4] {\n    padding: 0.25rem 0.5rem;\n    font-size: 0.875rem;\n    line-height: 1.5;\n    border-radius: 0.2rem;\n}\n.custom-modal[data-v-424ac0a4] {\n    border-radius: 0.5rem;\n    background-color: #f8f9fa;\n    border: 1px solid #dee2e6;\n}\n.custom-textarea[data-v-424ac0a4] {\n    border-radius: 0.5rem;\n    border: 1px solid #ced4da;\n    resize: none;\n    padding: 0.5rem;\n}\n.modal-header[data-v-424ac0a4] {\n    border-bottom: 1px solid #dee2e6;\n    padding: 1rem;\n}\n.modal-title[data-v-424ac0a4] {\n    font-size: 1.25rem;\n    font-weight: 500;\n}\n.modal-footer[data-v-424ac0a4] {\n    border-top: 1px solid #dee2e6;\n    padding: 1rem;\n    display: flex;\n    justify-content: flex-end;\n}\n.modal-content[data-v-424ac0a4] {\n    border-radius: 0.5rem;\n}\n.hidden[data-v-424ac0a4] {\n    display: none;\n}\n.modal-body[data-v-424ac0a4] {\n    padding: 1rem;\n}\n.modal-footer .btn[data-v-424ac0a4] {\n    margin-left: 0.5rem;\n}\n", ""]);
 
 // exports
 
@@ -131405,7 +131445,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\r\n/* Agregar aquí estilos adicionales si es necesario */\r\n", ""]);
+exports.push([module.i, "\n/* Agregar aquí estilos adicionales si es necesario */\n", ""]);
 
 // exports
 
@@ -131424,7 +131464,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.text-center[data-v-47dee471] {\r\n  text-align: center;\n}\ninput[type=\"checkbox\"][data-v-47dee471] {\r\n  margin: auto; /* Para centrar el checkbox en su celda */\n}\r\n", ""]);
+exports.push([module.i, "\n.text-center[data-v-47dee471] {\n  text-align: center;\n}\ninput[type=\"checkbox\"][data-v-47dee471] {\n  margin: auto; /* Para centrar el checkbox en su celda */\n}\n", ""]);
 
 // exports
 
@@ -131443,7 +131483,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-responsive[data-v-071b0ee8] {\r\n  overflow-x: auto;\n}\n.table thead th[data-v-071b0ee8],\r\n.table tbody td[data-v-071b0ee8] {\r\n  text-align: center; /* Centrar el texto */\r\n  white-space: nowrap;\n}\n.neuquen-highlight[data-v-071b0ee8] {\r\n  background-color: #000000;\n}\n.neuquen-highlight a[data-v-071b0ee8]{\r\n  color: rgb(255, 204, 0);\n}\n.table tbody td input[type=\"checkbox\"][data-v-071b0ee8] {\r\n  margin: 0 auto; /* Centrar los checkboxes */\r\n  display: block;\n}\n.checkbox-container[data-v-071b0ee8] {\r\n  position: relative;\r\n  display: inline-block;\n}\n.date-tooltip[data-v-071b0ee8] {\r\n  visibility: hidden;\r\n  width: 120px;\r\n  background-color: #333;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 5px;\r\n  padding: 5px;\r\n  position: absolute;\r\n  z-index: 1;\r\n  bottom: 125%; /* Sitúa el tooltip arriba del checkbox */\r\n  left: 50%;\r\n  margin-left: -60px; /* Centra el tooltip */\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\n}\n.checkbox-container:hover .date-tooltip[data-v-071b0ee8] {\r\n  visibility: visible;\r\n  opacity: 1;\n}\n.box.box-custom-enod[data-v-071b0ee8] {\r\n  padding: 20px;\n}\n.modal.show[data-v-071b0ee8] {\r\n  display: block;\r\n  z-index: 1050;\r\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-content[data-v-071b0ee8] {\r\n  background-color: white;\r\n  padding: 20px;\r\n  border-radius: 5px;\n}\n.domingo[data-v-071b0ee8] {\r\n  background-color: #FFEB99; /* Color para domingos */\n}\n.sabado[data-v-071b0ee8] {\r\n  background-color: #FFCC99; /* Color para sábados */\n}\n.feriado[data-v-071b0ee8] {\r\n  background-color: #FF6666; /* Color para feriados */\n}\n.dia-semana[data-v-071b0ee8] {\r\n  background-color: #6BB5D9; /* Color para días de semana */\n}\r\n", ""]);
+exports.push([module.i, "\n.table-responsive[data-v-071b0ee8] {\n  overflow-x: auto;\n}\n.table thead th[data-v-071b0ee8],\n.table tbody td[data-v-071b0ee8] {\n  text-align: center; /* Centrar el texto */\n  white-space: nowrap;\n}\n.neuquen-highlight[data-v-071b0ee8] {\n  background-color: #000000;\n}\n.neuquen-highlight a[data-v-071b0ee8]{\n  color: rgb(255, 204, 0);\n}\n.table tbody td input[type=\"checkbox\"][data-v-071b0ee8] {\n  margin: 0 auto; /* Centrar los checkboxes */\n  display: block;\n}\n.checkbox-container[data-v-071b0ee8] {\n  position: relative;\n  display: inline-block;\n}\n.date-tooltip[data-v-071b0ee8] {\n  visibility: hidden;\n  width: 120px;\n  background-color: #333;\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n  padding: 5px;\n  position: absolute;\n  z-index: 1;\n  bottom: 125%; /* Sitúa el tooltip arriba del checkbox */\n  left: 50%;\n  margin-left: -60px; /* Centra el tooltip */\n  opacity: 0;\n  transition: opacity 0.3s;\n}\n.checkbox-container:hover .date-tooltip[data-v-071b0ee8] {\n  visibility: visible;\n  opacity: 1;\n}\n.box.box-custom-enod[data-v-071b0ee8] {\n  padding: 20px;\n}\n.modal.show[data-v-071b0ee8] {\n  display: block;\n  z-index: 1050;\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.modal-content[data-v-071b0ee8] {\n  background-color: white;\n  padding: 20px;\n  border-radius: 5px;\n}\n.domingo[data-v-071b0ee8] {\n  background-color: #FFEB99; /* Color para domingos */\n}\n.sabado[data-v-071b0ee8] {\n  background-color: #FFCC99; /* Color para sábados */\n}\n.feriado[data-v-071b0ee8] {\n  background-color: #FF6666; /* Color para feriados */\n}\n.dia-semana[data-v-071b0ee8] {\n  background-color: #6BB5D9; /* Color para días de semana */\n}\n", ""]);
 
 // exports
 
@@ -131462,7 +131502,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.table-responsive[data-v-49076a18] {\r\n  overflow-x: auto;\n}\n.table thead th[data-v-49076a18],\r\n.table tbody td[data-v-49076a18] {\r\n  text-align: center; /* Centrar el texto */\r\n  white-space: nowrap;\n}\n.neuquen-highlight[data-v-49076a18] {\r\n  background-color: #000000;\n}\n.neuquen-highlight a[data-v-49076a18]{\r\n  color: rgb(255, 204, 0);\n}\n.table tbody td input[type=\"checkbox\"][data-v-49076a18] {\r\n  margin: 0 auto; /* Centrar los checkboxes */\r\n  display: block;\n}\n.checkbox-container[data-v-49076a18] {\r\n  position: relative;\r\n  display: inline-block;\n}\n.date-tooltip[data-v-49076a18] {\r\n  visibility: hidden;\r\n  width: 120px;\r\n  background-color: #333;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 5px;\r\n  padding: 5px;\r\n  position: absolute;\r\n  z-index: 1;\r\n  bottom: 125%; /* Sitúa el tooltip arriba del checkbox */\r\n  left: 50%;\r\n  margin-left: -60px; /* Centra el tooltip */\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\n}\n.checkbox-container:hover .date-tooltip[data-v-49076a18] {\r\n  visibility: visible;\r\n  opacity: 1;\n}\n.box.box-custom-enod[data-v-49076a18] {\r\n  padding: 20px;\n}\n.modal.show[data-v-49076a18] {\r\n  display: block;\r\n  z-index: 1050;\r\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.subrayado[data-v-49076a18] {\r\n    text-decoration: underline;\n}\n.modal-content[data-v-49076a18] {\r\n  background-color: white;\r\n  padding: 20px;\r\n  border-radius: 5px;\n}\n.domingo[data-v-49076a18] {\r\n    background-color: #FFEB99; /* Color para domingos */\n}\n.sabado[data-v-49076a18] {\r\n    background-color: #FFCC99 ; /* Color para sábados */\n}\n.feriado[data-v-49076a18] {\r\n    background-color: #FF6666 ; /* Color para feriados */\n}\n.dia-semana[data-v-49076a18] {\r\n    background-color: #6BB5D9; /* Color para días de semana */\n}\r\n  \r\n", ""]);
+exports.push([module.i, "\n.table-responsive[data-v-49076a18] {\n  overflow-x: auto;\n}\n.table thead th[data-v-49076a18],\n.table tbody td[data-v-49076a18] {\n  text-align: center; /* Centrar el texto */\n  white-space: nowrap;\n}\n.neuquen-highlight[data-v-49076a18] {\n  background-color: #000000;\n}\n.neuquen-highlight a[data-v-49076a18]{\n  color: rgb(255, 204, 0);\n}\n.table tbody td input[type=\"checkbox\"][data-v-49076a18] {\n  margin: 0 auto; /* Centrar los checkboxes */\n  display: block;\n}\n.checkbox-container[data-v-49076a18] {\n  position: relative;\n  display: inline-block;\n}\n.date-tooltip[data-v-49076a18] {\n  visibility: hidden;\n  width: 120px;\n  background-color: #333;\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n  padding: 5px;\n  position: absolute;\n  z-index: 1;\n  bottom: 125%; /* Sitúa el tooltip arriba del checkbox */\n  left: 50%;\n  margin-left: -60px; /* Centra el tooltip */\n  opacity: 0;\n  transition: opacity 0.3s;\n}\n.checkbox-container:hover .date-tooltip[data-v-49076a18] {\n  visibility: visible;\n  opacity: 1;\n}\n.box.box-custom-enod[data-v-49076a18] {\n  padding: 20px;\n}\n.modal.show[data-v-49076a18] {\n  display: block;\n  z-index: 1050;\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.subrayado[data-v-49076a18] {\n    text-decoration: underline;\n}\n.modal-content[data-v-49076a18] {\n  background-color: white;\n  padding: 20px;\n  border-radius: 5px;\n}\n.domingo[data-v-49076a18] {\n    background-color: #FFEB99; /* Color para domingos */\n}\n.sabado[data-v-49076a18] {\n    background-color: #FFCC99 ; /* Color para sábados */\n}\n.feriado[data-v-49076a18] {\n    background-color: #FF6666 ; /* Color para feriados */\n}\n.dia-semana[data-v-49076a18] {\n    background-color: #6BB5D9; /* Color para días de semana */\n}\n  \n", ""]);
 
 // exports
 
@@ -131481,7 +131521,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.top-buffer[data-v-2f5fa535] {\r\n  margin-top: 20px;\n}\n.filters[data-v-2f5fa535] {\r\n  margin-bottom: 20px;\n}\n.input-group[data-v-2f5fa535] {\r\n  display: flex;\r\n  align-items: center;\n}\n.input-label[data-v-2f5fa535] {\r\n  margin-right: 10px;\n}\n.v-s[data-v-2f5fa535] {\r\n  width: 80%;\n}\r\n", ""]);
+exports.push([module.i, "\n.top-buffer[data-v-2f5fa535] {\n  margin-top: 20px;\n}\n.filters[data-v-2f5fa535] {\n  margin-bottom: 20px;\n}\n.input-group[data-v-2f5fa535] {\n  display: flex;\n  align-items: center;\n}\n.input-label[data-v-2f5fa535] {\n  margin-right: 10px;\n}\n.v-s[data-v-2f5fa535] {\n  width: 80%;\n}\n", ""]);
 
 // exports
 
@@ -131500,7 +131540,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.top-buffer[data-v-7a86f5d5] {\r\n  margin-top: 20px;\n}\n.filters[data-v-7a86f5d5] {\r\n  margin-bottom: 20px;\n}\n.input-group[data-v-7a86f5d5] {\r\n  display: flex;\r\n  align-items: center;\n}\n.input-label[data-v-7a86f5d5] {\r\n  margin-right: 10px;\n}\n.v-s[data-v-7a86f5d5] {\r\n  width: 80%;\n}\r\n", ""]);
+exports.push([module.i, "\n.top-buffer[data-v-7a86f5d5] {\n  margin-top: 20px;\n}\n.filters[data-v-7a86f5d5] {\n  margin-bottom: 20px;\n}\n.input-group[data-v-7a86f5d5] {\n  display: flex;\n  align-items: center;\n}\n.input-label[data-v-7a86f5d5] {\n  margin-right: 10px;\n}\n.v-s[data-v-7a86f5d5] {\n  width: 80%;\n}\n", ""]);
 
 // exports
 
@@ -131519,7 +131559,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.small-box {\r\n  position: relative;\r\n  border-radius: 6px;\r\n  box-shadow: 0 1px 4px rgba(0,0,0,0.08);\r\n  overflow: hidden;\n}\n.small-box .inner {\r\n  padding: 18px 16px 10px;\r\n  min-height: 80px;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: space-between;\n}\n.card-icon-badge {\r\n  width: 58px;\r\n  height: 58px;\r\n  border-radius: 14px;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-size: 26px;\r\n  flex-shrink: 0;\n}\n.bg-custom-1 .card-icon-badge { background: #D0E8FF; color: #2E80E0;\n}\n.bg-custom-2 .card-icon-badge { background: #C8EFD9; color: #2E9A61;\n}\n.bg-custom-3 .card-icon-badge { background: #DDD8FF; color: #6C56E5;\n}\n.bg-custom-4 .card-icon-badge { background: #C8EEF6; color: #239AB5;\n}\n.bg-custom-5 .card-icon-badge { background: #FFE8C4; color: #D4892A;\n}\n.bg-custom-6 .card-icon-badge { background: #FFD9E6; color: #C9527A;\n}\n.bg-custom-7 .card-icon-badge { background: #D0E8FF; color: #2E80E0;\n}\n.bg-custom-8 .card-icon-badge { background: #DDD8FF; color: #6C56E5;\n}\n.card-nums {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: flex-end;\n}\n.num-primary {\r\n  font-size: 30px;\r\n  font-weight: 700;\r\n  color: #2D3748;\r\n  line-height: 1.1;\n}\n.num-secondary {\r\n  font-size: 18px;\r\n  font-weight: 600;\r\n  color: #7A8594;\r\n  line-height: 1.2;\n}\n.card-footer-enod {\r\n  background-color: rgba(0,0,0,0.04);\r\n  border-top: 1px solid rgba(0,0,0,0.07);\r\n  padding: 7px 12px;\r\n  font-size: 10px;\r\n  font-weight: 700;\r\n  font-family: 'Montserrat', sans-serif;\r\n  color: #7A8594;\r\n  text-align: center;\r\n  letter-spacing: 0.6px;\r\n  text-transform: uppercase;\n}\n.footer-sep {\r\n  color: #b0b8c6;\r\n  font-weight: 400;\n}\n.cuadro-loading-badge {\r\n  position: absolute;\r\n  top: 8px;\r\n  left: 8px;\r\n  width: 22px;\r\n  height: 22px;\r\n  border-radius: 50%;\r\n  background: rgba(255,255,255,0.9);\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  z-index: 2;\r\n  pointer-events: none;\n}\n.cuadro-loading-badge i {\r\n  font-size: 12px;\r\n  color: #4F8CFF;\n}\n.zoom:hover {\r\n  transform: scale(1.03);\r\n  transition: 0.2s;\n}\n.flash:hover {\r\n  opacity: 1;\r\n  animation: flash 1.5s;\n}\n@keyframes flash {\n0% { opacity: .4;\n}\n100% { opacity: 1;\n}\n}\n.small_box_opacity { opacity: 0.5;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.small-box {\n  position: relative;\n  border-radius: 6px;\n  box-shadow: 0 1px 4px rgba(0,0,0,0.08);\n  overflow: hidden;\n}\n.small-box .inner {\n  padding: 18px 16px 10px;\n  min-height: 80px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.card-icon-badge {\n  width: 58px;\n  height: 58px;\n  border-radius: 14px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 26px;\n  flex-shrink: 0;\n}\n.bg-custom-1 .card-icon-badge { background: #D0E8FF; color: #2E80E0;\n}\n.bg-custom-2 .card-icon-badge { background: #C8EFD9; color: #2E9A61;\n}\n.bg-custom-3 .card-icon-badge { background: #DDD8FF; color: #6C56E5;\n}\n.bg-custom-4 .card-icon-badge { background: #C8EEF6; color: #239AB5;\n}\n.bg-custom-5 .card-icon-badge { background: #FFE8C4; color: #D4892A;\n}\n.bg-custom-6 .card-icon-badge { background: #FFD9E6; color: #C9527A;\n}\n.bg-custom-7 .card-icon-badge { background: #D0E8FF; color: #2E80E0;\n}\n.bg-custom-8 .card-icon-badge { background: #DDD8FF; color: #6C56E5;\n}\n.card-nums {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n.num-primary {\n  font-size: 30px;\n  font-weight: 700;\n  color: #2D3748;\n  line-height: 1.1;\n}\n.num-secondary {\n  font-size: 18px;\n  font-weight: 600;\n  color: #7A8594;\n  line-height: 1.2;\n}\n.card-footer-enod {\n  background-color: rgba(0,0,0,0.04);\n  border-top: 1px solid rgba(0,0,0,0.07);\n  padding: 7px 12px;\n  font-size: 10px;\n  font-weight: 700;\n  font-family: 'Montserrat', sans-serif;\n  color: #7A8594;\n  text-align: center;\n  letter-spacing: 0.6px;\n  text-transform: uppercase;\n}\n.footer-sep {\n  color: #b0b8c6;\n  font-weight: 400;\n}\n.cuadro-loading-badge {\n  position: absolute;\n  top: 8px;\n  left: 8px;\n  width: 22px;\n  height: 22px;\n  border-radius: 50%;\n  background: rgba(255,255,255,0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 2;\n  pointer-events: none;\n}\n.cuadro-loading-badge i {\n  font-size: 12px;\n  color: #4F8CFF;\n}\n.zoom:hover {\n  transform: scale(1.03);\n  transition: 0.2s;\n}\n.flash:hover {\n  opacity: 1;\n  animation: flash 1.5s;\n}\n@keyframes flash {\n0% { opacity: .4;\n}\n100% { opacity: 1;\n}\n}\n.small_box_opacity { opacity: 0.5;\n}\n\n", ""]);
 
 // exports
 
@@ -131538,7 +131578,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.inner {\r\n\r\n    height:127px;\n}\n.small-box .icon {\r\n    top: 0;\r\n    right: 0;\r\n    padding: 0;\n}\n.small-box,.icono_cuadro {\r\n\r\n  text-align: center !important;\r\n  border-radius: 5px;\n}\n.small-box .inner .titulo {\r\n\r\n  font-size: 12px;\r\n  font-weight: bold;\r\n  margin-top: -10px;\n}\n.color_1, .color_cant_1  {\r\n  color: rgb(255, 255, 255);\n}\n.color_2 {\r\n  color: rgb(32, 32, 32);\n}\n.color_3, .color_cant_2 {\r\n  color: rgb(255, 204, 0);\n}\n.small-box .inner {\r\n\r\n    padding-bottom: 0px;\n}\n.small-box .inner .posicion_1 {\r\n  position: absolute;;\r\n  font-size: 26px;\r\n  top: 0;\r\n  right: 20px;\r\n  color: white;\n}\n.small-box .inner .posicion_2 {\r\n  position: absolute;;\r\n  font-size: 26px;\r\n  bottom: 15px;\r\n  right: 20px;\r\n  color: rgb(255, 204, 0);\n}\n.icon {\r\n\r\n    padding: 0;\n}\n.icono_cuadro {\r\n\r\n    position: absolute;\r\n    height: 127px;\r\n    width:200px;\r\n    padding: 0;\r\n    right:0 ;\r\n    z-index: 0;\r\n    top: 0;\n}\n.titulo_cuadro {\r\n\r\n    position: absolute;\r\n    padding: 0;\r\n    z-index: 0;\r\n    top:55px;\r\n    right: 230px;\r\n    font-weight: bold;\n}\n.icono_cuadro img {\r\n    margin-top:15px;\n}\n.small-box .small-box-footer {\r\n  font-size: 11px;\r\n  font-weight: 600;\r\n  font-family: 'Montserrat',sans-serif;\r\n  padding-bottom: 0;\n}\n.flash:hover {\r\n\r\n  opacity: 1;\r\n  animation: flash 1.5s;\n}\n@keyframes flash {\n0% {\r\n\t\topacity: .4;\n}\n100% {\r\n\t\topacity: 1;\n}\n}\n.small_box_opacity {\r\n\r\n    opacity: 0.5;\n}\n.footer-oper-inf {\r\n\r\n    background-image: url(\"/img/tablero/barra-oper-inf.svg\") !important;\r\n    background-size:     cover;\r\n    background-repeat:   no-repeat;\r\n    background-position: center center;\n}\n.footer-equipos-partes {\r\n\r\n    background-image: url(\"/img/tablero/barra-equipos-partes.svg\") !important;\r\n    background-size:     cover;\r\n    background-repeat:   no-repeat;\r\n    background-position: center center;\n}\n.footer-proc-cert {\r\n\r\n    background-image: url(\"/img/tablero/barra-proc-cert.svg\") !important;\r\n    background-size:     cover;\r\n    background-repeat:   no-repeat;\r\n    background-position: center center;\n}\n.footer-doc-remitos {\r\n\r\n    background-image: url(\"/img/tablero/barra-doc-remitos.svg\") !important;\r\n    background-size:     cover;\r\n    background-repeat:   no-repeat;\r\n    background-position: center center;\n}\r\n", ""]);
+exports.push([module.i, "\n.inner {\n\n    height:127px;\n}\n.small-box .icon {\n    top: 0;\n    right: 0;\n    padding: 0;\n}\n.small-box,.icono_cuadro {\n\n  text-align: center !important;\n  border-radius: 5px;\n}\n.small-box .inner .titulo {\n\n  font-size: 12px;\n  font-weight: bold;\n  margin-top: -10px;\n}\n.color_1, .color_cant_1  {\n  color: rgb(255, 255, 255);\n}\n.color_2 {\n  color: rgb(32, 32, 32);\n}\n.color_3, .color_cant_2 {\n  color: rgb(255, 204, 0);\n}\n.small-box .inner {\n\n    padding-bottom: 0px;\n}\n.small-box .inner .posicion_1 {\n  position: absolute;;\n  font-size: 26px;\n  top: 0;\n  right: 20px;\n  color: white;\n}\n.small-box .inner .posicion_2 {\n  position: absolute;;\n  font-size: 26px;\n  bottom: 15px;\n  right: 20px;\n  color: rgb(255, 204, 0);\n}\n.icon {\n\n    padding: 0;\n}\n.icono_cuadro {\n\n    position: absolute;\n    height: 127px;\n    width:200px;\n    padding: 0;\n    right:0 ;\n    z-index: 0;\n    top: 0;\n}\n.titulo_cuadro {\n\n    position: absolute;\n    padding: 0;\n    z-index: 0;\n    top:55px;\n    right: 230px;\n    font-weight: bold;\n}\n.icono_cuadro img {\n    margin-top:15px;\n}\n.small-box .small-box-footer {\n  font-size: 11px;\n  font-weight: 600;\n  font-family: 'Montserrat',sans-serif;\n  padding-bottom: 0;\n}\n.flash:hover {\n\n  opacity: 1;\n  animation: flash 1.5s;\n}\n@keyframes flash {\n0% {\n\t\topacity: .4;\n}\n100% {\n\t\topacity: 1;\n}\n}\n.small_box_opacity {\n\n    opacity: 0.5;\n}\n.footer-oper-inf {\n\n    background-image: url(\"/img/tablero/barra-oper-inf.svg\") !important;\n    background-size:     cover;\n    background-repeat:   no-repeat;\n    background-position: center center;\n}\n.footer-equipos-partes {\n\n    background-image: url(\"/img/tablero/barra-equipos-partes.svg\") !important;\n    background-size:     cover;\n    background-repeat:   no-repeat;\n    background-position: center center;\n}\n.footer-proc-cert {\n\n    background-image: url(\"/img/tablero/barra-proc-cert.svg\") !important;\n    background-size:     cover;\n    background-repeat:   no-repeat;\n    background-position: center center;\n}\n.footer-doc-remitos {\n\n    background-image: url(\"/img/tablero/barra-doc-remitos.svg\") !important;\n    background-size:     cover;\n    background-repeat:   no-repeat;\n    background-position: center center;\n}\n", ""]);
 
 // exports
 
@@ -131595,7 +131635,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-b1ddf9b4], .form-control[readonly][data-v-b1ddf9b4], fieldset[disabled] .form-control[data-v-b1ddf9b4] {\r\n     background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-b1ddf9b4], .form-control[readonly][data-v-b1ddf9b4], fieldset[disabled] .form-control[data-v-b1ddf9b4] {\n     background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -131614,7 +131654,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-facd6174], .form-control[readonly][data-v-facd6174], fieldset[disabled] .form-control[data-v-facd6174] {\r\n     background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-facd6174], .form-control[readonly][data-v-facd6174], fieldset[disabled] .form-control[data-v-facd6174] {\n     background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -131633,7 +131673,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-3216f1e0], .form-control[readonly][data-v-3216f1e0], fieldset[disabled] .form-control[data-v-3216f1e0] {\r\n     background-color: #eee;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-3216f1e0], .form-control[readonly][data-v-3216f1e0], fieldset[disabled] .form-control[data-v-3216f1e0] {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -131652,7 +131692,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-6cfc0c26], .form-control[readonly][data-v-6cfc0c26], fieldset[disabled] .form-control[data-v-6cfc0c26] {\r\n     background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-6cfc0c26], .form-control[readonly][data-v-6cfc0c26], fieldset[disabled] .form-control[data-v-6cfc0c26] {\n     background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -131671,7 +131711,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.dropdown-menu-center[data-v-e6d6cda6] {\r\n    /* Mueve el menú un poco a la derecha y ajusta verticalmente */\r\n    transform: translate(5%, -70%);\n}\n.dropdown-item[data-v-e6d6cda6] {\r\n    width: 100%;\r\n    text-align: left;\r\n    /* Estilo para los elementos dentro del menú */\r\n    color: black !important; /* Cambia el color del texto a negro */\r\n    text-decoration: none !important; /* Elimina el subrayado */\n}\n.dropdown-item[data-v-e6d6cda6]:hover, .dropdown-item[data-v-e6d6cda6]:focus {\r\n    background-color: #e1e3e9; /* Reemplaza #color con el código hexadecimal del color deseado */\r\n    color: white; /* Cambia el color del texto si es necesario */\n}\r\n", ""]);
+exports.push([module.i, "\n.dropdown-menu-center[data-v-e6d6cda6] {\n    /* Mueve el menú un poco a la derecha y ajusta verticalmente */\n    transform: translate(5%, -70%);\n}\n.dropdown-item[data-v-e6d6cda6] {\n    width: 100%;\n    text-align: left;\n    /* Estilo para los elementos dentro del menú */\n    color: black !important; /* Cambia el color del texto a negro */\n    text-decoration: none !important; /* Elimina el subrayado */\n}\n.dropdown-item[data-v-e6d6cda6]:hover, .dropdown-item[data-v-e6d6cda6]:focus {\n    background-color: #e1e3e9; /* Reemplaza #color con el código hexadecimal del color deseado */\n    color: white; /* Cambia el color del texto si es necesario */\n}\n", ""]);
 
 // exports
 
@@ -131709,7 +131749,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-6bcac5a6], .form-control[readonly][data-v-6bcac5a6], fieldset[disabled] .form-control[data-v-6bcac5a6] {\r\n     background-color: #eee;\n}\n.style-chooser .vs__search[data-v-6bcac5a6]::-moz-placeholder {\r\n    background: #dfe5fb;\r\n    border: none;\r\n    color: #394066;\r\n    text-transform: lowercase;\r\n    font-variant: small-caps;\n}\n.style-chooser .vs__search[data-v-6bcac5a6]::placeholder,\r\n  .style-chooser .vs__dropdown-toggle[data-v-6bcac5a6],\r\n  .style-chooser .vs__dropdown-menu[data-v-6bcac5a6] {\r\n    background: #dfe5fb;\r\n    border: none;\r\n    color: #394066;\r\n    text-transform: lowercase;\r\n    font-variant: small-caps;\n}\n.style-chooser .vs__clear[data-v-6bcac5a6],\r\n  .style-chooser .vs__open-indicator[data-v-6bcac5a6] {\r\n    fill: #394066;\n}\n@media (max-width: 970px) {\n.col-xs-12[data-v-6bcac5a6], .col-sm-12[data-v-6bcac5a6] {\r\n        margin-top:10px;\n}\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-6bcac5a6], .form-control[readonly][data-v-6bcac5a6], fieldset[disabled] .form-control[data-v-6bcac5a6] {\n     background-color: #eee;\n}\n.style-chooser .vs__search[data-v-6bcac5a6]::-moz-placeholder {\n    background: #dfe5fb;\n    border: none;\n    color: #394066;\n    text-transform: lowercase;\n    font-variant: small-caps;\n}\n.style-chooser .vs__search[data-v-6bcac5a6]::placeholder,\n  .style-chooser .vs__dropdown-toggle[data-v-6bcac5a6],\n  .style-chooser .vs__dropdown-menu[data-v-6bcac5a6] {\n    background: #dfe5fb;\n    border: none;\n    color: #394066;\n    text-transform: lowercase;\n    font-variant: small-caps;\n}\n.style-chooser .vs__clear[data-v-6bcac5a6],\n  .style-chooser .vs__open-indicator[data-v-6bcac5a6] {\n    fill: #394066;\n}\n@media (max-width: 970px) {\n.col-xs-12[data-v-6bcac5a6], .col-sm-12[data-v-6bcac5a6] {\n        margin-top:10px;\n}\n}\n\n\n\n", ""]);
 
 // exports
 
@@ -131728,7 +131768,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-2fb3fc54] {\r\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-2fb3fc54] {\r\n        overflow: inherit;\n}\n}\r\n   \r\n", ""]);
+exports.push([module.i, "\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-2fb3fc54] {\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-2fb3fc54] {\n        overflow: inherit;\n}\n}\n   \n", ""]);
 
 // exports
 
@@ -131747,7 +131787,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.maxRxMensual {\r\n\r\n    color: red;\n}\n.MaxDifOpRx {\r\n\r\n    text-decoration: underline;\n}\n.top {\r\n  margin: 0 auto;\r\n  display: table;\n}\n.popper  {\r\n\r\n    color: black;\n}\n.checkbox label {\r\n\r\n    font-size: 12px;\r\n    font-weight: bold;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.maxRxMensual {\n\n    color: red;\n}\n.MaxDifOpRx {\n\n    text-decoration: underline;\n}\n.top {\n  margin: 0 auto;\n  display: table;\n}\n.popper  {\n\n    color: black;\n}\n.checkbox label {\n\n    font-size: 12px;\n    font-weight: bold;\n}\n\n", ""]);
 
 // exports
 
@@ -131766,7 +131806,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.modulo-style .v-select .vs__selected-options{\r\n    flex-wrap: wrap;\r\n    white-space: wrap;\r\n    overflow: wrap;\n}\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.modulo-style .v-select .vs__selected-options{\n    flex-wrap: wrap;\n    white-space: wrap;\n    overflow: wrap;\n}\n\n\n", ""]);
 
 // exports
 
@@ -131785,7 +131825,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.enod-back-row[data-v-0c251594] {\r\n  display: flex;\r\n  justify-content: flex-start;\r\n  clear: both;\r\n  margin: 0 0 10px 0;\r\n  line-height: 1;\n}\n.enod-back-in-header[data-v-0c251594] {\r\n  display: inline-flex;\r\n  vertical-align: middle;\r\n  margin: 0 8px 0 0;\n}\n.enod-back-label[data-v-0c251594] {\r\n  margin-left: 6px;\n}\r\n", ""]);
+exports.push([module.i, "\n.enod-back-row[data-v-0c251594] {\n  display: flex;\n  justify-content: flex-start;\n  clear: both;\n  margin: 0 0 10px 0;\n  line-height: 1;\n}\n.enod-back-in-header[data-v-0c251594] {\n  display: inline-flex;\n  vertical-align: middle;\n  margin: 0 8px 0 0;\n}\n.enod-back-label[data-v-0c251594] {\n  margin-left: 6px;\n}\n", ""]);
 
 // exports
 
@@ -131823,7 +131863,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.no-wrap[data-v-418f40b8] {\r\n    white-space: nowrap;\r\n    margin: 0px 5px\n}\n.existe[data-v-418f40b8] {\r\n\r\n    color: blue ;\n}\n.checkbox-inline[data-v-418f40b8] {\r\n    margin-left: 0px;\n}\ninput[type=number][data-v-418f40b8]::-webkit-inner-spin-button,\r\ninput[type=number][data-v-418f40b8]::-webkit-outer-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\n}\n.sinpadding [class*=\"col-\"][data-v-418f40b8] {\r\n    padding-right: 0;\n}\n.form-control[disabled][data-v-418f40b8], .form-control[readonly][data-v-418f40b8], fieldset[disabled] .form-control[data-v-418f40b8] {\r\n     background-color: #eee;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.no-wrap[data-v-418f40b8] {\n    white-space: nowrap;\n    margin: 0px 5px\n}\n.existe[data-v-418f40b8] {\n\n    color: blue ;\n}\n.checkbox-inline[data-v-418f40b8] {\n    margin-left: 0px;\n}\ninput[type=number][data-v-418f40b8]::-webkit-inner-spin-button,\ninput[type=number][data-v-418f40b8]::-webkit-outer-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n.sinpadding [class*=\"col-\"][data-v-418f40b8] {\n    padding-right: 0;\n}\n.form-control[disabled][data-v-418f40b8], .form-control[readonly][data-v-418f40b8], fieldset[disabled] .form-control[data-v-418f40b8] {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -131842,7 +131882,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-4dacb71b], .form-control[readonly][data-v-4dacb71b], fieldset[disabled] .form-control[data-v-4dacb71b] {\r\n     background-color: #eee;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-4dacb71b], .form-control[readonly][data-v-4dacb71b], fieldset[disabled] .form-control[data-v-4dacb71b] {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -131861,7 +131901,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.existe[data-v-275b8cdc] {\r\n\r\n    color: blue;\n}\n.checkbox-inline[data-v-275b8cdc] {\r\n    margin-left: 0px;\n}\n.form-control[disabled][data-v-275b8cdc],\r\n.form-control[readonly][data-v-275b8cdc],\r\nfieldset[disabled] .form-control[data-v-275b8cdc] {\r\n    background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.existe[data-v-275b8cdc] {\n\n    color: blue;\n}\n.checkbox-inline[data-v-275b8cdc] {\n    margin-left: 0px;\n}\n.form-control[disabled][data-v-275b8cdc],\n.form-control[readonly][data-v-275b8cdc],\nfieldset[disabled] .form-control[data-v-275b8cdc] {\n    background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -131918,7 +131958,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-14339980],\r\n.form-control[readonly][data-v-14339980],\r\nfieldset[disabled] .form-control[data-v-14339980] {\r\n    background-color: #eee;\n}\n.checkbox-inline[data-v-14339980] {\r\n    margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-14339980] {\r\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-14339980] {\r\n        overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-14339980]:nth-child(4n+1),\r\n.tabla-detalle tr[data-v-14339980]:nth-child(4n+2) {\r\n    background: #f2f2f2;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-14339980],\n.form-control[readonly][data-v-14339980],\nfieldset[disabled] .form-control[data-v-14339980] {\n    background-color: #eee;\n}\n.checkbox-inline[data-v-14339980] {\n    margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-14339980] {\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-14339980] {\n        overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-14339980]:nth-child(4n+1),\n.tabla-detalle tr[data-v-14339980]:nth-child(4n+2) {\n    background: #f2f2f2;\n}\n", ""]);
 
 // exports
 
@@ -131937,7 +131977,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-select .vs__selected-options {\r\n    flex-wrap: nowrap;\r\n    white-space: nowrap;\r\n    overflow: hidden;\n}\r\n", ""]);
+exports.push([module.i, "\n.v-select .vs__selected-options {\n    flex-wrap: nowrap;\n    white-space: nowrap;\n    overflow: hidden;\n}\n", ""]);
 
 // exports
 
@@ -131956,7 +131996,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.existe[data-v-13df0c7a] {\r\n\r\n    color: blue;\n}\n.checkbox-inline[data-v-13df0c7a] {\r\n    margin-left: 0px;\n}\n.centrado-label[data-v-13df0c7a] {\r\n    color: #685454;\r\n    display: inline-block;\r\n    text-align: right;\r\n    width: 130px;\r\n    margin-right: 40px;\n}\n.table th[data-v-13df0c7a] {\r\n    text-align: center;\n}\ntd[data-v-13df0c7a]:nth-child(2) {\r\n    text-align: center;\n}\ntd[data-v-13df0c7a]:nth-child(3) {\r\n    text-align: center;\n}\ntd[data-v-13df0c7a]:nth-child(4) {\r\n    text-align: center;\n}\n.sinpadding [class*=\"col-\"][data-v-13df0c7a] {\r\n    padding-right: 0;\n}\n.form-control[disabled][data-v-13df0c7a],\r\n.form-control[readonly][data-v-13df0c7a],\r\nfieldset[disabled] .form-control[data-v-13df0c7a] {\r\n    background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.existe[data-v-13df0c7a] {\n\n    color: blue;\n}\n.checkbox-inline[data-v-13df0c7a] {\n    margin-left: 0px;\n}\n.centrado-label[data-v-13df0c7a] {\n    color: #685454;\n    display: inline-block;\n    text-align: right;\n    width: 130px;\n    margin-right: 40px;\n}\n.table th[data-v-13df0c7a] {\n    text-align: center;\n}\ntd[data-v-13df0c7a]:nth-child(2) {\n    text-align: center;\n}\ntd[data-v-13df0c7a]:nth-child(3) {\n    text-align: center;\n}\ntd[data-v-13df0c7a]:nth-child(4) {\n    text-align: center;\n}\n.sinpadding [class*=\"col-\"][data-v-13df0c7a] {\n    padding-right: 0;\n}\n.form-control[disabled][data-v-13df0c7a],\n.form-control[readonly][data-v-13df0c7a],\nfieldset[disabled] .form-control[data-v-13df0c7a] {\n    background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -131975,7 +132015,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-13a6ae76],\r\n.form-control[readonly][data-v-13a6ae76],\r\nfieldset[disabled] .form-control[data-v-13a6ae76] {\r\n    background-color: #eee;\n}\n.checkbox-inline[data-v-13a6ae76] {\r\n    margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-13a6ae76] {\r\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-13a6ae76] {\r\n        overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-13a6ae76]:nth-child(4n+1),\r\n.tabla-detalle tr[data-v-13a6ae76]:nth-child(4n+2) {\r\n    background: #f2f2f2;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-13a6ae76],\n.form-control[readonly][data-v-13a6ae76],\nfieldset[disabled] .form-control[data-v-13a6ae76] {\n    background-color: #eee;\n}\n.checkbox-inline[data-v-13a6ae76] {\n    margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-13a6ae76] {\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-13a6ae76] {\n        overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-13a6ae76]:nth-child(4n+1),\n.tabla-detalle tr[data-v-13a6ae76]:nth-child(4n+2) {\n    background: #f2f2f2;\n}\n", ""]);
 
 // exports
 
@@ -131994,7 +132034,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-select .vs__selected-options {\r\n    flex-wrap: nowrap;\r\n    white-space: nowrap;\r\n    overflow: hidden;\n}\r\n", ""]);
+exports.push([module.i, "\n.v-select .vs__selected-options {\n    flex-wrap: nowrap;\n    white-space: nowrap;\n    overflow: hidden;\n}\n", ""]);
 
 // exports
 
@@ -132013,7 +132053,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-0b9d46e4],\r\n.form-control[readonly][data-v-0b9d46e4],\r\nfieldset[disabled] .form-control[data-v-0b9d46e4] {\r\n    background-color: #eee;\n}\n.checkbox-inline[data-v-0b9d46e4] {\r\n    margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-0b9d46e4] {\r\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-0b9d46e4] {\r\n        overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-0b9d46e4]:nth-child(4n+1),\r\n.tabla-detalle tr[data-v-0b9d46e4]:nth-child(4n+2) {\r\n    background: #f2f2f2;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-0b9d46e4],\n.form-control[readonly][data-v-0b9d46e4],\nfieldset[disabled] .form-control[data-v-0b9d46e4] {\n    background-color: #eee;\n}\n.checkbox-inline[data-v-0b9d46e4] {\n    margin-left: 0px;\n}\n@media (max-width: 767px) {\n.table-responsive .dropdown-menu[data-v-0b9d46e4] {\n        position: static !important;\n}\n}\n@media (min-width: 768px) {\n.table-responsive[data-v-0b9d46e4] {\n        overflow: inherit;\n}\n}\n.tabla-detalle tr[data-v-0b9d46e4]:nth-child(4n+1),\n.tabla-detalle tr[data-v-0b9d46e4]:nth-child(4n+2) {\n    background: #f2f2f2;\n}\n", ""]);
 
 // exports
 
@@ -132032,7 +132072,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.v-select .vs__selected-options {\r\n    flex-wrap: nowrap;\r\n    white-space: nowrap;\r\n    overflow: hidden;\n}\r\n", ""]);
+exports.push([module.i, "\n.v-select .vs__selected-options {\n    flex-wrap: nowrap;\n    white-space: nowrap;\n    overflow: hidden;\n}\n", ""]);
 
 // exports
 
@@ -132051,7 +132091,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.existe[data-v-084fc4a8] {\r\n\r\n    color: blue;\r\n    margin-top: ;\n}\n.checkbox-inline[data-v-084fc4a8] {\r\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-084fc4a8] {\r\n\r\n    width: 12.499999995%\n}\n@media (min-width: 768px) {\n.size-1-5[data-v-084fc4a8] {\r\n\r\n        width: 12.499999995%;\n}\n}\n.form-control[disabled][data-v-084fc4a8],\r\n.form-control[readonly][data-v-084fc4a8],\r\nfieldset[disabled] .form-control[data-v-084fc4a8] {\r\n    background-color: #eee;\n}\ntable th[data-v-084fc4a8],\r\ntable td[data-v-084fc4a8] {\r\n\r\n    text-align: center;\n}\n.colorearLimiteTablaUs[data-v-084fc4a8] {\r\n    color: blue;\n}\r\n", ""]);
+exports.push([module.i, "\n.existe[data-v-084fc4a8] {\n\n    color: blue;\n    margin-top: ;\n}\n.checkbox-inline[data-v-084fc4a8] {\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-084fc4a8] {\n\n    width: 12.499999995%\n}\n@media (min-width: 768px) {\n.size-1-5[data-v-084fc4a8] {\n\n        width: 12.499999995%;\n}\n}\n.form-control[disabled][data-v-084fc4a8],\n.form-control[readonly][data-v-084fc4a8],\nfieldset[disabled] .form-control[data-v-084fc4a8] {\n    background-color: #eee;\n}\ntable th[data-v-084fc4a8],\ntable td[data-v-084fc4a8] {\n\n    text-align: center;\n}\n.colorearLimiteTablaUs[data-v-084fc4a8] {\n    color: blue;\n}\n", ""]);
 
 // exports
 
@@ -132070,7 +132110,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\r\n    position: fixed;\r\n    /* ocupa toda la pantalla */\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    display: flex;\r\n    /* flex para centrar */\r\n    align-items: center;\r\n    /* centrar vertical */\r\n    justify-content: center;\r\n    /* centrar horizontal */\r\n    background: rgba(0, 0, 0, 0.5);\r\n    /* overlay oscuro */\r\n    z-index: 9999;\r\n    /* por encima de todo */\n}\r\n\r\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\r\n    margin: 0;\r\n    /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\r\n    max-height: 90vh;\r\n    overflow-y: auto;\n}\n.form-control[disabled][data-v-653e7c51],\r\n.form-control[readonly][data-v-653e7c51],\r\nfieldset[disabled] .form-control[data-v-653e7c51] {\r\n    background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n#modalPopup[data-v-653e7c51] {\n    position: fixed;\n    /* ocupa toda la pantalla */\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    display: flex;\n    /* flex para centrar */\n    align-items: center;\n    /* centrar vertical */\n    justify-content: center;\n    /* centrar horizontal */\n    background: rgba(0, 0, 0, 0.5);\n    /* overlay oscuro */\n    z-index: 9999;\n    /* por encima de todo */\n}\n\n/* Opcional: controla el overflow si el modal crece mucho */\n.modal-dialog[data-v-653e7c51] {\n    margin: 0;\n    /* elimina márgenes por defecto */\n}\n.modal-content[data-v-653e7c51] {\n    max-height: 90vh;\n    overflow-y: auto;\n}\n.form-control[disabled][data-v-653e7c51],\n.form-control[readonly][data-v-653e7c51],\nfieldset[disabled] .form-control[data-v-653e7c51] {\n    background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -132089,7 +132129,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cleaner-container[data-v-5582bc2c] {\r\n    padding: 30px;\r\n    border-radius: 15px;\r\n    background: #ffffff;\r\n    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);\r\n    max-width: 900px;\r\n    margin: 20px auto;\r\n    font-family: 'Roboto', sans-serif;\n}\n.info-section p[data-v-5582bc2c] {\r\n    font-size: 1.1rem;\r\n    color: #34495e;\r\n    margin-bottom: 8px;\n}\n.highlight[data-v-5582bc2c] {\r\n    font-weight: bold;\r\n    color: #2ecc71;\n}\n.buttons-section[data-v-5582bc2c] {\r\n    display: flex;\r\n    gap: 20px;\r\n    justify-content: center;\r\n    margin-top: 20px;\n}\n.buttons-section button[data-v-5582bc2c] {\r\n    padding: 12px 20px;\r\n    border-radius: 30px;\r\n    font-size: 1rem;\r\n    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\r\n    transition: all 0.3s ease;\n}\n.buttons-section button[data-v-5582bc2c]:hover {\r\n    transform: scale(1.05);\r\n    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);\n}\n.sobrantes-section[data-v-5582bc2c] {\r\n    margin-top: 30px;\r\n    padding: 20px;\r\n    background-color: #f9fafb;\r\n    border: 1px solid #e1e4e8;\r\n    border-radius: 10px;\r\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);\n}\n.sobrantes-section h4[data-v-5582bc2c] {\r\n    color: #e74c3c;\r\n    font-weight: 500;\r\n    margin-bottom: 15px;\n}\n.sobrantes-list ul[data-v-5582bc2c] {\r\n    list-style: none;\r\n    padding: 0;\r\n    margin: 0;\n}\n.sobrantes-list li[data-v-5582bc2c] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    padding: 12px;\r\n    margin-bottom: 10px;\r\n    background-color: #ffffff;\r\n    border-radius: 8px;\r\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n    transition: all 0.2s ease;\n}\n.sobrantes-list li[data-v-5582bc2c]:hover {\r\n    background-color: #f1f1f1;\r\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n}\n.sobrantes-list a[data-v-5582bc2c] {\r\n    text-decoration: none;\r\n    color: #3498db;\r\n    font-weight: bold;\r\n    transition: color 0.3s ease;\n}\n.sobrantes-list a[data-v-5582bc2c]:hover {\r\n    color: #2980b9;\n}\r\n", ""]);
+exports.push([module.i, "\n.cleaner-container[data-v-5582bc2c] {\n    padding: 30px;\n    border-radius: 15px;\n    background: #ffffff;\n    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);\n    max-width: 900px;\n    margin: 20px auto;\n    font-family: 'Roboto', sans-serif;\n}\n.info-section p[data-v-5582bc2c] {\n    font-size: 1.1rem;\n    color: #34495e;\n    margin-bottom: 8px;\n}\n.highlight[data-v-5582bc2c] {\n    font-weight: bold;\n    color: #2ecc71;\n}\n.buttons-section[data-v-5582bc2c] {\n    display: flex;\n    gap: 20px;\n    justify-content: center;\n    margin-top: 20px;\n}\n.buttons-section button[data-v-5582bc2c] {\n    padding: 12px 20px;\n    border-radius: 30px;\n    font-size: 1rem;\n    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n    transition: all 0.3s ease;\n}\n.buttons-section button[data-v-5582bc2c]:hover {\n    transform: scale(1.05);\n    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);\n}\n.sobrantes-section[data-v-5582bc2c] {\n    margin-top: 30px;\n    padding: 20px;\n    background-color: #f9fafb;\n    border: 1px solid #e1e4e8;\n    border-radius: 10px;\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);\n}\n.sobrantes-section h4[data-v-5582bc2c] {\n    color: #e74c3c;\n    font-weight: 500;\n    margin-bottom: 15px;\n}\n.sobrantes-list ul[data-v-5582bc2c] {\n    list-style: none;\n    padding: 0;\n    margin: 0;\n}\n.sobrantes-list li[data-v-5582bc2c] {\n    display: flex;\n    justify-content: space-between;\n    padding: 12px;\n    margin-bottom: 10px;\n    background-color: #ffffff;\n    border-radius: 8px;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n    transition: all 0.2s ease;\n}\n.sobrantes-list li[data-v-5582bc2c]:hover {\n    background-color: #f1f1f1;\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n}\n.sobrantes-list a[data-v-5582bc2c] {\n    text-decoration: none;\n    color: #3498db;\n    font-weight: bold;\n    transition: color 0.3s ease;\n}\n.sobrantes-list a[data-v-5582bc2c]:hover {\n    color: #2980b9;\n}\n", ""]);
 
 // exports
 
@@ -132260,7 +132300,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.map-container {\r\n    width: 100%;\r\n    height: 425px;\r\n    display: inline-block;\n}\n.vtimeselector__input {\r\n    width: 100%;\r\n    box-sizing: border-box;\r\n    padding: 6px 12px;\r\n    height: 34px;\r\n    font-size: 14px;\r\n    background-color: #fff;\r\n    border: 1px solid #ccc;\n}\n.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {\r\n\r\n    background-color: #fff;\n}\n.existe {\r\n\r\n    color: blue ;\n}\n.downSelect {\r\n font-style: oblique;\r\n font-size: 12px;\n}\n.upSelect {\r\n  font-weight: bold;\r\n  font-size: 14;\n}\n.markError{\r\n\r\n  border-color: red;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.map-container {\n    width: 100%;\n    height: 425px;\n    display: inline-block;\n}\n.vtimeselector__input {\n    width: 100%;\n    box-sizing: border-box;\n    padding: 6px 12px;\n    height: 34px;\n    font-size: 14px;\n    background-color: #fff;\n    border: 1px solid #ccc;\n}\n.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {\n\n    background-color: #fff;\n}\n.existe {\n\n    color: blue ;\n}\n.downSelect {\n font-style: oblique;\n font-size: 12px;\n}\n.upSelect {\n  font-weight: bold;\n  font-size: 14;\n}\n.markError{\n\n  border-color: red;\n}\n\n", ""]);
 
 // exports
 
@@ -132279,7 +132319,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-26c5974a], .form-control[readonly][data-v-26c5974a], fieldset[disabled] .form-control[data-v-26c5974a] {\r\n     background-color: #eee;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-26c5974a], .form-control[readonly][data-v-26c5974a], fieldset[disabled] .form-control[data-v-26c5974a] {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -132317,7 +132357,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.boton-centrado[data-v-a4652f86] {\r\n  display: flex;\r\n  align-items: center;\r\n  height: 100%;\n}\n.ml-2[data-v-a4652f86] {\r\n  margin-left: 0.5rem;\n}\n.d-flex[data-v-a4652f86] {\r\n  display: flex;\n}\n.input-group[data-v-a4652f86] {\r\n  display: flex;\n}\n.input-group-btn[data-v-a4652f86] {\r\n  margin-left: 0.5rem;\n}\n.tag-cantidad[data-v-a4652f86] {\r\n  display: inline-block;\r\n  padding: 0.25rem 0.5rem;\r\n  margin-right: 0.5rem;\r\n  margin-top: 0.5rem;\r\n  background-color: #f0f0f0;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  -webkit-user-select: none;\r\n     -moz-user-select: none;\r\n          user-select: none;\n}\n.tag-cantidad[data-v-a4652f86]:hover {\r\n  background-color: #e0e0e0;\n}\r\n", ""]);
+exports.push([module.i, "\n.boton-centrado[data-v-a4652f86] {\n  display: flex;\n  align-items: center;\n  height: 100%;\n}\n.ml-2[data-v-a4652f86] {\n  margin-left: 0.5rem;\n}\n.d-flex[data-v-a4652f86] {\n  display: flex;\n}\n.input-group[data-v-a4652f86] {\n  display: flex;\n}\n.input-group-btn[data-v-a4652f86] {\n  margin-left: 0.5rem;\n}\n.tag-cantidad[data-v-a4652f86] {\n  display: inline-block;\n  padding: 0.25rem 0.5rem;\n  margin-right: 0.5rem;\n  margin-top: 0.5rem;\n  background-color: #f0f0f0;\n  border-radius: 4px;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n}\n.tag-cantidad[data-v-a4652f86]:hover {\n  background-color: #e0e0e0;\n}\n", ""]);
 
 // exports
 
@@ -132336,7 +132376,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-04aace14],\r\n.form-control[readonly][data-v-04aace14],\r\nfieldset[disabled] .form-control[data-v-04aace14] {\r\n    background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-04aace14],\n.form-control[readonly][data-v-04aace14],\nfieldset[disabled] .form-control[data-v-04aace14] {\n    background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -132374,7 +132414,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.vcenter[data-v-599d8596] {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    float: none;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.vcenter[data-v-599d8596] {\n    display: inline-block;\n    vertical-align: middle;\n    float: none;\n}\n\n", ""]);
 
 // exports
 
@@ -132393,7 +132433,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination {\r\n    color : blue\n}\n.page-item {\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination {\n    color : #4F8CFF\n}\n.page-item {\n}\n\n", ""]);
 
 // exports
 
@@ -132412,7 +132452,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.vcenter[data-v-0f8072a0] {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    float: none;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.vcenter[data-v-0f8072a0] {\n    display: inline-block;\n    vertical-align: middle;\n    float: none;\n}\n\n", ""]);
 
 // exports
 
@@ -132431,7 +132471,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pagination {\r\n    color : blue\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.pagination {\n    color : #4F8CFF\n}\n\n", ""]);
 
 // exports
 
@@ -132450,7 +132490,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-7c22c270], .form-control[readonly][data-v-7c22c270], fieldset[disabled] .form-control[data-v-7c22c270] {\r\n     background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-7c22c270], .form-control[readonly][data-v-7c22c270], fieldset[disabled] .form-control[data-v-7c22c270] {\n     background-color: #eee;\n}\n", ""]);
 
 // exports
 
@@ -132469,7 +132509,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\r\n\r\n/* Page styles */\n.tabs-component {\r\n    margin: 1;\n}\n.tabs-component-tabs {\r\n\r\n    padding-left: 0;\r\n    margin-left: 0;\n}\n.tabs-component-panels\r\n {\r\n    position: relative;\n}\nbody {\r\n    background-color: #efefef;\r\n    padding: 1em;\n}\n.page {\r\n    background-color: #fff;\r\n    border-radius: 3px;\r\n    box-shadow: 0 2px 20px rgba(0, 0, 0, .025);\r\n    margin: 0 auto;\r\n    max-width: 66em;\r\n    padding: 4em 2em;\n}\n@media (min-width: 700px) {\n.page {\r\n        padding: 4em;\n}\n}\n.page-title {\r\n    font-size: 2.4rem;\r\n    margin-bottom: 1em;\n}\n.page-title a {\r\n    color: inherit;\r\n    text-decoration: none;\n}\n.page-title a:hover {\r\n    color: #007593;\n}\n.page-subtitle {\r\n    font-size: 1.25rem;\r\n    margin-bottom: 1em;\r\n    padding-top: .25em;\n}\n.page-about {\r\n    background-color: #d1e8eb;\r\n    margin: 0 -2em;\r\n    padding: 2em 1em;\n}\n@media (min-width: 700px) {\n.page-about {\r\n        border-radius: 3px;\r\n        margin: 0;\r\n        padding: 2em;\n}\n}\n.page-about h2 {\r\n    color: #003345;\n}\n.page-about p {\r\n    color: #003345;\r\n    line-height: 1.45;\r\n    margin-bottom: 1em;\n}\n.page-about a {\r\n    color: #007593;\n}\n.page-about code {\r\n    background-color: rgba(255, 255, 255, .75);\r\n    border-radius: 3px;\r\n    padding: 0 .25em;\n}\n.page-outro {\r\n    color: #999;\r\n    display: block;\r\n    margin-top: 4em;\r\n    text-align: center;\n}\n.page-outro a {\r\n    color: #999;\n}\n.prefix,\r\n.suffix {\r\n    align-items: center;\r\n    border-radius: 1.25rem;\r\n    display: flex;\r\n    font-size: .75rem;\r\n    flex-shrink: 0;\r\n    height: 1.25rem;\r\n    justify-content: center;\r\n    line-height: 1.25rem;\r\n    min-width: 1.25rem;\r\n    padding: 0 .1em;\n}\n.prefix {\r\n    background-color: #d1e8eb;\r\n    color: #0c5174;\r\n    margin-right: .35em;\n}\n.suffix {\r\n    background-color: #c03;\r\n    color: #fff;\r\n    margin-left: .35em;\n}\n@media (min-width: 700px) {\n.suffix {\r\n        position: absolute;\r\n        right: -.725em;\r\n        top: -.725em;\n}\n}\n.seleccionar {\r\n   /* font-size: 14px; */\r\n    font: inherit;\r\n    font-family: inherit;\r\n    color:#8e8e8e ;\n}\n.list-fecha .mx-input,.list-fecha .mx-datepicker,.list-fecha .mx-input-wrapper {\r\n    box-shadow : none !important;\r\n   -webkit-box-shadow : none !important;\r\n    border-top: none !important;\r\n    border-left: none !important;\r\n    border-right: none !important;\r\n    border-radius: 0px !important;\r\n    padding-left: 0px;\n}\n.is-active{\r\n\r\n    border-top:3px solid rgb(255, 204, 0) !important;\r\n    box-shadow: 0 -2px 0 #000;\n}\nul li .titulo-li {\r\n    font-weight: 600 !important;\n}\n.list-fecha {\r\n     border-bottom: none !important;\n}\n.list-informes {\r\n\r\n     font-size: 14px;\r\n     color: gray;\r\n     font-weight: 500;\r\n     line-height: 10px;\n}\n.btn-enod {\r\n    border: 1px solid black;\n}\n.box-custom-enod {\r\n\r\n    box-shadow: 0 -2px 0 #000;\n}\n.profile-username {\r\n\r\n    font-size: 16px !important ;\r\n    font-weight: 500 !important ;\r\n    line-height: 1.1 !important ;\r\n    font-family: 'Montserrat',sans-serif;\n}\n.stat-sol table tbody tr th,.stat-sol table tbody tr td {\r\n    text-align: center;\n}\n.titulo-tabla-tabs{\r\n    text-align: center !important;\n}\n.titulo-tabla-tabs h5{\r\n\r\n    font-weight: 700 !important;\r\n    color: #666 !important;\r\n    font-size: 12px;\r\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n}\n.div-grafico {\r\n    max-width:375px;\r\n    margin:  0px auto 15px auto;\n}\n.totales_posiciones {\r\n\r\n      color:#666;\r\n      font-size: 14px;\n}\n.c {\r\n      color:red\n}\r\n", ""]);
+exports.push([module.i, "\n\n/* Page styles */\n.tabs-component {\n    margin: 1;\n}\n.tabs-component-tabs {\n\n    padding-left: 0;\n    margin-left: 0;\n}\n.tabs-component-panels\n {\n    position: relative;\n}\nbody {\n    background-color: #efefef;\n    padding: 1em;\n}\n.page {\n    background-color: #fff;\n    border-radius: 3px;\n    box-shadow: 0 2px 20px rgba(0, 0, 0, .025);\n    margin: 0 auto;\n    max-width: 66em;\n    padding: 4em 2em;\n}\n@media (min-width: 700px) {\n.page {\n        padding: 4em;\n}\n}\n.page-title {\n    font-size: 2.4rem;\n    margin-bottom: 1em;\n}\n.page-title a {\n    color: inherit;\n    text-decoration: none;\n}\n.page-title a:hover {\n    color: #007593;\n}\n.page-subtitle {\n    font-size: 1.25rem;\n    margin-bottom: 1em;\n    padding-top: .25em;\n}\n.page-about {\n    background-color: #d1e8eb;\n    margin: 0 -2em;\n    padding: 2em 1em;\n}\n@media (min-width: 700px) {\n.page-about {\n        border-radius: 3px;\n        margin: 0;\n        padding: 2em;\n}\n}\n.page-about h2 {\n    color: #003345;\n}\n.page-about p {\n    color: #003345;\n    line-height: 1.45;\n    margin-bottom: 1em;\n}\n.page-about a {\n    color: #007593;\n}\n.page-about code {\n    background-color: rgba(255, 255, 255, .75);\n    border-radius: 3px;\n    padding: 0 .25em;\n}\n.page-outro {\n    color: #999;\n    display: block;\n    margin-top: 4em;\n    text-align: center;\n}\n.page-outro a {\n    color: #999;\n}\n.prefix,\n.suffix {\n    align-items: center;\n    border-radius: 1.25rem;\n    display: flex;\n    font-size: .75rem;\n    flex-shrink: 0;\n    height: 1.25rem;\n    justify-content: center;\n    line-height: 1.25rem;\n    min-width: 1.25rem;\n    padding: 0 .1em;\n}\n.prefix {\n    background-color: #d1e8eb;\n    color: #0c5174;\n    margin-right: .35em;\n}\n.suffix {\n    background-color: #c03;\n    color: #fff;\n    margin-left: .35em;\n}\n@media (min-width: 700px) {\n.suffix {\n        position: absolute;\n        right: -.725em;\n        top: -.725em;\n}\n}\n.seleccionar {\n   /* font-size: 14px; */\n    font: inherit;\n    font-family: inherit;\n    color:#8e8e8e ;\n}\n.list-fecha .mx-input,.list-fecha .mx-datepicker,.list-fecha .mx-input-wrapper {\n    box-shadow : none !important;\n   -webkit-box-shadow : none !important;\n    border-top: none !important;\n    border-left: none !important;\n    border-right: none !important;\n    border-radius: 0px !important;\n    padding-left: 0px;\n}\n.is-active{\n\n    border-top:3px solid #4F8CFF !important;\n    box-shadow: 0 -2px 0 rgba(79,140,255,0.3);\n}\nul li .titulo-li {\n    font-weight: 600 !important;\n}\n.list-fecha {\n     border-bottom: none !important;\n}\n.list-informes {\n\n     font-size: 14px;\n     color: gray;\n     font-weight: 500;\n     line-height: 10px;\n}\n.btn-enod {\n    border: 1px solid black;\n}\n.box-custom-enod {\n\n    box-shadow: 0 -2px 0 #000;\n}\n.profile-username {\n\n    font-size: 16px !important ;\n    font-weight: 500 !important ;\n    line-height: 1.1 !important ;\n    font-family: 'Montserrat',sans-serif;\n}\n.stat-sol table tbody tr th,.stat-sol table tbody tr td {\n    text-align: center;\n}\n.titulo-tabla-tabs{\n    text-align: center !important;\n}\n.titulo-tabla-tabs h5{\n\n    font-weight: 700 !important;\n    color: #666 !important;\n    font-size: 12px;\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n}\n.div-grafico {\n    max-width:375px;\n    margin:  0px auto 15px auto;\n}\n.totales_posiciones {\n\n      color:#666;\n      font-size: 14px;\n}\n.c {\n      color:red\n}\n", ""]);
 
 // exports
 
@@ -132488,7 +132528,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.text-center[data-v-2493830e] {\r\n  text-align: center;\n}\r\n", ""]);
+exports.push([module.i, "\n.text-center[data-v-2493830e] {\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -132526,7 +132566,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.vencidas[data-v-e15131a4] {\r\n    color:red;\n}\n.notificadas[data-v-e15131a4] {\r\n    color:blue;\n}\r\n", ""]);
+exports.push([module.i, "\n.vencidas[data-v-e15131a4] {\n    color:red;\n}\n.notificadas[data-v-e15131a4] {\n    color:blue;\n}\n", ""]);
 
 // exports
 
@@ -132545,7 +132585,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.checkbox-right[data-v-067d0ecf] {\r\n\r\n\r\n    float: right;\r\n    margin-right: 15px;\n}\r\n", ""]);
+exports.push([module.i, "\n.checkbox-right[data-v-067d0ecf] {\n\n\n    float: right;\n    margin-right: 15px;\n}\n", ""]);
 
 // exports
 
@@ -132621,7 +132661,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.stock-registro-actions[data-v-00add724] {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n    margin-bottom: 10px;\r\n    gap: 12px;\n}\n.stock-registro-actions__right[data-v-00add724] {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: flex-end;\r\n    gap: 8px;\n}\n.stock-registro-actions__label[data-v-00add724] {\r\n    font-size: 12px;\r\n    color: #6E6A6A;\r\n    font-family: 'Montserrat', sans-serif;\n}\n.stock-registro-actions__date[data-v-00add724] {\r\n    margin-bottom: 0;\n}\n.exportar-todo-pdf[data-v-00add724] {\r\n    margin-bottom: 0;\n}\r\n", ""]);
+exports.push([module.i, "\n.stock-registro-actions[data-v-00add724] {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    margin-bottom: 10px;\n    gap: 12px;\n}\n.stock-registro-actions__right[data-v-00add724] {\n    display: flex;\n    align-items: center;\n    justify-content: flex-end;\n    gap: 8px;\n}\n.stock-registro-actions__label[data-v-00add724] {\n    font-size: 12px;\n    color: #6E6A6A;\n    font-family: 'Montserrat', sans-serif;\n}\n.stock-registro-actions__date[data-v-00add724] {\n    margin-bottom: 0;\n}\n.exportar-todo-pdf[data-v-00add724] {\n    margin-bottom: 0;\n}\n", ""]);
 
 // exports
 
@@ -132640,7 +132680,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n@media (max-width: 768px) {\n.td-mobile-stack[data-v-374d5f23] {\r\n    display: block;\r\n    width: 100% !important; /* Asegura que esta regla tenga prioridad */\r\n    box-sizing: border-box;\r\n    padding: 5px 0 !important; /* Reduce el espacio entre celdas */\n}\n.table-responsive-mobile[data-v-374d5f23] {\r\n    border: 0; /* Elimina los bordes de la tabla en vistas móviles si se desea */\n}\n}\r\n", ""]);
+exports.push([module.i, "\n@media (max-width: 768px) {\n.td-mobile-stack[data-v-374d5f23] {\n    display: block;\n    width: 100% !important; /* Asegura que esta regla tenga prioridad */\n    box-sizing: border-box;\n    padding: 5px 0 !important; /* Reduce el espacio entre celdas */\n}\n.table-responsive-mobile[data-v-374d5f23] {\n    border: 0; /* Elimina los bordes de la tabla en vistas móviles si se desea */\n}\n}\n", ""]);
 
 // exports
 
@@ -132659,7 +132699,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.exportar-todo-pdf[data-v-e92958ce] {\r\n    margin-bottom: 20px;\n}\r\n", ""]);
+exports.push([module.i, "\n.exportar-todo-pdf[data-v-e92958ce] {\n    margin-bottom: 20px;\n}\n", ""]);
 
 // exports
 
@@ -132678,7 +132718,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.box.box-custom-enod[data-v-bd79d13c] {\r\n  padding: 20px;\n}\n.boton-centrado[data-v-bd79d13c] {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\n}\r\n", ""]);
+exports.push([module.i, "\n.box.box-custom-enod[data-v-bd79d13c] {\n  padding: 20px;\n}\n.boton-centrado[data-v-bd79d13c] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n", ""]);
 
 // exports
 
@@ -132697,7 +132737,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-dce134bc], .form-control[readonly][data-v-dce134bc], fieldset[disabled] .form-control[data-v-dce134bc] {\r\n     background-color: #eee;\n}\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-dce134bc], .form-control[readonly][data-v-dce134bc], fieldset[disabled] .form-control[data-v-dce134bc] {\n     background-color: #eee;\n}\n\n\n", ""]);
 
 // exports
 
@@ -132716,7 +132756,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-5bc4ac32], .form-control[readonly][data-v-5bc4ac32], fieldset[disabled] .form-control[data-v-5bc4ac32] {\r\n     background-color: #eee;\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-5bc4ac32], .form-control[readonly][data-v-5bc4ac32], fieldset[disabled] .form-control[data-v-5bc4ac32] {\n     background-color: #eee;\n}\n", ""]);
 
 // exports
 

@@ -22,7 +22,7 @@
                                        
                     </ul>
                     <a  @click="Buscar()">
-                        <button class="btn btn-enod btn-block"><span class="fa fa-search"></span>
+                        <button class="btn btn-enod btn-block"><span class="fas fa-search"></span>
                             Buscar
                         </button>
                     </a>
@@ -37,7 +37,7 @@
                     <div  v-if="(paginatedItems && paginatedItems.length)">
                         <div class="row">
                             <div class="col-lg-4">
-                                <button type="button" class="btn btn-success" @click="exportarQr"><i class="fa fa-qrcode"></i>  Exportar QR</button>
+                                <button type="button" class="btn btn-success" @click="exportarQr"><i class="fas fa-qrcode"></i>  Exportar QR</button>
                             </div>
                         </div>                           
                     </div>
@@ -282,7 +282,7 @@ export default {
 </script>
 <style scope>
 .pagination {
-    color : blue
+    color : #4F8CFF
 }
 .page-item {
 }

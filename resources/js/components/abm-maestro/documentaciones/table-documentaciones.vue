@@ -65,15 +65,15 @@
 
               <!-- Botón de Editar -->
               <td width="10px">
-                <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('M_documentaciones_edita')">
-                  <span class="fa fa-edit"></span>
+                <button class="btn btn-enod btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('M_documentaciones_edita')">
+                  <span class="fas fa-edit"></span>
                 </button>
               </td>
 
               <!-- Botón de Eliminar -->
               <td width="10px">
                 <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.titulo)" :disabled="!$can('M_documentaciones_edita')">
-                  <span class="fa fa-trash"></span>
+                  <span class="fas fa-trash"></span>
                 </button>
               </td>
             </tr>

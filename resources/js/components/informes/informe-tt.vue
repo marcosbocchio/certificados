@@ -238,7 +238,7 @@
                             <div class="col-md-1">
                                 <span>
                                     <button type="button" @click="addDetalle()"><span
-                                            class="fa fa-plus-circle"></span></button>
+                                            class="fas fa-plus-circle"></span></button>
                                 </span>
                             </div>
 
@@ -262,7 +262,7 @@
                                                     :class="{ selected: indexPosDetalle === k }">
                                                     <td>{{ item.elemento }}</td>
                                                     <td>{{ item.termocupla }}</td>
-                                                    <td style="text-align:center"><span class="fa fa-minus-circle"
+                                                    <td style="text-align:center"><span class="fas fa-circle-minus"
                                                             @click="removeDetalle(k)"></span></td>
                                                 </tr>
                                             </tbody>

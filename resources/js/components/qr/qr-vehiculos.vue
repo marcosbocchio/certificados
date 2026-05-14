@@ -9,7 +9,7 @@
                     <div  v-if="1">
                         <div class="row">
                             <div class="col-lg-4">
-                                <button type="button" class="btn btn-success" @click="exportarQr"><i class="fa fa-qrcode"></i>  Exportar QR</button>
+                                <button type="button" class="btn btn-success" @click="exportarQr"><i class="fas fa-qrcode"></i>  Exportar QR</button>
                             </div>
                         </div>
                     </div>
@@ -214,7 +214,7 @@ export default {
 </script>
 <style scope>
 .pagination {
-    color : blue
+    color : #4F8CFF
 }
 
 </style>

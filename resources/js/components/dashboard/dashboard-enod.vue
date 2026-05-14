@@ -158,14 +158,14 @@
   <div class="row">
     <div class="col-md-2 col-sm-12 col-xs-12">
         <div v-show="$can('O_alta')">
-            <button @click="NuevaOt()" class="btn pull-left btn-enod"> <span class="fa fa-plus-circle"></span> Nueva OT</button>
+            <button @click="NuevaOt()" class="btn pull-left btn-enod"> <span class="fas fa-plus-circle"></span> Nueva OT</button>
         </div>
     </div>
     <div class="col-md-3 col-md-offset-7 col-sm-12 col-xs-12">
       <div class="form-group">
           <div class="input-group">
-              <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
-              <span class="input-group-addon btn btn-enod" @click="aplicarFiltro()"><i class="fa fa-search"></i></span>
+              <input type="text" v-model="search" class="form-control search-enod" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
+              <span class="input-group-btn" @click="aplicarFiltro()"><button class="btn btn-enod" type="button"><i class="fas fa-search"></i></button></span>
           </div>
       </div>
     </div>
@@ -219,18 +219,18 @@
                                         </div>
                                         <td width="10px">
                                         <button class="btn btn-default btn-sm" title="Generar link de documentación" @click="ExportarDocumentacionOt(ot.id)" :disabled="!$can('T_exportar_documentacion')">
-                                            <span class="fa fa-cloud-upload">
+                                            <span class="fas fa-cloud-arrow-up">
                                             </span>
                                         </button>
                                         </td>
 
                                         <td width="10px">
-                                        <button class="btn btn-warning btn-sm" title="Editar" @click="openEditarOt(ot.id)" :disabled="!$can('T_edita')">
-                                            <span class="fa fa-edit">
+                                        <button class="btn btn-enod btn-sm" title="Editar" @click="openEditarOt(ot.id)" :disabled="!$can('T_edita')">
+                                            <span class="fas fa-edit">
                                             </span>
                                         </button>
                                         </td>
-                                        <td width="10px"> <a :href="'/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
+                                        <td width="10px"> <a :href="'/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="far fa-file-pdf"></span></a></td>
 
                                         <td width="10px">
                                         <div v-if="ot.estado == 'EDITANDO'">

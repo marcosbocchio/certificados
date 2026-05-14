@@ -49,7 +49,7 @@
                         <div class="bootstrap-timepicker">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-clock-o"></i>
+                                    <i class="fas fa-clock-o"></i>
                                 </div>
                                 <timeselector v-model="entrada_selected"></timeselector>
                             </div>
@@ -62,7 +62,7 @@
                         <div class="bootstrap-timepicker">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-clock-o"></i>
+                                    <i class="fas fa-clock-o"></i>
                                 </div>
                                 <timeselector v-model="salida_selected"></timeselector>
                             </div>
@@ -97,7 +97,7 @@
                 <div class="col-md-3">
                     <div style="display:flex;justify-content: flex-start;align-items: center;">
                         <button type="button" @click="agregarDetalle" style="margin-top:25px;"><span
-                                class="fa fa-plus-circle"></span></button>
+                                class="fas fa-plus-circle"></span></button>
                     </div>
                 </div>
             </div>
@@ -156,7 +156,7 @@
                                 <i :class="detalle.observaciones ? 'fa fa-comment' : 'fa fa-comment-o'"
                                     @click="abrirObservacionModal(index)"
                                     style="cursor: pointer;width: 10px;margin-right: 10px"></i>
-                                <i style="cursor: pointer;width: 10px;margin-right: 10px" class="fa fa-minus-circle"
+                                <i style="cursor: pointer;width: 10px;margin-right: 10px" class="fas fa-circle-minus"
                                     @click="eliminarDetalle(index)"></i>
                             </td>
                         </tr>

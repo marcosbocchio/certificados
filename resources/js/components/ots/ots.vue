@@ -54,7 +54,7 @@
                 <label>Hora *</label>
                 <div class="input-group">
                   <div class="input-group-addon">
-                    <i class="fa fa-clock-o"></i>
+                    <i class="fas fa-clock-o"></i>
                   </div>
                   <timeselector v-model="hora"></timeselector>
                 </div>
@@ -125,7 +125,7 @@
             <label for="search">Buscar Ubicación</label>
             <div class="input-group">
                 <div class="input-group-addon enod-accent-bg">
-                  <i class="fa fa-search"></i>
+                  <i class="fas fa-search"></i>
                 </div>
                 <gmap-autocomplete class="form-control"
                 @place_changed="setPlace"
@@ -215,7 +215,7 @@
         <div class="col-md-1">
             <div class="form-group">
               <span>
-                  <button type="button" @click="addServicio()" :disabled="!servicio"><span class="fa fa-plus-circle"></span></button>
+                  <button type="button" @click="addServicio()" :disabled="!servicio"><span class="fas fa-plus-circle"></span></button>
               </span>
             </div>
         </div>
@@ -249,7 +249,7 @@
                     inputsServicio.path1 ||
                     inputsServicio.path2 ||
                     inputsServicio.path3 ||
-                    inputsServicio.path4)  }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'servicios',inputsServicio)" ></span></td>
+                    inputsServicio.path4)  }" class="fas fa-file-archive-o" @click="OpenReferencias($event,k,'servicios',inputsServicio)" ></span></td>
                     <td style="text-align:center">
                       <input type="checkbox" id="checkbox" v-model="inputsServicios[k].procedimiento_sn">
                     </td>
@@ -257,7 +257,7 @@
                     <td style="text-align:center">
                       <input type="checkbox" id="checkbox" v-model="inputsServicios[k].combinado_sn">
                     </td>
-                    <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeServicio(k)" ></i></td>
+                    <td style="text-align:center"> <i class="fas fa-circle-minus" @click="removeServicio(k)" ></i></td>
                   </tr>
                 </tbody>
               </table>
@@ -316,7 +316,7 @@
           <div class="col-md-1">
               <div class="form-group">
                 <span>
-                    <button type="button" @click="addProducto()" :disabled="!producto || !medida"><span class="fa fa-plus-circle"></span></button>
+                    <button type="button" @click="addProducto()" :disabled="!producto || !medida"><span class="fas fa-plus-circle"></span></button>
                 </span>
               </div>
           </div>
@@ -347,9 +347,9 @@
                                           inputsProducto.path2 ||
                                           inputsProducto.path3 ||
                                           inputsProducto.path4 )
-                      }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'productos',inputsProducto)" ></span></td>
+                      }" class="fas fa-file-archive-o" @click="OpenReferencias($event,k,'productos',inputsProducto)" ></span></td>
                       <td> {{ inputsProducto.cantidad_productos}}</td>
-                      <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
+                      <td style="text-align:center"> <i class="fas fa-circle-minus" @click="removeProducto(k)" ></i></td>
                     </tr>
                   </tbody>
                 </table>
@@ -368,7 +368,7 @@
 
               <div class="form-group">
                 <span>
-                    <button type="button" @click="addEpp()" :disabled="!epp"><span class="fa fa-plus-circle"></span></button>
+                    <button type="button" @click="addEpp()" :disabled="!epp"><span class="fas fa-plus-circle"></span></button>
                 </span>
               </div>
 
@@ -389,7 +389,7 @@
                   <tbody>
                     <tr v-for="(inputsEpp,k) in inputsEpps" :key="k">
                       <td> {{ inputsEpp.descripcion}}</td>
-                      <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeEpp(k)" ></i></td>
+                      <td style="text-align:center"> <i class="fas fa-circle-minus" @click="removeEpp(k)" ></i></td>
                     </tr>
                   </tbody>
                 </table>
@@ -404,7 +404,7 @@
 
             <div class="form-group">
               <span>
-                  <button type="button" @click="addRiesgo()":disabled="!riesgo"><span class="fa fa-plus-circle"></span></button>
+                  <button type="button" @click="addRiesgo()":disabled="!riesgo"><span class="fas fa-plus-circle"></span></button>
               </span>
             </div>
 
@@ -424,7 +424,7 @@
                   <tbody>
                     <tr v-for="(inputsRiesgo,k) in inputsRiesgos" :key="k">
                       <td> {{ inputsRiesgo.descripcion}}</td>
-                      <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeRiesgo(k)" ></i></td>
+                      <td style="text-align:center"> <i class="fas fa-circle-minus" @click="removeRiesgo(k)" ></i></td>
                     </tr>
                   </tbody>
                 </table>

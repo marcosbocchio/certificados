@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-4" style="margin-top: 29px;">
                     <button @click="mostrarPopup = true">
-                        <span class="fa fa-plus-circle"></span>
+                        <span class="fas fa-plus-circle"></span>
                     </button>
                 </div>
             </div>
@@ -42,8 +42,8 @@
                         <tr v-for="(operador, index) in operadores" :key="index">
                             <td>{{ operador.name }}</td>
                             <td style="text-align:right">
-                                <button @click="editarOperador(index)" class="btn btn-warning btn-sm">
-                                    <span class="fa fa-edit"></span>
+                                <button @click="editarOperador(index)" class="btn btn-enod btn-sm">
+                                    <span class="fas fa-edit"></span>
                                 </button>
                             </td>
                         </tr>

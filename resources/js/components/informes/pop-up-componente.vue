@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="col-md-1 d-flex align-items-end">
                                         <button type="button" style="margin-top: 25px;" @click="addDetalle">
-                                            <span class="fa fa-plus-circle"></span>
+                                            <span class="fas fa-plus-circle"></span>
                                         </button>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
                                                     <td>{{ +item.espNominal !== 0 ? item.espNominal : '' }}</td>
                                                     <td>{{ +item.espMinMedido !== 0 ? item.espMinMedido : '' }}</td>
                                                     <td>
-                                                        <span class="fa fa-minus-circle"
+                                                        <span class="fas fa-circle-minus"
                                                             @click="removeDetalle(index)"></span>
                                                     </td>
                                                 </tr>

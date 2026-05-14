@@ -20,7 +20,7 @@
 
         <div class="col-md-12">
             <div v-show="$can('T_certif_edita')">
-                <a :href="'/area/enod/ot/' + ot_id_data + '/certificado' " class="btn btn-enod pull-left"> <span class="fa fa-plus-circle"></span> Nuevo</a>
+                <a :href="'/area/enod/ot/' + ot_id_data + '/certificado' " class="btn btn-enod pull-left"> <span class="fas fa-plus-circle"></span> Nuevo</a>
             </div>
         </div>
 
@@ -32,7 +32,7 @@
                     <h3 class="box-title">Certificados asignados a la orden de trabajo</h3>
 
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                         </button>
                     </div>
                 </div>
@@ -51,17 +51,17 @@
                                     <td> {{ot_certificado.numero_formateado}}</td>
                                     <td> {{ot_certificado.fecha}}</td>
                                     <td width="10px">
-                                        <button @click.prevent="editCertificado(ot_certificado.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_certif_edita')"><span class="fa fa-edit"></span></button>
+                                        <button @click.prevent="editCertificado(ot_certificado.id)" class="btn btn-enod btn-sm" title="Editar" :disabled="!$can('T_certif_edita')"><span class="fas fa-edit"></span></button>
                                     </td>
 
                                     <td width="10px" v-show="$can('T_certif_edita')">
-                                        <a :href="'/pdf/certificado/' + ot_certificado.id + '/original/normal' " target="_blank"  class="btn btn-default btn-sm" title="certificado original"><span class="fa fa-file-pdf-o"></span></a>
+                                        <a :href="'/pdf/certificado/' + ot_certificado.id + '/original/normal' " target="_blank"  class="btn btn-default btn-sm" title="certificado original"><span class="far fa-file-pdf"></span></a>
                                     </td>
 
                                     <td width="10px">
                                         <div class="dropdown">
                                             <button class="btn btn-default dropdown-toggle btn-sm" type="button" :id="'certificateDropdown-' + ot_certificado.id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Opciones de Certificado">
-                                                <span class="fa fa-file-pdf-o"></span></button>
+                                                <span class="far fa-file-pdf"></span></button>
                                             <ul class="dropdown-menu" :aria-labelledby="'certificateDropdown-' + ot_certificado.id">
                                                 <li><a :href="'/pdf/certificado/' + ot_certificado.id + '/final/normal'" target="_blank">Certificado</a></li>
                                                 <li><a :href="'/pdf/certificado/' + ot_certificado.id + '/final/agrupado'" target="_blank">Certificado Agrupado</a></li>
@@ -69,10 +69,10 @@
                                         </div>
                                     </td>
                                     <td width="10px">
-                                        <button @click="informesEscaneados(ot_certificado.id)" :disabled="!$can('T_certif_edita')" class="btn btn-default btn-sm" title="certificado escaneados"><span class="fa fa-cloud-upload"></span></button>
+                                        <button @click="informesEscaneados(ot_certificado.id)" :disabled="!$can('T_certif_edita')" class="btn btn-default btn-sm" title="certificado escaneados"><span class="fas fa-cloud-arrow-up"></span></button>
                                     </td>
                                     <td width="10px">
-                                        <button @click="exportarAExcel(ot_certificado.id)" class="btn btn-default btn-sm" title="exportar excel"><span class="fa fa-file-excel-o"></span></button>
+                                        <button @click="exportarAExcel(ot_certificado.id)" class="btn btn-default btn-sm" title="exportar excel"><span class="far fa-file-excel"></span></button>
                                     </td>
                                     <td v-if="!ot_certificado.firma" width="10px">
                                         <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_certif_edita')"><span class="glyphicon glyphicon-pencil"></span></button>

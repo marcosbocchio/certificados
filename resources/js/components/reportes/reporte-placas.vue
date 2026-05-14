@@ -87,7 +87,7 @@
               !fechaOtHasta
             "
           >
-            <span class="fa fa-search"></span> Buscar
+            <span class="fas fa-search"></span> Buscar
           </button>
         </div>
       </div>

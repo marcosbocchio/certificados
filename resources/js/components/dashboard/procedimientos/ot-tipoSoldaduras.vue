@@ -7,7 +7,7 @@
                 <h3 class="box-title">Procedimientos clientes</h3>
 
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                         </button>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-group">
                         <span>
-                            <button type="button" @click="addTipoSoldaduras()"><span class="fa fa-plus-circle"></span></button>
+                            <button type="button" @click="addTipoSoldaduras()"><span class="fas fa-plus-circle"></span></button>
                         </span>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                                     <input type="text" v-model="TablaTipoSoldaduras[k].proc_reparacion" maxlength="30">
                                 </td >
                                 <td v-else>{{ item.proc_reparacion }}</td>
-                                <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeTipoSoldadura(k)" ></i></td>
+                                <td style="text-align:center"> <i class="fas fa-circle-minus" @click="removeTipoSoldadura(k)" ></i></td>
                             </tr>
                         </tbody>
                     </table>

@@ -43,7 +43,7 @@
                     <div class="input-group">
                             &nbsp;
                     </div>
-                    <button class="btn btn-enod pull-left" v-on:click.prevent="openNuevoRegistro()"><span class="fa fa-plus-circle"></span> Nuevo</button>
+                    <button class="btn btn-enod pull-left" v-on:click.prevent="openNuevoRegistro()"><span class="fas fa-plus-circle"></span> Nuevo</button>
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                     </div>
                     <div class="input-group">
                           <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
-                          <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+                          <span class="input-group-btn"><button class="btn btn-enod" type="button" @click="aplicarFiltro()" ><i class="fas fa-search"></i></button></span>
                     </div>
                 </div>
 
@@ -250,7 +250,7 @@
                             </div>
                              <div class="form-group">
                                  <div v-if="isPdf && newRegistro.path != ''">
-                                    <a :href="'/' + newRegistro.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
+                                    <a :href="'/' + newRegistro.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="far fa-file-pdf"></span></a>
                                  </div>
                                  <div v-else-if="newRegistro.path != ''">
                                   <img :src="'/' + newRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
@@ -279,7 +279,7 @@
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h4><span class="fa fa-warning" style="color:#FBCA19;">&nbsp;&nbsp;</span>Alerta</h4>
+                    <h4><span class="fas fa-warning" style="color:#FBCA19;">&nbsp;&nbsp;</span>Alerta</h4>
                     </div>
                 <div class="modal-body">
                     <p style="text-align: center;">El registro ingresado existe.</p>

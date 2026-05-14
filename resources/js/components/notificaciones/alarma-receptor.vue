@@ -19,7 +19,7 @@
                 <div class="col-sm-2">
                      <p>&nbsp;</p>
                       <span>
-                          <button type="button" class="form-group" @click="addReceptor()"><span class="fa fa-plus-circle"></span></button>
+                          <button type="button" class="form-group" @click="addReceptor()"><span class="fas fa-plus-circle"></span></button>
                       </span>
                 </div>
 
@@ -44,7 +44,7 @@
                         <tbody>
                             <tr v-for="(receptor,k) in receptores" :key="k">
                                 <td  class="col-sm-12"> {{receptor.name}}</td>
-                                <td> <i class="fa fa-minus-circle" @click="removeReceptor(k)" ></i></td>
+                                <td> <i class="fas fa-circle-minus" @click="removeReceptor(k)" ></i></td>
                             </tr>
                         </tbody>
                     </table>

@@ -36,7 +36,7 @@
                         </li>                                            
                     </ul>
                     <a  @click="Buscar()">
-                        <button class="btn btn-enod btn-block"><span class="fa fa-search"></span>
+                        <button class="btn btn-enod btn-block"><span class="fas fa-search"></span>
                             Buscar
                         </button>
                     </a>
@@ -93,7 +93,7 @@
                                                     <td>{{ item.tipo_equipamiento_codigo }} </td>
                                                     <td>{{ item.name }}</td>
                                                     <td>{{ item.fecha_cad_formateada }}</td>
-                                                    <td align="center" width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
+                                                    <td align="center" width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="far fa-file-image"></span></a></td>
                                                 </tr>
                                             </tbody>
                                         </table>

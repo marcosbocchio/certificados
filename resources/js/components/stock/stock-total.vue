@@ -21,10 +21,9 @@
                 <div class="input-group" style="width: 17vw;">
                     <input type="text" v-model="searchTerm" class="form-control" @keyup.enter="applySearch"
                         placeholder="Buscar...">
-                    <span class="input-group-addon btn" @click="applySearch"
-                        style="background-color: rgb(255, 204, 0); cursor: pointer; border: none;">
-                        <i class="fa fa-search"></i>
-                    </span>
+                    <span class="input-group-btn"><button class="btn btn-enod" type="button" @click="applySearch"
+                        >
+                        <i class="fas fa-search"></i></button></span>
                 </div>
             </div>
         </div>
@@ -51,15 +50,15 @@
                                     <td>{{ producto.stock }}</td>
 
                                     <td width="10px">
-                                        <button @click="editProducto(producto)" class="btn btn-warning btn-sm"
+                                        <button @click="editProducto(producto)" class="btn btn-enod btn-sm"
                                             title="Editar" :disabled="!$can('S_stock_edita')">
-                                            <span class="fa fa-edit"></span>
+                                            <span class="fas fa-edit"></span>
                                         </button>
                                     </td>
                                     <td width="10px">
-                                        <button class="btn btn-warning btn-sm" title="Ver Detalles"
+                                        <button class="btn btn-enod btn-sm" title="Ver Detalles"
                                             @click.prevent="registroProducto(producto)">
-                                            <span class="fa fa-list"></span>
+                                            <span class="fas fa-list"></span>
                                         </button>
                                     </td>
                                 </tr>

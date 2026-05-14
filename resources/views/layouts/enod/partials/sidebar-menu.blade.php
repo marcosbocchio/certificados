@@ -392,8 +392,8 @@
 
         </li>
 
-        <li>
-            <a href="{{ route('ayuda-general') }}">
+        <li class="disabled" style="opacity:0.4;pointer-events:none;cursor:default;">
+            <a href="#">
               <i class="fas fa-circle-question"></i> <span>AYUDA GENERAL</span>
               <span class="pull-right-container">
                 <i class="fas fa-angle-left pull-right"></i>

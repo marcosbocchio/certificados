@@ -40,7 +40,7 @@
             <div class="bootstrap-timepicker">
               <div class="input-group">
                 <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
+                  <i class="fas fa-clock-o"></i>
                 </div>
                 <timeselector v-model="entrada_selected"></timeselector>
               </div>
@@ -53,7 +53,7 @@
             <div class="bootstrap-timepicker">
               <div class="input-group">
                 <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
+                  <i class="fas fa-clock-o"></i>
                 </div>
                 <timeselector v-model="salida_selected"></timeselector>
               </div>
@@ -75,7 +75,7 @@
         </div>
         <div class="col-md-3">
           <div style="display:flex;justify-content: flex-start;align-items: center;">
-            <button type="button" @click="agregarDetalle" style="margin-top:25px;"><span class="fa fa-plus-circle"></span></button>
+            <button type="button" @click="agregarDetalle" style="margin-top:25px;"><span class="fas fa-plus-circle"></span></button>
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@
               <td>{{ detalle.contratista ? detalle.contratista.nombre : '-' }}</td>
               <td>{{ detalle.parte ? detalle.parte : '-'}}</td>
               <td style="text-align: center;">
-                <i class="fa fa-minus-circle" @click="eliminarDetalle(index)"></i>
+                <i class="fas fa-circle-minus" @click="eliminarDetalle(index)"></i>
               </td>
             </tr>
           </tbody>

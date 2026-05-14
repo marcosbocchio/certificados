@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <span>
-                                <button type="button" @click="addSoldador(soldador.id)"><span class="fa fa-plus-circle"></span></button>
+                                <button type="button" @click="addSoldador(soldador.id)"><span class="fas fa-plus-circle"></span></button>
                             </span>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                 <h3 class="box-title">Soldadores Asignados Orden de Trabajo</h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                     </button>
                 </div>
                 </div>
@@ -63,7 +63,7 @@
                                 <tr v-for="(ot_soldador,k) in ot_soldadores" :key="k">
                                     <td> {{ot_soldador.codigo}}</td>
                                     <td> {{ot_soldador.nombre}}</td>
-                                    <td> <i class="fa fa-minus-circle" @click="removeSoldador(k)" ></i></td>
+                                    <td> <i class="fas fa-circle-minus" @click="removeSoldador(k)" ></i></td>
                                 </tr>
 
                             </tbody>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="form-group">
                             <span>
-                                <button type="button" @click="addUsuarioCliente(usuario_cliente.id)"><span class="fa fa-plus-circle"></span></button>
+                                <button type="button" @click="addUsuarioCliente(usuario_cliente.id)"><span class="fas fa-plus-circle"></span></button>
                             </span>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                 <h3 class="box-title">Usuarios del Cliente Asignados Orden de Trabajo</h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                     </button>
                 </div>
                 </div>
@@ -109,7 +109,7 @@
                                 <tr v-for="(ot_usuario_cliente,k) in ot_usuarios_cliente" :key="k">
                                     <td> {{ot_usuario_cliente.name}}</td>
                                     <td> {{ot_usuario_cliente.email}}</td>
-                                    <td> <i class="fa fa-minus-circle" @click="removeUsuarioCliente(k)" ></i></td>
+                                    <td> <i class="fas fa-circle-minus" @click="removeUsuarioCliente(k)" ></i></td>
                                 </tr>
 
                             </tbody>

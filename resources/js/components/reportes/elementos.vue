@@ -75,7 +75,7 @@
                    </ul>
 
                    <a  @click="Buscar()">
-                       <button class="btn btn-enod  btn-block" :disabled="!ot "><span class="fa fa-search"></span>
+                       <button class="btn btn-enod  btn-block" :disabled="!ot "><span class="fas fa-search"></span>
                            Buscar
                        </button>
                    </a>

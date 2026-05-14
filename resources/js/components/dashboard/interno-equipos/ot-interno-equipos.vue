@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <span>
-                                    <button type="button" @click="addEquipo(interno_equipo.id)"><span class="fa fa-plus-circle"></span></button>
+                                    <button type="button" @click="addEquipo(interno_equipo.id)"><span class="fas fa-plus-circle"></span></button>
                                 </span>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                     <h3 class="box-title">Equipos Asignados Orden de Trabajo</h3>
 
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                         </button>
                     </div>
                     </div>
@@ -77,7 +77,7 @@
                                             <td v-if="interno_equipo.interno_fuente"> {{interno_equipo.interno_fuente.nro_serie}} / {{interno_equipo.interno_fuente.fuente.codigo}}</td>
                                             <td v-else>&nbsp;</td>
                                         -->
-                                        <td> <i class="fa fa-minus-circle" @click="removeInternoEquipos(k)" ></i></td>
+                                        <td> <i class="fas fa-circle-minus" @click="removeInternoEquipos(k)" ></i></td>
                                     </tr>
 
                                 </tbody>
@@ -101,7 +101,7 @@
                 <h3 class="box-title">Documentaciones del equipo</h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                     </button>
                 </div>
                 </div>
@@ -119,7 +119,7 @@
                                 <tr v-for="(item,k) in TablaInternoEquipoDoc" :key="k">
                                     <td> {{item.titulo}}</td>
                                     <td> {{item.descripcion}}</td>
-                                    <td width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
+                                    <td width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="far fa-file-image"></span></a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -138,7 +138,7 @@
                 <h3 class="box-title">Documentaciones de la fuente</h3>
 
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fas fa-minus"></i>
                     </button>
                 </div>
                 </div>
@@ -160,7 +160,7 @@
                                     <td> {{item.codigo}} </td>
                                     <td> {{item.titulo}} </td>
                                     <td> {{item.descripcion}}  </td>
-                                    <td width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
+                                    <td width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="far fa-file-image"></span></a></td>
                                 </tr>
                             </tbody>
                         </table>

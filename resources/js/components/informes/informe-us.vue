@@ -37,7 +37,7 @@
                                         && (tipo_tgs == 'Horizontal' || tipo_tgs == 'Vertical' || tipo_tgs == 'Linea')
                                         && material !== ''
                                         && planta !== ''" :disabled="!componente">
-                                        <i class="fa fa-list"></i>
+                                        <i class="fas fa-list"></i>
                                     </button>
                                 </label>
                                 <input type="text" v-model="componente" class="form-control" id="componente"
@@ -283,7 +283,7 @@
                         <div class="col-md-1">
                             <span>
                                 <button type="button" @click="addModelo()"><span
-                                        class="fa fa-plus-circle"></span></button>
+                                        class="fas fa-plus-circle"></span></button>
                             </span>
                         </div>
 
@@ -326,7 +326,7 @@
                                 <h3 class="box-title">CALIBRACIONES</h3>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
+                                            class="fas fa-minus"></i>
                                     </button>
                                 </div>
                             </div>
@@ -480,7 +480,7 @@
                             <div class="col-md-1">
                                 <span>
                                     <button type="button" @click="addCalibraciones"><span
-                                            class="fa fa-plus-circle"></span></button>
+                                            class="fas fa-plus-circle"></span></button>
                                 </span>
                             </div>
                             <div class="form-group">
@@ -548,7 +548,7 @@
                             <h3 class="box-title">IMAGENES CALIBRACIONES</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
+                                        class="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
@@ -724,7 +724,7 @@
                             <div class="col-md-1">
                                 <span>
                                     <button type="button" @click="addTabla_us_pa()"><span
-                                            class="fa fa-plus-circle"></span></button>
+                                            class="fas fa-plus-circle"></span></button>
                                 </span>
                             </div>
 
@@ -786,12 +786,12 @@
                                                                 item.path2 ||
                                                                 item.path3 ||
                                                                 item.path4)
-                                                        }" class="fa fa-file-archive-o"
+                                                        }" class="fas fa-file-archive-o"
                                                             @click="OpenReferencias_us_pa($event, k, 'Informe US', item)"></span>
                                                     </td>
 
 
-                                                    <td><span class="fa fa-minus-circle"
+                                                    <td><span class="fas fa-circle-minus"
                                                             @click="removeTabla_us_pa(k)"></span></td>
 
                                                 </tr>
@@ -921,10 +921,10 @@
 
                                                 <td>
                                                     <button type="button" @click="triggerFileUpload(k)">
-                                                        <i class="fa fa-file-excel-o"></i>
+                                                        <i class="far fa-file-excel"></i>
                                                     </button>
                                                 </td>
-                                                <td><span class="fa fa-minus-circle" @click="removeTabla_me(k)"></span>
+                                                <td><span class="fas fa-circle-minus" @click="removeTabla_me(k)"></span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -936,7 +936,7 @@
                                     <div class="form-group">
                                         <span>
                                             <button type="button" @click="addTabla_me()"><span
-                                                    class="fa fa-plus-circle"></span></button>
+                                                    class="fas fa-plus-circle"></span></button>
                                         </span>
                                     </div>
                                 </div>
@@ -944,7 +944,7 @@
                                     <div class="form-group">
                                         <span>
                                             <button type="button" @click="createExel()" style="margin:20px"><span
-                                                    class="fa fa-file-excel-o"></span></button>
+                                                    class="far fa-file-excel"></span></button>
                                         </span>
                                     </div>
                                 </div>
@@ -1042,7 +1042,7 @@
                             <h3 class="box-title">IMAGENES INDICACIONES</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                        class="fa fa-minus"></i>
+                                        class="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
@@ -1092,7 +1092,7 @@
                             <h3 class="box-title">INSPECCIÓN VISUAL</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                    <i class="fa fa-minus"></i>
+                                    <i class="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>

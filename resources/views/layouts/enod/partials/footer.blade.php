@@ -10,9 +10,6 @@
             <img class="pull-left img-responsive" src="{{asset('img/logos-soft-ram.png')}}" width="400px" alt="...">
           </div>
         </div>
-        <div class="col-lg-12 text-center">
-            <strong>Copyright &copy; 2024 <a href="http://www.enodndt.com.ar/" target="_blank">Enod</a>.</strong> Todos los derechos reservados.
-        </div>
     </div>
     <!-- Default to the left -->
 </footer>
