@@ -77,7 +77,7 @@ text-decoration: underline;
 
 .habilitadoArn {
 
-color: rgb(255, 204, 0);
+color: #4F8CFF;
 }
 
 .deshabilitadoArn {

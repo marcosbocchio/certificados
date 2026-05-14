@@ -39,20 +39,20 @@
 
 table .header-detalle tr th {
 
-    border-top: 1.5px solid rgb(255,204, 0);
+    border-top: 1.5px solid #4F8CFF;
     text-align: left;
 }
 
 
 .borderFilabottom {
 
-    border-bottom: 1.5px solid rgb(255,204, 0);
+    border-bottom: 1.5px solid #4F8CFF;
 
 }
 
 .borderFilatop {
 
-    border-top: 1.5px solid rgb(255,204, 0);
+    border-top: 1.5px solid #4F8CFF;
 
 }
 
