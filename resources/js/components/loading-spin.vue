@@ -1,6 +1,6 @@
 <template>
     <div class="loading-container">
-      <i class="fa fas fa-radiation-alt fa-spin" style="color:#F9CA33"></i>
+      <i class="fas fa-spinner fa-spin" style="color:#4F8CFF"></i>
     </div>
   </template>
   
@@ -15,7 +15,7 @@
   }
   .loading-container i {
   font-size: 5vh; /* Ajusta el tamaño a lo que requieras */
-  color: #F9CA33;
+  color: #4F8CFF;
 }
   </style>
   

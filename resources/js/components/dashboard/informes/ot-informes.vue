@@ -8,7 +8,7 @@
               :class_color_titulo = "'color_3'"
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantInformes"
-              :src_icono ="'/img/tablero/icono-enod-informes.svg'"
+              :icono="'fas fa-chart-pie'"
               :class_color_cuadro = "'bg-custom-6'"
               :class_color_cuadro_largo = "'bg-custom-8'"
               :habilitado_sn =" $can('T_informes_acceder') ?  true : false"

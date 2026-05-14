@@ -2,10 +2,10 @@
     <div>
         <div class="small-box zoom" :class="[class_color_cuadro ,{flash : tablero_sn},{small_box_opacity : !habilitado_sn}, {pointer : (tablero_sn && habilitado_sn)},{not_allowed : !habilitado_sn}  ] ">
           <div v-if="loading_sn" class="cuadro-loading-badge">
-            <i class="fa fas fa-radiation-alt fa-spin"></i>
+            <i class="fas fa-spinner fa-spin"></i>
           </div>
           <div class="inner">
-            <div v-if="icono" class="card-icon-badge">
+            <div v-if="icono" class="card-icon-bg">
               <i :class="icono"></i>
             </div>
             <div class="card-nums">
@@ -108,38 +108,33 @@ export default {
 
 .small-box {
   position: relative;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.22), 0 1px 4px rgba(0,0,0,0.12);
   overflow: hidden;
 }
 
 .small-box .inner {
+  position: relative;
   padding: 18px 16px 10px;
-  min-height: 80px;
+  min-height: 85px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  overflow: hidden;
 }
 
-.card-icon-badge {
-  width: 58px;
-  height: 58px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  flex-shrink: 0;
+.card-icon-bg {
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-58%);
+  font-size: 88px;
+  line-height: 1;
+  opacity: 0.22;
+  pointer-events: none;
+  user-select: none;
+  color: #ffffff;
 }
-
-.bg-custom-1 .card-icon-badge { background: #D0E8FF; color: #2E80E0; }
-.bg-custom-2 .card-icon-badge { background: #C8EFD9; color: #2E9A61; }
-.bg-custom-3 .card-icon-badge { background: #DDD8FF; color: #6C56E5; }
-.bg-custom-4 .card-icon-badge { background: #C8EEF6; color: #239AB5; }
-.bg-custom-5 .card-icon-badge { background: #FFE8C4; color: #D4892A; }
-.bg-custom-6 .card-icon-badge { background: #FFD9E6; color: #C9527A; }
-.bg-custom-7 .card-icon-badge { background: #D0E8FF; color: #2E80E0; }
-.bg-custom-8 .card-icon-badge { background: #DDD8FF; color: #6C56E5; }
 
 .card-nums {
   display: flex;
@@ -148,34 +143,34 @@ export default {
 }
 
 .num-primary {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 700;
-  color: #2D3748;
+  color: #ffffff;
   line-height: 1.1;
 }
 
 .num-secondary {
   font-size: 18px;
   font-weight: 600;
-  color: #7A8594;
+  color: rgba(255,255,255,0.65);
   line-height: 1.2;
 }
 
 .card-footer-enod {
-  background-color: rgba(0,0,0,0.04);
-  border-top: 1px solid rgba(0,0,0,0.07);
+  background-color: rgba(0,0,0,0.20);
+  border-top: 1px solid rgba(255,255,255,0.08);
   padding: 7px 12px;
   font-size: 10px;
   font-weight: 700;
   font-family: 'Montserrat', sans-serif;
-  color: #7A8594;
+  color: rgba(255,255,255,0.70);
   text-align: center;
   letter-spacing: 0.6px;
   text-transform: uppercase;
 }
 
 .footer-sep {
-  color: #b0b8c6;
+  color: rgba(255,255,255,0.35);
   font-weight: 400;
 }
 

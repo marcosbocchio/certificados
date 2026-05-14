@@ -8,7 +8,7 @@
               :class_color_titulo = "'color_3'"
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="ot_interno_equipos.length"
-              :src_icono ="'/img/tablero/icono-enod-equipos.svg'"
+              :icono="'fas fa-cogs'"
               :class_color_cuadro = "'bg-custom-2'"
               :class_color_cuadro_largo = "'bg-custom-5'"
               :habilitado_sn ="true"

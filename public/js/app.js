@@ -64205,7 +64205,7 @@ var render = function render() {
       class_color_titulo: "color_2",
       class_color_sub_titulo: "color_1",
       cantidad_1: _vm.CantCertificados,
-      src_icono: "/img/tablero/icono-enod-certificados.svg",
+      icono: "fas fa-certificate",
       class_color_cuadro: "bg-custom-8",
       class_color_cuadro_largo: "bg-custom-2",
       habilitado_sn: _vm.$can("T_certif_acceder") ? true : false,
@@ -64460,11 +64460,11 @@ var render = function render() {
   }, [_vm.loading_sn ? _c("div", {
     staticClass: "cuadro-loading-badge"
   }, [_c("i", {
-    staticClass: "fa fas fa-radiation-alt fa-spin"
+    staticClass: "fas fa-spinner fa-spin"
   })]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "inner"
   }, [_vm.icono ? _c("div", {
-    staticClass: "card-icon-badge"
+    staticClass: "card-icon-bg"
   }, [_c("i", {
     "class": _vm.icono
   })]) : _vm._e(), _vm._v(" "), _c("div", {
@@ -64564,7 +64564,7 @@ var render = function render() {
   return _c("div", [_c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-md-10 col-md-offset-1"
+    staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "col-lg-3 col-xs-6"
   }, [_c("a", {
@@ -65038,7 +65038,7 @@ var render = function render() {
       class_color_sub_titulo: "color_3",
       cantidad_1: _vm.ot_vehiculos.length,
       cantidad_2: _vm.ot_documentaciones.length,
-      src_icono: "/img/tablero/icono-enod-vehiculos-doc.svg",
+      icono: "fas fa-truck",
       class_color_cuadro: "bg-custom-4",
       class_color_cuadro_largo: "bg-custom-2",
       habilitado_sn: _vm.$can("T_doc_acceder") ? true : false,
@@ -66350,7 +66350,7 @@ var render = function render() {
       class_color_titulo: "color_3",
       class_color_sub_titulo: "color_2",
       cantidad_1: _vm.CantInformes,
-      src_icono: "/img/tablero/icono-enod-informes.svg",
+      icono: "fas fa-chart-pie",
       class_color_cuadro: "bg-custom-6",
       class_color_cuadro_largo: "bg-custom-8",
       habilitado_sn: _vm.$can("T_informes_acceder") ? true : false,
@@ -66950,7 +66950,7 @@ var render = function render() {
       class_color_titulo: "color_3",
       class_color_sub_titulo: "color_2",
       cantidad_1: _vm.ot_interno_equipos.length,
-      src_icono: "/img/tablero/icono-enod-equipos.svg",
+      icono: "fas fa-cogs",
       class_color_cuadro: "bg-custom-2",
       class_color_cuadro_largo: "bg-custom-5",
       habilitado_sn: true
@@ -67254,7 +67254,7 @@ var render = function render() {
       class_color_titulo: "color_3",
       class_color_sub_titulo: "color_2",
       cantidad_1: _vm.users_ot_operarios.length,
-      src_icono: "/img/tablero/icono-enod-operador.svg",
+      icono: "fas fa-hard-hat",
       class_color_cuadro: "bg-custom-1",
       class_color_cuadro_largo: "bg-custom-8",
       habilitado_sn: true
@@ -67572,7 +67572,7 @@ var render = function render() {
       class_color_titulo: "color_3",
       class_color_sub_titulo: "color_2",
       cantidad_1: _vm.CantPartes,
-      src_icono: "/img/tablero/icono-enod-partes.svg",
+      icono: "fas fa-calendar-day",
       class_color_cuadro: "bg-custom-7",
       class_color_cuadro_largo: "bg-custom-5",
       habilitado_sn: _vm.$can("T_partes_acceder") ? true : false,
@@ -68662,7 +68662,7 @@ var render = function render() {
       class_color_sub_titulo: "color_3",
       cantidad_2: _vm.ot_soldadores.length,
       cantidad_1: _vm.ot_usuarios_cliente.length,
-      src_icono: "/img/tablero/icono-enod-soldadores.svg",
+      icono: "fas fa-stamp",
       class_color_cuadro: "bg-custom-1",
       class_color_cuadro_largo: "bg-custom-4",
       habilitado_sn: _vm.$can("T_remitos_acceder") ? true : false,
@@ -91299,9 +91299,9 @@ var staticRenderFns = [function () {
   return _c("div", {
     staticClass: "loading-container"
   }, [_c("i", {
-    staticClass: "fa fas fa-radiation-alt fa-spin",
+    staticClass: "fas fa-spinner fa-spin",
     staticStyle: {
-      color: "#F9CA33"
+      color: "#4F8CFF"
     }
   })]);
 }];
@@ -131559,7 +131559,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.small-box {\n  position: relative;\n  border-radius: 6px;\n  box-shadow: 0 1px 4px rgba(0,0,0,0.08);\n  overflow: hidden;\n}\n.small-box .inner {\n  padding: 18px 16px 10px;\n  min-height: 80px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.card-icon-badge {\n  width: 58px;\n  height: 58px;\n  border-radius: 14px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 26px;\n  flex-shrink: 0;\n}\n.bg-custom-1 .card-icon-badge { background: #D0E8FF; color: #2E80E0;\n}\n.bg-custom-2 .card-icon-badge { background: #C8EFD9; color: #2E9A61;\n}\n.bg-custom-3 .card-icon-badge { background: #DDD8FF; color: #6C56E5;\n}\n.bg-custom-4 .card-icon-badge { background: #C8EEF6; color: #239AB5;\n}\n.bg-custom-5 .card-icon-badge { background: #FFE8C4; color: #D4892A;\n}\n.bg-custom-6 .card-icon-badge { background: #FFD9E6; color: #C9527A;\n}\n.bg-custom-7 .card-icon-badge { background: #D0E8FF; color: #2E80E0;\n}\n.bg-custom-8 .card-icon-badge { background: #DDD8FF; color: #6C56E5;\n}\n.card-nums {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n.num-primary {\n  font-size: 30px;\n  font-weight: 700;\n  color: #2D3748;\n  line-height: 1.1;\n}\n.num-secondary {\n  font-size: 18px;\n  font-weight: 600;\n  color: #7A8594;\n  line-height: 1.2;\n}\n.card-footer-enod {\n  background-color: rgba(0,0,0,0.04);\n  border-top: 1px solid rgba(0,0,0,0.07);\n  padding: 7px 12px;\n  font-size: 10px;\n  font-weight: 700;\n  font-family: 'Montserrat', sans-serif;\n  color: #7A8594;\n  text-align: center;\n  letter-spacing: 0.6px;\n  text-transform: uppercase;\n}\n.footer-sep {\n  color: #b0b8c6;\n  font-weight: 400;\n}\n.cuadro-loading-badge {\n  position: absolute;\n  top: 8px;\n  left: 8px;\n  width: 22px;\n  height: 22px;\n  border-radius: 50%;\n  background: rgba(255,255,255,0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 2;\n  pointer-events: none;\n}\n.cuadro-loading-badge i {\n  font-size: 12px;\n  color: #4F8CFF;\n}\n.zoom:hover {\n  transform: scale(1.03);\n  transition: 0.2s;\n}\n.flash:hover {\n  opacity: 1;\n  animation: flash 1.5s;\n}\n@keyframes flash {\n0% { opacity: .4;\n}\n100% { opacity: 1;\n}\n}\n.small_box_opacity { opacity: 0.5;\n}\n\n", ""]);
+exports.push([module.i, "\n.small-box {\n  position: relative;\n  border-radius: 8px;\n  box-shadow: 0 4px 16px rgba(0,0,0,0.22), 0 1px 4px rgba(0,0,0,0.12);\n  overflow: hidden;\n}\n.small-box .inner {\n  position: relative;\n  padding: 18px 16px 10px;\n  min-height: 85px;\n  display: flex;\n  align-items: center;\n  justify-content: flex-end;\n  overflow: hidden;\n}\n.card-icon-bg {\n  position: absolute;\n  left: -8px;\n  top: 50%;\n  transform: translateY(-58%);\n  font-size: 88px;\n  line-height: 1;\n  opacity: 0.22;\n  pointer-events: none;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n  color: #ffffff;\n}\n.card-nums {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n.num-primary {\n  font-size: 32px;\n  font-weight: 700;\n  color: #ffffff;\n  line-height: 1.1;\n}\n.num-secondary {\n  font-size: 18px;\n  font-weight: 600;\n  color: rgba(255,255,255,0.65);\n  line-height: 1.2;\n}\n.card-footer-enod {\n  background-color: rgba(0,0,0,0.20);\n  border-top: 1px solid rgba(255,255,255,0.08);\n  padding: 7px 12px;\n  font-size: 10px;\n  font-weight: 700;\n  font-family: 'Montserrat', sans-serif;\n  color: rgba(255,255,255,0.70);\n  text-align: center;\n  letter-spacing: 0.6px;\n  text-transform: uppercase;\n}\n.footer-sep {\n  color: rgba(255,255,255,0.35);\n  font-weight: 400;\n}\n.cuadro-loading-badge {\n  position: absolute;\n  top: 8px;\n  left: 8px;\n  width: 22px;\n  height: 22px;\n  border-radius: 50%;\n  background: rgba(255,255,255,0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 2;\n  pointer-events: none;\n}\n.cuadro-loading-badge i {\n  font-size: 12px;\n  color: #4F8CFF;\n}\n.zoom:hover {\n  transform: scale(1.03);\n  transition: 0.2s;\n}\n.flash:hover {\n  opacity: 1;\n  animation: flash 1.5s;\n}\n@keyframes flash {\n0% { opacity: .4;\n}\n100% { opacity: 1;\n}\n}\n.small_box_opacity { opacity: 0.5;\n}\n\n", ""]);
 
 // exports
 
@@ -132148,7 +132148,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.loading-container[data-v-fe350704] {\n    display: flex;\n    align-items: flex-start; /* Alinea verticalmente al inicio */\n    justify-content: center; /* Centra horizontalmente (opcional) */\n    margin-top: 12vh;\n    width: 100%;\n    height: 100%; /* Asegúrate de que el contenedor ocupe el espacio deseado */\n}\n.loading-container i[data-v-fe350704] {\n  font-size: 5vh; /* Ajusta el tamaño a lo que requieras */\n  color: #F9CA33;\n}\n  ", ""]);
+exports.push([module.i, "\n.loading-container[data-v-fe350704] {\n    display: flex;\n    align-items: flex-start; /* Alinea verticalmente al inicio */\n    justify-content: center; /* Centra horizontalmente (opcional) */\n    margin-top: 12vh;\n    width: 100%;\n    height: 100%; /* Asegúrate de que el contenedor ocupe el espacio deseado */\n}\n.loading-container i[data-v-fe350704] {\n  font-size: 5vh; /* Ajusta el tamaño a lo que requieras */\n  color: #4F8CFF;\n}\n  ", ""]);
 
 // exports
 
