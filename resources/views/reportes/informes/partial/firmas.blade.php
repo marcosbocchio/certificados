@@ -1,19 +1,20 @@
-<table width="100%">
+<table width="100%" style="border-collapse:collapse;margin-top:8px;">
     <tbody>
         <tr>
-            <td style="font-size: 13px;" colspan="1"  rowspan="2"><b>Firmas </b></td>
-            <td style="font-size: 13px;text-align: center;height: 85px;" colspan="2" width="33.33%">
+            <td style="font-size:10px;font-weight:bold;color:#1C2340;width:55px;vertical-align:top;padding-top:4px;">Firmas</td>
+            <td style="width:33%;text-align:center;height:80px;">
                 @if($firma)
-                    <img src="{{ public_path($firma) }}" alt="" style="width: 175px;height: 85px;">
+                    <img src="{{ public_path($firma) }}" alt="" style="width:175px;height:80px;">
                 @endif
             </td>
-            <td style="font-size: 13px;" colspan="2"  width="33.33%">&nbsp;</td>
-            <td style="font-size: 13px;" colspan="2" width="33.33%">&nbsp;</td>
+            <td style="width:33%;text-align:center;">&nbsp;</td>
+            <td style="width:33%;text-align:center;">&nbsp;</td>
         </tr>
         <tr>
-            <td style="font-size: 14px; text-align: center;" colspan="2"><em>Evaluador </em></td>
-            <td style="font-size: 14px; text-align: center;" colspan="2"><em>Cliente </em></td>
-            <td style="font-size: 14px; text-align: center;" colspan="2"><em>Comitente </em></td>
+            <td></td>
+            <td style="font-size:11px;font-style:italic;text-align:center;color:#64748B;border-top:1px solid #CBD5E1;padding-top:3px;">Evaluador</td>
+            <td style="font-size:11px;font-style:italic;text-align:center;color:#64748B;border-top:1px solid #CBD5E1;padding-top:3px;">Cliente</td>
+            <td style="font-size:11px;font-style:italic;text-align:center;color:#64748B;border-top:1px solid #CBD5E1;padding-top:3px;">Comitente</td>
         </tr>
     </tbody>
 </table>

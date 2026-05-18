@@ -1,79 +1,172 @@
+/* ============================================================
+   PDF REPORT STYLES — ENOD
+   Palette: #4F8CFF primary · #1C2340 dark · #64748B muted
+            #F0F5FF light-bg · #CBD5E1 border · #EBF2FF thead
+   ============================================================ */
+
+/* ── Base ── */
+body {
+    font-family: DejaVu Sans, sans-serif;
+    font-size: 12px;
+    color: #1C2340;
+    line-height: 1.45;
+}
+
+/* ── Borders ── */
 .bordered {
-    border-color: #000000;
-    border-style: solid;
-    border-width: 2px;
+    border: 1.5px solid #4F8CFF;
     border-collapse: collapse;
 }
 .bordered-td {
-    border-color: #000000;
-    border-style: solid;
-    border-width: 1px;
+    border: 1px solid #CBD5E1;
     border-collapse: collapse;
 }
-.titulosHead {
-
-    font-size: 13px;
-    font-weight: bold;
+.bordered-td thead tr th {
+    background-color: #EBF2FF;
+    border: 1px solid #CBD5E1;
+    font-size: 11px;
+    padding: 3px 5px;
+    color: #1C2340;
+    text-align: center;
+}
+.bordered-td tbody tr td {
+    padding: 2px 5px;
 }
 
-.header-detalle-principal
-{
+/* ── Typography ── */
+.titulosHead {
+    font-size: 10px;
+    font-weight: bold;
+    color: #4F8CFF;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.datosHead {
+    font-style: italic;
+    color: #1C2340;
+}
+
+/* ── Header layout helpers ── */
+.header-detalle-principal {
     width: 100%;
     border-collapse: collapse;
 }
 
-.header-detalle
- {
+.header-detalle {
     border-collapse: collapse;
+    width: 100%;
 }
 
-.header-detalle tbody tr:nth-of-type(4n+1 ) {
-    background-color: rgb(217, 217, 217);
+/* Alternating rows — soft blue tint */
+.header-detalle tbody tr:nth-of-type(4n+1),
+.header-detalle tbody tr:nth-of-type(4n+2) {
+    background-color: #F0F5FF;
 }
 
-.header-detalle tbody tr:nth-of-type(4n+2 ) {
-    background-color: rgb(217, 217, 217);
-
-}
-
-
+/* Table header cells */
 table .header-detalle tr th {
-
-    border-top: 1.5px solid #4F8CFF;
+    border-top: 2px solid #4F8CFF;
+    background-color: #EBF2FF;
+    color: #1C2340;
+    font-size: 11px;
+    padding: 3px 5px;
     text-align: left;
 }
 
+table .header-detalle tr td {
+    padding: 3px 5px;
+    font-size: 11px;
+}
 
+/* ── Separator utilities ── */
 .borderFilabottom {
-
-    border-bottom: 1.5px solid #4F8CFF;
-
+    border-bottom: 2px solid #4F8CFF;
 }
-
 .borderFilatop {
-
-    border-top: 1.5px solid #4F8CFF;
-
+    border-top: 2px solid #4F8CFF;
 }
-
 .noBorder {
     border: none !important;
     border-style: none !important;
 }
 
-
-.datosHead, .header-detalle tbody tr td {
-
-    font-style: italic;
-}
-
+/* ── Special chars ── */
 .EspecialCaracter {
     font-family: DejaVu Sans;
 }
 
+/* ── Page break ── */
 .page-break {
     page-break-after: always;
 }
 
+/* ── PDF Header cells ── */
+.pdf-logo-cell {
+    background-color: #F0F5FF;
+    border-right: 2px solid #4F8CFF;
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px 6px;
+}
+.pdf-title-cell {
+    text-align: center;
+    vertical-align: middle;
+    padding: 6px 16px;
+}
+.pdf-meta-cell {
+    vertical-align: top;
+    padding: 8px 0 8px 10px;
+    border-left: 1px solid #CBD5E1;
+}
+.pdf-meta-label {
+    font-size: 9px;
+    font-weight: bold;
+    color: #4F8CFF;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.pdf-meta-value {
+    font-size: 12px;
+    color: #1C2340;
+    margin-bottom: 5px;
+}
 
+/* ── Project row labels ── */
+.pdf-project-label {
+    font-size: 9px;
+    font-weight: bold;
+    color: #4F8CFF;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.pdf-project-value {
+    font-size: 12px;
+    font-style: italic;
+    color: #1C2340;
+}
 
+/* ── Signature cells ── */
+.pdf-firma-role {
+    font-size: 11px;
+    font-style: italic;
+    text-align: center;
+    color: #64748B;
+    border-top: 1px solid #CBD5E1;
+    padding-top: 3px;
+}
+
+/* ── Observations ── */
+.pdf-obs-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #1C2340;
+    padding-bottom: 2px;
+}
+.pdf-obs-box {
+    border: 1px solid #CBD5E1;
+    background-color: #FAFBFF;
+    padding: 4px 6px;
+    font-size: 12px;
+    min-height: 44px;
+}

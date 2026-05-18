@@ -1,2 +1,1 @@
-<div style="height: 1.3px;background-color:rgb(137,131,99)" >
-</div>
+<div style="height:1px;background-color:#CBD5E1;margin:4px 0;"></div>

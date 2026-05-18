@@ -1,39 +1,23 @@
-<table style="text-align: center;" width="100%">
+<table width="100%" style="border-collapse:collapse;border-bottom:2px solid #4F8CFF;">
     <tbody>
         <tr>
-            <td>
-                <table width="100%">
-                    <tbody>
-                        <tr>
-                            <td rowspan="4" style="text-align: left;width: 200px;">
-                                <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-left: 25px;">
-                            </td>
-                            <td style="font-size: 19px; height: 30px;width: 360px; text-align: center;margin-left: 0px" rowspan="3"><b>{{ $titulo }}</b></td>
-                            <td style="font-size: 11px;width: 200px" ><b style="margin-left: 80px;">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            @if ($informe->km === -1)
-                            {
-                               <td style="font-size: 10px;" ><b style="margin-left: 80px;">INFORME N°: </b>PDJ-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro }}
-                               </td>
-
-                            }
-                            @else{
-                                <td style="font-size: 10px;" ><b style="margin-left: 80px;">INFORME N°: </b>{{$informe->km}}-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro }}
-                                </td>
-                               }
-                            @endif
-
-                        </tr>
-                        <tr>
-                            <td style="font-size: 11px;"><b style="margin-left: 80px;">FECHA: </b>{{ $fecha }}</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 11px;">&nbsp;</td>
-                            <td style="font-size: 11px;">&nbsp;</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <td style="width:165px;text-align:center;vertical-align:middle;background-color:#F0F5FF;border-right:2px solid #4F8CFF;padding:8px 6px;">
+                <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height:70px;">
+            </td>
+            <td style="text-align:center;vertical-align:middle;padding:6px 18px;">
+                <div style="font-size:18px;font-weight:bold;color:#1C2340;letter-spacing:0.2px;">{{ $titulo }}</div>
+            </td>
+            <td style="width:210px;vertical-align:top;padding:8px 0 8px 12px;border-left:1px solid #CBD5E1;">
+                <div style="font-size:9px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;">Informe N°</div>
+                <div style="font-size:12px;color:#1C2340;margin-bottom:6px;">
+                    @if ($informe->km === -1)
+                        PDJ-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro }}
+                    @else
+                        {{$informe->km}}-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro }}
+                    @endif
+                </div>
+                <div style="font-size:9px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;">Fecha</div>
+                <div style="font-size:12px;color:#1C2340;">{{ $fecha }}</div>
             </td>
         </tr>
     </tbody>
