@@ -9,7 +9,7 @@
 
 <style>
 
-    @page { margin: 260px 40px 343px 40px !important;
+    @page { margin: 260px 40px 400px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -48,43 +48,43 @@ footer {
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>
                             <tr>
-                                <td style="font-size: 14px;"><strong>Diccionario</strong></td>
+                                <td colspan="6" style="font-size:10px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;padding-bottom:2px;">Diccionario</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 10px; " class="bordered-td"><b>F: </b>Fisura</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>FF: </b>Falta de fusion</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>FP: </b>Falta de Penetración</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>FPD: </b>FP por Desalineación</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>FFP: </b>FF por Pasadas</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>HL: </b>Desalineación</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>F: </b>Fisura</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>FF: </b>Falta de fusion</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>FP: </b>Falta de Penetración</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>FPD: </b>FP por Desalineación</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>FFP: </b>FF por Pasadas</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>HL: </b>Desalineación</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 10px; " class="bordered-td"><b>PE: </b>Penetración Excesiva</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>Q: </b>Quemaduras</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>CI: </b>Concavidad Interna</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>CE: </b>Concavidad Externa</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>SI: </b>Socavado Interior</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>SE: </b>Socavado Exterior</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>PE: </b>Penetración Excesiva</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>Q: </b>Quemaduras</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>CI: </b>Concavidad Interna</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>CE: </b>Concavidad Externa</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>SI: </b>Socavado Interior</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>SE: </b>Socavado Exterior</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 10px; " class="bordered-td"><b>ME: </b>Escoria Aislada</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>MEL: </b>Escoria Lineal</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>P: </b>Poros</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>NP: </b>Nido de Poros</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>PV: </b>Poro Vermicular</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>CH: </b>Cordón Hueco</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>ME: </b>Escoria Aislada</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>MEL: </b>Escoria Lineal</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>P: </b>Poros</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>NP: </b>Nido de Poros</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>PV: </b>Poro Vermicular</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>CH: </b>Cordón Hueco</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 10px; " class="bordered-td"><b>IT: </b>Inclusión de Tungteno</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>SA: </b>Salto de Arco</td>
-                                <td style="font-size: 10px; " colspan="2" class="bordered-td"><b>AD: </b>Acumulación de Discontinuidades</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>DP: </b>Defecto de Placa</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>RP: </b>Repetir Placa</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>IT: </b>Inclusión de Tungteno</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>SA: </b>Salto de Arco</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;" colspan="2"><b>AD: </b>Acumulación de Discontinuidades</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>DP: </b>Defecto de Placa</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;"><b>RP: </b>Repetir Placa</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 10px; " colspan="2" class="bordered-td"><b>MDC: </b>Material dentro del caño</td>
-                                <td style="font-size: 10px; " colspan="2" class="bordered-td"><b>AP: </b>Aprobado</td>
-                                <td style="font-size: 10px; " colspan="2" class="bordered-td"><b>RZ: </b>Rechazado</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;" colspan="2"><b>MDC: </b>Material dentro del caño</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;" colspan="2"><b>AP: </b>Aprobado</td>
+                                <td style="font-size:9px;border:1px solid #CBD5E1;padding:1px 4px;" colspan="2"><b>RZ: </b>Rechazado</td>
                             </tr>
                         </tbody>
                     </table>
