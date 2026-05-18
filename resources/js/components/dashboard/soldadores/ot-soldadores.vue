@@ -10,8 +10,9 @@
               :cantidad_2 ="ot_soldadores.length"
               :cantidad_1 ="ot_usuarios_cliente.length"
               :icono="'fas fa-stamp'"
+              :src_icono ="'/img/tablero/icono-enod-soldadores.svg'"
               :class_color_cuadro = "'bg-custom-1'"
-              :class_color_cuadro_largo = "'bg-custom-4'"
+              :class_color_cuadro_largo = "'bg-custom-5'"
               :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"
               :class_footer_img ="'footer-doc-remitos'"
           >

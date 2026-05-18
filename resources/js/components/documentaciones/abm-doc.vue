@@ -10,7 +10,7 @@
                     :cantidad_1 ="CantProcedimientos"
                     :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
                     :class_color_cuadro = "'bg-custom-3'"
-                    :class_color_cuadro_largo = "'bg-custom-2'"
+                    :class_color_cuadro_largo = "'bg-custom-3'"
                     :habilitado_sn =" $can('T_proc_acceder') ?  true : false"
                     :class_footer_img ="'footer-proc-cert'"
                 >
@@ -28,7 +28,7 @@
                     :cantidad_1 ="CantDocumentacionesTotal"
                     :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
                     :class_color_cuadro = "'bg-custom-4'"
-                    :class_color_cuadro_largo = "'bg-custom-2'"
+                    :class_color_cuadro_largo = "'bg-custom-4'"
                     :habilitado_sn ="true"
                 >
                 </cuadro-largo-enod>

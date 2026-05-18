@@ -172,14 +172,14 @@ table .selected{
   border-radius: 4px;
 }
 
-.bg-custom-1 { background: linear-gradient(135deg, #1a3a5c 0%, #1e4d7b 100%); border-top: 3px solid #5DA9FF !important; }
-.bg-custom-2 { background: linear-gradient(135deg, #1a3d2e 0%, #1e5238 100%); border-top: 3px solid #73C69D !important; }
-.bg-custom-3 { background: linear-gradient(135deg, #2a1f5c 0%, #362873 100%); border-top: 3px solid #9B8AFB !important; }
-.bg-custom-4 { background: linear-gradient(135deg, #0f3d4d 0%, #145266 100%); border-top: 3px solid #67C7D9 !important; }
-.bg-custom-5 { background: linear-gradient(135deg, #4d3210 0%, #664319 100%); border-top: 3px solid #F2B35E !important; }
-.bg-custom-6 { background: linear-gradient(135deg, #4d1a2e 0%, #66223d 100%); border-top: 3px solid #E79AB0 !important; }
-.bg-custom-7 { background: linear-gradient(135deg, #1a3a5c 0%, #1e4d7b 100%); border-top: 3px solid #5DA9FF !important; }
-.bg-custom-8 { background: linear-gradient(135deg, #2a1f5c 0%, #362873 100%); border-top: 3px solid #9B8AFB !important; }
+.bg-custom-1 { background: linear-gradient(140deg, #1e4d8a 0%, #2a6dd9 100%); border-top: 3px solid #5DA9FF !important; }
+.bg-custom-2 { background: linear-gradient(140deg, #1a5c38 0%, #248a52 100%); border-top: 3px solid #73C69D !important; }
+.bg-custom-3 { background: linear-gradient(140deg, #312070 0%, #4e36b0 100%); border-top: 3px solid #9B8AFB !important; }
+.bg-custom-4 { background: linear-gradient(140deg, #0e4d63 0%, #1580a0 100%); border-top: 3px solid #67C7D9 !important; }
+.bg-custom-5 { background: linear-gradient(140deg, #6b3d0e 0%, #9e5c18 100%); border-top: 3px solid #F2B35E !important; }
+.bg-custom-6 { background: linear-gradient(140deg, #6b1535 0%, #a01f50 100%); border-top: 3px solid #E79AB0 !important; }
+.bg-custom-7 { background: linear-gradient(140deg, #1e4d8a 0%, #2a6dd9 100%); border-top: 3px solid #5DA9FF !important; }
+.bg-custom-8 { background: linear-gradient(140deg, #312070 0%, #4e36b0 100%); border-top: 3px solid #9B8AFB !important; }
 
 /* ── Search bar two-tone ── */
 .search-enod {

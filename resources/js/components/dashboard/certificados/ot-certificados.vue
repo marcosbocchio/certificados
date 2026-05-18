@@ -9,8 +9,9 @@
               :class_color_sub_titulo = "'color_1'"
               :cantidad_1 ="CantCertificados"
               :icono="'fas fa-certificate'"
+              :src_icono ="'/img/tablero/icono-enod-certificados.svg'"
               :class_color_cuadro = "'bg-custom-8'"
-              :class_color_cuadro_largo = "'bg-custom-2'"
+              :class_color_cuadro_largo = "'bg-custom-8'"
               :habilitado_sn =" $can('T_certif_acceder') ?  true : false"
               :class_footer_img ="'footer-proc-cert'"
           >

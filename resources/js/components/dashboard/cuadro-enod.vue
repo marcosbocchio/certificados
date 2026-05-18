@@ -5,7 +5,10 @@
             <i class="fas fa-spinner fa-spin"></i>
           </div>
           <div class="inner">
-            <div v-if="icono" class="card-icon-bg">
+            <div v-if="src_icono" class="card-icon-bg card-icon-bg--svg">
+              <img :src="src_icono.replace('/img/tablero/', '/img/tablero/white/')" alt="">
+            </div>
+            <div v-else-if="icono" class="card-icon-bg">
               <i :class="icono"></i>
             </div>
             <div class="card-nums">
@@ -130,10 +133,22 @@ export default {
   transform: translateY(-58%);
   font-size: 88px;
   line-height: 1;
-  opacity: 0.22;
+  opacity: 0.28;
   pointer-events: none;
   user-select: none;
   color: #ffffff;
+}
+
+.card-icon-bg--svg {
+  font-size: unset;
+  width: 95px;
+  height: 95px;
+}
+
+.card-icon-bg--svg img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .card-nums {

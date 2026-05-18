@@ -9,8 +9,9 @@
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="users_ot_operarios.length"
               :icono="'fas fa-hard-hat'"
+              :src_icono ="'/img/tablero/icono-enod-operador.svg'"
               :class_color_cuadro = "'bg-custom-1'"
-              :class_color_cuadro_largo = "'bg-custom-8'"
+              :class_color_cuadro_largo = "'bg-custom-1'"
               :habilitado_sn ="true"
           >
           </cuadro-largo-enod>

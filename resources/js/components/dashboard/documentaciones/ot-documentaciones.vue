@@ -11,8 +11,9 @@
               :cantidad_1 ="ot_vehiculos.length"
               :cantidad_2 ="ot_documentaciones.length"
               :icono="'fas fa-truck'"
+              :src_icono ="'/img/tablero/icono-enod-vehiculos-doc.svg'"
               :class_color_cuadro = "'bg-custom-4'"
-              :class_color_cuadro_largo = "'bg-custom-2'"
+              :class_color_cuadro_largo = "'bg-custom-4'"
               :habilitado_sn =" $can('T_doc_acceder') ?  true : false"
               :class_footer_img ="'footer-doc-remitos'"
               :invertir_cantidad_sn ="true"  >

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Gauge outer ring -->
+  <circle cx="50" cy="46" r="32" fill="none" stroke="#fff" stroke-width="5"/>
+  <!-- Scale ticks -->
+  <line x1="50" y1="16" x2="50" y2="23" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <line x1="78" y1="46" x2="71" y2="46" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <line x1="22" y1="46" x2="29" y2="46" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <line x1="72.3" y1="23.7" x2="67.4" y2="28.6" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <line x1="27.7" y1="23.7" x2="32.6" y2="28.6" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <!-- Needle -->
+  <line x1="50" y1="46" x2="68" y2="28" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- Center hub -->
+  <circle cx="50" cy="46" r="4.5" fill="#fff"/>
+  <!-- Mount housing -->
+  <rect x="38" y="78" width="24" height="8" rx="3" fill="none" stroke="#fff" stroke-width="4"/>
+</svg>

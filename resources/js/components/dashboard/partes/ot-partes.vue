@@ -8,8 +8,9 @@
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantPartes"
               :icono="'fas fa-calendar-day'"
+              :src_icono ="'/img/tablero/icono-enod-partes.svg'"
               :class_color_cuadro = "'bg-custom-7'"
-              :class_color_cuadro_largo = "'bg-custom-5'"
+              :class_color_cuadro_largo = "'bg-custom-7'"
               :habilitado_sn =" $can('T_partes_acceder') ?  true : false"
               :class_footer_img ="'footer-equipos-partes'"
           >
