@@ -8,7 +8,7 @@
 
 <style>
     @page {
-        margin: 240px 40px 255px 40px !important;
+        margin: 240px 40px 280px 40px !important;
         padding: 0px 0px 0px 0px !important;
     }
 
@@ -39,7 +39,7 @@
 </header>
 <footer>
     @include('reportes.partial.linea-amarilla')
-    @include('reportes.informes.partial.rd-diccionario', ['dictionaryFontSize' => 11, 'showObservaciones' => true])
+    @include('reportes.informes.partial.rd-diccionario', ['dictionaryFontSize' => 9, 'showObservaciones' => true])
     @include('reportes.partial.linea-amarilla')
     @include('reportes.informes.partial.firmas')
 </footer>
@@ -102,17 +102,15 @@
     </table>
     @endforeach
 
-    <div style="page-break-inside: avoid;">
-        @include('reportes.informes.partial.modelos3d-landscope')
-    </div>
+    @include('reportes.informes.partial.modelos3d-landscope')
 
 </main>
 
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 630;
-            $y = 70;
+            $x = 620;
+            $y = 168;
             $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
             $size = 9;
@@ -128,8 +126,8 @@
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 764;
-            $y = 70;
+            $x = 745;
+            $y = 168;
             $text = "RG.27 Rev.02";
             $font = $fontMetrics->get_font("serif", "normal");
             $size = 8;

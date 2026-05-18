@@ -42,7 +42,7 @@
 
         @include('reportes.partial.linea-amarilla')
 
-        <table width="100%" style="border-collapse: collapse;margin-bottom: -10px;"" >
+        <table width="100%" style="border-collapse: collapse;">
         <tbody>
             <tr>
                 <td colspan="6" style="font-size:10px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;padding-bottom:2px;"><strong>Diccionario</strong></td>
@@ -97,12 +97,8 @@
             </tbody>
         </table>
 
-        <div style="margin-bottom: -60px;">
-            @include('reportes.partial.linea-amarilla')
-        </div>
-        <div style="margin-top: -20px;">
-            @include('reportes.informes.partial.firmas')
-        </div>
+        @include('reportes.partial.linea-amarilla')
+        @include('reportes.informes.partial.firmas')
     </footer>
 
 
@@ -166,17 +162,15 @@
         </table>
         @endforeach
 
-        <div style="page-break-inside: avoid;">
-            @include('reportes.informes.partial.modelos3d-landscope')
-        </div>
+        @include('reportes.informes.partial.modelos3d-landscope')
     </main>
 
 
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 630;
-            $y = 70;
+            $x = 620;
+            $y = 168;
             $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
             $size = 9;
@@ -194,8 +188,8 @@
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 764;
-            $y = 70;
+            $x = 745;
+            $y = 168;
             $text = "RG.27 Rev.02";
             $font = $fontMetrics->get_font("serif", "normal");
             $size = 8;

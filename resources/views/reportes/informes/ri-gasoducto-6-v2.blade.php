@@ -485,8 +485,8 @@
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 630;
-            $y = 70;
+            $x = 620;
+            $y = 168;
             $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
             $size = 9;
@@ -504,8 +504,8 @@
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 764;
-            $y = 73;
+            $x = 745;
+            $y = 168;
             $text = "RG.27 Rev.02";
             $font = $fontMetrics->get_font("serif", "normal");
             $size = 8;
