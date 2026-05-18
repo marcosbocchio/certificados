@@ -8,7 +8,7 @@
 
 <style>
     @page {
-        margin: 240px 40px 280px 40px !important;
+        margin: 255px 40px 280px 40px !important;
         padding: 0px 0px 0px 0px !important;
     }
 
@@ -48,9 +48,7 @@
 <main>
     @include('reportes.informes.partial.header-detalle-rd-landscope')
 
-    {{-- Agrupar las juntas en bloques de 2 (cada junta ocupa 4 filas con 12 pasadas) --}}
-    @foreach (collect($juntas_posiciones)->chunk(2) as $bloque)
-    <table width="100%" style="border-collapse: collapse; page-break-inside: avoid; margin-bottom: 15px;">
+    <table width="100%" style="border-collapse: collapse;">
         <thead>
             <tr>
                 <td colspan="23"><strong style="font-size: 14px;">Indicaciones</strong></td>
@@ -89,7 +87,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($bloque as $junta_posicion)
+            @foreach ($juntas_posiciones as $junta_posicion)
                 @include('reportes.informes.partial.junta-completa-rd-v12', [
                     'junta_posicion'    => $junta_posicion,
                     'pasadas_juntas'    => $pasadas_juntas,
@@ -100,7 +98,6 @@
             @endforeach
         </tbody>
     </table>
-    @endforeach
 
     @include('reportes.informes.partial.modelos3d-landscope')
 
@@ -109,11 +106,11 @@
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 620;
-            $y = 168;
+            $x = 700;
+            $y = 8;
             $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
-            $size = 9;
+            $size = 8;
             $color = array(0,0,0);
             $word_space = 0.0;  //  default
             $char_space = 0.0;  //  default
@@ -126,11 +123,11 @@
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 745;
-            $y = 168;
+            $x = 600;
+            $y = 8;
             $text = "RG.27 Rev.02";
             $font = $fontMetrics->get_font("serif", "normal");
-            $size = 8;
+            $size = 7;
             $color = array(0,0,0);
             $word_space = 0.0;  //  default
             $char_space = 0.0;  //  default

@@ -1,11 +1,11 @@
 <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 425;
-        $y = 182;
+        $x = 470;
+        $y = 12;
         $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
-        $size = 9;
+        $size = 8;
         $color = array(0,0,0);
         $word_space = 0.0;  //  default
         $char_space = 0.0;  //  default

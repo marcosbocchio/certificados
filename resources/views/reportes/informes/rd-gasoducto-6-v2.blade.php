@@ -8,7 +8,7 @@
 
 <style>
 
-    @page { margin: 245px 40px 280px 40px !important;
+    @page { margin: 260px 40px 280px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -166,11 +166,11 @@ footer {
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 620;
-            $y = 168;
+            $x = 700;
+            $y = 8;
             $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
-            $size = 9;
+            $size = 8;
             $color = array(0,0,0);
             $word_space = 0.0;  //  default
             $char_space = 0.0;  //  default
@@ -185,11 +185,11 @@ footer {
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 745;
-            $y = 168;
+            $x = 600;
+            $y = 8;
             $text = "RG.27 Rev.02";
             $font = $fontMetrics->get_font("serif", "normal");
-            $size = 8;
+            $size = 7;
             $color = array(0,0,0);
             $word_space = 0.0;  //  default
             $char_space = 0.0;  //  default

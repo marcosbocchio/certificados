@@ -9,7 +9,7 @@
 
 <style>
     @page {
-        margin: 240px 40px 270px 40px !important;
+        margin: 255px 40px 270px 40px !important;
         padding: 0px 0px 0px 0px !important;
     }
 
@@ -106,8 +106,7 @@
         @include('reportes.informes.partial.header-detalle-ri-landscope')
 
         {{-- Agrupar las juntas en bloques de 4 --}}
-        @foreach ($juntas_posiciones->chunk(2) as $bloque)
-        <table width="100%" style="border-collapse: collapse; page-break-inside: avoid; margin-bottom: 15px;">
+        <table width="100%" style="border-collapse: collapse;">
             <thead>
                 <tr>
                     <td colspan="22"><strong style="font-size: 14px;">Indicaciones</strong></td>
@@ -145,9 +144,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- Renderizar hasta 4 juntas completas --}}
-                @foreach ($bloque as $junta_posiciones)
-
+                @foreach ($juntas_posiciones as $junta_posiciones)
                 @include('reportes.informes.partial.junta-completa-v12', [
                 'junta_posiciones' => $junta_posiciones,
                 'pasadas_juntas' => $pasadas_juntas,
@@ -156,11 +153,9 @@
                 'informe' => $informe,
                 'ot_tipo_soldadura' => $ot_tipo_soldadura
                 ])
-
                 @endforeach
             </tbody>
         </table>
-        @endforeach
 
         @include('reportes.informes.partial.modelos3d-landscope')
     </main>
@@ -169,11 +164,11 @@
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 620;
-            $y = 168;
+            $x = 700;
+            $y = 8;
             $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
-            $size = 9;
+            $size = 8;
             $color = array(0,0,0);
             $word_space = 0.0;  //  default
             $char_space = 0.0;  //  default
@@ -188,11 +183,11 @@
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 745;
-            $y = 168;
+            $x = 600;
+            $y = 8;
             $text = "RG.27 Rev.02";
             $font = $fontMetrics->get_font("serif", "normal");
-            $size = 8;
+            $size = 7;
             $color = array(0,0,0);
             $word_space = 0.0;  //  default
             $char_space = 0.0;  //  default

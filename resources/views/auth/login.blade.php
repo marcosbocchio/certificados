@@ -6,10 +6,12 @@
     <div class="login-box">
       <!-- /.login-logo -->
       <div class="login-box-body">
-        <div class="login-logo" >
-          <a href="{{ route('login') }}"><img src="{{asset('img/logo-enod-web.jpg')}}"  height="60px"  alt="Logo Enod"> </a>
+        <div class="login-logo" style="text-align:center;margin:0;padding:0;">
+          <a href="{{ route('login') }}">
+            <img src="{{asset('img/logo-enod-web.jpg')}}" style="height:140px;max-width:100%;margin:0;display:block;margin:0 auto;" alt="Logo Enod">
+          </a>
         </div>
-        <p class="login-box-msg" >Login para iniciar sesión</p>
+        <p class="login-box-msg" style="font-size:13px;letter-spacing:0.4px;color:#64748B;margin-top:0;">Login para iniciar sesión</p>
 
         <form method="POST" action="{{ route('login') }}">
           @csrf
