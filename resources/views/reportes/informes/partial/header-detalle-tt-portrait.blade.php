@@ -6,16 +6,16 @@
                     <tbody>
 
                        <tr>
-                           <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                               <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Componente</div>
-                               <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->componente}}</div>
+                           <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                               <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Componente</div>
+                               <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->componente}}</div>
                            </td>
                        </tr>
 
                        <tr>
-                           <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                               <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Linea</div>
-                               <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                           <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                               <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Linea</div>
+                               <div style="font-size:10px;font-style:italic;color:#1C2340;">
                                    @if($informe->linea)
                                      {{$informe->linea}}
                                    @else
@@ -26,45 +26,45 @@
                        </tr>
 
                        <tr>
-                           <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                               <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Procedimiento</div>
-                               <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->procedimiento['titulo']}}</div>
+                           <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                               <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Procedimiento</div>
+                               <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->procedimiento['titulo']}}</div>
                            </td>
                        </tr>
 
                        <tr>
-                           <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                               <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">EPS / WPS</div>
-                               <div style="font-size:12px;font-style:italic;color:#1C2340;">{{ $informe->OtTipoSoldadura['eps']}}</div>
+                           <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                               <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">EPS / WPS</div>
+                               <div style="font-size:10px;font-style:italic;color:#1C2340;">{{ $informe->OtTipoSoldadura['eps']}}</div>
                            </td>
                        </tr>
 
                        <tr>
-                           <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                               <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Temp. Inicial</div>
-                               <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->informeTt->temperatura_inicial}} °C</div>
+                           <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                               <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Temp. Inicial</div>
+                               <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->informeTt->temperatura_inicial}} °C</div>
                            </td>
-                           <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                               <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Temp. Subida</div>
-                               <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->informeTt->temperatura_subida}} °C/Hs</div>
-                           </td>
-                       </tr>
-
-                       <tr>
-                           <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                               <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Temp. Final</div>
-                               <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->informeTt->temperatura_final}} °C</div>
+                           <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                               <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Temp. Subida</div>
+                               <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->informeTt->temperatura_subida}} °C/Hs</div>
                            </td>
                        </tr>
 
                        <tr>
-                           <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
-                               <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Ejecutor Ensayo</div>
-                               <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->ejecutor_ensayo['name']}}</div>
+                           <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                               <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Temp. Final</div>
+                               <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->informeTt->temperatura_final}} °C</div>
                            </td>
-                           <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
-                               <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Solicitante</div>
-                               <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                       </tr>
+
+                       <tr>
+                           <td colspan="2" style="padding:1px 4px 2px;vertical-align:top;">
+                               <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Ejecutor Ensayo</div>
+                               <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->ejecutor_ensayo['name']}}</div>
+                           </td>
+                           <td colspan="2" style="padding:1px 4px 2px;vertical-align:top;">
+                               <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Solicitante</div>
+                               <div style="font-size:10px;font-style:italic;color:#1C2340;">
                                    @if($informe->solicitadoPor)
                                         {{ $informe->solicitadoPor['name'] }}
                                    @else
@@ -84,19 +84,19 @@
                 <table width="100%" style="border-collapse:collapse;float:right;">
                     <tbody>
                         <tr>
-                            <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Material</div>
-                                <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->material['codigo']}}</div>
+                            <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Material</div>
+                                <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->material['codigo']}}</div>
                             </td>
-                            <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">
+                            <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">
                                     @if($informe->material2)
                                         Material ( {{ $informe->material2_tipo }})
                                     @else
                                         &nbsp;
                                     @endif
                                 </div>
-                                <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                <div style="font-size:10px;font-style:italic;color:#1C2340;">
                                     @if($informe->material2)
                                          {{$informe->material2['codigo']}}
                                     @endif
@@ -105,9 +105,9 @@
                         </tr>
 
                         <tr>
-                            <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Plano / Isométrico</div>
-                                <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->plano_isom}}
+                            <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Plano / Isométrico</div>
+                                <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->plano_isom}}
                                     @if ($informe->hoja)
                                         - H:{{ $informe->hoja}}
                                     @endif
@@ -116,9 +116,9 @@
                         </tr>
 
                         <tr>
-                            <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">PQR</div>
-                                <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                            <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">PQR</div>
+                                <div style="font-size:10px;font-style:italic;color:#1C2340;">
                                     @if($informe->OtTipoSoldadura)
                                         {{$informe->OtTipoSoldadura['pqr']}}
                                     @else
@@ -129,31 +129,31 @@
                         </tr>
 
                         <tr>
-                            <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Equipo</div>
-                                <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->internoEquipo->equipo->codigo}}</div>
+                            <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Equipo</div>
+                                <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->internoEquipo->equipo->codigo}}</div>
                             </td>
                         </tr>
 
                         <tr>
-                            <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Temp. Mantenimiento</div>
-                                <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->informeTt->temperatura_mantenimiento}} °C</div>
+                            <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Temp. Mantenimiento</div>
+                                <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->informeTt->temperatura_mantenimiento}} °C</div>
                             </td>
-                            <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Temp. Enfriado</div>
-                                <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->informeTt->temperatura_enfriado}} °C/Hs</div>
+                            <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Temp. Enfriado</div>
+                                <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->informeTt->temperatura_enfriado}} °C/Hs</div>
                             </td>
                         </tr>
 
                         <tr>
-                            <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
-                                <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Norma Evaluación</div>
-                                <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->normaEvaluacion['codigo']}}</div>
+                            <td colspan="2" style="padding:1px 4px 2px;vertical-align:top;">
+                                <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Norma Evaluación</div>
+                                <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->normaEvaluacion['codigo']}}</div>
                             </td>
-                            <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
-                                <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Norma Ensayo</div>
-                                <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->normaEnsayo['codigo']}}</div>
+                            <td colspan="2" style="padding:1px 4px 2px;vertical-align:top;">
+                                <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Norma Ensayo</div>
+                                <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->normaEnsayo['codigo']}}</div>
                             </td>
                         </tr>
                     </tbody>

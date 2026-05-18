@@ -2,7 +2,7 @@
 
     if ( isset($pdf) ) {
         $x = 470;
-        $y = 12;
+        $y = 8;
         $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
         $size = 8;

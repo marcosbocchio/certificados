@@ -9,12 +9,12 @@
 
 <style>
 
-    @page { margin: 275px 40px 300px 40px !important;
+    @page { margin: 155px 40px 230px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -237px;
+    top: -140px;
 }
 
 footer {
@@ -126,7 +126,7 @@ footer {
 
         if ( isset($pdf) ) {
             $x = 395;
-            $y = 12;
+            $y = 8;
             $text = "RG.27 Rev.01";
             $font = $fontMetrics->get_font("serif", "normal");
             $size = 7;

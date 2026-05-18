@@ -13,19 +13,19 @@
 
     @if($tecnica->codigo == 'US' || $tecnica->codigo == 'PA' || $tecnica->codigo=='FMC-TFM')
         @page {
-            margin: 260px 40px 260px 40px !important;
+            margin: 155px 40px 230px 40px !important;
             padding: 0px 0px 0px 0px !important;
         }
     @else
         @page {
-            margin: 260px 40px 160px 40px !important;
+            margin: 155px 40px 230px 40px !important;
             padding: 0px 0px 0px 0px !important;
         }
     @endif
 
 header {
     position:fixed;
-    top: -237px;
+    top: -140px;
 }
 
 footer {

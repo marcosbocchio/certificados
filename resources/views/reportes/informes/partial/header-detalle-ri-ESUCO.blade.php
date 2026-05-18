@@ -75,7 +75,7 @@
                             </tr>
                             <tr>
                                     <td class="noBorder" colspan="2">{{$tecnica->codigo}}</td>
-                                    <td colspan="2" rowspan="4" style="text-align: center;"><img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 100px;margin-top: -10px;"></td>
+                                    <td colspan="2" rowspan="4" style="text-align: center;"><img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height:65px;"></td>
                             </tr>
                         </tbody>
                     </table>

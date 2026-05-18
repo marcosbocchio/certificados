@@ -9,13 +9,13 @@
 
 <style>
     @page {
-        margin: 255px 40px 270px 40px !important;
+        margin: 150px 40px 230px 40px !important;
         padding: 0px 0px 0px 0px !important;
     }
 
     header {
         position: fixed;
-        top: -230px;
+        top: -135px;
     }
 
     footer {

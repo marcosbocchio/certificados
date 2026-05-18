@@ -1,20 +1,22 @@
-<table width="100%" style="margin-top:10px">
+<table width="100%" style="border-collapse:collapse;margin-top:3px;">
     <tbody>
         <tr>
-            <td width="52%" style="font-size: 12px;"><b>Proyecto </b></td>
-            <td width="24%" style="font-size: 12px;"><b>Obra </b></td>
-            <td width="24%" style="font-size: 12px;"><b>OT N° </b></td>
-        </tr>
-        <tr>
-            <td style="font-size: 12px;"><span class="datosHead">{{$ot->proyecto}}</span></td>
-
-
-            @if(isset($informe))
-                <td style="font-size: 12px;" ><span class="datosHead">{{$informe->obra}}</span></td>
-            @else
-                <td style="font-size: 12px;"><span class="datosHead"></span>{{$ot->obra}}</td>
-            @endif
-            <td style="font-size: 12px;"><span class="datosHead"><span class="datosHead"></span>{{$ot->numero}}</td>
+            <td width="50%" style="padding:1px 0;">
+                <span style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;">Proyecto:</span>
+                <span style="font-size:11px;font-style:italic;color:#1C2340;margin-left:4px;">{{$ot->proyecto}}</span>
+            </td>
+            <td width="30%" style="padding:1px 0;">
+                <span style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;">Obra:</span>
+                @if(isset($informe))
+                    <span style="font-size:11px;font-style:italic;color:#1C2340;margin-left:4px;">{{$informe->obra}}</span>
+                @else
+                    <span style="font-size:11px;font-style:italic;color:#1C2340;margin-left:4px;">{{$ot->obra}}</span>
+                @endif
+            </td>
+            <td width="20%" style="padding:1px 0;">
+                <span style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;">OT N°:</span>
+                <span style="font-size:11px;font-style:italic;color:#1C2340;margin-left:4px;">{{$ot->numero}}</span>
+            </td>
         </tr>
     </tbody>
 </table>

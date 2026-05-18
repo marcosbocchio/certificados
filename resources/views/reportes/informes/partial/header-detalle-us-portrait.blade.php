@@ -6,16 +6,16 @@
                         <tbody>
 
                            <tr>
-                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Componente</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->componente}}</div>
+                               <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Componente</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->componente}}</div>
                                </td>
                            </tr>
 
                            <tr>
-                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Linea</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                               <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Linea</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">
                                        @if($informe->linea)
                                        {{$informe->linea}}
                                        @else
@@ -26,49 +26,49 @@
                            </tr>
 
                            <tr>
-                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Procedimiento</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$procedimiento_inf->titulo}}</div>
+                               <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Procedimiento</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$procedimiento_inf->titulo}}</div>
                                </td>
                            </tr>
 
                            <tr>
-                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">EPS / WPS</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$ot_tipo_soldadura->eps}}</div>
+                               <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">EPS / WPS</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$ot_tipo_soldadura->eps}}</div>
                                </td>
                            </tr>
 
                            <tr>
-                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Encoder</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe_us->encoder}}</div>
+                               <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Encoder</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe_us->encoder}}</div>
                                </td>
-                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Estado Superficie</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$estado_superficie->codigo}}</div>
-                               </td>
-                           </tr>
-
-                           <tr>
-                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Agente Acoplamiento</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$agente_acoplamiento->codigo}}</div>
-                               </td>
-                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Técnica</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$tecnica->descripcion}}</div>
+                               <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Estado Superficie</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$estado_superficie->codigo}}</div>
                                </td>
                            </tr>
 
                            <tr>
-                               <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Ejecutor Ensayo</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$ejecutor_ensayo->name}}</div>
+                               <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Agente Acoplamiento</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$agente_acoplamiento->codigo}}</div>
                                </td>
-                               <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Solicitante</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</div>
+                               <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Técnica</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$tecnica->descripcion}}</div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="2" style="padding:1px 4px 2px;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Ejecutor Ensayo</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$ejecutor_ensayo->name}}</div>
+                               </td>
+                               <td colspan="2" style="padding:1px 4px 2px;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Solicitante</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</div>
                                </td>
                            </tr>
 
@@ -82,19 +82,19 @@
                     <table width="100%" style="border-collapse:collapse;float:right;">
                         <tbody>
                            <tr>
-                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Material</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$material->codigo}}</div>
+                               <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Material</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$material->codigo}}</div>
                                </td>
-                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">
+                               <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">
                                        @if($material2)
                                            Material ( {{ $informe->material2_tipo }})
                                        @else
                                            &nbsp;
                                        @endif
                                    </div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">
                                        @if($material2)
                                             {{$material2->codigo}}
                                        @endif
@@ -103,9 +103,9 @@
                            </tr>
 
                            <tr>
-                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Plano / Isométrico</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->plano_isom}}
+                               <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Plano / Isométrico</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$informe->plano_isom}}
                                        @if ($informe->hoja)
                                            - H:{{ $informe->hoja}}
                                        @endif
@@ -114,9 +114,9 @@
                            </tr>
 
                            <tr>
-                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Diámetro</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                               <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Diámetro</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">
                                        @if ($informe->diametro_espesor_id)
                                            {{$diametro_espesor->diametro}}
                                        @else
@@ -124,9 +124,9 @@
                                        @endif
                                    </div>
                                </td>
-                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Espesor</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                               <td colspan="2" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Espesor</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">
                                        @if ($informe->espesor_chapa)
                                            {{ $informe->espesor_chapa }}
                                        @elseif($informe->espesor_especifico)
@@ -141,9 +141,9 @@
                            </tr>
 
                            <tr>
-                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">PQR</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                               <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">PQR</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">
                                        @if($ot_tipo_soldadura->pqr)
                                            {{$ot_tipo_soldadura->pqr}}
                                        @else
@@ -154,20 +154,20 @@
                            </tr>
 
                            <tr>
-                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Equipo</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$interno_equipo->equipo->codigo}}</div>
+                               <td colspan="4" style="padding:1px 4px 2px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Equipo</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$interno_equipo->equipo->codigo}}</div>
                                </td>
                            </tr>
 
                            <tr>
-                               <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Norma Evaluación</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$norma_evaluacion->codigo}}</div>
+                               <td colspan="2" style="padding:1px 4px 2px;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Norma Evaluación</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$norma_evaluacion->codigo}}</div>
                                </td>
-                               <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
-                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Norma Ensayo</div>
-                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$norma_ensayo->codigo}}</div>
+                               <td colspan="2" style="padding:1px 4px 2px;vertical-align:top;">
+                                   <div style="font-size:7px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:0;">Norma Ensayo</div>
+                                   <div style="font-size:10px;font-style:italic;color:#1C2340;">{{$norma_ensayo->codigo}}</div>
                                </td>
                            </tr>
 
