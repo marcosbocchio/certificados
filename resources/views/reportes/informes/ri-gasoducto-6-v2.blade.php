@@ -485,8 +485,8 @@
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 755;
-            $y = 12;
+            $x = 630;
+            $y = 70;
             $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
             $size = 9;

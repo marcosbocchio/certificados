@@ -110,7 +110,7 @@
         @include('reportes.informes.partial.header-detalle-ri-landscope')
 
         {{-- Agrupar las juntas en bloques de 4 --}}
-        @foreach ($juntas_posiciones->chunk(4) as $bloque)
+        @foreach ($juntas_posiciones->chunk(2) as $bloque)
         <table width="100%" style="border-collapse: collapse; page-break-inside: avoid; margin-bottom: 15px;">
             <thead>
                 <tr>
@@ -175,8 +175,8 @@
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 755;
-            $y = 12;
+            $x = 630;
+            $y = 70;
             $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
             $size = 9;

@@ -1,7 +1,6 @@
 @if(count($informe_modelos_3d) > 0 )
 
-    <div class="page-break"></div>
-    <h4 style="color: gray">Capturas de modelos 3d</h4>
+    <h4 style="color: gray;margin-top:20px;">Capturas de modelos 3d</h4>
 
     <table style="text-align: center;" width="100%">
         <tbody>
