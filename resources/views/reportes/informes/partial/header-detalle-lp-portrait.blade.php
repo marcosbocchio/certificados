@@ -1,105 +1,111 @@
-    <table class="header-detalle-principal">
+    <table width="100%" style="border-collapse:collapse;font-size:12px;">
         <tbody>
             <tr>
                 <td width="49%">
-                    <table style="font-size: 12px;" width="100%" class="header-detalle">
+                    <table width="100%" style="border-collapse:collapse;">
                         <tbody>
 
                            <tr>
-                               <th width="100%" colspan="4">Componente</th>
-                           </tr>
-                           <tr>
-                               <td colspan="4">{{$informe->componente}}</td>
-                           </tr>
-
-                           <tr>
-                                <th colspan="4" >Linea</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4">
-                                    @if($informe->linea)
-                                      {{$informe->linea}}
-                                    @else
-                                         &nbsp;
-                                    @endif
-                                </td>
-                           </tr>
-
-                            <tr>
-                                <th colspan="4">Procedimiento</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4">{{$procedimiento_inf->titulo}}</td>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Componente</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->componente}}</div>
+                               </td>
                            </tr>
 
                            <tr>
-                                <th colspan="4">EPS / WPS</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
-                           </tr>
-
-
-                           <tr>
-                                <th colspan="2">Método</th>
-                                <th colspan="2">Penetrante</th>
-                           </tr>
-                           <tr>
-                                <td colspan="2">{{$metodo->tipo}}-{{$metodo->metodo}}</td>
-                                <td colspan="2">
-                                    @if($metodo->tipo =='TIPO I')
-                                        Fluorescente
-                                    @else
-                                        Visible
-                                    @endif
-                                </td>
-                           </tr>
-                           <tr>
-                                <th colspan="2">Líquido Revelador</th>
-                                <th colspan="2">Aplicación Revelador</th>
-                           </tr>
-                           <tr>
-                                <td colspan="2">
-                                    {{$revelador->tipo}}
-                                    @if ($revelador->marca)
-
-                                        &nbsp;/&nbsp;{{$revelador->marca}}
-
-                                    @endif
-                                </td>
-                                <td colspan="2">{{$revelador_aplicacion->codigo}}</td>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Linea</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($informe->linea)
+                                         {{$informe->linea}}
+                                       @else
+                                            &nbsp;
+                                       @endif
+                                   </div>
+                               </td>
                            </tr>
 
                            <tr>
-                                <th colspan="2">Limpieza Previa</th>
-                                <th colspan="2">Limpieza Intermedia</th>
-                           </tr>
-                            <tr>
-                                <td colspan="2" class="borderFilabottom">{{$informe_lp->limpieza_previa}}</td>
-                                <td colspan="2" class="borderFilabottom">{{$informe_lp->limpieza_intermedia}}</td>
-                            </tr>
-
-                            <tr>
-                                <th colspan="4">Limpieza Final</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4" class="borderFilabottom">
-                                    @if ($informe_lp->limpieza_final)
-                                         {{$informe_lp->limpieza_final}}
-                                    @else
-                                          &nbsp;
-                                    @endif
-                                </td>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Procedimiento</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$procedimiento_inf->titulo}}</div>
+                               </td>
                            </tr>
 
                            <tr>
-                            <th colspan="2">Ejecutor Ensayo</th>
-                            <th colspan="2">Solicitante</th>
-                            </tr>
-                            <tr>
-                             <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
-                             <td colspan="2" class="borderFilabottom">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
-                            </tr>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">EPS / WPS</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$ot_tipo_soldadura->eps}}</div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Método</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$metodo->tipo}}-{{$metodo->metodo}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Penetrante</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($metodo->tipo =='TIPO I')
+                                           Fluorescente
+                                       @else
+                                           Visible
+                                       @endif
+                                   </div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Líquido Revelador</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       {{$revelador->tipo}}
+                                       @if ($revelador->marca)
+                                           &nbsp;/&nbsp;{{$revelador->marca}}
+                                       @endif
+                                   </div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Aplicación Revelador</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$revelador_aplicacion->codigo}}</div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Limpieza Previa</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe_lp->limpieza_previa}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Limpieza Intermedia</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe_lp->limpieza_intermedia}}</div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Limpieza Final</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if ($informe_lp->limpieza_final)
+                                            {{$informe_lp->limpieza_final}}
+                                       @else
+                                             &nbsp;
+                                       @endif
+                                   </div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Ejecutor Ensayo</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$ejecutor_ensayo->name}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Solicitante</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</div>
+                               </td>
+                           </tr>
 
                         </tbody>
                     </table>
@@ -108,133 +114,140 @@
                     &nbsp;
                 </td>
                 <td width="49%">
-                    <table style="font-size: 12px;float:right;" width="100%" class="header-detalle">
+                    <table width="100%" style="border-collapse:collapse;float:right;">
                         <tbody>
 
-                           <tr >
-                               <th width="50%" colspan="2">Material</th>
-                               <th width="50%" colspan="2">
-                                @if($material2)
-                                    Material ( {{ $informe->material2_tipo }})
-                                 @else
-                                      &nbsp;
-                                  @endif
-                             </th>
-                           </tr>
-                           <tr >
-                               <td colspan="2">{{$material->codigo}}</td>
-                               <td colspan="2">
-                                    @if($material2)
-                                         {{$material2->codigo}}
-                                    @endif
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Material</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$material->codigo}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">
+                                       @if($material2)
+                                           Material ( {{ $informe->material2_tipo }})
+                                       @else
+                                           &nbsp;
+                                       @endif
+                                   </div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($material2)
+                                            {{$material2->codigo}}
+                                       @endif
+                                   </div>
                                </td>
                            </tr>
 
-                            <tr>
-                                <th colspan="4" >Plano / Isométrico</th>
-                            </tr>
-                            <tr>
-                                <td colspan="4">{{$informe->plano_isom}}
-                                    @if ($informe->hoja)
-                                        - H:{{ $informe->hoja}}
-                                    @endif
-                                </td>
-                            </tr>
-
                            <tr>
-                                <th colspan="2">Diámetro</th>
-                                <th colspan="2">Espesor</th>
-                           </tr>
-                            <tr>
-                                <td colspan="2">{{$diametro_espesor->diametro}}</td>
-                                <td colspan="2">
-                                    @if ($informe->espesor_chapa)
-                                        {{ $informe->espesor_chapa }}
-                                    @elseif($informe->espesor_especifico)
-                                        {{ $informe->espesor_especifico }}
-                                    @else
-                                        {{ $diametro_espesor->espesor }}
-                                    @endif
-                                </td>
-                            </tr>
-
-                            <tr >
-                                <th colspan="4">PQR</th>
-                            </tr>
-                            <tr >
-                                <td colspan="4">
-                                    @if($ot_tipo_soldadura->pqr)
-                                        {{$ot_tipo_soldadura->pqr}}
-                                    @else
-                                        &nbsp;
-                                    @endif
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th colspan="3">Instrumento Medición</th>
-                                <th colspan="1">Iluminaciones </th>
-                            </tr>
-                            <tr>
-                            <td colspan="3">
-                            @if($equipo && $equipo->equipo)
-                                    {{ $equipo->equipo->instrumento_medicion . ' / ' . $equipo->equipo->codigo }}
-                                @else
-                                    {{ '-' }}
-                                @endif
-                            </td>
-
-                            @if($equipo && $equipo->equipo)
-                                <td colspan="1">{{$iluminacion->codigo}}</td>
-                            @else
-                                <td colspan="1">luz natural</td>
-                            @endif
-
-                            <tr>
-                                <th colspan="2">Líquido Penetrante.</th>
-                                <th colspan="2">Aplicación Penetrante</th>
-                           </tr>
-                           <tr>
-                                <td colspan="2">
-                                    {{$penetrante->tipo}}
-
-                                    @if ($penetrante->marca)
-                                    &nbsp;/&nbsp;{{$penetrante->marca}}
-                                    @else
-                                         &nbsp;
-                                    @endif
-
-                                </td>
-                                <td colspan="2">
-                                    {{$penetrante_aplicacion->codigo}}
-                                </td>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Plano / Isométrico</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->plano_isom}}
+                                       @if ($informe->hoja)
+                                           - H:{{ $informe->hoja}}
+                                       @endif
+                                   </div>
+                               </td>
                            </tr>
 
-
                            <tr>
-                            <th colspan="2">Líquido Removedor </th>
-                            <th colspan="2">Aplicación Removedor </th>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Diámetro</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$diametro_espesor->diametro}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Espesor</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if ($informe->espesor_chapa)
+                                           {{ $informe->espesor_chapa }}
+                                       @elseif($informe->espesor_especifico)
+                                           {{ $informe->espesor_especifico }}
+                                       @else
+                                           {{ $diametro_espesor->espesor }}
+                                       @endif
+                                   </div>
+                               </td>
                            </tr>
+
                            <tr>
-                                <td colspan="2">
-                                    {{$removedor->tipo}}
-                                    @if ($removedor->marca)
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">PQR</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($ot_tipo_soldadura->pqr)
+                                           {{$ot_tipo_soldadura->pqr}}
+                                       @else
+                                           &nbsp;
+                                       @endif
+                                   </div>
+                               </td>
+                           </tr>
 
-                                    &nbsp;/&nbsp;{{$removedor->marca}}
+                           <tr>
+                               <td colspan="3" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Instrumento Medición</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($equipo && $equipo->equipo)
+                                           {{ $equipo->equipo->instrumento_medicion . ' / ' . $equipo->equipo->codigo }}
+                                       @else
+                                           {{ '-' }}
+                                       @endif
+                                   </div>
+                               </td>
+                               <td colspan="1" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Iluminaciones</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($equipo && $equipo->equipo)
+                                           {{$iluminacion->codigo}}
+                                       @else
+                                           luz natural
+                                       @endif
+                                   </div>
+                               </td>
+                           </tr>
 
-                                    @endif
-                                </td>
-                                <td colspan="2">{{$removedor_aplicacion->codigo}}</td>
-                            </tr>
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Líquido Penetrante.</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       {{$penetrante->tipo}}
+                                       @if ($penetrante->marca)
+                                       &nbsp;/&nbsp;{{$penetrante->marca}}
+                                       @else
+                                            &nbsp;
+                                       @endif
+                                   </div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Aplicación Penetrante</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$penetrante_aplicacion->codigo}}</div>
+                               </td>
+                           </tr>
 
-                            <tr>
-                                <th colspan="2">Norma Evaluación</th>
-                                <th colspan="2">Norma Ensayo</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">{{$norma_evaluacion->codigo}}</td>
-                                <td colspan="2">{{$norma_ensayo->codigo}}</td>
-                            </tr>
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Líquido Removedor</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       {{$removedor->tipo}}
+                                       @if ($removedor->marca)
+                                       &nbsp;/&nbsp;{{$removedor->marca}}
+                                       @endif
+                                   </div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Aplicación Removedor</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$removedor_aplicacion->codigo}}</div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Norma Evaluación</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$norma_evaluacion->codigo}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Norma Ensayo</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$norma_ensayo->codigo}}</div>
+                               </td>
+                           </tr>
 
                         </tbody>
                     </table>

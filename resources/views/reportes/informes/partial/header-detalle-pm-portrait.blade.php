@@ -1,115 +1,119 @@
-    <table class="header-detalle-principal">
+    <table width="100%" style="border-collapse:collapse;font-size:12px;">
         <tbody>
             <tr>
                 <td width="49%">
-                    <table style="font-size: 12px;" width="100%" class="header-detalle">
+                    <table width="100%" style="border-collapse:collapse;">
                         <tbody>
 
                            <tr>
-                               <th width="100%" colspan="4">Componente</th>
-                           </tr>
-                           <tr >
-                               <td colspan="4">{{$informe->componente}}</td>
-                           </tr>
-
-                           <tr>
-                              <th colspan="4" >Linea</th>
-                           </tr>
-                           <tr>
-                              <td colspan="4">
-                                 @if($informe->linea)
-                                    {{$informe->linea}}
-                                 @else
-                                    &nbsp;
-                                 @endif
-                              </td>
-                           </tr>
-
-                           <tr>
-                                <th colspan="4">Procedimiento</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4">{{$procedimiento_inf->titulo}}</td>
-                           </tr>
-
-                           <tr>
-                                <th colspan="4">EPS / WPS</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
-                           </tr>
-
-
-                           <tr>
-                                <th colspan="4">Método</th>
-                           </tr>
-                           <tr>
-                               <td colspan="4">{{$metodo->codigo}}</td>
-                           </tr>
-
-                           <tr>
-                                <th colspan="2">Instrumento Medición</th>
-                                <th colspan="2">Tipo</th>
-                           </tr>
-                           <tr>
-                                <td colspan="2">{{$instrumento_medicion->equipo->codigo}}</td>
-                                <td colspan="2">{{$instrumento_medicion->equipo->instrumento_medicion}}</td>
-                           </tr>
-
-                           <tr>
-                                <th colspan="2">Vehículo</th>
-                                <th colspan="2">Aditivo</th>
-                           </tr>
-                           <tr>
-                                <td colspan="2">
-                                    @if($informe_pm->vehiculo)
-                                        {{$informe_pm->vehiculo}}
-                                    @else
-                                         &nbsp;
-                                    @endif
-                                </td>
-                                <td colspan="2">
-                                    @if($informe_pm->aditivo)
-                                        {{$informe_pm->aditivo}}
-                                    @else
-                                        &nbsp;
-                                    @endif
-                                </td>
-                           </tr>
-
-                           <tr>
-                               <th colspan="2">Partícula</th>
-                               <th colspan="2">Color Partícula</th>
-                           </tr>
-                           <tr>
-                               <td colspan="2">{{$particula->tipo}} / {{$particula->marca}}</td>
-                               <td colspan="2">{{$particula->color->codigo}}</td>
-                           </tr>
-
-                           <tr>
-                               <th colspan="4">Contraste</th>
-                           </tr>
-                           <tr>
-                               <td colspan="4">
-                                @if ($contraste)
-
-                                    {{$contraste->tipo}} / {{$contraste->marca}}
-
-                                @else
-                                     &nbsp;
-                                @endif
-
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Componente</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->componente}}</div>
                                </td>
                            </tr>
 
-                            <tr>
-                                <th colspan="2">Técnica</th>
-                                <th colspan="2">Ejecutor Ensayo</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">{{$tecnica->descripcion}}</td>
-                                <td colspan="2">{{$ejecutor_ensayo->name}}</td>
-                            </tr>
+                           <tr>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Linea</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($informe->linea)
+                                          {{$informe->linea}}
+                                       @else
+                                          &nbsp;
+                                       @endif
+                                   </div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Procedimiento</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$procedimiento_inf->titulo}}</div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">EPS / WPS</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$ot_tipo_soldadura->eps}}</div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Método</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$metodo->codigo}}</div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Instrumento Medición</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$instrumento_medicion->equipo->codigo}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Tipo</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$instrumento_medicion->equipo->instrumento_medicion}}</div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Vehículo</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($informe_pm->vehiculo)
+                                           {{$informe_pm->vehiculo}}
+                                       @else
+                                            &nbsp;
+                                       @endif
+                                   </div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Aditivo</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($informe_pm->aditivo)
+                                           {{$informe_pm->aditivo}}
+                                       @else
+                                           &nbsp;
+                                       @endif
+                                   </div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Partícula</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$particula->tipo}} / {{$particula->marca}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Color Partícula</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$particula->color->codigo}}</div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Contraste</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if ($contraste)
+                                           {{$contraste->tipo}} / {{$contraste->marca}}
+                                       @else
+                                            &nbsp;
+                                       @endif
+                                   </div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Técnica</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$tecnica->descripcion}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Ejecutor Ensayo</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$ejecutor_ensayo->name}}</div>
+                               </td>
+                           </tr>
 
                         </tbody>
                     </table>
@@ -118,133 +122,151 @@
                     &nbsp;
                 </td>
                 <td width="49%">
-                    <table style="font-size: 12px;float:right;" width="100%" class="header-detalle">
+                    <table width="100%" style="border-collapse:collapse;float:right;">
                         <tbody>
 
-                           <tr >
-                               <th width="50%" colspan="2">Material</th>
-                               <th width="50%" colspan="2">
-                                @if($material2)
-                                    Material ( {{ $informe->material2_tipo }})
-                                 @else
-                                      &nbsp;
-                                  @endif
-                             </th>
-                           </tr>
-                           <tr >
-                               <td colspan="2">{{$material->codigo}}</td>
-                               <td colspan="2">
-                                    @if($material2)
-                                         {{$material2->codigo}}
-                                    @endif
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Material</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$material->codigo}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">
+                                       @if($material2)
+                                           Material ( {{ $informe->material2_tipo }})
+                                       @else
+                                           &nbsp;
+                                       @endif
+                                   </div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($material2)
+                                            {{$material2->codigo}}
+                                       @endif
+                                   </div>
                                </td>
                            </tr>
 
                            <tr>
-                                <th colspan="4" >Plano / Isométrico</th>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Plano / Isométrico</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe->plano_isom}}
+                                       @if ($informe->hoja)
+                                           - H:{{ $informe->hoja}}
+                                       @endif
+                                   </div>
+                               </td>
                            </tr>
+
                            <tr>
-                                <td colspan="4">{{$informe->plano_isom}}
-                                    @if ($informe->hoja)
-                                        - H:{{ $informe->hoja}}
-                                    @endif
-                                </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Diámetro</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$diametro_espesor->diametro}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Espesor</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if ($informe->espesor_chapa)
+                                           {{ $informe->espesor_chapa }}
+                                       @elseif($informe->espesor_especifico)
+                                           {{ $informe->espesor_especifico }}
+                                       @else
+                                           {{ $diametro_espesor->espesor }}
+                                       @endif
+                                   </div>
+                               </td>
                            </tr>
 
                            <tr>
-                                <th colspan="2">Diámetro</th>
-                                <th colspan="2">Espesor</th>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">PQR</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($ot_tipo_soldadura->pqr)
+                                           {{$ot_tipo_soldadura->pqr}}
+                                       @else
+                                           &nbsp;
+                                       @endif
+                                   </div>
+                               </td>
                            </tr>
-                            <tr>
-                                <td colspan="2">{{$diametro_espesor->diametro}}</td>
-                                <td colspan="2">
-                                    @if ($informe->espesor_chapa)
-                                        {{ $informe->espesor_chapa }}
-                                    @elseif($informe->espesor_especifico)
-                                        {{ $informe->espesor_especifico }}
-                                    @else
-                                        {{ $diametro_espesor->espesor }}
-                                    @endif
-                                </td>
-                            </tr>
 
-                            <tr >
-                                <th colspan="4">PQR</th>
-                            </tr>
-                            <tr >
-                                <td colspan="4">
-                                    @if($ot_tipo_soldadura->pqr)
-                                        {{$ot_tipo_soldadura->pqr}}
-                                    @else
-                                        &nbsp;
-                                    @endif
-                                </td>
-                            </tr>
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Equipo</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$interno_equipo->equipo->codigo}}</div>
+                               </td>
+                               <td colspan="1" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">V</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe_pm->voltaje}}</div>
+                               </td>
+                               <td colspan="1" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">A</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe_pm->amperaje}}</div>
+                               </td>
+                           </tr>
 
-                            <tr>
-                                <th colspan="2">Equipo</th>
-                                <th colspan="1">V</th>
-                                <th colspan="1">A</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">{{$interno_equipo->equipo->codigo}}</td>
-                                <td colspan="1">{{$informe_pm->voltaje}}</td>
-                                <td colspan="1">{{$informe_pm->amperaje}}</td>
-                            </tr>
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Tipo Magnetización</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if($tipo_magnetizacion)
+                                           {{$tipo_magnetizacion->codigo}}
+                                       @else
+                                           &nbsp;
+                                       @endif
+                                   </div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Desmagnetización</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">
+                                       @if ($desmagnetizacion_sn)
+                                           SI
+                                       @else
+                                           NO
+                                       @endif
+                                   </div>
+                               </td>
+                           </tr>
 
-                            <tr>
-                                <th colspan="2">Tipo Magnetización</th>
-                                <th colspan="2">Desmagnetización</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    @if($tipo_magnetizacion)
-                                        {{$tipo_magnetizacion->codigo}}
-                                    @else
-                                        &nbsp;
-                                    @endif
-                                </td>
-                                <td colspan="2">
-                                    @if ($desmagnetizacion_sn)
-                                        SI
-                                    @else
-                                        NO
-                                    @endif
-                                </td>
-                            </tr>
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Magnetización</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$magnetizacion->codigo}}</div>
+                               </td>
+                               <td colspan="1" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Fueza Portante</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$magnetizacion->fuerza_portante}}</div>
+                               </td>
+                               <td colspan="1" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Concentración</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe_pm->concentracion}}</div>
+                               </td>
+                           </tr>
 
-                            <tr>
-                                <th colspan="2">Magnetización</th>
-                                <th colspan="1">Fueza Portante</th>
-                                <th colspan="1">Concentración</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">{{$magnetizacion->codigo}}</td>
-                                <td colspan="1">{{$magnetizacion->fuerza_portante}}</td>
-                                <td colspan="1">{{$informe_pm->concentracion}}</td>
-                            </tr>
+                           <tr>
+                               <td colspan="4" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Iluminación</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$iluminacion->codigo}}</div>
+                               </td>
+                           </tr>
 
-                            <tr>
-                                <th colspan="4">Iluminación</th>
-                            </tr>
-                            <tr>
-                                <td colspan="4">{{$iluminacion->codigo}}</td>
-                            </tr>
+                           <tr>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Norma Evaluación</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$norma_evaluacion->codigo}}</div>
+                               </td>
+                               <td colspan="2" style="padding:4px 5px 5px;border-bottom:1px solid #EEF2F7;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Norma Ensayo</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$norma_ensayo->codigo}}</div>
+                               </td>
+                           </tr>
 
-                            <tr>
-                                <th colspan="2">Norma Evaluación</th>
-                                <th colspan="2">Norma Ensayo</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="borderFilabottom">{{$norma_evaluacion->codigo}}</td>
-                                <td colspan="2" class="borderFilabottom">{{$norma_ensayo->codigo}}</td>
-                            </tr>
-                            <tr>
-                                <th colspan="4">Solicitante</th>
-                            </tr>
-                            <tr>
-                                <td colspan="4">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
-                            </tr>
+                           <tr>
+                               <td colspan="4" style="padding:4px 5px 5px;vertical-align:top;">
+                                   <div style="font-size:8px;font-weight:bold;color:#4F8CFF;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;">Solicitante</div>
+                                   <div style="font-size:12px;font-style:italic;color:#1C2340;">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</div>
+                               </td>
+                           </tr>
+
                        </tbody>
                     </table>
                 </td>
