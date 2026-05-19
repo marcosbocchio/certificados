@@ -8,7 +8,7 @@
 
 <style>
 
-    @page { margin: 155px 40px 230px 40px !important;
+    @page { margin: 180px 40px 230px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
 header {
