@@ -44,7 +44,8 @@
       "Bash(sed -i 's|<i class=\"fas fa-search\">\\\\n\\\\s*</span>|<i class=\"fas fa-search\"></i></button></span>|g' resources/js/components/abm-maestro/abm-maestro.vue)",
       "Bash(perl -i -0pe 's|\\(<i class=\"fas fa-search\"></i>\\\\n\\\\s*</span>\\)|<\\\\/i><\\\\/button><\\\\/span>\\\\n|g' resources/js/components/abm-maestro/abm-maestro.vue)",
       "Bash(xargs sed -i 's/class=\"btn btn-warning btn-sm\"/class=\"btn btn-enod btn-sm\"/g')",
-      "Bash(docker compose *)"
+      "Bash(docker compose *)",
+      "Bash(ls \"C:/Users/Sakat/.claude/\"; echo \"---\"; ls \"C:/laragon/www/rusoft/certificados/.claude/\" 2>/dev/null)"
     ]
   }
 }

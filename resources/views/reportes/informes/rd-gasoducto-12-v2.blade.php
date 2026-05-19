@@ -8,13 +8,13 @@
 
 <style>
     @page {
-        margin: 150px 40px 230px 40px !important;
+        margin: 180px 40px 230px 40px !important;
         padding: 0px 0px 0px 0px !important;
     }
 
     header {
         position: fixed;
-        top: -135px;
+        top: -180px;
     }
 
     footer {
