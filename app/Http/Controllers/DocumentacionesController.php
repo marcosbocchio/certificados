@@ -425,11 +425,17 @@ public function importarZipDoc(Request $request)
             // Pivot records
             if ($item['tipo'] === 'USUARIO') {
                 $ud = UsuarioDocumentaciones::where('documentacion_id', $doc->id)->first() ?? new UsuarioDocumentaciones();
-                $ud->documentacion_id               = $doc->id;
-                $ud->user_id                        = $userId;
-                $ud->tipo_documentacion_usuario_id  = $tipoDocUsuarioId;
-                $ud->fecha_caducidad                = $item['fecha_caducidad'] ?? null;
-                $ud->save();
+                $ud->documentacion_id              = $doc->id;
+                $ud->user_id                       = $userId;
+                $ud->tipo_documentacion_usuario_id = $tipoDocUsuarioId;
+                // fecha_caducidad puede no existir en todos los entornos
+                try {
+                    $ud->fecha_caducidad = $item['fecha_caducidad'] ?? null;
+                    $ud->save();
+                } catch (\Exception $e) {
+                    unset($ud->fecha_caducidad);
+                    $ud->save();
+                }
             }
 
             if ($item['tipo'] === 'EQUIPO') {

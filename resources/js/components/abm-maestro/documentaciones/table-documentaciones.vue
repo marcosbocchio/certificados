@@ -154,7 +154,13 @@ export default {
         });
         const { created, updated, errors } = response.data;
         const msg = `Importados: ${created} creados, ${updated} actualizados${errors.length ? ', ' + errors.length + ' errores' : ''}`;
-        errors.length ? toastr.warning(msg) : toastr.success(msg);
+        if (errors.length) {
+          toastr.warning(msg);
+          console.warn('Errores en importación:', errors);
+          errors.forEach(e => toastr.error(e, 'Error importación', { timeOut: 8000 }));
+        } else {
+          toastr.success(msg);
+        }
         this.$emit('refreshEvent');
       } catch (error) {
         console.error('Error importando ZIP:', error);

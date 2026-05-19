@@ -3754,7 +3754,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               response = _context2.sent;
               _response$data = response.data, created = _response$data.created, updated = _response$data.updated, errors = _response$data.errors;
               msg = "Importados: ".concat(created, " creados, ").concat(updated, " actualizados").concat(errors.length ? ', ' + errors.length + ' errores' : '');
-              errors.length ? toastr.warning(msg) : toastr.success(msg);
+              if (errors.length) {
+                toastr.warning(msg);
+                console.warn('Errores en importación:', errors);
+                errors.forEach(function (e) {
+                  return toastr.error(e, 'Error importación', {
+                    timeOut: 8000
+                  });
+                });
+              } else {
+                toastr.success(msg);
+              }
               _this2.$emit('refreshEvent');
               _context2.next = 21;
               break;
