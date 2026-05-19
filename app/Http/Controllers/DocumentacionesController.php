@@ -20,6 +20,11 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
 use ZipArchive;
+use App\MetodoEnsayos;
+use App\InternoEquipos;
+use App\InternoFuentes;
+use App\Vehiculos;
+use App\TiposDocumentosUsuarios;
 
 
 class DocumentacionesController extends Controller
@@ -116,6 +121,7 @@ class DocumentacionesController extends Controller
     }
 
     $filesAdded = false;
+    $manifestItems = [];
 
     foreach ($request->registros as $registro) {
         $filePath = public_path($registro['path']);
@@ -127,16 +133,50 @@ class DocumentacionesController extends Controller
         $extension = pathinfo($filePath, PATHINFO_EXTENSION);
         $zipFolderPath = $this->getZipFolderPath($registro);
         $fileNameInZip = $registro['titulo'] . '.' . $extension;
+        $filePathInZip = $zipFolderPath . '/' . $fileNameInZip;
 
         // Agregar el archivo al ZIP
-        $zip->addFile($filePath, $zipFolderPath . '/' . $fileNameInZip);
+        $zip->addFile($filePath, $filePathInZip);
         $filesAdded = true;
+
+        // Construir entrada del manifest
+        $manifestItems[] = [
+            'tipo'                        => $registro['tipo'],
+            'titulo'                      => $registro['titulo'],
+            'descripcion'                 => $registro['descripcion'] ?? null,
+            'visible_sn'                  => $registro['visible_sn'] ?? true,
+            'fecha_caducidad'             => $registro['fecha_caducidad'] ?? null,
+            'file_path_in_zip'            => $filePathInZip,
+            'metodo_ensayo'               => isset($registro['metodo_ensayo']['metodo']) && $registro['metodo_ensayo']['metodo']
+                                                ? ['metodo' => $registro['metodo_ensayo']['metodo']] : null,
+            'usuario'                     => isset($registro['usuario'][0]['email'])
+                                                ? ['email' => $registro['usuario'][0]['email']] : null,
+            'tipo_documento_usuario'      => isset($registro['tipo_documento_usuario'][0]['codigo'])
+                                                ? ['codigo' => $registro['tipo_documento_usuario'][0]['codigo']] : null,
+            'interno_equipo'              => isset($registro['interno_equipo'][0]['nro_interno'])
+                                                ? ['nro_interno' => $registro['interno_equipo'][0]['nro_interno']] : null,
+            'certificado_verificacion_sn' => $registro['interno_equipo'][0]['pivot']['certificado_verificacion_sn'] ?? false,
+            'user_dosimetro'              => isset($registro['user_interno_equipo'][0]['email'])
+                                                ? ['email' => $registro['user_interno_equipo'][0]['email']] : null,
+            'interno_fuente'              => isset($registro['interno_fuente'][0]['nro_serie'])
+                                                ? ['nro_serie' => $registro['interno_fuente'][0]['nro_serie']] : null,
+            'vehiculo'                    => isset($registro['vehiculo'][0]['nro_interno'])
+                                                ? ['nro_interno' => $registro['vehiculo'][0]['nro_interno']] : null,
+        ];
     }
 
     if (!$filesAdded) {
         $zip->close();
         return response()->json(['message' => 'No se agregaron archivos al ZIP'], 400);
     }
+
+    // Agregar manifest.json al ZIP
+    $manifest = json_encode([
+        'exported_at'     => now()->toIso8601String(),
+        'version'         => '1',
+        'documentaciones' => $manifestItems,
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    $zip->addFromString('manifest.json', $manifest);
 
     $zip->close();
 
@@ -184,8 +224,204 @@ private function getZipFolderPath($registro)
     }
 }
 
-    
-    
+public function importarZipDoc(Request $request)
+{
+    $request->validate(['zip' => 'required|file']);
+
+    $zip = new ZipArchive();
+    $tmpDir = storage_path('app/import_tmp/' . Str::uuid());
+    mkdir($tmpDir, 0777, true);
+
+    if ($zip->open($request->file('zip')->getRealPath()) !== true) {
+        $this->limpiarDirectorio($tmpDir);
+        return response()->json(['message' => 'No se pudo abrir el ZIP'], 400);
+    }
+    $zip->extractTo($tmpDir);
+    $zip->close();
+
+    $manifestPath = $tmpDir . '/manifest.json';
+    if (!file_exists($manifestPath)) {
+        $this->limpiarDirectorio($tmpDir);
+        return response()->json(['message' => 'El ZIP no contiene manifest.json'], 400);
+    }
+
+    $manifest = json_decode(file_get_contents($manifestPath), true);
+    $created = 0;
+    $updated = 0;
+    $errors = [];
+
+    foreach ($manifest['documentaciones'] as $item) {
+        try {
+            // Resolver metodo_ensayo
+            $metodoEnsayoId = null;
+            if (!empty($item['metodo_ensayo']['metodo'])) {
+                $metodo = MetodoEnsayos::where('metodo', $item['metodo_ensayo']['metodo'])->first();
+                if (!$metodo) {
+                    $errors[] = "{$item['titulo']}: metodo_ensayo '{$item['metodo_ensayo']['metodo']}' no encontrado";
+                    continue;
+                }
+                $metodoEnsayoId = $metodo->id;
+            }
+
+            // Resolver relaciones por tipo
+            $userId = null;
+            $tipoDocUsuarioId = null;
+            if ($item['tipo'] === 'USUARIO') {
+                if (empty($item['usuario']['email'])) {
+                    $errors[] = "{$item['titulo']}: sin email de usuario en manifest";
+                    continue;
+                }
+                $user = \App\User::where('email', $item['usuario']['email'])->first();
+                if (!$user) {
+                    $errors[] = "{$item['titulo']}: usuario '{$item['usuario']['email']}' no encontrado";
+                    continue;
+                }
+                $userId = $user->id;
+                if (!empty($item['tipo_documento_usuario']['codigo'])) {
+                    $tipoDoc = TiposDocumentosUsuarios::where('codigo', $item['tipo_documento_usuario']['codigo'])->first();
+                    $tipoDocUsuarioId = $tipoDoc ? $tipoDoc->id : null;
+                }
+            }
+
+            $internoEquipoId = null;
+            $userDosimetroId = null;
+            if ($item['tipo'] === 'EQUIPO') {
+                if (empty($item['interno_equipo']['nro_interno'])) {
+                    $errors[] = "{$item['titulo']}: sin nro_interno de equipo";
+                    continue;
+                }
+                $equipo = InternoEquipos::where('nro_interno', $item['interno_equipo']['nro_interno'])->first();
+                if (!$equipo) {
+                    $errors[] = "{$item['titulo']}: equipo '{$item['interno_equipo']['nro_interno']}' no encontrado";
+                    continue;
+                }
+                $internoEquipoId = $equipo->id;
+                if (!empty($item['user_dosimetro']['email'])) {
+                    $userDos = \App\User::where('email', $item['user_dosimetro']['email'])->first();
+                    $userDosimetroId = $userDos ? $userDos->id : null;
+                }
+            }
+
+            $internoFuenteId = null;
+            if ($item['tipo'] === 'FUENTE') {
+                if (empty($item['interno_fuente']['nro_serie'])) {
+                    $errors[] = "{$item['titulo']}: sin nro_serie de fuente";
+                    continue;
+                }
+                $fuente = InternoFuentes::where('nro_serie', $item['interno_fuente']['nro_serie'])->first();
+                if (!$fuente) {
+                    $errors[] = "{$item['titulo']}: fuente '{$item['interno_fuente']['nro_serie']}' no encontrada";
+                    continue;
+                }
+                $internoFuenteId = $fuente->id;
+            }
+
+            $vehiculoId = null;
+            if ($item['tipo'] === 'VEHICULO') {
+                if (empty($item['vehiculo']['nro_interno'])) {
+                    $errors[] = "{$item['titulo']}: sin nro_interno de vehiculo";
+                    continue;
+                }
+                $vehiculo = Vehiculos::where('nro_interno', $item['vehiculo']['nro_interno'])->first();
+                if (!$vehiculo) {
+                    $errors[] = "{$item['titulo']}: vehiculo '{$item['vehiculo']['nro_interno']}' no encontrado";
+                    continue;
+                }
+                $vehiculoId = $vehiculo->id;
+            }
+
+            // Copiar archivo al storage
+            $newPath = null;
+            $fileInZip = $tmpDir . '/' . $item['file_path_in_zip'];
+            if (file_exists($fileInZip)) {
+                $extension = pathinfo($fileInZip, PATHINFO_EXTENSION);
+                $newFilename = Str::uuid() . '_' . Str::slug($item['titulo']) . '.' . $extension;
+                $destDir = storage_path('app/public/documentaciones');
+                if (!is_dir($destDir)) {
+                    mkdir($destDir, 0777, true);
+                }
+                copy($fileInZip, $destDir . '/' . $newFilename);
+                $newPath = 'storage/documentaciones/' . $newFilename;
+            }
+
+            // Buscar existente por tipo + titulo
+            $doc = Documentaciones::where('tipo', $item['tipo'])->where('titulo', $item['titulo'])->first();
+            $isNew = !$doc;
+            if (!$doc) {
+                $doc = new Documentaciones();
+            }
+
+            $doc->tipo             = $item['tipo'];
+            $doc->titulo           = $item['titulo'];
+            $doc->descripcion      = $item['descripcion'] ?? null;
+            $doc->visible_sn       = $item['visible_sn'] ?? true;
+            $doc->metodo_ensayo_id = $metodoEnsayoId;
+            $doc->fecha_caducidad  = $item['fecha_caducidad'] ?? null;
+            if ($newPath) {
+                $doc->path = $newPath;
+            }
+            $doc->save();
+
+            // Pivot records
+            if ($item['tipo'] === 'USUARIO') {
+                $ud = UsuarioDocumentaciones::where('documentacion_id', $doc->id)->first() ?? new UsuarioDocumentaciones();
+                $ud->documentacion_id               = $doc->id;
+                $ud->user_id                        = $userId;
+                $ud->tipo_documentacion_usuario_id  = $tipoDocUsuarioId;
+                $ud->fecha_caducidad                = $item['fecha_caducidad'] ?? null;
+                $ud->save();
+            }
+
+            if ($item['tipo'] === 'EQUIPO') {
+                $ed = InternoEquipoDocumentaciones::where('documentacion_id', $doc->id)->first() ?? new InternoEquipoDocumentaciones();
+                $ed->documentacion_id           = $doc->id;
+                $ed->interno_equipo_id          = $internoEquipoId;
+                $ed->certificado_verificacion_sn = $item['certificado_verificacion_sn'] ?? false;
+                $ed->interno_equipo_user_id     = $userDosimetroId;
+                $ed->save();
+            }
+
+            if ($item['tipo'] === 'FUENTE') {
+                $fd = InternoFuenteDocumentaciones::where('documentacion_id', $doc->id)->first() ?? new InternoFuenteDocumentaciones();
+                $fd->documentacion_id    = $doc->id;
+                $fd->interno_fuente_id   = $internoFuenteId;
+                $fd->save();
+            }
+
+            if ($item['tipo'] === 'VEHICULO') {
+                $vd = VehiculoDocumentaciones::where('documentacion_id', $doc->id)->first() ?? new VehiculoDocumentaciones();
+                $vd->documentacion_id = $doc->id;
+                $vd->vehiculo_id      = $vehiculoId;
+                $vd->save();
+            }
+
+            $isNew ? $created++ : $updated++;
+
+        } catch (\Exception $e) {
+            Log::error('importarZipDoc error: ' . $e->getMessage());
+            $errors[] = ($item['titulo'] ?? '?') . ': ' . $e->getMessage();
+        }
+    }
+
+    $this->limpiarDirectorio($tmpDir);
+
+    return response()->json(['created' => $created, 'updated' => $updated, 'errors' => $errors]);
+}
+
+private function limpiarDirectorio($dir)
+{
+    if (!is_dir($dir)) return;
+    $files = new \RecursiveIteratorIterator(
+        new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS),
+        \RecursiveIteratorIterator::CHILD_FIRST
+    );
+    foreach ($files as $file) {
+        $file->isDir() ? rmdir($file->getPathname()) : unlink($file->getPathname());
+    }
+    rmdir($dir);
+}
+
+
 
     public function callView()
     {

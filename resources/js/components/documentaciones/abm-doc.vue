@@ -79,7 +79,7 @@
 
         <div class="col-md-12">
 
-            <component :is= setTablaComponente :registros="registros.data"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro" :loading="isLoading"/>
+            <component :is= setTablaComponente :registros="registros.data"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro" @refreshEvent="getResults" :loading="isLoading"/>
             <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getResults" :modelo="modelo"></delete-registro>
 
              <pagination

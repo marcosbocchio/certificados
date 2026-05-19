@@ -1,8 +1,10 @@
 <template>
   <div class="box box-custom-enod top-buffer">
     <div class="box-body">
-      <div style="padding: 5px;">
+      <div style="padding: 5px; display: flex; gap: 8px; align-items: center;">
           <button @click="generateZip" :disabled="!selectedRegistros.length" class="btn btn-enod">Descargar</button>
+          <button @click="$refs.importInput.click()" class="btn btn-default" :disabled="!$can('M_documentaciones_edita')">Importar ZIP</button>
+          <input ref="importInput" type="file" accept=".zip" style="display:none" @change="importarZip($event)" />
       </div>
       <loading :active.sync="isLoading" :loader="'bars'" :color="'red'"></loading>
       <div class="table-responsive">
@@ -119,18 +121,11 @@ export default {
       this.selectedRegistros = event.target.checked ? this.registros : [];
     },
     async generateZip() {
-    if (!this.selectedRegistros.length) return;
-
-    this.isLoading = true;
-    try {
-    console.log(this.selectedRegistros);
-        // Mapear los registros seleccionados para obtener solo tipo y path
-        const registros = this.selectedRegistros
-
-        // Enviar los datos al backend para generar el ZIP
+      if (!this.selectedRegistros.length) return;
+      this.isLoading = true;
+      try {
+        const registros = this.selectedRegistros;
         const response = await axios.post("/documentaciones/generar-zip-doc", { registros }, { responseType: 'blob' });
-        
-        // Crear el archivo ZIP y descargarlo
         const blob = new Blob([response.data], { type: 'application/zip' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -139,12 +134,35 @@ export default {
         document.body.appendChild(link);
         link.click();
         URL.revokeObjectURL(url);
-    } catch (error) {
+      } catch (error) {
         console.error("Error generando el ZIP:", error);
-    } finally {
+        toastr.error('Error al generar el ZIP');
+      } finally {
         this.isLoading = false;
+      }
+    },
+    async importarZip(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      this.$refs.importInput.value = '';
+      this.isLoading = true;
+      try {
+        const formData = new FormData();
+        formData.append('zip', file);
+        const response = await axios.post('/documentaciones/importar-zip-doc', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        const { created, updated, errors } = response.data;
+        const msg = `Importados: ${created} creados, ${updated} actualizados${errors.length ? ', ' + errors.length + ' errores' : ''}`;
+        errors.length ? toastr.warning(msg) : toastr.success(msg);
+        this.$emit('refreshEvent');
+      } catch (error) {
+        console.error('Error importando ZIP:', error);
+        toastr.error('Error al importar el ZIP');
+      } finally {
+        this.isLoading = false;
+      }
     }
-}
   }
 };
 </script>

@@ -3688,18 +3688,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 2:
               _this.isLoading = true;
               _context.prev = 3;
-              console.log(_this.selectedRegistros);
-              // Mapear los registros seleccionados para obtener solo tipo y path
-              registros = _this.selectedRegistros; // Enviar los datos al backend para generar el ZIP
-              _context.next = 8;
+              registros = _this.selectedRegistros;
+              _context.next = 7;
               return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/documentaciones/generar-zip-doc", {
                 registros: registros
               }, {
                 responseType: 'blob'
               });
-            case 8:
+            case 7:
               response = _context.sent;
-              // Crear el archivo ZIP y descargarlo
               blob = new Blob([response.data], {
                 type: 'application/zip'
               });
@@ -3712,10 +3709,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               URL.revokeObjectURL(url);
               _context.next = 22;
               break;
-            case 19:
-              _context.prev = 19;
+            case 18:
+              _context.prev = 18;
               _context.t0 = _context["catch"](3);
               console.error("Error generando el ZIP:", _context.t0);
+              toastr.error('Error al generar el ZIP');
             case 22:
               _context.prev = 22;
               _this.isLoading = false;
@@ -3724,7 +3722,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[3, 19, 22, 25]]);
+        }, _callee, null, [[3, 18, 22, 25]]);
+      }))();
+    },
+    importarZip: function importarZip(event) {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var file, formData, response, _response$data, created, updated, errors, msg;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              file = event.target.files[0];
+              if (file) {
+                _context2.next = 3;
+                break;
+              }
+              return _context2.abrupt("return");
+            case 3:
+              _this2.$refs.importInput.value = '';
+              _this2.isLoading = true;
+              _context2.prev = 5;
+              formData = new FormData();
+              formData.append('zip', file);
+              _context2.next = 10;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/documentaciones/importar-zip-doc', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              });
+            case 10:
+              response = _context2.sent;
+              _response$data = response.data, created = _response$data.created, updated = _response$data.updated, errors = _response$data.errors;
+              msg = "Importados: ".concat(created, " creados, ").concat(updated, " actualizados").concat(errors.length ? ', ' + errors.length + ' errores' : '');
+              errors.length ? toastr.warning(msg) : toastr.success(msg);
+              _this2.$emit('refreshEvent');
+              _context2.next = 21;
+              break;
+            case 17:
+              _context2.prev = 17;
+              _context2.t0 = _context2["catch"](5);
+              console.error('Error importando ZIP:', _context2.t0);
+              toastr.error('Error al importar el ZIP');
+            case 21:
+              _context2.prev = 21;
+              _this2.isLoading = false;
+              return _context2.finish(21);
+            case 24:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[5, 17, 21, 24]]);
       }))();
     }
   }
@@ -46386,7 +46433,10 @@ var render = function render() {
     staticClass: "box-body"
   }, [_c("div", {
     staticStyle: {
-      padding: "5px"
+      padding: "5px",
+      display: "flex",
+      gap: "8px",
+      "align-items": "center"
     }
   }, [_c("button", {
     staticClass: "btn btn-enod",
@@ -46396,7 +46446,31 @@ var render = function render() {
     on: {
       click: _vm.generateZip
     }
-  }, [_vm._v("Descargar")])]), _vm._v(" "), _c("loading", {
+  }, [_vm._v("Descargar")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-default",
+    attrs: {
+      disabled: !_vm.$can("M_documentaciones_edita")
+    },
+    on: {
+      click: function click($event) {
+        return _vm.$refs.importInput.click();
+      }
+    }
+  }, [_vm._v("Importar ZIP")]), _vm._v(" "), _c("input", {
+    ref: "importInput",
+    staticStyle: {
+      display: "none"
+    },
+    attrs: {
+      type: "file",
+      accept: ".zip"
+    },
+    on: {
+      change: function change($event) {
+        return _vm.importarZip($event);
+      }
+    }
+  })]), _vm._v(" "), _c("loading", {
     attrs: {
       active: _vm.isLoading,
       loader: "bars",
@@ -69088,7 +69162,8 @@ var render = function render() {
     },
     on: {
       confirmarDelete: _vm.confirmDeleteRegistro,
-      editRegistroEvent: _vm.editRegistro
+      editRegistroEvent: _vm.editRegistro,
+      refreshEvent: _vm.getResults
     }
   }), _vm._v(" "), _c("delete-registro", {
     attrs: {

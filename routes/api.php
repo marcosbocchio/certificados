@@ -550,6 +550,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/buscar-asignaciones-epp', 'AsignacionRopaController@buscarAsignacionesEPP');
 
     Route::post('/documentaciones/generar-zip-doc', 'DocumentacionesController@generarZipDoc');
+    Route::post('/documentaciones/importar-zip-doc', 'DocumentacionesController@importarZipDoc');
 
     //reporte-placas
 
