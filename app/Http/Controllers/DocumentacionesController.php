@@ -123,21 +123,38 @@ class DocumentacionesController extends Controller
     $filesAdded = false;
     $manifestItems = [];
 
+    $prodFilesUrl = rtrim(env('PROD_FILES_URL', ''), '/');
+
     foreach ($request->registros as $registro) {
         $filePath = public_path($registro['path']);
-        if (!file_exists($filePath)) {
-            \Log::warning("El archivo {$filePath} no existe y no fue agregado al ZIP.");
-            continue;
-        }
-
-        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+        $extension = pathinfo($registro['path'], PATHINFO_EXTENSION);
         $zipFolderPath = $this->getZipFolderPath($registro);
         $fileNameInZip = $registro['titulo'] . '.' . $extension;
         $filePathInZip = $zipFolderPath . '/' . $fileNameInZip;
 
-        // Agregar el archivo al ZIP
-        $zip->addFile($filePath, $filePathInZip);
-        $filesAdded = true;
+        if (file_exists($filePath)) {
+            $zip->addFile($filePath, $filePathInZip);
+            $filesAdded = true;
+        } elseif (env('PROD_PUBLIC_URL')) {
+            $url = rtrim(env('PROD_PUBLIC_URL'), '/') . '/' . ltrim($registro['path'], '/');
+            $result = $this->fetchViaHttps($url);
+            if ($result !== false && strlen($result['content']) > 0) {
+                // Si el path no tiene extensión, inferirla del Content-Type
+                if (!$extension) {
+                    $extension = $this->extensionFromContentType($result['content_type']) ?? 'bin';
+                    $fileNameInZip = $registro['titulo'] . '.' . $extension;
+                    $filePathInZip = $zipFolderPath . '/' . $fileNameInZip;
+                }
+                $zip->addFromString($filePathInZip, $result['content']);
+                $filesAdded = true;
+            } else {
+                Log::warning("HTTPS: no se pudo obtener {$url}");
+                continue;
+            }
+        } else {
+            Log::warning("Archivo no encontrado y sin PROD_PUBLIC_URL configurado: {$filePath}");
+            continue;
+        }
 
         // Construir entrada del manifest
         $manifestItems[] = [
@@ -406,6 +423,45 @@ public function importarZipDoc(Request $request)
     $this->limpiarDirectorio($tmpDir);
 
     return response()->json(['created' => $created, 'updated' => $updated, 'errors' => $errors]);
+}
+
+private function fetchViaHttps($url)
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $content = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+    $error = curl_error($ch);
+    curl_close($ch);
+    if ($httpCode === 200 && $content !== false) {
+        return ['content' => $content, 'content_type' => $contentType];
+    }
+    Log::warning("fetchViaHttps: {$url} | HTTP {$httpCode} | {$error}");
+    return false;
+}
+
+private function extensionFromContentType(?string $contentType): ?string
+{
+    if (!$contentType) return null;
+    $map = [
+        'application/pdf'  => 'pdf',
+        'image/jpeg'       => 'jpg',
+        'image/jpg'        => 'jpg',
+        'image/png'        => 'png',
+        'image/bmp'        => 'bmp',
+        'image/gif'        => 'gif',
+        'image/webp'       => 'webp',
+        'application/msword' => 'doc',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+        'application/vnd.ms-excel' => 'xls',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'xlsx',
+    ];
+    $mime = strtolower(explode(';', $contentType)[0]);
+    return $map[$mime] ?? null;
 }
 
 private function limpiarDirectorio($dir)
