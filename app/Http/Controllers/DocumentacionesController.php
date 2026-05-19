@@ -267,6 +267,23 @@ public function importarZipDoc(Request $request)
     $updated = 0;
     $errors = [];
 
+    // Construir mapa de archivos extraídos: path_relativo_normalizado => path_absoluto
+    // También por basename para fallback con rutas con caracteres especiales
+    $extractedByPath = [];
+    $extractedByBasename = [];
+    $iterator = new \RecursiveIteratorIterator(
+        new \RecursiveDirectoryIterator($tmpDir, \RecursiveDirectoryIterator::SKIP_DOTS)
+    );
+    foreach ($iterator as $file) {
+        if ($file->isFile() && $file->getFilename() !== 'manifest.json') {
+            $absPath = $file->getPathname();
+            $relPath = str_replace($tmpDir . DIRECTORY_SEPARATOR, '', $absPath);
+            $relPath = str_replace('\\', '/', $relPath); // normalizar separadores
+            $extractedByPath[$relPath] = $absPath;
+            $extractedByBasename[$file->getFilename()][] = $absPath;
+        }
+    }
+
     foreach ($manifest['documentaciones'] as $item) {
         try {
             // Resolver metodo_ensayo
@@ -347,22 +364,48 @@ public function importarZipDoc(Request $request)
                 $vehiculoId = $vehiculo->id;
             }
 
-            // Copiar archivo al storage
+            // Localizar archivo extraído
             $newPath = null;
-            $fileInZip = $tmpDir . '/' . $item['file_path_in_zip'];
-            if (file_exists($fileInZip)) {
-                $extension = pathinfo($fileInZip, PATHINFO_EXTENSION);
+            $zipRelPath = str_replace('\\', '/', $item['file_path_in_zip']);
+            $resolvedFile = $extractedByPath[$zipRelPath]
+                ?? ($extractedByBasename[basename($zipRelPath)][0] ?? null);
+
+            if ($resolvedFile && file_exists($resolvedFile)) {
+                $extension = pathinfo($resolvedFile, PATHINFO_EXTENSION) ?: 'bin';
                 $newFilename = Str::uuid() . '_' . Str::slug($item['titulo']) . '.' . $extension;
                 $destDir = storage_path('app/public/documentaciones');
                 if (!is_dir($destDir)) {
                     mkdir($destDir, 0777, true);
                 }
-                copy($fileInZip, $destDir . '/' . $newFilename);
+                copy($resolvedFile, $destDir . '/' . $newFilename);
                 $newPath = 'storage/documentaciones/' . $newFilename;
             }
 
-            // Buscar existente por tipo + titulo
-            $doc = Documentaciones::where('tipo', $item['tipo'])->where('titulo', $item['titulo'])->first();
+            // Buscar existente: para tipos relacionados incluir la relación en el criterio
+            $doc = null;
+            if ($item['tipo'] === 'USUARIO' && $userId) {
+                $doc = Documentaciones::where('tipo', $item['tipo'])
+                    ->where('titulo', $item['titulo'])
+                    ->whereHas('usuario', fn($q) => $q->where('users.id', $userId))
+                    ->first();
+            } elseif ($item['tipo'] === 'EQUIPO' && $internoEquipoId) {
+                $doc = Documentaciones::where('tipo', $item['tipo'])
+                    ->where('titulo', $item['titulo'])
+                    ->whereHas('internoEquipo', fn($q) => $q->where('interno_equipos.id', $internoEquipoId))
+                    ->first();
+            } elseif ($item['tipo'] === 'FUENTE' && $internoFuenteId) {
+                $doc = Documentaciones::where('tipo', $item['tipo'])
+                    ->where('titulo', $item['titulo'])
+                    ->whereHas('internoFuente', fn($q) => $q->where('interno_fuentes.id', $internoFuenteId))
+                    ->first();
+            } elseif ($item['tipo'] === 'VEHICULO' && $vehiculoId) {
+                $doc = Documentaciones::where('tipo', $item['tipo'])
+                    ->where('titulo', $item['titulo'])
+                    ->whereHas('vehiculo', fn($q) => $q->where('vehiculos.id', $vehiculoId))
+                    ->first();
+            } else {
+                $doc = Documentaciones::where('tipo', $item['tipo'])->where('titulo', $item['titulo'])->first();
+            }
             $isNew = !$doc;
             if (!$doc) {
                 $doc = new Documentaciones();

@@ -19,3 +19,15 @@ docker-compose.local.yml
 .env.docker.local
 docker/**/*.local
 nginx/**/*.local
+
+# Entornos con credenciales
+.env.produccion
+.env.testing
+
+# Scripts locales de conexión/sync
+tunnel-produccion.bat
+sync-storage-produccion.bat
+
+# Directorios temporales generados
+/storage/app/import_tmp/
+/public/documentos-zip-abm/
