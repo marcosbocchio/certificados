@@ -2,7 +2,7 @@
     <tbody>
         <tr>
             <td style="width:125px;text-align:center;vertical-align:middle;background-color:#F0F5FF;border-right:2px solid #4F8CFF;padding:4px 4px;">
-                <img src="{{ public_path('img/logo-enod.png')}}" alt="" style="width:100%;height:auto;display:block;">
+                <img src="{{ public_path('img/logo-enod.png')}}" alt="" style="width:100%;max-height:50px;height:auto;display:block;">
             </td>
             <td style="text-align:center;vertical-align:middle;padding:4px 14px;">
                 <div style="font-size:14px;font-weight:bold;color:#1C2340;letter-spacing:0.2px;">{{ $titulo }}</div>

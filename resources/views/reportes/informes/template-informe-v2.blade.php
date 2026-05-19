@@ -14,7 +14,7 @@
 
 header {
     position:fixed;
-    top: -140px;
+    top: -180px;
 }        
     
 footer {
