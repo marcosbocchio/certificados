@@ -386,22 +386,22 @@ public function importarZipDoc(Request $request)
             if ($item['tipo'] === 'USUARIO' && $userId) {
                 $doc = Documentaciones::where('tipo', $item['tipo'])
                     ->where('titulo', $item['titulo'])
-                    ->whereHas('usuario', fn($q) => $q->where('users.id', $userId))
+                    ->whereHas('usuario', function($q) use ($userId) { $q->where('users.id', $userId); })
                     ->first();
             } elseif ($item['tipo'] === 'EQUIPO' && $internoEquipoId) {
                 $doc = Documentaciones::where('tipo', $item['tipo'])
                     ->where('titulo', $item['titulo'])
-                    ->whereHas('internoEquipo', fn($q) => $q->where('interno_equipos.id', $internoEquipoId))
+                    ->whereHas('internoEquipo', function($q) use ($internoEquipoId) { $q->where('interno_equipos.id', $internoEquipoId); })
                     ->first();
             } elseif ($item['tipo'] === 'FUENTE' && $internoFuenteId) {
                 $doc = Documentaciones::where('tipo', $item['tipo'])
                     ->where('titulo', $item['titulo'])
-                    ->whereHas('internoFuente', fn($q) => $q->where('interno_fuentes.id', $internoFuenteId))
+                    ->whereHas('internoFuente', function($q) use ($internoFuenteId) { $q->where('interno_fuentes.id', $internoFuenteId); })
                     ->first();
             } elseif ($item['tipo'] === 'VEHICULO' && $vehiculoId) {
                 $doc = Documentaciones::where('tipo', $item['tipo'])
                     ->where('titulo', $item['titulo'])
-                    ->whereHas('vehiculo', fn($q) => $q->where('vehiculos.id', $vehiculoId))
+                    ->whereHas('vehiculo', function($q) use ($vehiculoId) { $q->where('vehiculos.id', $vehiculoId); })
                     ->first();
             } else {
                 $doc = Documentaciones::where('tipo', $item['tipo'])->where('titulo', $item['titulo'])->first();
