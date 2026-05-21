@@ -287,3 +287,46 @@ color:rgb(255, 255, 255);
   font-size: var(--vs-font-size);
   line-height: var(--vs-line-height);
 }
+
+/* Footer Enod — card con el mismo ancho que el contenido */
+.enod-footer{
+  background: #ecf0f5 !important;
+  border: none !important;
+  border-top: none !important;
+  box-shadow: none !important;
+  padding: 0 15px 15px !important;
+  display: block;
+}
+.enod-footer-inner{
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px -2px rgba(0,0,0,.18), 0 2px 6px -1px rgba(0,0,0,.12);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+.enod-footer-logo{
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  display: block;
+}
+@media (max-width: 768px){
+  .enod-footer-logo{ max-height: 60px; }
+}
+
+/* Dashboard /area/enod — sombras consistentes en cards y tabla */
+.small-box{
+  border-radius: 8px !important;
+  box-shadow: 0 4px 14px -2px rgba(0,0,0,.18), 0 2px 6px -1px rgba(0,0,0,.12) !important;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.small-box:hover{
+  box-shadow: 0 10px 22px -4px rgba(0,0,0,.28), 0 4px 10px -2px rgba(0,0,0,.18) !important;
+}
+.box.box-custom-enod{
+  border-radius: 8px;
+  box-shadow: 0 4px 14px -2px rgba(0,0,0,.18), 0 2px 6px -1px rgba(0,0,0,.12);
+}

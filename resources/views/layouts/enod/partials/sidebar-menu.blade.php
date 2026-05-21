@@ -184,22 +184,22 @@
           </a>
           <ul class="treeview-menu">
             @can('A_asistencia_acceder')
-              <li><a href="{{ route('asistencia-horas') }}">Carga Horas Extras</a></li>
+              <li><a href="{{ route('asistencia-horas') }}"><i class="fas fa-clock"></i> Carga Horas Extras</a></li>
             @endcan
             @can('A_asistencia_acceder')
-              <li><a href="{{ route('asistencia-servicios') }}">Carga Servicios Extras</a></li>
+              <li><a href="{{ route('asistencia-servicios') }}"><i class="fas fa-concierge-bell"></i> Carga Servicios Extras</a></li>
             @endcan
             @can('A_resumen_view')
-              <li><a href="{{ route('asistencia-resumen') }}">Resumen Horas Extras</a></li>
+              <li><a href="{{ route('asistencia-resumen') }}"><i class="fas fa-list-alt"></i> Resumen Horas Extras</a></li>
             @endcan
             @can('A_resumen_view')
-              <li><a href="{{ route('asistencia-resumen-servicio') }}">Resumen Servicios Extras</a></li>
+              <li><a href="{{ route('asistencia-resumen-servicio') }}"><i class="fas fa-clipboard-list"></i> Resumen Servicios Extras</a></li>
             @endcan
             @can('A_asistencia_acceder')
-              <li><a href="{{ route('asistencia-pagos') }}">Pagar Horas Extras</a></li>
+              <li><a href="{{ route('asistencia-pagos') }}"><i class="fas fa-money-bill-wave"></i> Pagar Horas Extras</a></li>
             @endcan
             @can('A_asistencia_acceder')
-              <li><a href="{{ route('asistencia-pagos-servicios') }}">Pagar Servicios Extras</a></li>
+              <li><a href="{{ route('asistencia-pagos-servicios') }}"><i class="fas fa-hand-holding-usd"></i> Pagar Servicios Extras</a></li>
             @endcan
           </ul>
         </li>

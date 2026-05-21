@@ -5,9 +5,9 @@
     <div class="grandParentContaniner">
     <div class="login-box">
       <!-- /.login-logo -->
-      <div class="login-box-body">
-        <div class="login-logo" >
-          <a href="{{ route('login') }}"><img src="{{asset('img/logo-enod-web.jpg')}}"  height="60px"  alt="Logo Enod"> </a>
+      <div class="login-box-body login-card">
+        <div class="login-logo login-logo-top">
+          <a href="{{ route('login') }}"><img src="{{asset('img/logo-enod.png')}}" class="login-brand" alt="Logo Enod"></a>
         </div>
         <p class="login-box-msg" >Login para iniciar sesión</p>
 
@@ -63,14 +63,17 @@
               </div>
           </div>
         </form>
-      </div>
-      <div class="logos-soft" style="margin-top: 8px !important;">
-          <img src="{{asset('img/logos-soft-ram.png')}}" width="100%" alt="...">
+
+        <div class="login-extras">
+          <div class="logos-soft">
+            <img src="{{asset('img/logos-soft-ram.png')}}" width="100%" alt="...">
+          </div>
+          <div class="login-logo login-logo-bottom">
+            <img src="{{asset('img/redes.png')}}" height="60px" alt="Redes Enod">
+          </div>
+        </div>
       </div>
       <!-- /.login-box-body -->
-      <div class="login-logo">
-        <a href="http://www.enodndt.com.ar/"><img src="{{asset('img/redes.png')}}"  height="90px"  alt="Redes Enod"> </a>
-      </div>
     </div>
 
     </div>

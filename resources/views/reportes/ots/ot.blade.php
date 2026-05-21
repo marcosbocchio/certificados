@@ -75,7 +75,7 @@ td b,td span {
                         <tbody>
                             <tr>
                                 <td rowspan="4" style="text-align: right;width: 240px;">
-                                    <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
+                                    <img src="{{ public_path('img/logo-enod.png')}}" alt="" style="max-width: 200px; max-height: 70px; margin-right: 25px;">
                                 </td>   
                                 <td style="font-size: 19px; height: 30px;width: 250px; text-align: center;margin-left: 0px" rowspan="3"><b>ORDEN DE TRABAJO</b></td>
                                 <td style="font-size: 11px;"><b ></b></td>                         

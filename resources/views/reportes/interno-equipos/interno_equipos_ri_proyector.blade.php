@@ -57,7 +57,7 @@ footer {
                             <tbody>
                                 <tr>
                                     <td rowspan="4" style="text-align: right; width:253px">
-                                        <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
+                                        <img src="{{ public_path('img/logo-enod.png')}}" alt="" style="max-width: 200px; max-height: 70px; margin-right: 25px;">
                                     </td>
 
                                     <td style="font-size: 22px; height: 30px; text-align: center;width:534px;" rowspan="2"><b>INTERNO EQUIPOS RI</b></td>
