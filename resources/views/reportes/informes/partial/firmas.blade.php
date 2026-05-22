@@ -2,13 +2,13 @@
     <tbody>
         <tr>
             <td style="font-size: 13px;" colspan="1"  rowspan="2"><b>Firmas </b></td>
-            <td style="font-size: 13px;text-align: center;height: 85px;" colspan="2" width="33.33%">
+            <td style="font-size: 13px;text-align: center;height: 65px;" colspan="2" width="33.33%">
                 @if($firma)
-                    <img src="{{ public_path($firma) }}" alt="" style="width: 175px;height: 85px;">
+                    <img src="{{ public_path($firma) }}" alt="" style="width: 140px;height: 65px;">
                 @endif
             </td>
-            <td style="font-size: 13px;" colspan="2"  width="33.33%">&nbsp;</td>
-            <td style="font-size: 13px;" colspan="2" width="33.33%">&nbsp;</td>
+            <td style="font-size: 13px;height: 65px;" colspan="2"  width="33.33%">&nbsp;</td>
+            <td style="font-size: 13px;height: 65px;" colspan="2" width="33.33%">&nbsp;</td>
         </tr>
         <tr>
             <td style="font-size: 14px; text-align: center;" colspan="2"><em>Evaluador </em></td>
