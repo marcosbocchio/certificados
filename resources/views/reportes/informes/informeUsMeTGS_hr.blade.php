@@ -87,7 +87,7 @@ footer {
                         <tbody>
                             <tr>
                                 <td rowspan="4" style="width: 210px;">
-                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 200px; max-height: 70px; margin-left: 2px;">
+                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 120px; max-height: 50px; margin-left: 2px;">
                                 </td>
                                 <td style="font-size: 18px; height: 30px;width: 295px; text-align: center;" rowspan="4"><b>{{ $titulo }}</b></td>
                                 <td style="font-size: 10px;" ><b style="margin-left:35px;">

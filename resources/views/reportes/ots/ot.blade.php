@@ -75,7 +75,7 @@ td b,td span {
                         <tbody>
                             <tr>
                                 <td rowspan="4" style="text-align: right;width: 240px;">
-                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 200px; max-height: 70px; margin-right: 25px;">
+                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 120px; max-height: 50px; margin-right: 25px;">
                                 </td>   
                                 <td style="font-size: 19px; height: 30px;width: 250px; text-align: center;margin-left: 0px" rowspan="3"><b>ORDEN DE TRABAJO</b></td>
                                 <td style="font-size: 11px;"><b ></b></td>                         

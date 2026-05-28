@@ -91,7 +91,7 @@ b {
                         <tbody>
                             <tr>
                                 <td rowspan="4" style="text-align: right;width: 240px;">
-                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 200px; max-height: 70px; margin-right: 25px;">
+                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 120px; max-height: 50px; margin-right: 25px;">
                                 </td>   
                                 <td style="font-size: 19px; height: 30px;width: 295px; text-align: center;margin-left: 0px" rowspan="4"><b>INFORME DE ULTRASONIDO ({{mb_strtoupper($tecnica->descripcion,"UTF-8")}})</b></td>
                                 <td style="font-size: 11px;">&nbsp;</td>                         

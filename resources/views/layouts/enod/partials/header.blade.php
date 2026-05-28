@@ -9,7 +9,7 @@
             <span class="logo-mini"><img src="{{asset('img/logo-empresa-t.png')}}" style="max-height: 36px; max-width: 36px;" alt=""></span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
-                 <img src="{{asset('img/logo-empresa.png')}}" style="margin-top: -10px; max-width: 200px; max-height: 70px;" alt="">
+                 <img src="{{asset('img/logo-empresa.png')}}" style="margin-top: -10px; max-width: 120px; max-height: 50px;" alt="">
             </span>
         </a>
 

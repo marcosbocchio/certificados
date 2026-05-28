@@ -6,7 +6,7 @@
                     <tbody>
                         <tr>
                             <td rowspan="4" style="text-align: left;width: 200px;">
-                                <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 200px; max-height: 70px; margin-left: 25px;">
+                                <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 120px; max-height: 50px; margin-left: 25px;">
                             </td>   
                             <td style="font-size: 19px; height: 30px;width: 375px; text-align: center;margin-left: 0px" rowspan="2"><b>{{ $titulo1 }}</b></td>
                             <td style="font-size: 11px;width: 200px" ><b style="margin-left: 110px;">&nbsp;</td>          

@@ -73,7 +73,7 @@ b {
                         <tbody>
                             <tr>
                                 <td rowspan="3" style="text-align: right; width:233px">
-                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 200px; max-height: 70px; margin-right: 25px;">
+                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 120px; max-height: 50px; margin-right: 25px;">
                                 </td>   
                                 <td style="font-size: 18px; height: 30px; text-align: center;width:234px" rowspan="3"><b>PARTE DIARIO DE TRABAJO</b></td>
                                 <td style="font-size: 13px;" colspan="2" ><b style="margin-left: 80px">PARTE N°: </b>{{$parte->id}}</td>                                        

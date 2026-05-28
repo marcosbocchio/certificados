@@ -68,7 +68,7 @@ b {
                         <tbody>
                             <tr>
                                 <td rowspan="4" style="text-align: right; width:253px">
-                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 200px; max-height: 70px; margin-right: 25px;">
+                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 120px; max-height: 50px; margin-right: 25px;">
                                 </td>
 
                                 <td style="font-size: 22px; height: 30px; text-align: center;width:534px;" rowspan="2"><b>CERTIFICADO</b></td>

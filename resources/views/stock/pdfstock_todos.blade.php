@@ -31,8 +31,8 @@
         }
 
         .logo img {
-            max-width: 180px;
-            max-height: 60px;
+            max-width: 120px;
+            max-height: 50px;
         }
 
         .title {

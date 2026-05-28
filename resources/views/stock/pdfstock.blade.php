@@ -24,8 +24,8 @@
         .logo img {
             height: auto;
             width: 100%;
-            max-width: 180px;
-            max-height: 60px;
+            max-width: 120px;
+            max-height: 50px;
         }
         .title {
             font-size: 18px;
