@@ -1,1 +1,1 @@
-<div style="background-color:rgb(255,204,0);border-top:1px solid rgb(137,131,99);border-bottom:1px solid rgb(137,131,99);height:3px;line-height:3px;font-size:1px;margin-top:10px;">&nbsp;</div>
+<hr style="border:0;border-top:4px solid rgb(255,204,0);margin:10px 0 0 0;height:0;padding:0;">
