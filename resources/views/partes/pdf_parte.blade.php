@@ -79,7 +79,7 @@
             <tr>
             <th rowspan="6" style="text-align:left; position: fixed; top:-30px;">
             &nbsp;
-                <img src="{{ public_path('/img/logo-enod.png')}}" alt="Logo ENOD" style="height: 150px;">
+                <img src="{{ public_path('/img/logo-empresa.png')}}" alt="Logo" style="height: 150px;">
             </th>
                 <th colspan="3" style="background-color:#878883;padding: 0px;height: 30px;">PARTE DIARIO</th>
             </tr>

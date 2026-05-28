@@ -79,7 +79,7 @@ b {
                         <tbody>
                             <tr>
                                 <td rowspan="4" style="text-align: right; width:253px">
-                                    <img src="{{ public_path('img/logo-enod.png')}}" alt="" style="max-width: 200px; max-height: 70px; margin-right: 25px;">
+                                    <img src="{{ public_path('img/logo-empresa.png')}}" alt="" style="max-width: 200px; max-height: 70px; margin-right: 25px;">
                                 </td>   
                                 <td style="font-size: 18px; height: 30px; text-align: center;width:534px;" rowspan="3"><b>RADIOGRAFÍA INDUSTRIAL</b></td>
                                 <td style="font-size: 11px;"><b style="margin-left: 40px"></b></td>                         

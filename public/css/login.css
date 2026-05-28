@@ -1,55 +1,46 @@
-Html,body{height:100%}
-@media (min-width:768px){.background-image{background-image:url(/img/fondo-login-enod.jpg);background-repeat:no-repeat;background-size:cover}}
-@media (max-width:768px){.background-image{background-image:url(/img/fondo-login-enod-mobile.jpg);background-repeat:no-repeat;background-size:cover}}
-#app{height:100%!important}
-.py-4{padding-bottom:5rem!important;height:100%!important}
-.grandParentContaniner{display:table;height:100%;margin:0 auto!important}
-.login-box{display:table-cell;vertical-align:middle!important}
-
-/* Card unificada */
-.login-card{
-  border:none!important;
-  border-radius:14px!important;
-  background:#fff;
-  padding:28px 30px 22px!important;
-  box-shadow:0 25px 60px -10px rgba(0,0,0,.55), 0 12px 25px -5px rgba(0,0,0,.35);
-  position:relative;
-  overflow:hidden;
-}
-.login-card::before{
-  content:"";
-  position:absolute;left:0;right:0;top:0;height:6px;
-  background:linear-gradient(90deg,#f1c40f 0%,#f39c12 50%,#f1c40f 100%);
+Html, body{
+  height:100%;
 }
 
-/* Logo principal arriba — más grande, con sombra */
-.login-logo-top{margin:8px 0 18px!important;text-align:center}
-.login-brand{
-  height:130px;
-  max-width:100%;
-  filter:drop-shadow(0 6px 10px rgba(0,0,0,.35)) drop-shadow(0 2px 3px rgba(0,0,0,.25));
-  transition:transform .25s ease;
+.login-box-body  , .logos-soft {
+  border: solid 1px #B0B0B0 !important;
 }
-.login-brand:hover{transform:scale(1.03)}
 
-/* Bloque extras (logos-soft + redes) dentro de la misma card */
-.login-extras{
-  margin-top:18px;
-  padding-top:16px;
-  border-top:1px solid #eaeaea;
-}
-.logos-soft{
-  border:none!important;
-  margin:0 0 10px!important;
-  padding:4px 0;
-  filter:drop-shadow(0 2px 4px rgba(0,0,0,.15));
-}
-.login-logo-bottom{margin:6px 0 0!important;text-align:center}
-.login-logo-bottom img{filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
+.logos-soft {
 
-/* Mensaje y form */
-.login-box-msg{font-weight:600;color:#444;margin-bottom:14px}
-.login-card .btn-primary{
-  box-shadow:0 6px 14px -4px rgba(241,196,15,.55);
-  border:none;
+  margin-top: 8px !important;
+
+}
+
+@media (min-width: 768px) {
+
+  .background-image {
+      background-image: url("/img/fondo-login-empresa.jpg");
+      background-repeat: no-repeat;
+      background-size : cover;
+    }
+}
+
+@media (max-width: 768px) {
+  
+  .background-image {
+      background-image: url("/img/fondo-login-empresa-mobile.jpg");
+      background-repeat: no-repeat;
+      background-size : cover;
+    }
+}
+
+#app { height: 100% !important}
+
+.py-4 {
+  padding-bottom: 5rem !important;
+  height: 100% !important;  
+}
+
+.grandParentContaniner{
+  display:table; height:100%; margin: 0 auto !important;
+}
+
+.login-box{
+  display:table-cell; vertical-align:middle !important;;
 }

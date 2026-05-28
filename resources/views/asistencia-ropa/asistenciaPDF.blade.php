@@ -87,7 +87,7 @@
     <table class="header-table">
         <tr>
             <td class="logo">
-                <img src="{{ public_path('img/logo-enod.png') }}" alt="Logotipo ENOD">
+                <img src="{{ public_path('img/logo-empresa.png') }}" alt="Logotipo">
             </td>
             <td class="title">CONTROL ASISTENCIA {{$modo}} </td>
             <td class="date"><b>FECHA:{{$fecha}}</b></td>
@@ -187,7 +187,7 @@
         <table class="header-table">
             <tr>
                 <td class="logo">
-                    <img src="{{ public_path('img/logo-enod.png') }}" alt="Logotipo ENOD">
+                    <img src="{{ public_path('img/logo-empresa.png') }}" alt="Logotipo">
                 </td>
                 <td class="title">CONTROL ASISTENCIA</td>
                 <td class="date"><b>FECHA:{{$fecha}}</b></td>

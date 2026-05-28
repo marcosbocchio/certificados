@@ -7,7 +7,7 @@
               :class_color_titulo = "'color_3'"
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantPartes"
-              :src_icono ="'/img/tablero/icono-enod-partes.svg'"
+              :src_icono ="'/img/tablero/icono-empresa-partes.svg'"
               :class_color_cuadro = "'bg-custom-7'"
               :class_color_cuadro_largo = "'bg-custom-5'"
               :habilitado_sn =" $can('T_partes_acceder') ?  true : false"

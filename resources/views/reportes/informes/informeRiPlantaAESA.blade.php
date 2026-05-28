@@ -379,7 +379,7 @@ footer {
                                 <tr class="gris">
                                 <td style="width: 43mm;">
                     @if(!empty($contratista) && isset($contratista->nombre) && $contratista->nombre === 'ENOD')
-                        Evaluador ENOD
+                        Evaluador EMPRESA
                     @else
                         Evaluador AESA
                     @endif
@@ -531,7 +531,7 @@ footer {
             <tr class="gris">
             <td style="width: 43mm;">
     @if(!empty($contratista) && isset($contratista->nombre) && $contratista->nombre === 'ENOD')
-        Evaluador ENOD
+        Evaluador EMPRESA
     @else
         Evaluador AESA
     @endif

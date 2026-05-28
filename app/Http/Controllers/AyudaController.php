@@ -410,7 +410,7 @@ public function __construct()
             'La OT queda lista para servir como nodo central del circuito documental y operativo.',
             [],
             [
-                'Tablero ENOD > Ordenes de trabajo > Listado.',
+                'Tablero EMPRESA > Ordenes de trabajo > Listado.',
             ],
             [],
             [
@@ -455,7 +455,7 @@ public function __construct()
             'La orden de trabajo queda creada y lista para iniciar el resto del circuito operativo.',
             [],
             [
-                'Tablero ENOD > Ordenes de trabajo > Nuevo.',
+                'Tablero EMPRESA > Ordenes de trabajo > Nuevo.',
             ],
             [
                 'Numero de OT, fecha, cliente/comitente y al menos un servicio o producto segun el alcance del trabajo.',
@@ -828,7 +828,7 @@ public function __construct()
                 'Muestra los procedimientos disponibles y los ya asociados a la OT.',
             ],
             [
-                'Seleccion de procedimientos propios de Enod y procedimientos del cliente.',
+                'Seleccion de procedimientos propios de Empresa y procedimientos del cliente.',
             ],
             [
                 'Asignar procedimientos a la OT.',
@@ -850,7 +850,7 @@ public function __construct()
                 'OT > Procedimientos.',
             ],
             [
-                'Al menos un procedimiento ENOD o del cliente cuando el metodo de informe lo necesita.',
+                'Al menos un procedimiento EMPRESA o del cliente cuando el metodo de informe lo necesita.',
             ],
             [
                 'Actualizar puede quedar bloqueado si no existen procedimientos disponibles o si el perfil no tiene permiso de asignacion.',
@@ -1031,7 +1031,7 @@ public function __construct()
               'GIF de alta o edicion de una norma.',
           ],
           [
-              'audience' => 'Operacion tecnica y administracion ENOD',
+              'audience' => 'Operacion tecnica y administracion EMPRESA',
           ]
       );
   }
@@ -1243,9 +1243,9 @@ public function __construct()
                       'columns' => ['Nombre', 'Razon social', 'Email', 'Localidad', 'Acciones'],
                       'rows' => [
                           [
-                              'ENOD',
-                              'ENOD S.A.',
-                              'contacto@enod.com',
+                              'EMPRESA',
+                              'EMPRESA S.A.',
+                              'contacto@empresa.com',
                               'Neuquen',
                               ['type' => 'actions', 'items' => [
                                   ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
@@ -1276,7 +1276,7 @@ public function __construct()
               'GIF de alta o edicion de cliente.',
           ],
           [
-              'audience' => 'Operacion comercial y administracion ENOD',
+              'audience' => 'Operacion comercial y administracion EMPRESA',
           ]
       );
   }
@@ -2155,7 +2155,7 @@ public function __construct()
                       'columns' => ['Rol', 'Guard', 'Acciones'],
                       'rows' => [
                           [
-                              'Supervisor ENOD',
+                              'Supervisor EMPRESA',
                               'web',
                               ['type' => 'actions', 'items' => [
                                   ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
@@ -2194,7 +2194,7 @@ public function __construct()
               'GIF de alta o ajuste de un rol.',
           ],
           [
-              'audience' => 'Administracion y sistemas ENOD',
+              'audience' => 'Administracion y sistemas EMPRESA',
           ]
       );
   }

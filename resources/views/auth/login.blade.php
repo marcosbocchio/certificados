@@ -7,7 +7,7 @@
       <!-- /.login-logo -->
       <div class="login-box-body login-card">
         <div class="login-logo login-logo-top">
-          <a href="{{ route('login') }}"><img src="{{asset('img/logo-enod.png')}}" class="login-brand" alt="Logo Enod"></a>
+          <a href="{{ route('login') }}"><img src="{{asset('img/logo-empresa.png')}}" class="login-brand" alt="Logo"></a>
         </div>
         <p class="login-box-msg" >Login para iniciar sesión</p>
 
@@ -69,7 +69,7 @@
             <img src="{{asset('img/logos-soft-ram.png')}}" width="100%" alt="...">
           </div>
           <div class="login-logo login-logo-bottom">
-            <img src="{{asset('img/redes.png')}}" height="60px" alt="Redes Enod">
+            <img src="{{asset('img/redes.png')}}" height="60px" alt="Redes">
           </div>
         </div>
       </div>

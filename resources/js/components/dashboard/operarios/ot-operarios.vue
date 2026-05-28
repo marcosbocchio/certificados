@@ -8,7 +8,7 @@
               :class_color_titulo = "'color_3'"
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="users_ot_operarios.length"
-              :src_icono ="'/img/tablero/icono-enod-operador.svg'"
+              :src_icono ="'/img/tablero/icono-empresa-operador.svg'"
               :class_color_cuadro = "'bg-custom-1'"
               :class_color_cuadro_largo = "'bg-custom-8'"
               :habilitado_sn ="true"

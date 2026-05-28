@@ -98,7 +98,7 @@
         <table class="header-table">
             <tr>
                 <td class="logo">
-                    <img src="{{ public_path('img/logo-enod.png') }}" alt="ENOD">
+                    <img src="{{ public_path('img/logo-empresa.png') }}" alt="Logo">
                 </td>
                 <td class="title">Stock de Productos</td>
                 <td class="date"><b>FECHA:</b> {{ $fecha }}</td>

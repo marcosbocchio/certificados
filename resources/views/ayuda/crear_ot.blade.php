@@ -54,7 +54,7 @@
                 <li><strong>Mostrar logo:</strong> define si el logo se visualiza en los informes.</li>
                 <li><strong>Comitente:</strong> comitente asociado al trabajo.</li>
                 <li><strong>Contacto:</strong> contactos del cliente que se desea mostrar en la OT.</li>
-                <li><strong>Responsable OT:</strong> responsable de Enod. Debe estar asignado como <a href="{{ route('ayuda-asignar-operadores') }}"><strong>operador de la OT</strong></a>.</li>
+                <li><strong>Responsable OT:</strong> responsable de Empresa. Debe estar asignado como <a href="{{ route('ayuda-asignar-operadores') }}"><strong>operador de la OT</strong></a>.</li>
                 <li><strong>Lugar de ensayo:</strong> sector descriptivo y datos de ubicacion. Si se completa latitud y longitud, el mapa se reubica con esa informacion.</li>
             </ul>
         </div>

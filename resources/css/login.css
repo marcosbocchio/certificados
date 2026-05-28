@@ -15,7 +15,7 @@ Html, body{
 @media (min-width: 768px) {
 
   .background-image {
-      background-image: url("/img/fondo-login-enod.jpg");
+      background-image: url("/img/fondo-login-empresa.jpg");
       background-repeat: no-repeat;
       background-size : cover;
     }
@@ -24,7 +24,7 @@ Html, body{
 @media (max-width: 768px) {
   
   .background-image {
-      background-image: url("/img/fondo-login-enod-mobile.jpg");
+      background-image: url("/img/fondo-login-empresa-mobile.jpg");
       background-repeat: no-repeat;
       background-size : cover;
     }

@@ -34,7 +34,11 @@
       "Bash(\"C:/laragon/bin/mysql/mysql-8.4.3-winx64/bin/mysql.exe\" -u root -h 127.0.0.1 sigo_ENOD -e \"SELECT ROUTINE_NAME FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='sigo_ENOD' AND ROUTINE_NAME LIKE '%InformeRd%';\")",
       "Bash(curl -sSL -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:8080/login)",
       "Skill(anthropic-skills:pdf)",
-      "Skill(anthropic-skills:pdf:*)"
+      "Skill(anthropic-skills:pdf:*)",
+      "Bash(Get-ChildItem -Path . -Depth 0 -File)",
+      "Bash(Select-Object Name)",
+      "Bash(sed -i 's|responsable de Enod|responsable de Empresa|g' resources/views/ayuda/crear_ot.blade.php)",
+      "Bash(sed -i \"s|'ENOD',|'EMPRESA',|g; s|'ENOD S.A.'|'EMPRESA S.A.'|g; s|sistemas ENOD|sistemas EMPRESA|g\" app/Http/Controllers/AyudaController.php)"
     ]
   }
 }

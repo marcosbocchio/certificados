@@ -27,7 +27,7 @@ class dashboardController extends Controller
      {                
 
          $user = $Request->user();
-         $title = 'Area Enod' ;
+         $title = 'Area Empresa' ;
          $header_titulo = "Tablero Principal";
          $header_descripcion ="";     
          return view('dashboard',compact('user','title','header_titulo','header_descripcion'));

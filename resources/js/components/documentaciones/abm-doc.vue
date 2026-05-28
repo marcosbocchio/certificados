@@ -8,7 +8,7 @@
                     :class_color_titulo = "'color_2'"
                     :class_color_sub_titulo = "'color_1'"
                     :cantidad_1 ="CantProcedimientos"
-                    :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
+                    :src_icono ="'/img/tablero/icono-empresa-procedimientos.svg'"
                     :class_color_cuadro = "'bg-custom-3'"
                     :class_color_cuadro_largo = "'bg-custom-2'"
                     :habilitado_sn =" $can('T_proc_acceder') ?  true : false"
@@ -26,7 +26,7 @@
                     :class_color_titulo = "'color_2'"
                     :class_color_sub_titulo = "'color_3'"
                     :cantidad_1 ="CantDocumentacionesTotal"
-                    :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
+                    :src_icono ="'/img/tablero/icono-empresa-documentacion.svg'"
                     :class_color_cuadro = "'bg-custom-4'"
                     :class_color_cuadro_largo = "'bg-custom-2'"
                     :habilitado_sn ="true"
@@ -766,7 +766,7 @@ export default {
         this.interno_equipo = registro.interno_equipo ? registro.interno_equipo[0] : {'id' : null};
         this.interno_fuente = registro.interno_fuente ? registro.interno_fuente[0] : {'id' : null};
         this.vehiculo = registro.vehiculo ? registro.vehiculo[0] : {'id' : null};
-        this.certificado_verificacion_sn = registro.interno_equipo.length ? registro.interno_equipo[0].pivot.certificado_verificacion_sn : true;
+        this.certificado_verificacion_sn = (registro.interno_equipo && registro.interno_equipo.length) ? registro.interno_equipo[0].pivot.certificado_verificacion_sn : true;
         this.newRegistro = registro;
         let fileName = this.newRegistro.path ;
         let FileExt = fileName.substring(fileName.length-3,fileName.length);

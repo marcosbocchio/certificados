@@ -25,8 +25,8 @@
                 <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_usuarios_edita')"><span class="fa fa-edit"></span></button>
               </td>
               <td width="10px">
-                <button @click="AsignacionO(registro)" class="btn btn-default btn-sm" title="EEP" :disabled="!$can('M_usuarios_edita')">
-                    <span class="fas fa-clipboard"></span>
+                <button @click="AsignacionO(registro)" class="btn btn-default btn-sm" title="EPP" :disabled="!$can('M_usuarios_edita')">
+                    <span class="fa fa-shield"></span>
                 </button>
               </td>
               <td width="10px">

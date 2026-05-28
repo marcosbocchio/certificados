@@ -9,7 +9,7 @@
               :class_color_sub_titulo = "'color_3'"
               :cantidad_2 ="ot_soldadores.length"
               :cantidad_1 ="ot_usuarios_cliente.length"
-              :src_icono ="'/img/tablero/icono-enod-soldadores.svg'"
+              :src_icono ="'/img/tablero/icono-empresa-soldadores.svg'"
               :class_color_cuadro = "'bg-custom-1'"
               :class_color_cuadro_largo = "'bg-custom-4'"
               :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"

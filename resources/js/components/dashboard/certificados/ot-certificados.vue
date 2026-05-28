@@ -8,7 +8,7 @@
               :class_color_titulo = "'color_2'"
               :class_color_sub_titulo = "'color_1'"
               :cantidad_1 ="CantCertificados"
-              :src_icono ="'/img/tablero/icono-enod-certificados.svg'"
+              :src_icono ="'/img/tablero/icono-empresa-certificados.svg'"
               :class_color_cuadro = "'bg-custom-8'"
               :class_color_cuadro_largo = "'bg-custom-2'"
               :habilitado_sn =" $can('T_certif_acceder') ?  true : false"

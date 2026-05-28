@@ -45,7 +45,7 @@
       </div>
       <!-- /.login-box-body -->
       <div class="login-logo">
-        <a href="http://www.enodndt.com.ar/"><img src="{{asset('img/redes.png')}}"  height="90px"  alt="Redes Enod"> </a>
+        <a href="http://www.enodndt.com.ar/"><img src="{{asset('img/redes.png')}}"  height="90px"  alt="Redes"> </a>
       </div>
     </div>
 

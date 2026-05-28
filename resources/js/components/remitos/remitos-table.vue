@@ -68,8 +68,8 @@
                                             </button>
                                         </td>
                                         <td width="10px">
-                                            <button @click="AsignacionR(k)" class="btn btn-default btn-sm" title="EEP" :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 1">
-                                                <span class="fas fa-clipboard"></span>
+                                            <button @click="AsignacionR(k)" class="btn btn-default btn-sm" title="EPP" :disabled="!$can('T_remitos_edita') || remito.borrador_sn === 1">
+                                                <span class="fa fa-shield"></span>
                                             </button>
                                         </td>
                                        <td v-if="remito.interno_sn" width="10px"> 

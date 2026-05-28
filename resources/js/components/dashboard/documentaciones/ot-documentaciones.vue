@@ -10,7 +10,7 @@
               :class_color_sub_titulo = "'color_3'"
               :cantidad_1 ="ot_vehiculos.length"
               :cantidad_2 ="ot_documentaciones.length"
-              :src_icono ="'/img/tablero/icono-enod-vehiculos-doc.svg'"
+              :src_icono ="'/img/tablero/icono-empresa-vehiculos-doc.svg'"
               :class_color_cuadro = "'bg-custom-4'"
               :class_color_cuadro_largo = "'bg-custom-2'"
               :habilitado_sn =" $can('T_doc_acceder') ?  true : false"
