@@ -7,7 +7,7 @@
       <!-- /.login-logo -->
       <div class="login-box-body login-card">
         <div class="login-logo login-logo-top">
-          <a href="{{ route('login') }}"><img src="{{asset('img/logo-empresa.png')}}" class="login-brand" alt="Logo"></a>
+          <a href="{{ route('login') }}"><img src="{{asset('img/logo-empresa.png')}}" class="login-brand" alt="Logo" style="max-width: 300px; max-height: 100px;"></a>
         </div>
         <p class="login-box-msg" >Login para iniciar sesión</p>
 
