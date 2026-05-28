@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>REFERENCIA INFORME N°: {{ $nro }}</title>
-    <link rel="stylesheet" href="{{ asset('/css/reportes/pdf.css') }}" media="all" />
+    <style>{!! file_get_contents(public_path('css/reportes/pdf.css')) !!}</style>
 
 </head>
 

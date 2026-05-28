@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>PROYECTO : {{$ot->proyecto }} - OT N° : {{$ot->numero}}</title>
-<link rel="stylesheet" href="{{ asset('/css/reportes/pdf.css') }}" media="all" />
+<style>{!! file_get_contents(public_path('css/reportes/pdf.css')) !!}</style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
 </head>
