@@ -673,7 +673,7 @@ footer {
 
     if ( isset($pdf) ) {
         $x = 518;
-        $y = 78;
+        $y = 63;
         $text = "RG.62 Rev.01";
         $font = $fontMetrics->get_font("serif", "normal");
         $size = 8;
