@@ -106,7 +106,7 @@
 
             if ( isset($pdf) ) {
                 $x = 518;
-                $y = 63;
+                $y = 66;
                 $text = "RG.29 Rev.02";
                 $font = $fontMetrics->get_font("serif", "normal");
                 $size = 8;
@@ -126,7 +126,7 @@
 
             if ( isset($pdf) ) {
                 $x = 518;
-                $y = 63;
+                $y = 66;
                 $text = "RG.28 Rev.02";
                 $font = $fontMetrics->get_font("serif", "normal");
                 $size = 8;
@@ -147,7 +147,7 @@
 
                     if ( isset($pdf) ) {
                         $x = 518;
-                        $y = 63;
+                        $y = 66;
                         $text = "RG.30 Rev.02";
                         $font = $fontMetrics->get_font("serif", "normal");
                         $size = 8;
@@ -167,7 +167,7 @@
 
                     if ( isset($pdf) ) {
                         $x = 518;
-                        $y = 63;
+                        $y = 66;
                         $text = "RG.79 Rev.01";
                         $font = $fontMetrics->get_font("serif", "normal");
                         $size = 8;

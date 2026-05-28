@@ -396,7 +396,7 @@ footer {
     <script type="text/php">
         if ( isset($pdf) ) {
             $x = 520;
-            $y = 63;
+            $y = 51;
             $text = "RG.30 Rev.02";
             $font = $fontMetrics->get_font("serif", "normal");
             $size = 8;
@@ -412,7 +412,7 @@ footer {
     <script type="text/php">
         if ( isset($pdf) ) {
             $x = 520;
-            $y = 63;
+            $y = 51;
             $text = "RG.79 Rev.01";
             $font = $fontMetrics->get_font("serif", "normal");
             $size = 8;
@@ -427,7 +427,7 @@ footer {
     <script type="text/php">
         if ( isset($pdf) ) {
             $x = 520;
-            $y = 63;
+            $y = 51;
             $text = "RG.79 Rev.01";
             $font = $fontMetrics->get_font("serif", "normal");
             $size = 8;
@@ -444,7 +444,7 @@ footer {
  <script type="text/php">
     if ( isset($pdf) ) {
         $x = 518;
-        $y = 63;
+        $y = 51;
         $text = "RG.33 Rev.02";
         $font = $fontMetrics->get_font("serif", "normal");
         $size = 8;
