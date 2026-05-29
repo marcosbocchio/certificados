@@ -86,18 +86,9 @@ class EstadisticasSoldadurasController extends Controller
     public function AnalisisSoldadurasDefectosSoldador(Request $request, $informes_ids = null){
         $informes_ids = $this->resolveInformesIds($request, $informes_ids);
 
-        Log::info('[DefectosSoldador] informes_ids: ' . $informes_ids);
-
         DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
 
-        $tempData = DB::select('SELECT sector, defecto_codigo, COUNT(*) as cant FROM defectos_posicion_reduce_temp GROUP BY sector, defecto_codigo');
-        Log::info('[DefectosSoldador] temp table rows: ' . count($tempData) . ' - ' . json_encode($tempData));
-
-        $result = DB::select('CALL AnalisisSoldadurasDefectosSoldador(?)',array($informes_ids));
-        Log::info('[DefectosSoldador] SP result count: ' . count($result));
-        Log::info('[DefectosSoldador] SP first 3 rows: ' . json_encode(array_slice($result, 0, 3)));
-
-        return $result;
+        return  DB::select('CALL AnalisisSoldadurasDefectosSoldador(?)',array($informes_ids));
 
 
 
