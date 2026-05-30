@@ -31,7 +31,9 @@
       "Bash(mysql -u root -e \"USE sigo_ENOD; SHOW CREATE PROCEDURE InformeRdPlantaJuntaPosicion\\\\G\")",
       "Bash(mysql -u root -h 127.0.0.1 -P 3306 sigo_ENOD -e \"SELECT ROUTINE_NAME FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='sigo_ENOD' AND ROUTINE_NAME LIKE '%InformeRd%';\")",
       "Bash(C:/laragon/bin/mysql/mysql-8.0.30-winx64/bin/mysql.exe -u root -h 127.0.0.1 sigo_ENOD -e \"SELECT ROUTINE_NAME FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='sigo_ENOD' AND ROUTINE_NAME LIKE '%InformeRd%';\")",
-      "Bash(\"C:/laragon/bin/mysql/mysql-8.4.3-winx64/bin/mysql.exe\" -u root -h 127.0.0.1 sigo_ENOD -e \"SELECT ROUTINE_NAME FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='sigo_ENOD' AND ROUTINE_NAME LIKE '%InformeRd%';\")"
+      "Bash(\"C:/laragon/bin/mysql/mysql-8.4.3-winx64/bin/mysql.exe\" -u root -h 127.0.0.1 sigo_ENOD -e \"SELECT ROUTINE_NAME FROM information_schema.ROUTINES WHERE ROUTINE_SCHEMA='sigo_ENOD' AND ROUTINE_NAME LIKE '%InformeRd%';\")",
+      "Bash(set NODE_OPTIONS=--openssl-legacy-provider)",
+      "PowerShell(cd C:\\\\laragon\\\\www\\\\rusoft\\\\certificados; $env:NODE_OPTIONS=\"--openssl-legacy-provider\"; npm run prod 2>&1)"
     ]
   }
 }
