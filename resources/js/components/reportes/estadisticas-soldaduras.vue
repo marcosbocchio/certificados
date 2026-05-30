@@ -1714,41 +1714,76 @@ methods : {
 
     async downloadPdf_tab3(){
 
+        const ROWS_PER_PAGE  = 15;
+        const CHART_INLINE_MAX = 6;
+
         const doc = new jsPDF("p", "mm", "a4");
         doc.setFont("serif");
 
-        doc.setFontSize(11);
-        doc.text("Defectos por soldador", 15, 72)
+        const tableColumns = [
+            { header: 'Cuño.',        dataKey: 'soldador_codigo_nombre' },
+            { header: 'Cord.',        dataKey: 'cordones' },
+            { header: 'Cantidad',     dataKey: 'cantidad' },
+            { header: '%',            dataKey: 'porcentaje' },
+            { header: 'Placas Total', dataKey: 'total_placas' },
+            { header: 'Placas Rech.', dataKey: 'placas_rechazadas' },
+        ];
 
-        doc.autoTable({
-            startY:74,
-            body: this.TablaDefectosSoldador,
-            columns: [
-                { header: 'Cuño.', dataKey: 'soldador_codigo_nombre' },
-                { header: 'Cord.', dataKey: 'cordones' },
-                { header: 'Cantidad', dataKey: 'cantidad' },
-                { header: '%', dataKey: 'porcentaje' },
-                { header: 'Placas Total', dataKey: 'total_placas' },
-                { header: 'Placas Rech.', dataKey: 'placas_rechazadas' },
-            ],
-          columnStyles: {
+        const columnStyles = {
             0: { cellWidth: 40, fontSize: 9 },
             1: { cellWidth: 20, fontSize: 9 },
             2: { cellWidth: 30, fontSize: 9 },
             3: { cellWidth: 20, fontSize: 9 },
             4: { cellWidth: 40, fontSize: 9 },
-            4: { cellWidth: 40, fontSize: 9 },
-          },
-        margin: { top: 70 },
-        })
+            5: { cellWidth: 40, fontSize: 9 },
+        };
 
-       var newCanvas = document.getElementById('img_defectologia_produccion');
-       var imgData = newCanvas.toDataURL('image/png',1.0)
-       doc.addImage(imgData,'PNG',20,doc.lastAutoTable.finalY + 15,170,80)
+        const addChart = (startY) => {
+            const canvas = document.getElementById('img_defectologia_produccion');
+            if (!canvas) return;
+            const imgData = canvas.toDataURL('image/png', 1.0);
+            doc.addImage(imgData, 'PNG', 20, startY, 170, 80);
+        };
 
-       this.prepareHeaderPdf(doc);
+        // Dividir tabla en chunks de ROWS_PER_PAGE
+        const chunks = [];
+        for (let i = 0; i < this.TablaDefectosSoldador.length; i += ROWS_PER_PAGE) {
+            chunks.push(this.TablaDefectosSoldador.slice(i, i + ROWS_PER_PAGE));
+        }
 
-       doc.save("defectologia.pdf")
+        for (let i = 0; i < chunks.length; i++) {
+
+            if (i > 0) doc.addPage();
+
+            doc.setFontSize(11);
+            doc.text("Defectos por soldador", 15, 72);
+
+            doc.autoTable({
+                startY: 74,
+                body: chunks[i],
+                columns: tableColumns,
+                columnStyles: columnStyles,
+                margin: { top: 70 },
+            });
+
+            const isLastChunk = i === chunks.length - 1;
+
+            if (isLastChunk) {
+                if (chunks[i].length <= CHART_INLINE_MAX) {
+                    // Cabe en la misma hoja
+                    addChart(doc.lastAutoTable.finalY + 15);
+                } else {
+                    // Gráfico en hoja nueva
+                    doc.addPage();
+                    doc.setFontSize(11);
+                    doc.text("Gráfico", 15, 72);
+                    addChart(80);
+                }
+            }
+        }
+
+        this.prepareHeaderPdf(doc);
+        doc.save("defectologia.pdf");
 
     },
 
