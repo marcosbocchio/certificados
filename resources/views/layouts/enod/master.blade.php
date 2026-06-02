@@ -19,12 +19,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
-    <!-- Font Awesome -->
+    <!-- Font Awesome 4 (local) — cubre clases fa fa-* del sidebar -->
     <link rel="stylesheet" href="{{asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css')}}">
+    <!-- Font Awesome 7 (local) — cubre clases fas/far/fab -->
+    <link rel="stylesheet" href="{{asset('fontawesome/css/all.min.css')}}">
     <!-- Ionicons -->
     <link  rel="stylesheet" href="{{asset('adminlte/bower_components/Ionicons/css/ionicons.min.css')}}">
-
-    <script src="https://kit.fontawesome.com/2740e8ca64.js" crossorigin="anonymous"></script>
 
     <!-- message -->
     <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
