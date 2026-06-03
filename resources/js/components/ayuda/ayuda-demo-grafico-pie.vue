@@ -68,10 +68,17 @@ export default {
     font-weight: 600;
 }
 .ayuda_demo_chart_wrap {
-    height: 280px;
+    position: relative;
+    height: 260px;
+    width: 100%;
     background: #fff;
     border: 1px solid #e6eaf0;
     border-radius: 10px;
     padding: 12px;
+    box-sizing: border-box;
+}
+.ayuda_demo_chart_wrap >>> canvas {
+    max-height: 100% !important;
+    max-width: 100% !important;
 }
 </style>

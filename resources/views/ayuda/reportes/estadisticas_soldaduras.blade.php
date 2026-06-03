@@ -216,23 +216,28 @@
 
             <h3>Como se calcula la atribucion del defecto</h3>
             <p>
-                El sistema reparte cada defecto entre los soldadores segun donde esta ubicado:
+                El sistema reparte cada defecto entre los soldadores segun la posicion en la que esta ubicado:
             </p>
             <ul>
-                <li>Si en la soldadura participo <strong>un solo soldador</strong>, todos los defectos son para el.</li>
                 <li>
-                    Si participaron <strong>dos soldadores</strong> (uno a cada lado de la soldadura), el sistema mira la
-                    posicion exacta del defecto y lo asigna al soldador del lado correspondiente.
+                    El sistema toma como referencia los <strong>dos lados</strong> de la soldadura (el lado del soldador P
+                    y el lado del soldador Z) y mira la <strong>posicion exacta del defecto</strong> para asignarlo al
+                    soldador del lado que corresponde.
                 </li>
                 <li>
                     Si el defecto esta <strong>justo en el medio</strong> entre los dos lados, se reparte mitad y mitad
-                    (cada uno recibe 0.5).
+                    (cada soldador recibe 0.5).
                 </li>
                 <li>
                     En caso de <strong>ductos con varias capas</strong> (raiz, relleno, sobremonta), tambien se considera
                     en que pasada ocurrio el defecto para identificar al soldador responsable.
                 </li>
             </ul>
+            <p>
+                <strong>Importante:</strong> para que la asignacion funcione correctamente, en la carga de pasadas se deben
+                cargar <strong>los dos soldadores</strong> (P y Z). Si solo se carga uno, los defectos del lado que no tiene
+                soldador asignado no se contabilizan en este reporte.
+            </p>
 
             <h3>Como leerla</h3>
             <p>
@@ -355,10 +360,18 @@
             </p>
 
             <h3>Un soldador no aparece en la pestaña Produccion</h3>
+            <p>Puede deberse a alguna de estas razones:</p>
+            <ul>
+                <li>El soldador no tuvo defectos en el periodo (entonces no figura en la tabla).</li>
+                <li>El soldador solo esta asignado como <strong>lateral (L)</strong> en pasadas — actualmente los cordones del rol lateral no se contabilizan en esta version del reporte.</li>
+                <li>En la carga de pasadas no se asigno al soldador en ningun rol (P o Z), por lo que el sistema no puede atribuirle defectos.</li>
+            </ul>
+
+            <h3>Hay defectos cargados en una soldadura pero ningun soldador los muestra</h3>
             <p>
-                Puede ser que ese soldador no haya tenido defectos en el periodo (entonces no figura) o que solo este
-                asignado como soldador lateral en pasadas, ya que actualmente los cordones del rol lateral no se contabilizan
-                en esta version del reporte.
+                Suele pasar cuando en la carga de pasadas solo se asigno un soldador (por ejemplo, solo el P pero no el Z, o viceversa).
+                Los defectos que estan del lado del soldador que <strong>no fue cargado</strong> se quedan sin asignar y no aparecen en
+                el reporte. Revisar la carga de pasadas del informe y completar los dos roles (P y Z).
             </p>
 
             <h3>¿Por que el porcentaje da diferente entre pestañas?</h3>
