@@ -312,6 +312,15 @@ Vue.component('abm-documentos-escaneados', require('./components/dashboard/docum
 Vue.component('table-documentos-escaneados', require('./components/dashboard/documentos-escaneados/table-documentos-escaneados.vue').default);
 Vue.component('form-documentos-escaneados', require('./components/dashboard/documentos-escaneados/form-documentos-escaneados.vue').default);
 
+/* Componentes demo de ayuda */
+Vue.component('ayuda-demo-filtros',          require('./components/ayuda/ayuda-demo-filtros.vue').default);
+Vue.component('ayuda-demo-tabla-rechazos',   require('./components/ayuda/ayuda-demo-tabla-rechazos.vue').default);
+Vue.component('ayuda-demo-tabla-soldadores', require('./components/ayuda/ayuda-demo-tabla-soldadores.vue').default);
+Vue.component('ayuda-demo-grafico-pie',      require('./components/ayuda/ayuda-demo-grafico-pie.vue').default);
+Vue.component('ayuda-demo-grafico-doughnut', require('./components/ayuda/ayuda-demo-grafico-doughnut.vue').default);
+Vue.component('ayuda-demo-grafico-barras',   require('./components/ayuda/ayuda-demo-grafico-barras.vue').default);
+Vue.component('ayuda-demo-pestanas',         require('./components/ayuda/ayuda-demo-pestanas.vue').default);
+
 /* Reportes */
 Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);
 Vue.component('costuras', require('./components/reportes/costuras.vue').default);

@@ -15,6 +15,11 @@
         </p>
     </div>
 
+    {{-- Vista previa interactiva del reporte completo --}}
+    <section class="ayuda_section">
+        <ayuda-demo-pestanas></ayuda-demo-pestanas>
+    </section>
+
     {{-- =========================================================== --}}
     {{-- ¿PARA QUE SIRVE? --}}
     {{-- =========================================================== --}}
@@ -67,11 +72,8 @@
                 <li><strong>Fechas Desde / Hasta:</strong> para definir el rango temporal del analisis.</li>
             </ul>
             <p>No es obligatorio completar todos los filtros. Cuantos menos filtros pongas, mas amplio sera el resultado.</p>
-            {{-- IMAGEN A AGREGAR:
-                Captura del panel de filtros completo (cliente, OT, obra, componente, PK, fechas, boton Buscar).
-                Sugerido nombre: img/ayuda/Estadisticas_filtros.PNG
-            --}}
-            {{-- <img class="img-responsive" src="{{ asset('img/ayuda/Estadisticas_filtros.PNG') }}" alt="Filtros de estadisticas" /> --}}
+
+            <ayuda-demo-filtros></ayuda-demo-filtros>
 
             <h3>2. Presionar Buscar</h3>
             <p>
@@ -130,11 +132,12 @@
                 <li>Para armar reportes mensuales o de cierre de obra.</li>
             </ul>
 
-            {{-- IMAGEN A AGREGAR:
-                Captura completa de la pestaña "Indices de rechazos" con las dos tablas (diametro y espesor) y el grafico pie.
-                Sugerido nombre: img/ayuda/Estadisticas_tab1_indices.PNG
-            --}}
-            {{-- <img class="img-responsive" src="{{ asset('img/ayuda/Estadisticas_tab1_indices.PNG') }}" alt="Indices de rechazos" /> --}}
+            <ayuda-demo-tabla-rechazos></ayuda-demo-tabla-rechazos>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <ayuda-demo-grafico-pie></ayuda-demo-grafico-pie>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -169,11 +172,11 @@
                 <li>Cuando se necesita un detalle tecnico de la causa de rechazo, mas alla del numero global.</li>
             </ul>
 
-            {{-- IMAGEN A AGREGAR:
-                Captura de la pestaña "Defectologia" con tabla de defectos y grafico de torta de posiciones.
-                Sugerido nombre: img/ayuda/Estadisticas_tab2_defectologia.PNG
-            --}}
-            {{-- <img class="img-responsive" src="{{ asset('img/ayuda/Estadisticas_tab2_defectologia.PNG') }}" alt="Defectologia" /> --}}
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <ayuda-demo-grafico-doughnut></ayuda-demo-grafico-doughnut>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -249,17 +252,12 @@
             de cordones que hizo cada soldador. Un soldador con 1 defecto en 10 cordones tiene 10% — el mismo defecto en
             100 cordones es solo 1%. Conviene mirar el porcentaje junto con la cantidad de cordones.</p>
 
-            {{-- IMAGEN A AGREGAR:
-                Captura de la pestaña con la tabla de soldadores completa.
-                Sugerido nombre: img/ayuda/Estadisticas_tab3_soldadores.PNG
-            --}}
-            {{-- <img class="img-responsive" src="{{ asset('img/ayuda/Estadisticas_tab3_soldadores.PNG') }}" alt="Defectologia por soldador" /> --}}
-
-            {{-- IMAGEN A AGREGAR:
-                GIF mostrando el click sobre una fila y como cambia el grafico de barras de abajo.
-                Sugerido nombre: img/ayuda/Estadisticas_tab3_click.gif
-            --}}
-            {{-- <img class="img-responsive" src="{{ asset('img/ayuda/Estadisticas_tab3_click.gif') }}" alt="Detalle al hacer clic en un soldador" /> --}}
+            <ayuda-demo-tabla-soldadores></ayuda-demo-tabla-soldadores>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <ayuda-demo-grafico-barras></ayuda-demo-grafico-barras>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -299,11 +297,12 @@
                 <li>Como insumo para revisiones tecnicas mas detalladas.</li>
             </ul>
 
-            {{-- IMAGEN A AGREGAR:
-                Captura de la pestaña "Indicaciones" con la tabla, el grafico torta y el detalle por posicion.
-                Sugerido nombre: img/ayuda/Estadisticas_tab4_indicaciones.PNG
-            --}}
-            {{-- <img class="img-responsive" src="{{ asset('img/ayuda/Estadisticas_tab4_indicaciones.PNG') }}" alt="Indicaciones" /> --}}
+            {{-- Para esta pestaña se reutiliza el componente demo doughnut con datos de indicaciones --}}
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <ayuda-demo-grafico-doughnut></ayuda-demo-grafico-doughnut>
+                </div>
+            </div>
         </div>
     </section>
 
