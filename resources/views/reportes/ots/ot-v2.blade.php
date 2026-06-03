@@ -4,7 +4,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>PROYECTO : {{$ot->proyecto }} - OT N° : {{$ot->numero}}</title>
 <link rel="stylesheet" href="{{ asset('/css/reportes/pdf.css') }}" media="all" />
-<link rel="stylesheet" href="{{ asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css') }}">
 
 </head>
 
