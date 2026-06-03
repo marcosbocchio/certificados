@@ -7,7 +7,7 @@
     <estadisticas-soldaduras
             :user= "{{ $user }}"
             :ot_prop= "{{ $ot_prop === null ? 'null' : $ot_prop }}"
-            :ayuda_url= "'{{ route('ayuda-reportes-estadisticas-soldaduras') }}'"
+            ayuda-url="{{ route('ayuda-reportes-estadisticas-soldaduras') }}"
     ></estadisticas-soldaduras>
 
     </div>

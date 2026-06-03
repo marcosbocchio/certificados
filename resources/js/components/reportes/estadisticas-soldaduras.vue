@@ -132,8 +132,8 @@
         <div class="col-md-9">
 
                   <div class="estadisticas-soldaduras">
-                    <div class="ayuda-btn-wrap" v-if="ayuda_url">
-                        <a :href="ayuda_url" class="ayuda-btn-reporte" title="Ver manual de uso de este reporte">
+                    <div class="ayuda-btn-wrap">
+                        <a :href="ayudaUrl || '/ayuda_reportes_estadisticas_soldaduras'" class="ayuda-btn-reporte" title="Ver manual de uso de este reporte">
                             <i class="fa fa-info-circle"></i>
                             <span>¿Cómo usar este reporte?</span>
                         </a>
@@ -590,7 +590,7 @@ export default {
       ot_prop : {
         type : Object,
       },
-      ayuda_url : {
+      ayudaUrl : {
         type : String,
         default : '',
       },
