@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_hero">
         <h1>Estadisticas de soldaduras</h1>
@@ -390,6 +391,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection
