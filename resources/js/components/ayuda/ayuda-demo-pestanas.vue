@@ -51,7 +51,7 @@
 
             <!-- Columna derecha: pestañas con contenido -->
             <div class="ayuda_demo_content">
-                <tabs :options="{ useUrlFragment: false }">
+                <tabs :options="{ useUrlFragment: false }" @changed="onTabChanged">
             <tab name="Índices de rechazos" id="demo-indices">
                 <div class="ayuda_demo_tab_content">
                     <p class="ayuda_demo_tab_intro">
@@ -164,6 +164,25 @@ export default {
         'ayuda-demo-grafico-pie': AyudaDemoGraficoPie,
         'ayuda-demo-grafico-doughnut': AyudaDemoGraficoDoughnut,
         'ayuda-demo-grafico-barras': AyudaDemoGraficoBarras,
+    },
+    methods: {
+        onTabChanged() {
+            // Los charts dentro de tabs ocultas se renderizan con tamaño 0.
+            // Al cambiar de tab, disparamos un resize para que se redibujen al tamaño correcto.
+            this.$nextTick(() => {
+                setTimeout(() => {
+                    window.dispatchEvent(new Event('resize'));
+                }, 50);
+            });
+        },
+    },
+    mounted() {
+        // Trigger inicial al montar — el primer tab también necesita el resize para dibujarse OK
+        this.$nextTick(() => {
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize'));
+            }, 100);
+        });
     },
     data() {
         return {

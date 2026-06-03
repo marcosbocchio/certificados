@@ -69,15 +69,25 @@ export default {
 }
 .ayuda_demo_chart_wrap {
     position: relative;
-    height: 260px;
+    height: 280px;
     width: 100%;
     background: #fff;
     border: 1px solid #e6eaf0;
     border-radius: 10px;
     padding: 12px;
     box-sizing: border-box;
+    overflow: hidden;
 }
-.ayuda_demo_chart_wrap >>> canvas {
+.ayuda_demo_chart_wrap ::v-deep > div {
+    position: absolute !important;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    height: auto !important;
+    width: auto !important;
+}
+.ayuda_demo_chart_wrap ::v-deep canvas {
     max-height: 100% !important;
     max-width: 100% !important;
 }
