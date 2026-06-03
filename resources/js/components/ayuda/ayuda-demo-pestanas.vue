@@ -232,9 +232,28 @@ export default {
     gap: 18px;
     align-items: start;
 }
+
+/* Permitir scroll horizontal en las tabs cuando no entran */
+.ayuda_demo_content ::v-deep .tabs-component {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.ayuda_demo_content ::v-deep .tabs-component-tabs {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
 @media (max-width: 768px) {
+    .ayuda_demo_pestanas {
+        padding: 14px 12px;
+        border-radius: 10px;
+    }
     .ayuda_demo_layout {
         grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .ayuda_demo_pestanas_header h3 {
+        font-size: 16px;
     }
 }
 
@@ -350,6 +369,9 @@ export default {
     font-size: 13px;
     color: #4c5661;
 }
+.ayuda_demo_table {
+    width: 100%;
+}
 .ayuda_demo_table th {
     background: #f8fafc;
     color: #4c5661;
@@ -358,5 +380,32 @@ export default {
 }
 .ayuda_demo_table td {
     font-size: 13px;
+}
+
+/* Wrapper de scroll horizontal para tablas en mobile */
+.ayuda_demo_content ::v-deep .table {
+    margin-bottom: 0;
+}
+.ayuda_demo_content ::v-deep .ayuda_demo_block {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 600px) {
+    .ayuda_demo_tab_content {
+        padding: 12px 0;
+    }
+    .ayuda_demo_tab_intro {
+        font-size: 13px;
+    }
+    .ayuda_demo_content ::v-deep .row > [class*="col-"] {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    .ayuda_demo_table th,
+    .ayuda_demo_table td {
+        font-size: 12px;
+        padding: 6px 4px;
+    }
 }
 </style>

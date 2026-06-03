@@ -112,4 +112,25 @@ export default {
 .ayuda_demo_badge--success { background: #dff0d8; color: #2c7a2c; }
 .ayuda_demo_badge--warning { background: #fff3cd; color: #8a6d3b; }
 .ayuda_demo_badge--danger  { background: #f8d7da; color: #a94442; }
+
+/* Scroll horizontal en mobile */
+.ayuda_demo_block {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.ayuda_demo_table {
+    min-width: 520px;
+}
+
+@media (max-width: 600px) {
+    .ayuda_demo_table th,
+    .ayuda_demo_table td {
+        font-size: 12px;
+        padding: 6px 4px;
+    }
+    .ayuda_demo_badge {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
+}
 </style>

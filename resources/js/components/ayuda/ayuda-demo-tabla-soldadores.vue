@@ -122,4 +122,29 @@ export default {
     border-radius: 6px;
     font-size: 13px;
 }
+
+/* Scroll horizontal en mobile */
+.ayuda_demo_block {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.ayuda_demo_table {
+    min-width: 560px;
+}
+
+@media (max-width: 600px) {
+    .ayuda_demo_table th,
+    .ayuda_demo_table td {
+        font-size: 12px;
+        padding: 6px 4px;
+    }
+    .ayuda_demo_badge_pct {
+        font-size: 10px;
+        padding: 1px 6px;
+    }
+    .ayuda_demo_detalle {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+}
 </style>

@@ -97,4 +97,16 @@ export default {
     max-height: 100% !important;
     max-width: 100% !important;
 }
+@media (max-width: 600px) {
+    .ayuda_demo_chart_wrap {
+        height: 220px;
+        padding: 8px;
+    }
+    .ayuda_demo_chart_wrap ::v-deep > div {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+    }
+}
 </style>
