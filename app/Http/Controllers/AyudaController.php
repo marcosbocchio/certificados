@@ -3292,45 +3292,12 @@ public function __construct()
 
   public function reportes()
   {
-      return $this->returnAyudaIntroView(
-          'Reportes',
-          [
-              'Esta seccion agrupa reportes y consultas consolidadas para control tecnico, seguimiento operativo y lectura administrativa.',
-              'No reemplaza los modulos operativos: sirve para revisar informacion resumida, filtrarla y exportarla sin recorrer cada pantalla de origen.',
-          ],
-          $this->functionalSections(
-              [
-                  'Reportes de certificados, partes, placas, trazabilidad y otras salidas consolidadas.',
-                  'Filtros por periodo, cliente, OT u otros criterios disponibles segun el reporte.',
-                  'Resultados listos para consulta o exportacion.',
-              ],
-              [
-                  'Consultar salidas consolidadas.',
-                  'Aplicar filtros para acotar resultados.',
-                  'Exportar o compartir informacion resumida cuando el reporte lo permite.',
-              ],
-              [
-                  'Se entra al reporte adecuado segun la pregunta operativa o administrativa que se quiere responder.',
-                  'Despues se filtra por el criterio disponible para obtener una salida acotada sin recorrer modulos de origen uno por uno.',
-              ],
-              'El usuario obtiene una salida consolidada con filtros que le evita recorrer modulos operativos uno por uno.',
-              [],
-              [
-                  'Buscar y filtrar: permite acotar resultados segun cliente, OT, fecha u otros criterios del reporte.',
-                  'Exportar: genera la salida resumida en el formato disponible para cada reporte.',
-              ]
-          ),
-          [
-              ['href' => route('ayuda-visualizar-informes'), 'label' => 'Visualizacion de informes'],
-              ['href' => route('ayuda-visualizar-parte-diario'), 'label' => 'Visualizacion de partes diarios'],
-              ['href' => route('ayuda-visualizar-certificados'), 'label' => 'Visualizacion de certificados'],
-              ['href' => route('ayuda-dosimetria-resumen'), 'label' => 'Resumen de dosimetria'],
-          ],
-          [
-              'GIF de filtros y exportacion en los reportes mas usados.',
-              'Capturas de ejemplos de salida por tipo de reporte.',
-          ]
-      );
+      return $this->returnAyudaView('ayuda.reportes', "", "");
+  }
+
+  public function reportesEstadisticasSoldaduras()
+  {
+      return $this->returnAyudaView('ayuda.reportes.estadisticas_soldaduras', "", "");
   }
 
   public function qr()
