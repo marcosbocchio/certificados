@@ -20,3 +20,4 @@ docker-compose.local.yml
 .env.docker.local
 docker/**/*.local
 nginx/**/*.local
+/.claude
