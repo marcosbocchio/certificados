@@ -14,7 +14,36 @@
         <p>
             Es la herramienta principal para control de calidad y seguimiento del rendimiento por soldador.
         </p>
+        @can('R_estadisticas_soldaduras')
+            <p style="margin-top: 14px;">
+                <a href="{{ route('estadisticas-soldaduras') }}" class="ayuda_ir_reporte_btn">
+                    <i class="fa fa-external-link"></i> Ir al reporte real
+                </a>
+            </p>
+        @endcan
     </div>
+
+    <style>
+        .ayuda_ir_reporte_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: #d99000;
+            color: #fff !important;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none !important;
+            transition: all 0.15s ease;
+        }
+        .ayuda_ir_reporte_btn:hover,
+        .ayuda_ir_reporte_btn:focus {
+            background: #b57400;
+            color: #fff !important;
+            box-shadow: 0 3px 10px rgba(217, 144, 0, 0.3);
+        }
+    </style>
 
     {{-- Vista previa interactiva del reporte completo --}}
     <section class="ayuda_section">

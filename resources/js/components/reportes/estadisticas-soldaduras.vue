@@ -132,6 +132,12 @@
         <div class="col-md-9">
 
                   <div class="estadisticas-soldaduras">
+                    <div class="ayuda-btn-wrap" v-if="ayuda_url">
+                        <a :href="ayuda_url" class="ayuda-btn-reporte" title="Ver manual de uso de este reporte">
+                            <i class="fa fa-info-circle"></i>
+                            <span>¿Cómo usar este reporte?</span>
+                        </a>
+                    </div>
                     <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
                         <tab v-if="$can('R_indices_de_rechazos')" name="Indices de rechazos">
 
@@ -583,6 +589,10 @@ export default {
       },
       ot_prop : {
         type : Object,
+      },
+      ayuda_url : {
+        type : String,
+        default : '',
       },
     },
 
@@ -2114,6 +2124,48 @@ ul li .titulo-li {
   .c {
       color:red
      }
+
+  /* Botón de ayuda del reporte */
+  .ayuda-btn-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin: 0 0 10px 0;
+  }
+  .ayuda-btn-reporte {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      background: #2e86c1;
+      color: #fff !important;
+      border: 1px solid #2874a6;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none !important;
+      box-shadow: 0 1px 3px rgba(46, 134, 193, 0.25);
+      transition: all 0.15s ease;
+  }
+  .ayuda-btn-reporte:hover,
+  .ayuda-btn-reporte:focus {
+      background: #2874a6;
+      color: #fff !important;
+      box-shadow: 0 3px 8px rgba(46, 134, 193, 0.4);
+      text-decoration: none !important;
+      transform: translateY(-1px);
+  }
+  .ayuda-btn-reporte i {
+      font-size: 15px;
+  }
+  @media (max-width: 600px) {
+      .ayuda-btn-reporte {
+          padding: 6px 10px;
+          font-size: 12px;
+      }
+      .ayuda-btn-reporte span {
+          display: none;
+      }
+  }
 </style>
 
 
