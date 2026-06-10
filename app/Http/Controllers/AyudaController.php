@@ -3300,6 +3300,11 @@ public function __construct()
       return $this->returnAyudaView('ayuda.reportes.estadisticas_soldaduras', "", "");
   }
 
+  public function reportesCosturas()
+  {
+      return $this->returnAyudaView('ayuda.reportes.costuras', "", "");
+  }
+
   public function qr()
   {
       return $this->returnAyudaIntroView(

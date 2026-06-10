@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('ayuda_historial_operadores', 'AyudaController@historialOperadores')->name('ayuda-historial-operadores');
     Route::get('ayuda_reportes', 'AyudaController@reportes')->name('ayuda-reportes');
     Route::get('ayuda_reportes_estadisticas_soldaduras', 'AyudaController@reportesEstadisticasSoldaduras')->name('ayuda-reportes-estadisticas-soldaduras');
+    Route::get('ayuda_reportes_costuras', 'AyudaController@reportesCosturas')->name('ayuda-reportes-costuras');
     Route::get('ayuda_qr', 'AyudaController@qr')->name('ayuda-qr');
     Route::get('ayuda_multimedia_gestion', 'AyudaController@multimediaGestion')->name('ayuda-multimedia-gestion');
     Route::get('ayuda_multimedia_visualizacion', 'AyudaController@multimediaVisualizacion')->name('ayuda-multimedia-visualizacion');

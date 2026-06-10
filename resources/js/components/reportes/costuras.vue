@@ -103,6 +103,12 @@
        </div>
 
        <div class="col-md-9">
+           <div class="ayuda-btn-wrap">
+               <a :href="ayudaUrl || '/ayuda_reportes_costuras'" class="ayuda-btn-reporte" title="Ver manual de uso de este reporte">
+                   <i class="fa fa-info-circle"></i>
+                   <span>¿Cómo usar este reporte?</span>
+               </a>
+           </div>
            <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
                <tab name="Costuras/Plano Isom">
                    <div class="row">
@@ -190,6 +196,10 @@ export default {
      },
      ot_prop : {
        type : Object,
+     },
+     ayudaUrl : {
+       type : String,
+       default : '',
      },
    },
    data() { return {
@@ -393,6 +403,43 @@ methods : {
 </script>
 
 <style>
-
-
+  .ayuda-btn-wrap {
+      display: flex;
+      justify-content: flex-end;
+      margin: 0 0 10px 0;
+  }
+  .ayuda-btn-reporte {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      background: #2e86c1;
+      color: #fff !important;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none !important;
+      box-shadow: 0 1px 3px rgba(46, 134, 193, 0.25);
+      transition: all 0.15s ease;
+  }
+  .ayuda-btn-reporte:hover,
+  .ayuda-btn-reporte:focus {
+      background: #2874a6;
+      color: #fff !important;
+      box-shadow: 0 3px 8px rgba(46, 134, 193, 0.4);
+      text-decoration: none !important;
+      transform: translateY(-1px);
+  }
+  .ayuda-btn-reporte i {
+      font-size: 15px;
+  }
+  @media (max-width: 600px) {
+      .ayuda-btn-reporte {
+          padding: 6px 10px;
+          font-size: 12px;
+      }
+      .ayuda-btn-reporte span {
+          display: none;
+      }
+  }
 </style>

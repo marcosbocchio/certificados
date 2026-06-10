@@ -21,6 +21,7 @@
             <p>Elegi el reporte que necesitas segun la informacion que estes buscando.</p>
             <ul class="ayuda_links">
                 <li><a href="{{ route('ayuda-reportes-estadisticas-soldaduras') }}">Estadisticas de soldaduras</a></li>
+                <li><a href="{{ route('ayuda-reportes-costuras') }}">Seguimiento de costuras / Plano-isometrico</a></li>
             </ul>
         </div>
     </section>
