@@ -99,6 +99,8 @@
                 <li><strong>Soldador:</strong> muestra solo las costuras donde ese soldador intervino en alguna pasada (como Z, L o P).</li>
             </ul>
 
+            <ayuda-demo-costuras-filtros></ayuda-demo-costuras-filtros>
+
             <h3>3. Casillas Rechazados y Reparaciones</h3>
             <ul>
                 <li>
@@ -146,6 +148,8 @@
                 <strong>Importante:</strong> la aprobacion se evalua a nivel costura completa. Una sola posicion no aceptable
                 alcanza para que toda la costura figure como NO aprobada.
             </p>
+
+            <ayuda-demo-tabla-costuras></ayuda-demo-tabla-costuras>
         </div>
     </section>
 

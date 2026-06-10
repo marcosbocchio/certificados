@@ -320,6 +320,8 @@ Vue.component('ayuda-demo-grafico-pie',      require('./components/ayuda/ayuda-d
 Vue.component('ayuda-demo-grafico-doughnut', require('./components/ayuda/ayuda-demo-grafico-doughnut.vue').default);
 Vue.component('ayuda-demo-grafico-barras',   require('./components/ayuda/ayuda-demo-grafico-barras.vue').default);
 Vue.component('ayuda-demo-pestanas',         require('./components/ayuda/ayuda-demo-pestanas.vue').default);
+Vue.component('ayuda-demo-costuras-filtros', require('./components/ayuda/ayuda-demo-costuras-filtros.vue').default);
+Vue.component('ayuda-demo-tabla-costuras',   require('./components/ayuda/ayuda-demo-tabla-costuras.vue').default);
 
 /* Reportes */
 Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);

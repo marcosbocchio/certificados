@@ -102,7 +102,7 @@
            </div>
        </div>
 
-       <div class="col-md-9">
+       <div class="col-md-9 ayuda-btn-anchor">
            <div class="ayuda-btn-wrap">
                <a :href="ayudaUrl || '/ayuda_reportes_costuras'" class="ayuda-btn-reporte" title="Ver manual de uso de este reporte">
                    <i class="fa fa-info-circle"></i>
@@ -403,19 +403,23 @@ methods : {
 </script>
 
 <style>
+  .ayuda-btn-anchor {
+      position: relative;
+  }
   .ayuda-btn-wrap {
-      display: flex;
-      justify-content: flex-end;
-      margin: 0 0 10px 0;
+      position: absolute;
+      top: 2px;
+      right: 15px;
+      z-index: 10;
   }
   .ayuda-btn-reporte {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      padding: 7px 14px;
+      padding: 6px 12px;
       background: #2e86c1;
       color: #fff !important;
-      border-radius: 999px;
+      border-radius: 4px;
       font-size: 13px;
       font-weight: 700;
       text-decoration: none !important;
