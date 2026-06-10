@@ -127,12 +127,12 @@
                                            </tr>
                                            <tr v-for="(item,k) in TablaCosturas.data" :key="k">
                                                <td>{{ item.fecha_formateada }}</td>
-                                               <a :href="'/informes/ot/' + ot.id" @click="setInformeCookie(item.nro_informe_formateado)" target="_blank" title="Informe">
+                                               <td><a :href="'/informes/ot/' + ot.id" @click="setInformeCookie(item.nro_informe_formateado)" target="_blank" title="Informe">
                                                     <span>{{ item.nro_informe_formateado }}</span>
-                                                </a>
+                                                </a></td>
                                                <td>{{ item.codigo_junta }}</td>
                                                <td>{{ item.linea }}</td>
-                                               <td  v-if="item.hoja"><a href="" rel="tooltip" :title="' Hoja: '+ item.hoja">{{ item.plano_isom }}</a></td>
+                                               <td  v-if="item.hoja"><span rel="tooltip" :title="' Hoja: '+ item.hoja">{{ item.plano_isom }} <small class="text-muted">(Hoja {{ item.hoja }})</small></span></td>
                                                <td v-else>{{ item.plano_isom }}</td>
                                                <td style="text-align:center">
                                                    <div v-if="item.aprobado_sn">
