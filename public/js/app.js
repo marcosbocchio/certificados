@@ -81430,7 +81430,7 @@ var render = function render() {
         _vm.actividad = $event.target.value;
       }
     }
-  })])]) : _vm._e(), _vm._v(" "), _vm.esRayosX ? _c("div", {
+  })])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
@@ -81449,7 +81449,7 @@ var render = function render() {
     attrs: {
       type: "number",
       id: "kv",
-      disabled: _vm.interno_equipo.interno_fuente,
+      disabled: !_vm.esRayosX,
       max: "9999",
       step: "0.1"
     },
@@ -81462,7 +81462,7 @@ var render = function render() {
         _vm.kv = $event.target.value;
       }
     }
-  })])]) : _vm._e(), _vm._v(" "), _vm.esRayosX ? _c("div", {
+  })])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
@@ -81481,7 +81481,7 @@ var render = function render() {
     attrs: {
       type: "number",
       id: "ma",
-      disabled: _vm.interno_equipo.interno_fuente,
+      disabled: !_vm.esRayosX,
       max: "9999",
       step: "0.1"
     },
@@ -81494,7 +81494,7 @@ var render = function render() {
         _vm.ma = $event.target.value;
       }
     }
-  })])]) : _vm._e(), _vm._v(" "), _c("div", {
+  })])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"

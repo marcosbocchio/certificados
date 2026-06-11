@@ -291,18 +291,18 @@
                             </div>
                         </div>
 
-                        <div v-if="esRayosX" class="col-md-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="kv">Kv</label>
                                 <input type="number" class="form-control" v-model="kv" id="kv"
-                                    :disabled="interno_equipo.interno_fuente" max="9999" step="0.1">
+                                    :disabled="!esRayosX" max="9999" step="0.1">
                             </div>
                         </div>
-                        <div v-if="esRayosX" class="col-md-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="ma">mA</label>
                                 <input type="number" class="form-control" v-model="ma" id="ma"
-                                    :disabled="interno_equipo.interno_fuente" max="9999" step="0.1">
+                                    :disabled="!esRayosX" max="9999" step="0.1">
                             </div>
                         </div>
 
