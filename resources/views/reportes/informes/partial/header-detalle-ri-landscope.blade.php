@@ -8,14 +8,14 @@
                                 <th width="100%" colspan="4">Componente</th>
                             </tr>
                             <tr >
-                                <td colspan="4">{{$informe->componente}}</td>
+                                <td colspan="4">{!! $informe->componente ? e($informe->componente) : '&nbsp;' !!}</td>
                             </tr>
 
                             <tr>
                                 <th colspan="4" >Plano / Isométrico</th>
                             </tr>
                             <tr>
-                                 <td colspan="4">{{$informe->plano_isom}}
+                                 <td colspan="4">{!! $informe->plano_isom ? e($informe->plano_isom) : '&nbsp;' !!}
                                     @if ($informe->hoja)
                                      -H:{{ $informe->hoja}}
                                      @endif
@@ -27,9 +27,9 @@
                             </tr>
                             <tr>
                                 @if($informe_ri->reparacion_sn)
-                                  <td colspan="4">{{$ot_tipo_soldadura->proc_reparacion}}</td>
+                                  <td colspan="4">{!! $ot_tipo_soldadura->proc_reparacion ? e($ot_tipo_soldadura->proc_reparacion) : '&nbsp;' !!}</td>
                                 @else
-                                    <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
+                                    <td colspan="4">{!! $ot_tipo_soldadura->eps ? e($ot_tipo_soldadura->eps) : '&nbsp;' !!}</td>
                                 @endif
 
                             </tr>
@@ -39,12 +39,12 @@
                                 <th colspan="2">Fuente</th>
                             </tr>
                             <tr>
-                                <td colspan="2">{{$interno_equipo->equipo->codigo}}</td>
+                                <td colspan="2">{!! $interno_equipo->equipo->codigo ? e($interno_equipo->equipo->codigo) : '&nbsp;' !!}</td>
                                 <td colspan="2">
                                     @if ($interno_fuente)
-
                                         {{$interno_fuente->fuente->codigo}}
-
+                                    @else
+                                        &nbsp;
                                     @endif
                                 </td>
                             </tr>
@@ -55,8 +55,8 @@
                            </tr>
 
                            <tr>
-                                <td colspan="2">{{$informe_ri->lado}}</td>
-                                <td colspan="2">{{$informe_ri->distancia_fuente_pelicula}}</td>
+                                <td colspan="2">{!! $informe_ri->lado ? e($informe_ri->lado) : '&nbsp;' !!}</td>
+                                <td colspan="2">{!! $informe_ri->distancia_fuente_pelicula ? e($informe_ri->distancia_fuente_pelicula) : '&nbsp;' !!}</td>
                            </tr>
 
 
@@ -101,7 +101,7 @@
                                 <th colspan="4">Procedimiento</th>
                             </tr>
                             <tr>
-                                <td colspan="4">{{$procedimiento_inf->titulo}}</td>
+                                <td colspan="4">{!! $procedimiento_inf->titulo ? e($procedimiento_inf->titulo) : '&nbsp;' !!}</td>
                             </tr>
 
 
@@ -130,17 +130,11 @@
                             
                             <tr>
                                 @if ($interno_fuente)
-                                    <td colspan="2">{{$actividad}}</td>
-                                    <td colspan="2">
-                                            @if ($interno_fuente)
-                                            {{$interno_fuente->foco}}
-                                            @else
-                                                {{$interno_equipo->foco}}
-                                            @endif
-                                    </td>
-                                @else                                        
-                                    <td colspan="2">{{ $informe_ri->kv }}</td>
-                                    <td colspan="2"> {{ $informe_ri->ma }} </td>
+                                    <td colspan="2">{!! $actividad ? e($actividad) : '&nbsp;' !!}</td>
+                                    <td colspan="2">{!! $interno_fuente->foco ? e($interno_fuente->foco) : '&nbsp;' !!}</td>
+                                @else
+                                    <td colspan="2">{!! $informe_ri->kv !== null ? e($informe_ri->kv) : '&nbsp;' !!}</td>
+                                    <td colspan="2">{!! $informe_ri->ma !== null ? e($informe_ri->ma) : '&nbsp;' !!}</td>
                                 @endif
                             </tr>
 
@@ -148,7 +142,7 @@
                                <th colspan="4">Norma Evaluación</th>
                             </tr>
                             <tr>
-                                <td colspan="4">{{$norma_evaluacion->codigo}}</td>
+                                <td colspan="4">{!! $norma_evaluacion->codigo ? e($norma_evaluacion->codigo) : '&nbsp;' !!}</td>
                             </tr>
 
                             <tr>
@@ -156,8 +150,8 @@
                                 <th colspan="2">Nº de exposiciones</th>
                             </tr>
                             <tr>
-                                <td colspan="2">{{$ici->codigo}}</td>
-                                <td colspan="2">{{$informe_ri->exposicion}}</td>
+                                <td colspan="2">{!! $ici->codigo ? e($ici->codigo) : '&nbsp;' !!}</td>
+                                <td colspan="2">{!! $informe_ri->exposicion !== null ? e($informe_ri->exposicion) : '&nbsp;' !!}</td>
                             </tr>
 
                         </tbody>
@@ -212,8 +206,8 @@
                                 <th colspan="2">Tipo</th>
                             </tr>
                             <tr>
-                                <td colspan="2">{{$tipo_pelicula->fabricante}}</td>
-                                <td colspan="2">{{$tipo_pelicula->codigo}}</td>
+                                <td colspan="2">{!! $tipo_pelicula->fabricante ? e($tipo_pelicula->fabricante) : '&nbsp;' !!}</td>
+                                <td colspan="2">{!! $tipo_pelicula->codigo ? e($tipo_pelicula->codigo) : '&nbsp;' !!}</td>
                             </tr>
 
                             <tr>
@@ -223,15 +217,15 @@
                            </tr>
                            <tr>
                                 <td colspan="2">Pb</td>
-                                <td colspan="1">{{$informe_ri->pos_ant}}</td>
-                                <td colspan="1">{{$informe_ri->pos_pos}}</td>
+                                <td colspan="1">{!! $informe_ri->pos_ant !== null ? e($informe_ri->pos_ant) : '&nbsp;' !!}</td>
+                                <td colspan="1">{!! $informe_ri->pos_pos !== null ? e($informe_ri->pos_pos) : '&nbsp;' !!}</td>
                            </tr>
 
                             <tr>
                                 <th colspan="4">Norma Ensayo</th>
                             </tr>
                             <tr>
-                                <td colspan="4" class="borderFilabottom">{{$norma_ensayo->codigo}}</td>
+                                <td colspan="4" class="borderFilabottom">{!! $norma_ensayo->codigo ? e($norma_ensayo->codigo) : '&nbsp;' !!}</td>
                             </tr>
 
                             <tr>
@@ -240,7 +234,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
-                                <td colspan="2" class="borderFilabottom">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
+                                <td colspan="2" class="borderFilabottom">{!! $informe_solicitado_por ? e($informe_solicitado_por->name) : '&nbsp;' !!}</td>
                             </tr>
                         </tbody>
                     </table>

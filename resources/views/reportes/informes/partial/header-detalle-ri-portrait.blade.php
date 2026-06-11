@@ -9,7 +9,7 @@
                                <th width="100%" colspan="4">Componente</th>
                            </tr>
                            <tr >
-                               <td colspan="4">{{$informe->componente}}</td>
+                               <td colspan="4">{!! $informe->componente ? e($informe->componente) : '&nbsp;' !!}</td>
                            </tr>
 
                            <tr>
@@ -29,13 +29,13 @@
                                 <th colspan="4">Procedimiento</th>
                            </tr>
                            <tr>
-                                <td colspan="4">{{$procedimiento_inf->titulo}}</td>
+                                <td colspan="4">{!! $procedimiento_inf->titulo ? e($procedimiento_inf->titulo) : '&nbsp;' !!}</td>
                            </tr>
                            <tr>
                                 <th colspan="4">EPS / WPS</th>
                            </tr>
                            <tr>
-                                <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
+                                <td colspan="4">{!! $ot_tipo_soldadura->eps ? e($ot_tipo_soldadura->eps) : '&nbsp;' !!}</td>
                            </tr>
 
                            <tr>
@@ -43,8 +43,8 @@
                                 <th colspan="2">Tipo</th>
                            </tr>
                            <tr>
-                                <td colspan="2">{{$tipo_pelicula->fabricante}}</td>
-                                <td colspan="2">{{$tipo_pelicula->codigo}}</td>
+                                <td colspan="2">{!! $tipo_pelicula->fabricante ? e($tipo_pelicula->fabricante) : '&nbsp;' !!}</td>
+                                <td colspan="2">{!! $tipo_pelicula->codigo ? e($tipo_pelicula->codigo) : '&nbsp;' !!}</td>
                            </tr>
 
                            <tr>
@@ -54,8 +54,8 @@
                            </tr>
                            <tr>
                                 <td colspan="2">Pb</td>
-                                <td colspan="1">{{$informe_ri->pos_ant}}</td>
-                                <td colspan="1">{{$informe_ri->pos_pos}}</td>
+                                <td colspan="1">{!! $informe_ri->pos_ant !== null ? e($informe_ri->pos_ant) : '&nbsp;' !!}</td>
+                                <td colspan="1">{!! $informe_ri->pos_pos !== null ? e($informe_ri->pos_pos) : '&nbsp;' !!}</td>
                            </tr>
 
                            <tr>
@@ -64,8 +64,8 @@
                            </tr>
 
                            <tr>
-                                <td colspan="2">{{$informe_ri->lado}}</td>
-                                <td colspan="2">{{$informe_ri->distancia_fuente_pelicula}}</td>
+                                <td colspan="2">{!! $informe_ri->lado ? e($informe_ri->lado) : '&nbsp;' !!}</td>
+                                <td colspan="2">{!! $informe_ri->distancia_fuente_pelicula ? e($informe_ri->distancia_fuente_pelicula) : '&nbsp;' !!}</td>
                            </tr>
                             <tr>
                                 <th colspan="2">Técnica Empleada</th>
@@ -157,12 +157,12 @@
                                 <th colspan="2">Fuente</th>
                             </tr>
                             <tr>
-                                <td colspan="2">{{$interno_equipo->equipo->codigo}}</td>
+                                <td colspan="2">{!! $interno_equipo->equipo->codigo ? e($interno_equipo->equipo->codigo) : '&nbsp;' !!}</td>
                                 <td colspan="2">
                                     @if ($interno_fuente)
-
                                         {{$interno_fuente->fuente->codigo}}
-
+                                    @else
+                                        &nbsp;
                                     @endif
                                 </td>
                             </tr>
@@ -198,8 +198,8 @@
                                 <th colspan="2">Nº de exposiciones</th>
                             </tr>
                             <tr>
-                                <td colspan="2">{{$ici->codigo}}</td>
-                                <td colspan="2">{{$informe_ri->exposicion}}</td>
+                                <td colspan="2">{!! $ici->codigo ? e($ici->codigo) : '&nbsp;' !!}</td>
+                                <td colspan="2">{!! $informe_ri->exposicion !== null ? e($informe_ri->exposicion) : '&nbsp;' !!}</td>
                             </tr>
 
                             <tr>
@@ -207,8 +207,8 @@
                                 <th colspan="2">Norma Ensayo</th>
                             </tr>
                             <tr>
-                                <td colspan="2">{{$norma_evaluacion->codigo}}</td>
-                                <td colspan="2">{{$norma_ensayo->codigo}}</td>
+                                <td colspan="2">{!! $norma_evaluacion->codigo ? e($norma_evaluacion->codigo) : '&nbsp;' !!}</td>
+                                <td colspan="2">{!! $norma_ensayo->codigo ? e($norma_ensayo->codigo) : '&nbsp;' !!}</td>
                             </tr>
                             @if($informe_ri->perfil_sn)
                                 <tr>
@@ -238,7 +238,7 @@
                                     </tr>
                                     <tr>
                                      <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
-                                     <td colspan="2" class="borderFilabottom">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
+                                     <td colspan="2" class="borderFilabottom">{!! $informe_solicitado_por ? e($informe_solicitado_por->name) : '&nbsp;' !!}</td>
                                 </tr>
                             @endif
 
