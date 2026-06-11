@@ -95,7 +95,7 @@
                                     </td>
                                     <td>
                                         <div v-if="indexPosTabla === k">
-                                            <div v-if="ot_informe.metodo == 'RI'">
+                                            <div v-if="(ot_informe.metodo == 'RI' || ot_informe.metodo == 'RD') && ot_informe.informe_completo">
                                                 <div v-if="ot_informe.numero_repetido === 1">
                                                     {{ot_informe.informe_completo}}
                                                     <div @click="CambioNumero(ot_informe)" style="display:inline-block" ><span style="margin-left:5px;cursor:pointer;" class="glyphicon glyphicon-pencil"></span></div>
@@ -117,7 +117,7 @@
                                             </div>
                                         </div>
                                         <div v-else>
-                                            <div v-if="ot_informe.metodo == 'RI'">
+                                            <div v-if="(ot_informe.metodo == 'RI' || ot_informe.metodo == 'RD') && ot_informe.informe_completo">
                                                 <div v-if="ot_informe.numero_repetido === 1">
                                                     {{ot_informe.informe_completo}}
                                                 </div>
