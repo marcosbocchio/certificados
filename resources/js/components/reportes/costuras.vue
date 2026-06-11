@@ -138,7 +138,7 @@
                                                 </a></td>
                                                <td>{{ item.codigo_junta }}</td>
                                                <td>{{ item.linea }}</td>
-                                               <td  v-if="item.hoja"><span rel="tooltip" :title="' Hoja: '+ item.hoja">{{ item.plano_isom }} <small class="text-muted">(Hoja {{ item.hoja }})</small></span></td>
+                                               <td  v-if="item.hoja"><span :title="'Hoja: '+ item.hoja" style="cursor:help;border-bottom:1px dotted #999">{{ item.plano_isom }}</span></td>
                                                <td v-else>{{ item.plano_isom }}</td>
                                                <td style="text-align:center">
                                                    <div v-if="item.aprobado_sn">

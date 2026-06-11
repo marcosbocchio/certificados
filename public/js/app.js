@@ -102152,13 +102152,14 @@ var render = function render() {
         }
       }
     }, [_c("span", [_vm._v(_vm._s(item.nro_informe_formateado))])])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.codigo_junta))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.linea))]), _vm._v(" "), item.hoja ? _c("td", [_c("span", {
+      staticStyle: {
+        cursor: "help",
+        "border-bottom": "1px dotted #999"
+      },
       attrs: {
-        rel: "tooltip",
-        title: " Hoja: " + item.hoja
+        title: "Hoja: " + item.hoja
       }
-    }, [_vm._v(_vm._s(item.plano_isom) + " "), _c("small", {
-      staticClass: "text-muted"
-    }, [_vm._v("(Hoja " + _vm._s(item.hoja) + ")")])])]) : _c("td", [_vm._v(_vm._s(item.plano_isom))]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(item.plano_isom))])]) : _c("td", [_vm._v(_vm._s(item.plano_isom))]), _vm._v(" "), _c("td", {
       staticStyle: {
         "text-align": "center"
       }
