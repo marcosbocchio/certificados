@@ -22,8 +22,8 @@
                     </td>
                     <td>{{ row.linea }}</td>
                     <td>
-                        {{ row.plano }}
-                        <i v-if="row.hoja" class="fa fa-eye" :title="'Hoja: '+ row.hoja" style="color:#999;font-size:11px"></i>
+                        <strong v-if="row.hoja" :title="'Hoja: '+ row.hoja">{{ row.plano }}</strong>
+                        <span v-else>{{ row.plano }}</span>
                     </td>
                     <td class="text-center">
                         <span class="ayuda_demo_badge" :class="row.aprobado ? 'ayuda_demo_badge--success' : 'ayuda_demo_badge--danger'">
@@ -35,7 +35,7 @@
         </table>
         <div class="ayuda_demo_caption">
             Datos de ejemplo — el número de informe es un link al informe real. La costura J15 fue rechazada el 12/05
-            y su reparación (J15R) aprobada el 20/05. El ícono <i class="fa fa-eye" style="color:#999;font-size:11px"></i> indica que el plano tiene número de hoja — pasá el mouse para verlo.
+            y su reparación (J15R) aprobada el 20/05. Los planos en <strong>negrita</strong> tienen número de hoja — pasá el mouse para verlo.
         </div>
     </div>
 </template>

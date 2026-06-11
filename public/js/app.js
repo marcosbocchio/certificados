@@ -60521,16 +60521,11 @@ var render = function render() {
       staticClass: "ayuda_demo_link"
     }, [_vm._v(_vm._s(row.informe))])]), _vm._v(" "), _c("td", [_c("strong", [_vm._v(_vm._s(row.costura))]), _vm._v(" "), row.costura.endsWith("R") ? _c("span", {
       staticClass: "ayuda_demo_rep_tag"
-    }, [_vm._v("reparación")]) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(row.linea))]), _vm._v(" "), _c("td", [_vm._v("\n                    " + _vm._s(row.plano) + "\n                    "), row.hoja ? _c("i", {
-      staticClass: "fa fa-eye",
-      staticStyle: {
-        color: "#999",
-        "font-size": "11px"
-      },
+    }, [_vm._v("reparación")]) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(row.linea))]), _vm._v(" "), _c("td", [row.hoja ? _c("strong", {
       attrs: {
         title: "Hoja: " + row.hoja
       }
-    }) : _vm._e()]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(row.plano))]) : _c("span", [_vm._v(_vm._s(row.plano))])]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_c("span", {
       staticClass: "ayuda_demo_badge",
@@ -60549,13 +60544,7 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "ayuda_demo_caption"
-  }, [_vm._v("\n        Datos de ejemplo — el número de informe es un link al informe real. La costura J15 fue rechazada el 12/05\n        y su reparación (J15R) aprobada el 20/05. El ícono "), _c("i", {
-    staticClass: "fa fa-eye",
-    staticStyle: {
-      color: "#999",
-      "font-size": "11px"
-    }
-  }), _vm._v(" indica que el plano tiene número de hoja — pasá el mouse para verlo.\n    ")]);
+  }, [_vm._v("\n        Datos de ejemplo — el número de informe es un link al informe real. La costura J15 fue rechazada el 12/05\n        y su reparación (J15R) aprobada el 20/05. Los planos en "), _c("strong", [_vm._v("negrita")]), _vm._v(" tienen número de hoja — pasá el mouse para verlo.\n    ")]);
 }];
 render._withStripped = true;
 
@@ -102168,16 +102157,11 @@ var render = function render() {
           return _vm.setInformeCookie(item.nro_informe_formateado);
         }
       }
-    }, [_c("span", [_vm._v(_vm._s(item.nro_informe_formateado))])])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.codigo_junta))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.linea))]), _vm._v(" "), item.hoja ? _c("td", [_vm._v(_vm._s(item.plano_isom) + " "), _c("i", {
-      staticClass: "fa fa-eye",
-      staticStyle: {
-        color: "#999",
-        "font-size": "11px"
-      },
+    }, [_c("span", [_vm._v(_vm._s(item.nro_informe_formateado))])])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.codigo_junta))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.linea))]), _vm._v(" "), item.hoja ? _c("td", [_c("strong", {
       attrs: {
         title: "Hoja: " + item.hoja
       }
-    })]) : _c("td", [_vm._v(_vm._s(item.plano_isom))]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(item.plano_isom))])]) : _c("td", [_vm._v(_vm._s(item.plano_isom))]), _vm._v(" "), _c("td", {
       staticStyle: {
         "text-align": "center"
       }
