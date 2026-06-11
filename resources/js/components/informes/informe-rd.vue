@@ -264,7 +264,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="fuente">Fuente</label>
-                                <input type="text" v-model="fuente.codigo" class="form-control" id="fuente" disabled>
+                                <input type="text" :value="esRayosX ? 'Rayos X' : (fuente ? fuente.codigo : '')"
+                                    class="form-control" id="fuente" disabled>
                             </div>
                         </div>
 
@@ -283,10 +284,25 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div v-if="!esRayosX" class="col-md-3">
                             <div class="form-group">
                                 <label for="actividad">Actividad</label>
                                 <input type="text" v-model="actividad" class="form-control" id="actividad" disabled>
+                            </div>
+                        </div>
+
+                        <div v-if="esRayosX" class="col-md-3">
+                            <div class="form-group">
+                                <label for="kv">Kv</label>
+                                <input type="number" class="form-control" v-model="kv" id="kv"
+                                    :disabled="interno_equipo.interno_fuente" max="9999" step="0.1">
+                            </div>
+                        </div>
+                        <div v-if="esRayosX" class="col-md-3">
+                            <div class="form-group">
+                                <label for="ma">mA</label>
+                                <input type="number" class="form-control" v-model="ma" id="ma"
+                                    :disabled="interno_equipo.interno_fuente" max="9999" step="0.1">
                             </div>
                         </div>
 
@@ -302,21 +318,6 @@
                                 <label for="srb_dwi">SRb DWI</label>
                                 <input type="number" class="form-control" v-model="srb_dwi" id="srb_dwi"
                                     step="0.01">
-                            </div>
-                        </div>
-
-                        <div style="display:none">
-                            <div class="form-group">
-                                <label for="kv">Kv</label>
-                                <input type="number" class="form-control" v-model="kv" id="kv"
-                                    :disabled="interno_equipo.interno_fuente" max="9999" step="0.1">
-                            </div>
-                        </div>
-                        <div style="display:none">
-                            <div class="form-group">
-                                <label for="ma">mA</label>
-                                <input type="number" class="form-control" v-model="ma" id="ma"
-                                    :disabled="interno_equipo.interno_fuente" max="9999" step="0.1">
                             </div>
                         </div>
 
@@ -1534,6 +1535,10 @@ export default {
     computed: {
 
         ...mapState(['isLoading', 'url', 'ot_obra_tipo_soldaduras', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos', 'interno_equipos', 'fuentePorInterno', 'curie', 'modelos_3d', 'medidas_placa']),
+
+        esRayosX() {
+            return !!(this.interno_equipo && this.interno_equipo.id && !this.fuente);
+        },
 
         HabilitarClonarPasadas() {
 
