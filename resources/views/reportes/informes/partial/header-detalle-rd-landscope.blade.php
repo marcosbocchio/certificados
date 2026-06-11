@@ -42,9 +42,7 @@
                             <td colspan="2">{{$interno_equipo->equipo->codigo}}</td>
                             <td colspan="2">
                                 @if ($interno_fuente)
-
                                     {{$interno_fuente->fuente->codigo}}
-
                                 @else
                                     &nbsp;
                                 @endif
@@ -106,12 +104,23 @@
                             @endif
                             </td>
                         </tr>
+                        @if($es_rayos_x)
+                        <tr>
+                            <th colspan="2">Kv</th>
+                            <th colspan="2">mA</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{!! $kv ? e($kv) : '&nbsp;' !!}</td>
+                            <td colspan="2">{!! $ma ? e($ma) : '&nbsp;' !!}</td>
+                        </tr>
+                        @else
                         <tr>
                             <th colspan="4">Actividad</th>
                         </tr>
                         <tr>
                             <td colspan="4">{!! $actividad !== '' ? e($actividad . ' Ci') : '&nbsp;' !!}</td>
                         </tr>
+                        @endif
                         <tr>
                             <th colspan="2">Norma Evaluación</th>
                             <th colspan="2">Filtros Aplicados</th>

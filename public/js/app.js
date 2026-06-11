@@ -81356,7 +81356,7 @@ var render = function render() {
       disabled: ""
     },
     domProps: {
-      value: _vm.esRayosX ? "Rayos X" : _vm.fuente ? _vm.fuente.codigo : ""
+      value: _vm.fuente ? _vm.fuente.codigo : ""
     }
   })])]), _vm._v(" "), _vm.fuente ? _c("div", {
     staticClass: "col-md-3"

@@ -97,6 +97,9 @@ class PdfInformesRdController extends Controller
         $interno_equipo = InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
         $interno_fuente = InternoFuentes::where('id',$informe_rd->interno_fuente_id)->first();
         $actividad = $interno_fuente ? curie($interno_fuente->id,$informe->fecha) : '';
+        $kv = $informe_rd->kv;
+        $ma = $informe_rd->ma;
+        $es_rayos_x = !$interno_fuente;
         $tipo_pelicula = TipoPeliculas::find($informe_rd->tipo_pelicula_id);
         $dimension_detector = DimensionesDetector::find($informe_rd->dimension_detector_id);
         $diametro_espesor = $informe->diametro_espesor_id ? DiametrosEspesor::findOrFail($informe->diametro_espesor_id) : null;
@@ -140,6 +143,9 @@ class PdfInformesRdController extends Controller
                                                                         'ot_tipo_soldadura',
                                                                         'interno_equipo',
                                                                         'actividad',
+                                                                        'kv',
+                                                                        'ma',
+                                                                        'es_rayos_x',
                                                                         'interno_fuente',
                                                                         'tipo_pelicula',
                                                                         'dimension_detector',
@@ -194,6 +200,9 @@ class PdfInformesRdController extends Controller
                                                                         'interno_equipo',
                                                                         'ot_tipo_soldadura',
                                                                         'actividad',
+                                                                        'kv',
+                                                                        'ma',
+                                                                        'es_rayos_x',
                                                                         'interno_fuente',
                                                                         'tipo_pelicula',
                                                                         'dimension_detector',
@@ -244,6 +253,9 @@ class PdfInformesRdController extends Controller
                                                               'ot_tipo_soldadura',
                                                               'interno_equipo',
                                                               'actividad',
+                                                              'kv',
+                                                              'ma',
+                                                              'es_rayos_x',
                                                               'interno_fuente',
                                                               'tipo_pelicula',
                                                               'dimension_detector',

@@ -264,7 +264,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="fuente">Fuente</label>
-                                <input type="text" :value="esRayosX ? 'Rayos X' : (fuente ? fuente.codigo : '')"
+                                <input type="text" :value="fuente ? fuente.codigo : ''"
                                     class="form-control" id="fuente" disabled>
                             </div>
                         </div>
