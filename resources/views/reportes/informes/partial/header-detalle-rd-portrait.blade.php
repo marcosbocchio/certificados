@@ -9,7 +9,7 @@
                            <th width="100%" colspan="4">Componente</th>
                        </tr>
                        <tr >
-                           <td colspan="4">{{$informe->componente}}</td>
+                           <td colspan="4">{!! $informe->componente ? e($informe->componente) : '&nbsp;' !!}</td>
                        </tr>
 
                        <tr>
@@ -36,7 +36,7 @@
                             <th colspan="4">EPS / WPS</th>
                        </tr>
                        <tr>
-                            <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
+                            <td colspan="4">{!! $ot_tipo_soldadura->eps ? e($ot_tipo_soldadura->eps) : '&nbsp;' !!}</td>
                        </tr>
 
                        <tr>
@@ -44,8 +44,8 @@
                             <th colspan="2">Tipo centellador</th>
                        </tr>
                        <tr>
-                            <td colspan="2">{{ $dimension_detector ? $dimension_detector->descripcion . ' cm' : '' }}</td>
-                            <td colspan="2">{{ $tipo_centellador ? $tipo_centellador->descripcion : '' }}</td>
+                            <td colspan="2">{!! $dimension_detector ? e($dimension_detector->descripcion . ' cm') : '&nbsp;' !!}</td>
+                            <td colspan="2">{!! $tipo_centellador ? e($tipo_centellador->descripcion) : '&nbsp;' !!}</td>
                        </tr>
 
                        <tr>
@@ -53,8 +53,8 @@
                             <th colspan="2">SRb DWI</th>
                        </tr>
                        <tr>
-                            <td colspan="2">{{ $informe_rd->pitch ? $informe_rd->pitch . ' µm' : '' }}</td>
-                            <td colspan="2">{{ $informe_rd->srb_dwi ? $informe_rd->srb_dwi . ' µm' : '' }}</td>
+                            <td colspan="2">{!! $informe_rd->pitch ? e($informe_rd->pitch . ' µm') : '&nbsp;' !!}</td>
+                            <td colspan="2">{!! $informe_rd->srb_dwi ? e($informe_rd->srb_dwi . ' µm') : '&nbsp;' !!}</td>
                        </tr>
 
                        <tr>
@@ -63,8 +63,8 @@
                        </tr>
 
                        <tr>
-                            <td colspan="2">{{$informe_rd->lado}}</td>
-                            <td colspan="2">{{$informe_rd->distancia_fuente_pelicula}}</td>
+                            <td colspan="2">{!! $informe_rd->lado ? e($informe_rd->lado) : '&nbsp;' !!}</td>
+                            <td colspan="2">{!! $informe_rd->distancia_fuente_pelicula ? e($informe_rd->distancia_fuente_pelicula) : '&nbsp;' !!}</td>
                        </tr>
 
                       <tr>
@@ -151,6 +151,8 @@
 
                                     {{$interno_fuente->fuente->codigo}}
 
+                                @else
+                                    &nbsp;
                                 @endif
                             </td>
                         </tr>
@@ -159,7 +161,7 @@
                             <th colspan="4">Actividad</th>
                         </tr>
                         <tr>
-                            <td colspan="4">{{$actividad !== '' ? $actividad . ' Ci' : ''}}</td>
+                            <td colspan="4">{!! $actividad !== '' ? e($actividad . ' Ci') : '&nbsp;' !!}</td>
                         </tr>
                         <tr>
                             <th colspan="2">ICI</th>
@@ -176,7 +178,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">{{$norma_evaluacion->codigo}}</td>
-                            <td colspan="2">{{ $filtro_aplicado_rd ? $filtro_aplicado_rd->descripcion : '' }}</td>
+                            <td colspan="2">{!! $filtro_aplicado_rd ? e($filtro_aplicado_rd->descripcion) : '&nbsp;' !!}</td>
                         </tr>
                         <tr>
                             <th colspan="2">Norma Ensayo</th>
@@ -184,7 +186,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">{{$norma_ensayo->codigo}}</td>
-                            <td colspan="2">{{ $software_adquisicion_rd ? $software_adquisicion_rd->descripcion : '' }}</td>
+                            <td colspan="2">{!! $software_adquisicion_rd ? e($software_adquisicion_rd->descripcion) : '&nbsp;' !!}</td>
                         </tr>
                         @if($informe_rd->perfil_sn)
                             <tr>
@@ -214,7 +216,7 @@
                                 </tr>
                                 <tr>
                                  <td colspan="2" class="">{{$ejecutor_ensayo->name}}</td>
-                                 <td colspan="2" class="">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
+                                 <td colspan="2" class="">{!! $informe_solicitado_por ? e($informe_solicitado_por->name) : '&nbsp;' !!}</td>
                             </tr>
                         @endif
 
