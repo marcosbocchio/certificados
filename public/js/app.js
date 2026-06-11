@@ -24363,7 +24363,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     getFuente: function getFuente() {
       var _this9 = this;
-      if (this.interno_equipo.interno_fuente) {
+      if (this.interno_equipo && this.interno_equipo.interno_fuente) {
         this.interno_fuente = this.interno_equipo.interno_fuente;
         this.$store.dispatch('loadFuentePorInterno', this.interno_equipo.interno_fuente.id).then(function (response) {
           _this9.fuente = _this9.fuentePorInterno;
@@ -24394,8 +24394,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     resetInputsEquipos: function resetInputsEquipos() {
-      this.kv = this.interno_equipo.voltaje;
-      this.ma = this.interno_equipo.amperaje;
+      this.kv = this.interno_equipo ? this.interno_equipo.voltaje : '';
+      this.ma = this.interno_equipo ? this.interno_equipo.amperaje : '';
     },
     getTipoPeliculas: function getTipoPeliculas() {
       var _this11 = this;
@@ -24531,7 +24531,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     ActualizarDistFuentePelicula: function ActualizarDistFuentePelicula() {
       var _this19 = this;
       axios.defaults.baseURL = this.url;
-      var foco = this.interno_fuente ? this.interno_fuente.foco : this.interno_equipo.foco;
+      var foco = this.interno_fuente ? this.interno_fuente.foco : this.interno_equipo ? this.interno_equipo.foco : '';
       foco = foco ? foco : 0;
       if (this.tecnica.codigo == 'SWE/SWV') {
         if (this.tecnica && this.medida) {
@@ -81163,12 +81163,6 @@ var render = function render() {
       "for": "foco"
     }
   }, [_vm._v("Foco ")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.interno_equipo.foco,
-      expression: "interno_equipo.foco"
-    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
@@ -81176,15 +81170,9 @@ var render = function render() {
       disabled: ""
     },
     domProps: {
-      value: _vm.interno_equipo.foco
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.interno_equipo, "foco", $event.target.value);
-      }
+      value: _vm.interno_equipo ? _vm.interno_equipo.foco : ""
     }
-  })])]), _vm._v(" "), !_vm.esRayosX ? _c("div", {
+  })])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
@@ -81214,7 +81202,7 @@ var render = function render() {
         _vm.actividad = $event.target.value;
       }
     }
-  })])]) : _vm._e(), _vm._v(" "), _vm.esRayosX ? _c("div", {
+  })])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
@@ -81233,7 +81221,7 @@ var render = function render() {
     attrs: {
       type: "number",
       id: "kv",
-      disabled: _vm.interno_equipo.interno_fuente,
+      disabled: !_vm.esRayosX,
       max: "9999",
       step: "0.1"
     },
@@ -81246,7 +81234,7 @@ var render = function render() {
         _vm.kv = $event.target.value;
       }
     }
-  })])]) : _vm._e(), _vm._v(" "), _vm.esRayosX ? _c("div", {
+  })])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
@@ -81265,7 +81253,7 @@ var render = function render() {
     attrs: {
       type: "number",
       id: "ma",
-      disabled: _vm.interno_equipo.interno_fuente,
+      disabled: !_vm.esRayosX,
       max: "9999",
       step: "0.1"
     },
@@ -81276,66 +81264,6 @@ var render = function render() {
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.ma = $event.target.value;
-      }
-    }
-  })])]) : _vm._e(), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "pitch"
-    }
-  }, [_vm._v("Pitch")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.pitch,
-      expression: "pitch"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      id: "pitch",
-      step: "0.01"
-    },
-    domProps: {
-      value: _vm.pitch
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.pitch = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "srb_dwi"
-    }
-  }, [_vm._v("SRb DWI")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.srb_dwi,
-      expression: "srb_dwi"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      id: "srb_dwi",
-      step: "0.01"
-    },
-    domProps: {
-      value: _vm.srb_dwi
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.srb_dwi = $event.target.value;
       }
     }
   })])]), _vm._v(" "), _c("div", {
@@ -81494,6 +81422,8 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
+    staticClass: "clearfix"
+  }), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "row"
@@ -81749,6 +81679,70 @@ var render = function render() {
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.distancia_fuente_pelicula = $event.target.value;
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "pitch"
+    }
+  }, [_vm._v("Pitch")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.pitch,
+      expression: "pitch"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      id: "pitch",
+      step: "0.01"
+    },
+    domProps: {
+      value: _vm.pitch
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.pitch = $event.target.value;
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "srb_dwi"
+    }
+  }, [_vm._v("SRb DWI")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.srb_dwi,
+      expression: "srb_dwi"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      id: "srb_dwi",
+      step: "0.01"
+    },
+    domProps: {
+      value: _vm.srb_dwi
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.srb_dwi = $event.target.value;
       }
     }
   })])])])]), _vm._v(" "), _c("div", {

@@ -279,45 +279,30 @@
                         <div v-else class="col-md-3">
                             <div class="form-group">
                                 <label for="foco">Foco </label>
-                                <input type="text" v-model="interno_equipo.foco" class="form-control" id="foco"
-                                    disabled>
+                                <input type="text" :value="interno_equipo ? interno_equipo.foco : ''"
+                                    class="form-control" id="foco" disabled>
                             </div>
                         </div>
 
-                        <div v-if="!esRayosX" class="col-md-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="actividad">Actividad</label>
                                 <input type="text" v-model="actividad" class="form-control" id="actividad" disabled>
                             </div>
                         </div>
 
-                        <div v-if="esRayosX" class="col-md-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="kv">Kv</label>
                                 <input type="number" class="form-control" v-model="kv" id="kv"
-                                    :disabled="interno_equipo.interno_fuente" max="9999" step="0.1">
+                                    :disabled="!esRayosX" max="9999" step="0.1">
                             </div>
                         </div>
-                        <div v-if="esRayosX" class="col-md-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="ma">mA</label>
                                 <input type="number" class="form-control" v-model="ma" id="ma"
-                                    :disabled="interno_equipo.interno_fuente" max="9999" step="0.1">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="pitch">Pitch</label>
-                                <input type="number" class="form-control" v-model="pitch" id="pitch" step="0.01">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="srb_dwi">SRb DWI</label>
-                                <input type="number" class="form-control" v-model="srb_dwi" id="srb_dwi"
-                                    step="0.01">
+                                    :disabled="!esRayosX" max="9999" step="0.1">
                             </div>
                         </div>
 
@@ -359,6 +344,8 @@
                                 <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
                             </div>
                         </div>
+
+                        <div class="clearfix"></div>
 
                         <!-- Col 1: ICI + Filtros + Lado + Ejecutor -->
                         <div class="col-md-3">
@@ -462,6 +449,24 @@
                                             class="form-control"
                                             :disabled="diametro.diametro != 'VARIOS' && !dist_fuente_pel_edit_sn"
                                             id="distancia_fuente_pelicula">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="pitch">Pitch</label>
+                                        <input type="number" class="form-control" v-model="pitch" id="pitch"
+                                            step="0.01">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="srb_dwi">SRb DWI</label>
+                                        <input type="number" class="form-control" v-model="srb_dwi" id="srb_dwi"
+                                            step="0.01">
                                     </div>
                                 </div>
                             </div>
@@ -1791,7 +1796,7 @@ export default {
 
         getFuente: function () {
 
-            if (this.interno_equipo.interno_fuente) {
+            if (this.interno_equipo && this.interno_equipo.interno_fuente) {
                 this.interno_fuente = this.interno_equipo.interno_fuente;
                 this.$store.dispatch('loadFuentePorInterno', this.interno_equipo.interno_fuente.id).then(response => {
                     this.fuente = this.fuentePorInterno;
@@ -1824,8 +1829,8 @@ export default {
         },
         resetInputsEquipos: function () {
 
-            this.kv = this.interno_equipo.voltaje;
-            this.ma = this.interno_equipo.amperaje;
+            this.kv = this.interno_equipo ? this.interno_equipo.voltaje : '';
+            this.ma = this.interno_equipo ? this.interno_equipo.amperaje : '';
         },
         getTipoPeliculas: function () {
             axios.defaults.baseURL = this.url;
@@ -1946,7 +1951,7 @@ export default {
         ActualizarDistFuentePelicula: function () {
 
             axios.defaults.baseURL = this.url;
-            let foco = (this.interno_fuente) ? this.interno_fuente.foco : this.interno_equipo.foco;
+            let foco = (this.interno_fuente) ? this.interno_fuente.foco : (this.interno_equipo ? this.interno_equipo.foco : '');
             foco = foco ? foco : 0;
             if (this.tecnica.codigo == 'SWE/SWV') {
                 if (this.tecnica && this.medida) {
