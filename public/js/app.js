@@ -9612,6 +9612,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ayuda-demo-costuras-filtros'
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-filtros.vue?vue&type=script&lang=js":
 /*!**********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-filtros.vue?vue&type=script&lang=js ***!
@@ -9914,6 +9929,66 @@ Vue.use(vue_tabs_component__WEBPACK_IMPORTED_MODULE_0___default.a);
         descripcion: 'Marca de identificación',
         cantidad: 3,
         porcentaje: 20.0
+      }]
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ayuda-demo-tabla-costuras',
+  data: function data() {
+    return {
+      filas: [{
+        fecha: '20/05/2026',
+        informe: 'RD0034',
+        costura: 'J15R',
+        linea: 'L-104',
+        plano: 'ISO-PL-0245',
+        hoja: '2',
+        aprobado: true
+      }, {
+        fecha: '12/05/2026',
+        informe: 'RD0028',
+        costura: 'J15',
+        linea: 'L-104',
+        plano: 'ISO-PL-0245',
+        hoja: '2',
+        aprobado: false
+      }, {
+        fecha: '12/05/2026',
+        informe: 'RD0028',
+        costura: 'J14',
+        linea: 'L-104',
+        plano: 'ISO-PL-0245',
+        hoja: '1',
+        aprobado: true
+      }, {
+        fecha: '08/05/2026',
+        informe: '125-PT-RI0019',
+        costura: 'K221',
+        linea: 'L-090',
+        plano: 'ISO-DC-0090',
+        hoja: null,
+        aprobado: true
+      }, {
+        fecha: '08/05/2026',
+        informe: '125-PT-RI0019',
+        costura: 'K220',
+        linea: 'L-090',
+        plano: 'ISO-DC-0090',
+        hoja: null,
+        aprobado: true
       }]
     };
   }
@@ -24363,7 +24438,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     getFuente: function getFuente() {
       var _this9 = this;
-      if (this.interno_equipo.interno_fuente) {
+      if (this.interno_equipo && this.interno_equipo.interno_fuente) {
         this.interno_fuente = this.interno_equipo.interno_fuente;
         this.$store.dispatch('loadFuentePorInterno', this.interno_equipo.interno_fuente.id).then(function (response) {
           _this9.fuente = _this9.fuentePorInterno;
@@ -24394,8 +24469,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     },
     resetInputsEquipos: function resetInputsEquipos() {
-      this.kv = this.interno_equipo.voltaje;
-      this.ma = this.interno_equipo.amperaje;
+      this.kv = this.interno_equipo ? this.interno_equipo.voltaje : '';
+      this.ma = this.interno_equipo ? this.interno_equipo.amperaje : '';
     },
     getTipoPeliculas: function getTipoPeliculas() {
       var _this11 = this;
@@ -24531,7 +24606,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     ActualizarDistFuentePelicula: function ActualizarDistFuentePelicula() {
       var _this19 = this;
       axios.defaults.baseURL = this.url;
-      var foco = this.interno_fuente ? this.interno_fuente.foco : this.interno_equipo.foco;
+      var foco = this.interno_fuente ? this.interno_fuente.foco : this.interno_equipo ? this.interno_equipo.foco : '';
       foco = foco ? foco : 0;
       if (this.tecnica.codigo == 'SWE/SWV') {
         if (this.tecnica && this.medida) {
@@ -36846,6 +36921,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     ot_prop: {
       type: Object
+    },
+    ayudaUrl: {
+      type: String,
+      "default": ''
     }
   },
   data: function data() {
@@ -37607,6 +37686,10 @@ Vue.use(vue_tabs_component__WEBPACK_IMPORTED_MODULE_4___default.a);
     },
     ot_prop: {
       type: Object
+    },
+    ayudaUrl: {
+      type: String,
+      "default": ''
     }
   },
   data: function data() {
@@ -59985,6 +60068,100 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=template&id=82e4797e&scoped=true":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=template&id=82e4797e&scoped=true ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _vm._m(0);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_demo_filtros_wrap"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_filtros_label"
+  }, [_c("span", {
+    staticClass: "ayuda_demo_filtros_label_main"
+  }, [_vm._v("REPORTE")]), _vm._v(" "), _c("span", {
+    staticClass: "ayuda_demo_filtros_label_sub"
+  }, [_vm._v("Seguimiento de costuras / Plano-isométrico")])]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_filtros_panel"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_filtros_field"
+  }, [_c("label", [_vm._v("Cliente")]), _vm._v(" "), _c("span", [_vm._v("Cliente Demo SA")])]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_filtros_field"
+  }, [_c("label", [_vm._v("OT")]), _vm._v(" "), _c("span", [_vm._v("OT-2026-001")])]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_filtros_field"
+  }, [_c("label", [_vm._v("Obra")]), _vm._v(" "), _c("span", [_vm._v("Gasoducto Norte")])]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_filtros_field"
+  }, [_c("label", [_vm._v("Componente")]), _vm._v(" "), _c("span", [_vm._v("Cañería principal")])]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_filtros_input"
+  }, [_c("input", {
+    attrs: {
+      type: "text",
+      value: "125",
+      disabled: "",
+      placeholder: "PK"
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_filtros_input"
+  }, [_c("input", {
+    attrs: {
+      type: "text",
+      value: "ISO-PL-0245",
+      disabled: "",
+      placeholder: "Plano Isométrico"
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_filtros_input"
+  }, [_c("input", {
+    attrs: {
+      type: "text",
+      value: "J15",
+      disabled: "",
+      placeholder: "Costura"
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_filtros_field"
+  }, [_c("label", [_vm._v("Soldador")]), _vm._v(" "), _c("span", [_vm._v("S-07 — Pérez, J.")])]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_filtros_checks"
+  }, [_c("label", [_c("input", {
+    attrs: {
+      type: "checkbox",
+      disabled: ""
+    }
+  }), _vm._v(" Rechazados")]), _vm._v(" "), _c("label", [_c("input", {
+    attrs: {
+      type: "checkbox",
+      disabled: ""
+    }
+  }), _vm._v(" Reparaciones")])]), _vm._v(" "), _c("button", {
+    staticClass: "ayuda_demo_filtros_btn",
+    attrs: {
+      disabled: ""
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-search"
+  }), _vm._v(" Buscar\n        ")])]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_filtros_caption"
+  }, [_vm._v("Vista de ejemplo del panel de filtros — no funcional")])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-filtros.vue?vue&type=template&id=3426c118&scoped=true":
 /*!********************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-filtros.vue?vue&type=template&id=3426c118&scoped=true ***!
@@ -60311,6 +60488,57 @@ var staticRenderFns = [function () {
   }, [_c("i", {
     staticClass: "fa fa-search"
   }), _vm._v(" Buscar\n            ")])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=template&id=7e770786&scoped=true":
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=template&id=7e770786&scoped=true ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_demo_block"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_label"
+  }, [_vm._v("Ejemplo: tabla de resultados del seguimiento de costuras")]), _vm._v(" "), _c("table", {
+    staticClass: "ayuda_demo_table table table-striped"
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.filas, function (row, i) {
+    return _c("tr", {
+      key: i
+    }, [_c("td", [_vm._v(_vm._s(row.fecha))]), _vm._v(" "), _c("td", [_c("span", {
+      staticClass: "ayuda_demo_link"
+    }, [_vm._v(_vm._s(row.informe))])]), _vm._v(" "), _c("td", [_c("strong", [_vm._v(_vm._s(row.costura))]), _vm._v(" "), row.costura.endsWith("R") ? _c("span", {
+      staticClass: "ayuda_demo_rep_tag"
+    }, [_vm._v("reparación")]) : _vm._e()]), _vm._v(" "), _c("td", [_vm._v(_vm._s(row.linea))]), _vm._v(" "), _c("td", [_vm._v("\n                    " + _vm._s(row.plano) + "\n                    "), row.hoja ? _c("small", {
+      staticClass: "text-muted"
+    }, [_vm._v("(Hoja " + _vm._s(row.hoja) + ")")]) : _vm._e()]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_c("span", {
+      staticClass: "ayuda_demo_badge",
+      "class": row.aprobado ? "ayuda_demo_badge--success" : "ayuda_demo_badge--danger"
+    }, [_vm._v("\n                        " + _vm._s(row.aprobado ? "SI" : "NO") + "\n                    ")])])]);
+  }), 0)]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_demo_caption"
+  }, [_vm._v("\n        Datos de ejemplo — el numero de informe es un link al informe real. La costura J15 fue rechazada el 12/05\n        y su reparación (J15R) aprobada el 20/05.\n    ")])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Fecha")]), _vm._v(" "), _c("th", [_vm._v("Informe Nº")]), _vm._v(" "), _c("th", [_vm._v("Costura")]), _vm._v(" "), _c("th", [_vm._v("Línea")]), _vm._v(" "), _c("th", [_vm._v("Plano Isométrico")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center"
+  }, [_vm._v("Aprob.")])])]);
 }];
 render._withStripped = true;
 
@@ -81163,12 +81391,6 @@ var render = function render() {
       "for": "foco"
     }
   }, [_vm._v("Foco ")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.interno_equipo.foco,
-      expression: "interno_equipo.foco"
-    }],
     staticClass: "form-control",
     attrs: {
       type: "text",
@@ -81176,13 +81398,7 @@ var render = function render() {
       disabled: ""
     },
     domProps: {
-      value: _vm.interno_equipo.foco
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.interno_equipo, "foco", $event.target.value);
-      }
+      value: _vm.interno_equipo ? _vm.interno_equipo.foco : ""
     }
   })])]), _vm._v(" "), !_vm.esRayosX ? _c("div", {
     staticClass: "col-md-3"
@@ -101859,8 +102075,18 @@ var render = function render() {
   }, [_c("span", {
     staticClass: "fa fa-search"
   }), _vm._v("\n                        Buscar\n                    ")])])])])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-9"
-  }, [_c("tabs", {
+    staticClass: "col-md-9 ayuda-btn-anchor"
+  }, [_c("div", {
+    staticClass: "ayuda-btn-wrap"
+  }, [_c("a", {
+    staticClass: "ayuda-btn-reporte",
+    attrs: {
+      href: _vm.ayudaUrl || "/ayuda_reportes_costuras",
+      title: "Ver manual de uso de este reporte"
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-info-circle"
+  }), _vm._v(" "), _c("span", [_vm._v("¿Cómo usar este reporte?")])])]), _vm._v(" "), _c("tabs", {
     attrs: {
       options: {
         useUrlFragment: false
@@ -101908,7 +102134,7 @@ var render = function render() {
   }, [_vm._v("Aprob.")])]), _vm._v(" "), _vm._l(_vm.TablaCosturas.data, function (item, k) {
     return _c("tr", {
       key: k
-    }, [_c("td", [_vm._v(_vm._s(item.fecha_formateada))]), _vm._v(" "), _c("a", {
+    }, [_c("td", [_vm._v(_vm._s(item.fecha_formateada))]), _vm._v(" "), _c("td", [_c("a", {
       attrs: {
         href: "/informes/ot/" + _vm.ot.id,
         target: "_blank",
@@ -101919,13 +102145,14 @@ var render = function render() {
           return _vm.setInformeCookie(item.nro_informe_formateado);
         }
       }
-    }, [_c("span", [_vm._v(_vm._s(item.nro_informe_formateado))])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.codigo_junta))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.linea))]), _vm._v(" "), item.hoja ? _c("td", [_c("a", {
+    }, [_c("span", [_vm._v(_vm._s(item.nro_informe_formateado))])])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.codigo_junta))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.linea))]), _vm._v(" "), item.hoja ? _c("td", [_c("span", {
       attrs: {
-        href: "",
         rel: "tooltip",
         title: " Hoja: " + item.hoja
       }
-    }, [_vm._v(_vm._s(item.plano_isom))])]) : _c("td", [_vm._v(_vm._s(item.plano_isom))]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(item.plano_isom) + " "), _c("small", {
+      staticClass: "text-muted"
+    }, [_vm._v("(Hoja " + _vm._s(item.hoja) + ")")])])]) : _c("td", [_vm._v(_vm._s(item.plano_isom))]), _vm._v(" "), _c("td", {
       staticStyle: {
         "text-align": "center"
       }
@@ -102686,7 +102913,17 @@ var render = function render() {
     staticClass: "col-md-9"
   }, [_c("div", {
     staticClass: "estadisticas-soldaduras"
-  }, [_c("tabs", {
+  }, [_c("div", {
+    staticClass: "ayuda-btn-wrap"
+  }, [_c("a", {
+    staticClass: "ayuda-btn-reporte",
+    attrs: {
+      href: _vm.ayudaUrl || "/ayuda_reportes_estadisticas_soldaduras",
+      title: "Ver manual de uso de este reporte"
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-info-circle"
+  }), _vm._v(" "), _c("span", [_vm._v("¿Cómo usar este reporte?")])])]), _vm._v(" "), _c("tabs", {
     attrs: {
       options: {
         useUrlFragment: false
@@ -132231,6 +132468,25 @@ exports.push([module.i, "\n.box.box-custom-enod[data-v-0a1313be] {\r\n    paddin
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda_demo_filtros_wrap[data-v-82e4797e] {\r\n    max-width: 260px;\r\n    margin: 14px 0;\n}\n.ayuda_demo_filtros_label[data-v-82e4797e] {\r\n    margin-bottom: 6px;\n}\n.ayuda_demo_filtros_label_main[data-v-82e4797e] {\r\n    font-size: 10px;\r\n    color: #6b7280;\r\n    letter-spacing: 0.08em;\r\n    font-weight: 700;\r\n    text-transform: uppercase;\r\n    display: block;\n}\n.ayuda_demo_filtros_label_sub[data-v-82e4797e] {\r\n    font-size: 11px;\r\n    color: #6b7280;\n}\n.ayuda_demo_filtros_panel[data-v-82e4797e] {\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-top: 3px solid #d99000;\r\n    border-radius: 6px;\r\n    padding: 14px;\n}\n.ayuda_demo_filtros_field[data-v-82e4797e] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    padding: 8px 0;\r\n    border-bottom: 1px solid #edf1f5;\r\n    font-size: 13px;\n}\n.ayuda_demo_filtros_field label[data-v-82e4797e] {\r\n    color: #4c5661;\r\n    font-weight: 700;\r\n    font-size: 12px;\r\n    margin: 0;\n}\n.ayuda_demo_filtros_field span[data-v-82e4797e] {\r\n    color: #6b7280;\r\n    font-size: 11px;\r\n    text-align: right;\n}\n.ayuda_demo_filtros_input[data-v-82e4797e] {\r\n    padding: 10px 0 6px;\r\n    border-bottom: 1px solid #edf1f5;\n}\n.ayuda_demo_filtros_input input[data-v-82e4797e] {\r\n    width: 100%;\r\n    border: 1px solid #d4d4d8;\r\n    border-radius: 4px;\r\n    padding: 5px 8px;\r\n    font-size: 12px;\r\n    background: #fafbfd;\r\n    cursor: not-allowed;\n}\n.ayuda_demo_filtros_checks[data-v-82e4797e] {\r\n    display: grid;\r\n    grid-template-columns: 1fr 1fr;\r\n    gap: 8px;\r\n    padding: 10px 0 4px;\n}\n.ayuda_demo_filtros_checks label[data-v-82e4797e] {\r\n    font-size: 12px;\r\n    color: #4c5661;\r\n    font-weight: 600;\r\n    margin: 0;\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 5px;\r\n    cursor: not-allowed;\n}\n.ayuda_demo_filtros_btn[data-v-82e4797e] {\r\n    width: 100%;\r\n    margin-top: 10px;\r\n    padding: 8px 12px;\r\n    background: #f0ad4e;\r\n    color: #fff;\r\n    border: 1px solid #eea236;\r\n    border-radius: 4px;\r\n    font-size: 13px;\r\n    font-weight: 700;\r\n    cursor: not-allowed;\n}\n.ayuda_demo_filtros_btn i[data-v-82e4797e] {\r\n    margin-right: 4px;\n}\n.ayuda_demo_filtros_caption[data-v-82e4797e] {\r\n    margin-top: 6px;\r\n    font-size: 11px;\r\n    color: #9ca3af;\r\n    font-style: italic;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-filtros.vue?vue&type=style&index=0&id=3426c118&scoped=true&lang=css":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-filtros.vue?vue&type=style&index=0&id=3426c118&scoped=true&lang=css ***!
@@ -132262,7 +132518,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_chart[data-v-70120280] {\r\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-70120280] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_chart_wrap[data-v-70120280] {\r\n    position: relative;\r\n    height: 280px;\r\n    width: 100%;\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-radius: 10px;\r\n    padding: 12px;\r\n    box-sizing: border-box;\r\n    overflow: hidden;\n}\n.ayuda_demo_chart_wrap[data-v-70120280] > div {\r\n    position: absolute !important;\r\n    top: 12px;\r\n    left: 12px;\r\n    right: 12px;\r\n    bottom: 12px;\r\n    height: auto !important;\r\n    width: auto !important;\n}\n.ayuda_demo_chart_wrap[data-v-70120280] canvas {\r\n    max-height: 100% !important;\r\n    max-width: 100% !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_chart[data-v-70120280] {\r\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-70120280] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_chart_wrap[data-v-70120280] {\r\n    position: relative;\r\n    height: 280px;\r\n    width: 100%;\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-radius: 10px;\r\n    padding: 12px;\r\n    box-sizing: border-box;\r\n    overflow: hidden;\n}\n.ayuda_demo_chart_wrap[data-v-70120280] > div {\r\n    position: absolute !important;\r\n    top: 12px;\r\n    left: 12px;\r\n    right: 12px;\r\n    bottom: 12px;\r\n    height: auto !important;\r\n    width: auto !important;\n}\n.ayuda_demo_chart_wrap[data-v-70120280] canvas {\r\n    max-height: 100% !important;\r\n    max-width: 100% !important;\n}\n@media (max-width: 600px) {\n.ayuda_demo_chart_wrap[data-v-70120280] {\r\n        height: 220px;\r\n        padding: 8px;\n}\n.ayuda_demo_chart_wrap[data-v-70120280] > div {\r\n        top: 8px;\r\n        left: 8px;\r\n        right: 8px;\r\n        bottom: 8px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -132281,7 +132537,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_chart[data-v-c0d0255e] {\r\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-c0d0255e] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_chart_wrap[data-v-c0d0255e] {\r\n    position: relative;\r\n    height: 280px;\r\n    width: 100%;\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-radius: 10px;\r\n    padding: 12px;\r\n    box-sizing: border-box;\r\n    overflow: hidden;\n}\n.ayuda_demo_chart_wrap[data-v-c0d0255e] > div {\r\n    position: absolute !important;\r\n    top: 12px;\r\n    left: 12px;\r\n    right: 12px;\r\n    bottom: 12px;\r\n    height: auto !important;\r\n    width: auto !important;\n}\n.ayuda_demo_chart_wrap[data-v-c0d0255e] canvas {\r\n    max-height: 100% !important;\r\n    max-width: 100% !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_chart[data-v-c0d0255e] {\r\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-c0d0255e] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_chart_wrap[data-v-c0d0255e] {\r\n    position: relative;\r\n    height: 280px;\r\n    width: 100%;\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-radius: 10px;\r\n    padding: 12px;\r\n    box-sizing: border-box;\r\n    overflow: hidden;\n}\n.ayuda_demo_chart_wrap[data-v-c0d0255e] > div {\r\n    position: absolute !important;\r\n    top: 12px;\r\n    left: 12px;\r\n    right: 12px;\r\n    bottom: 12px;\r\n    height: auto !important;\r\n    width: auto !important;\n}\n.ayuda_demo_chart_wrap[data-v-c0d0255e] canvas {\r\n    max-height: 100% !important;\r\n    max-width: 100% !important;\n}\n@media (max-width: 600px) {\n.ayuda_demo_chart_wrap[data-v-c0d0255e] {\r\n        height: 220px;\r\n        padding: 8px;\n}\n.ayuda_demo_chart_wrap[data-v-c0d0255e] > div {\r\n        top: 8px;\r\n        left: 8px;\r\n        right: 8px;\r\n        bottom: 8px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -132300,7 +132556,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_chart[data-v-8800c7e6] {\r\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-8800c7e6] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_chart_wrap[data-v-8800c7e6] {\r\n    position: relative;\r\n    height: 280px;\r\n    width: 100%;\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-radius: 10px;\r\n    padding: 12px;\r\n    box-sizing: border-box;\r\n    overflow: hidden;\n}\n.ayuda_demo_chart_wrap[data-v-8800c7e6] > div {\r\n    position: absolute !important;\r\n    top: 12px;\r\n    left: 12px;\r\n    right: 12px;\r\n    bottom: 12px;\r\n    height: auto !important;\r\n    width: auto !important;\n}\n.ayuda_demo_chart_wrap[data-v-8800c7e6] canvas {\r\n    max-height: 100% !important;\r\n    max-width: 100% !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_chart[data-v-8800c7e6] {\r\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-8800c7e6] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_chart_wrap[data-v-8800c7e6] {\r\n    position: relative;\r\n    height: 280px;\r\n    width: 100%;\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-radius: 10px;\r\n    padding: 12px;\r\n    box-sizing: border-box;\r\n    overflow: hidden;\n}\n.ayuda_demo_chart_wrap[data-v-8800c7e6] > div {\r\n    position: absolute !important;\r\n    top: 12px;\r\n    left: 12px;\r\n    right: 12px;\r\n    bottom: 12px;\r\n    height: auto !important;\r\n    width: auto !important;\n}\n.ayuda_demo_chart_wrap[data-v-8800c7e6] canvas {\r\n    max-height: 100% !important;\r\n    max-width: 100% !important;\n}\n@media (max-width: 600px) {\n.ayuda_demo_chart_wrap[data-v-8800c7e6] {\r\n        height: 220px;\r\n        padding: 8px;\n}\n.ayuda_demo_chart_wrap[data-v-8800c7e6] > div {\r\n        top: 8px;\r\n        left: 8px;\r\n        right: 8px;\r\n        bottom: 8px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -132319,7 +132575,26 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_pestanas[data-v-4921417c] {\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-radius: 14px;\r\n    padding: 20px 22px;\r\n    margin: 16px 0;\r\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);\n}\n.ayuda_demo_pestanas_header h3[data-v-4921417c] {\r\n    color: #d99000;\r\n    font-size: 18px;\r\n    margin-top: 0;\r\n    margin-bottom: 6px;\r\n    font-weight: 700;\n}\n.ayuda_demo_pestanas_hint[data-v-4921417c] {\r\n    font-size: 13px;\r\n    color: #6b7280;\r\n    margin-bottom: 16px;\n}\r\n\r\n/* Layout 2 columnas (réplica del reporte real) */\n.ayuda_demo_layout[data-v-4921417c] {\r\n    display: grid;\r\n    grid-template-columns: 240px 1fr;\r\n    gap: 18px;\r\n    align-items: start;\n}\n@media (max-width: 768px) {\n.ayuda_demo_layout[data-v-4921417c] {\r\n        grid-template-columns: 1fr;\n}\n}\r\n\r\n/* Sidebar de filtros */\n.ayuda_demo_sidebar[data-v-4921417c] {\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-top: 3px solid #d99000;\r\n    border-radius: 6px;\r\n    padding: 14px;\r\n    font-size: 13px;\n}\n.ayuda_demo_sidebar_label[data-v-4921417c] {\r\n    margin-bottom: 14px;\n}\n.ayuda_demo_sidebar_label_main[data-v-4921417c] {\r\n    font-size: 10px;\r\n    color: #6b7280;\r\n    letter-spacing: 0.08em;\r\n    font-weight: 700;\r\n    text-transform: uppercase;\r\n    display: block;\r\n    margin-bottom: 2px;\n}\n.ayuda_demo_sidebar_label_sub[data-v-4921417c] {\r\n    font-size: 11px;\r\n    color: #6b7280;\n}\n.ayuda_demo_sidebar_field[data-v-4921417c] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    padding: 8px 0;\r\n    border-bottom: 1px solid #edf1f5;\n}\n.ayuda_demo_sidebar_field label[data-v-4921417c] {\r\n    color: #4c5661;\r\n    font-weight: 700;\r\n    font-size: 12px;\r\n    margin: 0;\n}\n.ayuda_demo_sidebar_value[data-v-4921417c] {\r\n    color: #6b7280;\r\n    font-size: 11px;\r\n    text-align: right;\n}\n.ayuda_demo_sidebar_input[data-v-4921417c] {\r\n    padding: 10px 0 6px;\r\n    border-bottom: 1px solid #edf1f5;\n}\n.ayuda_demo_sidebar_input input[data-v-4921417c] {\r\n    width: 100%;\r\n    border: 1px solid #d4d4d8;\r\n    border-radius: 4px;\r\n    padding: 5px 8px;\r\n    font-size: 12px;\r\n    background: #fafbfd;\r\n    cursor: not-allowed;\n}\n.ayuda_demo_sidebar_dates[data-v-4921417c] {\r\n    display: grid;\r\n    grid-template-columns: 1fr 1fr;\r\n    gap: 8px;\r\n    padding: 10px 0;\n}\n.ayuda_demo_sidebar_dates label[data-v-4921417c] {\r\n    font-size: 11px;\r\n    color: #6b7280;\r\n    margin: 0;\r\n    display: block;\n}\n.ayuda_demo_sidebar_dates span[data-v-4921417c] {\r\n    font-size: 11px;\r\n    color: #4c5661;\r\n    border-bottom: 1px solid #d4d4d8;\r\n    display: block;\r\n    padding-bottom: 2px;\n}\n.ayuda_demo_sidebar_btn[data-v-4921417c] {\r\n    width: 100%;\r\n    margin-top: 10px;\r\n    padding: 8px 12px;\r\n    background: #f0ad4e;\r\n    color: #fff;\r\n    border: 1px solid #eea236;\r\n    border-radius: 4px;\r\n    font-size: 13px;\r\n    font-weight: 700;\r\n    cursor: not-allowed;\n}\n.ayuda_demo_sidebar_btn i[data-v-4921417c] {\r\n    margin-right: 4px;\n}\r\n\r\n/* Contenido derecha */\n.ayuda_demo_content[data-v-4921417c] {\r\n    min-width: 0; /* permite que charts hagan resize bien dentro de grid */\n}\n.ayuda_demo_tab_content[data-v-4921417c] {\r\n    padding: 18px 4px;\n}\n.ayuda_demo_tab_intro[data-v-4921417c] {\r\n    font-size: 14px;\r\n    color: #4c5661;\r\n    margin-bottom: 12px;\n}\n.ayuda_demo_tab_hint[data-v-4921417c] {\r\n    margin-top: 12px;\r\n    padding: 10px 14px;\r\n    background: #f7f9fc;\r\n    border-left: 3px solid #d99000;\r\n    border-radius: 6px;\r\n    font-size: 13px;\r\n    color: #4c5661;\n}\n.ayuda_demo_table th[data-v-4921417c] {\r\n    background: #f8fafc;\r\n    color: #4c5661;\r\n    font-size: 13px;\r\n    font-weight: 700;\n}\n.ayuda_demo_table td[data-v-4921417c] {\r\n    font-size: 13px;\n}\r\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_pestanas[data-v-4921417c] {\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-radius: 14px;\r\n    padding: 20px 22px;\r\n    margin: 16px 0;\r\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);\n}\n.ayuda_demo_pestanas_header h3[data-v-4921417c] {\r\n    color: #d99000;\r\n    font-size: 18px;\r\n    margin-top: 0;\r\n    margin-bottom: 6px;\r\n    font-weight: 700;\n}\n.ayuda_demo_pestanas_hint[data-v-4921417c] {\r\n    font-size: 13px;\r\n    color: #6b7280;\r\n    margin-bottom: 16px;\n}\r\n\r\n/* Layout 2 columnas (réplica del reporte real) */\n.ayuda_demo_layout[data-v-4921417c] {\r\n    display: grid;\r\n    grid-template-columns: 240px 1fr;\r\n    gap: 18px;\r\n    align-items: start;\n}\r\n\r\n/* Permitir scroll horizontal en las tabs cuando no entran */\n.ayuda_demo_content[data-v-4921417c] .tabs-component {\r\n    overflow-x: auto;\r\n    -webkit-overflow-scrolling: touch;\n}\n.ayuda_demo_content[data-v-4921417c] .tabs-component-tabs {\r\n    flex-wrap: nowrap;\r\n    white-space: nowrap;\n}\n@media (max-width: 768px) {\n.ayuda_demo_pestanas[data-v-4921417c] {\r\n        padding: 14px 12px;\r\n        border-radius: 10px;\n}\n.ayuda_demo_layout[data-v-4921417c] {\r\n        grid-template-columns: 1fr;\r\n        gap: 14px;\n}\n.ayuda_demo_pestanas_header h3[data-v-4921417c] {\r\n        font-size: 16px;\n}\n}\r\n\r\n/* Sidebar de filtros */\n.ayuda_demo_sidebar[data-v-4921417c] {\r\n    background: #fff;\r\n    border: 1px solid #e6eaf0;\r\n    border-top: 3px solid #d99000;\r\n    border-radius: 6px;\r\n    padding: 14px;\r\n    font-size: 13px;\n}\n.ayuda_demo_sidebar_label[data-v-4921417c] {\r\n    margin-bottom: 14px;\n}\n.ayuda_demo_sidebar_label_main[data-v-4921417c] {\r\n    font-size: 10px;\r\n    color: #6b7280;\r\n    letter-spacing: 0.08em;\r\n    font-weight: 700;\r\n    text-transform: uppercase;\r\n    display: block;\r\n    margin-bottom: 2px;\n}\n.ayuda_demo_sidebar_label_sub[data-v-4921417c] {\r\n    font-size: 11px;\r\n    color: #6b7280;\n}\n.ayuda_demo_sidebar_field[data-v-4921417c] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    padding: 8px 0;\r\n    border-bottom: 1px solid #edf1f5;\n}\n.ayuda_demo_sidebar_field label[data-v-4921417c] {\r\n    color: #4c5661;\r\n    font-weight: 700;\r\n    font-size: 12px;\r\n    margin: 0;\n}\n.ayuda_demo_sidebar_value[data-v-4921417c] {\r\n    color: #6b7280;\r\n    font-size: 11px;\r\n    text-align: right;\n}\n.ayuda_demo_sidebar_input[data-v-4921417c] {\r\n    padding: 10px 0 6px;\r\n    border-bottom: 1px solid #edf1f5;\n}\n.ayuda_demo_sidebar_input input[data-v-4921417c] {\r\n    width: 100%;\r\n    border: 1px solid #d4d4d8;\r\n    border-radius: 4px;\r\n    padding: 5px 8px;\r\n    font-size: 12px;\r\n    background: #fafbfd;\r\n    cursor: not-allowed;\n}\n.ayuda_demo_sidebar_dates[data-v-4921417c] {\r\n    display: grid;\r\n    grid-template-columns: 1fr 1fr;\r\n    gap: 8px;\r\n    padding: 10px 0;\n}\n.ayuda_demo_sidebar_dates label[data-v-4921417c] {\r\n    font-size: 11px;\r\n    color: #6b7280;\r\n    margin: 0;\r\n    display: block;\n}\n.ayuda_demo_sidebar_dates span[data-v-4921417c] {\r\n    font-size: 11px;\r\n    color: #4c5661;\r\n    border-bottom: 1px solid #d4d4d8;\r\n    display: block;\r\n    padding-bottom: 2px;\n}\n.ayuda_demo_sidebar_btn[data-v-4921417c] {\r\n    width: 100%;\r\n    margin-top: 10px;\r\n    padding: 8px 12px;\r\n    background: #f0ad4e;\r\n    color: #fff;\r\n    border: 1px solid #eea236;\r\n    border-radius: 4px;\r\n    font-size: 13px;\r\n    font-weight: 700;\r\n    cursor: not-allowed;\n}\n.ayuda_demo_sidebar_btn i[data-v-4921417c] {\r\n    margin-right: 4px;\n}\r\n\r\n/* Contenido derecha */\n.ayuda_demo_content[data-v-4921417c] {\r\n    min-width: 0; /* permite que charts hagan resize bien dentro de grid */\n}\n.ayuda_demo_tab_content[data-v-4921417c] {\r\n    padding: 18px 4px;\n}\n.ayuda_demo_tab_intro[data-v-4921417c] {\r\n    font-size: 14px;\r\n    color: #4c5661;\r\n    margin-bottom: 12px;\n}\n.ayuda_demo_tab_hint[data-v-4921417c] {\r\n    margin-top: 12px;\r\n    padding: 10px 14px;\r\n    background: #f7f9fc;\r\n    border-left: 3px solid #d99000;\r\n    border-radius: 6px;\r\n    font-size: 13px;\r\n    color: #4c5661;\n}\n.ayuda_demo_table[data-v-4921417c] {\r\n    width: 100%;\n}\n.ayuda_demo_table th[data-v-4921417c] {\r\n    background: #f8fafc;\r\n    color: #4c5661;\r\n    font-size: 13px;\r\n    font-weight: 700;\n}\n.ayuda_demo_table td[data-v-4921417c] {\r\n    font-size: 13px;\n}\r\n\r\n/* Wrapper de scroll horizontal para tablas en mobile */\n.ayuda_demo_content[data-v-4921417c] .table {\r\n    margin-bottom: 0;\n}\n.ayuda_demo_content[data-v-4921417c] .ayuda_demo_block {\r\n    overflow-x: auto;\r\n    -webkit-overflow-scrolling: touch;\n}\n@media (max-width: 600px) {\n.ayuda_demo_tab_content[data-v-4921417c] {\r\n        padding: 12px 0;\n}\n.ayuda_demo_tab_intro[data-v-4921417c] {\r\n        font-size: 13px;\n}\n.ayuda_demo_content[data-v-4921417c] .row > [class*=\"col-\"] {\r\n        padding-left: 4px;\r\n        padding-right: 4px;\n}\n.ayuda_demo_table th[data-v-4921417c],\r\n    .ayuda_demo_table td[data-v-4921417c] {\r\n        font-size: 12px;\r\n        padding: 6px 4px;\n}\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda_demo_block[data-v-7e770786] {\r\n    margin: 12px 0 20px;\r\n    overflow-x: auto;\r\n    -webkit-overflow-scrolling: touch;\n}\n.ayuda_demo_label[data-v-7e770786] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_table[data-v-7e770786] {\r\n    min-width: 560px;\n}\n.ayuda_demo_table th[data-v-7e770786] {\r\n    background: #f8fafc;\r\n    color: #4c5661;\r\n    font-size: 13px;\r\n    font-weight: 700;\n}\n.ayuda_demo_table td[data-v-7e770786] {\r\n    font-size: 13px;\n}\n.ayuda_demo_link[data-v-7e770786] {\r\n    color: #2e86c1;\r\n    text-decoration: underline;\r\n    cursor: not-allowed;\n}\n.ayuda_demo_rep_tag[data-v-7e770786] {\r\n    display: inline-block;\r\n    margin-left: 6px;\r\n    padding: 1px 7px;\r\n    border-radius: 999px;\r\n    background: #fff3cd;\r\n    color: #8a6d3b;\r\n    font-size: 10px;\r\n    font-weight: 700;\r\n    text-transform: uppercase;\n}\n.ayuda_demo_badge[data-v-7e770786] {\r\n    display: inline-block;\r\n    padding: 3px 10px;\r\n    border-radius: 999px;\r\n    font-size: 12px;\r\n    font-weight: 700;\n}\n.ayuda_demo_badge--success[data-v-7e770786] { background: #dff0d8; color: #2c7a2c;\n}\n.ayuda_demo_badge--danger[data-v-7e770786]  { background: #f8d7da; color: #a94442;\n}\n.ayuda_demo_caption[data-v-7e770786] {\r\n    margin-top: 6px;\r\n    font-size: 11px;\r\n    color: #9ca3af;\r\n    font-style: italic;\n}\n@media (max-width: 600px) {\n.ayuda_demo_table th[data-v-7e770786],\r\n    .ayuda_demo_table td[data-v-7e770786] {\r\n        font-size: 12px;\r\n        padding: 6px 4px;\n}\n.ayuda_demo_badge[data-v-7e770786] {\r\n        font-size: 10px;\r\n        padding: 2px 6px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -132338,7 +132613,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_block[data-v-eabab042] {\r\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-eabab042] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_table th[data-v-eabab042] {\r\n    background: #f8fafc;\r\n    color: #4c5661;\r\n    font-size: 13px;\r\n    font-weight: 700;\n}\n.ayuda_demo_table td[data-v-eabab042] {\r\n    font-size: 13px;\n}\n.ayuda_demo_total_row[data-v-eabab042] {\r\n    background: #f0f4f8 !important;\n}\n.ayuda_demo_badge[data-v-eabab042] {\r\n    display: inline-block;\r\n    padding: 3px 10px;\r\n    border-radius: 999px;\r\n    font-size: 12px;\r\n    font-weight: 700;\n}\n.ayuda_demo_badge--success[data-v-eabab042] { background: #dff0d8; color: #2c7a2c;\n}\n.ayuda_demo_badge--warning[data-v-eabab042] { background: #fff3cd; color: #8a6d3b;\n}\n.ayuda_demo_badge--danger[data-v-eabab042]  { background: #f8d7da; color: #a94442;\n}\r\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_block[data-v-eabab042] {\r\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-eabab042] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_table th[data-v-eabab042] {\r\n    background: #f8fafc;\r\n    color: #4c5661;\r\n    font-size: 13px;\r\n    font-weight: 700;\n}\n.ayuda_demo_table td[data-v-eabab042] {\r\n    font-size: 13px;\n}\n.ayuda_demo_total_row[data-v-eabab042] {\r\n    background: #f0f4f8 !important;\n}\n.ayuda_demo_badge[data-v-eabab042] {\r\n    display: inline-block;\r\n    padding: 3px 10px;\r\n    border-radius: 999px;\r\n    font-size: 12px;\r\n    font-weight: 700;\n}\n.ayuda_demo_badge--success[data-v-eabab042] { background: #dff0d8; color: #2c7a2c;\n}\n.ayuda_demo_badge--warning[data-v-eabab042] { background: #fff3cd; color: #8a6d3b;\n}\n.ayuda_demo_badge--danger[data-v-eabab042]  { background: #f8d7da; color: #a94442;\n}\r\n\r\n/* Scroll horizontal en mobile */\n.ayuda_demo_block[data-v-eabab042] {\r\n    overflow-x: auto;\r\n    -webkit-overflow-scrolling: touch;\n}\n.ayuda_demo_table[data-v-eabab042] {\r\n    min-width: 520px;\n}\n@media (max-width: 600px) {\n.ayuda_demo_table th[data-v-eabab042],\r\n    .ayuda_demo_table td[data-v-eabab042] {\r\n        font-size: 12px;\r\n        padding: 6px 4px;\n}\n.ayuda_demo_badge[data-v-eabab042] {\r\n        font-size: 10px;\r\n        padding: 2px 6px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -132357,7 +132632,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_block[data-v-07ee7b1c] {\r\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-07ee7b1c] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_table th[data-v-07ee7b1c] {\r\n    background: #f8fafc;\r\n    color: #4c5661;\r\n    font-size: 13px;\r\n    font-weight: 700;\n}\n.ayuda_demo_table td[data-v-07ee7b1c] {\r\n    font-size: 13px;\r\n    vertical-align: middle;\n}\n.ayuda_demo_clickable[data-v-07ee7b1c] {\r\n    cursor: pointer;\r\n    transition: background 0.15s;\n}\n.ayuda_demo_selected[data-v-07ee7b1c] {\r\n    background: #fff7dd !important;\r\n    border-left: 3px solid #d99000;\n}\n.ayuda_demo_progress[data-v-07ee7b1c] {\r\n    background: #eef3f8;\r\n    border-radius: 999px;\r\n    height: 8px;\r\n    width: 100%;\r\n    overflow: hidden;\r\n    margin-bottom: 4px;\n}\n.ayuda_demo_progress_bar[data-v-07ee7b1c] {\r\n    height: 100%;\r\n    transition: width 0.3s;\n}\n.ayuda_demo_badge_pct[data-v-07ee7b1c] {\r\n    display: inline-block;\r\n    padding: 2px 8px;\r\n    border-radius: 999px;\r\n    font-size: 11px;\r\n    color: #fff;\r\n    font-weight: 700;\n}\n.ayuda_demo_detalle[data-v-07ee7b1c] {\r\n    margin-top: 10px;\r\n    padding: 10px 14px;\r\n    background: #fff7dd;\r\n    border-left: 3px solid #d99000;\r\n    border-radius: 6px;\r\n    font-size: 13px;\n}\r\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_block[data-v-07ee7b1c] {\r\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-07ee7b1c] {\r\n    font-size: 12px;\r\n    color: #6b7280;\r\n    text-transform: uppercase;\r\n    letter-spacing: 0.06em;\r\n    margin-bottom: 8px;\r\n    font-weight: 600;\n}\n.ayuda_demo_table th[data-v-07ee7b1c] {\r\n    background: #f8fafc;\r\n    color: #4c5661;\r\n    font-size: 13px;\r\n    font-weight: 700;\n}\n.ayuda_demo_table td[data-v-07ee7b1c] {\r\n    font-size: 13px;\r\n    vertical-align: middle;\n}\n.ayuda_demo_clickable[data-v-07ee7b1c] {\r\n    cursor: pointer;\r\n    transition: background 0.15s;\n}\n.ayuda_demo_selected[data-v-07ee7b1c] {\r\n    background: #fff7dd !important;\r\n    border-left: 3px solid #d99000;\n}\n.ayuda_demo_progress[data-v-07ee7b1c] {\r\n    background: #eef3f8;\r\n    border-radius: 999px;\r\n    height: 8px;\r\n    width: 100%;\r\n    overflow: hidden;\r\n    margin-bottom: 4px;\n}\n.ayuda_demo_progress_bar[data-v-07ee7b1c] {\r\n    height: 100%;\r\n    transition: width 0.3s;\n}\n.ayuda_demo_badge_pct[data-v-07ee7b1c] {\r\n    display: inline-block;\r\n    padding: 2px 8px;\r\n    border-radius: 999px;\r\n    font-size: 11px;\r\n    color: #fff;\r\n    font-weight: 700;\n}\n.ayuda_demo_detalle[data-v-07ee7b1c] {\r\n    margin-top: 10px;\r\n    padding: 10px 14px;\r\n    background: #fff7dd;\r\n    border-left: 3px solid #d99000;\r\n    border-radius: 6px;\r\n    font-size: 13px;\n}\r\n\r\n/* Scroll horizontal en mobile */\n.ayuda_demo_block[data-v-07ee7b1c] {\r\n    overflow-x: auto;\r\n    -webkit-overflow-scrolling: touch;\n}\n.ayuda_demo_table[data-v-07ee7b1c] {\r\n    min-width: 560px;\n}\n@media (max-width: 600px) {\n.ayuda_demo_table th[data-v-07ee7b1c],\r\n    .ayuda_demo_table td[data-v-07ee7b1c] {\r\n        font-size: 12px;\r\n        padding: 6px 4px;\n}\n.ayuda_demo_badge_pct[data-v-07ee7b1c] {\r\n        font-size: 10px;\r\n        padding: 1px 6px;\n}\n.ayuda_demo_detalle[data-v-07ee7b1c] {\r\n        font-size: 12px;\r\n        padding: 8px 10px;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -133561,6 +133836,25 @@ exports.push([module.i, "\n.form-control[disabled][data-v-7c22c270], .form-contr
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reportes/costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reportes/costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda-btn-anchor {\n    position: relative;\n}\n.ayuda-btn-wrap {\n    position: absolute;\n    top: 2px;\n    right: 15px;\n    z-index: 10;\n}\n.ayuda-btn-reporte {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    padding: 6px 12px;\n    background: #2e86c1;\n    color: #fff !important;\n    border-radius: 4px;\n    font-size: 13px;\n    font-weight: 700;\n    text-decoration: none !important;\n    box-shadow: 0 1px 3px rgba(46, 134, 193, 0.25);\n    transition: all 0.15s ease;\n}\n.ayuda-btn-reporte:hover,\n.ayuda-btn-reporte:focus {\n    background: #2874a6;\n    color: #fff !important;\n    box-shadow: 0 3px 8px rgba(46, 134, 193, 0.4);\n    text-decoration: none !important;\n    transform: translateY(-1px);\n}\n.ayuda-btn-reporte i {\n    font-size: 15px;\n}\n@media (max-width: 600px) {\n.ayuda-btn-reporte {\n        padding: 6px 10px;\n        font-size: 12px;\n}\n.ayuda-btn-reporte span {\n        display: none;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reportes/estadisticas-soldaduras.vue?vue&type=style&index=0&id=44ad1d64&lang=css":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reportes/estadisticas-soldaduras.vue?vue&type=style&index=0&id=44ad1d64&lang=css ***!
@@ -133573,7 +133867,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\r\n\r\n/* Page styles */\n.tabs-component {\r\n    margin: 1;\n}\n.tabs-component-tabs {\r\n\r\n    padding-left: 0;\r\n    margin-left: 0;\n}\n.tabs-component-panels\r\n {\r\n    position: relative;\n}\nbody {\r\n    background-color: #efefef;\r\n    padding: 1em;\n}\n.page {\r\n    background-color: #fff;\r\n    border-radius: 3px;\r\n    box-shadow: 0 2px 20px rgba(0, 0, 0, .025);\r\n    margin: 0 auto;\r\n    max-width: 66em;\r\n    padding: 4em 2em;\n}\n@media (min-width: 700px) {\n.page {\r\n        padding: 4em;\n}\n}\n.page-title {\r\n    font-size: 2.4rem;\r\n    margin-bottom: 1em;\n}\n.page-title a {\r\n    color: inherit;\r\n    text-decoration: none;\n}\n.page-title a:hover {\r\n    color: #007593;\n}\n.page-subtitle {\r\n    font-size: 1.25rem;\r\n    margin-bottom: 1em;\r\n    padding-top: .25em;\n}\n.page-about {\r\n    background-color: #d1e8eb;\r\n    margin: 0 -2em;\r\n    padding: 2em 1em;\n}\n@media (min-width: 700px) {\n.page-about {\r\n        border-radius: 3px;\r\n        margin: 0;\r\n        padding: 2em;\n}\n}\n.page-about h2 {\r\n    color: #003345;\n}\n.page-about p {\r\n    color: #003345;\r\n    line-height: 1.45;\r\n    margin-bottom: 1em;\n}\n.page-about a {\r\n    color: #007593;\n}\n.page-about code {\r\n    background-color: rgba(255, 255, 255, .75);\r\n    border-radius: 3px;\r\n    padding: 0 .25em;\n}\n.page-outro {\r\n    color: #999;\r\n    display: block;\r\n    margin-top: 4em;\r\n    text-align: center;\n}\n.page-outro a {\r\n    color: #999;\n}\n.prefix,\r\n.suffix {\r\n    align-items: center;\r\n    border-radius: 1.25rem;\r\n    display: flex;\r\n    font-size: .75rem;\r\n    flex-shrink: 0;\r\n    height: 1.25rem;\r\n    justify-content: center;\r\n    line-height: 1.25rem;\r\n    min-width: 1.25rem;\r\n    padding: 0 .1em;\n}\n.prefix {\r\n    background-color: #d1e8eb;\r\n    color: #0c5174;\r\n    margin-right: .35em;\n}\n.suffix {\r\n    background-color: #c03;\r\n    color: #fff;\r\n    margin-left: .35em;\n}\n@media (min-width: 700px) {\n.suffix {\r\n        position: absolute;\r\n        right: -.725em;\r\n        top: -.725em;\n}\n}\n.seleccionar {\r\n   /* font-size: 14px; */\r\n    font: inherit;\r\n    font-family: inherit;\r\n    color:#8e8e8e ;\n}\n.list-fecha .mx-input,.list-fecha .mx-datepicker,.list-fecha .mx-input-wrapper {\r\n    box-shadow : none !important;\r\n   -webkit-box-shadow : none !important;\r\n    border-top: none !important;\r\n    border-left: none !important;\r\n    border-right: none !important;\r\n    border-radius: 0px !important;\r\n    padding-left: 0px;\n}\n.is-active{\r\n\r\n    border-top:3px solid rgb(255, 204, 0) !important;\r\n    box-shadow: 0 -2px 0 #000;\n}\nul li .titulo-li {\r\n    font-weight: 600 !important;\n}\n.list-fecha {\r\n     border-bottom: none !important;\n}\n.list-informes {\r\n\r\n     font-size: 14px;\r\n     color: gray;\r\n     font-weight: 500;\r\n     line-height: 10px;\n}\n.btn-enod {\r\n    border: 1px solid black;\n}\n.box-custom-enod {\r\n\r\n    box-shadow: 0 -2px 0 #000;\n}\n.profile-username {\r\n\r\n    font-size: 16px !important ;\r\n    font-weight: 500 !important ;\r\n    line-height: 1.1 !important ;\r\n    font-family: 'Montserrat',sans-serif;\n}\n.stat-sol table tbody tr th,.stat-sol table tbody tr td {\r\n    text-align: center;\n}\n.titulo-tabla-tabs{\r\n    text-align: center !important;\n}\n.titulo-tabla-tabs h5{\r\n\r\n    font-weight: 700 !important;\r\n    color: #666 !important;\r\n    font-size: 12px;\r\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n}\n.div-grafico {\r\n    max-width:375px;\r\n    margin:  0px auto 15px auto;\n}\n.totales_posiciones {\r\n\r\n      color:#666;\r\n      font-size: 14px;\n}\n.c {\r\n      color:red\n}\r\n", ""]);
+exports.push([module.i, "\r\n\r\n/* Page styles */\n.tabs-component {\r\n    margin: 1;\n}\n.tabs-component-tabs {\r\n\r\n    padding-left: 0;\r\n    margin-left: 0;\n}\n.tabs-component-panels\r\n {\r\n    position: relative;\n}\nbody {\r\n    background-color: #efefef;\r\n    padding: 1em;\n}\n.page {\r\n    background-color: #fff;\r\n    border-radius: 3px;\r\n    box-shadow: 0 2px 20px rgba(0, 0, 0, .025);\r\n    margin: 0 auto;\r\n    max-width: 66em;\r\n    padding: 4em 2em;\n}\n@media (min-width: 700px) {\n.page {\r\n        padding: 4em;\n}\n}\n.page-title {\r\n    font-size: 2.4rem;\r\n    margin-bottom: 1em;\n}\n.page-title a {\r\n    color: inherit;\r\n    text-decoration: none;\n}\n.page-title a:hover {\r\n    color: #007593;\n}\n.page-subtitle {\r\n    font-size: 1.25rem;\r\n    margin-bottom: 1em;\r\n    padding-top: .25em;\n}\n.page-about {\r\n    background-color: #d1e8eb;\r\n    margin: 0 -2em;\r\n    padding: 2em 1em;\n}\n@media (min-width: 700px) {\n.page-about {\r\n        border-radius: 3px;\r\n        margin: 0;\r\n        padding: 2em;\n}\n}\n.page-about h2 {\r\n    color: #003345;\n}\n.page-about p {\r\n    color: #003345;\r\n    line-height: 1.45;\r\n    margin-bottom: 1em;\n}\n.page-about a {\r\n    color: #007593;\n}\n.page-about code {\r\n    background-color: rgba(255, 255, 255, .75);\r\n    border-radius: 3px;\r\n    padding: 0 .25em;\n}\n.page-outro {\r\n    color: #999;\r\n    display: block;\r\n    margin-top: 4em;\r\n    text-align: center;\n}\n.page-outro a {\r\n    color: #999;\n}\n.prefix,\r\n.suffix {\r\n    align-items: center;\r\n    border-radius: 1.25rem;\r\n    display: flex;\r\n    font-size: .75rem;\r\n    flex-shrink: 0;\r\n    height: 1.25rem;\r\n    justify-content: center;\r\n    line-height: 1.25rem;\r\n    min-width: 1.25rem;\r\n    padding: 0 .1em;\n}\n.prefix {\r\n    background-color: #d1e8eb;\r\n    color: #0c5174;\r\n    margin-right: .35em;\n}\n.suffix {\r\n    background-color: #c03;\r\n    color: #fff;\r\n    margin-left: .35em;\n}\n@media (min-width: 700px) {\n.suffix {\r\n        position: absolute;\r\n        right: -.725em;\r\n        top: -.725em;\n}\n}\n.seleccionar {\r\n   /* font-size: 14px; */\r\n    font: inherit;\r\n    font-family: inherit;\r\n    color:#8e8e8e ;\n}\n.list-fecha .mx-input,.list-fecha .mx-datepicker,.list-fecha .mx-input-wrapper {\r\n    box-shadow : none !important;\r\n   -webkit-box-shadow : none !important;\r\n    border-top: none !important;\r\n    border-left: none !important;\r\n    border-right: none !important;\r\n    border-radius: 0px !important;\r\n    padding-left: 0px;\n}\n.is-active{\r\n\r\n    border-top:3px solid rgb(255, 204, 0) !important;\r\n    box-shadow: 0 -2px 0 #000;\n}\nul li .titulo-li {\r\n    font-weight: 600 !important;\n}\n.list-fecha {\r\n     border-bottom: none !important;\n}\n.list-informes {\r\n\r\n     font-size: 14px;\r\n     color: gray;\r\n     font-weight: 500;\r\n     line-height: 10px;\n}\n.btn-enod {\r\n    border: 1px solid black;\n}\n.box-custom-enod {\r\n\r\n    box-shadow: 0 -2px 0 #000;\n}\n.profile-username {\r\n\r\n    font-size: 16px !important ;\r\n    font-weight: 500 !important ;\r\n    line-height: 1.1 !important ;\r\n    font-family: 'Montserrat',sans-serif;\n}\n.stat-sol table tbody tr th,.stat-sol table tbody tr td {\r\n    text-align: center;\n}\n.titulo-tabla-tabs{\r\n    text-align: center !important;\n}\n.titulo-tabla-tabs h5{\r\n\r\n    font-weight: 700 !important;\r\n    color: #666 !important;\r\n    font-size: 12px;\r\n    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n}\n.div-grafico {\r\n    max-width:375px;\r\n    margin:  0px auto 15px auto;\n}\n.totales_posiciones {\r\n\r\n      color:#666;\r\n      font-size: 14px;\n}\n.c {\r\n      color:red\n}\r\n\r\n  /* Botón de ayuda del reporte */\n.ayuda-btn-wrap {\r\n      display: flex;\r\n      justify-content: flex-end;\r\n      margin: 0 0 10px 0;\n}\n.ayuda-btn-reporte {\r\n      display: inline-flex;\r\n      align-items: center;\r\n      gap: 7px;\r\n      padding: 7px 14px;\r\n      background: #2e86c1;\r\n      color: #fff !important;\r\n      border: 1px solid #2874a6;\r\n      border-radius: 6px;\r\n      font-size: 13px;\r\n      font-weight: 600;\r\n      text-decoration: none !important;\r\n      box-shadow: 0 1px 3px rgba(46, 134, 193, 0.25);\r\n      transition: all 0.15s ease;\n}\n.ayuda-btn-reporte:hover,\r\n  .ayuda-btn-reporte:focus {\r\n      background: #2874a6;\r\n      color: #fff !important;\r\n      box-shadow: 0 3px 8px rgba(46, 134, 193, 0.4);\r\n      text-decoration: none !important;\r\n      transform: translateY(-1px);\n}\n.ayuda-btn-reporte i {\r\n      font-size: 15px;\n}\n@media (max-width: 600px) {\n.ayuda-btn-reporte {\r\n          padding: 6px 10px;\r\n          font-size: 12px;\n}\n.ayuda-btn-reporte span {\r\n          display: none;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -210614,6 +210908,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-filtros.vue?vue&type=style&index=0&id=3426c118&scoped=true&lang=css":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-filtros.vue?vue&type=style&index=0&id=3426c118&scoped=true&lang=css ***!
@@ -210743,6 +211067,36 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-pestanas.vue?vue&type=style&index=0&id=4921417c&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-pestanas.vue?vue&type=style&index=0&id=4921417c&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -212693,6 +213047,36 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./remitos.vue?vue&type=style&index=0&id=7c22c270&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/remitos/remitos.vue?vue&type=style&index=0&id=7c22c270&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reportes/costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reportes/costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reportes/costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -375928,6 +376312,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-grafico-pie', _
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-grafico-doughnut', __webpack_require__(/*! ./components/ayuda/ayuda-demo-grafico-doughnut.vue */ "./resources/js/components/ayuda/ayuda-demo-grafico-doughnut.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-grafico-barras', __webpack_require__(/*! ./components/ayuda/ayuda-demo-grafico-barras.vue */ "./resources/js/components/ayuda/ayuda-demo-grafico-barras.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-pestanas', __webpack_require__(/*! ./components/ayuda/ayuda-demo-pestanas.vue */ "./resources/js/components/ayuda/ayuda-demo-pestanas.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-costuras-filtros', __webpack_require__(/*! ./components/ayuda/ayuda-demo-costuras-filtros.vue */ "./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-tabla-costuras', __webpack_require__(/*! ./components/ayuda/ayuda-demo-tabla-costuras.vue */ "./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue")["default"]);
 
 /* Reportes */
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('estadisticas-soldaduras', __webpack_require__(/*! ./components/reportes/estadisticas-soldaduras.vue */ "./resources/js/components/reportes/estadisticas-soldaduras.vue")["default"]);
@@ -383905,6 +384291,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ayuda_demo_costuras_filtros_vue_vue_type_template_id_82e4797e_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ayuda-demo-costuras-filtros.vue?vue&type=template&id=82e4797e&scoped=true */ "./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=template&id=82e4797e&scoped=true");
+/* harmony import */ var _ayuda_demo_costuras_filtros_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ayuda-demo-costuras-filtros.vue?vue&type=script&lang=js */ "./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ayuda_demo_costuras_filtros_vue_vue_type_style_index_0_id_82e4797e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css */ "./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ayuda_demo_costuras_filtros_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ayuda_demo_costuras_filtros_vue_vue_type_template_id_82e4797e_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ayuda_demo_costuras_filtros_vue_vue_type_template_id_82e4797e_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "82e4797e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_costuras_filtros_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-costuras-filtros.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_costuras_filtros_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css":
+/*!*******************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css ***!
+  \*******************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_costuras_filtros_vue_vue_type_style_index_0_id_82e4797e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=style&index=0&id=82e4797e&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_costuras_filtros_vue_vue_type_style_index_0_id_82e4797e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_costuras_filtros_vue_vue_type_style_index_0_id_82e4797e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_costuras_filtros_vue_vue_type_style_index_0_id_82e4797e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_costuras_filtros_vue_vue_type_style_index_0_id_82e4797e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=template&id=82e4797e&scoped=true":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=template&id=82e4797e&scoped=true ***!
+  \*****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_costuras_filtros_vue_vue_type_template_id_82e4797e_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-costuras-filtros.vue?vue&type=template&id=82e4797e&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-costuras-filtros.vue?vue&type=template&id=82e4797e&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_costuras_filtros_vue_vue_type_template_id_82e4797e_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_costuras_filtros_vue_vue_type_template_id_82e4797e_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ayuda/ayuda-demo-filtros.vue":
 /*!**************************************************************!*\
   !*** ./resources/js/components/ayuda/ayuda-demo-filtros.vue ***!
@@ -384335,6 +384808,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_pestanas_vue_vue_type_template_id_4921417c_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_pestanas_vue_vue_type_template_id_4921417c_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ayuda_demo_tabla_costuras_vue_vue_type_template_id_7e770786_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ayuda-demo-tabla-costuras.vue?vue&type=template&id=7e770786&scoped=true */ "./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=template&id=7e770786&scoped=true");
+/* harmony import */ var _ayuda_demo_tabla_costuras_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ayuda-demo-tabla-costuras.vue?vue&type=script&lang=js */ "./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ayuda_demo_tabla_costuras_vue_vue_type_style_index_0_id_7e770786_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css */ "./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ayuda_demo_tabla_costuras_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ayuda_demo_tabla_costuras_vue_vue_type_template_id_7e770786_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ayuda_demo_tabla_costuras_vue_vue_type_template_id_7e770786_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "7e770786",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tabla_costuras_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-tabla-costuras.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tabla_costuras_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css":
+/*!*****************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css ***!
+  \*****************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tabla_costuras_vue_vue_type_style_index_0_id_7e770786_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=style&index=0&id=7e770786&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tabla_costuras_vue_vue_type_style_index_0_id_7e770786_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tabla_costuras_vue_vue_type_style_index_0_id_7e770786_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tabla_costuras_vue_vue_type_style_index_0_id_7e770786_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tabla_costuras_vue_vue_type_style_index_0_id_7e770786_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=template&id=7e770786&scoped=true":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=template&id=7e770786&scoped=true ***!
+  \***************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tabla_costuras_vue_vue_type_template_id_7e770786_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-tabla-costuras.vue?vue&type=template&id=7e770786&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tabla-costuras.vue?vue&type=template&id=7e770786&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tabla_costuras_vue_vue_type_template_id_7e770786_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tabla_costuras_vue_vue_type_template_id_7e770786_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -391576,7 +392136,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _costuras_vue_vue_type_template_id_aa9937a4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./costuras.vue?vue&type=template&id=aa9937a4 */ "./resources/js/components/reportes/costuras.vue?vue&type=template&id=aa9937a4");
 /* harmony import */ var _costuras_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./costuras.vue?vue&type=script&lang=js */ "./resources/js/components/reportes/costuras.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _costuras_vue_vue_type_style_index_0_id_aa9937a4_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css */ "./resources/js/components/reportes/costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -391584,7 +392146,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _costuras_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
   _costuras_vue_vue_type_template_id_aa9937a4__WEBPACK_IMPORTED_MODULE_0__["render"],
   _costuras_vue_vue_type_template_id_aa9937a4__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -391613,6 +392175,22 @@ component.options.__file = "resources/js/components/reportes/costuras.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_costuras_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./costuras.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reportes/costuras.vue?vue&type=script&lang=js");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_costuras_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/reportes/costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/reportes/costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_costuras_vue_vue_type_style_index_0_id_aa9937a4_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reportes/costuras.vue?vue&type=style&index=0&id=aa9937a4&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_costuras_vue_vue_type_style_index_0_id_aa9937a4_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_costuras_vue_vue_type_style_index_0_id_aa9937a4_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_costuras_vue_vue_type_style_index_0_id_aa9937a4_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_costuras_vue_vue_type_style_index_0_id_aa9937a4_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 

@@ -279,8 +279,8 @@
                         <div v-else class="col-md-3">
                             <div class="form-group">
                                 <label for="foco">Foco </label>
-                                <input type="text" v-model="interno_equipo.foco" class="form-control" id="foco"
-                                    disabled>
+                                <input type="text" :value="interno_equipo ? interno_equipo.foco : ''"
+                                    class="form-control" id="foco" disabled>
                             </div>
                         </div>
 
@@ -1791,7 +1791,7 @@ export default {
 
         getFuente: function () {
 
-            if (this.interno_equipo.interno_fuente) {
+            if (this.interno_equipo && this.interno_equipo.interno_fuente) {
                 this.interno_fuente = this.interno_equipo.interno_fuente;
                 this.$store.dispatch('loadFuentePorInterno', this.interno_equipo.interno_fuente.id).then(response => {
                     this.fuente = this.fuentePorInterno;
@@ -1824,8 +1824,8 @@ export default {
         },
         resetInputsEquipos: function () {
 
-            this.kv = this.interno_equipo.voltaje;
-            this.ma = this.interno_equipo.amperaje;
+            this.kv = this.interno_equipo ? this.interno_equipo.voltaje : '';
+            this.ma = this.interno_equipo ? this.interno_equipo.amperaje : '';
         },
         getTipoPeliculas: function () {
             axios.defaults.baseURL = this.url;
@@ -1946,7 +1946,7 @@ export default {
         ActualizarDistFuentePelicula: function () {
 
             axios.defaults.baseURL = this.url;
-            let foco = (this.interno_fuente) ? this.interno_fuente.foco : this.interno_equipo.foco;
+            let foco = (this.interno_fuente) ? this.interno_fuente.foco : (this.interno_equipo ? this.interno_equipo.foco : '');
             foco = foco ? foco : 0;
             if (this.tecnica.codigo == 'SWE/SWV') {
                 if (this.tecnica && this.medida) {
