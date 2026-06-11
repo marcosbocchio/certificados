@@ -81495,66 +81495,6 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "pitch"
-    }
-  }, [_vm._v("Pitch")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.pitch,
-      expression: "pitch"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      id: "pitch",
-      step: "0.01"
-    },
-    domProps: {
-      value: _vm.pitch
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.pitch = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-3"
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("label", {
-    attrs: {
-      "for": "srb_dwi"
-    }
-  }, [_vm._v("SRb DWI")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.srb_dwi,
-      expression: "srb_dwi"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "number",
-      id: "srb_dwi",
-      step: "0.01"
-    },
-    domProps: {
-      value: _vm.srb_dwi
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.srb_dwi = $event.target.value;
-      }
-    }
-  })])]), _vm._v(" "), _c("div", {
     staticStyle: {
       display: "none"
     }
@@ -81710,6 +81650,8 @@ var render = function render() {
       }
     }
   })])]), _vm._v(" "), _c("div", {
+    staticClass: "clearfix"
+  }), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "row"
@@ -81965,6 +81907,70 @@ var render = function render() {
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.distancia_fuente_pelicula = $event.target.value;
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "pitch"
+    }
+  }, [_vm._v("Pitch")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.pitch,
+      expression: "pitch"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      id: "pitch",
+      step: "0.01"
+    },
+    domProps: {
+      value: _vm.pitch
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.pitch = $event.target.value;
+      }
+    }
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    attrs: {
+      "for": "srb_dwi"
+    }
+  }, [_vm._v("SRb DWI")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.srb_dwi,
+      expression: "srb_dwi"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      id: "srb_dwi",
+      step: "0.01"
+    },
+    domProps: {
+      value: _vm.srb_dwi
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.srb_dwi = $event.target.value;
       }
     }
   })])])])]), _vm._v(" "), _c("div", {

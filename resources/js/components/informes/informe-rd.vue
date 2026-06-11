@@ -306,21 +306,6 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="pitch">Pitch</label>
-                                <input type="number" class="form-control" v-model="pitch" id="pitch" step="0.01">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="srb_dwi">SRb DWI</label>
-                                <input type="number" class="form-control" v-model="srb_dwi" id="srb_dwi"
-                                    step="0.01">
-                            </div>
-                        </div>
-
                         <div style="display:none">
                             <div class="form-group">
                                 <label>Calidad de placas</label>
@@ -359,6 +344,8 @@
                                 <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
                             </div>
                         </div>
+
+                        <div class="clearfix"></div>
 
                         <!-- Col 1: ICI + Filtros + Lado + Ejecutor -->
                         <div class="col-md-3">
@@ -462,6 +449,24 @@
                                             class="form-control"
                                             :disabled="diametro.diametro != 'VARIOS' && !dist_fuente_pel_edit_sn"
                                             id="distancia_fuente_pelicula">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="pitch">Pitch</label>
+                                        <input type="number" class="form-control" v-model="pitch" id="pitch"
+                                            step="0.01">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="srb_dwi">SRb DWI</label>
+                                        <input type="number" class="form-control" v-model="srb_dwi" id="srb_dwi"
+                                            step="0.01">
                                     </div>
                                 </div>
                             </div>
