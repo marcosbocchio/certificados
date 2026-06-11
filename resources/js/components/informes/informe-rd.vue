@@ -284,7 +284,7 @@
                             </div>
                         </div>
 
-                        <div v-if="!esRayosX" class="col-md-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="actividad">Actividad</label>
                                 <input type="text" v-model="actividad" class="form-control" id="actividad" disabled>

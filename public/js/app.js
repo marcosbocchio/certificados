@@ -81400,7 +81400,7 @@ var render = function render() {
     domProps: {
       value: _vm.interno_equipo ? _vm.interno_equipo.foco : ""
     }
-  })])]), _vm._v(" "), !_vm.esRayosX ? _c("div", {
+  })])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
@@ -81430,7 +81430,7 @@ var render = function render() {
         _vm.actividad = $event.target.value;
       }
     }
-  })])]) : _vm._e(), _vm._v(" "), _c("div", {
+  })])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
   }, [_c("div", {
     staticClass: "form-group"
