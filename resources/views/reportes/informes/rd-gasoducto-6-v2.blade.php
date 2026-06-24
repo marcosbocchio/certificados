@@ -125,7 +125,7 @@ footer {
         <tbody>
             @foreach ($juntas_posiciones as $junta_posicion)
                 <tr>
-                    <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $informe->km ?: '' }}</td>
+                    <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $informe->km !== null ? $informe->km : '' }}</td>
                     <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
                     <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $ot_tipo_soldadura->TipoSoldadura->codigo }}</td>
 

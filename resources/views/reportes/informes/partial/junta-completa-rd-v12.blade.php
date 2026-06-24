@@ -7,7 +7,7 @@ $pasadasPorNumero = collect($pasadas_juntas)
 <tr>
     {{-- Pk --}}
     <td class="bordered-td" style="font-size:10px;width:30px;text-align:center;" rowspan="4">
-        {{ $informe->km ?: '' }}
+        {{ $informe->km !== null ? $informe->km : '' }}
     </td>
     {{-- Elem --}}
     <td class="bordered-td" style="font-size:10px;width:51px;text-align:center;" rowspan="4">
