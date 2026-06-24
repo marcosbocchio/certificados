@@ -76,8 +76,7 @@ footer {
         };
     @endphp
 
-    @foreach (collect($juntas_posiciones)->chunk(15) as $bloque)
-    <table width="100%" style="border-collapse: collapse; page-break-inside: avoid; margin-bottom: 15px;">
+    <table width="100%" style="border-collapse: collapse;">
         <thead>
             <tr>
                 <td colspan="23"><strong style="font-size: 14px;">Indicaciones</strong></td>
@@ -124,7 +123,7 @@ footer {
             </tr>
         </thead>
         <tbody>
-            @foreach ($bloque as $junta_posicion)
+            @foreach ($juntas_posiciones as $junta_posicion)
                 <tr>
                     <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $informe->km !== null ? $informe->km : '' }}</td>
                     <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
@@ -159,7 +158,6 @@ footer {
             @endforeach
         </tbody>
     </table>
-    @endforeach
 
     @include('reportes.informes.partial.modelos3d-landscope')
 
