@@ -322,6 +322,15 @@ Vue.component('ayuda-demo-grafico-barras',   require('./components/ayuda/ayuda-d
 Vue.component('ayuda-demo-pestanas',         require('./components/ayuda/ayuda-demo-pestanas.vue').default);
 Vue.component('ayuda-demo-costuras-filtros', require('./components/ayuda/ayuda-demo-costuras-filtros.vue').default);
 Vue.component('ayuda-demo-tabla-costuras',   require('./components/ayuda/ayuda-demo-tabla-costuras.vue').default);
+/* Ayuda - Indice y Bloque 1 (OT y Parte diario) */
+Vue.component('ayuda-indice',                     require('./components/ayuda/ayuda-indice.vue').default);
+Vue.component('ayuda-demo-wizard-pasos',          require('./components/ayuda/ayuda-demo-wizard-pasos.vue').default);
+Vue.component('ayuda-demo-form-ot',               require('./components/ayuda/ayuda-demo-form-ot.vue').default);
+Vue.component('ayuda-demo-filtros-ot',            require('./components/ayuda/ayuda-demo-filtros-ot.vue').default);
+Vue.component('ayuda-demo-tabla-ots',             require('./components/ayuda/ayuda-demo-tabla-ots.vue').default);
+Vue.component('ayuda-demo-form-parte',            require('./components/ayuda/ayuda-demo-form-parte.vue').default);
+Vue.component('ayuda-demo-tabla-operarios-horas', require('./components/ayuda/ayuda-demo-tabla-operarios-horas.vue').default);
+Vue.component('ayuda-demo-tabla-partes',          require('./components/ayuda/ayuda-demo-tabla-partes.vue').default);
 
 /* Reportes */
 Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);

@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Como crear una orden de trabajo (OT)</h1>
@@ -33,6 +34,7 @@
                 <li>Completar el formulario con la informacion solicitada.</li>
                 <li>Hacer click en <strong>Guardar</strong>.</li>
             </ol>
+            <ayuda-demo-wizard-pasos></ayuda-demo-wizard-pasos>
             <p>
                 Guardar crea la OT y deja disponible su circuito de trabajo. A partir de ese momento ya puede completarse,
                 editarse o prepararse para firma segun el estado de avance del trabajo.
@@ -57,6 +59,7 @@
                 <li><strong>Responsable OT:</strong> responsable de Enod. Debe estar asignado como <a href="{{ route('ayuda-asignar-operadores') }}"><strong>operador de la OT</strong></a>.</li>
                 <li><strong>Lugar de ensayo:</strong> sector descriptivo y datos de ubicacion. Si se completa latitud y longitud, el mapa se reubica con esa informacion.</li>
             </ul>
+            <ayuda-demo-form-ot></ayuda-demo-form-ot>
         </div>
     </section>
 
@@ -133,6 +136,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Creacion de partes diarios</h1>
@@ -51,6 +52,8 @@
                 <li><strong>Informes:</strong> RI, PM, LP, RD, US, DZ, CV, PMI, RG, TT e importados, segun corresponda.</li>
                 <li><strong>Servicios:</strong> detalle adicional de tareas o cantidades no cubiertas solo por el informe.</li>
             </ul>
+            <ayuda-demo-form-parte></ayuda-demo-form-parte>
+            <ayuda-demo-tabla-operarios-horas></ayuda-demo-tabla-operarios-horas>
             <p>
                 El resultado no es solo administrativo: despues el parte puede alimentar certificados y reportes.
             </p>
@@ -103,6 +106,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

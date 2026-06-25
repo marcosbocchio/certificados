@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Visualizacion de partes diarios</h1>
@@ -23,6 +24,7 @@
                 <li><strong>Usuario alta:</strong> quien genero el registro.</li>
                 <li><strong>Firma:</strong> estado documental segun el circuito del modulo.</li>
             </ul>
+            <ayuda-demo-tabla-partes></ayuda-demo-tabla-partes>
             <p>
                 Esta consulta es util para verificar si una jornada ya fue consolidada y si puede ser utilizada despues
                 en un certificado o en reportes.
@@ -74,6 +76,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

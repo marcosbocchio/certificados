@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Visualizacion general de una orden de trabajo</h1>
@@ -24,9 +25,8 @@
                 Las OT se listan en orden descendente de alta. Desde esta pantalla se puede identificar rapidamente
                 el cliente, la fecha, el estado y las acciones disponibles sobre cada registro.
             </p>
-            <div class="ayuda_media">
-                <img src="{{ asset('img/ayuda/Listado_OT.PNG') }}" class="img-responsive" alt="Listado de ordenes de trabajo" />
-            </div>
+            <ayuda-demo-filtros-ot></ayuda-demo-filtros-ot>
+            <ayuda-demo-tabla-ots></ayuda-demo-tabla-ots>
             <h3>Estados de la OT</h3>
             <ul>
                 <li><strong>Editando:</strong> la OT todavia puede ajustarse antes de quedar formalmente activa.</li>
@@ -68,6 +68,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection
