@@ -10187,9 +10187,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     badge: function badge(estado) {
       return {
-        'Activa': 'ayuda_demo_badge--success',
-        'Editando': 'ayuda_demo_badge--warning',
-        'Cerrada': 'ayuda_demo_badge--muted'
+        'Activa': 'label-success',
+        'Editando': 'label-warning',
+        'Cerrada': 'label-default'
       }[estado];
     }
   }
@@ -10251,9 +10251,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     badge: function badge(f) {
       return {
-        'Firmado': 'ayuda_demo_badge--success',
-        'Pendiente': 'ayuda_demo_badge--warning',
-        'Anulado': 'ayuda_demo_badge--danger'
+        'Firmado': 'label-success',
+        'Pendiente': 'label-warning',
+        'Anulado': 'label-danger'
       }[f];
     },
     iconoFirma: function iconoFirma(f) {
@@ -10481,36 +10481,28 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       categoria: 'todas',
       categorias: [{
         id: 'todas',
-        label: 'Todas',
-        icono: 'th-large'
+        label: 'Todas'
       }, {
         id: 'inicio',
-        label: 'Inicio',
-        icono: 'play-circle'
+        label: 'Inicio'
       }, {
         id: 'operativo',
-        label: 'Operativo',
-        icono: 'cogs'
+        label: 'Operativo'
       }, {
         id: 'documental',
-        label: 'Documental',
-        icono: 'file-text'
+        label: 'Documental'
       }, {
         id: 'maestros',
-        label: 'Maestros',
-        icono: 'database'
+        label: 'Maestros'
       }, {
         id: 'interno',
-        label: 'Interno',
-        icono: 'briefcase'
+        label: 'Interno'
       }, {
         id: 'dosimetria',
-        label: 'Dosimetría',
-        icono: 'bolt'
+        label: 'Dosimetría'
       }, {
         id: 'extras',
-        label: 'Multimedia',
-        icono: 'image'
+        label: 'Multimedia'
       }]
     };
   },
@@ -60587,10 +60579,16 @@ var render = function render() {
     staticClass: "ayuda_demo_block"
   }, [_c("div", {
     staticClass: "ayuda_demo_label"
-  }, [_vm._v("Ejemplo: barra de filtros del listado de OT")]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_filtros_ot"
+  }, [_vm._v("Barra de filtros del listado")]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_real_box"
   }, [_c("div", {
-    staticClass: "ayuda_filtro_row"
+    staticClass: "box-body"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-sm-3 col-xs-6"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Cliente")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
@@ -60598,6 +60596,7 @@ var render = function render() {
       value: _vm.filtros.cliente,
       expression: "filtros.cliente"
     }],
+    staticClass: "form-control input-sm",
     on: {
       change: function change($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
@@ -60613,8 +60612,10 @@ var render = function render() {
     attrs: {
       value: ""
     }
-  }, [_vm._v("Todos")]), _vm._v(" "), _c("option", [_vm._v("YPF S.A.")]), _vm._v(" "), _c("option", [_vm._v("Techint Ingeniería")]), _vm._v(" "), _c("option", [_vm._v("Pampa Energía")])])]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_filtro_row"
+  }, [_vm._v("Todos")]), _vm._v(" "), _c("option", [_vm._v("YPF S.A.")]), _vm._v(" "), _c("option", [_vm._v("Techint Ingeniería")]), _vm._v(" "), _c("option", [_vm._v("Pampa Energía")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-2 col-xs-6"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Estado")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
@@ -60622,6 +60623,7 @@ var render = function render() {
       value: _vm.filtros.estado,
       expression: "filtros.estado"
     }],
+    staticClass: "form-control input-sm",
     on: {
       change: function change($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
@@ -60637,8 +60639,10 @@ var render = function render() {
     attrs: {
       value: ""
     }
-  }, [_vm._v("Todos")]), _vm._v(" "), _c("option", [_vm._v("Editando")]), _vm._v(" "), _c("option", [_vm._v("Activa")]), _vm._v(" "), _c("option", [_vm._v("Cerrada")])])]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_filtro_row"
+  }, [_vm._v("Todos")]), _vm._v(" "), _c("option", [_vm._v("Editando")]), _vm._v(" "), _c("option", [_vm._v("Activa")]), _vm._v(" "), _c("option", [_vm._v("Cerrada")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-2 col-xs-6"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Desde")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
@@ -60646,6 +60650,7 @@ var render = function render() {
       value: _vm.filtros.desde,
       expression: "filtros.desde"
     }],
+    staticClass: "form-control input-sm",
     attrs: {
       type: "text",
       placeholder: "dd/mm/aaaa"
@@ -60659,8 +60664,10 @@ var render = function render() {
         _vm.$set(_vm.filtros, "desde", $event.target.value);
       }
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_filtro_row"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-2 col-xs-6"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Hasta")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
@@ -60668,6 +60675,7 @@ var render = function render() {
       value: _vm.filtros.hasta,
       expression: "filtros.hasta"
     }],
+    staticClass: "form-control input-sm",
     attrs: {
       type: "text",
       placeholder: "dd/mm/aaaa"
@@ -60681,8 +60689,10 @@ var render = function render() {
         _vm.$set(_vm.filtros, "hasta", $event.target.value);
       }
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_filtro_row ayuda_filtro_row--buscar"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-3 col-xs-12"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Buscar")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
@@ -60690,6 +60700,7 @@ var render = function render() {
       value: _vm.filtros.texto,
       expression: "filtros.texto"
     }],
+    staticClass: "form-control input-sm",
     attrs: {
       type: "text",
       placeholder: "N° OT, proyecto, obra..."
@@ -60703,16 +60714,16 @@ var render = function render() {
         _vm.$set(_vm.filtros, "texto", $event.target.value);
       }
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_filtro_actions"
-  }, [_vm._m(0), _vm._v(" "), _c("button", {
-    staticClass: "ayuda_btn_demo ayuda_btn_demo--secondary",
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "enod-form-actions enod-form-actions--end"
+  }, [_c("button", {
+    staticClass: "btn btn-default btn-sm",
     on: {
       click: _vm.reset
     }
   }, [_c("i", {
     staticClass: "fa fa-eraser"
-  }), _vm._v(" Limpiar")])])]), _vm._v(" "), _c("div", {
+  }), _vm._v("  Limpiar")]), _vm._v(" "), _vm._m(0)])])]), _vm._v(" "), _c("div", {
     staticClass: "ayuda_demo_caption"
   }, [_vm._v("\n        Los filtros se combinan: si elegís un cliente y un estado, la tabla queda restringida a OT que cumplan ambos.\n        Un cliente externo ve solo sus propias OT.\n    ")])]);
 };
@@ -60720,10 +60731,10 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("button", {
-    staticClass: "ayuda_btn_demo ayuda_btn_demo--primary"
+    staticClass: "btn btn-enod btn-sm"
   }, [_c("i", {
     staticClass: "fa fa-filter"
-  }), _vm._v(" Filtrar")]);
+  }), _vm._v("  Filtrar")]);
 }];
 render._withStripped = true;
 
@@ -60817,116 +60828,143 @@ var staticRenderFns = [function () {
     staticClass: "ayuda_demo_block"
   }, [_c("div", {
     staticClass: "ayuda_demo_label"
-  }, [_vm._v("Ejemplo: formulario de Nueva OT")]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_demo"
+  }, [_vm._v("Formulario de Nueva OT")]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_real_box"
   }, [_c("div", {
-    staticClass: "ayuda_form_demo_header"
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "box-title"
   }, [_c("i", {
     staticClass: "fa fa-clipboard"
-  }), _vm._v(" Nueva orden de trabajo\n        ")]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_demo_body"
+  }), _vm._v("  Nueva orden de trabajo")])]), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
   }, [_c("div", {
-    staticClass: "ayuda_form_row"
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-sm-12"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Proyecto")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
     attrs: {
       type: "text",
       value: "Gasoducto NEA - Tramo 12",
       disabled: ""
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_grid"
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
   }, [_c("div", {
-    staticClass: "ayuda_form_row"
+    staticClass: "col-sm-4"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("FST N°")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
     attrs: {
       type: "text",
       value: "P-2026-0087",
       disabled: ""
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_row"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-4"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("OT N°")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
     attrs: {
       type: "text",
       value: "OT-1542",
       disabled: ""
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_row"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-4"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Fecha")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
     attrs: {
       type: "text",
       value: "25/06/2026",
       disabled: ""
     }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_grid"
+  })])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
   }, [_c("div", {
-    staticClass: "ayuda_form_row"
+    staticClass: "col-sm-6"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Cliente "), _c("span", {
     staticClass: "ayuda_req"
   }, [_vm._v("*")])]), _vm._v(" "), _c("select", {
+    staticClass: "form-control",
     attrs: {
       disabled: ""
     }
-  }, [_c("option", [_vm._v("YPF S.A.")])])]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_row"
+  }, [_c("option", [_vm._v("YPF S.A.")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-6"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Comitente")]), _vm._v(" "), _c("select", {
+    staticClass: "form-control",
     attrs: {
       disabled: ""
     }
-  }, [_c("option", [_vm._v("Techint Ingeniería")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_row"
+  }, [_c("option", [_vm._v("Techint Ingeniería")])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-sm-12"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Responsable OT "), _c("span", {
     staticClass: "ayuda_req"
   }, [_vm._v("*")])]), _vm._v(" "), _c("select", {
+    staticClass: "form-control",
     attrs: {
       disabled: ""
     }
-  }, [_c("option", [_vm._v("Juan Pérez (operador asignado)")])])]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_row"
+  }, [_c("option", [_vm._v("Juan Pérez (operador asignado)")])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Servicios")]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_chips_row"
+    staticClass: "ayuda_chips_box"
   }, [_c("span", {
-    staticClass: "ayuda_chip"
+    staticClass: "label label-warning ayuda_chip"
   }, [_vm._v("RI - Radiografía Industrial")]), _vm._v(" "), _c("span", {
-    staticClass: "ayuda_chip"
+    staticClass: "label label-warning ayuda_chip"
   }, [_vm._v("PM - Partículas Magnéticas")]), _vm._v(" "), _c("button", {
-    staticClass: "ayuda_chip_add",
+    staticClass: "btn btn-enod btn-xs ayuda_chip_add",
     attrs: {
       disabled: ""
     }
   }, [_c("i", {
     staticClass: "fa fa-plus"
   })])])]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_row"
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("EPP requeridos")]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_chips_row"
+    staticClass: "ayuda_chips_box"
   }, [_c("span", {
-    staticClass: "ayuda_chip ayuda_chip--epp"
+    staticClass: "label label-default ayuda_chip"
   }, [_vm._v("Casco")]), _vm._v(" "), _c("span", {
-    staticClass: "ayuda_chip ayuda_chip--epp"
+    staticClass: "label label-default ayuda_chip"
   }, [_vm._v("Dosímetro")]), _vm._v(" "), _c("span", {
-    staticClass: "ayuda_chip ayuda_chip--epp"
+    staticClass: "label label-default ayuda_chip"
   }, [_vm._v("Calzado de seguridad")])])]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_actions"
+    staticClass: "enod-form-actions enod-form-actions--end"
   }, [_c("button", {
-    staticClass: "ayuda_btn_demo ayuda_btn_demo--secondary",
+    staticClass: "btn btn-default",
     attrs: {
       disabled: ""
     }
   }, [_vm._v("Cancelar")]), _vm._v(" "), _c("button", {
-    staticClass: "ayuda_btn_demo ayuda_btn_demo--primary",
+    staticClass: "btn btn-enod",
     attrs: {
       disabled: ""
     }
   }, [_c("i", {
     staticClass: "fa fa-save"
-  }), _vm._v(" Guardar\n                ")])])])]), _vm._v(" "), _c("div", {
+  }), _vm._v("  Guardar")])])])]), _vm._v(" "), _c("div", {
     staticClass: "ayuda_demo_caption"
   }, [_vm._v("\n        Vista previa del formulario real. Los campos con "), _c("span", {
     staticClass: "ayuda_req"
-  }, [_vm._v("*")]), _vm._v(' son obligatorios.\n        "Servicios" y "Responsable OT" son los dos datos más sensibles: condicionan los métodos disponibles después en informes.\n    ')])]);
+  }, [_vm._v("*")]), _vm._v(' son obligatorios.\n        "Servicios" y "Responsable OT" son los datos más sensibles: condicionan los métodos disponibles después en informes.\n    ')])]);
 }];
 render._withStripped = true;
 
@@ -60951,30 +60989,35 @@ var render = function render() {
     staticClass: "ayuda_demo_block"
   }, [_c("div", {
     staticClass: "ayuda_demo_label"
-  }, [_vm._v("Ejemplo: cabecera del parte diario")]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_demo"
+  }, [_vm._v("Cabecera del parte diario")]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_real_box"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_demo_body"
-  }, [_vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_tabs_demo"
+    staticClass: "box-body"
+  }, [_vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("ul", {
+    staticClass: "nav nav-tabs ayuda_tabs"
   }, _vm._l(_vm.tabs, function (t, i) {
-    return _c("button", {
+    return _c("li", {
       key: i,
-      "class": ["ayuda_tab", {
-        "is-active": _vm.activa === i
-      }],
+      "class": {
+        active: _vm.activa === i
+      }
+    }, [_c("a", {
+      attrs: {
+        href: "#"
+      },
       on: {
         click: function click($event) {
+          $event.preventDefault();
           _vm.activa = i;
         }
       }
     }, [_c("i", {
       "class": "fa fa-" + t.icono
-    }), _vm._v(" " + _vm._s(t.label) + "\n                    "), t.badge ? _c("span", {
-      staticClass: "ayuda_tab_badge"
-    }, [_vm._v(_vm._s(t.badge))]) : _vm._e()]);
+    }), _vm._v("  " + _vm._s(t.label) + "\n                        "), t.badge !== null ? _c("span", {
+      staticClass: "badge ayuda_tab_badge"
+    }, [_vm._v(_vm._s(t.badge))]) : _vm._e()])]);
   }), 0), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_tabs_panel"
+    staticClass: "ayuda_tab_panel"
   }, [_vm.activa === 0 ? _c("p", [_c("i", {
     staticClass: "fa fa-info-circle"
   }), _vm._v(" Se listan los informes "), _c("strong", [_vm._v("pendientes")]), _vm._v(" de la OT que coinciden con la fecha y obra elegidas. Tildá los que pertenezcan a esta jornada.")]) : _vm._e(), _vm._v(" "), _vm.activa === 1 ? _c("p", [_c("i", {
@@ -60989,80 +61032,97 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "ayuda_form_demo_header"
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "box-title"
   }, [_c("i", {
     staticClass: "fa fa-calendar-check-o"
-  }), _vm._v(" Nuevo parte diario - OT-1542\n        ")]);
+  }), _vm._v("  Nuevo parte diario · OT-1542")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "ayuda_form_grid"
+    staticClass: "row"
   }, [_c("div", {
-    staticClass: "ayuda_form_row"
+    staticClass: "col-sm-4"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Fecha "), _c("span", {
     staticClass: "ayuda_req"
   }, [_vm._v("*")])]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
     attrs: {
       type: "text",
       value: "25/06/2026",
       disabled: ""
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_row"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-4"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Obra")]), _vm._v(" "), _c("select", {
+    staticClass: "form-control",
     attrs: {
       disabled: ""
     }
-  }, [_c("option", [_vm._v("Gasoducto NEA - T12")])])]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_row"
+  }, [_c("option", [_vm._v("Gasoducto NEA - T12")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-4"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Tipo de servicio "), _c("span", {
     staticClass: "ayuda_req"
   }, [_vm._v("*")])]), _vm._v(" "), _c("select", {
+    staticClass: "form-control",
     attrs: {
       disabled: ""
     }
-  }, [_c("option", [_vm._v("Radiografía industrial")])])])]);
+  }, [_c("option", [_vm._v("Radiografía industrial")])])])])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "ayuda_form_grid"
+    staticClass: "row"
   }, [_c("div", {
-    staticClass: "ayuda_form_row"
+    staticClass: "col-sm-3 col-xs-6"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Horario inicio")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
     attrs: {
       type: "text",
       value: "07:30",
       disabled: ""
     }
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "ayuda_form_row"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-3 col-xs-6"
+  }, [_c("div", {
+    staticClass: "form-group"
   }, [_c("label", [_vm._v("Horario fin")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
     attrs: {
       type: "text",
       value: "16:00",
       disabled: ""
     }
-  })])]);
+  })])])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "ayuda_form_actions"
+    staticClass: "enod-form-actions enod-form-actions--end"
   }, [_c("button", {
-    staticClass: "ayuda_btn_demo ayuda_btn_demo--secondary",
+    staticClass: "btn btn-default",
     attrs: {
       disabled: ""
     }
   }, [_vm._v("Cancelar")]), _vm._v(" "), _c("button", {
-    staticClass: "ayuda_btn_demo ayuda_btn_demo--primary",
+    staticClass: "btn btn-enod",
     attrs: {
       disabled: ""
     }
   }, [_c("i", {
     staticClass: "fa fa-save"
-  }), _vm._v(" Guardar parte")])]);
+  }), _vm._v("  Guardar parte")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -61418,8 +61478,10 @@ var render = function render() {
     staticClass: "ayuda_demo_block"
   }, [_c("div", {
     staticClass: "ayuda_demo_label"
-  }, [_vm._v("Ejemplo: carga de responsables y horas de la jornada")]), _vm._v(" "), _c("table", {
-    staticClass: "ayuda_demo_table table table-striped"
+  }, [_vm._v("Responsables y horas de la jornada")]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_table_wrap"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-bordered table-condensed ayuda_real_table"
   }, [_vm._m(0), _vm._v(" "), _c("tbody", [_vm._l(_vm.filas, function (r, i) {
     return _c("tr", {
       key: i
@@ -61430,11 +61492,11 @@ var render = function render() {
     }, [_vm._v(_vm._s(r.fin))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_c("span", {
-      staticClass: "ayuda_demo_chip"
+      staticClass: "label label-warning"
     }, [_vm._v(_vm._s(r.horas) + "h")])]), _vm._v(" "), _c("td", [r.novedad ? _c("span", {
-      staticClass: "ayuda_demo_nov"
+      staticClass: "ayuda_nov"
     }, [_vm._v(_vm._s(r.novedad))]) : _c("span", {
-      staticClass: "ayuda_demo_dash"
+      staticClass: "text-muted"
     }, [_vm._v("—")])]), _vm._v(" "), _vm._m(1, true)]);
   }), _vm._v(" "), _c("tr", {
     staticClass: "ayuda_total_row"
@@ -61444,7 +61506,7 @@ var render = function render() {
     attrs: {
       colspan: "2"
     }
-  })])], 2)]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("div", {
+  })])], 2)])]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("div", {
     staticClass: "ayuda_demo_caption"
   }, [_vm._v("\n        Si un operador faltó parte del día, registralo en novedades — esto después aparece en el PDF del parte\n        y se usa en certificados / reportes de horas hombre.\n    ")])]);
 };
@@ -61458,15 +61520,18 @@ var staticRenderFns = [function () {
   }, [_vm._v("Fin")]), _vm._v(" "), _c("th", {
     staticClass: "text-center"
   }, [_vm._v("Horas")]), _vm._v(" "), _c("th", [_vm._v("Novedades")]), _vm._v(" "), _c("th", {
-    staticClass: "text-center"
-  }, [_vm._v("—")])])]);
+    staticClass: "text-center",
+    staticStyle: {
+      width: "42px"
+    }
+  })])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("td", {
     staticClass: "text-center"
   }, [_c("button", {
-    staticClass: "ayuda_demo_iconbtn ayuda_demo_iconbtn--danger",
+    staticClass: "btn btn-enod-danger btn-xs",
     attrs: {
       title: "Quitar"
     }
@@ -61477,6 +61542,7 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("td", {
+    staticClass: "text-right",
     attrs: {
       colspan: "4"
     }
@@ -61485,12 +61551,12 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "ayuda_demo_actions_row"
+    staticClass: "enod-form-actions"
   }, [_c("button", {
-    staticClass: "ayuda_btn_demo ayuda_btn_demo--secondary"
+    staticClass: "btn btn-default btn-sm"
   }, [_c("i", {
     staticClass: "fa fa-plus"
-  }), _vm._v(" Agregar operador")])]);
+  }), _vm._v("  Agregar operador")])]);
 }];
 render._withStripped = true;
 
@@ -61515,20 +61581,22 @@ var render = function render() {
     staticClass: "ayuda_demo_block"
   }, [_c("div", {
     staticClass: "ayuda_demo_label"
-  }, [_vm._v("Ejemplo: listado de órdenes de trabajo")]), _vm._v(" "), _c("table", {
-    staticClass: "ayuda_demo_table table table-striped"
+  }, [_vm._v("Listado de órdenes de trabajo")]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_table_wrap"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-bordered table-condensed ayuda_real_table"
   }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.filas, function (ot, i) {
     return _c("tr", {
       key: i
     }, [_c("td", [_c("strong", [_vm._v(_vm._s(ot.numero))])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(ot.fecha))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(ot.cliente))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(ot.proyecto))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(ot.responsable))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_c("span", {
-      staticClass: "ayuda_demo_badge",
+      staticClass: "label",
       "class": _vm.badge(ot.estado)
     }, [_vm._v(_vm._s(ot.estado))])]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_vm._m(1, true), _vm._v(" "), _c("button", {
-      staticClass: "ayuda_demo_iconbtn",
+      staticClass: "btn btn-enod btn-xs",
       attrs: {
         disabled: ot.estado === "Cerrada",
         title: "Editar"
@@ -61536,7 +61604,7 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "fa fa-pencil"
     })]), _vm._v(" "), _vm._m(2, true)])]);
-  }), 0)]), _vm._v(" "), _vm._m(3)]);
+  }), 0)])]), _vm._v(" "), _vm._m(3)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -61550,7 +61618,7 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("button", {
-    staticClass: "ayuda_demo_iconbtn",
+    staticClass: "btn btn-default btn-xs",
     attrs: {
       title: "Ver"
     }
@@ -61561,7 +61629,7 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("button", {
-    staticClass: "ayuda_demo_iconbtn",
+    staticClass: "btn btn-default btn-xs",
     attrs: {
       title: "PDF"
     }
@@ -61573,7 +61641,7 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "ayuda_demo_caption"
-  }, [_vm._v("\n        Las OT se muestran en orden descendente por fecha de alta. El estado "), _c("strong", [_vm._v("Editando")]), _vm._v(" habilita\n        edición, "), _c("strong", [_vm._v("Activa")]), _vm._v(" congela datos base pero permite cargar informes y partes,\n        "), _c("strong", [_vm._v("Cerrada")]), _vm._v(" deja la OT como antecedente consultable.\n    ")]);
+  }, [_vm._v("\n        Las OT se muestran en orden descendente por fecha de alta. "), _c("strong", [_vm._v("Editando")]), _vm._v(" habilita\n        edición, "), _c("strong", [_vm._v("Activa")]), _vm._v(" congela datos base pero permite cargar informes y partes,\n        "), _c("strong", [_vm._v("Cerrada")]), _vm._v(" deja la OT como antecedente consultable.\n    ")]);
 }];
 render._withStripped = true;
 
@@ -61598,26 +61666,28 @@ var render = function render() {
     staticClass: "ayuda_demo_block"
   }, [_c("div", {
     staticClass: "ayuda_demo_label"
-  }, [_vm._v("Ejemplo: listado de partes diarios de una OT")]), _vm._v(" "), _c("table", {
-    staticClass: "ayuda_demo_table table table-striped"
+  }, [_vm._v("Listado de partes diarios")]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_table_wrap"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-bordered table-condensed ayuda_real_table"
   }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.filas, function (p, i) {
     return _c("tr", {
       key: i
     }, [_c("td", [_c("strong", [_vm._v(_vm._s(p.numero))])]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.fecha))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.tipo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.usuario))]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_c("span", {
-      staticClass: "ayuda_demo_chip"
+      staticClass: "label label-warning"
     }, [_vm._v(_vm._s(p.informes))])]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_c("span", {
-      staticClass: "ayuda_demo_badge",
+      staticClass: "label",
       "class": _vm.badge(p.firma)
     }, [_c("i", {
       "class": _vm.iconoFirma(p.firma)
-    }), _vm._v(" " + _vm._s(p.firma) + "\n                    ")])]), _vm._v(" "), _c("td", {
+    }), _vm._v("  " + _vm._s(p.firma) + "\n                        ")])]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_vm._m(1, true), _vm._v(" "), _c("button", {
-      staticClass: "ayuda_demo_iconbtn",
+      staticClass: "btn btn-enod btn-xs",
       attrs: {
         disabled: p.firma === "Firmado",
         title: "Editar"
@@ -61625,7 +61695,7 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "fa fa-pencil"
     })])])]);
-  }), 0)]), _vm._v(" "), _vm._m(2)]);
+  }), 0)])]), _vm._v(" "), _vm._m(2)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -61641,7 +61711,7 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("button", {
-    staticClass: "ayuda_demo_iconbtn",
+    staticClass: "btn btn-default btn-xs",
     attrs: {
       title: "Ver PDF"
     }
@@ -61653,7 +61723,7 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "ayuda_demo_caption"
-  }, [_vm._v("\n        La columna "), _c("strong", [_vm._v("Firma")]), _vm._v(" resume el estado documental: una vez firmado, el parte queda inmutable y disponible para certificados.\n        La columna "), _c("strong", [_vm._v("Informes")]), _vm._v(" indica cuántos informes técnicos fueron consolidados en esa jornada.\n    ")]);
+  }, [_c("strong", [_vm._v("Firma")]), _vm._v(" resume el estado documental: una vez firmado, el parte queda inmutable y disponible para certificados.\n        "), _c("strong", [_vm._v("Informes")]), _vm._v(" indica cuántos informes técnicos fueron consolidados en esa jornada.\n    ")]);
 }];
 render._withStripped = true;
 
@@ -61829,7 +61899,7 @@ var render = function render() {
     staticClass: "ayuda_demo_block"
   }, [_c("div", {
     staticClass: "ayuda_demo_label"
-  }, [_vm._v("Ejemplo: flujo de creación de una OT")]), _vm._v(" "), _c("ol", {
+  }, [_vm._v("Flujo paso a paso")]), _vm._v(" "), _c("ol", {
     staticClass: "ayuda_wizard"
   }, _vm._l(_vm.pasos, function (paso, i) {
     return _c("li", {
@@ -61890,6 +61960,7 @@ var render = function render() {
       value: _vm.busqueda,
       expression: "busqueda"
     }],
+    staticClass: "form-control",
     attrs: {
       type: "text",
       placeholder: "Buscar tema, módulo o palabra clave..."
@@ -61933,27 +62004,20 @@ var render = function render() {
           _vm.categoria = cat.id;
         }
       }
-    }, [_c("i", {
-      "class": "fa fa-" + cat.icono
-    }), _vm._v(" " + _vm._s(cat.label) + "\n            ")]);
+    }, [_vm._v("\n                " + _vm._s(cat.label) + "\n            ")]);
   }), 0)]), _vm._v(" "), _vm.totalResultados === 0 ? _c("p", {
     staticClass: "ayuda_indice_vacio"
   }, [_c("i", {
     staticClass: "fa fa-info-circle"
-  }), _vm._v(' No se encontraron artículos para "'), _c("strong", [_vm._v(_vm._s(_vm.busqueda))]), _vm._v('".\n    ')]) : _vm._e(), _vm._v(" "), _c("div", {
+  }), _vm._v(' Sin resultados para "'), _c("strong", [_vm._v(_vm._s(_vm.busqueda))]), _vm._v('".\n    ')]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "ayuda_indice_grid"
   }, _vm._l(_vm.seccionesVisibles, function (seccion, idx) {
     return _c("article", {
       key: idx,
-      staticClass: "ayuda_indice_card",
-      "class": "ayuda_indice_card--" + seccion.color
+      staticClass: "ayuda_indice_card"
     }, [_c("header", {
       staticClass: "ayuda_indice_card_head"
-    }, [_c("div", {
-      staticClass: "ayuda_indice_card_icon"
-    }, [_c("i", {
-      "class": "fa fa-" + seccion.icono
-    })]), _vm._v(" "), _c("div", [_c("h2", [_vm._v(_vm._s(seccion.titulo))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(seccion.descripcion))])])]), _vm._v(" "), _c("ul", {
+    }, [_c("h2", [_vm._v(_vm._s(seccion.titulo))]), _vm._v(" "), _c("p", [_vm._v(_vm._s(seccion.descripcion))])]), _vm._v(" "), _c("ul", {
       staticClass: "ayuda_indice_links"
     }, _vm._l(seccion.linksVisibles, function (link, j) {
       return _c("li", {
@@ -61963,7 +62027,6 @@ var render = function render() {
           href: link.href
         }
       }, [_c("span", {
-        staticClass: "ayuda_indice_link_titulo",
         domProps: {
           innerHTML: _vm._s(_vm.resaltar(link.label))
         }
@@ -61976,13 +62039,9 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "ayuda_indice_hero"
-  }, [_c("div", {
-    staticClass: "ayuda_indice_hero_icon"
-  }, [_c("i", {
-    staticClass: "fa fa-life-ring"
-  })]), _vm._v(" "), _c("div", [_c("h1", [_vm._v("Centro de ayuda")]), _vm._v(" "), _c("p", [_vm._v("\n                Punto de entrada a la documentación del sistema. Cada tarjeta agrupa los temas\n                de un módulo: usá el buscador o filtrá por categoría para llegar directo al artículo que necesitás.\n            ")])])]);
+  return _c("header", {
+    staticClass: "ayuda_indice_header"
+  }, [_c("h1", [_vm._v("Centro de ayuda")]), _vm._v(" "), _c("p", [_vm._v("Documentación del sistema organizada por módulo. Buscá un tema o filtrá por categoría.")])]);
 }];
 render._withStripped = true;
 
@@ -133795,7 +133854,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_block[data-v-4a12460e] { margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-4a12460e] {\n    font-size: 12px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 600;\n}\n.ayuda_filtros_ot[data-v-4a12460e] {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));\n    gap: 10px;\n    background: #f9fafb;\n    border: 1px solid #e3e8ee;\n    border-radius: 10px;\n    padding: 14px;\n    align-items: end;\n}\n.ayuda_filtro_row label[data-v-4a12460e] {\n    display: block; font-size: 11px; font-weight: 700;\n    color: #4c5661; margin-bottom: 4px;\n    text-transform: uppercase; letter-spacing: 0.03em;\n}\n.ayuda_filtro_row input[data-v-4a12460e],\n.ayuda_filtro_row select[data-v-4a12460e] {\n    width: 100%; padding: 6px 9px;\n    border: 1px solid #d6dce3; border-radius: 6px;\n    background: #fff; font-size: 13px;\n}\n.ayuda_filtro_row--buscar[data-v-4a12460e] { grid-column: span 2;\n}\n.ayuda_filtro_actions[data-v-4a12460e] {\n    display: flex; gap: 6px;\n    grid-column: 1 / -1;\n    justify-content: flex-end;\n}\n.ayuda_btn_demo[data-v-4a12460e] {\n    padding: 7px 14px; border-radius: 6px;\n    font-size: 12px; font-weight: 700;\n    border: 0; cursor: pointer;\n}\n.ayuda_btn_demo i[data-v-4a12460e] { margin-right: 5px;\n}\n.ayuda_btn_demo--primary[data-v-4a12460e]   { background: #2e86c1; color: #fff;\n}\n.ayuda_btn_demo--secondary[data-v-4a12460e] { background: #e3e8ee; color: #4c5661;\n}\n.ayuda_demo_caption[data-v-4a12460e] {\n    margin-top: 6px; font-size: 11px;\n    color: #9ca3af; font-style: italic;\n}\n@media (max-width: 600px) {\n.ayuda_filtro_row--buscar[data-v-4a12460e] { grid-column: span 1;\n}\n}\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_block[data-v-4a12460e] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-4a12460e] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_real_box[data-v-4a12460e] {\n    border: 1px solid #eef0f3;\n    border-top: 3px solid #FFCC00;\n    border-radius: 4px;\n    box-shadow: none;\n}\n.ayuda_real_box label[data-v-4a12460e] { font-size: 11px; color: #4c5661; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 4px; font-weight: 700;\n}\n.ayuda_real_box .form-group[data-v-4a12460e] { margin-bottom: 8px;\n}\n.enod-form-actions[data-v-4a12460e] { border-top: 1px solid #eef0f3; padding-top: 10px; margin-top: 8px;\n}\n.ayuda_demo_caption[data-v-4a12460e] {\n    margin-top: 8px;\n    font-size: 12px;\n    color: #6b7280;\n    font-style: italic;\n}\n", ""]);
 
 // exports
 
@@ -133833,7 +133892,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_block[data-v-0017c517] {\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-0017c517] {\n    font-size: 12px;\n    color: #6b7280;\n    text-transform: uppercase;\n    letter-spacing: 0.06em;\n    margin-bottom: 8px;\n    font-weight: 600;\n}\n.ayuda_form_demo[data-v-0017c517] {\n    background: #fff;\n    border: 1px solid #e3e8ee;\n    border-radius: 10px;\n    overflow: hidden;\n    box-shadow: 0 2px 6px rgba(0,0,0,0.04);\n}\n.ayuda_form_demo_header[data-v-0017c517] {\n    background: linear-gradient(135deg, #1f4e7a 0%, #2e86c1 100%);\n    color: #fff;\n    padding: 12px 16px;\n    font-weight: 700;\n    font-size: 14px;\n}\n.ayuda_form_demo_header i[data-v-0017c517] { margin-right: 8px;\n}\n.ayuda_form_demo_body[data-v-0017c517] {\n    padding: 16px;\n}\n.ayuda_form_row[data-v-0017c517] {\n    margin-bottom: 12px;\n}\n.ayuda_form_row label[data-v-0017c517] {\n    display: block;\n    font-size: 12px;\n    font-weight: 700;\n    color: #4c5661;\n    margin-bottom: 4px;\n    text-transform: uppercase;\n    letter-spacing: 0.03em;\n}\n.ayuda_form_row input[data-v-0017c517],\n.ayuda_form_row select[data-v-0017c517] {\n    width: 100%;\n    padding: 7px 10px;\n    border: 1px solid #d6dce3;\n    border-radius: 6px;\n    background: #f9fafb;\n    font-size: 13px;\n    color: #374151;\n    cursor: not-allowed;\n}\n.ayuda_form_grid[data-v-0017c517] {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));\n    gap: 10px;\n    margin-bottom: 12px;\n}\n.ayuda_form_grid .ayuda_form_row[data-v-0017c517] { margin-bottom: 0;\n}\n.ayuda_req[data-v-0017c517] { color: #dc3545; font-weight: 700;\n}\n.ayuda_chips_row[data-v-0017c517] {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 6px;\n    padding: 6px;\n    background: #f9fafb;\n    border: 1px dashed #d6dce3;\n    border-radius: 6px;\n    min-height: 40px;\n}\n.ayuda_chip[data-v-0017c517] {\n    background: #eaf4fb;\n    color: #1f4e7a;\n    border: 1px solid #cbe2f1;\n    padding: 4px 10px;\n    border-radius: 999px;\n    font-size: 12px;\n    font-weight: 600;\n}\n.ayuda_chip--epp[data-v-0017c517] {\n    background: #fff3cd;\n    color: #8a6d3b;\n    border-color: #ffe7a0;\n}\n.ayuda_chip_add[data-v-0017c517] {\n    background: #2e86c1;\n    color: #fff;\n    border: 0;\n    width: 26px; height: 26px;\n    border-radius: 50%;\n    font-size: 12px;\n    cursor: not-allowed;\n}\n.ayuda_form_actions[data-v-0017c517] {\n    display: flex;\n    justify-content: flex-end;\n    gap: 8px;\n    padding-top: 12px;\n    border-top: 1px solid #f1f5f9;\n}\n.ayuda_btn_demo[data-v-0017c517] {\n    padding: 7px 16px;\n    border-radius: 6px;\n    font-size: 13px;\n    font-weight: 700;\n    border: 0;\n    cursor: not-allowed;\n}\n.ayuda_btn_demo--primary[data-v-0017c517] { background: #28a745; color: #fff;\n}\n.ayuda_btn_demo--secondary[data-v-0017c517] { background: #e3e8ee; color: #4c5661;\n}\n.ayuda_demo_caption[data-v-0017c517] {\n    margin-top: 8px;\n    font-size: 11px;\n    color: #9ca3af;\n    font-style: italic;\n}\n@media (max-width: 600px) {\n.ayuda_form_grid[data-v-0017c517] { grid-template-columns: 1fr;\n}\n}\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_block[data-v-0017c517] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-0017c517] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_real_box[data-v-0017c517] {\n    border: 1px solid #eef0f3;\n    border-top: 3px solid #FFCC00;\n    border-radius: 4px;\n    box-shadow: none;\n    margin-bottom: 0;\n}\n.ayuda_real_box .box-header[data-v-0017c517] { border-bottom: 1px solid #eef0f3; padding: 10px 14px;\n}\n.ayuda_real_box .box-title[data-v-0017c517] { font-size: 14px; font-weight: 700; color: #1a1a1a;\n}\n.ayuda_real_box .box-title i[data-v-0017c517] { color: #FFCC00;\n}\n.ayuda_real_box .box-body[data-v-0017c517] { padding: 14px;\n}\n.ayuda_real_box .form-control[disabled][data-v-0017c517] { background: #fafbfc; cursor: not-allowed; color: #4c5661;\n}\n.ayuda_real_box label[data-v-0017c517] { font-size: 12px; color: #4c5661; margin-bottom: 4px;\n}\n.ayuda_req[data-v-0017c517] { color: #dc3545; font-weight: 700;\n}\n.ayuda_chips_box[data-v-0017c517] {\n    background: #fafbfc;\n    border: 1px dashed #e5e7eb;\n    border-radius: 4px;\n    padding: 8px;\n    display: flex;\n    flex-wrap: wrap;\n    gap: 6px;\n    align-items: center;\n    min-height: 40px;\n}\n.ayuda_chip[data-v-0017c517] { font-size: 12px; padding: 4px 9px;\n}\n.ayuda_chip_add[data-v-0017c517] { width: 26px; height: 22px; padding: 0;\n}\n.enod-form-actions[data-v-0017c517] { border-top: 1px solid #eef0f3; padding-top: 12px; margin-top: 12px;\n}\n.ayuda_demo_caption[data-v-0017c517] {\n    margin-top: 8px;\n    font-size: 12px;\n    color: #6b7280;\n    font-style: italic;\n}\n", ""]);
 
 // exports
 
@@ -133852,7 +133911,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_block[data-v-9517f1e0] { margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-9517f1e0] {\n    font-size: 12px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 600;\n}\n.ayuda_form_demo[data-v-9517f1e0] {\n    background: #fff;\n    border: 1px solid #e3e8ee;\n    border-radius: 10px;\n    overflow: hidden;\n    box-shadow: 0 2px 6px rgba(0,0,0,0.04);\n}\n.ayuda_form_demo_header[data-v-9517f1e0] {\n    background: linear-gradient(135deg, #6f42c1 0%, #9c27b0 100%);\n    color: #fff; padding: 12px 16px;\n    font-weight: 700; font-size: 14px;\n}\n.ayuda_form_demo_header i[data-v-9517f1e0] { margin-right: 8px;\n}\n.ayuda_form_demo_body[data-v-9517f1e0] { padding: 16px;\n}\n.ayuda_form_grid[data-v-9517f1e0] {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));\n    gap: 10px; margin-bottom: 12px;\n}\n.ayuda_form_row label[data-v-9517f1e0] {\n    display: block; font-size: 11px; font-weight: 700;\n    color: #4c5661; margin-bottom: 4px;\n    text-transform: uppercase; letter-spacing: 0.03em;\n}\n.ayuda_form_row input[data-v-9517f1e0],\n.ayuda_form_row select[data-v-9517f1e0] {\n    width: 100%; padding: 6px 9px;\n    border: 1px solid #d6dce3; border-radius: 6px;\n    background: #f9fafb; font-size: 13px;\n    color: #374151; cursor: not-allowed;\n}\n.ayuda_req[data-v-9517f1e0] { color: #dc3545; font-weight: 700;\n}\n.ayuda_tabs_demo[data-v-9517f1e0] {\n    display: flex; flex-wrap: wrap; gap: 4px;\n    border-bottom: 2px solid #e3e8ee;\n    margin: 12px 0 0;\n}\n.ayuda_tab[data-v-9517f1e0] {\n    background: transparent; border: 0;\n    padding: 8px 14px; font-size: 13px;\n    color: #6b7280; cursor: pointer;\n    border-bottom: 3px solid transparent;\n    font-weight: 600;\n    position: relative;\n    margin-bottom: -2px;\n}\n.ayuda_tab i[data-v-9517f1e0] { margin-right: 5px;\n}\n.ayuda_tab.is-active[data-v-9517f1e0] {\n    color: #6f42c1;\n    border-bottom-color: #6f42c1;\n}\n.ayuda_tab_badge[data-v-9517f1e0] {\n    display: inline-block;\n    background: #6f42c1; color: #fff;\n    border-radius: 999px;\n    padding: 0 6px;\n    font-size: 10px; font-weight: 700;\n    margin-left: 4px;\n}\n.ayuda_tabs_panel[data-v-9517f1e0] {\n    background: #faf7fd;\n    border: 1px solid #ede0f7;\n    border-top: 0;\n    border-radius: 0 0 6px 6px;\n    padding: 12px 14px;\n    font-size: 13px;\n    color: #4c5661;\n}\n.ayuda_tabs_panel p[data-v-9517f1e0] { margin: 0;\n}\n.ayuda_tabs_panel i[data-v-9517f1e0] { margin-right: 6px; color: #6f42c1;\n}\n.ayuda_form_actions[data-v-9517f1e0] {\n    display: flex; justify-content: flex-end; gap: 8px;\n    padding-top: 14px; margin-top: 14px;\n    border-top: 1px solid #f1f5f9;\n}\n.ayuda_btn_demo[data-v-9517f1e0] {\n    padding: 7px 16px; border-radius: 6px;\n    font-size: 13px; font-weight: 700;\n    border: 0; cursor: not-allowed;\n}\n.ayuda_btn_demo--primary[data-v-9517f1e0] { background: #28a745; color: #fff;\n}\n.ayuda_btn_demo--secondary[data-v-9517f1e0] { background: #e3e8ee; color: #4c5661;\n}\n.ayuda_demo_caption[data-v-9517f1e0] {\n    margin-top: 8px; font-size: 11px;\n    color: #9ca3af; font-style: italic;\n}\n@media (max-width: 600px) {\n.ayuda_form_grid[data-v-9517f1e0] { grid-template-columns: 1fr;\n}\n}\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_block[data-v-9517f1e0] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-9517f1e0] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_real_box[data-v-9517f1e0] {\n    border: 1px solid #eef0f3;\n    border-top: 3px solid #FFCC00;\n    border-radius: 4px;\n    box-shadow: none;\n}\n.ayuda_real_box .box-header[data-v-9517f1e0] { border-bottom: 1px solid #eef0f3; padding: 10px 14px;\n}\n.ayuda_real_box .box-title[data-v-9517f1e0] { font-size: 14px; font-weight: 700; color: #1a1a1a;\n}\n.ayuda_real_box .box-title i[data-v-9517f1e0] { color: #FFCC00;\n}\n.ayuda_real_box .box-body[data-v-9517f1e0] { padding: 14px;\n}\n.ayuda_real_box .form-control[disabled][data-v-9517f1e0] { background: #fafbfc; cursor: not-allowed; color: #4c5661;\n}\n.ayuda_real_box label[data-v-9517f1e0] { font-size: 12px; color: #4c5661; margin-bottom: 4px;\n}\n.ayuda_req[data-v-9517f1e0] { color: #dc3545; font-weight: 700;\n}\n.ayuda_tabs[data-v-9517f1e0] { margin-top: 8px; border-bottom: 1px solid #eef0f3;\n}\n.ayuda_tabs > li > a[data-v-9517f1e0] {\n    color: #6b7280;\n    font-size: 13px;\n    font-weight: 600;\n    padding: 8px 14px;\n    border-radius: 0;\n}\n.ayuda_tabs > li.active > a[data-v-9517f1e0],\n.ayuda_tabs > li.active > a[data-v-9517f1e0]:hover,\n.ayuda_tabs > li.active > a[data-v-9517f1e0]:focus {\n    color: #1a1a1a;\n    background: #fff;\n    border-bottom: 3px solid #FFCC00;\n    margin-bottom: -1px;\n}\n.ayuda_tabs > li > a[data-v-9517f1e0]:hover { background: #fafbfc; color: #1a1a1a;\n}\n.ayuda_tab_badge[data-v-9517f1e0] {\n    background: #FFCC00;\n    color: #1a1a1a;\n    font-size: 10px;\n    margin-left: 4px;\n}\n.ayuda_tab_panel[data-v-9517f1e0] {\n    background: #fafbfc;\n    border: 1px solid #eef0f3;\n    border-top: 0;\n    padding: 12px 14px;\n    font-size: 13px;\n    color: #4c5661;\n    margin-bottom: 14px;\n    border-radius: 0 0 4px 4px;\n}\n.ayuda_tab_panel p[data-v-9517f1e0] { margin: 0;\n}\n.ayuda_tab_panel i[data-v-9517f1e0] { color: #d4a800; margin-right: 4px;\n}\n.enod-form-actions[data-v-9517f1e0] { border-top: 1px solid #eef0f3; padding-top: 12px; margin-top: 4px;\n}\n.ayuda_demo_caption[data-v-9517f1e0] {\n    margin-top: 8px;\n    font-size: 12px;\n    color: #6b7280;\n    font-style: italic;\n}\n", ""]);
 
 // exports
 
@@ -133966,7 +134025,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_block[data-v-26e97db8] { margin: 12px 0 20px; overflow-x: auto;\n}\n.ayuda_demo_label[data-v-26e97db8] {\n    font-size: 12px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 600;\n}\n.ayuda_demo_table[data-v-26e97db8] { min-width: 640px;\n}\n.ayuda_demo_table th[data-v-26e97db8] {\n    background: #f8fafc; color: #4c5661;\n    font-size: 13px; font-weight: 700;\n}\n.ayuda_demo_table td[data-v-26e97db8] { font-size: 13px; vertical-align: middle;\n}\n.ayuda_demo_chip[data-v-26e97db8] {\n    display: inline-block; padding: 2px 9px;\n    border-radius: 999px; font-size: 11.5px; font-weight: 700;\n    background: #eaf4fb; color: #1f4e7a;\n}\n.ayuda_demo_nov[data-v-26e97db8] {\n    display: inline-block; padding: 2px 8px;\n    border-radius: 4px; font-size: 11.5px;\n    background: #fff3cd; color: #8a6d3b;\n}\n.ayuda_demo_dash[data-v-26e97db8] { color: #d6dce3;\n}\n.ayuda_demo_iconbtn[data-v-26e97db8] {\n    background: transparent; border: 0;\n    padding: 4px 6px; cursor: pointer;\n    font-size: 13px; color: #4c5661;\n}\n.ayuda_demo_iconbtn--danger[data-v-26e97db8]:hover { color: #dc3545;\n}\n.ayuda_total_row td[data-v-26e97db8] { background: #f9fafb;\n}\n.ayuda_demo_actions_row[data-v-26e97db8] { margin-top: 8px;\n}\n.ayuda_btn_demo[data-v-26e97db8] {\n    padding: 6px 14px; border-radius: 6px;\n    font-size: 12px; font-weight: 700;\n    border: 0; cursor: pointer;\n}\n.ayuda_btn_demo--secondary[data-v-26e97db8] { background: #e3e8ee; color: #4c5661;\n}\n.ayuda_btn_demo i[data-v-26e97db8] { margin-right: 5px;\n}\n.ayuda_demo_caption[data-v-26e97db8] {\n    margin-top: 8px; font-size: 11px;\n    color: #9ca3af; font-style: italic;\n}\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_block[data-v-26e97db8] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-26e97db8] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_table_wrap[data-v-26e97db8] { overflow-x: auto;\n}\n.ayuda_real_table[data-v-26e97db8] { background: #fff; margin-bottom: 0;\n}\n.ayuda_real_table > thead > tr > th[data-v-26e97db8] {\n    background: #fafbfc;\n    border-bottom: 2px solid #FFCC00;\n    color: #4c5661;\n    font-size: 11.5px;\n    text-transform: uppercase;\n    letter-spacing: 0.03em;\n    font-weight: 700;\n    white-space: nowrap;\n}\n.ayuda_real_table > tbody > tr > td[data-v-26e97db8] {\n    font-size: 13px;\n    vertical-align: middle;\n}\n.ayuda_real_table .label[data-v-26e97db8] { font-size: 11px; padding: 3px 8px;\n}\n.ayuda_nov[data-v-26e97db8] {\n    display: inline-block;\n    background: #fff7d6;\n    color: #6b5300;\n    padding: 2px 8px;\n    border-radius: 3px;\n    font-size: 12px;\n}\n.ayuda_total_row td[data-v-26e97db8] { background: #fafbfc;\n}\n.enod-form-actions[data-v-26e97db8] { margin-top: 8px;\n}\n.ayuda_demo_caption[data-v-26e97db8] {\n    margin-top: 8px;\n    font-size: 12px;\n    color: #6b7280;\n    font-style: italic;\n}\n", ""]);
 
 // exports
 
@@ -133985,7 +134044,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_block[data-v-7a9c5d74] {\n    margin: 12px 0 20px;\n    overflow-x: auto;\n}\n.ayuda_demo_label[data-v-7a9c5d74] {\n    font-size: 12px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 600;\n}\n.ayuda_demo_table[data-v-7a9c5d74] { min-width: 640px;\n}\n.ayuda_demo_table th[data-v-7a9c5d74] {\n    background: #f8fafc; color: #4c5661;\n    font-size: 13px; font-weight: 700;\n}\n.ayuda_demo_table td[data-v-7a9c5d74] { font-size: 13px; vertical-align: middle;\n}\n.ayuda_demo_badge[data-v-7a9c5d74] {\n    display: inline-block; padding: 3px 10px;\n    border-radius: 999px; font-size: 11.5px; font-weight: 700;\n}\n.ayuda_demo_badge--success[data-v-7a9c5d74] { background: #dff0d8; color: #2c7a2c;\n}\n.ayuda_demo_badge--warning[data-v-7a9c5d74] { background: #fff3cd; color: #8a6d3b;\n}\n.ayuda_demo_badge--muted[data-v-7a9c5d74]   { background: #e9ecef; color: #6b7280;\n}\n.ayuda_demo_iconbtn[data-v-7a9c5d74] {\n    background: transparent; border: 0;\n    color: #4c5661; padding: 4px 6px;\n    cursor: pointer; font-size: 14px;\n}\n.ayuda_demo_iconbtn[data-v-7a9c5d74]:hover { color: #2e86c1;\n}\n.ayuda_demo_iconbtn[data-v-7a9c5d74]:disabled { color: #d6dce3; cursor: not-allowed;\n}\n.ayuda_demo_caption[data-v-7a9c5d74] {\n    margin-top: 6px; font-size: 11px;\n    color: #9ca3af; font-style: italic;\n}\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_block[data-v-7a9c5d74] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-7a9c5d74] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_table_wrap[data-v-7a9c5d74] { overflow-x: auto;\n}\n.ayuda_real_table[data-v-7a9c5d74] { background: #fff; margin-bottom: 0;\n}\n.ayuda_real_table > thead > tr > th[data-v-7a9c5d74] {\n    background: #fafbfc;\n    border-bottom: 2px solid #FFCC00;\n    color: #4c5661;\n    font-size: 11.5px;\n    text-transform: uppercase;\n    letter-spacing: 0.03em;\n    font-weight: 700;\n    white-space: nowrap;\n}\n.ayuda_real_table > tbody > tr > td[data-v-7a9c5d74] {\n    font-size: 13px;\n    vertical-align: middle;\n}\n.ayuda_real_table .label[data-v-7a9c5d74] { font-size: 11px; padding: 3px 8px; font-weight: 700;\n}\n.ayuda_real_table .btn-xs[data-v-7a9c5d74] { margin: 0 1px;\n}\n.ayuda_demo_caption[data-v-7a9c5d74] {\n    margin-top: 8px;\n    font-size: 12px;\n    color: #6b7280;\n    font-style: italic;\n}\n", ""]);
 
 // exports
 
@@ -134004,7 +134063,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_block[data-v-3f71b08b] { margin: 12px 0 20px; overflow-x: auto;\n}\n.ayuda_demo_label[data-v-3f71b08b] {\n    font-size: 12px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 600;\n}\n.ayuda_demo_table[data-v-3f71b08b] { min-width: 680px;\n}\n.ayuda_demo_table th[data-v-3f71b08b] {\n    background: #f8fafc; color: #4c5661;\n    font-size: 13px; font-weight: 700;\n}\n.ayuda_demo_table td[data-v-3f71b08b] { font-size: 13px; vertical-align: middle;\n}\n.ayuda_demo_chip[data-v-3f71b08b] {\n    display: inline-block; min-width: 28px;\n    padding: 2px 9px; border-radius: 999px;\n    font-size: 12px; font-weight: 700;\n    background: #eaf4fb; color: #1f4e7a;\n}\n.ayuda_demo_badge[data-v-3f71b08b] {\n    display: inline-flex; align-items: center; gap: 4px;\n    padding: 3px 9px; border-radius: 999px;\n    font-size: 11.5px; font-weight: 700;\n}\n.ayuda_demo_badge--success[data-v-3f71b08b] { background: #dff0d8; color: #2c7a2c;\n}\n.ayuda_demo_badge--warning[data-v-3f71b08b] { background: #fff3cd; color: #8a6d3b;\n}\n.ayuda_demo_badge--danger[data-v-3f71b08b]  { background: #f8d7da; color: #a94442;\n}\n.ayuda_demo_iconbtn[data-v-3f71b08b] {\n    background: transparent; border: 0;\n    color: #4c5661; padding: 4px 6px;\n    cursor: pointer; font-size: 14px;\n}\n.ayuda_demo_iconbtn[data-v-3f71b08b]:hover { color: #2e86c1;\n}\n.ayuda_demo_iconbtn[data-v-3f71b08b]:disabled { color: #d6dce3; cursor: not-allowed;\n}\n.ayuda_demo_caption[data-v-3f71b08b] {\n    margin-top: 6px; font-size: 11px;\n    color: #9ca3af; font-style: italic;\n}\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_block[data-v-3f71b08b] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-3f71b08b] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_table_wrap[data-v-3f71b08b] { overflow-x: auto;\n}\n.ayuda_real_table[data-v-3f71b08b] { background: #fff; margin-bottom: 0;\n}\n.ayuda_real_table > thead > tr > th[data-v-3f71b08b] {\n    background: #fafbfc;\n    border-bottom: 2px solid #FFCC00;\n    color: #4c5661;\n    font-size: 11.5px;\n    text-transform: uppercase;\n    letter-spacing: 0.03em;\n    font-weight: 700;\n    white-space: nowrap;\n}\n.ayuda_real_table > tbody > tr > td[data-v-3f71b08b] {\n    font-size: 13px;\n    vertical-align: middle;\n}\n.ayuda_real_table .label[data-v-3f71b08b] { font-size: 11px; padding: 3px 8px;\n}\n.ayuda_demo_caption[data-v-3f71b08b] {\n    margin-top: 8px;\n    font-size: 12px;\n    color: #6b7280;\n    font-style: italic;\n}\n", ""]);
 
 // exports
 
@@ -134061,7 +134120,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_demo_block[data-v-51ca772a] {\n    margin: 12px 0 20px;\n}\n.ayuda_demo_label[data-v-51ca772a] {\n    font-size: 12px;\n    color: #6b7280;\n    text-transform: uppercase;\n    letter-spacing: 0.06em;\n    margin-bottom: 10px;\n    font-weight: 600;\n}\n.ayuda_wizard[data-v-51ca772a] {\n    list-style: none;\n    counter-reset: pasos;\n    padding: 0;\n    margin: 0;\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));\n    gap: 10px;\n}\n.ayuda_wizard_item[data-v-51ca772a] {\n    display: flex;\n    align-items: flex-start;\n    gap: 10px;\n    padding: 12px 14px;\n    background: #fff;\n    border: 1px solid #e3e8ee;\n    border-radius: 10px;\n    cursor: pointer;\n    transition: all 0.18s ease;\n    position: relative;\n}\n.ayuda_wizard_item[data-v-51ca772a]:hover {\n    border-color: #2e86c1;\n    box-shadow: 0 4px 12px rgba(46, 134, 193, 0.12);\n}\n.ayuda_wizard_item.is-active[data-v-51ca772a] {\n    background: #eaf4fb;\n    border-color: #2e86c1;\n}\n.ayuda_wizard_item.is-done[data-v-51ca772a] {\n    background: #f0fbf3;\n    border-color: #28a745;\n}\n.ayuda_wizard_num[data-v-51ca772a] {\n    width: 32px; height: 32px;\n    border-radius: 50%;\n    background: #d6dce3;\n    color: #fff;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-weight: 700;\n    font-size: 14px;\n    flex-shrink: 0;\n}\n.ayuda_wizard_item.is-active .ayuda_wizard_num[data-v-51ca772a] { background: #2e86c1;\n}\n.ayuda_wizard_item.is-done .ayuda_wizard_num[data-v-51ca772a] { background: #28a745;\n}\n.ayuda_wizard_text strong[data-v-51ca772a] {\n    display: block;\n    font-size: 13.5px;\n    color: #1f2937;\n    margin-bottom: 2px;\n}\n.ayuda_wizard_text small[data-v-51ca772a] {\n    display: block;\n    font-size: 11.5px;\n    color: #6b7280;\n    line-height: 1.35;\n}\n.ayuda_demo_caption[data-v-51ca772a] {\n    margin-top: 8px;\n    font-size: 11px;\n    color: #9ca3af;\n    font-style: italic;\n}\n", ""]);
+exports.push([module.i, "\n.ayuda_demo_block[data-v-51ca772a] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-51ca772a] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_wizard[data-v-51ca772a] {\n    list-style: none;\n    padding: 0; margin: 0;\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));\n    gap: 8px;\n}\n.ayuda_wizard_item[data-v-51ca772a] {\n    display: flex;\n    align-items: flex-start;\n    gap: 10px;\n    padding: 12px 14px;\n    background: #fff;\n    border: 1px solid #eef0f3;\n    border-radius: 4px;\n    cursor: pointer;\n    transition: all 0.12s ease;\n}\n.ayuda_wizard_item[data-v-51ca772a]:hover {\n    border-color: #FFCC00;\n}\n.ayuda_wizard_item.is-active[data-v-51ca772a] {\n    background: #fffdf5;\n    border-color: #FFCC00;\n    border-left: 3px solid #FFCC00;\n    padding-left: 12px;\n}\n.ayuda_wizard_item.is-done[data-v-51ca772a] {\n    background: #fff;\n    border-color: #e6f4ea;\n}\n.ayuda_wizard_num[data-v-51ca772a] {\n    width: 28px; height: 28px;\n    border-radius: 50%;\n    background: #f3f4f6;\n    color: #6b7280;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-weight: 700;\n    font-size: 13px;\n    flex-shrink: 0;\n}\n.ayuda_wizard_item.is-active .ayuda_wizard_num[data-v-51ca772a] { background: #FFCC00; color: #1a1a1a;\n}\n.ayuda_wizard_item.is-done .ayuda_wizard_num[data-v-51ca772a] { background: #1b6b34; color: #fff;\n}\n.ayuda_wizard_text strong[data-v-51ca772a] {\n    display: block;\n    font-size: 13px;\n    color: #1a1a1a;\n    margin-bottom: 2px;\n    font-weight: 700;\n}\n.ayuda_wizard_text small[data-v-51ca772a] {\n    display: block;\n    font-size: 11.5px;\n    color: #6b7280;\n    line-height: 1.4;\n}\n.ayuda_demo_caption[data-v-51ca772a] {\n    margin-top: 8px;\n    font-size: 12px;\n    color: #6b7280;\n    font-style: italic;\n}\n", ""]);
 
 // exports
 
@@ -134080,7 +134139,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.ayuda_indice[data-v-14619dff] {\n    max-width: 1200px;\n    margin: 0 auto;\n    padding: 0 12px;\n}\n.ayuda_indice_hero[data-v-14619dff] {\n    display: flex;\n    gap: 18px;\n    align-items: flex-start;\n    background: linear-gradient(135deg, #1f4e7a 0%, #2e86c1 100%);\n    color: #fff;\n    padding: 26px 28px;\n    border-radius: 14px;\n    box-shadow: 0 6px 24px rgba(31, 78, 122, 0.18);\n    margin-bottom: 24px;\n}\n.ayuda_indice_hero_icon[data-v-14619dff] {\n    font-size: 38px;\n    background: rgba(255, 255, 255, 0.15);\n    width: 64px; height: 64px;\n    border-radius: 50%;\n    display: flex; align-items: center; justify-content: center;\n    flex-shrink: 0;\n}\n.ayuda_indice_hero h1[data-v-14619dff] {\n    margin: 0 0 6px;\n    font-size: 24px;\n    font-weight: 700;\n}\n.ayuda_indice_hero p[data-v-14619dff] {\n    margin: 0;\n    font-size: 14px;\n    opacity: 0.92;\n    line-height: 1.5;\n}\n.ayuda_indice_toolbar[data-v-14619dff] {\n    background: #fff;\n    border: 1px solid #e3e8ee;\n    border-radius: 12px;\n    padding: 14px 16px;\n    margin-bottom: 22px;\n    box-shadow: 0 2px 6px rgba(0,0,0,0.03);\n}\n.ayuda_indice_search[data-v-14619dff] {\n    position: relative;\n    margin-bottom: 12px;\n}\n.ayuda_indice_search i.fa-search[data-v-14619dff] {\n    position: absolute;\n    top: 50%; left: 14px;\n    transform: translateY(-50%);\n    color: #9ca3af;\n}\n.ayuda_indice_search input[data-v-14619dff] {\n    width: 100%;\n    padding: 10px 38px 10px 38px;\n    border: 1px solid #d6dce3;\n    border-radius: 8px;\n    font-size: 14px;\n    background: #f9fafb;\n    transition: all 0.15s ease;\n}\n.ayuda_indice_search input[data-v-14619dff]:focus {\n    outline: none;\n    background: #fff;\n    border-color: #2e86c1;\n    box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.12);\n}\n.ayuda_indice_search_clear[data-v-14619dff] {\n    position: absolute;\n    top: 50%; right: 8px;\n    transform: translateY(-50%);\n    background: transparent;\n    border: 0;\n    color: #6b7280;\n    cursor: pointer;\n    padding: 6px 8px;\n}\n.ayuda_indice_filtros[data-v-14619dff] {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 6px;\n}\n.ayuda_indice_chip[data-v-14619dff] {\n    border: 1px solid #d6dce3;\n    background: #fff;\n    color: #4c5661;\n    padding: 5px 12px;\n    border-radius: 999px;\n    font-size: 12px;\n    font-weight: 600;\n    cursor: pointer;\n    transition: all 0.15s ease;\n    display: inline-flex;\n    align-items: center;\n    gap: 5px;\n}\n.ayuda_indice_chip[data-v-14619dff]:hover { background: #f1f5f9;\n}\n.ayuda_indice_chip.is-active[data-v-14619dff] {\n    background: #2e86c1;\n    border-color: #2e86c1;\n    color: #fff;\n}\n.ayuda_indice_vacio[data-v-14619dff] {\n    background: #fff8e1;\n    border: 1px solid #ffe7a0;\n    color: #8a6d3b;\n    padding: 14px 18px;\n    border-radius: 10px;\n    text-align: center;\n    margin-bottom: 16px;\n}\n.ayuda_indice_grid[data-v-14619dff] {\n    display: grid;\n    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));\n    gap: 18px;\n}\n.ayuda_indice_card[data-v-14619dff] {\n    background: #fff;\n    border: 1px solid #e3e8ee;\n    border-radius: 12px;\n    padding: 18px 18px 8px;\n    box-shadow: 0 2px 6px rgba(0,0,0,0.03);\n    transition: all 0.2s ease;\n    display: flex;\n    flex-direction: column;\n}\n.ayuda_indice_card[data-v-14619dff]:hover {\n    transform: translateY(-2px);\n    box-shadow: 0 8px 20px rgba(0,0,0,0.08);\n}\n.ayuda_indice_card_head[data-v-14619dff] {\n    display: flex;\n    gap: 12px;\n    align-items: flex-start;\n    border-bottom: 1px solid #f1f5f9;\n    padding-bottom: 12px;\n    margin-bottom: 8px;\n}\n.ayuda_indice_card_icon[data-v-14619dff] {\n    width: 44px; height: 44px;\n    border-radius: 10px;\n    display: flex; align-items: center; justify-content: center;\n    font-size: 20px;\n    flex-shrink: 0;\n    color: #fff;\n}\n.ayuda_indice_card h2[data-v-14619dff] {\n    margin: 0 0 4px;\n    font-size: 16px;\n    font-weight: 700;\n    color: #1f2937;\n}\n.ayuda_indice_card_head p[data-v-14619dff] {\n    margin: 0;\n    font-size: 12.5px;\n    color: #6b7280;\n    line-height: 1.4;\n}\n.ayuda_indice_links[data-v-14619dff] {\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    flex: 1;\n}\n.ayuda_indice_links li[data-v-14619dff] { border-bottom: 1px solid #f8fafc;\n}\n.ayuda_indice_links li[data-v-14619dff]:last-child { border-bottom: 0;\n}\n.ayuda_indice_links a[data-v-14619dff] {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    padding: 8px 4px;\n    color: #374151;\n    font-size: 13.5px;\n    text-decoration: none;\n    transition: all 0.12s ease;\n    border-radius: 6px;\n}\n.ayuda_indice_links a[data-v-14619dff]:hover {\n    background: #f8fafc;\n    color: #2e86c1;\n    padding-left: 10px;\n}\n.ayuda_indice_links a i[data-v-14619dff] { color: #9ca3af; font-size: 14px;\n}\n.ayuda_indice_links a:hover i[data-v-14619dff] { color: #2e86c1;\n}\n.ayuda_indice_links mark[data-v-14619dff] {\n    background: #fff3a0;\n    color: inherit;\n    padding: 0 2px;\n    border-radius: 3px;\n}\n\n/* Color por categoría */\n.ayuda_indice_card--azul    .ayuda_indice_card_icon[data-v-14619dff] { background: #2e86c1;\n}\n.ayuda_indice_card--verde   .ayuda_indice_card_icon[data-v-14619dff] { background: #28a745;\n}\n.ayuda_indice_card--violeta .ayuda_indice_card_icon[data-v-14619dff] { background: #7c3aed;\n}\n.ayuda_indice_card--naranja .ayuda_indice_card_icon[data-v-14619dff] { background: #d99000;\n}\n.ayuda_indice_card--turquesa .ayuda_indice_card_icon[data-v-14619dff] { background: #14b8a6;\n}\n.ayuda_indice_card--rosa    .ayuda_indice_card_icon[data-v-14619dff] { background: #ec4899;\n}\n.ayuda_indice_card--gris    .ayuda_indice_card_icon[data-v-14619dff] { background: #64748b;\n}\n@media (max-width: 600px) {\n.ayuda_indice_hero[data-v-14619dff] { flex-direction: column; padding: 20px;\n}\n.ayuda_indice_hero_icon[data-v-14619dff] { width: 50px; height: 50px; font-size: 28px;\n}\n.ayuda_indice_hero h1[data-v-14619dff] { font-size: 20px;\n}\n.ayuda_indice_grid[data-v-14619dff] { grid-template-columns: 1fr;\n}\n}\n", ""]);
+exports.push([module.i, "\n.ayuda_indice[data-v-14619dff] {\n    max-width: 1100px;\n    margin: 0 auto;\n    padding: 0 12px;\n    font-family: 'Montserrat', sans-serif;\n    color: #2b2f33;\n}\n.ayuda_indice_header[data-v-14619dff] {\n    padding: 0 0 16px;\n    margin-bottom: 20px;\n    border-bottom: 1px solid #eef0f3;\n}\n.ayuda_indice_header h1[data-v-14619dff] {\n    margin: 0 0 6px;\n    font-size: 24px;\n    font-weight: 700;\n    color: #1a1a1a;\n    letter-spacing: -0.01em;\n    padding-bottom: 8px;\n    border-bottom: 3px solid #FFCC00;\n    display: inline-block;\n}\n.ayuda_indice_header p[data-v-14619dff] {\n    margin: 8px 0 0;\n    font-size: 14px;\n    color: #6b7280;\n}\n.ayuda_indice_toolbar[data-v-14619dff] {\n    margin-bottom: 22px;\n}\n.ayuda_indice_search[data-v-14619dff] {\n    position: relative;\n    margin-bottom: 12px;\n}\n.ayuda_indice_search i.fa-search[data-v-14619dff] {\n    position: absolute;\n    top: 50%; left: 12px;\n    transform: translateY(-50%);\n    color: #9ca3af;\n    font-size: 13px;\n    z-index: 1;\n}\n.ayuda_indice_search input.form-control[data-v-14619dff] {\n    padding-left: 34px;\n    padding-right: 36px;\n    height: 38px;\n    border-radius: 6px;\n    border-color: #e5e7eb;\n    font-size: 14px;\n    box-shadow: none;\n}\n.ayuda_indice_search input.form-control[data-v-14619dff]:focus {\n    border-color: #FFCC00;\n    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.18);\n}\n.ayuda_indice_search_clear[data-v-14619dff] {\n    position: absolute;\n    top: 50%; right: 6px;\n    transform: translateY(-50%);\n    background: transparent;\n    border: 0;\n    color: #6b7280;\n    cursor: pointer;\n    padding: 6px 8px;\n    z-index: 2;\n}\n.ayuda_indice_filtros[data-v-14619dff] {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 4px;\n}\n.ayuda_indice_chip[data-v-14619dff] {\n    border: 1px solid #e5e7eb;\n    background: #fff;\n    color: #4c5661;\n    padding: 4px 12px;\n    border-radius: 999px;\n    font-size: 12px;\n    font-weight: 600;\n    cursor: pointer;\n    transition: all 0.12s ease;\n}\n.ayuda_indice_chip[data-v-14619dff]:hover {\n    border-color: #1a1a1a;\n    color: #1a1a1a;\n}\n.ayuda_indice_chip.is-active[data-v-14619dff] {\n    background: #FFCC00;\n    border-color: #FFCC00;\n    color: #1a1a1a;\n}\n.ayuda_indice_vacio[data-v-14619dff] {\n    background: #fffdf5;\n    border-left: 3px solid #FFCC00;\n    color: #5c4a00;\n    padding: 10px 14px;\n    border-radius: 0 4px 4px 0;\n    margin-bottom: 16px;\n    font-size: 13px;\n}\n.ayuda_indice_grid[data-v-14619dff] {\n    display: grid;\n    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));\n    gap: 14px;\n}\n.ayuda_indice_card[data-v-14619dff] {\n    background: #fff;\n    border: 1px solid #eef0f3;\n    border-top: 3px solid #FFCC00;\n    border-radius: 4px;\n    padding: 16px 18px 8px;\n    transition: border-color 0.12s ease;\n    display: flex;\n    flex-direction: column;\n}\n.ayuda_indice_card[data-v-14619dff]:hover {\n    border-color: #d6dce3;\n    border-top-color: #FFCC00;\n}\n.ayuda_indice_card_head[data-v-14619dff] {\n    padding-bottom: 10px;\n    margin-bottom: 6px;\n    border-bottom: 1px solid #f3f4f6;\n}\n.ayuda_indice_card h2[data-v-14619dff] {\n    margin: 0 0 4px;\n    font-size: 15px;\n    font-weight: 700;\n    color: #1a1a1a;\n}\n.ayuda_indice_card_head p[data-v-14619dff] {\n    margin: 0;\n    font-size: 12.5px;\n    color: #6b7280;\n    line-height: 1.45;\n}\n.ayuda_indice_links[data-v-14619dff] {\n    list-style: none;\n    margin: 0;\n    padding: 0;\n    flex: 1;\n}\n.ayuda_indice_links li[data-v-14619dff] { border-bottom: 1px solid #f8fafc;\n}\n.ayuda_indice_links li[data-v-14619dff]:last-child { border-bottom: 0;\n}\n.ayuda_indice_links a[data-v-14619dff] {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    padding: 7px 2px;\n    color: #2b2f33;\n    font-size: 13px;\n    text-decoration: none;\n    transition: all 0.1s ease;\n    border-bottom: 0 !important;\n}\n.ayuda_indice_links a[data-v-14619dff]:hover {\n    color: #1a1a1a;\n    padding-left: 8px;\n}\n.ayuda_indice_links a i[data-v-14619dff] {\n    color: #d1d5db;\n    font-size: 14px;\n    transition: color 0.1s ease;\n}\n.ayuda_indice_links a:hover i[data-v-14619dff] { color: #FFCC00;\n}\n.ayuda_indice_links mark[data-v-14619dff] {\n    background: #FFCC00;\n    color: #1a1a1a;\n    padding: 0 2px;\n    border-radius: 2px;\n}\n@media (max-width: 600px) {\n.ayuda_indice_grid[data-v-14619dff] { grid-template-columns: 1fr;\n}\n.ayuda_indice_header h1[data-v-14619dff] { font-size: 20px;\n}\n}\n", ""]);
 
 // exports
 

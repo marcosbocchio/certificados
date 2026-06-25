@@ -1,15 +1,9 @@
 <template>
     <div class="ayuda_indice">
-        <div class="ayuda_indice_hero">
-            <div class="ayuda_indice_hero_icon"><i class="fa fa-life-ring"></i></div>
-            <div>
-                <h1>Centro de ayuda</h1>
-                <p>
-                    Punto de entrada a la documentación del sistema. Cada tarjeta agrupa los temas
-                    de un módulo: usá el buscador o filtrá por categoría para llegar directo al artículo que necesitás.
-                </p>
-            </div>
-        </div>
+        <header class="ayuda_indice_header">
+            <h1>Centro de ayuda</h1>
+            <p>Documentación del sistema organizada por módulo. Buscá un tema o filtrá por categoría.</p>
+        </header>
 
         <div class="ayuda_indice_toolbar">
             <div class="ayuda_indice_search">
@@ -17,6 +11,7 @@
                 <input
                     type="text"
                     v-model="busqueda"
+                    class="form-control"
                     placeholder="Buscar tema, módulo o palabra clave..."
                     @keydown.esc="busqueda = ''"
                 />
@@ -32,13 +27,13 @@
                     :class="{ 'is-active': categoria === cat.id }"
                     @click="categoria = cat.id"
                 >
-                    <i :class="'fa fa-' + cat.icono"></i> {{ cat.label }}
+                    {{ cat.label }}
                 </button>
             </div>
         </div>
 
         <p v-if="totalResultados === 0" class="ayuda_indice_vacio">
-            <i class="fa fa-info-circle"></i> No se encontraron artículos para "<strong>{{ busqueda }}</strong>".
+            <i class="fa fa-info-circle"></i> Sin resultados para "<strong>{{ busqueda }}</strong>".
         </p>
 
         <div class="ayuda_indice_grid">
@@ -46,19 +41,15 @@
                 v-for="(seccion, idx) in seccionesVisibles"
                 :key="idx"
                 class="ayuda_indice_card"
-                :class="'ayuda_indice_card--' + seccion.color"
             >
                 <header class="ayuda_indice_card_head">
-                    <div class="ayuda_indice_card_icon"><i :class="'fa fa-' + seccion.icono"></i></div>
-                    <div>
-                        <h2>{{ seccion.titulo }}</h2>
-                        <p>{{ seccion.descripcion }}</p>
-                    </div>
+                    <h2>{{ seccion.titulo }}</h2>
+                    <p>{{ seccion.descripcion }}</p>
                 </header>
                 <ul class="ayuda_indice_links">
                     <li v-for="(link, j) in seccion.linksVisibles" :key="j">
                         <a :href="link.href">
-                            <span class="ayuda_indice_link_titulo" v-html="resaltar(link.label)"></span>
+                            <span v-html="resaltar(link.label)"></span>
                             <i class="fa fa-angle-right"></i>
                         </a>
                     </li>
@@ -71,22 +62,20 @@
 <script>
 export default {
     name: 'ayuda-indice',
-    props: {
-        secciones: { type: Array, required: true },
-    },
+    props: { secciones: { type: Array, required: true } },
     data() {
         return {
             busqueda: '',
             categoria: 'todas',
             categorias: [
-                { id: 'todas',    label: 'Todas',       icono: 'th-large' },
-                { id: 'inicio',   label: 'Inicio',      icono: 'play-circle' },
-                { id: 'operativo',label: 'Operativo',   icono: 'cogs' },
-                { id: 'documental',label: 'Documental', icono: 'file-text' },
-                { id: 'maestros', label: 'Maestros',    icono: 'database' },
-                { id: 'interno',  label: 'Interno',     icono: 'briefcase' },
-                { id: 'dosimetria',label: 'Dosimetría', icono: 'bolt' },
-                { id: 'extras',   label: 'Multimedia',  icono: 'image' },
+                { id: 'todas',      label: 'Todas' },
+                { id: 'inicio',     label: 'Inicio' },
+                { id: 'operativo',  label: 'Operativo' },
+                { id: 'documental', label: 'Documental' },
+                { id: 'maestros',   label: 'Maestros' },
+                { id: 'interno',    label: 'Interno' },
+                { id: 'dosimetria', label: 'Dosimetría' },
+                { id: 'extras',     label: 'Multimedia' },
             ],
         };
     },
@@ -125,49 +114,36 @@ export default {
 
 <style scoped>
 .ayuda_indice {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 0 12px;
+    font-family: 'Montserrat', sans-serif;
+    color: #2b2f33;
 }
 
-.ayuda_indice_hero {
-    display: flex;
-    gap: 18px;
-    align-items: flex-start;
-    background: linear-gradient(135deg, #1f4e7a 0%, #2e86c1 100%);
-    color: #fff;
-    padding: 26px 28px;
-    border-radius: 14px;
-    box-shadow: 0 6px 24px rgba(31, 78, 122, 0.18);
-    margin-bottom: 24px;
+.ayuda_indice_header {
+    padding: 0 0 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eef0f3;
 }
-.ayuda_indice_hero_icon {
-    font-size: 38px;
-    background: rgba(255, 255, 255, 0.15);
-    width: 64px; height: 64px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-}
-.ayuda_indice_hero h1 {
+.ayuda_indice_header h1 {
     margin: 0 0 6px;
     font-size: 24px;
     font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.01em;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #FFCC00;
+    display: inline-block;
 }
-.ayuda_indice_hero p {
-    margin: 0;
+.ayuda_indice_header p {
+    margin: 8px 0 0;
     font-size: 14px;
-    opacity: 0.92;
-    line-height: 1.5;
+    color: #6b7280;
 }
 
 .ayuda_indice_toolbar {
-    background: #fff;
-    border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 14px 16px;
     margin-bottom: 22px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 .ayuda_indice_search {
     position: relative;
@@ -175,120 +151,110 @@ export default {
 }
 .ayuda_indice_search i.fa-search {
     position: absolute;
-    top: 50%; left: 14px;
+    top: 50%; left: 12px;
     transform: translateY(-50%);
     color: #9ca3af;
+    font-size: 13px;
+    z-index: 1;
 }
-.ayuda_indice_search input {
-    width: 100%;
-    padding: 10px 38px 10px 38px;
-    border: 1px solid #d6dce3;
-    border-radius: 8px;
+.ayuda_indice_search input.form-control {
+    padding-left: 34px;
+    padding-right: 36px;
+    height: 38px;
+    border-radius: 6px;
+    border-color: #e5e7eb;
     font-size: 14px;
-    background: #f9fafb;
-    transition: all 0.15s ease;
+    box-shadow: none;
 }
-.ayuda_indice_search input:focus {
-    outline: none;
-    background: #fff;
-    border-color: #2e86c1;
-    box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.12);
+.ayuda_indice_search input.form-control:focus {
+    border-color: #FFCC00;
+    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.18);
 }
 .ayuda_indice_search_clear {
     position: absolute;
-    top: 50%; right: 8px;
+    top: 50%; right: 6px;
     transform: translateY(-50%);
     background: transparent;
     border: 0;
     color: #6b7280;
     cursor: pointer;
     padding: 6px 8px;
+    z-index: 2;
 }
 
 .ayuda_indice_filtros {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 4px;
 }
 .ayuda_indice_chip {
-    border: 1px solid #d6dce3;
+    border: 1px solid #e5e7eb;
     background: #fff;
     color: #4c5661;
-    padding: 5px 12px;
+    padding: 4px 12px;
     border-radius: 999px;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.15s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
+    transition: all 0.12s ease;
 }
-.ayuda_indice_chip:hover { background: #f1f5f9; }
+.ayuda_indice_chip:hover {
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+}
 .ayuda_indice_chip.is-active {
-    background: #2e86c1;
-    border-color: #2e86c1;
-    color: #fff;
+    background: #FFCC00;
+    border-color: #FFCC00;
+    color: #1a1a1a;
 }
 
 .ayuda_indice_vacio {
-    background: #fff8e1;
-    border: 1px solid #ffe7a0;
-    color: #8a6d3b;
-    padding: 14px 18px;
-    border-radius: 10px;
-    text-align: center;
+    background: #fffdf5;
+    border-left: 3px solid #FFCC00;
+    color: #5c4a00;
+    padding: 10px 14px;
+    border-radius: 0 4px 4px 0;
     margin-bottom: 16px;
+    font-size: 13px;
 }
 
 .ayuda_indice_grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 14px;
 }
 
 .ayuda_indice_card {
     background: #fff;
-    border: 1px solid #e3e8ee;
-    border-radius: 12px;
-    padding: 18px 18px 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-    transition: all 0.2s ease;
+    border: 1px solid #eef0f3;
+    border-top: 3px solid #FFCC00;
+    border-radius: 4px;
+    padding: 16px 18px 8px;
+    transition: border-color 0.12s ease;
     display: flex;
     flex-direction: column;
 }
 .ayuda_indice_card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    border-color: #d6dce3;
+    border-top-color: #FFCC00;
 }
 
 .ayuda_indice_card_head {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 12px;
-    margin-bottom: 8px;
-}
-.ayuda_indice_card_icon {
-    width: 44px; height: 44px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-    color: #fff;
+    padding-bottom: 10px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid #f3f4f6;
 }
 .ayuda_indice_card h2 {
     margin: 0 0 4px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
-    color: #1f2937;
+    color: #1a1a1a;
 }
 .ayuda_indice_card_head p {
     margin: 0;
     font-size: 12.5px;
     color: #6b7280;
-    line-height: 1.4;
+    line-height: 1.45;
 }
 
 .ayuda_indice_links {
@@ -303,41 +269,32 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 4px;
-    color: #374151;
-    font-size: 13.5px;
+    padding: 7px 2px;
+    color: #2b2f33;
+    font-size: 13px;
     text-decoration: none;
-    transition: all 0.12s ease;
-    border-radius: 6px;
+    transition: all 0.1s ease;
+    border-bottom: 0 !important;
 }
 .ayuda_indice_links a:hover {
-    background: #f8fafc;
-    color: #2e86c1;
-    padding-left: 10px;
+    color: #1a1a1a;
+    padding-left: 8px;
 }
-.ayuda_indice_links a i { color: #9ca3af; font-size: 14px; }
-.ayuda_indice_links a:hover i { color: #2e86c1; }
-
+.ayuda_indice_links a i {
+    color: #d1d5db;
+    font-size: 14px;
+    transition: color 0.1s ease;
+}
+.ayuda_indice_links a:hover i { color: #FFCC00; }
 .ayuda_indice_links mark {
-    background: #fff3a0;
-    color: inherit;
+    background: #FFCC00;
+    color: #1a1a1a;
     padding: 0 2px;
-    border-radius: 3px;
+    border-radius: 2px;
 }
-
-/* Color por categoría */
-.ayuda_indice_card--azul    .ayuda_indice_card_icon { background: #2e86c1; }
-.ayuda_indice_card--verde   .ayuda_indice_card_icon { background: #28a745; }
-.ayuda_indice_card--violeta .ayuda_indice_card_icon { background: #7c3aed; }
-.ayuda_indice_card--naranja .ayuda_indice_card_icon { background: #d99000; }
-.ayuda_indice_card--turquesa .ayuda_indice_card_icon { background: #14b8a6; }
-.ayuda_indice_card--rosa    .ayuda_indice_card_icon { background: #ec4899; }
-.ayuda_indice_card--gris    .ayuda_indice_card_icon { background: #64748b; }
 
 @media (max-width: 600px) {
-    .ayuda_indice_hero { flex-direction: column; padding: 20px; }
-    .ayuda_indice_hero_icon { width: 50px; height: 50px; font-size: 28px; }
-    .ayuda_indice_hero h1 { font-size: 20px; }
     .ayuda_indice_grid { grid-template-columns: 1fr; }
+    .ayuda_indice_header h1 { font-size: 20px; }
 }
 </style>

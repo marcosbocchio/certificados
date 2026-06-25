@@ -1,40 +1,54 @@
 <template>
     <div class="ayuda_demo_block">
-        <div class="ayuda_demo_label">Ejemplo: barra de filtros del listado de OT</div>
-        <div class="ayuda_filtros_ot">
-            <div class="ayuda_filtro_row">
-                <label>Cliente</label>
-                <select v-model="filtros.cliente">
-                    <option value="">Todos</option>
-                    <option>YPF S.A.</option>
-                    <option>Techint Ingeniería</option>
-                    <option>Pampa Energía</option>
-                </select>
-            </div>
-            <div class="ayuda_filtro_row">
-                <label>Estado</label>
-                <select v-model="filtros.estado">
-                    <option value="">Todos</option>
-                    <option>Editando</option>
-                    <option>Activa</option>
-                    <option>Cerrada</option>
-                </select>
-            </div>
-            <div class="ayuda_filtro_row">
-                <label>Desde</label>
-                <input type="text" v-model="filtros.desde" placeholder="dd/mm/aaaa" />
-            </div>
-            <div class="ayuda_filtro_row">
-                <label>Hasta</label>
-                <input type="text" v-model="filtros.hasta" placeholder="dd/mm/aaaa" />
-            </div>
-            <div class="ayuda_filtro_row ayuda_filtro_row--buscar">
-                <label>Buscar</label>
-                <input type="text" v-model="filtros.texto" placeholder="N° OT, proyecto, obra..." />
-            </div>
-            <div class="ayuda_filtro_actions">
-                <button class="ayuda_btn_demo ayuda_btn_demo--primary"><i class="fa fa-filter"></i> Filtrar</button>
-                <button class="ayuda_btn_demo ayuda_btn_demo--secondary" @click="reset"><i class="fa fa-eraser"></i> Limpiar</button>
+        <div class="ayuda_demo_label">Barra de filtros del listado</div>
+        <div class="box box-custom-enod ayuda_real_box">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="form-group">
+                            <label>Cliente</label>
+                            <select class="form-control input-sm" v-model="filtros.cliente">
+                                <option value="">Todos</option>
+                                <option>YPF S.A.</option>
+                                <option>Techint Ingeniería</option>
+                                <option>Pampa Energía</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 col-xs-6">
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select class="form-control input-sm" v-model="filtros.estado">
+                                <option value="">Todos</option>
+                                <option>Editando</option>
+                                <option>Activa</option>
+                                <option>Cerrada</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 col-xs-6">
+                        <div class="form-group">
+                            <label>Desde</label>
+                            <input type="text" class="form-control input-sm" v-model="filtros.desde" placeholder="dd/mm/aaaa" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2 col-xs-6">
+                        <div class="form-group">
+                            <label>Hasta</label>
+                            <input type="text" class="form-control input-sm" v-model="filtros.hasta" placeholder="dd/mm/aaaa" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-12">
+                        <div class="form-group">
+                            <label>Buscar</label>
+                            <input type="text" class="form-control input-sm" v-model="filtros.texto" placeholder="N° OT, proyecto, obra..." />
+                        </div>
+                    </div>
+                </div>
+                <div class="enod-form-actions enod-form-actions--end">
+                    <button class="btn btn-default btn-sm" @click="reset"><i class="fa fa-eraser"></i>&nbsp; Limpiar</button>
+                    <button class="btn btn-enod btn-sm"><i class="fa fa-filter"></i>&nbsp; Filtrar</button>
+                </div>
             </div>
         </div>
         <div class="ayuda_demo_caption">
@@ -59,52 +73,25 @@ export default {
 </script>
 
 <style scoped>
-.ayuda_demo_block { margin: 12px 0 20px; }
+.ayuda_demo_block { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif; }
 .ayuda_demo_label {
-    font-size: 12px; color: #6b7280;
+    font-size: 11px; color: #6b7280;
     text-transform: uppercase; letter-spacing: 0.06em;
-    margin-bottom: 8px; font-weight: 600;
+    margin-bottom: 8px; font-weight: 700;
 }
-.ayuda_filtros_ot {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-    background: #f9fafb;
-    border: 1px solid #e3e8ee;
-    border-radius: 10px;
-    padding: 14px;
-    align-items: end;
+.ayuda_real_box {
+    border: 1px solid #eef0f3;
+    border-top: 3px solid #FFCC00;
+    border-radius: 4px;
+    box-shadow: none;
 }
-.ayuda_filtro_row label {
-    display: block; font-size: 11px; font-weight: 700;
-    color: #4c5661; margin-bottom: 4px;
-    text-transform: uppercase; letter-spacing: 0.03em;
-}
-.ayuda_filtro_row input,
-.ayuda_filtro_row select {
-    width: 100%; padding: 6px 9px;
-    border: 1px solid #d6dce3; border-radius: 6px;
-    background: #fff; font-size: 13px;
-}
-.ayuda_filtro_row--buscar { grid-column: span 2; }
-.ayuda_filtro_actions {
-    display: flex; gap: 6px;
-    grid-column: 1 / -1;
-    justify-content: flex-end;
-}
-.ayuda_btn_demo {
-    padding: 7px 14px; border-radius: 6px;
-    font-size: 12px; font-weight: 700;
-    border: 0; cursor: pointer;
-}
-.ayuda_btn_demo i { margin-right: 5px; }
-.ayuda_btn_demo--primary   { background: #2e86c1; color: #fff; }
-.ayuda_btn_demo--secondary { background: #e3e8ee; color: #4c5661; }
+.ayuda_real_box label { font-size: 11px; color: #4c5661; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 4px; font-weight: 700; }
+.ayuda_real_box .form-group { margin-bottom: 8px; }
+.enod-form-actions { border-top: 1px solid #eef0f3; padding-top: 10px; margin-top: 8px; }
 .ayuda_demo_caption {
-    margin-top: 6px; font-size: 11px;
-    color: #9ca3af; font-style: italic;
-}
-@media (max-width: 600px) {
-    .ayuda_filtro_row--buscar { grid-column: span 1; }
+    margin-top: 8px;
+    font-size: 12px;
+    color: #6b7280;
+    font-style: italic;
 }
 </style>

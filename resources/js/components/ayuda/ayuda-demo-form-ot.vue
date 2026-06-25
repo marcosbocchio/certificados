@@ -1,70 +1,89 @@
 <template>
     <div class="ayuda_demo_block">
-        <div class="ayuda_demo_label">Ejemplo: formulario de Nueva OT</div>
-        <div class="ayuda_form_demo">
-            <div class="ayuda_form_demo_header">
-                <i class="fa fa-clipboard"></i> Nueva orden de trabajo
+        <div class="ayuda_demo_label">Formulario de Nueva OT</div>
+        <div class="box box-custom-enod ayuda_real_box">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-clipboard"></i>&nbsp; Nueva orden de trabajo</h3>
             </div>
-            <div class="ayuda_form_demo_body">
-                <div class="ayuda_form_row">
-                    <label>Proyecto</label>
-                    <input type="text" value="Gasoducto NEA - Tramo 12" disabled />
-                </div>
-                <div class="ayuda_form_grid">
-                    <div class="ayuda_form_row">
-                        <label>FST N°</label>
-                        <input type="text" value="P-2026-0087" disabled />
-                    </div>
-                    <div class="ayuda_form_row">
-                        <label>OT N°</label>
-                        <input type="text" value="OT-1542" disabled />
-                    </div>
-                    <div class="ayuda_form_row">
-                        <label>Fecha</label>
-                        <input type="text" value="25/06/2026" disabled />
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Proyecto</label>
+                            <input type="text" class="form-control" value="Gasoducto NEA - Tramo 12" disabled />
+                        </div>
                     </div>
                 </div>
-                <div class="ayuda_form_grid">
-                    <div class="ayuda_form_row">
-                        <label>Cliente <span class="ayuda_req">*</span></label>
-                        <select disabled><option>YPF S.A.</option></select>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>FST N°</label>
+                            <input type="text" class="form-control" value="P-2026-0087" disabled />
+                        </div>
                     </div>
-                    <div class="ayuda_form_row">
-                        <label>Comitente</label>
-                        <select disabled><option>Techint Ingeniería</option></select>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>OT N°</label>
+                            <input type="text" class="form-control" value="OT-1542" disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Fecha</label>
+                            <input type="text" class="form-control" value="25/06/2026" disabled />
+                        </div>
                     </div>
                 </div>
-                <div class="ayuda_form_row">
-                    <label>Responsable OT <span class="ayuda_req">*</span></label>
-                    <select disabled><option>Juan Pérez (operador asignado)</option></select>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Cliente <span class="ayuda_req">*</span></label>
+                            <select class="form-control" disabled><option>YPF S.A.</option></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Comitente</label>
+                            <select class="form-control" disabled><option>Techint Ingeniería</option></select>
+                        </div>
+                    </div>
                 </div>
-                <div class="ayuda_form_row">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Responsable OT <span class="ayuda_req">*</span></label>
+                            <select class="form-control" disabled><option>Juan Pérez (operador asignado)</option></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label>Servicios</label>
-                    <div class="ayuda_chips_row">
-                        <span class="ayuda_chip">RI - Radiografía Industrial</span>
-                        <span class="ayuda_chip">PM - Partículas Magnéticas</span>
-                        <button class="ayuda_chip_add" disabled><i class="fa fa-plus"></i></button>
+                    <div class="ayuda_chips_box">
+                        <span class="label label-warning ayuda_chip">RI - Radiografía Industrial</span>
+                        <span class="label label-warning ayuda_chip">PM - Partículas Magnéticas</span>
+                        <button class="btn btn-enod btn-xs ayuda_chip_add" disabled><i class="fa fa-plus"></i></button>
                     </div>
                 </div>
-                <div class="ayuda_form_row">
+
+                <div class="form-group">
                     <label>EPP requeridos</label>
-                    <div class="ayuda_chips_row">
-                        <span class="ayuda_chip ayuda_chip--epp">Casco</span>
-                        <span class="ayuda_chip ayuda_chip--epp">Dosímetro</span>
-                        <span class="ayuda_chip ayuda_chip--epp">Calzado de seguridad</span>
+                    <div class="ayuda_chips_box">
+                        <span class="label label-default ayuda_chip">Casco</span>
+                        <span class="label label-default ayuda_chip">Dosímetro</span>
+                        <span class="label label-default ayuda_chip">Calzado de seguridad</span>
                     </div>
                 </div>
-                <div class="ayuda_form_actions">
-                    <button class="ayuda_btn_demo ayuda_btn_demo--secondary" disabled>Cancelar</button>
-                    <button class="ayuda_btn_demo ayuda_btn_demo--primary" disabled>
-                        <i class="fa fa-save"></i> Guardar
-                    </button>
+
+                <div class="enod-form-actions enod-form-actions--end">
+                    <button class="btn btn-default" disabled>Cancelar</button>
+                    <button class="btn btn-enod" disabled><i class="fa fa-save"></i>&nbsp; Guardar</button>
                 </div>
             </div>
         </div>
         <div class="ayuda_demo_caption">
             Vista previa del formulario real. Los campos con <span class="ayuda_req">*</span> son obligatorios.
-            "Servicios" y "Responsable OT" son los dos datos más sensibles: condicionan los métodos disponibles después en informes.
+            "Servicios" y "Responsable OT" son los datos más sensibles: condicionan los métodos disponibles después en informes.
         </div>
     </div>
 </template>
@@ -74,128 +93,48 @@ export default { name: 'ayuda-demo-form-ot' };
 </script>
 
 <style scoped>
-.ayuda_demo_block {
-    margin: 12px 0 20px;
-}
+.ayuda_demo_block { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif; }
 .ayuda_demo_label {
-    font-size: 12px;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 8px;
-    font-weight: 600;
+    font-size: 11px; color: #6b7280;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 8px; font-weight: 700;
 }
-.ayuda_form_demo {
-    background: #fff;
-    border: 1px solid #e3e8ee;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+.ayuda_real_box {
+    border: 1px solid #eef0f3;
+    border-top: 3px solid #FFCC00;
+    border-radius: 4px;
+    box-shadow: none;
+    margin-bottom: 0;
 }
-.ayuda_form_demo_header {
-    background: linear-gradient(135deg, #1f4e7a 0%, #2e86c1 100%);
-    color: #fff;
-    padding: 12px 16px;
-    font-weight: 700;
-    font-size: 14px;
-}
-.ayuda_form_demo_header i { margin-right: 8px; }
-.ayuda_form_demo_body {
-    padding: 16px;
-}
-.ayuda_form_row {
-    margin-bottom: 12px;
-}
-.ayuda_form_row label {
-    display: block;
-    font-size: 12px;
-    font-weight: 700;
-    color: #4c5661;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-}
-.ayuda_form_row input,
-.ayuda_form_row select {
-    width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #d6dce3;
-    border-radius: 6px;
-    background: #f9fafb;
-    font-size: 13px;
-    color: #374151;
-    cursor: not-allowed;
-}
-.ayuda_form_grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
-    margin-bottom: 12px;
-}
-.ayuda_form_grid .ayuda_form_row { margin-bottom: 0; }
+.ayuda_real_box .box-header { border-bottom: 1px solid #eef0f3; padding: 10px 14px; }
+.ayuda_real_box .box-title { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+.ayuda_real_box .box-title i { color: #FFCC00; }
+.ayuda_real_box .box-body { padding: 14px; }
+.ayuda_real_box .form-control[disabled] { background: #fafbfc; cursor: not-allowed; color: #4c5661; }
+.ayuda_real_box label { font-size: 12px; color: #4c5661; margin-bottom: 4px; }
 
 .ayuda_req { color: #dc3545; font-weight: 700; }
 
-.ayuda_chips_row {
+.ayuda_chips_box {
+    background: #fafbfc;
+    border: 1px dashed #e5e7eb;
+    border-radius: 4px;
+    padding: 8px;
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    padding: 6px;
-    background: #f9fafb;
-    border: 1px dashed #d6dce3;
-    border-radius: 6px;
+    align-items: center;
     min-height: 40px;
 }
-.ayuda_chip {
-    background: #eaf4fb;
-    color: #1f4e7a;
-    border: 1px solid #cbe2f1;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-}
-.ayuda_chip--epp {
-    background: #fff3cd;
-    color: #8a6d3b;
-    border-color: #ffe7a0;
-}
-.ayuda_chip_add {
-    background: #2e86c1;
-    color: #fff;
-    border: 0;
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    font-size: 12px;
-    cursor: not-allowed;
-}
+.ayuda_chip { font-size: 12px; padding: 4px 9px; }
+.ayuda_chip_add { width: 26px; height: 22px; padding: 0; }
 
-.ayuda_form_actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    padding-top: 12px;
-    border-top: 1px solid #f1f5f9;
-}
-.ayuda_btn_demo {
-    padding: 7px 16px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 700;
-    border: 0;
-    cursor: not-allowed;
-}
-.ayuda_btn_demo--primary { background: #28a745; color: #fff; }
-.ayuda_btn_demo--secondary { background: #e3e8ee; color: #4c5661; }
+.enod-form-actions { border-top: 1px solid #eef0f3; padding-top: 12px; margin-top: 12px; }
 
 .ayuda_demo_caption {
     margin-top: 8px;
-    font-size: 11px;
-    color: #9ca3af;
+    font-size: 12px;
+    color: #6b7280;
     font-style: italic;
-}
-
-@media (max-width: 600px) {
-    .ayuda_form_grid { grid-template-columns: 1fr; }
 }
 </style>

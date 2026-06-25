@@ -1,6 +1,6 @@
 <template>
     <div class="ayuda_demo_block">
-        <div class="ayuda_demo_label">Ejemplo: flujo de creación de una OT</div>
+        <div class="ayuda_demo_label">Flujo paso a paso</div>
         <ol class="ayuda_wizard">
             <li
                 v-for="(paso, i) in pasos"
@@ -43,25 +43,18 @@ export default {
 </script>
 
 <style scoped>
-.ayuda_demo_block {
-    margin: 12px 0 20px;
-}
+.ayuda_demo_block { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif; }
 .ayuda_demo_label {
-    font-size: 12px;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 10px;
-    font-weight: 600;
+    font-size: 11px; color: #6b7280;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 8px; font-weight: 700;
 }
 .ayuda_wizard {
     list-style: none;
-    counter-reset: pasos;
-    padding: 0;
-    margin: 0;
+    padding: 0; margin: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
+    gap: 8px;
 }
 .ayuda_wizard_item {
     display: flex;
@@ -69,54 +62,55 @@ export default {
     gap: 10px;
     padding: 12px 14px;
     background: #fff;
-    border: 1px solid #e3e8ee;
-    border-radius: 10px;
+    border: 1px solid #eef0f3;
+    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.18s ease;
-    position: relative;
+    transition: all 0.12s ease;
 }
 .ayuda_wizard_item:hover {
-    border-color: #2e86c1;
-    box-shadow: 0 4px 12px rgba(46, 134, 193, 0.12);
+    border-color: #FFCC00;
 }
 .ayuda_wizard_item.is-active {
-    background: #eaf4fb;
-    border-color: #2e86c1;
+    background: #fffdf5;
+    border-color: #FFCC00;
+    border-left: 3px solid #FFCC00;
+    padding-left: 12px;
 }
 .ayuda_wizard_item.is-done {
-    background: #f0fbf3;
-    border-color: #28a745;
+    background: #fff;
+    border-color: #e6f4ea;
 }
 .ayuda_wizard_num {
-    width: 32px; height: 32px;
+    width: 28px; height: 28px;
     border-radius: 50%;
-    background: #d6dce3;
-    color: #fff;
+    background: #f3f4f6;
+    color: #6b7280;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     flex-shrink: 0;
 }
-.ayuda_wizard_item.is-active .ayuda_wizard_num { background: #2e86c1; }
-.ayuda_wizard_item.is-done .ayuda_wizard_num { background: #28a745; }
+.ayuda_wizard_item.is-active .ayuda_wizard_num { background: #FFCC00; color: #1a1a1a; }
+.ayuda_wizard_item.is-done .ayuda_wizard_num { background: #1b6b34; color: #fff; }
 .ayuda_wizard_text strong {
     display: block;
-    font-size: 13.5px;
-    color: #1f2937;
+    font-size: 13px;
+    color: #1a1a1a;
     margin-bottom: 2px;
+    font-weight: 700;
 }
 .ayuda_wizard_text small {
     display: block;
     font-size: 11.5px;
     color: #6b7280;
-    line-height: 1.35;
+    line-height: 1.4;
 }
 .ayuda_demo_caption {
     margin-top: 8px;
-    font-size: 11px;
-    color: #9ca3af;
+    font-size: 12px;
+    color: #6b7280;
     font-style: italic;
 }
 </style>

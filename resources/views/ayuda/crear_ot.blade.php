@@ -85,10 +85,6 @@
                 <li><strong>Riesgos:</strong> riesgos detectados para el ensayo.</li>
                 <li><strong>Observaciones:</strong> comentarios generales de la OT.</li>
             </ul>
-            <p>Mira un ejemplo:</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Nueva_ot.gif') }}" alt="Creacion de nueva OT" />
-            </div>
         </div>
     </section>
 

@@ -1,52 +1,64 @@
 <template>
     <div class="ayuda_demo_block">
-        <div class="ayuda_demo_label">Ejemplo: cabecera del parte diario</div>
-        <div class="ayuda_form_demo">
-            <div class="ayuda_form_demo_header">
-                <i class="fa fa-calendar-check-o"></i> Nuevo parte diario - OT-1542
+        <div class="ayuda_demo_label">Cabecera del parte diario</div>
+        <div class="box box-custom-enod ayuda_real_box">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-calendar-check-o"></i>&nbsp; Nuevo parte diario · OT-1542</h3>
             </div>
-            <div class="ayuda_form_demo_body">
-                <div class="ayuda_form_grid">
-                    <div class="ayuda_form_row">
-                        <label>Fecha <span class="ayuda_req">*</span></label>
-                        <input type="text" value="25/06/2026" disabled />
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Fecha <span class="ayuda_req">*</span></label>
+                            <input type="text" class="form-control" value="25/06/2026" disabled />
+                        </div>
                     </div>
-                    <div class="ayuda_form_row">
-                        <label>Obra</label>
-                        <select disabled><option>Gasoducto NEA - T12</option></select>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Obra</label>
+                            <select class="form-control" disabled><option>Gasoducto NEA - T12</option></select>
+                        </div>
                     </div>
-                    <div class="ayuda_form_row">
-                        <label>Tipo de servicio <span class="ayuda_req">*</span></label>
-                        <select disabled><option>Radiografía industrial</option></select>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Tipo de servicio <span class="ayuda_req">*</span></label>
+                            <select class="form-control" disabled><option>Radiografía industrial</option></select>
+                        </div>
                     </div>
                 </div>
-                <div class="ayuda_form_grid">
-                    <div class="ayuda_form_row">
-                        <label>Horario inicio</label>
-                        <input type="text" value="07:30" disabled />
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="form-group">
+                            <label>Horario inicio</label>
+                            <input type="text" class="form-control" value="07:30" disabled />
+                        </div>
                     </div>
-                    <div class="ayuda_form_row">
-                        <label>Horario fin</label>
-                        <input type="text" value="16:00" disabled />
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="form-group">
+                            <label>Horario fin</label>
+                            <input type="text" class="form-control" value="16:00" disabled />
+                        </div>
                     </div>
                 </div>
 
-                <div class="ayuda_tabs_demo">
-                    <button v-for="(t, i) in tabs" :key="i" :class="['ayuda_tab', { 'is-active': activa === i }]" @click="activa = i">
-                        <i :class="'fa fa-' + t.icono"></i> {{ t.label }}
-                        <span v-if="t.badge" class="ayuda_tab_badge">{{ t.badge }}</span>
-                    </button>
-                </div>
-                <div class="ayuda_tabs_panel">
+                <ul class="nav nav-tabs ayuda_tabs">
+                    <li v-for="(t, i) in tabs" :key="i" :class="{ active: activa === i }">
+                        <a href="#" @click.prevent="activa = i">
+                            <i :class="'fa fa-' + t.icono"></i>&nbsp; {{ t.label }}
+                            <span v-if="t.badge !== null" class="badge ayuda_tab_badge">{{ t.badge }}</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="ayuda_tab_panel">
                     <p v-if="activa === 0"><i class="fa fa-info-circle"></i> Se listan los informes <strong>pendientes</strong> de la OT que coinciden con la fecha y obra elegidas. Tildá los que pertenezcan a esta jornada.</p>
                     <p v-if="activa === 1"><i class="fa fa-users"></i> Operadores que trabajaron en la jornada. Cada uno con hora de inicio, fin y novedades.</p>
                     <p v-if="activa === 2"><i class="fa fa-truck"></i> Vehículos usados, con kilometraje inicial y final.</p>
                     <p v-if="activa === 3"><i class="fa fa-cog"></i> Servicios o cantidades extra que no quedan cubiertos solo por los informes.</p>
                 </div>
 
-                <div class="ayuda_form_actions">
-                    <button class="ayuda_btn_demo ayuda_btn_demo--secondary" disabled>Cancelar</button>
-                    <button class="ayuda_btn_demo ayuda_btn_demo--primary" disabled><i class="fa fa-save"></i> Guardar parte</button>
+                <div class="enod-form-actions enod-form-actions--end">
+                    <button class="btn btn-default" disabled>Cancelar</button>
+                    <button class="btn btn-enod" disabled><i class="fa fa-save"></i>&nbsp; Guardar parte</button>
                 </div>
             </div>
         </div>
@@ -74,103 +86,68 @@ export default {
 </script>
 
 <style scoped>
-.ayuda_demo_block { margin: 12px 0 20px; }
+.ayuda_demo_block { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif; }
 .ayuda_demo_label {
-    font-size: 12px; color: #6b7280;
+    font-size: 11px; color: #6b7280;
     text-transform: uppercase; letter-spacing: 0.06em;
-    margin-bottom: 8px; font-weight: 600;
+    margin-bottom: 8px; font-weight: 700;
 }
-.ayuda_form_demo {
-    background: #fff;
-    border: 1px solid #e3e8ee;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+.ayuda_real_box {
+    border: 1px solid #eef0f3;
+    border-top: 3px solid #FFCC00;
+    border-radius: 4px;
+    box-shadow: none;
 }
-.ayuda_form_demo_header {
-    background: linear-gradient(135deg, #6f42c1 0%, #9c27b0 100%);
-    color: #fff; padding: 12px 16px;
-    font-weight: 700; font-size: 14px;
-}
-.ayuda_form_demo_header i { margin-right: 8px; }
-.ayuda_form_demo_body { padding: 16px; }
-
-.ayuda_form_grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px; margin-bottom: 12px;
-}
-.ayuda_form_row label {
-    display: block; font-size: 11px; font-weight: 700;
-    color: #4c5661; margin-bottom: 4px;
-    text-transform: uppercase; letter-spacing: 0.03em;
-}
-.ayuda_form_row input,
-.ayuda_form_row select {
-    width: 100%; padding: 6px 9px;
-    border: 1px solid #d6dce3; border-radius: 6px;
-    background: #f9fafb; font-size: 13px;
-    color: #374151; cursor: not-allowed;
-}
+.ayuda_real_box .box-header { border-bottom: 1px solid #eef0f3; padding: 10px 14px; }
+.ayuda_real_box .box-title { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+.ayuda_real_box .box-title i { color: #FFCC00; }
+.ayuda_real_box .box-body { padding: 14px; }
+.ayuda_real_box .form-control[disabled] { background: #fafbfc; cursor: not-allowed; color: #4c5661; }
+.ayuda_real_box label { font-size: 12px; color: #4c5661; margin-bottom: 4px; }
 .ayuda_req { color: #dc3545; font-weight: 700; }
 
-.ayuda_tabs_demo {
-    display: flex; flex-wrap: wrap; gap: 4px;
-    border-bottom: 2px solid #e3e8ee;
-    margin: 12px 0 0;
-}
-.ayuda_tab {
-    background: transparent; border: 0;
-    padding: 8px 14px; font-size: 13px;
-    color: #6b7280; cursor: pointer;
-    border-bottom: 3px solid transparent;
+.ayuda_tabs { margin-top: 8px; border-bottom: 1px solid #eef0f3; }
+.ayuda_tabs > li > a {
+    color: #6b7280;
+    font-size: 13px;
     font-weight: 600;
-    position: relative;
-    margin-bottom: -2px;
+    padding: 8px 14px;
+    border-radius: 0;
 }
-.ayuda_tab i { margin-right: 5px; }
-.ayuda_tab.is-active {
-    color: #6f42c1;
-    border-bottom-color: #6f42c1;
+.ayuda_tabs > li.active > a,
+.ayuda_tabs > li.active > a:hover,
+.ayuda_tabs > li.active > a:focus {
+    color: #1a1a1a;
+    background: #fff;
+    border-bottom: 3px solid #FFCC00;
+    margin-bottom: -1px;
 }
+.ayuda_tabs > li > a:hover { background: #fafbfc; color: #1a1a1a; }
 .ayuda_tab_badge {
-    display: inline-block;
-    background: #6f42c1; color: #fff;
-    border-radius: 999px;
-    padding: 0 6px;
-    font-size: 10px; font-weight: 700;
+    background: #FFCC00;
+    color: #1a1a1a;
+    font-size: 10px;
     margin-left: 4px;
 }
-.ayuda_tabs_panel {
-    background: #faf7fd;
-    border: 1px solid #ede0f7;
+.ayuda_tab_panel {
+    background: #fafbfc;
+    border: 1px solid #eef0f3;
     border-top: 0;
-    border-radius: 0 0 6px 6px;
     padding: 12px 14px;
     font-size: 13px;
     color: #4c5661;
+    margin-bottom: 14px;
+    border-radius: 0 0 4px 4px;
 }
-.ayuda_tabs_panel p { margin: 0; }
-.ayuda_tabs_panel i { margin-right: 6px; color: #6f42c1; }
+.ayuda_tab_panel p { margin: 0; }
+.ayuda_tab_panel i { color: #d4a800; margin-right: 4px; }
 
-.ayuda_form_actions {
-    display: flex; justify-content: flex-end; gap: 8px;
-    padding-top: 14px; margin-top: 14px;
-    border-top: 1px solid #f1f5f9;
-}
-.ayuda_btn_demo {
-    padding: 7px 16px; border-radius: 6px;
-    font-size: 13px; font-weight: 700;
-    border: 0; cursor: not-allowed;
-}
-.ayuda_btn_demo--primary { background: #28a745; color: #fff; }
-.ayuda_btn_demo--secondary { background: #e3e8ee; color: #4c5661; }
+.enod-form-actions { border-top: 1px solid #eef0f3; padding-top: 12px; margin-top: 4px; }
+
 .ayuda_demo_caption {
-    margin-top: 8px; font-size: 11px;
-    color: #9ca3af; font-style: italic;
-}
-
-@media (max-width: 600px) {
-    .ayuda_form_grid { grid-template-columns: 1fr; }
+    margin-top: 8px;
+    font-size: 12px;
+    color: #6b7280;
+    font-style: italic;
 }
 </style>
