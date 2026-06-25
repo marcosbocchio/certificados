@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Generar informes RI</h1>
@@ -18,11 +19,6 @@
             <h2>Encabezado del informe</h2>
             <p>
                 Si la OT fue creada como multiobra, al ingresar primero debe indicarse a que obra corresponde el informe.
-            </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Encabezado_principal.PNG') }}" alt="Encabezado principal de informe RI" />
-            </div>
-            <p>
                 Luego debe completarse el segundo encabezado indicando si el informe corresponde a <strong>Planta</strong> o <strong>Ducto</strong>.
                 Aunque la carga es similar, la numeracion cambia entre ambos casos.
             </p>
@@ -30,10 +26,8 @@
                 En ducto el numero se arma considerando PK y tipo de soldadura definidos en los procedimientos del cliente.
                 En planta esos campos quedan deshabilitados y el numero sigue una secuencia correlativa por OT.
             </p>
-            <p><strong>Ejemplo:</strong> ducto `150-LR-RI001` y planta `RI001`.</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Encabezado_RI.PNG') }}" alt="Campos principales del informe RI" />
-            </div>
+            <p><strong>Ejemplo:</strong> ducto <code>150-LR-RI001</code> y planta <code>RI001</code>.</p>
+            <ayuda-demo-form-informe metodo="RI"></ayuda-demo-form-informe>
         </div>
     </section>
 
@@ -47,9 +41,6 @@
                 <li><strong>Equipo:</strong> al seleccionar el equipo se completan datos de la fuente o los valores del equipo RX.</li>
                 <li><strong>Tecnica:</strong> modifica el grafico visible y se usa para calcular la distancia fuente-film.</li>
             </ul>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/pk_sol.PNG') }}" alt="Campos PK y tipo de soldadura en RI" />
-            </div>
         </div>
     </section>
 
@@ -60,16 +51,11 @@
                 El informe puede vincular uno o mas modelos 3D disponibles en el repositorio. En el PDF se muestra una captura
                 y luego puede consultarse el modelo desde el visualizador 3D.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Modelo_3d.PNG') }}" alt="Modelos 3D en informe RI" />
-            </div>
             <p>
-                En la seccion de <strong>Elementos/posiciones</strong> se cargan las costuras o elementos con sus posiciones de placa y densidad.
+                En la seccion de <strong>Elementos / posiciones</strong> se cargan las costuras o elementos con sus posiciones de placa y densidad.
                 El sistema permite clonar posiciones para agilizar la carga.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Agregar_costuras.gif') }}" alt="Carga de costuras en informe RI" />
-            </div>
+            <ayuda-demo-tabla-elementos metodo="RI"></ayuda-demo-tabla-elementos>
         </div>
     </section>
 
@@ -81,19 +67,11 @@
                 Cuando se informa posicion de la anomalia, el sistema la interpreta como rechazo y marca la costura como no aceptable,
                 aunque ese estado puede modificarse manualmente.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Agregar_indicaciones.gif') }}" alt="Carga de indicaciones en informe RI" />
-            </div>
             <p>
                 En <strong>Pasadas</strong> se cargan los soldadores responsables. En planta se registra una pasada y en ducto pueden cargarse hasta seis.
                 Tambien es posible clonar la informacion o importarla desde un archivo CSV.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Agregar_pasadas_manual.gif') }}" alt="Carga manual de pasadas en informe RI" />
-            </div>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Agregar_pasadas_archivo.gif') }}" alt="Importacion de pasadas en informe RI" />
-            </div>
+            <ayuda-demo-tabla-pasadas></ayuda-demo-tabla-pasadas>
         </div>
     </section>
 
@@ -115,6 +93,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

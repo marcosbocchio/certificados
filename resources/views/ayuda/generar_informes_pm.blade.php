@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Generar informes PM</h1>
@@ -18,16 +19,9 @@
             <h2>Encabezado del informe</h2>
             <p>
                 Si la OT fue creada como multiobra, primero debe indicarse a que obra corresponde el informe.
-            </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Encabezado_principal.PNG') }}" alt="Encabezado principal de informe PM" />
-            </div>
-            <p>
                 Despues se completa el encabezado propio del informe con los campos obligatorios y la informacion tecnica del ensayo.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Encabezado_PM.PNG') }}" alt="Campos principales del informe PM" />
-            </div>
+            <ayuda-demo-form-informe metodo="PM"></ayuda-demo-form-informe>
         </div>
     </section>
 
@@ -51,16 +45,11 @@
                 El informe puede vincular modelos 3D ya cargados en el sistema. En el PDF se muestra una captura y luego puede abrirse
                 el modelo desde el visualizador 3D.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Modelo_3d.PNG') }}" alt="Modelos 3D en informe PM" />
-            </div>
             <p>
                 En la seccion de <strong>Elemento</strong> se cargan las piezas o sectores inspeccionados. Para cada uno puede registrarse
                 la medida en centimetros, una descripcion, su estado y un archivo de referencia si hace falta mas detalle.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Elementos_PM.gif') }}" alt="Carga de elementos en informe PM" />
-            </div>
+            <ayuda-demo-tabla-elementos metodo="PM"></ayuda-demo-tabla-elementos>
         </div>
     </section>
 
@@ -82,6 +71,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

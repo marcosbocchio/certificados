@@ -331,6 +331,12 @@ Vue.component('ayuda-demo-tabla-ots',             require('./components/ayuda/ay
 Vue.component('ayuda-demo-form-parte',            require('./components/ayuda/ayuda-demo-form-parte.vue').default);
 Vue.component('ayuda-demo-tabla-operarios-horas', require('./components/ayuda/ayuda-demo-tabla-operarios-horas.vue').default);
 Vue.component('ayuda-demo-tabla-partes',          require('./components/ayuda/ayuda-demo-tabla-partes.vue').default);
+/* Ayuda - Bloque 2 (Informes NDT) */
+Vue.component('ayuda-demo-selector-metodo',       require('./components/ayuda/ayuda-demo-selector-metodo.vue').default);
+Vue.component('ayuda-demo-form-informe',          require('./components/ayuda/ayuda-demo-form-informe.vue').default);
+Vue.component('ayuda-demo-tabla-elementos',       require('./components/ayuda/ayuda-demo-tabla-elementos.vue').default);
+Vue.component('ayuda-demo-tabla-pasadas',         require('./components/ayuda/ayuda-demo-tabla-pasadas.vue').default);
+Vue.component('ayuda-demo-tabla-informes',        require('./components/ayuda/ayuda-demo-tabla-informes.vue').default);
 
 /* Reportes */
 Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);

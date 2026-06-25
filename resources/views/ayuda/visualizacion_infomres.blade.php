@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Visualizacion de informes</h1>
@@ -20,9 +21,7 @@
                 El listado se arma por OT y permite buscar por numero u otros datos visibles.
                 Tambien muestra el numero de revision, que es clave para entender si el informe tuvo correcciones posteriores.
             </p>
-            <div class="ayuda_media">
-                <img src="{{ asset('img/ayuda/Listado_informes.PNG') }}" class="img-responsive" alt="Listado de informes" />
-            </div>
+            <ayuda-demo-tabla-informes></ayuda-demo-tabla-informes>
             <ul>
                 <li><strong>Tipo:</strong> metodo de ensayo del informe.</li>
                 <li><strong>Numero:</strong> identificador del informe.</li>
@@ -62,6 +61,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

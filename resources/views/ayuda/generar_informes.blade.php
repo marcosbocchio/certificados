@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Creacion de informes</h1>
@@ -61,18 +62,7 @@
         <div class="ayuda_panel">
             <h2>Metodos disponibles</h2>
             <p>El flujo comun concentra RI, PM, LP y US, pero la OT tambien puede habilitar otros metodos segun su configuracion.</p>
-            <ul>
-                <li>RI</li>
-                <li>PM</li>
-                <li>LP</li>
-                <li>US</li>
-                <li>TT</li>
-                <li>CV</li>
-                <li>DZ</li>
-                <li>RG</li>
-                <li>PMI</li>
-                <li>RD</li>
-            </ul>
+            <ayuda-demo-selector-metodo></ayuda-demo-selector-metodo>
             <p>Todos estos se enrutan desde un mismo punto de entrada y despues abren el formulario especifico de cada metodo.</p>
         </div>
     </section>
@@ -93,13 +83,8 @@
         <div class="ayuda_panel">
             <h2>Como trabajar en esta pantalla</h2>
             <p>Desde la OT seleccionada se ingresa al bloque de Informes y se trabaja sobre el listado de esa OT.</p>
-            <div class="ayuda_media">
-                <img src="{{ asset('img/ayuda/Generar_informe.gif') }}" class="img-responsive" alt="Acceso a informes" />
-            </div>
             <p>En ese listado se ven los informes ya creados, su metodo, numero, revision, obra, usuario y fecha.</p>
-            <div class="ayuda_media">
-                <img src="{{ asset('img/ayuda/Listado_informes.PNG') }}" class="img-responsive" alt="Listado de informes" />
-            </div>
+            <ayuda-demo-tabla-informes></ayuda-demo-tabla-informes>
             <p>
                 El listado es la referencia principal para ver que ya fue creado, que revision esta vigente y que acciones siguen disponibles para cada informe.
             </p>
@@ -138,6 +123,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection
