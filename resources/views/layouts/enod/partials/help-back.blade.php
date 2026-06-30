@@ -1,7 +1,19 @@
 <div class="ayuda_backbar">
     <a href="{{ route('ayuda-general') }}"
-       class="btn btn-enod btn-circle ayuda_backbutton_enod"
-       onclick="if (window.history.length > 1 && document.referrer) { try { if (new URL(document.referrer).origin === window.location.origin) { event.preventDefault(); window.history.back(); } } catch (e) {} }">
-        <span class="fa fa-arrow-left"></span>
+       class="ayuda_backbtn"
+       title="Volver"
+       onclick="(function(e){
+            try {
+                var ref = document.referrer;
+                if (ref && new URL(ref).origin === window.location.origin) {
+                    e.preventDefault();
+                    window.history.back();
+                    return;
+                }
+            } catch (err) {}
+            // Sin referrer del mismo origen: deja seguir el href (índice de ayuda).
+       })(event)">
+        <i class="fa fa-arrow-left"></i>
+        <span>Volver</span>
     </a>
 </div>

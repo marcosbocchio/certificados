@@ -65,35 +65,45 @@
 }
 
 /* ---------- Backbar ---------- */
-.ayuda_backbar { margin-bottom: 14px; }
-
-.ayuda_backbutton_enod {
-    align-items: center;
-    display: inline-flex;
-    line-height: 1;
+.ayuda_backbar {
+    max-width: 980px;
+    margin: 0 auto 16px;
+    padding: 0 12px;
 }
 
-.ayuda_backbutton {
-    align-items: center;
-    background-color: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    color: #4c5661;
+.ayuda_backbtn {
     display: inline-flex;
-    gap: 6px;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    color: #4c5661;
+    padding: 7px 14px;
+    border-radius: 6px;
     font-size: 13px;
     font-weight: 600;
-    padding: 6px 12px;
+    line-height: 1;
+    text-decoration: none;
     transition: all 0.12s ease;
 }
-
-.ayuda_backbutton:hover,
-.ayuda_backbutton:focus {
-    background-color: #FFCC00;
+.ayuda_backbtn:hover,
+.ayuda_backbtn:focus {
+    background: #FFCC00;
     border-color: #FFCC00;
-    color: #000;
+    color: #1a1a1a;
     text-decoration: none;
 }
+.ayuda_backbtn i { font-size: 12px; }
+
+/* legado por compatibilidad (todavía referenciado en algunos lados) */
+.ayuda_backbutton_enod { display: inline-flex; align-items: center; line-height: 1; }
+.ayuda_backbutton {
+    align-items: center; background-color: #fff; border: 1px solid #e5e7eb;
+    border-radius: 6px; color: #4c5661; display: inline-flex; gap: 6px;
+    font-size: 13px; font-weight: 600; padding: 6px 12px;
+}
+.ayuda_backbutton:hover,
+.ayuda_backbutton:focus { background-color: #FFCC00; border-color: #FFCC00; color: #000; text-decoration: none; }
 
 /* ---------- Links ---------- */
 .ayuda_enod a {

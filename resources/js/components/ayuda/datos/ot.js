@@ -1,145 +1,156 @@
-/* Datos del manual: Orden de Trabajo (OT).
- * Verificado contra:
- *   - app/Http/Controllers/OtsController.php
- *   - app/Http/Requests/OtsRequest.php
- *   - app/Ots.php
- *   - database/migrations/2019_06_13_190325_create_ots_table.php
- */
-
 export default {
     hero: {
-        titulo: 'Orden de Trabajo (OT)',
+        titulo: 'Crear una Orden de Trabajo (OT)',
         descripcion:
-            'La OT es el registro raíz del circuito documental. Define cliente, comitente, responsable, ' +
-            'servicios contratados, productos, EPP y riesgos. Todo lo que pasa después (informes, partes, ' +
-            'certificados, remitos) cuelga de una OT correctamente cargada.',
-        subtexto:
-            'Una OT mal definida en cabecera obliga a corregir documentos posteriores. ' +
-            'Conviene completar todos los datos sensibles antes de firmar.',
+            'La OT es la "carpeta" del trabajo. Acá cargás cliente, comitente, lugar de ensayo, ' +
+            'responsable, servicios contratados, productos, EPP y riesgos. Una vez creada, ' +
+            'desde la OT vas a asignar operadores, soldadores, vehículos y procedimientos.',
     },
 
-    dependencias: [
-        { entidad: 'Cliente',     descripcion: 'Debe estar dado de alta con razón social, CUIT y al menos un contacto.', ruta: '/ayuda_gestion_cliente',    critico: true },
-        { entidad: 'Comitente',   descripcion: 'Si aplica al trabajo, debe existir en el maestro de contratistas.',      ruta: '/ayuda_gestion_comitente', critico: false },
-        { entidad: 'Responsable', descripcion: 'Usuario interno de Enod habilitado y posteriormente asignado como operador de la OT.', ruta: '/ayuda_gestion_usuario', critico: true },
-        { entidad: 'Servicios',   descripcion: 'Habilita después qué métodos NDT (RI / PM / LP / US…) podrán informarse.', ruta: '/ayuda_gestion_servicios', critico: true },
-        { entidad: 'Productos',   descripcion: 'Solo si se presupuestaron consumibles por trabajo (placas, líquidos, etc).', ruta: '/ayuda_gestion_productos', critico: false },
+    ir_a: {
+        label: 'Abrir el tablero de OT',
+        ruta: '/area/enod',
+        icono: 'clipboard',
+    },
+
+    acciones: [
+        { icono: 'plus-circle', titulo: 'Crear una OT nueva',         detalle: 'Desde el botón "Nueva OT" del tablero principal.' },
+        { icono: 'pencil',      titulo: 'Editar una OT en borrador',  detalle: 'Mientras esté en estado Editando, podés modificar todos los datos.' },
+        { icono: 'check-circle',titulo: 'Firmar la OT',                detalle: 'La pasa a Activa. A partir de ahí ya podés cargar informes y partes.' },
+        { icono: 'cogs',        titulo: 'Cargar servicios y productos', detalle: 'Definen qué métodos de ensayo van a estar disponibles después.' },
+        { icono: 'archive',     titulo: 'Cerrar la OT',                detalle: 'Cuando el trabajo terminó. Queda como antecedente, ya no se edita.' },
     ],
+
+    dependencias_intro:
+        'Si alguno de estos datos no está cargado, vas a tener que crearlos primero en el menú "Maestros".',
+
+    dependencias: [
+        { entidad: 'Cliente',     descripcion: 'Tiene que estar dado de alta con al menos un contacto.', ruta: '/ayuda_gestion_cliente',    critico: true },
+        { entidad: 'Comitente',   descripcion: 'Solo si el trabajo lo terceriza otra empresa.',          ruta: '/ayuda_gestion_comitente', critico: false },
+        { entidad: 'Servicios',   descripcion: 'Sin servicios cargados, después no podés hacer informes.', ruta: '/ayuda_gestion_servicios', critico: true },
+        { entidad: 'Productos',   descripcion: 'Solo si vas a consumir materiales (placas, líquidos, etc.).', ruta: '/ayuda_gestion_productos', critico: false },
+        { entidad: 'Responsable', descripcion: 'Un usuario interno de Enod, que también vas a asignar como operador.', ruta: '/ayuda_gestion_usuario', critico: true },
+    ],
+
+    demo_intro:
+        'Esta es la cabecera del formulario tal como la vas a ver en el sistema. Más abajo encontrás ' +
+        'el detalle de qué se carga en cada campo.',
+    demo: 'ayuda-demo-form-ot',
 
     campos_intro:
-        'El formulario tiene 19 campos en cabecera más sub-secciones para servicios, productos, EPP y riesgos. ' +
-        'Los marcados con (*) son obligatorios — sin ellos el sistema no permite guardar.',
+        'Los campos con asterisco rojo no se pueden dejar vacíos. Si te falta algún dato, el sistema ' +
+        'no te deja guardar hasta que lo completes.',
 
     campos: [
-        { nombre: 'OT N°',           tipo: 'numeric',  obligatorio: true,  origen: 'Auto / manual',          validacion: 'digits_between:1,8 · unique:ots,numero', notas: 'No puede repetirse en el sistema.' },
-        { nombre: 'FST N°',          tipo: 'numeric',  obligatorio: true,  origen: 'Numero de presupuesto',  validacion: 'digits_between:1,8',                     notas: 'Identifica el presupuesto comercial origen.' },
-        { nombre: 'Proyecto',        tipo: 'text',     obligatorio: true,  origen: 'Libre',                  validacion: 'required · Max:60',                      notas: 'Nombre del proyecto / obra principal.' },
-        { nombre: 'Obra / OC',       tipo: 'text',     obligatorio: 'condicional', condicion: 'OT de obra única', origen: 'Libre',  validacion: 'Min:1 · Max:15 · nullable', notas: 'Si la OT es multiobra, puede quedar vacío.' },
-        { nombre: 'Fecha',           tipo: 'date',     obligatorio: true,  origen: 'Hoy por defecto',        validacion: 'required',                               notas: 'Fecha de creación del registro.' },
-        { nombre: 'Fecha estimada',  tipo: 'date',     obligatorio: true,  origen: 'Libre',                  validacion: 'required',                               notas: 'Cuándo se planea ejecutar el trabajo.' },
-        { nombre: 'Hora',            tipo: 'time',     obligatorio: true,  origen: 'HH:MM',                  validacion: 'required',                               notas: 'Hora estimada de inicio.' },
-        { nombre: 'Cliente',         tipo: 'select',   obligatorio: true,  origen: 'Maestro clientes',       validacion: 'required',                               notas: 'Al elegirlo, se filtran los contactos disponibles.' },
-        { nombre: 'Contacto 1',      tipo: 'select',   obligatorio: true,  origen: 'Contactos del cliente',  validacion: 'required',                               notas: 'Debe pertenecer al cliente elegido.' },
-        { nombre: 'Contacto 2 / 3',  tipo: 'select',   obligatorio: false, origen: 'Contactos del cliente',  validacion: 'nullable',                               notas: 'Contactos secundarios opcionales.' },
-        { nombre: 'Comitente',       tipo: 'select',   obligatorio: false, origen: 'Maestro contratistas',   validacion: 'nullable',                               notas: 'Empresa que terceriza el trabajo (si aplica).' },
-        { nombre: 'Responsable OT',  tipo: 'select',   obligatorio: true,  origen: 'Usuarios internos',      validacion: 'required',                               notas: 'Debe ser asignado luego como operador de la OT.' },
-        { nombre: 'Provincia',       tipo: 'select',   obligatorio: true,  origen: 'Maestro provincias',     validacion: 'required',                               notas: 'Al elegirla, se filtran las localidades.' },
-        { nombre: 'Localidad',       tipo: 'select',   obligatorio: true,  origen: 'Localidades por provincia', validacion: 'required',                            notas: 'Localidad del ensayo.' },
-        { nombre: 'Lugar de ensayo', tipo: 'text',     obligatorio: true,  origen: 'Libre',                  validacion: 'required · Max:200',                     notas: 'Sector / dirección del trabajo.' },
-        { nombre: 'Latitud',         tipo: 'decimal',  obligatorio: true,  origen: 'Google Maps',            validacion: 'required',                               notas: 'Reubica el mapa si se carga manualmente.' },
-        { nombre: 'Longitud',        tipo: 'decimal',  obligatorio: true,  origen: 'Google Maps',            validacion: 'required',                               notas: 'Idem latitud.' },
-        { nombre: 'Mostrar logo cliente',     tipo: 'checkbox', obligatorio: false, origen: '0/1', validacion: '', notas: 'Si está activo, se imprime el logo en los PDFs.' },
-        { nombre: 'Mostrar logo contratista', tipo: 'checkbox', obligatorio: false, origen: '0/1', validacion: '', notas: 'Idem para el logo del comitente.' },
-        { nombre: 'Observaciones',   tipo: 'textarea', obligatorio: false, origen: 'Libre',                  validacion: 'nullable · Max:255',                     notas: 'Aclaraciones generales, no reemplaza datos estructurados.' },
+        { nombre: 'Proyecto',        tipo: 'texto',     obligatorio: true,  origen: 'Lo escribís vos',                notas: 'Nombre del proyecto, hasta 60 caracteres.' },
+        { nombre: 'FST N°',          tipo: 'número',    obligatorio: true,  origen: 'Número de presupuesto',          notas: 'El número de presupuesto comercial que dio origen al trabajo.' },
+        { nombre: 'OT N°',           tipo: 'número',    obligatorio: true,  origen: 'Sugerido por el sistema',         notas: 'No puede repetirse. El sistema sugiere el siguiente libre, podés cambiarlo.' },
+        { nombre: 'Fecha',           tipo: 'fecha',     obligatorio: true,  origen: 'Por defecto la de hoy',           notas: 'La fecha de creación de la OT.' },
+        { nombre: 'Obra N° / OC',    tipo: 'texto',     obligatorio: 'condicional', condicion: 'OT de una sola obra', origen: 'Número que dio el cliente', notas: 'Si la OT es multiobra, este campo lo dejás vacío.' },
+        { nombre: 'Fecha estimada',  tipo: 'fecha',     obligatorio: true,  origen: 'Lo elegís vos',                  notas: 'Cuándo se va a hacer el ensayo.' },
+        { nombre: 'Hora',            tipo: 'hora',      obligatorio: true,  origen: 'HH:MM',                          notas: 'Hora estimada de inicio.' },
+        { nombre: 'Cliente',         tipo: 'lista',     obligatorio: true,  origen: 'Maestro de clientes',            notas: 'Al elegirlo, se cargan los contactos disponibles automáticamente.' },
+        { nombre: 'Contacto',        tipo: 'lista',     obligatorio: true,  origen: 'Contactos del cliente',          notas: 'Podés elegir hasta 3 contactos del cliente para que figuren en la OT.' },
+        { nombre: 'Comitente',       tipo: 'lista',     obligatorio: false, origen: 'Maestro de comitentes',          notas: 'Solo si aplica.' },
+        { nombre: 'Responsable OT',  tipo: 'lista',     obligatorio: true,  origen: 'Usuarios internos de Enod',      notas: 'Esta persona también tiene que estar asignada después como operador de la OT.' },
+        { nombre: 'Mostrar logo',    tipo: 'tilde',     obligatorio: false, origen: 'Sí / No',                        notas: 'Si lo tildás, el logo del cliente o del comitente sale en los PDFs.' },
+        { nombre: 'Provincia',       tipo: 'lista',     obligatorio: true,  origen: 'Maestro de provincias',          notas: 'Al elegirla, se filtran las localidades.' },
+        { nombre: 'Localidad',       tipo: 'lista',     obligatorio: true,  origen: 'Localidades de la provincia',     notas: '' },
+        { nombre: 'Lugar de ensayo', tipo: 'texto',     obligatorio: true,  origen: 'Lo escribís vos',                notas: 'Sector descriptivo (planta, taller, frente de obra, etc.).' },
+        { nombre: 'Latitud / Longitud', tipo: 'mapa',  obligatorio: true,  origen: 'Google Maps',                    notas: 'Si las cargás manualmente, el mapa se reubica en ese punto.' },
+        { nombre: 'Servicios',       tipo: 'subtabla',  obligatorio: true,  origen: 'Maestro de servicios',           notas: 'Agregá uno por uno con el botón +. Definen qué métodos podrás informar después.' },
+        { nombre: 'Productos',       tipo: 'subtabla',  obligatorio: false, origen: 'Maestro de productos',           notas: 'Solo si presupuestaste consumibles por trabajo.' },
+        { nombre: 'EPP',             tipo: 'subtabla',  obligatorio: false, origen: 'Maestro de EPP',                 notas: 'Elementos de seguridad requeridos para el trabajo.' },
+        { nombre: 'Riesgos',         tipo: 'subtabla',  obligatorio: false, origen: 'Maestro de riesgos',             notas: 'Riesgos detectados para el ensayo.' },
+        { nombre: 'Observaciones',   tipo: 'texto',     obligatorio: false, origen: 'Lo escribís vos',                notas: 'Aclaraciones generales. No reemplaza datos estructurados del formulario.' },
     ],
 
-    estados_intro:
-        'La OT pasa por tres estados. Cada transición es disparada por una acción explícita del usuario con permiso.',
+    botones: [
+        { label: '+ Nueva OT',  icono: 'plus',    estilo: '',     descripcion: 'Abre el formulario vacío para crear una OT nueva.' },
+        { label: '+',           icono: '',         estilo: '',     descripcion: 'Suma una fila a las subtablas (servicios, productos, EPP, riesgos).' },
+        { label: 'Guardar',     icono: 'save',    estilo: '',     descripcion: 'Graba la OT en estado Editando. Podés volver a modificarla.' },
+        { label: 'Firmar',      icono: 'check',   estilo: '',     descripcion: 'Pasa la OT a Activa. Es irreversible.' },
+        { label: 'Cancelar',    icono: '',         estilo: 'gris', descripcion: 'Sale sin guardar cambios.' },
+    ],
+
+    estados_intro: 'Una OT pasa por tres momentos. Lo que podés hacer en cada uno cambia:',
 
     estados: [
-        { nombre: 'EDITANDO', color: 'amarillo', icono: 'pencil',     descripcion: 'OT recién creada, todos los datos modificables.',                editable: true,     permiso: 'O_alta' },
-        { nombre: 'ACTIVA',   color: 'verde',    icono: 'check',      descripcion: 'Firmada por el responsable. Habilita informes, partes y certificados.', editable: 'parcial', permiso: 'O_alta' },
-        { nombre: 'CERRADA',  color: 'gris',     icono: 'archive',    descripcion: 'Trabajo terminado. Queda como antecedente, solo lectura.',     editable: false,    permiso: 'O_alta' },
+        { nombre: 'Editando', color: 'amarillo', icono: 'pencil',  descripcion: 'Recién creada. Modificás todo libremente.',                                editable: true },
+        { nombre: 'Activa',   color: 'verde',    icono: 'check',   descripcion: 'Firmada. Podés cargar informes, partes y certificados.',                    editable: 'parcial' },
+        { nombre: 'Cerrada',  color: 'gris',     icono: 'archive', descripcion: 'Trabajo terminado. Queda como consulta, no se edita más.',                  editable: false },
     ],
 
     transiciones: [
-        { de: 'EDITANDO', a: 'ACTIVA',  accion: 'Firmar OT',  permiso: 'O_alta', irreversible: true },
-        { de: 'ACTIVA',   a: 'CERRADA', accion: 'Cerrar OT',  permiso: 'O_alta', irreversible: true },
+        { de: 'Editando', a: 'Activa',  accion: 'Firmar la OT', irreversible: true },
+        { de: 'Activa',   a: 'Cerrada', accion: 'Cerrar la OT', irreversible: true },
     ],
 
     errores: [
+        { mensaje: 'No me deja guardar',
+          causa: 'Falta completar algún campo obligatorio (marcado con *).',
+          solucion: 'Revisá los campos que aparecen resaltados en rojo. Suele faltar cliente, contacto, responsable o servicios.' },
         { mensaje: 'El número de OT ya existe',
-          causa: 'Otro registro ya usa ese número (validación unique:ots,numero).',
-          solucion: 'Elegí un número de OT distinto. El sistema sugiere el siguiente correlativo libre.' },
-        { mensaje: 'El campo proyecto es obligatorio',
-          causa: 'No se completó el nombre del proyecto antes de guardar.',
-          solucion: 'Cargá un proyecto (máx. 60 caracteres) antes de continuar.' },
-        { mensaje: 'El contacto seleccionado no pertenece a este cliente',
-          causa: 'Cambiaste el cliente después de elegir el contacto.',
-          solucion: 'Elegí un contacto que sí esté cargado para el cliente actual, o agregálo en el maestro de clientes.' },
-        { mensaje: 'No hay localidades disponibles',
+          causa: 'Hay otra OT con el mismo número.',
+          solucion: 'Usá el correlativo que sugiere el sistema, o elegí otro distinto.' },
+        { mensaje: 'El contacto que elegí ya no aparece',
+          causa: 'Cambiaste el cliente después de elegir el contacto. Cada contacto pertenece a un cliente.',
+          solucion: 'Volvé a elegir el contacto. Si no aparece el que necesitás, agregálo desde el maestro de clientes.' },
+        { mensaje: 'No hay localidades para elegir',
           causa: 'No elegiste provincia, o la provincia no tiene localidades cargadas.',
-          solucion: 'Seleccioná primero la provincia. Si falta una localidad, cargála desde el maestro.' },
-        { mensaje: 'No puedo editar esta OT',
-          causa: 'La OT está en estado CERRADA. La firma es irreversible.',
-          solucion: 'Si necesitás corregir datos, abrí una nueva OT o consultá con sistemas para revertir manualmente.' },
-        { mensaje: 'No aparecen servicios al cargar informes',
-          causa: 'No agregaste servicios a la OT, o el método del informe no tiene su servicio cargado.',
-          solucion: 'Volvé a la OT y agregá el servicio del método (ej. servicio RI para informes de radiografía).' },
+          solucion: 'Primero seleccioná la provincia. Si igual no aparecen, pedile a sistemas que agregue la localidad.' },
+        { mensaje: 'No me deja editar la OT',
+          causa: 'La OT ya fue cerrada. No se puede revertir desde la pantalla.',
+          solucion: 'Si necesitás corregir algo, pedile a sistemas que la reabra manualmente.' },
+        { mensaje: 'No me aparecen los métodos en informes',
+          causa: 'No agregaste el servicio del método (por ejemplo, servicio "RI" para hacer informes de radiografía).',
+          solucion: 'Volvé a la OT y agregá el servicio correspondiente desde la subtabla de Servicios.' },
     ],
 
     calculos: [
-        { que: 'Número de OT', como: 'Validado como único en la tabla ots. El sistema sugiere correlativo pero permite manual.' },
-        { que: 'Filtro de contactos', como: 'Cuando elegís cliente, el select de contactos se filtra por cliente_id automáticamente.' },
-        { que: 'Filtro de localidades', como: 'Al elegir provincia, las localidades se cargan por provincia_id.' },
-        { que: 'Mapa', como: 'Si se cargan latitud y longitud manualmente, el mapa se reubica con esa información.' },
+        { que: 'Número de OT',  como: 'El sistema sugiere el siguiente número libre. Lo podés cambiar, siempre que no se repita.' },
+        { que: 'Contactos',     como: 'Cuando elegís cliente, la lista de contactos se actualiza sola con los que tiene ese cliente.' },
+        { que: 'Localidades',   como: 'Al elegir provincia, las localidades disponibles se filtran solas.' },
+        { que: 'Mapa',          como: 'Si cargás latitud y longitud manualmente, el mapa se mueve a esa ubicación.' },
     ],
 
     edicion: {
         texto:
-            'Mientras la OT está en estado EDITANDO se puede modificar todo. Tras firmar (estado ACTIVA), ' +
-            'la cabecera queda parcialmente bloqueada: el número de OT y FST quedan readonly, pero los ' +
-            'servicios, productos, EPP y asignaciones siguen siendo editables. Una vez cerrada, todo queda en solo lectura.',
+            'Mientras la OT está en Editando, podés cambiar todo. Una vez que la Firmás, queda en Activa: ' +
+            'algunos datos de cabecera (como el número de OT) quedan bloqueados, pero podés seguir cargando ' +
+            'servicios, asignaciones y demás. Cuando la Cerrás, la OT queda como consulta y ya no se modifica.',
         callouts: [
             {
                 tipo: 'irreversible',
-                titulo: 'Firmar OT es irreversible',
+                titulo: 'Firmar es irreversible',
                 contenido:
-                    'No existe función de desfirmar. Si necesitás revertir, consultá con el área de sistemas. ' +
-                    'Antes de firmar, verificá cliente, comitente, responsable, servicios y observaciones.',
+                    'No hay un botón para "desfirmar". Antes de firmar, revisá: cliente, comitente, ' +
+                    'responsable, servicios y los datos visibles en cabecera. Si algo está mal, lo único que queda es pedirle a sistemas que lo arregle.',
             },
             {
                 tipo: 'warning',
-                titulo: 'Edición de sub-entidades',
+                titulo: 'Cuidado al editar servicios y productos',
                 contenido:
-                    'Al editar la OT, las sub-entidades (servicios, productos, EPP, riesgos) se reescriben completamente. ' +
-                    'No hay sincronización delta — todo lo previo se borra y se vuelve a crear.',
+                    'Al editar una OT, las subtablas (servicios, productos, EPP, riesgos) se reemplazan completas con lo que dejaste en el formulario. ' +
+                    'Si quitás un servicio sin querer, los informes de ese método dejan de estar disponibles.',
             },
         ],
     },
 
     impacto: [
-        { modulo: 'Informes',     efecto: 'Al firmar OT, el módulo de informes muestra los métodos según los servicios cargados.', reversible: false },
-        { modulo: 'Partes diarios', efecto: 'Cada parte referencia ot_id. Si OT está cerrada, no se crean nuevos partes.',         reversible: false },
-        { modulo: 'Certificados', efecto: 'Filtran por ot_id. Pueden seguir generándose aún con OT cerrada.',                       reversible: true  },
-        { modulo: 'Asignaciones', efecto: 'Operadores, soldadores, vehículos y procedimientos se cuelgan de la OT.',                reversible: true  },
-        { modulo: 'PDF de OT',    efecto: 'DomPDF genera el reporte usando logo_cliente_sn y logo_contratista_sn para mostrar/ocultar logos.', reversible: true },
+        { modulo: 'Informes',         efecto: 'Recién después de firmar la OT, podés crear informes. Los métodos disponibles dependen de los servicios cargados.', reversible: 'parcial' },
+        { modulo: 'Partes diarios',   efecto: 'Cada parte se asocia a la OT. Si la OT está cerrada, ya no se pueden crear partes nuevos.',                            reversible: false },
+        { modulo: 'Certificados',     efecto: 'Toman partes firmados de la OT. Pueden seguir generándose aún con la OT cerrada.',                                     reversible: true },
+        { modulo: 'Asignaciones',     efecto: 'Operadores, soldadores, vehículos y procedimientos cuelgan de la OT. Se pueden modificar mientras la OT no esté cerrada.', reversible: true },
+        { modulo: 'PDF de la OT',     efecto: 'Si tildaste "Mostrar logo", el logo del cliente o comitente sale en el PDF generado.',                                  reversible: true },
     ],
 
     relacionados: [
-        { titulo: 'Visualización general de una OT', ruta: '/visualizar_ot' },
-        { titulo: 'Asignar operadores',               ruta: '/asignar_operadores' },
-        { titulo: 'Asignar soldadores y usuarios cliente', ruta: '/asignar_soldadores_y_usuarios' },
-        { titulo: 'Creación de informes',             ruta: '/generar_informes' },
-        { titulo: 'Gestionar clientes',               ruta: '/ayuda_gestion_cliente' },
-        { titulo: 'Gestionar servicios',              ruta: '/ayuda_gestion_servicios' },
+        { titulo: 'Ver listado de OT',                     ruta: '/visualizar_ot' },
+        { titulo: 'Asignar operadores a la OT',             ruta: '/asignar_operadores' },
+        { titulo: 'Asignar soldadores y usuarios cliente',  ruta: '/asignar_soldadores_y_usuarios' },
+        { titulo: 'Asignar vehículos',                       ruta: '/asignar_vehiculos' },
+        { titulo: 'Asignar procedimientos',                  ruta: '/asignar_procedimientos' },
+        { titulo: 'Generar informes',                        ruta: '/generar_informes' },
     ],
-
-    demo: 'ayuda-demo-form-ot',
-
-    fuente_codigo: {
-        controller: 'app/Http/Controllers/OtsController.php',
-        model:      'app/Ots.php',
-        request:    'app/Http/Requests/OtsRequest.php',
-    },
 };

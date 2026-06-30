@@ -11992,8 +11992,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   },
   created: function created() {
     if (this.datos && this.datos.variantes && this.datos.variantes.length) {
-      var inicial = this.variante || this.datos.variantes[0].id;
-      this.varianteActiva = inicial;
+      this.varianteActiva = this.variante || this.datos.variantes[0].id;
     }
   },
   computed: {
@@ -12014,11 +12013,17 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       var ov = this.variante_obj && this.variante_obj.hero;
       return ov ? Object.assign({}, base, ov) : base;
     },
+    acciones: function acciones() {
+      return this.resolver('acciones', []);
+    },
     dependencias: function dependencias() {
       return this.resolver('dependencias', []);
     },
     campos: function campos() {
       return this.resolver('campos', []);
+    },
+    botones: function botones() {
+      return this.resolver('botones', []);
     },
     errores: function errores() {
       return this.resolver('errores', []);
@@ -12034,15 +12039,16 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     },
     demoProps: function demoProps() {
       return this.variante_obj && this.variante_obj.demoProps || this.datos.demoProps || {};
+    },
+    indiceUrl: function indiceUrl() {
+      return '/ayuda_general';
     }
   },
   methods: {
     resolver: function resolver(key, fallback) {
-      // Si campos es {ducto: [...], planta: [...]} → resuelve por variante.
       var base = this.datos[key];
       if (!base) return fallback;
       if (Array.isArray(base)) return base;
-      // Es objeto con keys de variante → tomar la activa, fallback a la primera key
       if (_typeof(base) === 'object') {
         if (this.varianteActiva && base[this.varianteActiva]) return base[this.varianteActiva];
         var keys = Object.keys(base);
@@ -12054,7 +12060,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       var base = this.datos[key];
       if (!base) return null;
       if (_typeof(base) === 'object' && !Array.isArray(base) && !base.texto && !base.callouts) {
-        // mapa por variante
         if (this.varianteActiva && base[this.varianteActiva]) return base[this.varianteActiva];
         var keys = Object.keys(base);
         return keys.length ? base[keys[0]] : null;
@@ -66357,9 +66362,16 @@ var render = function render() {
     staticClass: "ayuda_articulo"
   }, [_c("header", {
     staticClass: "ayuda_articulo_hero"
-  }, [_c("h1", [_vm._v(_vm._s(_vm.heroData.titulo))]), _vm._v(" "), _vm.heroData.descripcion ? _c("p", [_vm._v(_vm._s(_vm.heroData.descripcion))]) : _vm._e(), _vm._v(" "), _vm.heroData.subtexto ? _c("p", {
-    staticClass: "ayuda_articulo_subtexto"
-  }, [_vm._v(_vm._s(_vm.heroData.subtexto))]) : _vm._e()]), _vm._v(" "), _vm.datos.variantes && _vm.datos.variantes.length ? _c("nav", {
+  }, [_c("div", {
+    staticClass: "ayuda_articulo_hero_text"
+  }, [_c("h1", [_vm._v(_vm._s(_vm.heroData.titulo))]), _vm._v(" "), _vm.heroData.descripcion ? _c("p", [_vm._v(_vm._s(_vm.heroData.descripcion))]) : _vm._e()]), _vm._v(" "), _vm.datos.ir_a ? _c("a", {
+    staticClass: "ayuda_ir_sistema_btn",
+    attrs: {
+      href: _vm.datos.ir_a.ruta
+    }
+  }, [_c("i", {
+    "class": "fa fa-" + (_vm.datos.ir_a.icono || "external-link")
+  }), _vm._v("\n            " + _vm._s(_vm.datos.ir_a.label || "Ir al sistema") + "\n        ")]) : _vm._e()]), _vm._v(" "), _vm.datos.variantes && _vm.datos.variantes.length ? _c("nav", {
     staticClass: "ayuda_articulo_tabs"
   }, _vm._l(_vm.datos.variantes, function (v) {
     return _c("button", {
@@ -66373,33 +66385,66 @@ var render = function render() {
           _vm.varianteActiva = v.id;
         }
       }
-    }, [_vm._v("\n            " + _vm._s(v.label) + "\n            "), v.descripcion ? _c("small", [_vm._v("— " + _vm._s(v.descripcion))]) : _vm._e()]);
-  }), 0) : _vm._e(), _vm._v(" "), _vm.dependencias.length ? _c("ayuda-seccion", {
+    }, [_vm._v("\n            " + _vm._s(v.label) + "\n        ")]);
+  }), 0) : _vm._e(), _vm._v(" "), _vm.acciones.length ? _c("ayuda-seccion", {
+    attrs: {
+      titulo: "¿Qué podés hacer en esta pantalla?",
+      id: "acciones"
+    }
+  }, [_c("ul", {
+    staticClass: "ayuda_acciones"
+  }, _vm._l(_vm.acciones, function (a, i) {
+    return _c("li", {
+      key: i
+    }, [_c("i", {
+      "class": "fa fa-" + (a.icono || "check")
+    }), _vm._v(" "), _c("div", [_c("strong", [_vm._v(_vm._s(a.titulo))]), _vm._v(" "), a.detalle ? _c("span", [_vm._v("— " + _vm._s(a.detalle))]) : _vm._e()])]);
+  }), 0)]) : _vm._e(), _vm._v(" "), _vm.dependencias.length ? _c("ayuda-seccion", {
     attrs: {
       titulo: "Antes de empezar",
-      numero: 1,
       id: "dependencias"
     }
-  }, [_c("p", [_vm._v("Verificá que estos elementos existan antes de abrir el formulario:")]), _vm._v(" "), _c("ayuda-tabla-dependencias", {
+  }, [_vm.datos.dependencias_intro ? _c("p", [_vm._v(_vm._s(_vm.datos.dependencias_intro))]) : _vm._e(), _vm._v(" "), _c("ayuda-tabla-dependencias", {
     attrs: {
       items: _vm.dependencias
     }
-  })], 1) : _vm._e(), _vm._v(" "), _vm.campos.length ? _c("ayuda-seccion", {
+  })], 1) : _vm._e(), _vm._v(" "), _vm.datos.demo ? _c("ayuda-seccion", {
     attrs: {
-      titulo: "Campos del formulario",
-      numero: 2,
+      titulo: "Así se ve la pantalla",
+      id: "vista"
+    }
+  }, [_vm.datos.demo_intro ? _c("p", [_vm._v(_vm._s(_vm.datos.demo_intro))]) : _vm._e(), _vm._v(" "), _c(_vm.datos.demo, _vm._b({
+    tag: "component"
+  }, "component", _vm.demoProps, false))], 1) : _vm._e(), _vm._v(" "), _vm.campos.length ? _c("ayuda-seccion", {
+    attrs: {
+      titulo: "Qué cargás en cada campo",
       id: "campos"
     }
   }, [_vm.datos.campos_intro ? _c("p", [_vm._v(_vm._s(_vm.datos.campos_intro))]) : _vm._e(), _vm._v(" "), _c("ayuda-tabla-campos", {
     attrs: {
       campos: _vm.campos
     }
-  }), _vm._v(" "), _vm.datos.demo ? _c(_vm.datos.demo, _vm._b({
-    tag: "component"
-  }, "component", _vm.demoProps, false)) : _vm._e()], 1) : _vm._e(), _vm._v(" "), _vm.datos.estados && _vm.datos.estados.length ? _c("ayuda-seccion", {
+  })], 1) : _vm._e(), _vm._v(" "), _vm.botones.length ? _c("ayuda-seccion", {
     attrs: {
-      titulo: "Estados y permisos",
-      numero: 3,
+      titulo: "Botones y qué hace cada uno",
+      id: "botones"
+    }
+  }, [_c("ul", {
+    staticClass: "ayuda_botones"
+  }, _vm._l(_vm.botones, function (b, i) {
+    return _c("li", {
+      key: i
+    }, [_c("span", {
+      staticClass: "ayuda_boton_demo",
+      "class": b.estilo || ""
+    }, [b.icono ? _c("i", {
+      "class": "fa fa-" + b.icono
+    }) : _vm._e(), _vm._v("\n                    " + _vm._s(b.label) + "\n                ")]), _vm._v(" "), _c("span", {
+      staticClass: "ayuda_boton_desc"
+    }, [_vm._v("— " + _vm._s(b.descripcion))])]);
+  }), 0)]) : _vm._e(), _vm._v(" "), _vm.datos.estados && _vm.datos.estados.length ? _c("ayuda-seccion", {
+    attrs: {
+      titulo: "¿Cuándo podés editar?",
       id: "estados"
     }
   }, [_vm.datos.estados_intro ? _c("p", [_vm._v(_vm._s(_vm.datos.estados_intro))]) : _vm._e(), _vm._v(" "), _c("ayuda-tabla-estados", {
@@ -66409,32 +66454,27 @@ var render = function render() {
     }
   })], 1) : _vm._e(), _vm._v(" "), _vm.errores.length ? _c("ayuda-seccion", {
     attrs: {
-      titulo: "Validaciones y errores comunes",
-      numero: 4,
+      titulo: "Si te pasa esto…",
       id: "errores"
     }
-  }, [_c("p", [_vm._v("Mensajes y situaciones más frecuentes con la causa real (según el código) y cómo resolverlos:")]), _vm._v(" "), _c("ayuda-tabla-errores", {
+  }, [_c("p", [_vm._v("Las situaciones más frecuentes y cómo resolverlas:")]), _vm._v(" "), _c("ayuda-tabla-errores", {
     attrs: {
       errores: _vm.errores
     }
   })], 1) : _vm._e(), _vm._v(" "), _vm.calculos.length ? _c("ayuda-seccion", {
     attrs: {
-      titulo: "Cálculos automáticos",
-      numero: 5,
+      titulo: "Lo que el sistema hace solo",
       id: "calculos"
     }
-  }, [_c("p", [_vm._v("Lo que el sistema calcula sin intervención del usuario:")]), _vm._v(" "), _c("ul", {
+  }, [_c("ul", {
     staticClass: "ayuda_calc_list"
   }, _vm._l(_vm.calculos, function (c, i) {
     return _c("li", {
       key: i
-    }, [_c("strong", [_vm._v(_vm._s(c.que))]), _vm._v(" — " + _vm._s(c.como) + "\n                "), c.formula ? _c("code", {
-      staticClass: "ayuda_calc_formula"
-    }, [_vm._v(_vm._s(c.formula))]) : _vm._e()]);
+    }, [_c("strong", [_vm._v(_vm._s(c.que))]), _vm._v(" — " + _vm._s(c.como) + "\n            ")]);
   }), 0)]) : _vm._e(), _vm._v(" "), _vm.edicion ? _c("ayuda-seccion", {
     attrs: {
-      titulo: "Edición y revisiones",
-      numero: 6,
+      titulo: "Modificar después de guardar",
       id: "edicion"
     }
   }, [_vm.edicion.texto ? _c("p", [_vm._v(_vm._s(_vm.edicion.texto))]) : _vm._e(), _vm._v(" "), _vm._l(_vm.edicion.callouts || [], function (co, i) {
@@ -66451,11 +66491,10 @@ var render = function render() {
     })]);
   })], 2) : _vm._e(), _vm._v(" "), _vm.impacto.length ? _c("ayuda-seccion", {
     attrs: {
-      titulo: "Impacto cruzado",
-      numero: 7,
+      titulo: "Qué cambia después de guardar",
       id: "impacto"
     }
-  }, [_c("p", [_vm._v("Qué afecta esta operación en otros módulos del sistema:")]), _vm._v(" "), _c("ayuda-tabla-impacto", {
+  }, [_c("ayuda-tabla-impacto", {
     attrs: {
       impactos: _vm.impacto
     }
@@ -66464,7 +66503,6 @@ var render = function render() {
       key: "extra-" + i,
       attrs: {
         titulo: extra.titulo,
-        numero: 8 + i,
         id: "extra-" + i
       }
     }, [_c("div", {
@@ -66474,26 +66512,34 @@ var render = function render() {
     })]);
   }), _vm._v(" "), _vm.datos.relacionados && _vm.datos.relacionados.length ? _c("ayuda-seccion", {
     attrs: {
-      titulo: "Artículos relacionados",
-      numero: 8 + (_vm.datos.secciones_extras || []).length,
+      titulo: "También te puede interesar",
       id: "relacionados"
     }
   }, [_c("ayuda-relacionados", {
     attrs: {
       items: _vm.datos.relacionados
     }
-  })], 1) : _vm._e(), _vm._v(" "), _vm.datos.fuente_codigo ? _c("footer", {
-    staticClass: "ayuda_articulo_fuente"
-  }, [_c("small", [_c("i", {
-    staticClass: "fa fa-code"
-  }), _vm._v("\n            Datos verificados contra:\n            "), _vm.datos.fuente_codigo.controller ? _c("code", [_vm._v(_vm._s(_vm.datos.fuente_codigo.controller))]) : _vm._e(), _vm._v(" "), _vm.datos.fuente_codigo.model ? _c("code", [_vm._v(_vm._s(_vm.datos.fuente_codigo.model))]) : _vm._e(), _vm._v(" "), _vm.datos.fuente_codigo.request ? _c("code", [_vm._v(_vm._s(_vm.datos.fuente_codigo.request))]) : _vm._e()])]) : _vm._e()], 2) : _c("div", {
+  })], 1) : _vm._e(), _vm._v(" "), _vm.datos.ir_a ? _c("div", {
+    staticClass: "ayuda_articulo_cta_bottom"
+  }, [_c("a", {
+    staticClass: "ayuda_ir_sistema_btn",
+    attrs: {
+      href: _vm.datos.ir_a.ruta
+    }
+  }, [_c("i", {
+    "class": "fa fa-" + (_vm.datos.ir_a.icono || "external-link")
+  }), _vm._v("\n            " + _vm._s(_vm.datos.ir_a.label || "Ir al sistema") + "\n        ")])]) : _vm._e()], 2) : _c("div", {
     staticClass: "ayuda_articulo_error"
   }, [_c("ayuda-callout", {
     attrs: {
       tipo: "error",
-      titulo: "Entidad no encontrada"
+      titulo: "Sección no disponible"
     }
-  }, [_vm._v("\n        La entidad "), _c("code", [_vm._v(_vm._s(_vm.entidad))]), _vm._v(" no tiene un archivo de datos en\n        "), _c("code", [_vm._v("resources/js/components/ayuda/datos/")]), _vm._v(".\n    ")])], 1);
+  }, [_vm._v("\n        Este artículo todavía no está disponible. Volvé al\n        "), _c("a", {
+    attrs: {
+      href: _vm.indiceUrl
+    }
+  }, [_vm._v("índice de ayuda")]), _vm._v(".\n    ")])], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -139354,7 +139400,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.ayuda_articulo[data-v-1743a5b5] {\n    max-width: 980px;\n    margin: 0 auto;\n    font-family: 'Montserrat', sans-serif;\n    color: #2b2f33;\n}\n.ayuda_articulo_hero[data-v-1743a5b5] {\n    padding: 4px 0 16px 18px;\n    border-left: 3px solid #FFCC00;\n    margin-bottom: 22px;\n}\n.ayuda_articulo_hero h1[data-v-1743a5b5] {\n    margin: 0 0 8px;\n    font-size: 24px;\n    font-weight: 700;\n    color: #1a1a1a;\n    letter-spacing: -0.01em;\n    padding-bottom: 6px;\n    border-bottom: 0;\n}\n.ayuda_articulo_hero p[data-v-1743a5b5] {\n    margin: 0 0 6px;\n    font-size: 14px;\n    color: #4c5661;\n    line-height: 1.6;\n}\n.ayuda_articulo_subtexto[data-v-1743a5b5] { color: #6b7280; font-size: 13px !important;\n}\n.ayuda_articulo_tabs[data-v-1743a5b5] {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 4px;\n    margin-bottom: 22px;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #eef0f3;\n}\n.ayuda_articulo_tab[data-v-1743a5b5] {\n    background: #fff;\n    border: 1px solid #e5e7eb;\n    color: #4c5661;\n    padding: 7px 14px;\n    border-radius: 6px;\n    font-size: 13px;\n    font-weight: 600;\n    cursor: pointer;\n    transition: all 0.12s ease;\n    display: inline-flex;\n    align-items: baseline;\n    gap: 5px;\n}\n.ayuda_articulo_tab small[data-v-1743a5b5] { color: #9ca3af; font-weight: 400; font-size: 11.5px;\n}\n.ayuda_articulo_tab[data-v-1743a5b5]:hover {\n    border-color: #1a1a1a;\n    color: #1a1a1a;\n}\n.ayuda_articulo_tab.is-active[data-v-1743a5b5] {\n    background: #FFCC00;\n    border-color: #FFCC00;\n    color: #1a1a1a;\n}\n.ayuda_articulo_tab.is-active small[data-v-1743a5b5] { color: #5c4a00;\n}\n.ayuda_calc_list[data-v-1743a5b5] {\n    list-style: none;\n    padding: 0;\n    margin: 8px 0 12px;\n}\n.ayuda_calc_list li[data-v-1743a5b5] {\n    padding: 8px 12px;\n    background: #fafbfc;\n    border-left: 3px solid #2e86c1;\n    border-radius: 0 4px 4px 0;\n    margin-bottom: 6px;\n    font-size: 13px;\n    line-height: 1.55;\n}\n.ayuda_calc_list li strong[data-v-1743a5b5] { color: #1a1a1a;\n}\n.ayuda_calc_formula[data-v-1743a5b5] {\n    display: inline-block;\n    background: #fff;\n    border: 1px solid #d6dce3;\n    color: #4c5661;\n    padding: 1px 6px;\n    border-radius: 3px;\n    font-size: 11.5px;\n    font-family: 'Courier New', monospace;\n    margin-left: 4px;\n}\n.ayuda_articulo_fuente[data-v-1743a5b5] {\n    margin-top: 30px;\n    padding-top: 12px;\n    border-top: 1px dashed #e5e7eb;\n    text-align: right;\n}\n.ayuda_articulo_fuente small[data-v-1743a5b5] {\n    color: #9ca3af;\n    font-size: 11px;\n}\n.ayuda_articulo_fuente code[data-v-1743a5b5] {\n    background: #fafbfc;\n    border: 1px solid #eef0f3;\n    color: #6b7280;\n    padding: 1px 5px;\n    border-radius: 3px;\n    font-size: 10.5px;\n    margin-left: 4px;\n}\n.ayuda_articulo_error[data-v-1743a5b5] { max-width: 980px; margin: 24px auto; padding: 0 12px;\n}\n", ""]);
+exports.push([module.i, "\n.ayuda_articulo[data-v-1743a5b5] {\n    max-width: 980px;\n    margin: 0 auto;\n    padding: 0 12px;\n    font-family: 'Montserrat', sans-serif;\n    color: #2b2f33;\n}\n\n/* Hero */\n.ayuda_articulo_hero[data-v-1743a5b5] {\n    display: flex;\n    gap: 18px;\n    align-items: flex-start;\n    flex-wrap: wrap;\n    padding: 4px 0 16px 18px;\n    border-left: 3px solid #FFCC00;\n    margin-bottom: 22px;\n}\n.ayuda_articulo_hero_text[data-v-1743a5b5] { flex: 1; min-width: 260px;\n}\n.ayuda_articulo_hero h1[data-v-1743a5b5] {\n    margin: 0 0 8px;\n    font-size: 24px;\n    font-weight: 700;\n    color: #1a1a1a;\n    letter-spacing: -0.01em;\n}\n.ayuda_articulo_hero p[data-v-1743a5b5] {\n    margin: 0;\n    font-size: 14px;\n    color: #4c5661;\n    line-height: 1.6;\n}\n\n/* Botón \"Ir al sistema\" — estilo enod amarillo */\n.ayuda_ir_sistema_btn[data-v-1743a5b5] {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #FFCC00;\n    border: 1px solid #FFCC00;\n    color: #1a1a1a !important;\n    padding: 9px 18px;\n    border-radius: 6px;\n    font-size: 13px;\n    font-weight: 700;\n    text-decoration: none !important;\n    transition: all 0.12s ease;\n    line-height: 1;\n    white-space: nowrap;\n    align-self: center;\n}\n.ayuda_ir_sistema_btn[data-v-1743a5b5]:hover,\n.ayuda_ir_sistema_btn[data-v-1743a5b5]:focus {\n    background: #1a1a1a;\n    border-color: #1a1a1a;\n    color: #FFCC00 !important;\n}\n.ayuda_articulo_cta_bottom[data-v-1743a5b5] {\n    margin: 28px 0 8px;\n    text-align: center;\n    padding-top: 24px;\n    border-top: 1px solid #eef0f3;\n}\n\n/* Tabs de variantes */\n.ayuda_articulo_tabs[data-v-1743a5b5] {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 4px;\n    margin-bottom: 22px;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #eef0f3;\n}\n.ayuda_articulo_tab[data-v-1743a5b5] {\n    background: #fff;\n    border: 1px solid #e5e7eb;\n    color: #4c5661;\n    padding: 7px 16px;\n    border-radius: 6px;\n    font-size: 13px;\n    font-weight: 600;\n    cursor: pointer;\n    transition: all 0.12s ease;\n}\n.ayuda_articulo_tab[data-v-1743a5b5]:hover { border-color: #1a1a1a; color: #1a1a1a;\n}\n.ayuda_articulo_tab.is-active[data-v-1743a5b5] {\n    background: #FFCC00;\n    border-color: #FFCC00;\n    color: #1a1a1a;\n}\n\n/* Lista de acciones disponibles */\n.ayuda_acciones[data-v-1743a5b5] {\n    list-style: none;\n    padding: 0;\n    margin: 8px 0 0;\n}\n.ayuda_acciones li[data-v-1743a5b5] {\n    display: flex;\n    gap: 10px;\n    padding: 8px 12px;\n    background: #fafbfc;\n    border: 1px solid #eef0f3;\n    border-radius: 4px;\n    margin-bottom: 6px;\n    align-items: flex-start;\n    font-size: 13.5px;\n    line-height: 1.55;\n}\n.ayuda_acciones li > i[data-v-1743a5b5] {\n    color: #d4a800;\n    font-size: 14px;\n    margin-top: 3px;\n    flex-shrink: 0;\n}\n.ayuda_acciones li strong[data-v-1743a5b5] { color: #1a1a1a; font-weight: 700;\n}\n\n/* Botones documentados */\n.ayuda_botones[data-v-1743a5b5] {\n    list-style: none;\n    padding: 0;\n    margin: 8px 0;\n}\n.ayuda_botones li[data-v-1743a5b5] {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    padding: 8px 0;\n    border-bottom: 1px solid #f3f4f6;\n    font-size: 13.5px;\n    flex-wrap: wrap;\n}\n.ayuda_botones li[data-v-1743a5b5]:last-child { border-bottom: 0;\n}\n.ayuda_boton_demo[data-v-1743a5b5] {\n    display: inline-flex;\n    align-items: center;\n    gap: 5px;\n    background: #FFCC00;\n    color: #1a1a1a;\n    padding: 5px 12px;\n    border-radius: 4px;\n    font-size: 12px;\n    font-weight: 700;\n    line-height: 1;\n    border: 1px solid #FFCC00;\n    pointer-events: none;\n    flex-shrink: 0;\n}\n.ayuda_boton_demo.gris[data-v-1743a5b5] { background: #fff; color: #4c5661; border-color: #d6dce3;\n}\n.ayuda_boton_demo.rojo[data-v-1743a5b5] { background: #dc3545; color: #fff; border-color: #dc3545;\n}\n.ayuda_boton_demo.negro[data-v-1743a5b5] { background: #1a1a1a; color: #fff; border-color: #1a1a1a;\n}\n.ayuda_boton_desc[data-v-1743a5b5] { color: #4c5661; font-size: 13px;\n}\n\n/* Cálculos */\n.ayuda_calc_list[data-v-1743a5b5] {\n    list-style: none;\n    padding: 0;\n    margin: 8px 0 12px;\n}\n.ayuda_calc_list li[data-v-1743a5b5] {\n    padding: 8px 12px;\n    background: #fffdf5;\n    border-left: 3px solid #FFCC00;\n    border-radius: 0 4px 4px 0;\n    margin-bottom: 6px;\n    font-size: 13.5px;\n    line-height: 1.55;\n}\n.ayuda_calc_list li strong[data-v-1743a5b5] { color: #1a1a1a;\n}\n.ayuda_articulo_error[data-v-1743a5b5] { max-width: 980px; margin: 24px auto; padding: 0 12px;\n}\n", ""]);
 
 // exports
 
@@ -396420,321 +396466,342 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* Datos del manual: Orden de Trabajo (OT).
- * Verificado contra:
- *   - app/Http/Controllers/OtsController.php
- *   - app/Http/Requests/OtsRequest.php
- *   - app/Ots.php
- *   - database/migrations/2019_06_13_190325_create_ots_table.php
- */
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   hero: {
-    titulo: 'Orden de Trabajo (OT)',
-    descripcion: 'La OT es el registro raíz del circuito documental. Define cliente, comitente, responsable, ' + 'servicios contratados, productos, EPP y riesgos. Todo lo que pasa después (informes, partes, ' + 'certificados, remitos) cuelga de una OT correctamente cargada.',
-    subtexto: 'Una OT mal definida en cabecera obliga a corregir documentos posteriores. ' + 'Conviene completar todos los datos sensibles antes de firmar.'
+    titulo: 'Crear una Orden de Trabajo (OT)',
+    descripcion: 'La OT es la "carpeta" del trabajo. Acá cargás cliente, comitente, lugar de ensayo, ' + 'responsable, servicios contratados, productos, EPP y riesgos. Una vez creada, ' + 'desde la OT vas a asignar operadores, soldadores, vehículos y procedimientos.'
   },
+  ir_a: {
+    label: 'Abrir el tablero de OT',
+    ruta: '/area/enod',
+    icono: 'clipboard'
+  },
+  acciones: [{
+    icono: 'plus-circle',
+    titulo: 'Crear una OT nueva',
+    detalle: 'Desde el botón "Nueva OT" del tablero principal.'
+  }, {
+    icono: 'pencil',
+    titulo: 'Editar una OT en borrador',
+    detalle: 'Mientras esté en estado Editando, podés modificar todos los datos.'
+  }, {
+    icono: 'check-circle',
+    titulo: 'Firmar la OT',
+    detalle: 'La pasa a Activa. A partir de ahí ya podés cargar informes y partes.'
+  }, {
+    icono: 'cogs',
+    titulo: 'Cargar servicios y productos',
+    detalle: 'Definen qué métodos de ensayo van a estar disponibles después.'
+  }, {
+    icono: 'archive',
+    titulo: 'Cerrar la OT',
+    detalle: 'Cuando el trabajo terminó. Queda como antecedente, ya no se edita.'
+  }],
+  dependencias_intro: 'Si alguno de estos datos no está cargado, vas a tener que crearlos primero en el menú "Maestros".',
   dependencias: [{
     entidad: 'Cliente',
-    descripcion: 'Debe estar dado de alta con razón social, CUIT y al menos un contacto.',
+    descripcion: 'Tiene que estar dado de alta con al menos un contacto.',
     ruta: '/ayuda_gestion_cliente',
     critico: true
   }, {
     entidad: 'Comitente',
-    descripcion: 'Si aplica al trabajo, debe existir en el maestro de contratistas.',
+    descripcion: 'Solo si el trabajo lo terceriza otra empresa.',
     ruta: '/ayuda_gestion_comitente',
     critico: false
   }, {
-    entidad: 'Responsable',
-    descripcion: 'Usuario interno de Enod habilitado y posteriormente asignado como operador de la OT.',
-    ruta: '/ayuda_gestion_usuario',
-    critico: true
-  }, {
     entidad: 'Servicios',
-    descripcion: 'Habilita después qué métodos NDT (RI / PM / LP / US…) podrán informarse.',
+    descripcion: 'Sin servicios cargados, después no podés hacer informes.',
     ruta: '/ayuda_gestion_servicios',
     critico: true
   }, {
     entidad: 'Productos',
-    descripcion: 'Solo si se presupuestaron consumibles por trabajo (placas, líquidos, etc).',
+    descripcion: 'Solo si vas a consumir materiales (placas, líquidos, etc.).',
     ruta: '/ayuda_gestion_productos',
     critico: false
+  }, {
+    entidad: 'Responsable',
+    descripcion: 'Un usuario interno de Enod, que también vas a asignar como operador.',
+    ruta: '/ayuda_gestion_usuario',
+    critico: true
   }],
-  campos_intro: 'El formulario tiene 19 campos en cabecera más sub-secciones para servicios, productos, EPP y riesgos. ' + 'Los marcados con (*) son obligatorios — sin ellos el sistema no permite guardar.',
+  demo_intro: 'Esta es la cabecera del formulario tal como la vas a ver en el sistema. Más abajo encontrás ' + 'el detalle de qué se carga en cada campo.',
+  demo: 'ayuda-demo-form-ot',
+  campos_intro: 'Los campos con asterisco rojo no se pueden dejar vacíos. Si te falta algún dato, el sistema ' + 'no te deja guardar hasta que lo completes.',
   campos: [{
-    nombre: 'OT N°',
-    tipo: 'numeric',
+    nombre: 'Proyecto',
+    tipo: 'texto',
     obligatorio: true,
-    origen: 'Auto / manual',
-    validacion: 'digits_between:1,8 · unique:ots,numero',
-    notas: 'No puede repetirse en el sistema.'
+    origen: 'Lo escribís vos',
+    notas: 'Nombre del proyecto, hasta 60 caracteres.'
   }, {
     nombre: 'FST N°',
-    tipo: 'numeric',
+    tipo: 'número',
     obligatorio: true,
-    origen: 'Numero de presupuesto',
-    validacion: 'digits_between:1,8',
-    notas: 'Identifica el presupuesto comercial origen.'
+    origen: 'Número de presupuesto',
+    notas: 'El número de presupuesto comercial que dio origen al trabajo.'
   }, {
-    nombre: 'Proyecto',
-    tipo: 'text',
+    nombre: 'OT N°',
+    tipo: 'número',
     obligatorio: true,
-    origen: 'Libre',
-    validacion: 'required · Max:60',
-    notas: 'Nombre del proyecto / obra principal.'
-  }, {
-    nombre: 'Obra / OC',
-    tipo: 'text',
-    obligatorio: 'condicional',
-    condicion: 'OT de obra única',
-    origen: 'Libre',
-    validacion: 'Min:1 · Max:15 · nullable',
-    notas: 'Si la OT es multiobra, puede quedar vacío.'
+    origen: 'Sugerido por el sistema',
+    notas: 'No puede repetirse. El sistema sugiere el siguiente libre, podés cambiarlo.'
   }, {
     nombre: 'Fecha',
-    tipo: 'date',
+    tipo: 'fecha',
     obligatorio: true,
-    origen: 'Hoy por defecto',
-    validacion: 'required',
-    notas: 'Fecha de creación del registro.'
+    origen: 'Por defecto la de hoy',
+    notas: 'La fecha de creación de la OT.'
+  }, {
+    nombre: 'Obra N° / OC',
+    tipo: 'texto',
+    obligatorio: 'condicional',
+    condicion: 'OT de una sola obra',
+    origen: 'Número que dio el cliente',
+    notas: 'Si la OT es multiobra, este campo lo dejás vacío.'
   }, {
     nombre: 'Fecha estimada',
-    tipo: 'date',
+    tipo: 'fecha',
     obligatorio: true,
-    origen: 'Libre',
-    validacion: 'required',
-    notas: 'Cuándo se planea ejecutar el trabajo.'
+    origen: 'Lo elegís vos',
+    notas: 'Cuándo se va a hacer el ensayo.'
   }, {
     nombre: 'Hora',
-    tipo: 'time',
+    tipo: 'hora',
     obligatorio: true,
     origen: 'HH:MM',
-    validacion: 'required',
     notas: 'Hora estimada de inicio.'
   }, {
     nombre: 'Cliente',
-    tipo: 'select',
+    tipo: 'lista',
     obligatorio: true,
-    origen: 'Maestro clientes',
-    validacion: 'required',
-    notas: 'Al elegirlo, se filtran los contactos disponibles.'
+    origen: 'Maestro de clientes',
+    notas: 'Al elegirlo, se cargan los contactos disponibles automáticamente.'
   }, {
-    nombre: 'Contacto 1',
-    tipo: 'select',
+    nombre: 'Contacto',
+    tipo: 'lista',
     obligatorio: true,
     origen: 'Contactos del cliente',
-    validacion: 'required',
-    notas: 'Debe pertenecer al cliente elegido.'
-  }, {
-    nombre: 'Contacto 2 / 3',
-    tipo: 'select',
-    obligatorio: false,
-    origen: 'Contactos del cliente',
-    validacion: 'nullable',
-    notas: 'Contactos secundarios opcionales.'
+    notas: 'Podés elegir hasta 3 contactos del cliente para que figuren en la OT.'
   }, {
     nombre: 'Comitente',
-    tipo: 'select',
+    tipo: 'lista',
     obligatorio: false,
-    origen: 'Maestro contratistas',
-    validacion: 'nullable',
-    notas: 'Empresa que terceriza el trabajo (si aplica).'
+    origen: 'Maestro de comitentes',
+    notas: 'Solo si aplica.'
   }, {
     nombre: 'Responsable OT',
-    tipo: 'select',
+    tipo: 'lista',
     obligatorio: true,
-    origen: 'Usuarios internos',
-    validacion: 'required',
-    notas: 'Debe ser asignado luego como operador de la OT.'
+    origen: 'Usuarios internos de Enod',
+    notas: 'Esta persona también tiene que estar asignada después como operador de la OT.'
+  }, {
+    nombre: 'Mostrar logo',
+    tipo: 'tilde',
+    obligatorio: false,
+    origen: 'Sí / No',
+    notas: 'Si lo tildás, el logo del cliente o del comitente sale en los PDFs.'
   }, {
     nombre: 'Provincia',
-    tipo: 'select',
+    tipo: 'lista',
     obligatorio: true,
-    origen: 'Maestro provincias',
-    validacion: 'required',
+    origen: 'Maestro de provincias',
     notas: 'Al elegirla, se filtran las localidades.'
   }, {
     nombre: 'Localidad',
-    tipo: 'select',
+    tipo: 'lista',
     obligatorio: true,
-    origen: 'Localidades por provincia',
-    validacion: 'required',
-    notas: 'Localidad del ensayo.'
+    origen: 'Localidades de la provincia',
+    notas: ''
   }, {
     nombre: 'Lugar de ensayo',
-    tipo: 'text',
+    tipo: 'texto',
     obligatorio: true,
-    origen: 'Libre',
-    validacion: 'required · Max:200',
-    notas: 'Sector / dirección del trabajo.'
+    origen: 'Lo escribís vos',
+    notas: 'Sector descriptivo (planta, taller, frente de obra, etc.).'
   }, {
-    nombre: 'Latitud',
-    tipo: 'decimal',
-    obligatorio: true,
-    origen: 'Google Maps',
-    validacion: 'required',
-    notas: 'Reubica el mapa si se carga manualmente.'
-  }, {
-    nombre: 'Longitud',
-    tipo: 'decimal',
+    nombre: 'Latitud / Longitud',
+    tipo: 'mapa',
     obligatorio: true,
     origen: 'Google Maps',
-    validacion: 'required',
-    notas: 'Idem latitud.'
+    notas: 'Si las cargás manualmente, el mapa se reubica en ese punto.'
   }, {
-    nombre: 'Mostrar logo cliente',
-    tipo: 'checkbox',
-    obligatorio: false,
-    origen: '0/1',
-    validacion: '',
-    notas: 'Si está activo, se imprime el logo en los PDFs.'
+    nombre: 'Servicios',
+    tipo: 'subtabla',
+    obligatorio: true,
+    origen: 'Maestro de servicios',
+    notas: 'Agregá uno por uno con el botón +. Definen qué métodos podrás informar después.'
   }, {
-    nombre: 'Mostrar logo contratista',
-    tipo: 'checkbox',
+    nombre: 'Productos',
+    tipo: 'subtabla',
     obligatorio: false,
-    origen: '0/1',
-    validacion: '',
-    notas: 'Idem para el logo del comitente.'
+    origen: 'Maestro de productos',
+    notas: 'Solo si presupuestaste consumibles por trabajo.'
+  }, {
+    nombre: 'EPP',
+    tipo: 'subtabla',
+    obligatorio: false,
+    origen: 'Maestro de EPP',
+    notas: 'Elementos de seguridad requeridos para el trabajo.'
+  }, {
+    nombre: 'Riesgos',
+    tipo: 'subtabla',
+    obligatorio: false,
+    origen: 'Maestro de riesgos',
+    notas: 'Riesgos detectados para el ensayo.'
   }, {
     nombre: 'Observaciones',
-    tipo: 'textarea',
+    tipo: 'texto',
     obligatorio: false,
-    origen: 'Libre',
-    validacion: 'nullable · Max:255',
-    notas: 'Aclaraciones generales, no reemplaza datos estructurados.'
+    origen: 'Lo escribís vos',
+    notas: 'Aclaraciones generales. No reemplaza datos estructurados del formulario.'
   }],
-  estados_intro: 'La OT pasa por tres estados. Cada transición es disparada por una acción explícita del usuario con permiso.',
+  botones: [{
+    label: '+ Nueva OT',
+    icono: 'plus',
+    estilo: '',
+    descripcion: 'Abre el formulario vacío para crear una OT nueva.'
+  }, {
+    label: '+',
+    icono: '',
+    estilo: '',
+    descripcion: 'Suma una fila a las subtablas (servicios, productos, EPP, riesgos).'
+  }, {
+    label: 'Guardar',
+    icono: 'save',
+    estilo: '',
+    descripcion: 'Graba la OT en estado Editando. Podés volver a modificarla.'
+  }, {
+    label: 'Firmar',
+    icono: 'check',
+    estilo: '',
+    descripcion: 'Pasa la OT a Activa. Es irreversible.'
+  }, {
+    label: 'Cancelar',
+    icono: '',
+    estilo: 'gris',
+    descripcion: 'Sale sin guardar cambios.'
+  }],
+  estados_intro: 'Una OT pasa por tres momentos. Lo que podés hacer en cada uno cambia:',
   estados: [{
-    nombre: 'EDITANDO',
+    nombre: 'Editando',
     color: 'amarillo',
     icono: 'pencil',
-    descripcion: 'OT recién creada, todos los datos modificables.',
-    editable: true,
-    permiso: 'O_alta'
+    descripcion: 'Recién creada. Modificás todo libremente.',
+    editable: true
   }, {
-    nombre: 'ACTIVA',
+    nombre: 'Activa',
     color: 'verde',
     icono: 'check',
-    descripcion: 'Firmada por el responsable. Habilita informes, partes y certificados.',
-    editable: 'parcial',
-    permiso: 'O_alta'
+    descripcion: 'Firmada. Podés cargar informes, partes y certificados.',
+    editable: 'parcial'
   }, {
-    nombre: 'CERRADA',
+    nombre: 'Cerrada',
     color: 'gris',
     icono: 'archive',
-    descripcion: 'Trabajo terminado. Queda como antecedente, solo lectura.',
-    editable: false,
-    permiso: 'O_alta'
+    descripcion: 'Trabajo terminado. Queda como consulta, no se edita más.',
+    editable: false
   }],
   transiciones: [{
-    de: 'EDITANDO',
-    a: 'ACTIVA',
-    accion: 'Firmar OT',
-    permiso: 'O_alta',
+    de: 'Editando',
+    a: 'Activa',
+    accion: 'Firmar la OT',
     irreversible: true
   }, {
-    de: 'ACTIVA',
-    a: 'CERRADA',
-    accion: 'Cerrar OT',
-    permiso: 'O_alta',
+    de: 'Activa',
+    a: 'Cerrada',
+    accion: 'Cerrar la OT',
     irreversible: true
   }],
   errores: [{
+    mensaje: 'No me deja guardar',
+    causa: 'Falta completar algún campo obligatorio (marcado con *).',
+    solucion: 'Revisá los campos que aparecen resaltados en rojo. Suele faltar cliente, contacto, responsable o servicios.'
+  }, {
     mensaje: 'El número de OT ya existe',
-    causa: 'Otro registro ya usa ese número (validación unique:ots,numero).',
-    solucion: 'Elegí un número de OT distinto. El sistema sugiere el siguiente correlativo libre.'
+    causa: 'Hay otra OT con el mismo número.',
+    solucion: 'Usá el correlativo que sugiere el sistema, o elegí otro distinto.'
   }, {
-    mensaje: 'El campo proyecto es obligatorio',
-    causa: 'No se completó el nombre del proyecto antes de guardar.',
-    solucion: 'Cargá un proyecto (máx. 60 caracteres) antes de continuar.'
+    mensaje: 'El contacto que elegí ya no aparece',
+    causa: 'Cambiaste el cliente después de elegir el contacto. Cada contacto pertenece a un cliente.',
+    solucion: 'Volvé a elegir el contacto. Si no aparece el que necesitás, agregálo desde el maestro de clientes.'
   }, {
-    mensaje: 'El contacto seleccionado no pertenece a este cliente',
-    causa: 'Cambiaste el cliente después de elegir el contacto.',
-    solucion: 'Elegí un contacto que sí esté cargado para el cliente actual, o agregálo en el maestro de clientes.'
-  }, {
-    mensaje: 'No hay localidades disponibles',
+    mensaje: 'No hay localidades para elegir',
     causa: 'No elegiste provincia, o la provincia no tiene localidades cargadas.',
-    solucion: 'Seleccioná primero la provincia. Si falta una localidad, cargála desde el maestro.'
+    solucion: 'Primero seleccioná la provincia. Si igual no aparecen, pedile a sistemas que agregue la localidad.'
   }, {
-    mensaje: 'No puedo editar esta OT',
-    causa: 'La OT está en estado CERRADA. La firma es irreversible.',
-    solucion: 'Si necesitás corregir datos, abrí una nueva OT o consultá con sistemas para revertir manualmente.'
+    mensaje: 'No me deja editar la OT',
+    causa: 'La OT ya fue cerrada. No se puede revertir desde la pantalla.',
+    solucion: 'Si necesitás corregir algo, pedile a sistemas que la reabra manualmente.'
   }, {
-    mensaje: 'No aparecen servicios al cargar informes',
-    causa: 'No agregaste servicios a la OT, o el método del informe no tiene su servicio cargado.',
-    solucion: 'Volvé a la OT y agregá el servicio del método (ej. servicio RI para informes de radiografía).'
+    mensaje: 'No me aparecen los métodos en informes',
+    causa: 'No agregaste el servicio del método (por ejemplo, servicio "RI" para hacer informes de radiografía).',
+    solucion: 'Volvé a la OT y agregá el servicio correspondiente desde la subtabla de Servicios.'
   }],
   calculos: [{
     que: 'Número de OT',
-    como: 'Validado como único en la tabla ots. El sistema sugiere correlativo pero permite manual.'
+    como: 'El sistema sugiere el siguiente número libre. Lo podés cambiar, siempre que no se repita.'
   }, {
-    que: 'Filtro de contactos',
-    como: 'Cuando elegís cliente, el select de contactos se filtra por cliente_id automáticamente.'
+    que: 'Contactos',
+    como: 'Cuando elegís cliente, la lista de contactos se actualiza sola con los que tiene ese cliente.'
   }, {
-    que: 'Filtro de localidades',
-    como: 'Al elegir provincia, las localidades se cargan por provincia_id.'
+    que: 'Localidades',
+    como: 'Al elegir provincia, las localidades disponibles se filtran solas.'
   }, {
     que: 'Mapa',
-    como: 'Si se cargan latitud y longitud manualmente, el mapa se reubica con esa información.'
+    como: 'Si cargás latitud y longitud manualmente, el mapa se mueve a esa ubicación.'
   }],
   edicion: {
-    texto: 'Mientras la OT está en estado EDITANDO se puede modificar todo. Tras firmar (estado ACTIVA), ' + 'la cabecera queda parcialmente bloqueada: el número de OT y FST quedan readonly, pero los ' + 'servicios, productos, EPP y asignaciones siguen siendo editables. Una vez cerrada, todo queda en solo lectura.',
+    texto: 'Mientras la OT está en Editando, podés cambiar todo. Una vez que la Firmás, queda en Activa: ' + 'algunos datos de cabecera (como el número de OT) quedan bloqueados, pero podés seguir cargando ' + 'servicios, asignaciones y demás. Cuando la Cerrás, la OT queda como consulta y ya no se modifica.',
     callouts: [{
       tipo: 'irreversible',
-      titulo: 'Firmar OT es irreversible',
-      contenido: 'No existe función de desfirmar. Si necesitás revertir, consultá con el área de sistemas. ' + 'Antes de firmar, verificá cliente, comitente, responsable, servicios y observaciones.'
+      titulo: 'Firmar es irreversible',
+      contenido: 'No hay un botón para "desfirmar". Antes de firmar, revisá: cliente, comitente, ' + 'responsable, servicios y los datos visibles en cabecera. Si algo está mal, lo único que queda es pedirle a sistemas que lo arregle.'
     }, {
       tipo: 'warning',
-      titulo: 'Edición de sub-entidades',
-      contenido: 'Al editar la OT, las sub-entidades (servicios, productos, EPP, riesgos) se reescriben completamente. ' + 'No hay sincronización delta — todo lo previo se borra y se vuelve a crear.'
+      titulo: 'Cuidado al editar servicios y productos',
+      contenido: 'Al editar una OT, las subtablas (servicios, productos, EPP, riesgos) se reemplazan completas con lo que dejaste en el formulario. ' + 'Si quitás un servicio sin querer, los informes de ese método dejan de estar disponibles.'
     }]
   },
   impacto: [{
     modulo: 'Informes',
-    efecto: 'Al firmar OT, el módulo de informes muestra los métodos según los servicios cargados.',
-    reversible: false
+    efecto: 'Recién después de firmar la OT, podés crear informes. Los métodos disponibles dependen de los servicios cargados.',
+    reversible: 'parcial'
   }, {
     modulo: 'Partes diarios',
-    efecto: 'Cada parte referencia ot_id. Si OT está cerrada, no se crean nuevos partes.',
+    efecto: 'Cada parte se asocia a la OT. Si la OT está cerrada, ya no se pueden crear partes nuevos.',
     reversible: false
   }, {
     modulo: 'Certificados',
-    efecto: 'Filtran por ot_id. Pueden seguir generándose aún con OT cerrada.',
+    efecto: 'Toman partes firmados de la OT. Pueden seguir generándose aún con la OT cerrada.',
     reversible: true
   }, {
     modulo: 'Asignaciones',
-    efecto: 'Operadores, soldadores, vehículos y procedimientos se cuelgan de la OT.',
+    efecto: 'Operadores, soldadores, vehículos y procedimientos cuelgan de la OT. Se pueden modificar mientras la OT no esté cerrada.',
     reversible: true
   }, {
-    modulo: 'PDF de OT',
-    efecto: 'DomPDF genera el reporte usando logo_cliente_sn y logo_contratista_sn para mostrar/ocultar logos.',
+    modulo: 'PDF de la OT',
+    efecto: 'Si tildaste "Mostrar logo", el logo del cliente o comitente sale en el PDF generado.',
     reversible: true
   }],
   relacionados: [{
-    titulo: 'Visualización general de una OT',
+    titulo: 'Ver listado de OT',
     ruta: '/visualizar_ot'
   }, {
-    titulo: 'Asignar operadores',
+    titulo: 'Asignar operadores a la OT',
     ruta: '/asignar_operadores'
   }, {
     titulo: 'Asignar soldadores y usuarios cliente',
     ruta: '/asignar_soldadores_y_usuarios'
   }, {
-    titulo: 'Creación de informes',
+    titulo: 'Asignar vehículos',
+    ruta: '/asignar_vehiculos'
+  }, {
+    titulo: 'Asignar procedimientos',
+    ruta: '/asignar_procedimientos'
+  }, {
+    titulo: 'Generar informes',
     ruta: '/generar_informes'
-  }, {
-    titulo: 'Gestionar clientes',
-    ruta: '/ayuda_gestion_cliente'
-  }, {
-    titulo: 'Gestionar servicios',
-    ruta: '/ayuda_gestion_servicios'
-  }],
-  demo: 'ayuda-demo-form-ot',
-  fuente_codigo: {
-    controller: 'app/Http/Controllers/OtsController.php',
-    model: 'app/Ots.php',
-    request: 'app/Http/Requests/OtsRequest.php'
-  }
+  }]
 });
 
 /***/ }),
