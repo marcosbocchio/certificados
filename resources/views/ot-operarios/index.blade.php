@@ -3,6 +3,7 @@
 @section('contenido')
 
 <div id="app">
+  <enod-help-button url="{{ route('ayuda-asignar-operadores') }}"></enod-help-button>
 
    <ot-operarios
     :ot_id_data = "{{$id}}"

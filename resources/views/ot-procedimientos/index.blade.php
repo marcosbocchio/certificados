@@ -6,6 +6,7 @@
 
 
 <div id="app">
+  <enod-help-button url="{{ route('ayuda-asignar-procedimientos') }}"></enod-help-button>
 
    <abm-doc  modelo= "ot_procedimientos_propios"
              :otdata = "{{$ot}}"

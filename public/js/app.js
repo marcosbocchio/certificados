@@ -9905,6 +9905,418 @@ var CONFIG = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var POOL = [{
+  id: 1,
+  nombre: 'SALDAMANDO EMMANUEL'
+}, {
+  id: 2,
+  nombre: 'QUISPE MIGUEL'
+}, {
+  id: 3,
+  nombre: 'IFRAN JOAQUIN'
+}, {
+  id: 4,
+  nombre: 'PEREZ JUAN'
+}, {
+  id: 5,
+  nombre: 'GOMEZ ANA'
+}, {
+  id: 6,
+  nombre: 'TORRES LUIS'
+}];
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ayuda-demo-asignar-operadores',
+  data: function data() {
+    return {
+      operadorSel: '',
+      ayudanteSel: '',
+      asignadosOperador: [POOL[0], POOL[1], POOL[2]],
+      asignadosAyudante: []
+    };
+  },
+  computed: {
+    disponiblesOperador: function disponiblesOperador() {
+      var usados = new Set(this.asignadosOperador.map(function (x) {
+        return x.id;
+      }));
+      return POOL.filter(function (o) {
+        return !usados.has(o.id);
+      });
+    },
+    disponiblesAyudante: function disponiblesAyudante() {
+      var usados = new Set(this.asignadosAyudante.map(function (x) {
+        return x.id;
+      }));
+      return POOL.filter(function (o) {
+        return !usados.has(o.id);
+      });
+    }
+  },
+  methods: {
+    asignar: function asignar(rol) {
+      var id = rol === 'operador' ? this.operadorSel : this.ayudanteSel;
+      var item = POOL.find(function (p) {
+        return p.id === Number(id);
+      });
+      if (!item) return;
+      if (rol === 'operador') {
+        this.asignadosOperador.push(item);
+        this.operadorSel = '';
+      } else {
+        this.asignadosAyudante.push(item);
+        this.ayudanteSel = '';
+      }
+    },
+    quitar: function quitar(id, rol) {
+      if (rol === 'operador') this.asignadosOperador = this.asignadosOperador.filter(function (x) {
+        return x.id !== id;
+      });else this.asignadosAyudante = this.asignadosAyudante.filter(function (x) {
+        return x.id !== id;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ayuda-demo-asignar-procedimientos',
+  data: function data() {
+    return {
+      procsEnod: [{
+        id: 1,
+        tipo: 'Procedimiento',
+        titulo: 'PR-RI-007',
+        descripcion: 'Radiografía industrial DDSE',
+        metodo: 'RI'
+      }, {
+        id: 2,
+        tipo: 'Procedimiento',
+        titulo: 'PR-PM-002',
+        descripcion: 'Partículas magnéticas - Yugo',
+        metodo: 'PM'
+      }, {
+        id: 3,
+        tipo: 'Procedimiento',
+        titulo: 'PR-LP-004',
+        descripcion: 'Líquidos penetrantes',
+        metodo: 'LP'
+      }],
+      procsCliente: [{
+        id: 1,
+        tipoSol: 'LR',
+        obra: '777',
+        eps: 'EPS-API-1104',
+        pqr: 'PQR-001/24',
+        rep: 'PR-REP-007'
+      }],
+      form: {
+        tipoSol: '',
+        eps: '',
+        pqr: '',
+        rep: ''
+      },
+      nextId: 2
+    };
+  },
+  computed: {
+    puedeAgregar: function puedeAgregar() {
+      return this.form.eps && this.form.pqr && this.form.rep;
+    }
+  },
+  methods: {
+    agregarProcCliente: function agregarProcCliente() {
+      if (!this.puedeAgregar) return;
+      this.procsCliente.push({
+        id: this.nextId++,
+        tipoSol: this.form.tipoSol || '—',
+        obra: '777',
+        eps: this.form.eps,
+        pqr: this.form.pqr,
+        rep: this.form.rep
+      });
+      this.form = {
+        tipoSol: '',
+        eps: '',
+        pqr: '',
+        rep: ''
+      };
+    },
+    quitarProcCliente: function quitarProcCliente(id) {
+      this.procsCliente = this.procsCliente.filter(function (p) {
+        return p.id !== id;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var SOLDADORES = [{
+  id: 1,
+  codigo: 'S-104',
+  nombre: 'A. Gómez'
+}, {
+  id: 2,
+  codigo: 'S-118',
+  nombre: 'M. Suárez'
+}, {
+  id: 3,
+  codigo: 'S-122',
+  nombre: 'C. Núñez'
+}, {
+  id: 4,
+  codigo: 'S-130',
+  nombre: 'R. Vargas'
+}];
+var USERS = [{
+  id: 1,
+  name: 'YPF Supervisor obra',
+  email: 'sup@ypf.com'
+}, {
+  id: 2,
+  name: 'YPF Inspector calidad',
+  email: 'calidad@ypf.com'
+}, {
+  id: 3,
+  name: 'Techint Ingeniero',
+  email: 'ing@techint.com'
+}];
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ayuda-demo-asignar-soldadores',
+  data: function data() {
+    return {
+      solSel: '',
+      userSel: '',
+      solAsignados: [SOLDADORES[0], SOLDADORES[1]],
+      userAsignados: [USERS[0]]
+    };
+  },
+  computed: {
+    solDisponibles: function solDisponibles() {
+      var used = new Set(this.solAsignados.map(function (x) {
+        return x.id;
+      }));
+      return SOLDADORES.filter(function (s) {
+        return !used.has(s.id);
+      });
+    },
+    userDisponibles: function userDisponibles() {
+      var used = new Set(this.userAsignados.map(function (x) {
+        return x.id;
+      }));
+      return USERS.filter(function (u) {
+        return !used.has(u.id);
+      });
+    }
+  },
+  methods: {
+    agregarSoldador: function agregarSoldador() {
+      var _this = this;
+      var item = SOLDADORES.find(function (s) {
+        return s.id === Number(_this.solSel);
+      });
+      if (item) {
+        this.solAsignados.push(item);
+        this.solSel = '';
+      }
+    },
+    quitarSoldador: function quitarSoldador(id) {
+      this.solAsignados = this.solAsignados.filter(function (s) {
+        return s.id !== id;
+      });
+    },
+    agregarUsuario: function agregarUsuario() {
+      var _this2 = this;
+      var item = USERS.find(function (u) {
+        return u.id === Number(_this2.userSel);
+      });
+      if (item) {
+        this.userAsignados.push(item);
+        this.userSel = '';
+      }
+    },
+    quitarUsuario: function quitarUsuario(id) {
+      this.userAsignados = this.userAsignados.filter(function (u) {
+        return u.id !== id;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+var VEHICULOS = [{
+  id: 1,
+  nro_interno: '001',
+  marca: 'Toyota',
+  modelo: 'Hilux 4x4 2022',
+  patente: 'AB 234 CD',
+  tipo: 'Camioneta'
+}, {
+  id: 2,
+  nro_interno: '002',
+  marca: 'Ford',
+  modelo: 'Ranger XLT 2023',
+  patente: 'AC 887 LM',
+  tipo: 'Camioneta'
+}, {
+  id: 3,
+  nro_interno: '003',
+  marca: 'VW',
+  modelo: 'Amarok 2021',
+  patente: 'AE 102 NK',
+  tipo: 'Camioneta'
+}, {
+  id: 4,
+  nro_interno: '004',
+  marca: 'Iveco',
+  modelo: 'Daily furgón',
+  patente: 'AD 556 QR',
+  tipo: 'Furgón'
+}];
+var DOCS_VEH_POOL = {
+  1: [{
+    id: 11,
+    titulo: 'VTV Hilux',
+    descripcion: 'VTV vigente hasta 10/11/2026'
+  }, {
+    id: 12,
+    titulo: 'Seguro',
+    descripcion: 'Póliza La Caja vence 15/12/2026'
+  }],
+  3: [{
+    id: 31,
+    titulo: 'VTV Amarok',
+    descripcion: 'Vence en 10 días'
+  }]
+};
+var DOCS = [{
+  id: 101,
+  titulo: 'Plan de seguridad',
+  descripcion: 'PDS de la obra Tramo 12'
+}, {
+  id: 102,
+  titulo: 'Procedimiento de manejo defensivo',
+  descripcion: 'Capacitación obligatoria 2026'
+}, {
+  id: 103,
+  titulo: 'Mapa de riesgos vial',
+  descripcion: 'Ruta NEA'
+}];
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ayuda-demo-asignar-vehiculos',
+  data: function data() {
+    return {
+      vehSel: '',
+      docSel: '',
+      vehAsignados: [VEHICULOS[0], VEHICULOS[2]],
+      docAsignadas: [DOCS[0]]
+    };
+  },
+  computed: {
+    vehDisponibles: function vehDisponibles() {
+      var used = new Set(this.vehAsignados.map(function (x) {
+        return x.id;
+      }));
+      return VEHICULOS.filter(function (v) {
+        return !used.has(v.id);
+      });
+    },
+    docDisponibles: function docDisponibles() {
+      var used = new Set(this.docAsignadas.map(function (x) {
+        return x.id;
+      }));
+      return DOCS.filter(function (d) {
+        return !used.has(d.id);
+      });
+    },
+    docVehiculo: function docVehiculo() {
+      var out = [];
+      this.vehAsignados.forEach(function (v) {
+        if (DOCS_VEH_POOL[v.id]) out.push.apply(out, _toConsumableArray(DOCS_VEH_POOL[v.id]));
+      });
+      return out;
+    }
+  },
+  methods: {
+    agregarVehiculo: function agregarVehiculo() {
+      var _this = this;
+      var v = VEHICULOS.find(function (x) {
+        return x.id === Number(_this.vehSel);
+      });
+      if (v) {
+        this.vehAsignados.push(v);
+        this.vehSel = '';
+      }
+    },
+    quitarVehiculo: function quitarVehiculo(id) {
+      this.vehAsignados = this.vehAsignados.filter(function (v) {
+        return v.id !== id;
+      });
+    },
+    agregarDoc: function agregarDoc() {
+      var _this2 = this;
+      var d = DOCS.find(function (x) {
+        return x.id === Number(_this2.docSel);
+      });
+      if (d) {
+        this.docAsignadas.push(d);
+        this.docSel = '';
+      }
+    },
+    quitarDoc: function quitarDoc(id) {
+      this.docAsignadas = this.docAsignadas.filter(function (d) {
+        return d.id !== id;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-buscador.vue?vue&type=script&lang=js":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-buscador.vue?vue&type=script&lang=js ***!
@@ -11834,6 +12246,212 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ayuda-demo-tablero-ot',
+  data: function data() {
+    return {
+      cards: [{
+        titulo: 'OPERADORES',
+        cant: 3,
+        icono: 'users',
+        fondo: 'fondo-gris'
+      }, {
+        titulo: 'EQUIPOS',
+        cant: 2,
+        icono: 'cogs',
+        fondo: 'fondo-negro'
+      }, {
+        titulo: 'PROCEDIMIENTOS',
+        cant: 1,
+        icono: 'shield',
+        fondo: 'fondo-amarillo'
+      }, {
+        titulo: 'VEHÍCULOS',
+        cant: 1,
+        titulo2: '0',
+        icono: 'truck',
+        fondo: 'fondo-gris-claro'
+      }, {
+        titulo: 'CUÑOS',
+        cant: 4,
+        titulo2: '0',
+        icono: 'fire',
+        fondo: 'fondo-gris-claro'
+      }, {
+        titulo: 'INFORMES',
+        cant: 5,
+        icono: 'file-text',
+        fondo: 'fondo-gris'
+      }, {
+        titulo: 'PARTES',
+        cant: 2,
+        icono: 'calendar-check-o',
+        fondo: 'fondo-negro'
+      }, {
+        titulo: 'CERTIFICADOS',
+        cant: 1,
+        icono: 'certificate',
+        fondo: 'fondo-amarillo'
+      }]
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ayuda-demo-visualizar-operadores',
+  data: function data() {
+    return {
+      operadores: [{
+        id: 1,
+        nombre: 'SALDAMANDO EMMANUEL'
+      }, {
+        id: 2,
+        nombre: 'QUISPE MIGUEL'
+      }, {
+        id: 3,
+        nombre: 'IFRAN JOAQUIN'
+      }],
+      ayudantes: [{
+        id: 4,
+        nombre: 'GOMEZ ANA'
+      }],
+      docs: [{
+        id: 1,
+        titulo: 'Nivel II RI - SALDAMANDO',
+        descripcion: 'Certificación vigente hasta 08/2027'
+      }, {
+        id: 2,
+        titulo: 'ART - QUISPE',
+        descripcion: 'Vigente hasta 12/2026'
+      }, {
+        id: 3,
+        titulo: 'Capacitación PM - IFRAN',
+        descripcion: 'Curso interno 2026'
+      }]
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ayuda-demo-visualizar-procedimientos',
+  data: function data() {
+    return {
+      procEnod: [{
+        id: 1,
+        tipo: 'Procedimiento',
+        titulo: 'PR-RI-007',
+        descripcion: 'Radiografía industrial DDSE',
+        metodo: 'RI'
+      }, {
+        id: 2,
+        tipo: 'Procedimiento',
+        titulo: 'PR-PM-002',
+        descripcion: 'Partículas magnéticas',
+        metodo: 'PM'
+      }, {
+        id: 3,
+        tipo: 'Procedimiento',
+        titulo: 'PR-LP-004',
+        descripcion: 'Líquidos penetrantes',
+        metodo: 'LP'
+      }],
+      procCliente: [{
+        id: 1,
+        tipoSol: 'LR',
+        obra: '777',
+        eps: 'EPS-API-1104',
+        pqr: 'PQR-001/24',
+        rep: 'PR-REP-007'
+      }]
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ayuda-demo-visualizar-vehiculos',
+  data: function data() {
+    return {
+      vehiculos: [{
+        id: 1,
+        nro: '001',
+        marca: 'Toyota',
+        modelo: 'Hilux 4x4 2022',
+        patente: 'AB 234 CD',
+        tipo: 'Camioneta'
+      }, {
+        id: 3,
+        nro: '003',
+        marca: 'VW',
+        modelo: 'Amarok 2021',
+        patente: 'AE 102 NK',
+        tipo: 'Camioneta'
+      }],
+      docVeh: [{
+        id: 1,
+        titulo: 'VTV Hilux',
+        descripcion: 'Vigente hasta 10/11/2026'
+      }, {
+        id: 2,
+        titulo: 'Seguro',
+        descripcion: 'Póliza La Caja vence 15/12/2026'
+      }, {
+        id: 3,
+        titulo: 'VTV Amarok',
+        descripcion: 'Vence en 10 días'
+      }],
+      docExt: [{
+        id: 1,
+        titulo: 'Plan de seguridad',
+        descripcion: 'PDS de la obra Tramo 12'
+      }]
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-wizard-pasos.vue?vue&type=script&lang=js":
 /*!***************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-wizard-pasos.vue?vue&type=script&lang=js ***!
@@ -12019,8 +12637,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     dependencias: function dependencias() {
       return this.resolver('dependencias', []);
     },
-    campos: function campos() {
-      return this.resolver('campos', []);
+    bloques: function bloques() {
+      return this.resolver('bloques', []);
     },
     botones: function botones() {
       return this.resolver('botones', []);
@@ -12037,11 +12655,19 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     impacto: function impacto() {
       return this.resolver('impacto', []);
     },
+    demoActivo: function demoActivo() {
+      var d = this.datos.demo;
+      if (!d) return null;
+      if (typeof d === 'string') return d;
+      if (_typeof(d) === 'object') {
+        if (this.varianteActiva && d[this.varianteActiva]) return d[this.varianteActiva];
+        var keys = Object.keys(d);
+        return keys.length ? d[keys[0]] : null;
+      }
+      return null;
+    },
     demoProps: function demoProps() {
       return this.variante_obj && this.variante_obj.demoProps || this.datos.demoProps || {};
-    },
-    indiceUrl: function indiceUrl() {
-      return '/ayuda_general';
     }
   },
   methods: {
@@ -22715,6 +23341,42 @@ __webpack_require__.r(__webpack_exports__);
       }
       window.location.href = this.fallbackUrl;
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/enod-help-button.vue?vue&type=script&lang=js":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/enod-help-button.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    url: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      "default": 'Ver ayuda de esta pantalla'
+    },
+    showLabel: {
+      type: Boolean,
+      "default": true
+    } // mantenida por compatibilidad
+  },
+  mounted: function mounted() {
+    var contentHeader = document.querySelector('.content-header');
+    if (!contentHeader || !this.$el) return;
+    if (contentHeader.contains(this.$el) && this.$el.classList.contains('enod-help-in-header')) return;
+    contentHeader.style.position = contentHeader.style.position || 'relative';
+    contentHeader.appendChild(this.$el);
+    this.$el.classList.add('enod-help-in-header');
   }
 });
 
@@ -62730,6 +63392,1002 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=template&id=7d4f3287&scoped=true":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=template&id=7d4f3287&scoped=true ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_demo_block"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_label"
+  }, [_vm._v("Pantalla de asignar operadores")]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_op_grid"
+  }, [_c("div", {
+    staticClass: "box box-custom-enod"
+  }, [_c("div", {
+    staticClass: "box-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Operador")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.operadorSel,
+      expression: "operadorSel"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.operadorSel = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("— elegí un operador —")]), _vm._v(" "), _vm._l(_vm.disponiblesOperador, function (o) {
+    return _c("option", {
+      key: o.id,
+      domProps: {
+        value: o.id
+      }
+    }, [_vm._v(_vm._s(o.nombre))]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-default",
+    attrs: {
+      disabled: !_vm.operadorSel,
+      title: "Agregar operador"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.asignar("operador");
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-plus-circle"
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod"
+  }, [_c("div", {
+    staticClass: "box-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Ayudante")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.ayudanteSel,
+      expression: "ayudanteSel"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.ayudanteSel = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("— elegí un ayudante —")]), _vm._v(" "), _vm._l(_vm.disponiblesAyudante, function (o) {
+    return _c("option", {
+      key: o.id,
+      domProps: {
+        value: o.id
+      }
+    }, [_vm._v(_vm._s(o.nombre))]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-default",
+    attrs: {
+      disabled: !_vm.ayudanteSel,
+      title: "Agregar ayudante"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.asignar("ayudante");
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-plus-circle"
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_op_table"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.asignadosOperador, function (o) {
+    return _c("tr", {
+      key: o.id
+    }, [_c("td", [_vm._v(_vm._s(o.nombre))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_c("i", {
+      staticClass: "fa fa-minus-circle ayuda_op_remove",
+      attrs: {
+        title: "Quitar"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.quitar(o.id, "operador");
+        }
+      }
+    })])]);
+  }), _vm._v(" "), !_vm.asignadosOperador.length ? _c("tr", [_c("td", {
+    staticClass: "text-muted ayuda_op_empty",
+    attrs: {
+      colspan: "2"
+    }
+  }, [_vm._v("Todavía no asignaste operadores.")])]) : _vm._e()], 2)])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_op_table"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.asignadosAyudante, function (o) {
+    return _c("tr", {
+      key: o.id
+    }, [_c("td", [_vm._v(_vm._s(o.nombre))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_c("i", {
+      staticClass: "fa fa-minus-circle ayuda_op_remove",
+      attrs: {
+        title: "Quitar"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.quitar(o.id, "ayudante");
+        }
+      }
+    })])]);
+  }), _vm._v(" "), !_vm.asignadosAyudante.length ? _c("tr", [_c("td", {
+    staticClass: "text-muted ayuda_op_empty",
+    attrs: {
+      colspan: "2"
+    }
+  }, [_vm._v("Todavía no asignaste ayudantes.")])]) : _vm._e()], 2)])])])]), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._m(5)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_op_title"
+  }, [_vm._v("Operadores asignados a la orden de trabajo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Nombre")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "30px"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_op_title"
+  }, [_vm._v("Ayudantes asignados a la orden de trabajo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Nombre")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "30px"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_op_actions"
+  }, [_c("button", {
+    staticClass: "btn btn-enod"
+  }, [_vm._v("Actualizar")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "ayuda_demo_caption"
+  }, [_vm._v("\n        Probá agregar y quitar — la lista se actualiza al instante. En el sistema real, el botón "), _c("strong", [_vm._v("Actualizar")]), _vm._v(" graba los cambios.\n    ")]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=template&id=ba266bb8&scoped=true":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=template&id=ba266bb8&scoped=true ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_demo_block"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_label"
+  }, [_vm._v("Pantalla de procedimientos")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_proc_box"
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_proc_table"
+  }, [_vm._m(2), _vm._v(" "), _c("tbody", [_vm._l(_vm.procsEnod, function (p) {
+    return _c("tr", {
+      key: p.id
+    }, [_c("td", [_vm._v(_vm._s(p.tipo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.titulo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.descripcion))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.metodo))]), _vm._v(" "), _vm._m(3, true)]);
+  }), _vm._v(" "), !_vm.procsEnod.length ? _c("tr", [_c("td", {
+    staticClass: "ayuda_proc_empty text-muted",
+    attrs: {
+      colspan: "5"
+    }
+  }, [_vm._v("Sin procedimientos Enod cargados.")])]) : _vm._e()], 2)])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_proc_box"
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-md-2 col-sm-4"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Tipo Sol.")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.tipoSol,
+      expression: "form.tipoSol"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.form, "tipoSol", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("— elegí —")]), _vm._v(" "), _c("option", [_vm._v("LR")]), _vm._v(" "), _c("option", [_vm._v("CL")]), _vm._v(" "), _c("option", [_vm._v("JT")])])])]), _vm._v(" "), _vm._m(5), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3 col-sm-4"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_vm._m(6), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.eps,
+      expression: "form.eps"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "EPS-API-1104"
+    },
+    domProps: {
+      value: _vm.form.eps
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "eps", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2 col-sm-6"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_vm._m(7), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.pqr,
+      expression: "form.pqr"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "PQR-001/24"
+    },
+    domProps: {
+      value: _vm.form.pqr
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "pqr", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-2 col-sm-6"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_vm._m(8), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.rep,
+      expression: "form.rep"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "PR-REP-007"
+    },
+    domProps: {
+      value: _vm.form.rep
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "rep", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-1"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v(" ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-default ayuda_proc_add",
+    attrs: {
+      disabled: !_vm.puedeAgregar,
+      title: "Agregar"
+    },
+    on: {
+      click: _vm.agregarProcCliente
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-plus-circle"
+  })])])])]), _vm._v(" "), _vm.procsCliente.length ? _c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_proc_table",
+    staticStyle: {
+      "margin-top": "8px"
+    }
+  }, [_vm._m(9), _vm._v(" "), _c("tbody", _vm._l(_vm.procsCliente, function (p) {
+    return _c("tr", {
+      key: p.id
+    }, [_c("td", [_vm._v(_vm._s(p.tipoSol))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.obra))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.eps))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.pqr))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.rep))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_c("i", {
+      staticClass: "fa fa-minus-circle ayuda_proc_remove",
+      on: {
+        click: function click($event) {
+          return _vm.quitarProcCliente(p.id);
+        }
+      }
+    })])]);
+  }), 0)]) : _vm._e()])]), _vm._v(" "), _vm._m(10), _vm._v(" "), _vm._m(11)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_proc_topbar"
+  }, [_c("button", {
+    staticClass: "btn btn-enod"
+  }, [_c("i", {
+    staticClass: "fa fa-plus"
+  }), _vm._v("  Nuevo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_proc_title"
+  }, [_vm._v("Procedimientos Enod")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Tipo")]), _c("th", [_vm._v("Título")]), _c("th", [_vm._v("Descripción")]), _c("th", [_vm._v("Método")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "30px"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center"
+  }, [_c("i", {
+    staticClass: "fa fa-file-pdf-o",
+    staticStyle: {
+      color: "#d4a800"
+    },
+    attrs: {
+      title: "Ver PDF"
+    }
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_proc_title"
+  }, [_vm._v("Procedimientos clientes")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "col-md-2 col-sm-4"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Obra N°")]), _vm._v(" "), _c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      value: "777",
+      disabled: ""
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("label", [_vm._v("EPS / WPS "), _c("span", {
+    staticClass: "ayuda_proc_req"
+  }, [_vm._v("*")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("label", [_vm._v("PQR "), _c("span", {
+    staticClass: "ayuda_proc_req"
+  }, [_vm._v("*")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("label", [_vm._v("Proc.Reparación "), _c("span", {
+    staticClass: "ayuda_proc_req"
+  }, [_vm._v("*")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Tipo Sol.")]), _c("th", [_vm._v("Obra N°")]), _c("th", [_vm._v("EPS / WPS")]), _c("th", [_vm._v("PQR")]), _c("th", [_vm._v("Proc. Reparación")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "30px"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_proc_actions"
+  }, [_c("button", {
+    staticClass: "btn btn-enod"
+  }, [_vm._v("Actualizar")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "ayuda_demo_caption"
+  }, [_c("strong", [_vm._v('"Nuevo"')]), _vm._v(" abre un formulario para cargar un procedimiento Enod (con PDF).\n        Los "), _c("strong", [_vm._v("procedimientos del cliente")]), _vm._v(" se cargan inline con EPS/WPS, PQR y Proc. de reparación.\n        Los tres campos con "), _c("span", {
+    staticClass: "ayuda_proc_req"
+  }, [_vm._v("*")]), _vm._v(" son obligatorios.\n    ")]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=template&id=279d118d&scoped=true":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=template&id=279d118d&scoped=true ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_demo_block"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_label"
+  }, [_vm._v("Pantalla de soldadores y usuarios cliente")]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_sol_box"
+  }, [_c("div", {
+    staticClass: "box-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Soldadores")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.solSel,
+      expression: "solSel"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.solSel = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("— elegí un soldador —")]), _vm._v(" "), _vm._l(_vm.solDisponibles, function (s) {
+    return _c("option", {
+      key: s.id,
+      domProps: {
+        value: s.id
+      }
+    }, [_vm._v(_vm._s(s.nombre) + " (" + _vm._s(s.codigo) + ")")]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-default",
+    attrs: {
+      disabled: !_vm.solSel
+    },
+    on: {
+      click: _vm.agregarSoldador
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-plus-circle"
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_sol_box"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_sol_table"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.solAsignados, function (s) {
+    return _c("tr", {
+      key: s.id
+    }, [_c("td", [_vm._v(_vm._s(s.codigo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(s.nombre))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_c("i", {
+      staticClass: "fa fa-minus-circle ayuda_sol_remove",
+      on: {
+        click: function click($event) {
+          return _vm.quitarSoldador(s.id);
+        }
+      }
+    })])]);
+  }), _vm._v(" "), !_vm.solAsignados.length ? _c("tr", [_c("td", {
+    staticClass: "ayuda_sol_empty text-muted",
+    attrs: {
+      colspan: "3"
+    }
+  }, [_vm._v("Todavía no asignaste soldadores.")])]) : _vm._e()], 2)])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_sol_box"
+  }, [_c("div", {
+    staticClass: "box-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Usuarios Cliente")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.userSel,
+      expression: "userSel"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.userSel = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("— elegí un usuario cliente —")]), _vm._v(" "), _vm._l(_vm.userDisponibles, function (u) {
+    return _c("option", {
+      key: u.id,
+      domProps: {
+        value: u.id
+      }
+    }, [_vm._v(_vm._s(u.name))]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-default",
+    attrs: {
+      disabled: !_vm.userSel
+    },
+    on: {
+      click: _vm.agregarUsuario
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-plus-circle"
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_sol_box"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_sol_table"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.userAsignados, function (u) {
+    return _c("tr", {
+      key: u.id
+    }, [_c("td", [_vm._v(_vm._s(u.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(u.email))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_c("i", {
+      staticClass: "fa fa-minus-circle ayuda_sol_remove",
+      on: {
+        click: function click($event) {
+          return _vm.quitarUsuario(u.id);
+        }
+      }
+    })])]);
+  }), _vm._v(" "), !_vm.userAsignados.length ? _c("tr", [_c("td", {
+    staticClass: "ayuda_sol_empty text-muted",
+    attrs: {
+      colspan: "3"
+    }
+  }, [_vm._v("Todavía no asignaste usuarios cliente.")])]) : _vm._e()], 2)])])]), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._m(5)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_sol_title"
+  }, [_vm._v("Soldadores Asignados Orden de Trabajo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("CODIGO")]), _c("th", [_vm._v("NOMBRE")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "30px"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_sol_title"
+  }, [_vm._v("Usuarios del Cliente Asignados Orden de Trabajo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("NOMBRE")]), _c("th", [_vm._v("EMAIL")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "30px"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_sol_actions"
+  }, [_c("button", {
+    staticClass: "btn btn-enod"
+  }, [_vm._v("Actualizar")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "ayuda_demo_caption"
+  }, [_vm._v("\n        Soldadores y usuarios cliente comparten esta pantalla. Si la lista de soldadores está vacía, primero hay que cargarlos en\n        "), _c("strong", [_vm._v("Gestionar soldadores")]), _vm._v(" para ese cliente.\n    ")]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=template&id=3da06e0e&scoped=true":
+/*!******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=template&id=3da06e0e&scoped=true ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_demo_block"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_label"
+  }, [_vm._v("Pantalla de vehículos y documentación complementaria")]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_veh_box"
+  }, [_c("div", {
+    staticClass: "box-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Vehículos")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.vehSel,
+      expression: "vehSel"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.vehSel = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("— elegí un vehículo —")]), _vm._v(" "), _vm._l(_vm.vehDisponibles, function (v) {
+    return _c("option", {
+      key: v.id,
+      domProps: {
+        value: v.id
+      }
+    }, [_vm._v("\n                        " + _vm._s(v.nro_interno) + " — " + _vm._s(v.marca) + " " + _vm._s(v.patente) + "\n                    ")]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-default",
+    attrs: {
+      disabled: !_vm.vehSel
+    },
+    on: {
+      click: _vm.agregarVehiculo
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-plus-circle"
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_veh_box"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_veh_table"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.vehAsignados, function (v) {
+    return _c("tr", {
+      key: v.id
+    }, [_c("td", [_vm._v(_vm._s(v.nro_interno))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(v.marca))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(v.modelo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(v.patente))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(v.tipo))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_c("i", {
+      staticClass: "fa fa-minus-circle ayuda_veh_remove",
+      on: {
+        click: function click($event) {
+          return _vm.quitarVehiculo(v.id);
+        }
+      }
+    })])]);
+  }), _vm._v(" "), !_vm.vehAsignados.length ? _c("tr", [_c("td", {
+    staticClass: "ayuda_veh_empty text-muted",
+    attrs: {
+      colspan: "6"
+    }
+  }, [_vm._v("Todavía no asignaste vehículos.")])]) : _vm._e()], 2)])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_veh_box"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_veh_table"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", [_vm._l(_vm.docVehiculo, function (d) {
+    return _c("tr", {
+      key: d.id
+    }, [_c("td", [_vm._v(_vm._s(d.titulo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(d.descripcion))]), _vm._v(" "), _vm._m(4, true)]);
+  }), _vm._v(" "), !_vm.docVehiculo.length ? _c("tr", [_c("td", {
+    staticClass: "ayuda_veh_empty text-muted",
+    attrs: {
+      colspan: "3"
+    }
+  }, [_vm._v("Sin documentaciones cargadas para los vehículos asignados.")])]) : _vm._e()], 2)])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_veh_box"
+  }, [_c("div", {
+    staticClass: "box-body"
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("label", [_vm._v("Documentaciones")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.docSel,
+      expression: "docSel"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.docSel = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("— elegí una documentación —")]), _vm._v(" "), _vm._l(_vm.docDisponibles, function (d) {
+    return _c("option", {
+      key: d.id,
+      domProps: {
+        value: d.id
+      }
+    }, [_vm._v(_vm._s(d.titulo))]);
+  })], 2)]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-default",
+    attrs: {
+      disabled: !_vm.docSel
+    },
+    on: {
+      click: _vm.agregarDoc
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-plus-circle"
+  })])])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_veh_box"
+  }, [_vm._m(5), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_veh_table"
+  }, [_vm._m(6), _vm._v(" "), _c("tbody", [_vm._l(_vm.docAsignadas, function (d) {
+    return _c("tr", {
+      key: d.id
+    }, [_c("td", [_vm._v(_vm._s(d.titulo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(d.descripcion))]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_c("i", {
+      staticClass: "fa fa-minus-circle ayuda_veh_remove",
+      on: {
+        click: function click($event) {
+          return _vm.quitarDoc(d.id);
+        }
+      }
+    })])]);
+  }), _vm._v(" "), !_vm.docAsignadas.length ? _c("tr", [_c("td", {
+    staticClass: "ayuda_veh_empty text-muted",
+    attrs: {
+      colspan: "3"
+    }
+  }, [_vm._v("Sin documentaciones complementarias asignadas.")])]) : _vm._e()], 2)])])]), _vm._v(" "), _vm._m(7), _vm._v(" "), _c("p", {
+    staticClass: "ayuda_demo_caption"
+  }, [_vm._v('\n        Al asignar un vehículo, sus documentaciones (VTV, seguro) aparecen automáticamente en la tabla "Documentaciones del vehículo".\n        Las documentaciones complementarias son aparte, las cargás vos.\n    ')])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_veh_title"
+  }, [_vm._v("Vehículos asignados a la orden de trabajo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("N° INT.")]), _c("th", [_vm._v("Marca")]), _c("th", [_vm._v("Modelo")]), _c("th", [_vm._v("Patente")]), _c("th", [_vm._v("Tipo")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "30px"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_veh_title"
+  }, [_vm._v("Documentaciones del vehículo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("TÍTULO")]), _c("th", [_vm._v("DESCRIPCIÓN")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "30px"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center"
+  }, [_c("i", {
+    staticClass: "fa fa-file-image-o",
+    staticStyle: {
+      color: "#d4a800"
+    }
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_veh_title"
+  }, [_vm._v("Documentaciones asignadas a la orden de trabajo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Título")]), _c("th", [_vm._v("Descripción")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "30px"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_veh_actions"
+  }, [_c("button", {
+    staticClass: "btn btn-enod"
+  }, [_vm._v("Actualizar")])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-buscador.vue?vue&type=template&id=5a0173f0&scoped=true":
 /*!*********************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-buscador.vue?vue&type=template&id=5a0173f0&scoped=true ***!
@@ -66177,6 +67835,416 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=template&id=1cda3024&scoped=true":
+/*!***********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=template&id=1cda3024&scoped=true ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_demo_block"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_label"
+  }, [_vm._v("Tablero principal de una OT")]), _vm._v(" "), _c("p", {
+    staticClass: "ayuda_demo_intro"
+  }, [_vm._v('\n        Al entrar a una Orden de Trabajo, ves estas 8 secciones. Cada una es una "card" clicable que abre la pantalla correspondiente.\n        El número arriba a la derecha indica cuántos elementos hay cargados de ese tipo.\n    ')]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_tab_grid"
+  }, _vm._l(_vm.cards, function (c) {
+    return _c("div", {
+      key: c.titulo,
+      staticClass: "ayuda_tab_card",
+      "class": c.fondo
+    }, [_c("div", {
+      staticClass: "ayuda_tab_n"
+    }, [_vm._v(_vm._s(c.cant))]), _vm._v(" "), _c("div", {
+      staticClass: "ayuda_tab_icon"
+    }, [_c("i", {
+      "class": "fa fa-" + c.icono
+    })]), _vm._v(" "), _c("div", {
+      staticClass: "ayuda_tab_titulo"
+    }, [_vm._v("\n                " + _vm._s(c.titulo)), c.titulo2 ? _c("span", [_vm._v(" | "), _c("em", [_vm._v(_vm._s(c.titulo2))])]) : _vm._e()])]);
+  }), 0), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_tab_footer"
+  }, [_c("button", {
+    staticClass: "btn btn-enod"
+  }, [_c("i", {
+    staticClass: "fa fa-plus"
+  }), _vm._v("  Nueva OT")]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_tab_search"
+  }, [_c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      placeholder: "Buscar..."
+    }
+  }), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-enod"
+  }, [_c("i", {
+    staticClass: "fa fa-search"
+  })])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "ayuda_demo_caption"
+  }, [_c("strong", [_vm._v("+ Nueva OT")]), _vm._v(" abre el formulario en blanco. El buscador filtra entre las OT que tu usuario puede ver.\n    ")]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=template&id=291996d6&scoped=true":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=template&id=291996d6&scoped=true ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_demo_block"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_label"
+  }, [_vm._v("Vista solo lectura")]), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_vis_grid"
+  }, [_c("div", {
+    staticClass: "box box-custom-enod"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_vis_table"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.operadores, function (o) {
+    return _c("tr", {
+      key: o.id
+    }, [_c("td", [_vm._v(_vm._s(o.nombre))])]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_vis_table"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.ayudantes, function (a) {
+    return _c("tr", {
+      key: a.id
+    }, [_c("td", [_vm._v(_vm._s(a.nombre))])]);
+  }), 0)])])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_vis_full"
+  }, [_vm._m(4), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_vis_table"
+  }, [_vm._m(5), _vm._v(" "), _c("tbody", _vm._l(_vm.docs, function (d) {
+    return _c("tr", {
+      key: d.id
+    }, [_c("td", [_vm._v(_vm._s(d.titulo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(d.descripcion))]), _vm._v(" "), _vm._m(6, true)]);
+  }), 0)])])]), _vm._v(" "), _vm._m(7)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_vis_title"
+  }, [_vm._v("Operadores asignados a la orden de trabajo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Nombre")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_vis_title"
+  }, [_vm._v("Ayudantes asignados a la orden de trabajo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Nombre")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_vis_title"
+  }, [_vm._v("Documentación")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Título")]), _c("th", [_vm._v("Descripción")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "60px"
+    }
+  }, [_vm._v("PDF")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center"
+  }, [_c("i", {
+    staticClass: "fa fa-file-pdf-o",
+    staticStyle: {
+      color: "#d4a800"
+    }
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "ayuda_demo_caption"
+  }, [_vm._v("\n        Esta pantalla es de "), _c("strong", [_vm._v("solo consulta")]), _vm._v(". Ves quiénes están asignados y descargás la documentación de cada uno.\n        No hay botones de agregar ni quitar.\n    ")]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=template&id=4183221a&scoped=true":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=template&id=4183221a&scoped=true ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_demo_block"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_label"
+  }, [_vm._v("Vista solo lectura")]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_vis_table"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.procEnod, function (p) {
+    return _c("tr", {
+      key: p.id
+    }, [_c("td", [_vm._v(_vm._s(p.tipo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.titulo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.descripcion))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.metodo))]), _vm._v(" "), _vm._m(2, true)]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod ayuda_vis_full"
+  }, [_vm._m(3), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_vis_table"
+  }, [_vm._m(4), _vm._v(" "), _c("tbody", _vm._l(_vm.procCliente, function (p) {
+    return _c("tr", {
+      key: p.id
+    }, [_c("td", [_vm._v(_vm._s(p.tipoSol))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.obra))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.eps))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.pqr))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(p.rep))])]);
+  }), 0)])])]), _vm._v(" "), _vm._m(5)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_vis_title"
+  }, [_vm._v("Procedimientos Enod")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Tipo")]), _c("th", [_vm._v("Título")]), _c("th", [_vm._v("Descripción")]), _c("th", [_vm._v("Método")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "60px"
+    }
+  }, [_vm._v("PDF")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center"
+  }, [_c("i", {
+    staticClass: "fa fa-file-pdf-o",
+    staticStyle: {
+      color: "#d4a800"
+    }
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_vis_title"
+  }, [_vm._v("Procedimientos clientes")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Tipo Sol.")]), _c("th", [_vm._v("Obra N°")]), _c("th", [_vm._v("EPS / WPS")]), _c("th", [_vm._v("PQR")]), _c("th", [_vm._v("Proc. Reparación")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "ayuda_demo_caption"
+  }, [_vm._v("\n        Vista de "), _c("strong", [_vm._v("consulta")]), _vm._v('. No hay botón "Nuevo", ni formulario para agregar.\n        Solo ves los procedimientos cargados y descargás el PDF de los Enod desde el ícono.\n    ')]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=template&id=851fc26c&scoped=true":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=template&id=851fc26c&scoped=true ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "ayuda_demo_block"
+  }, [_c("div", {
+    staticClass: "ayuda_demo_label"
+  }, [_vm._v("Vista solo lectura")]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_vis_table"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.vehiculos, function (v) {
+    return _c("tr", {
+      key: v.id
+    }, [_c("td", [_vm._v(_vm._s(v.nro))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(v.marca))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(v.modelo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(v.patente))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(v.tipo))])]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_vis_table"
+  }, [_vm._m(3), _vm._v(" "), _c("tbody", _vm._l(_vm.docVeh, function (d) {
+    return _c("tr", {
+      key: d.id
+    }, [_c("td", [_vm._v(_vm._s(d.titulo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(d.descripcion))]), _vm._v(" "), _vm._m(4, true)]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "box box-custom-enod"
+  }, [_vm._m(5), _vm._v(" "), _c("div", {
+    staticClass: "box-body"
+  }, [_c("table", {
+    staticClass: "table table-hover table-striped table-condensed ayuda_vis_table"
+  }, [_vm._m(6), _vm._v(" "), _c("tbody", _vm._l(_vm.docExt, function (d) {
+    return _c("tr", {
+      key: d.id
+    }, [_c("td", [_vm._v(_vm._s(d.titulo))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(d.descripcion))]), _vm._v(" "), _vm._m(7, true)]);
+  }), 0)])])]), _vm._v(" "), _vm._m(8)]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_vis_title"
+  }, [_vm._v("Vehículos asignados a la orden de trabajo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("N° INT.")]), _c("th", [_vm._v("Marca")]), _c("th", [_vm._v("Modelo")]), _c("th", [_vm._v("Patente")]), _c("th", [_vm._v("Tipo")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_vis_title"
+  }, [_vm._v("Documentaciones del vehículo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Título")]), _c("th", [_vm._v("Descripción")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "60px"
+    }
+  }, [_vm._v("Archivo")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center"
+  }, [_c("i", {
+    staticClass: "fa fa-file-image-o",
+    staticStyle: {
+      color: "#d4a800"
+    }
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "box-header with-border"
+  }, [_c("h3", {
+    staticClass: "ayuda_vis_title"
+  }, [_vm._v("Documentaciones asignadas a la orden de trabajo")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Título")]), _c("th", [_vm._v("Descripción")]), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "60px"
+    }
+  }, [_vm._v("Archivo")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("td", {
+    staticClass: "text-center"
+  }, [_c("i", {
+    staticClass: "fa fa-file-image-o",
+    staticStyle: {
+      color: "#d4a800"
+    }
+  })]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("p", {
+    staticClass: "ayuda_demo_caption"
+  }, [_vm._v("\n        Vista de "), _c("strong", [_vm._v("consulta")]), _vm._v(". Ves los vehículos asignados, la documentación de cada uno (VTV, seguro, etc.)\n        y las documentaciones complementarias sumadas a la OT. Sin agregar ni quitar.\n    ")]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-wizard-pasos.vue?vue&type=template&id=51ca772a&scoped=true":
 /*!*************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-wizard-pasos.vue?vue&type=template&id=51ca772a&scoped=true ***!
@@ -66358,20 +68426,28 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm.datos ? _c("article", {
-    staticClass: "ayuda_articulo"
+  return _c("div", {
+    staticClass: "ayuda_articulo_root"
+  }, [_c("enod-back-button", {
+    attrs: {
+      "fallback-url": "/ayuda_general"
+    }
+  }), _vm._v(" "), _vm.datos ? _c("article", {
+    staticClass: "box box-custom-enod ayuda_articulo"
+  }, [_c("div", {
+    staticClass: "box-body"
   }, [_c("header", {
     staticClass: "ayuda_articulo_hero"
   }, [_c("div", {
     staticClass: "ayuda_articulo_hero_text"
-  }, [_c("h1", [_vm._v(_vm._s(_vm.heroData.titulo))]), _vm._v(" "), _vm.heroData.descripcion ? _c("p", [_vm._v(_vm._s(_vm.heroData.descripcion))]) : _vm._e()]), _vm._v(" "), _vm.datos.ir_a ? _c("a", {
+  }, [_c("h2", [_vm._v(_vm._s(_vm.heroData.titulo))]), _vm._v(" "), _vm.heroData.descripcion ? _c("p", [_vm._v(_vm._s(_vm.heroData.descripcion))]) : _vm._e()]), _vm._v(" "), _vm.datos.ir_a ? _c("a", {
     staticClass: "ayuda_ir_sistema_btn",
     attrs: {
       href: _vm.datos.ir_a.ruta
     }
   }, [_c("i", {
     "class": "fa fa-" + (_vm.datos.ir_a.icono || "external-link")
-  }), _vm._v("\n            " + _vm._s(_vm.datos.ir_a.label || "Ir al sistema") + "\n        ")]) : _vm._e()]), _vm._v(" "), _vm.datos.variantes && _vm.datos.variantes.length ? _c("nav", {
+  }), _vm._v("\n                    " + _vm._s(_vm.datos.ir_a.label || "Ir al sistema") + "\n                ")]) : _vm._e()]), _vm._v(" "), _vm.datos.variantes && _vm.datos.variantes.length ? _c("nav", {
     staticClass: "ayuda_articulo_tabs"
   }, _vm._l(_vm.datos.variantes, function (v) {
     return _c("button", {
@@ -66385,7 +68461,7 @@ var render = function render() {
           _vm.varianteActiva = v.id;
         }
       }
-    }, [_vm._v("\n            " + _vm._s(v.label) + "\n        ")]);
+    }, [_vm._v("\n                    " + _vm._s(v.label) + "\n                ")]);
   }), 0) : _vm._e(), _vm._v(" "), _vm.acciones.length ? _c("ayuda-seccion", {
     attrs: {
       titulo: "¿Qué podés hacer en esta pantalla?",
@@ -66408,23 +68484,51 @@ var render = function render() {
     attrs: {
       items: _vm.dependencias
     }
-  })], 1) : _vm._e(), _vm._v(" "), _vm.datos.demo ? _c("ayuda-seccion", {
+  })], 1) : _vm._e(), _vm._v(" "), _vm.bloques.length ? _c("ayuda-seccion", {
+    attrs: {
+      titulo: "Lo que cargás en la pantalla",
+      id: "bloques"
+    }
+  }, [_vm.datos.bloques_intro ? _c("p", [_vm._v(_vm._s(_vm.datos.bloques_intro))]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "ayuda_bloques"
+  }, _vm._l(_vm.bloques, function (b, i) {
+    return _c("div", {
+      key: i,
+      staticClass: "ayuda_bloque"
+    }, [_c("h4", {
+      staticClass: "ayuda_bloque_titulo"
+    }, [b.icono ? _c("i", {
+      "class": "fa fa-" + b.icono
+    }) : _vm._e(), _vm._v("\n                            " + _vm._s(b.titulo) + "\n                        ")]), _vm._v(" "), b.descripcion ? _c("p", {
+      staticClass: "ayuda_bloque_desc"
+    }, [_vm._v(_vm._s(b.descripcion))]) : _vm._e(), _vm._v(" "), _c("ul", {
+      staticClass: "ayuda_bloque_lista"
+    }, _vm._l(b.campos, function (c, j) {
+      return _c("li", {
+        key: j
+      }, [_c("span", {
+        staticClass: "ayuda_bloque_campo"
+      }, [_vm._v("\n                                    " + _vm._s(c.nombre) + "\n                                    "), c.obligatorio ? _c("span", {
+        staticClass: "ayuda_obl",
+        attrs: {
+          title: "Obligatorio"
+        }
+      }, [_vm._v("*")]) : _vm._e()]), _vm._v(" "), c.detalle ? _c("span", {
+        staticClass: "ayuda_bloque_detalle"
+      }, [_vm._v("— " + _vm._s(c.detalle))]) : _vm._e()]);
+    }), 0)]);
+  }), 0), _vm._v(" "), _c("p", {
+    staticClass: "ayuda_obl_leyenda"
+  }, [_c("span", {
+    staticClass: "ayuda_obl"
+  }, [_vm._v("*")]), _vm._v(" Obligatorio · sin estos campos el sistema no deja guardar.\n                ")])]) : _vm._e(), _vm._v(" "), _vm.demoActivo ? _c("ayuda-seccion", {
     attrs: {
       titulo: "Así se ve la pantalla",
       id: "vista"
     }
-  }, [_vm.datos.demo_intro ? _c("p", [_vm._v(_vm._s(_vm.datos.demo_intro))]) : _vm._e(), _vm._v(" "), _c(_vm.datos.demo, _vm._b({
+  }, [_c(_vm.demoActivo, _vm._b({
     tag: "component"
-  }, "component", _vm.demoProps, false))], 1) : _vm._e(), _vm._v(" "), _vm.campos.length ? _c("ayuda-seccion", {
-    attrs: {
-      titulo: "Qué cargás en cada campo",
-      id: "campos"
-    }
-  }, [_vm.datos.campos_intro ? _c("p", [_vm._v(_vm._s(_vm.datos.campos_intro))]) : _vm._e(), _vm._v(" "), _c("ayuda-tabla-campos", {
-    attrs: {
-      campos: _vm.campos
-    }
-  })], 1) : _vm._e(), _vm._v(" "), _vm.botones.length ? _c("ayuda-seccion", {
+  }, "component", _vm.demoProps, false))], 1) : _vm._e(), _vm._v(" "), _vm.botones.length ? _c("ayuda-seccion", {
     attrs: {
       titulo: "Botones y qué hace cada uno",
       id: "botones"
@@ -66439,7 +68543,7 @@ var render = function render() {
       "class": b.estilo || ""
     }, [b.icono ? _c("i", {
       "class": "fa fa-" + b.icono
-    }) : _vm._e(), _vm._v("\n                    " + _vm._s(b.label) + "\n                ")]), _vm._v(" "), _c("span", {
+    }) : _vm._e(), _vm._v("\n                            " + _vm._s(b.label) + "\n                        ")]), _vm._v(" "), _c("span", {
       staticClass: "ayuda_boton_desc"
     }, [_vm._v("— " + _vm._s(b.descripcion))])]);
   }), 0)]) : _vm._e(), _vm._v(" "), _vm.datos.estados && _vm.datos.estados.length ? _c("ayuda-seccion", {
@@ -66457,7 +68561,7 @@ var render = function render() {
       titulo: "Si te pasa esto…",
       id: "errores"
     }
-  }, [_c("p", [_vm._v("Las situaciones más frecuentes y cómo resolverlas:")]), _vm._v(" "), _c("ayuda-tabla-errores", {
+  }, [_c("ayuda-tabla-errores", {
     attrs: {
       errores: _vm.errores
     }
@@ -66471,7 +68575,7 @@ var render = function render() {
   }, _vm._l(_vm.calculos, function (c, i) {
     return _c("li", {
       key: i
-    }, [_c("strong", [_vm._v(_vm._s(c.que))]), _vm._v(" — " + _vm._s(c.como) + "\n            ")]);
+    }, [_c("strong", [_vm._v(_vm._s(c.que))]), _vm._v(" — " + _vm._s(c.como) + "\n                    ")]);
   }), 0)]) : _vm._e(), _vm._v(" "), _vm.edicion ? _c("ayuda-seccion", {
     attrs: {
       titulo: "Modificar después de guardar",
@@ -66528,18 +68632,20 @@ var render = function render() {
     }
   }, [_c("i", {
     "class": "fa fa-" + (_vm.datos.ir_a.icono || "external-link")
-  }), _vm._v("\n            " + _vm._s(_vm.datos.ir_a.label || "Ir al sistema") + "\n        ")])]) : _vm._e()], 2) : _c("div", {
-    staticClass: "ayuda_articulo_error"
+  }), _vm._v("\n                    " + _vm._s(_vm.datos.ir_a.label || "Ir al sistema") + "\n                ")])]) : _vm._e()], 2)]) : _c("article", {
+    staticClass: "box box-custom-enod ayuda_articulo"
+  }, [_c("div", {
+    staticClass: "box-body"
   }, [_c("ayuda-callout", {
     attrs: {
       tipo: "error",
       titulo: "Sección no disponible"
     }
-  }, [_vm._v("\n        Este artículo todavía no está disponible. Volvé al\n        "), _c("a", {
+  }, [_vm._v("\n                Este artículo todavía no está disponible. Volvé al\n                "), _c("a", {
     attrs: {
-      href: _vm.indiceUrl
+      href: "/ayuda_general"
     }
-  }, [_vm._v("índice de ayuda")]), _vm._v(".\n    ")])], 1);
+  }, [_vm._v("índice de ayuda")]), _vm._v(".\n            ")])], 1)])], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -80533,6 +82639,38 @@ var render = function render() {
   }), _vm._v(" "), _vm.showLabel ? _c("span", {
     staticClass: "enod-back-label"
   }, [_vm._v("Volver")]) : _vm._e()])]);
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/enod-help-button.vue?vue&type=template&id=37d42efa&scoped=true":
+/*!************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/enod-help-button.vue?vue&type=template&id=37d42efa&scoped=true ***!
+  \************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "enod-help-row"
+  }, [_c("a", {
+    staticClass: "btn btn-enod enod-help-pill",
+    attrs: {
+      href: _vm.url,
+      title: _vm.title
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-question-circle"
+  }), _vm._v(" "), _c("span", [_vm._v("Ayuda")])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -138837,6 +140975,82 @@ exports.push([module.i, "\n.ayuda_demo_block[data-v-f4577662] { margin: 16px 0 2
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda_demo_block[data-v-7d4f3287] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-7d4f3287] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_op_grid[data-v-7d4f3287] {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 14px;\n}\n.ayuda_op_grid .box[data-v-7d4f3287] {\n    border: 1px solid #eef0f3;\n    border-top: 3px solid #FFCC00;\n    border-radius: 4px;\n    box-shadow: none;\n    margin-bottom: 0;\n}\n.ayuda_op_grid .box-body[data-v-7d4f3287] { padding: 14px;\n}\n.ayuda_op_grid label[data-v-7d4f3287] { font-size: 13px; color: #4c5661; margin-bottom: 4px; font-weight: 600;\n}\n.ayuda_op_grid .form-control[data-v-7d4f3287] {\n    height: 34px;\n    border-radius: 4px;\n}\n.ayuda_op_grid .btn[data-v-7d4f3287] {\n    padding: 4px 10px;\n    font-size: 13px;\n}\n.ayuda_op_grid .btn-default i[data-v-7d4f3287] { color: #4c5661; font-size: 16px;\n}\n.ayuda_op_grid .box-header[data-v-7d4f3287] { border-bottom: 1px solid #eef0f3; padding: 10px 14px;\n}\n.ayuda_op_title[data-v-7d4f3287] {\n    margin: 0;\n    font-size: 13.5px;\n    font-weight: 600;\n    color: #d4a800;\n}\n.ayuda_op_table[data-v-7d4f3287] { margin: 0;\n}\n.ayuda_op_table thead th[data-v-7d4f3287] {\n    border-bottom: 2px solid #FFCC00;\n    background: #fafbfc;\n    color: #1a1a1a;\n    font-size: 13px;\n    font-weight: 700;\n    padding: 6px 10px;\n}\n.ayuda_op_table tbody td[data-v-7d4f3287] {\n    padding: 8px 10px;\n    font-size: 13px;\n    color: #2b2f33;\n    vertical-align: middle;\n}\n.ayuda_op_remove[data-v-7d4f3287] {\n    color: #1a1a1a;\n    cursor: pointer;\n    font-size: 16px;\n    background: #f3f4f6;\n    border-radius: 50%;\n    padding: 2px;\n    transition: all 0.12s ease;\n}\n.ayuda_op_remove[data-v-7d4f3287]:hover { background: #dc3545; color: #fff;\n}\n.ayuda_op_empty[data-v-7d4f3287] { font-style: italic; padding: 14px 10px !important; text-align: center;\n}\n.ayuda_op_actions[data-v-7d4f3287] { margin: 14px 0 0;\n}\n.ayuda_op_actions .btn[data-v-7d4f3287] { padding: 6px 18px; font-weight: 700;\n}\n.ayuda_demo_caption[data-v-7d4f3287] {\n    margin: 10px 0 0;\n    font-size: 12px;\n    color: #6b7280;\n    font-style: italic;\n}\n@media (max-width: 760px) {\n.ayuda_op_grid[data-v-7d4f3287] { grid-template-columns: 1fr;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda_demo_block[data-v-ba266bb8] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-ba266bb8] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_proc_topbar[data-v-ba266bb8] { margin-bottom: 10px;\n}\n.ayuda_proc_topbar .btn[data-v-ba266bb8] { padding: 7px 18px; font-weight: 700;\n}\n.ayuda_proc_box[data-v-ba266bb8] {\n    border: 1px solid #eef0f3; border-top: 3px solid #FFCC00;\n    border-radius: 4px; box-shadow: none; margin-bottom: 14px;\n}\n.ayuda_proc_box .box-body[data-v-ba266bb8] { padding: 14px;\n}\n.ayuda_proc_box .box-header[data-v-ba266bb8] { border-bottom: 1px solid #eef0f3; padding: 10px 14px;\n}\n.ayuda_proc_title[data-v-ba266bb8] { margin: 0; font-size: 13.5px; font-weight: 600; color: #d4a800;\n}\n.ayuda_proc_box label[data-v-ba266bb8] { font-size: 13px; color: #4c5661; margin-bottom: 4px; font-weight: 600;\n}\n.ayuda_proc_box .form-control[data-v-ba266bb8] { height: 34px; border-radius: 4px;\n}\n.ayuda_proc_req[data-v-ba266bb8] { color: #dc3545; font-weight: 700;\n}\n.ayuda_proc_add[data-v-ba266bb8] { padding: 4px 10px;\n}\n.ayuda_proc_add i[data-v-ba266bb8] { color: #4c5661; font-size: 16px;\n}\n.ayuda_proc_table[data-v-ba266bb8] { margin: 0;\n}\n.ayuda_proc_table thead th[data-v-ba266bb8] {\n    border-bottom: 2px solid #FFCC00; background: #fafbfc;\n    color: #1a1a1a; font-size: 13px; font-weight: 700; padding: 6px 10px;\n}\n.ayuda_proc_table tbody td[data-v-ba266bb8] { padding: 8px 10px; font-size: 13px; vertical-align: middle;\n}\n.ayuda_proc_remove[data-v-ba266bb8] {\n    color: #1a1a1a; cursor: pointer; font-size: 16px;\n    background: #f3f4f6; border-radius: 50%; padding: 2px;\n    transition: all 0.12s ease;\n}\n.ayuda_proc_remove[data-v-ba266bb8]:hover { background: #dc3545; color: #fff;\n}\n.ayuda_proc_empty[data-v-ba266bb8] { font-style: italic; padding: 14px 10px !important; text-align: center;\n}\n.ayuda_proc_actions[data-v-ba266bb8] { margin: 14px 0 0;\n}\n.ayuda_proc_actions .btn[data-v-ba266bb8] { padding: 6px 18px; font-weight: 700;\n}\n.ayuda_demo_caption[data-v-ba266bb8] {\n    margin: 10px 0 0; font-size: 12px; color: #6b7280; font-style: italic;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda_demo_block[data-v-279d118d] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-279d118d] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_sol_box[data-v-279d118d] {\n    border: 1px solid #eef0f3;\n    border-top: 3px solid #FFCC00;\n    border-radius: 4px;\n    box-shadow: none;\n    margin-bottom: 14px;\n}\n.ayuda_sol_box .box-body[data-v-279d118d] { padding: 14px;\n}\n.ayuda_sol_box .box-header[data-v-279d118d] { border-bottom: 1px solid #eef0f3; padding: 10px 14px;\n}\n.ayuda_sol_title[data-v-279d118d] {\n    margin: 0; font-size: 13.5px; font-weight: 600; color: #d4a800;\n}\n.ayuda_sol_box label[data-v-279d118d] { font-size: 13px; color: #4c5661; margin-bottom: 4px; font-weight: 600;\n}\n.ayuda_sol_box .form-control[data-v-279d118d] { height: 34px; border-radius: 4px;\n}\n.ayuda_sol_box .btn-default[data-v-279d118d] { padding: 4px 10px; font-size: 13px;\n}\n.ayuda_sol_box .btn-default i[data-v-279d118d] { color: #4c5661; font-size: 16px;\n}\n.ayuda_sol_table[data-v-279d118d] { margin: 0;\n}\n.ayuda_sol_table thead th[data-v-279d118d] {\n    border-bottom: 2px solid #FFCC00;\n    background: #fafbfc;\n    color: #1a1a1a;\n    font-size: 13px;\n    font-weight: 700;\n    padding: 6px 10px;\n}\n.ayuda_sol_table tbody td[data-v-279d118d] { padding: 8px 10px; font-size: 13px; vertical-align: middle;\n}\n.ayuda_sol_remove[data-v-279d118d] {\n    color: #1a1a1a; cursor: pointer; font-size: 16px;\n    background: #f3f4f6; border-radius: 50%; padding: 2px;\n    transition: all 0.12s ease;\n}\n.ayuda_sol_remove[data-v-279d118d]:hover { background: #dc3545; color: #fff;\n}\n.ayuda_sol_empty[data-v-279d118d] { font-style: italic; padding: 14px 10px !important; text-align: center;\n}\n.ayuda_sol_actions[data-v-279d118d] { margin: 14px 0 0;\n}\n.ayuda_sol_actions .btn[data-v-279d118d] { padding: 6px 18px; font-weight: 700;\n}\n.ayuda_demo_caption[data-v-279d118d] {\n    margin: 10px 0 0; font-size: 12px; color: #6b7280; font-style: italic;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda_demo_block[data-v-3da06e0e] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-3da06e0e] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_veh_box[data-v-3da06e0e] {\n    border: 1px solid #eef0f3; border-top: 3px solid #FFCC00;\n    border-radius: 4px; box-shadow: none; margin-bottom: 14px;\n}\n.ayuda_veh_box .box-body[data-v-3da06e0e] { padding: 14px;\n}\n.ayuda_veh_box .box-header[data-v-3da06e0e] { border-bottom: 1px solid #eef0f3; padding: 10px 14px;\n}\n.ayuda_veh_title[data-v-3da06e0e] { margin: 0; font-size: 13.5px; font-weight: 600; color: #d4a800;\n}\n.ayuda_veh_box label[data-v-3da06e0e] { font-size: 13px; color: #4c5661; margin-bottom: 4px; font-weight: 600;\n}\n.ayuda_veh_box .form-control[data-v-3da06e0e] { height: 34px; border-radius: 4px;\n}\n.ayuda_veh_box .btn-default[data-v-3da06e0e] { padding: 4px 10px; font-size: 13px;\n}\n.ayuda_veh_box .btn-default i[data-v-3da06e0e] { color: #4c5661; font-size: 16px;\n}\n.ayuda_veh_table[data-v-3da06e0e] { margin: 0;\n}\n.ayuda_veh_table thead th[data-v-3da06e0e] {\n    border-bottom: 2px solid #FFCC00; background: #fafbfc;\n    color: #1a1a1a; font-size: 13px; font-weight: 700; padding: 6px 10px;\n}\n.ayuda_veh_table tbody td[data-v-3da06e0e] { padding: 8px 10px; font-size: 13px; vertical-align: middle;\n}\n.ayuda_veh_remove[data-v-3da06e0e] {\n    color: #1a1a1a; cursor: pointer; font-size: 16px;\n    background: #f3f4f6; border-radius: 50%; padding: 2px;\n    transition: all 0.12s ease;\n}\n.ayuda_veh_remove[data-v-3da06e0e]:hover { background: #dc3545; color: #fff;\n}\n.ayuda_veh_empty[data-v-3da06e0e] { font-style: italic; padding: 14px 10px !important; text-align: center;\n}\n.ayuda_veh_actions[data-v-3da06e0e] { margin: 14px 0 0;\n}\n.ayuda_veh_actions .btn[data-v-3da06e0e] { padding: 6px 18px; font-weight: 700;\n}\n.ayuda_demo_caption[data-v-3da06e0e] {\n    margin: 10px 0 0; font-size: 12px; color: #6b7280; font-style: italic;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-buscador.vue?vue&type=style&index=0&id=5a0173f0&scoped=true&lang=css":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-buscador.vue?vue&type=style&index=0&id=5a0173f0&scoped=true&lang=css ***!
@@ -139350,6 +141564,82 @@ exports.push([module.i, "\n.ayuda_demo_block[data-v-07ee7b1c] {\r\n    margin: 1
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda_demo_block[data-v-1cda3024] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-1cda3024] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_demo_intro[data-v-1cda3024] { font-size: 13px; color: #4c5661; margin-bottom: 12px;\n}\n.ayuda_tab_grid[data-v-1cda3024] {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));\n    gap: 10px;\n}\n.ayuda_tab_card[data-v-1cda3024] {\n    position: relative;\n    height: 120px;\n    border-radius: 4px;\n    padding: 12px 14px 14px;\n    color: #fff;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    overflow: hidden;\n}\n.ayuda_tab_card.fondo-gris[data-v-1cda3024]        { background: #6b6b6b;\n}\n.ayuda_tab_card.fondo-gris-claro[data-v-1cda3024]  { background: #9b9b9b;\n}\n.ayuda_tab_card.fondo-negro[data-v-1cda3024]       { background: #1a1a1a;\n}\n.ayuda_tab_card.fondo-amarillo[data-v-1cda3024]    { background: #FFCC00; color: #1a1a1a;\n}\n.ayuda_tab_n[data-v-1cda3024] {\n    position: absolute;\n    top: 8px; right: 14px;\n    font-size: 20px;\n    font-weight: 700;\n}\n.ayuda_tab_icon[data-v-1cda3024] {\n    font-size: 38px;\n    text-align: center;\n    margin-top: 8px;\n    opacity: 0.85;\n}\n.ayuda_tab_card.fondo-amarillo .ayuda_tab_icon[data-v-1cda3024] { color: #fff; opacity: 0.95;\n}\n.ayuda_tab_titulo[data-v-1cda3024] {\n    margin-top: auto;\n    background: #1a1a1a;\n    color: #fff;\n    padding: 5px 10px;\n    font-size: 12px;\n    font-weight: 700;\n    letter-spacing: 0.04em;\n    border-radius: 0 0 4px 4px;\n    margin: 0 -14px -14px;\n}\n.ayuda_tab_card.fondo-amarillo .ayuda_tab_titulo[data-v-1cda3024] { color: #FFCC00;\n}\n.ayuda_tab_titulo em[data-v-1cda3024] { color: #FFCC00; font-style: normal;\n}\n.ayuda_tab_footer[data-v-1cda3024] {\n    margin-top: 18px;\n    display: flex; justify-content: space-between; align-items: center;\n    flex-wrap: wrap;\n    gap: 12px;\n}\n.ayuda_tab_footer .btn-enod[data-v-1cda3024] { padding: 7px 16px; font-weight: 700;\n}\n.ayuda_tab_search[data-v-1cda3024] {\n    display: flex; gap: 0;\n    width: 280px; max-width: 100%;\n}\n.ayuda_tab_search input.form-control[data-v-1cda3024] { border-radius: 4px 0 0 4px; height: 34px;\n}\n.ayuda_tab_search .btn[data-v-1cda3024] { border-radius: 0 4px 4px 0; padding: 0 14px;\n}\n.ayuda_demo_caption[data-v-1cda3024] {\n    margin: 10px 0 0; font-size: 12px; color: #6b7280; font-style: italic;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda_demo_block[data-v-291996d6] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-291996d6] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.ayuda_vis_grid[data-v-291996d6] {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 14px;\n    margin-bottom: 14px;\n}\n.ayuda_vis_grid .box[data-v-291996d6],\n.ayuda_vis_full[data-v-291996d6] {\n    border: 1px solid #eef0f3; border-top: 3px solid #FFCC00;\n    border-radius: 4px; box-shadow: none; margin-bottom: 0;\n}\n.ayuda_vis_grid .box-body[data-v-291996d6],\n.ayuda_vis_full .box-body[data-v-291996d6] { padding: 0;\n}\n.ayuda_vis_grid .box-header[data-v-291996d6],\n.ayuda_vis_full .box-header[data-v-291996d6] { border-bottom: 1px solid #eef0f3; padding: 10px 14px;\n}\n.ayuda_vis_title[data-v-291996d6] { margin: 0; font-size: 13.5px; font-weight: 600; color: #d4a800;\n}\n.ayuda_vis_table[data-v-291996d6] { margin: 0;\n}\n.ayuda_vis_table thead th[data-v-291996d6] {\n    border-bottom: 2px solid #FFCC00; background: #fafbfc;\n    color: #1a1a1a; font-size: 13px; font-weight: 700; padding: 6px 10px;\n}\n.ayuda_vis_table tbody td[data-v-291996d6] { padding: 8px 10px; font-size: 13px; vertical-align: middle;\n}\n.ayuda_demo_caption[data-v-291996d6] {\n    margin: 10px 0 0; font-size: 12px; color: #6b7280; font-style: italic;\n}\n@media (max-width: 760px) {\n.ayuda_vis_grid[data-v-291996d6] { grid-template-columns: 1fr;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda_demo_block[data-v-4183221a] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-4183221a] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.box[data-v-4183221a] {\n    border: 1px solid #eef0f3; border-top: 3px solid #FFCC00;\n    border-radius: 4px; box-shadow: none; margin-bottom: 14px;\n}\n.box-body[data-v-4183221a] { padding: 0;\n}\n.box-header[data-v-4183221a] { border-bottom: 1px solid #eef0f3; padding: 10px 14px;\n}\n.ayuda_vis_title[data-v-4183221a] { margin: 0; font-size: 13.5px; font-weight: 600; color: #d4a800;\n}\n.ayuda_vis_table[data-v-4183221a] { margin: 0;\n}\n.ayuda_vis_table thead th[data-v-4183221a] {\n    border-bottom: 2px solid #FFCC00; background: #fafbfc;\n    color: #1a1a1a; font-size: 13px; font-weight: 700; padding: 6px 10px;\n}\n.ayuda_vis_table tbody td[data-v-4183221a] { padding: 8px 10px; font-size: 13px; vertical-align: middle;\n}\n.ayuda_demo_caption[data-v-4183221a] {\n    margin: 10px 0 0; font-size: 12px; color: #6b7280; font-style: italic;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ayuda_demo_block[data-v-851fc26c] { margin: 16px 0 20px; font-family: 'Montserrat', sans-serif;\n}\n.ayuda_demo_label[data-v-851fc26c] {\n    font-size: 11px; color: #6b7280;\n    text-transform: uppercase; letter-spacing: 0.06em;\n    margin-bottom: 8px; font-weight: 700;\n}\n.box[data-v-851fc26c] {\n    border: 1px solid #eef0f3; border-top: 3px solid #FFCC00;\n    border-radius: 4px; box-shadow: none; margin-bottom: 14px;\n}\n.box-body[data-v-851fc26c] { padding: 0;\n}\n.box-header[data-v-851fc26c] { border-bottom: 1px solid #eef0f3; padding: 10px 14px;\n}\n.ayuda_vis_title[data-v-851fc26c] { margin: 0; font-size: 13.5px; font-weight: 600; color: #d4a800;\n}\n.ayuda_vis_table[data-v-851fc26c] { margin: 0;\n}\n.ayuda_vis_table thead th[data-v-851fc26c] {\n    border-bottom: 2px solid #FFCC00; background: #fafbfc;\n    color: #1a1a1a; font-size: 13px; font-weight: 700; padding: 6px 10px;\n}\n.ayuda_vis_table tbody td[data-v-851fc26c] { padding: 8px 10px; font-size: 13px; vertical-align: middle;\n}\n.ayuda_demo_caption[data-v-851fc26c] {\n    margin: 10px 0 0; font-size: 12px; color: #6b7280; font-style: italic;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-wizard-pasos.vue?vue&type=style&index=0&id=51ca772a&scoped=true&lang=css":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-wizard-pasos.vue?vue&type=style&index=0&id=51ca772a&scoped=true&lang=css ***!
@@ -139400,7 +141690,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.ayuda_articulo[data-v-1743a5b5] {\n    max-width: 980px;\n    margin: 0 auto;\n    padding: 0 12px;\n    font-family: 'Montserrat', sans-serif;\n    color: #2b2f33;\n}\n\n/* Hero */\n.ayuda_articulo_hero[data-v-1743a5b5] {\n    display: flex;\n    gap: 18px;\n    align-items: flex-start;\n    flex-wrap: wrap;\n    padding: 4px 0 16px 18px;\n    border-left: 3px solid #FFCC00;\n    margin-bottom: 22px;\n}\n.ayuda_articulo_hero_text[data-v-1743a5b5] { flex: 1; min-width: 260px;\n}\n.ayuda_articulo_hero h1[data-v-1743a5b5] {\n    margin: 0 0 8px;\n    font-size: 24px;\n    font-weight: 700;\n    color: #1a1a1a;\n    letter-spacing: -0.01em;\n}\n.ayuda_articulo_hero p[data-v-1743a5b5] {\n    margin: 0;\n    font-size: 14px;\n    color: #4c5661;\n    line-height: 1.6;\n}\n\n/* Botón \"Ir al sistema\" — estilo enod amarillo */\n.ayuda_ir_sistema_btn[data-v-1743a5b5] {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #FFCC00;\n    border: 1px solid #FFCC00;\n    color: #1a1a1a !important;\n    padding: 9px 18px;\n    border-radius: 6px;\n    font-size: 13px;\n    font-weight: 700;\n    text-decoration: none !important;\n    transition: all 0.12s ease;\n    line-height: 1;\n    white-space: nowrap;\n    align-self: center;\n}\n.ayuda_ir_sistema_btn[data-v-1743a5b5]:hover,\n.ayuda_ir_sistema_btn[data-v-1743a5b5]:focus {\n    background: #1a1a1a;\n    border-color: #1a1a1a;\n    color: #FFCC00 !important;\n}\n.ayuda_articulo_cta_bottom[data-v-1743a5b5] {\n    margin: 28px 0 8px;\n    text-align: center;\n    padding-top: 24px;\n    border-top: 1px solid #eef0f3;\n}\n\n/* Tabs de variantes */\n.ayuda_articulo_tabs[data-v-1743a5b5] {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 4px;\n    margin-bottom: 22px;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #eef0f3;\n}\n.ayuda_articulo_tab[data-v-1743a5b5] {\n    background: #fff;\n    border: 1px solid #e5e7eb;\n    color: #4c5661;\n    padding: 7px 16px;\n    border-radius: 6px;\n    font-size: 13px;\n    font-weight: 600;\n    cursor: pointer;\n    transition: all 0.12s ease;\n}\n.ayuda_articulo_tab[data-v-1743a5b5]:hover { border-color: #1a1a1a; color: #1a1a1a;\n}\n.ayuda_articulo_tab.is-active[data-v-1743a5b5] {\n    background: #FFCC00;\n    border-color: #FFCC00;\n    color: #1a1a1a;\n}\n\n/* Lista de acciones disponibles */\n.ayuda_acciones[data-v-1743a5b5] {\n    list-style: none;\n    padding: 0;\n    margin: 8px 0 0;\n}\n.ayuda_acciones li[data-v-1743a5b5] {\n    display: flex;\n    gap: 10px;\n    padding: 8px 12px;\n    background: #fafbfc;\n    border: 1px solid #eef0f3;\n    border-radius: 4px;\n    margin-bottom: 6px;\n    align-items: flex-start;\n    font-size: 13.5px;\n    line-height: 1.55;\n}\n.ayuda_acciones li > i[data-v-1743a5b5] {\n    color: #d4a800;\n    font-size: 14px;\n    margin-top: 3px;\n    flex-shrink: 0;\n}\n.ayuda_acciones li strong[data-v-1743a5b5] { color: #1a1a1a; font-weight: 700;\n}\n\n/* Botones documentados */\n.ayuda_botones[data-v-1743a5b5] {\n    list-style: none;\n    padding: 0;\n    margin: 8px 0;\n}\n.ayuda_botones li[data-v-1743a5b5] {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    padding: 8px 0;\n    border-bottom: 1px solid #f3f4f6;\n    font-size: 13.5px;\n    flex-wrap: wrap;\n}\n.ayuda_botones li[data-v-1743a5b5]:last-child { border-bottom: 0;\n}\n.ayuda_boton_demo[data-v-1743a5b5] {\n    display: inline-flex;\n    align-items: center;\n    gap: 5px;\n    background: #FFCC00;\n    color: #1a1a1a;\n    padding: 5px 12px;\n    border-radius: 4px;\n    font-size: 12px;\n    font-weight: 700;\n    line-height: 1;\n    border: 1px solid #FFCC00;\n    pointer-events: none;\n    flex-shrink: 0;\n}\n.ayuda_boton_demo.gris[data-v-1743a5b5] { background: #fff; color: #4c5661; border-color: #d6dce3;\n}\n.ayuda_boton_demo.rojo[data-v-1743a5b5] { background: #dc3545; color: #fff; border-color: #dc3545;\n}\n.ayuda_boton_demo.negro[data-v-1743a5b5] { background: #1a1a1a; color: #fff; border-color: #1a1a1a;\n}\n.ayuda_boton_desc[data-v-1743a5b5] { color: #4c5661; font-size: 13px;\n}\n\n/* Cálculos */\n.ayuda_calc_list[data-v-1743a5b5] {\n    list-style: none;\n    padding: 0;\n    margin: 8px 0 12px;\n}\n.ayuda_calc_list li[data-v-1743a5b5] {\n    padding: 8px 12px;\n    background: #fffdf5;\n    border-left: 3px solid #FFCC00;\n    border-radius: 0 4px 4px 0;\n    margin-bottom: 6px;\n    font-size: 13.5px;\n    line-height: 1.55;\n}\n.ayuda_calc_list li strong[data-v-1743a5b5] { color: #1a1a1a;\n}\n.ayuda_articulo_error[data-v-1743a5b5] { max-width: 980px; margin: 24px auto; padding: 0 12px;\n}\n", ""]);
+exports.push([module.i, "\n.ayuda_articulo_root[data-v-1743a5b5] {\n    max-width: 1100px;\n    margin: 0 auto;\n    padding: 0 4px;\n    font-family: 'Montserrat', sans-serif;\n}\n.ayuda_articulo[data-v-1743a5b5] {\n    margin: 0;\n    background: #fff;\n    border: 1px solid #eef0f3;\n    border-top: 3px solid #FFCC00;\n    border-radius: 4px;\n    box-shadow: 0 1px 3px rgba(0,0,0,0.04);\n}\n.ayuda_articulo .box-body[data-v-1743a5b5] { padding: 22px 26px;\n}\n\n/* Hero */\n.ayuda_articulo_hero[data-v-1743a5b5] {\n    display: flex;\n    gap: 18px;\n    align-items: flex-start;\n    flex-wrap: wrap;\n    margin-bottom: 22px;\n    padding-bottom: 16px;\n    border-bottom: 1px solid #eef0f3;\n}\n.ayuda_articulo_hero_text[data-v-1743a5b5] { flex: 1; min-width: 260px;\n}\n.ayuda_articulo_hero h2[data-v-1743a5b5] {\n    margin: 0 0 8px;\n    font-size: 22px;\n    font-weight: 700;\n    color: #1a1a1a;\n    letter-spacing: -0.01em;\n}\n.ayuda_articulo_hero p[data-v-1743a5b5] {\n    margin: 0;\n    font-size: 14px;\n    color: #4c5661;\n    line-height: 1.6;\n}\n\n/* CTA \"Ir al sistema\" — estilo enod */\n.ayuda_ir_sistema_btn[data-v-1743a5b5] {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #FFCC00;\n    border: 1px solid #FFCC00;\n    color: #1a1a1a !important;\n    padding: 9px 18px;\n    border-radius: 6px;\n    font-size: 13px;\n    font-weight: 700;\n    text-decoration: none !important;\n    transition: all 0.12s ease;\n    line-height: 1;\n    white-space: nowrap;\n    align-self: center;\n}\n.ayuda_ir_sistema_btn[data-v-1743a5b5]:hover,\n.ayuda_ir_sistema_btn[data-v-1743a5b5]:focus {\n    background: #1a1a1a;\n    border-color: #1a1a1a;\n    color: #FFCC00 !important;\n}\n.ayuda_articulo_cta_bottom[data-v-1743a5b5] {\n    margin: 28px 0 4px;\n    text-align: center;\n    padding-top: 20px;\n    border-top: 1px solid #eef0f3;\n}\n\n/* Tabs */\n.ayuda_articulo_tabs[data-v-1743a5b5] {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 4px;\n    margin-bottom: 22px;\n    padding-bottom: 8px;\n    border-bottom: 1px solid #eef0f3;\n}\n.ayuda_articulo_tab[data-v-1743a5b5] {\n    background: #fff;\n    border: 1px solid #e5e7eb;\n    color: #4c5661;\n    padding: 7px 16px;\n    border-radius: 6px;\n    font-size: 13px;\n    font-weight: 600;\n    cursor: pointer;\n    transition: all 0.12s ease;\n}\n.ayuda_articulo_tab[data-v-1743a5b5]:hover { border-color: #1a1a1a; color: #1a1a1a;\n}\n.ayuda_articulo_tab.is-active[data-v-1743a5b5] {\n    background: #FFCC00;\n    border-color: #FFCC00;\n    color: #1a1a1a;\n}\n\n/* Acciones */\n.ayuda_acciones[data-v-1743a5b5] {\n    list-style: none;\n    padding: 0;\n    margin: 8px 0 0;\n}\n.ayuda_acciones li[data-v-1743a5b5] {\n    display: flex;\n    gap: 10px;\n    padding: 10px 14px;\n    background: #fafbfc;\n    border: 1px solid #eef0f3;\n    border-radius: 4px;\n    margin-bottom: 6px;\n    align-items: flex-start;\n    font-size: 13.5px;\n    line-height: 1.55;\n}\n.ayuda_acciones li > i[data-v-1743a5b5] { color: #d4a800; font-size: 14px; margin-top: 3px; flex-shrink: 0;\n}\n.ayuda_acciones li strong[data-v-1743a5b5] { color: #1a1a1a; font-weight: 700;\n}\n\n/* Bloques de campos */\n.ayuda_bloques[data-v-1743a5b5] {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));\n    gap: 12px;\n    margin: 12px 0 8px;\n}\n.ayuda_bloque[data-v-1743a5b5] {\n    background: #fafbfc;\n    border: 1px solid #eef0f3;\n    border-top: 3px solid #FFCC00;\n    border-radius: 4px;\n    padding: 12px 14px;\n}\n.ayuda_bloque_titulo[data-v-1743a5b5] {\n    margin: 0 0 4px;\n    font-size: 13px;\n    font-weight: 700;\n    color: #1a1a1a;\n    text-transform: uppercase;\n    letter-spacing: 0.04em;\n}\n.ayuda_bloque_titulo i[data-v-1743a5b5] { color: #d4a800; margin-right: 5px;\n}\n.ayuda_bloque_desc[data-v-1743a5b5] {\n    font-size: 12px;\n    color: #6b7280;\n    margin: 0 0 8px;\n    line-height: 1.5;\n}\n.ayuda_bloque_lista[data-v-1743a5b5] { list-style: none; padding: 0; margin: 0;\n}\n.ayuda_bloque_lista li[data-v-1743a5b5] {\n    padding: 4px 0;\n    border-bottom: 1px dashed #eef0f3;\n    font-size: 13px;\n    line-height: 1.5;\n}\n.ayuda_bloque_lista li[data-v-1743a5b5]:last-child { border-bottom: 0;\n}\n.ayuda_bloque_campo[data-v-1743a5b5] { color: #1a1a1a; font-weight: 600;\n}\n.ayuda_bloque_detalle[data-v-1743a5b5] { color: #6b7280; font-size: 12.5px;\n}\n.ayuda_obl[data-v-1743a5b5] {\n    color: #dc3545;\n    font-weight: 700;\n    margin-left: 2px;\n}\n.ayuda_obl_leyenda[data-v-1743a5b5] {\n    font-size: 11.5px;\n    color: #6b7280;\n    margin: 8px 0 0;\n}\n\n/* Botones documentados */\n.ayuda_botones[data-v-1743a5b5] { list-style: none; padding: 0; margin: 8px 0;\n}\n.ayuda_botones li[data-v-1743a5b5] {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    padding: 8px 0;\n    border-bottom: 1px solid #f3f4f6;\n    font-size: 13.5px;\n    flex-wrap: wrap;\n}\n.ayuda_botones li[data-v-1743a5b5]:last-child { border-bottom: 0;\n}\n.ayuda_boton_demo[data-v-1743a5b5] {\n    display: inline-flex;\n    align-items: center;\n    gap: 5px;\n    background: #FFCC00;\n    color: #1a1a1a;\n    padding: 5px 12px;\n    border-radius: 4px;\n    font-size: 12px;\n    font-weight: 700;\n    line-height: 1;\n    border: 1px solid #FFCC00;\n    pointer-events: none;\n    flex-shrink: 0;\n}\n.ayuda_boton_demo.gris[data-v-1743a5b5] { background: #fff; color: #4c5661; border-color: #d6dce3;\n}\n.ayuda_boton_demo.rojo[data-v-1743a5b5] { background: #dc3545; color: #fff; border-color: #dc3545;\n}\n.ayuda_boton_demo.negro[data-v-1743a5b5] { background: #1a1a1a; color: #fff; border-color: #1a1a1a;\n}\n.ayuda_boton_desc[data-v-1743a5b5] { color: #4c5661; font-size: 13px;\n}\n\n/* Cálculos */\n.ayuda_calc_list[data-v-1743a5b5] { list-style: none; padding: 0; margin: 8px 0 4px;\n}\n.ayuda_calc_list li[data-v-1743a5b5] {\n    padding: 8px 12px;\n    background: #fffdf5;\n    border-left: 3px solid #FFCC00;\n    border-radius: 0 4px 4px 0;\n    margin-bottom: 6px;\n    font-size: 13.5px;\n    line-height: 1.55;\n}\n.ayuda_calc_list li strong[data-v-1743a5b5] { color: #1a1a1a;\n}\n", ""]);
 
 // exports
 
@@ -140104,6 +142394,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.enod-back-row[data-v-0c251594] {\r\n  display: flex;\r\n  justify-content: flex-start;\r\n  clear: both;\r\n  margin: 0 0 10px 0;\r\n  line-height: 1;\n}\n.enod-back-in-header[data-v-0c251594] {\r\n  display: inline-flex;\r\n  vertical-align: middle;\r\n  margin: 0 8px 0 0;\n}\n.enod-back-label[data-v-0c251594] {\r\n  margin-left: 6px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.enod-help-row[data-v-37d42efa] {\n  display: inline-flex;\n  line-height: 1;\n}\n.enod-help-in-header[data-v-37d42efa] {\n  position: absolute;\n  top: 50%;\n  right: 15px;\n  transform: translateY(-50%);\n  margin: 0;\n  z-index: 5;\n}\n.enod-help-pill[data-v-37d42efa] {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  border-radius: 999px;\n  padding: 7px 16px;\n  font-size: 13px;\n  font-weight: 700;\n  line-height: 1;\n  text-decoration: none;\n  white-space: nowrap;\n  transition: all 0.12s ease;\n}\n.enod-help-pill i[data-v-37d42efa] { font-size: 14px;\n}\n.enod-help-pill[data-v-37d42efa]:hover,\n.enod-help-pill[data-v-37d42efa]:focus {\n  text-decoration: none;\n  box-shadow: 0 2px 8px rgba(255, 204, 0, 0.45);\n}\n@media (max-width: 480px) {\n.enod-help-pill span[data-v-37d42efa] { display: none;\n}\n.enod-help-pill[data-v-37d42efa] { padding: 7px 9px;\n}\n}\n", ""]);
 
 // exports
 
@@ -217937,6 +220246,126 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-buscador.vue?vue&type=style&index=0&id=5a0173f0&scoped=true&lang=css":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-buscador.vue?vue&type=style&index=0&id=5a0173f0&scoped=true&lang=css ***!
@@ -218726,6 +221155,126 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-tabla-soldadores.vue?vue&type=style&index=0&id=07ee7b1c&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tabla-soldadores.vue?vue&type=style&index=0&id=07ee7b1c&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -219926,6 +222475,36 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./enod-back-button.vue?vue&type=style&index=0&id=0c251594&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/enod-back-button.vue?vue&type=style&index=0&id=0c251594&scoped=true&lang=css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -384265,6 +386844,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-form-remito', _
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-tabla-remitos', __webpack_require__(/*! ./components/ayuda/ayuda-demo-tabla-remitos.vue */ "./resources/js/components/ayuda/ayuda-demo-tabla-remitos.vue")["default"]);
 /* Ayuda - Bloque 4 (Asignaciones) */
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-asignacion', __webpack_require__(/*! ./components/ayuda/ayuda-demo-asignacion.vue */ "./resources/js/components/ayuda/ayuda-demo-asignacion.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-asignar-operadores', __webpack_require__(/*! ./components/ayuda/ayuda-demo-asignar-operadores.vue */ "./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-asignar-soldadores', __webpack_require__(/*! ./components/ayuda/ayuda-demo-asignar-soldadores.vue */ "./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-asignar-vehiculos', __webpack_require__(/*! ./components/ayuda/ayuda-demo-asignar-vehiculos.vue */ "./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-asignar-procedimientos', __webpack_require__(/*! ./components/ayuda/ayuda-demo-asignar-procedimientos.vue */ "./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-tablero-ot', __webpack_require__(/*! ./components/ayuda/ayuda-demo-tablero-ot.vue */ "./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-visualizar-operadores', __webpack_require__(/*! ./components/ayuda/ayuda-demo-visualizar-operadores.vue */ "./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-visualizar-procedimientos', __webpack_require__(/*! ./components/ayuda/ayuda-demo-visualizar-procedimientos.vue */ "./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-visualizar-vehiculos', __webpack_require__(/*! ./components/ayuda/ayuda-demo-visualizar-vehiculos.vue */ "./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-tabla-asignados', __webpack_require__(/*! ./components/ayuda/ayuda-demo-tabla-asignados.vue */ "./resources/js/components/ayuda/ayuda-demo-tabla-asignados.vue")["default"]);
 /* Ayuda - Bloque 5 (ABM Maestros) */
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-demo-abm-tabla', __webpack_require__(/*! ./components/ayuda/ayuda-demo-abm-tabla.vue */ "./resources/js/components/ayuda/ayuda-demo-abm-tabla.vue")["default"]);
@@ -384284,6 +386871,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-tabla-impacto', __we
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-relacionados', __webpack_require__(/*! ./components/ayuda/comunes/ayuda-relacionados.vue */ "./resources/js/components/ayuda/comunes/ayuda-relacionados.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-flujo-documental', __webpack_require__(/*! ./components/ayuda/comunes/ayuda-flujo-documental.vue */ "./resources/js/components/ayuda/comunes/ayuda-flujo-documental.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ayuda-articulo', __webpack_require__(/*! ./components/ayuda/comunes/ayuda-articulo.vue */ "./resources/js/components/ayuda/comunes/ayuda-articulo.vue")["default"]);
+
+/* Botones globales del sistema */
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('enod-help-button', __webpack_require__(/*! ./components/enod-help-button.vue */ "./resources/js/components/enod-help-button.vue")["default"]);
 
 /* Reportes */
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('estadisticas-soldaduras', __webpack_require__(/*! ./components/reportes/estadisticas-soldaduras.vue */ "./resources/js/components/reportes/estadisticas-soldaduras.vue")["default"]);
@@ -393037,6 +395627,354 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ayuda_demo_asignar_operadores_vue_vue_type_template_id_7d4f3287_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ayuda-demo-asignar-operadores.vue?vue&type=template&id=7d4f3287&scoped=true */ "./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=template&id=7d4f3287&scoped=true");
+/* harmony import */ var _ayuda_demo_asignar_operadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ayuda-demo-asignar-operadores.vue?vue&type=script&lang=js */ "./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ayuda_demo_asignar_operadores_vue_vue_type_style_index_0_id_7d4f3287_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css */ "./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ayuda_demo_asignar_operadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ayuda_demo_asignar_operadores_vue_vue_type_template_id_7d4f3287_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ayuda_demo_asignar_operadores_vue_vue_type_template_id_7d4f3287_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "7d4f3287",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_operadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-operadores.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_operadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css":
+/*!*********************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css ***!
+  \*********************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_operadores_vue_vue_type_style_index_0_id_7d4f3287_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=style&index=0&id=7d4f3287&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_operadores_vue_vue_type_style_index_0_id_7d4f3287_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_operadores_vue_vue_type_style_index_0_id_7d4f3287_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_operadores_vue_vue_type_style_index_0_id_7d4f3287_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_operadores_vue_vue_type_style_index_0_id_7d4f3287_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=template&id=7d4f3287&scoped=true":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=template&id=7d4f3287&scoped=true ***!
+  \*******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_operadores_vue_vue_type_template_id_7d4f3287_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-operadores.vue?vue&type=template&id=7d4f3287&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-operadores.vue?vue&type=template&id=7d4f3287&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_operadores_vue_vue_type_template_id_7d4f3287_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_operadores_vue_vue_type_template_id_7d4f3287_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ayuda_demo_asignar_procedimientos_vue_vue_type_template_id_ba266bb8_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ayuda-demo-asignar-procedimientos.vue?vue&type=template&id=ba266bb8&scoped=true */ "./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=template&id=ba266bb8&scoped=true");
+/* harmony import */ var _ayuda_demo_asignar_procedimientos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ayuda-demo-asignar-procedimientos.vue?vue&type=script&lang=js */ "./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ayuda_demo_asignar_procedimientos_vue_vue_type_style_index_0_id_ba266bb8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css */ "./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ayuda_demo_asignar_procedimientos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ayuda_demo_asignar_procedimientos_vue_vue_type_template_id_ba266bb8_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ayuda_demo_asignar_procedimientos_vue_vue_type_template_id_ba266bb8_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "ba266bb8",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_procedimientos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-procedimientos.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_procedimientos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css":
+/*!*************************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css ***!
+  \*************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_procedimientos_vue_vue_type_style_index_0_id_ba266bb8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=style&index=0&id=ba266bb8&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_procedimientos_vue_vue_type_style_index_0_id_ba266bb8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_procedimientos_vue_vue_type_style_index_0_id_ba266bb8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_procedimientos_vue_vue_type_style_index_0_id_ba266bb8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_procedimientos_vue_vue_type_style_index_0_id_ba266bb8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=template&id=ba266bb8&scoped=true":
+/*!***********************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=template&id=ba266bb8&scoped=true ***!
+  \***********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_procedimientos_vue_vue_type_template_id_ba266bb8_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-procedimientos.vue?vue&type=template&id=ba266bb8&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-procedimientos.vue?vue&type=template&id=ba266bb8&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_procedimientos_vue_vue_type_template_id_ba266bb8_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_procedimientos_vue_vue_type_template_id_ba266bb8_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ayuda_demo_asignar_soldadores_vue_vue_type_template_id_279d118d_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ayuda-demo-asignar-soldadores.vue?vue&type=template&id=279d118d&scoped=true */ "./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=template&id=279d118d&scoped=true");
+/* harmony import */ var _ayuda_demo_asignar_soldadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ayuda-demo-asignar-soldadores.vue?vue&type=script&lang=js */ "./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ayuda_demo_asignar_soldadores_vue_vue_type_style_index_0_id_279d118d_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css */ "./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ayuda_demo_asignar_soldadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ayuda_demo_asignar_soldadores_vue_vue_type_template_id_279d118d_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ayuda_demo_asignar_soldadores_vue_vue_type_template_id_279d118d_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "279d118d",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_soldadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-soldadores.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_soldadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css":
+/*!*********************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css ***!
+  \*********************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_soldadores_vue_vue_type_style_index_0_id_279d118d_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=style&index=0&id=279d118d&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_soldadores_vue_vue_type_style_index_0_id_279d118d_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_soldadores_vue_vue_type_style_index_0_id_279d118d_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_soldadores_vue_vue_type_style_index_0_id_279d118d_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_soldadores_vue_vue_type_style_index_0_id_279d118d_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=template&id=279d118d&scoped=true":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=template&id=279d118d&scoped=true ***!
+  \*******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_soldadores_vue_vue_type_template_id_279d118d_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-soldadores.vue?vue&type=template&id=279d118d&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-soldadores.vue?vue&type=template&id=279d118d&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_soldadores_vue_vue_type_template_id_279d118d_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_soldadores_vue_vue_type_template_id_279d118d_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ayuda_demo_asignar_vehiculos_vue_vue_type_template_id_3da06e0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ayuda-demo-asignar-vehiculos.vue?vue&type=template&id=3da06e0e&scoped=true */ "./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=template&id=3da06e0e&scoped=true");
+/* harmony import */ var _ayuda_demo_asignar_vehiculos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ayuda-demo-asignar-vehiculos.vue?vue&type=script&lang=js */ "./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ayuda_demo_asignar_vehiculos_vue_vue_type_style_index_0_id_3da06e0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css */ "./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ayuda_demo_asignar_vehiculos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ayuda_demo_asignar_vehiculos_vue_vue_type_template_id_3da06e0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ayuda_demo_asignar_vehiculos_vue_vue_type_template_id_3da06e0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "3da06e0e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=script&lang=js":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_vehiculos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-vehiculos.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_vehiculos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css":
+/*!********************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css ***!
+  \********************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_vehiculos_vue_vue_type_style_index_0_id_3da06e0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=style&index=0&id=3da06e0e&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_vehiculos_vue_vue_type_style_index_0_id_3da06e0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_vehiculos_vue_vue_type_style_index_0_id_3da06e0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_vehiculos_vue_vue_type_style_index_0_id_3da06e0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_vehiculos_vue_vue_type_style_index_0_id_3da06e0e_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=template&id=3da06e0e&scoped=true":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=template&id=3da06e0e&scoped=true ***!
+  \******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_vehiculos_vue_vue_type_template_id_3da06e0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-asignar-vehiculos.vue?vue&type=template&id=3da06e0e&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-asignar-vehiculos.vue?vue&type=template&id=3da06e0e&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_vehiculos_vue_vue_type_template_id_3da06e0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_asignar_vehiculos_vue_vue_type_template_id_3da06e0e_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ayuda/ayuda-demo-buscador.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/ayuda/ayuda-demo-buscador.vue ***!
@@ -395386,6 +398324,354 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ayuda_demo_tablero_ot_vue_vue_type_template_id_1cda3024_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ayuda-demo-tablero-ot.vue?vue&type=template&id=1cda3024&scoped=true */ "./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=template&id=1cda3024&scoped=true");
+/* harmony import */ var _ayuda_demo_tablero_ot_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ayuda-demo-tablero-ot.vue?vue&type=script&lang=js */ "./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ayuda_demo_tablero_ot_vue_vue_type_style_index_0_id_1cda3024_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css */ "./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ayuda_demo_tablero_ot_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ayuda_demo_tablero_ot_vue_vue_type_template_id_1cda3024_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ayuda_demo_tablero_ot_vue_vue_type_template_id_1cda3024_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "1cda3024",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ayuda/ayuda-demo-tablero-ot.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tablero_ot_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-tablero-ot.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tablero_ot_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css":
+/*!*************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css ***!
+  \*************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tablero_ot_vue_vue_type_style_index_0_id_1cda3024_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=style&index=0&id=1cda3024&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tablero_ot_vue_vue_type_style_index_0_id_1cda3024_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tablero_ot_vue_vue_type_style_index_0_id_1cda3024_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tablero_ot_vue_vue_type_style_index_0_id_1cda3024_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tablero_ot_vue_vue_type_style_index_0_id_1cda3024_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=template&id=1cda3024&scoped=true":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=template&id=1cda3024&scoped=true ***!
+  \***********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tablero_ot_vue_vue_type_template_id_1cda3024_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-tablero-ot.vue?vue&type=template&id=1cda3024&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-tablero-ot.vue?vue&type=template&id=1cda3024&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tablero_ot_vue_vue_type_template_id_1cda3024_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_tablero_ot_vue_vue_type_template_id_1cda3024_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ayuda_demo_visualizar_operadores_vue_vue_type_template_id_291996d6_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ayuda-demo-visualizar-operadores.vue?vue&type=template&id=291996d6&scoped=true */ "./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=template&id=291996d6&scoped=true");
+/* harmony import */ var _ayuda_demo_visualizar_operadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ayuda-demo-visualizar-operadores.vue?vue&type=script&lang=js */ "./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ayuda_demo_visualizar_operadores_vue_vue_type_style_index_0_id_291996d6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css */ "./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ayuda_demo_visualizar_operadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ayuda_demo_visualizar_operadores_vue_vue_type_template_id_291996d6_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ayuda_demo_visualizar_operadores_vue_vue_type_template_id_291996d6_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "291996d6",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_operadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-operadores.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_operadores_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css":
+/*!************************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css ***!
+  \************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_operadores_vue_vue_type_style_index_0_id_291996d6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=style&index=0&id=291996d6&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_operadores_vue_vue_type_style_index_0_id_291996d6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_operadores_vue_vue_type_style_index_0_id_291996d6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_operadores_vue_vue_type_style_index_0_id_291996d6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_operadores_vue_vue_type_style_index_0_id_291996d6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=template&id=291996d6&scoped=true":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=template&id=291996d6&scoped=true ***!
+  \**********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_operadores_vue_vue_type_template_id_291996d6_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-operadores.vue?vue&type=template&id=291996d6&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-operadores.vue?vue&type=template&id=291996d6&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_operadores_vue_vue_type_template_id_291996d6_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_operadores_vue_vue_type_template_id_291996d6_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ayuda_demo_visualizar_procedimientos_vue_vue_type_template_id_4183221a_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ayuda-demo-visualizar-procedimientos.vue?vue&type=template&id=4183221a&scoped=true */ "./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=template&id=4183221a&scoped=true");
+/* harmony import */ var _ayuda_demo_visualizar_procedimientos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ayuda-demo-visualizar-procedimientos.vue?vue&type=script&lang=js */ "./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ayuda_demo_visualizar_procedimientos_vue_vue_type_style_index_0_id_4183221a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css */ "./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ayuda_demo_visualizar_procedimientos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ayuda_demo_visualizar_procedimientos_vue_vue_type_template_id_4183221a_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ayuda_demo_visualizar_procedimientos_vue_vue_type_template_id_4183221a_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "4183221a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_procedimientos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-procedimientos.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_procedimientos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css":
+/*!****************************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css ***!
+  \****************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_procedimientos_vue_vue_type_style_index_0_id_4183221a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=style&index=0&id=4183221a&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_procedimientos_vue_vue_type_style_index_0_id_4183221a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_procedimientos_vue_vue_type_style_index_0_id_4183221a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_procedimientos_vue_vue_type_style_index_0_id_4183221a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_procedimientos_vue_vue_type_style_index_0_id_4183221a_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=template&id=4183221a&scoped=true":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=template&id=4183221a&scoped=true ***!
+  \**************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_procedimientos_vue_vue_type_template_id_4183221a_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-procedimientos.vue?vue&type=template&id=4183221a&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-procedimientos.vue?vue&type=template&id=4183221a&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_procedimientos_vue_vue_type_template_id_4183221a_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_procedimientos_vue_vue_type_template_id_4183221a_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ayuda_demo_visualizar_vehiculos_vue_vue_type_template_id_851fc26c_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ayuda-demo-visualizar-vehiculos.vue?vue&type=template&id=851fc26c&scoped=true */ "./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=template&id=851fc26c&scoped=true");
+/* harmony import */ var _ayuda_demo_visualizar_vehiculos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ayuda-demo-visualizar-vehiculos.vue?vue&type=script&lang=js */ "./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ayuda_demo_visualizar_vehiculos_vue_vue_type_style_index_0_id_851fc26c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css */ "./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ayuda_demo_visualizar_vehiculos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ayuda_demo_visualizar_vehiculos_vue_vue_type_template_id_851fc26c_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ayuda_demo_visualizar_vehiculos_vue_vue_type_template_id_851fc26c_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "851fc26c",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_vehiculos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-vehiculos.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_vehiculos_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css":
+/*!***********************************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css ***!
+  \***********************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_vehiculos_vue_vue_type_style_index_0_id_851fc26c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=style&index=0&id=851fc26c&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_vehiculos_vue_vue_type_style_index_0_id_851fc26c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_vehiculos_vue_vue_type_style_index_0_id_851fc26c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_vehiculos_vue_vue_type_style_index_0_id_851fc26c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_vehiculos_vue_vue_type_style_index_0_id_851fc26c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=template&id=851fc26c&scoped=true":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=template&id=851fc26c&scoped=true ***!
+  \*********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_vehiculos_vue_vue_type_template_id_851fc26c_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ayuda-demo-visualizar-vehiculos.vue?vue&type=template&id=851fc26c&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ayuda/ayuda-demo-visualizar-vehiculos.vue?vue&type=template&id=851fc26c&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_vehiculos_vue_vue_type_template_id_851fc26c_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ayuda_demo_visualizar_vehiculos_vue_vue_type_template_id_851fc26c_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ayuda/ayuda-demo-wizard-pasos.vue":
 /*!*******************************************************************!*\
   !*** ./resources/js/components/ayuda/ayuda-demo-wizard-pasos.vue ***!
@@ -396430,6 +399716,545 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ayuda/datos/asignaciones.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/ayuda/datos/asignaciones.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  hero: {
+    titulo: 'Asignar a la Orden de Trabajo',
+    descripcion: 'Definí quiénes y qué van a intervenir en la OT: operadores, soldadores, vehículos y procedimientos. ' + 'Estas asignaciones después aparecen en informes, partes y certificados.'
+  },
+  variantes: [{
+    id: 'operador',
+    label: 'Operadores',
+    hero: {
+      titulo: 'Asignar operadores y ayudantes a la OT',
+      descripcion: 'Definí quiénes ejecutan el ensayo y quiénes asisten. Los operadores asignados van a aparecer después como responsables en informes y partes.'
+    }
+  }, {
+    id: 'soldador',
+    label: 'Soldadores',
+    hero: {
+      titulo: 'Asignar soldadores y usuarios cliente',
+      descripcion: 'Indicá qué soldadores del cliente pueden aparecer en pasadas RI y qué usuarios del cliente acceden a la documentación de la OT.'
+    }
+  }, {
+    id: 'vehiculo',
+    label: 'Vehículos',
+    hero: {
+      titulo: 'Asignar vehículos y documentación',
+      descripcion: 'Vinculá a la OT los vehículos que van a intervenir y la documentación complementaria que querés dejar disponible para el cliente.'
+    }
+  }, {
+    id: 'procedimiento',
+    label: 'Procedimientos',
+    hero: {
+      titulo: 'Asignar procedimientos a la OT',
+      descripcion: 'Vinculá los procedimientos de Enod y los del cliente (EPS/WPS, PQR, Procedimiento de reparación).'
+    }
+  }],
+  ir_a: {
+    label: 'Ir a las asignaciones de la OT',
+    ruta: '/area/enod/ots',
+    icono: 'users'
+  },
+  /* ---------------- ACCIONES ---------------- */
+  acciones: {
+    operador: [{
+      icono: 'plus-circle',
+      titulo: 'Agregar un operador',
+      detalle: 'Elegís uno de la lista y tocás +.'
+    }, {
+      icono: 'plus-circle',
+      titulo: 'Agregar un ayudante',
+      detalle: 'Misma lista que operador, separados por rol.'
+    }, {
+      icono: 'minus-circle',
+      titulo: 'Quitar un asignado',
+      detalle: 'Tocás el botón − al lado del nombre.'
+    }, {
+      icono: 'save',
+      titulo: 'Confirmar los cambios',
+      detalle: 'El botón "Actualizar" graba la asignación.'
+    }],
+    soldador: [{
+      icono: 'plus-circle',
+      titulo: 'Agregar un soldador',
+      detalle: 'Solo aparecen los soldadores cargados para el cliente de la OT.'
+    }, {
+      icono: 'plus-circle',
+      titulo: 'Agregar un usuario cliente',
+      detalle: 'Para que el cliente pueda ver los documentos de la OT desde su login.'
+    }, {
+      icono: 'minus-circle',
+      titulo: 'Quitar uno asignado',
+      detalle: 'Tocás el − al lado de la fila.'
+    }, {
+      icono: 'save',
+      titulo: 'Confirmar los cambios',
+      detalle: 'El botón "Actualizar" graba.'
+    }],
+    vehiculo: [{
+      icono: 'plus-circle',
+      titulo: 'Agregar un vehículo',
+      detalle: 'Lo elegís del maestro de vehículos.'
+    }, {
+      icono: 'file-text',
+      titulo: 'Ver documentación del vehículo',
+      detalle: 'VTV, seguro y otros documentos del vehículo aparecen solos al asignarlo.'
+    }, {
+      icono: 'plus-circle',
+      titulo: 'Agregar documentación extra',
+      detalle: 'Otras documentaciones complementarias que querés sumar.'
+    }, {
+      icono: 'save',
+      titulo: 'Actualizar',
+      detalle: 'Graba los cambios.'
+    }],
+    procedimiento: [{
+      icono: 'plus',
+      titulo: 'Crear procedimiento Enod (Nuevo)',
+      detalle: 'Abre el formulario para subir un procedimiento interno con PDF.'
+    }, {
+      icono: 'plus-circle',
+      titulo: 'Cargar procedimiento del cliente',
+      detalle: 'Inline: EPS/WPS, PQR y Procedimiento de reparación (los tres obligatorios).'
+    }, {
+      icono: 'minus-circle',
+      titulo: 'Quitar un procedimiento cliente',
+      detalle: 'Tocás el − en la fila.'
+    }, {
+      icono: 'save',
+      titulo: 'Actualizar',
+      detalle: 'Graba los cambios.'
+    }]
+  },
+  /* ---------------- BLOQUES (campos que se ven en pantalla) ---------------- */
+  bloques: {
+    operador: [{
+      titulo: 'Operador',
+      icono: 'user',
+      descripcion: 'Lista de usuarios internos. Elegís uno y tocás +.',
+      campos: [{
+        nombre: 'Operador (lista)',
+        obligatorio: false,
+        detalle: 'Usuarios internos de Enod habilitados.'
+      }, {
+        nombre: '+ (agregar)',
+        obligatorio: false,
+        detalle: 'Suma al operador a la tabla "Operadores asignados".'
+      }]
+    }, {
+      titulo: 'Ayudante',
+      icono: 'user-plus',
+      descripcion: 'Misma lista, queda registrado como ayudante (no como responsable de ensayo).',
+      campos: [{
+        nombre: 'Ayudante (lista)',
+        obligatorio: false,
+        detalle: 'Mismo maestro de usuarios.'
+      }, {
+        nombre: '+ (agregar)',
+        obligatorio: false,
+        detalle: 'Suma al ayudante a la tabla "Ayudantes asignados".'
+      }]
+    }, {
+      titulo: 'Operadores asignados',
+      icono: 'list',
+      descripcion: 'Tabla con los operadores ya cargados. El − los quita.',
+      campos: [{
+        nombre: 'Nombre',
+        obligatorio: false,
+        detalle: 'Como vino del maestro de usuarios.'
+      }, {
+        nombre: '− (quitar)',
+        obligatorio: false,
+        detalle: ''
+      }]
+    }, {
+      titulo: 'Ayudantes asignados',
+      icono: 'list',
+      descripcion: 'Tabla con los ayudantes ya cargados.',
+      campos: [{
+        nombre: 'Nombre',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: '− (quitar)',
+        obligatorio: false,
+        detalle: ''
+      }]
+    }, {
+      titulo: 'Documentación',
+      icono: 'file-text-o',
+      descripcion: 'Después de tocar Actualizar, aparece la documentación de cada operador asignado.',
+      campos: [{
+        nombre: 'Título',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'Descripción',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'PDF',
+        obligatorio: false,
+        detalle: 'Click para abrir o descargar.'
+      }]
+    }],
+    soldador: [{
+      titulo: 'Soldadores',
+      icono: 'fire',
+      descripcion: 'Lista filtrada por cliente de la OT. Si está vacía, hay que cargar soldadores para ese cliente.',
+      campos: [{
+        nombre: 'Soldadores (lista)',
+        obligatorio: false,
+        detalle: 'Maestro de soldadores filtrado por el cliente de la OT.'
+      }, {
+        nombre: '+ (agregar)',
+        obligatorio: false,
+        detalle: 'Suma a la tabla "Soldadores Asignados".'
+      }]
+    }, {
+      titulo: 'Soldadores Asignados Orden de Trabajo',
+      icono: 'list',
+      descripcion: 'Tabla con los soldadores ya cargados. Aparecen después en pasadas RI.',
+      campos: [{
+        nombre: 'CODIGO',
+        obligatorio: false,
+        detalle: 'Código del soldador.'
+      }, {
+        nombre: 'NOMBRE',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: '− (quitar)',
+        obligatorio: false,
+        detalle: ''
+      }]
+    }, {
+      titulo: 'Usuarios Cliente',
+      icono: 'users',
+      descripcion: 'Lista de usuarios pertenecientes al cliente de la OT.',
+      campos: [{
+        nombre: 'Usuarios Cliente (lista)',
+        obligatorio: false,
+        detalle: 'Usuarios externos del cliente.'
+      }, {
+        nombre: '+ (agregar)',
+        obligatorio: false,
+        detalle: ''
+      }]
+    }, {
+      titulo: 'Usuarios del Cliente Asignados Orden de Trabajo',
+      icono: 'list',
+      descripcion: 'Quiénes del lado del cliente pueden ver los documentos de la OT.',
+      campos: [{
+        nombre: 'NOMBRE',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'EMAIL',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: '− (quitar)',
+        obligatorio: false,
+        detalle: ''
+      }]
+    }],
+    vehiculo: [{
+      titulo: 'Vehículos',
+      icono: 'truck',
+      descripcion: 'Lista del maestro de vehículos habilitados.',
+      campos: [{
+        nombre: 'Vehículos (lista)',
+        obligatorio: false,
+        detalle: 'N° interno + marca + patente.'
+      }, {
+        nombre: '+ (agregar)',
+        obligatorio: false,
+        detalle: ''
+      }]
+    }, {
+      titulo: 'Vehículos asignados a la orden de trabajo',
+      icono: 'list',
+      descripcion: 'Tabla con los vehículos ya cargados.',
+      campos: [{
+        nombre: 'N° INT.',
+        obligatorio: false,
+        detalle: 'Número interno del vehículo.'
+      }, {
+        nombre: 'Marca',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'Modelo',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'Patente',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'Tipo',
+        obligatorio: false,
+        detalle: 'Camioneta, furgón, etc.'
+      }, {
+        nombre: '− (quitar)',
+        obligatorio: false,
+        detalle: ''
+      }]
+    }, {
+      titulo: 'Documentaciones del vehículo',
+      icono: 'file-text-o',
+      descripcion: 'Aparece automáticamente al asignar el vehículo (VTV, seguro, etc.).',
+      campos: [{
+        nombre: 'TÍTULO',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'DESCRIPCIÓN',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'Archivo',
+        obligatorio: false,
+        detalle: 'Click en el icono para abrir.'
+      }]
+    }, {
+      titulo: 'Documentaciones',
+      icono: 'folder-o',
+      descripcion: 'Lista del maestro de documentaciones para sumar manualmente.',
+      campos: [{
+        nombre: 'Documentaciones (lista)',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: '+ (agregar)',
+        obligatorio: false,
+        detalle: ''
+      }]
+    }, {
+      titulo: 'Documentaciones asignadas a la orden de trabajo',
+      icono: 'list',
+      descripcion: 'Las que vos sumaste manualmente. Las verá el cliente.',
+      campos: [{
+        nombre: 'Título',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'Descripción',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: '− (quitar)',
+        obligatorio: false,
+        detalle: ''
+      }]
+    }],
+    procedimiento: [{
+      titulo: 'Procedimientos Enod',
+      icono: 'book',
+      descripcion: 'Tabla de procedimientos internos. Se cargan con el botón "Nuevo".',
+      campos: [{
+        nombre: 'Tipo',
+        obligatorio: false,
+        detalle: 'Tipo de documento.'
+      }, {
+        nombre: 'Título',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'Descripción',
+        obligatorio: false,
+        detalle: ''
+      }, {
+        nombre: 'Método',
+        obligatorio: false,
+        detalle: 'RI, PM, LP, US, etc.'
+      }, {
+        nombre: 'PDF',
+        obligatorio: false,
+        detalle: 'Click para abrir.'
+      }]
+    }, {
+      titulo: 'Procedimientos clientes',
+      icono: 'file-text',
+      descripcion: 'Se cargan inline directamente desde esta pantalla. Los tres campos con * son obligatorios.',
+      campos: [{
+        nombre: 'Tipo Sol.',
+        obligatorio: false,
+        detalle: 'Tipo de soldadura (LR, CL, JT, etc.).'
+      }, {
+        nombre: 'Obra N°',
+        obligatorio: false,
+        detalle: 'Lo trae de la OT, no se edita.'
+      }, {
+        nombre: 'EPS / WPS',
+        obligatorio: true,
+        detalle: 'Especificación de procedimiento del cliente.'
+      }, {
+        nombre: 'PQR',
+        obligatorio: true,
+        detalle: 'Record de calificación.'
+      }, {
+        nombre: 'Proc. Reparación',
+        obligatorio: true,
+        detalle: 'Procedimiento que aplica a soldaduras de reparación.'
+      }, {
+        nombre: '+ (agregar)',
+        obligatorio: false,
+        detalle: 'Suma la fila a la tabla.'
+      }]
+    }]
+  },
+  /* ---------------- BOTONES ---------------- */
+  botones: {
+    operador: [{
+      label: '+',
+      icono: 'plus-circle',
+      estilo: 'gris',
+      descripcion: 'Suma al operador o ayudante elegido a la tabla.'
+    }, {
+      label: '−',
+      icono: 'minus-circle',
+      estilo: 'gris',
+      descripcion: 'Quita una fila ya asignada.'
+    }, {
+      label: 'Actualizar',
+      icono: 'save',
+      estilo: '',
+      descripcion: 'Graba todos los cambios.'
+    }],
+    soldador: [{
+      label: '+',
+      icono: 'plus-circle',
+      estilo: 'gris',
+      descripcion: 'Agrega el soldador o usuario seleccionado.'
+    }, {
+      label: '−',
+      icono: 'minus-circle',
+      estilo: 'gris',
+      descripcion: 'Quita una fila asignada.'
+    }, {
+      label: 'Actualizar',
+      icono: 'save',
+      estilo: '',
+      descripcion: 'Graba los cambios.'
+    }],
+    vehiculo: [{
+      label: '+',
+      icono: 'plus-circle',
+      estilo: 'gris',
+      descripcion: 'Agrega un vehículo o una documentación.'
+    }, {
+      label: '−',
+      icono: 'minus-circle',
+      estilo: 'gris',
+      descripcion: 'Quita la fila asignada.'
+    }, {
+      label: 'Actualizar',
+      icono: 'save',
+      estilo: '',
+      descripcion: 'Graba los cambios.'
+    }],
+    procedimiento: [{
+      label: 'Nuevo',
+      icono: 'plus',
+      estilo: '',
+      descripcion: 'Abre el formulario para crear un procedimiento Enod (con PDF).'
+    }, {
+      label: '+',
+      icono: 'plus-circle',
+      estilo: 'gris',
+      descripcion: 'Agrega el procedimiento cliente que cargaste inline.'
+    }, {
+      label: '−',
+      icono: 'minus-circle',
+      estilo: 'gris',
+      descripcion: 'Quita una fila ya asignada.'
+    }, {
+      label: 'Actualizar',
+      icono: 'save',
+      estilo: '',
+      descripcion: 'Graba los cambios.'
+    }]
+  },
+  /* ---------------- ERRORES ---------------- */
+  errores: {
+    operador: [{
+      mensaje: 'No aparece el operador que necesito',
+      causa: 'No está dado de alta como usuario interno o está deshabilitado.',
+      solucion: 'Cargalo o reactivalo desde "Gestionar usuarios".'
+    }, {
+      mensaje: 'No veo la documentación del operador',
+      causa: 'Recién aparece después de tocar "Actualizar".',
+      solucion: 'Confirmá la asignación y refrescá la pantalla.'
+    }],
+    soldador: [{
+      mensaje: 'La lista de soldadores está vacía',
+      causa: 'El cliente de la OT no tiene soldadores cargados.',
+      solucion: 'Andá a "Gestionar soldadores" y cargá los soldadores para ese cliente.'
+    }, {
+      mensaje: 'No me aparece el usuario cliente',
+      causa: 'No está dado de alta como usuario del cliente.',
+      solucion: 'Cargalo desde "Gestionar usuarios" eligiendo el cliente correspondiente.'
+    }],
+    vehiculo: [{
+      mensaje: 'No aparece el vehículo',
+      causa: 'No está habilitado o no está cargado en el maestro.',
+      solucion: 'Verificá en "Gestionar vehículos".'
+    }, {
+      mensaje: 'Falta documentación del vehículo',
+      causa: 'El vehículo no tiene VTV / seguro asociados en su maestro.',
+      solucion: 'Cargá los documentos en "Gestionar vehículos" para ese vehículo.'
+    }],
+    procedimiento: [{
+      mensaje: 'No me deja agregar un procedimiento cliente',
+      causa: 'Faltan EPS/WPS, PQR o Proc. de reparación.',
+      solucion: 'Los tres campos con * son obligatorios para poder sumar la fila.'
+    }, {
+      mensaje: 'No tengo procedimientos Enod cargados',
+      causa: 'Nunca se cargó un procedimiento interno para esta OT.',
+      solucion: 'Tocá "Nuevo" para subir el PDF y sus datos.'
+    }]
+  },
+  /* ---------------- DEMO POR VARIANTE ---------------- */
+  demo: {
+    operador: 'ayuda-demo-asignar-operadores',
+    soldador: 'ayuda-demo-asignar-soldadores',
+    vehiculo: 'ayuda-demo-asignar-vehiculos',
+    procedimiento: 'ayuda-demo-asignar-procedimientos'
+  },
+  relacionados: [{
+    titulo: 'Crear una OT',
+    ruta: '/crear_ot'
+  }, {
+    titulo: 'Gestionar usuarios',
+    ruta: '/gestionar_usuarios'
+  }, {
+    titulo: 'Gestionar soldadores',
+    ruta: '/ayuda_gestion_soldadores'
+  }, {
+    titulo: 'Gestionar vehículos',
+    ruta: '/ayuda_gestion_vehiculos'
+  }, {
+    titulo: 'Gestionar documentaciones',
+    ruta: '/ayuda_gestion_documentaciones'
+  }, {
+    titulo: 'Visualizar documentación de operadores',
+    ruta: '/visualizar_documentacion_operadores'
+  }]
+});
+
+/***/ }),
+
 /***/ "./resources/js/components/ayuda/datos/index.js":
 /*!******************************************************!*\
   !*** ./resources/js/components/ayuda/datos/index.js ***!
@@ -396440,19 +400265,28 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ot_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ot.js */ "./resources/js/components/ayuda/datos/ot.js");
+/* harmony import */ var _asignaciones_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./asignaciones.js */ "./resources/js/components/ayuda/datos/asignaciones.js");
+/* harmony import */ var _visualizar_ot_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./visualizar-ot.js */ "./resources/js/components/ayuda/datos/visualizar-ot.js");
+/* harmony import */ var _visualizar_doc_operadores_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./visualizar-doc-operadores.js */ "./resources/js/components/ayuda/datos/visualizar-doc-operadores.js");
+/* harmony import */ var _visualizar_procedimientos_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./visualizar-procedimientos.js */ "./resources/js/components/ayuda/datos/visualizar-procedimientos.js");
+/* harmony import */ var _visualizar_vehiculos_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./visualizar-vehiculos.js */ "./resources/js/components/ayuda/datos/visualizar-vehiculos.js");
 /* Registro central de datos de la sección de ayuda.
- * Cada entrada es un objeto con el contrato:
- *   { hero, dependencias, campos, campos_intro,
- *     estados, transiciones, errores, calculos,
- *     edicion, impacto, relacionados,
- *     variantes?, demo?, demoProps?, fuente_codigo? }
- *
- * Se agregan las entidades a medida que se completan.
+ * Cada entidad expone { hero, acciones, dependencias, bloques, botones, errores, calculos, edicion, impacto, relacionados, demo, ir_a, variantes? }
  */
 
 
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  ot: _ot_js__WEBPACK_IMPORTED_MODULE_0__["default"]
+  ot: _ot_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  asignaciones: _asignaciones_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  'visualizar-ot': _visualizar_ot_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  'visualizar-doc-operadores': _visualizar_doc_operadores_js__WEBPACK_IMPORTED_MODULE_3__["default"],
+  'visualizar-procedimientos': _visualizar_procedimientos_js__WEBPACK_IMPORTED_MODULE_4__["default"],
+  'visualizar-vehiculos': _visualizar_vehiculos_js__WEBPACK_IMPORTED_MODULE_5__["default"]
 });
 
 /***/ }),
@@ -396469,7 +400303,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   hero: {
     titulo: 'Crear una Orden de Trabajo (OT)',
-    descripcion: 'La OT es la "carpeta" del trabajo. Acá cargás cliente, comitente, lugar de ensayo, ' + 'responsable, servicios contratados, productos, EPP y riesgos. Una vez creada, ' + 'desde la OT vas a asignar operadores, soldadores, vehículos y procedimientos.'
+    descripcion: 'La OT es la "carpeta" del trabajo. Acá cargás cliente, comitente, ubicación, ' + 'responsable, servicios contratados, productos, EPP y riesgos. Una vez creada, ' + 'desde la OT vas a asignar operadores, soldadores, vehículos y procedimientos.'
   },
   ir_a: {
     label: 'Abrir el tablero de OT',
@@ -396487,17 +400321,21 @@ __webpack_require__.r(__webpack_exports__);
   }, {
     icono: 'check-circle',
     titulo: 'Firmar la OT',
-    detalle: 'La pasa a Activa. A partir de ahí ya podés cargar informes y partes.'
+    detalle: 'La pasa a Activa. Recién ahí podés cargar informes y partes.'
   }, {
     icono: 'cogs',
     titulo: 'Cargar servicios y productos',
     detalle: 'Definen qué métodos de ensayo van a estar disponibles después.'
   }, {
+    icono: 'map-marker',
+    titulo: 'Marcar la ubicación en el mapa',
+    detalle: 'Buscás la dirección en Google y el mapa se posiciona solo.'
+  }, {
     icono: 'archive',
     titulo: 'Cerrar la OT',
     detalle: 'Cuando el trabajo terminó. Queda como antecedente, ya no se edita.'
   }],
-  dependencias_intro: 'Si alguno de estos datos no está cargado, vas a tener que crearlos primero en el menú "Maestros".',
+  dependencias_intro: 'Si alguno de estos datos no está cargado, lo primero es crearlo en el menú "Maestros".',
   dependencias: [{
     entidad: 'Cliente',
     descripcion: 'Tiene que estar dado de alta con al menos un contacto.',
@@ -396523,137 +400361,216 @@ __webpack_require__.r(__webpack_exports__);
     descripcion: 'Un usuario interno de Enod, que también vas a asignar como operador.',
     ruta: '/ayuda_gestion_usuario',
     critico: true
+  }, {
+    entidad: 'EPP',
+    descripcion: 'Elementos de protección personal que se van a usar.',
+    ruta: '/ayuda_gestion_materiales',
+    critico: false
+  }, {
+    entidad: 'Riesgos',
+    descripcion: 'Riesgos posibles del trabajo a ejecutar.',
+    ruta: '/ayuda_gestion_materiales',
+    critico: false
   }],
-  demo_intro: 'Esta es la cabecera del formulario tal como la vas a ver en el sistema. Más abajo encontrás ' + 'el detalle de qué se carga en cada campo.',
-  demo: 'ayuda-demo-form-ot',
-  campos_intro: 'Los campos con asterisco rojo no se pueden dejar vacíos. Si te falta algún dato, el sistema ' + 'no te deja guardar hasta que lo completes.',
-  campos: [{
-    nombre: 'Proyecto',
-    tipo: 'texto',
-    obligatorio: true,
-    origen: 'Lo escribís vos',
-    notas: 'Nombre del proyecto, hasta 60 caracteres.'
+  bloques_intro: 'La pantalla está dividida en bloques. Cada bloque se ve como una "card" en el sistema. ' + 'Los campos con asterisco rojo son obligatorios: si te falta alguno, el sistema no te deja guardar.',
+  bloques: [{
+    titulo: 'Proyecto',
+    icono: 'tag',
+    descripcion: 'Nombre comercial del trabajo. Es lo primero que se ve en el listado.',
+    campos: [{
+      nombre: 'Proyecto',
+      obligatorio: true,
+      detalle: 'Hasta 60 caracteres. Es el título visible de la OT.'
+    }]
   }, {
-    nombre: 'FST N°',
-    tipo: 'número',
-    obligatorio: true,
-    origen: 'Número de presupuesto',
-    notas: 'El número de presupuesto comercial que dio origen al trabajo.'
+    titulo: 'Datos generales',
+    icono: 'info-circle',
+    descripcion: 'Numeración, fechas y horario estimado.',
+    campos: [{
+      nombre: 'FST N°',
+      obligatorio: true,
+      detalle: 'Número del presupuesto comercial que dio origen al trabajo.'
+    }, {
+      nombre: 'OT N°',
+      obligatorio: true,
+      detalle: 'No puede repetirse. El sistema sugiere el siguiente libre.'
+    }, {
+      nombre: 'Fecha',
+      obligatorio: true,
+      detalle: 'Fecha de creación (por defecto, la de hoy).'
+    }, {
+      nombre: 'Obra N° / OC',
+      obligatorio: false,
+      detalle: 'Número que dio el cliente. Si la OT es multiobra, lo dejás vacío.'
+    }, {
+      nombre: 'Fecha estimada',
+      obligatorio: true,
+      detalle: 'Cuándo se planea ejecutar el ensayo.'
+    }, {
+      nombre: 'Hora',
+      obligatorio: true,
+      detalle: 'Hora estimada de inicio.'
+    }]
   }, {
-    nombre: 'OT N°',
-    tipo: 'número',
-    obligatorio: true,
-    origen: 'Sugerido por el sistema',
-    notas: 'No puede repetirse. El sistema sugiere el siguiente libre, podés cambiarlo.'
+    titulo: 'Cliente y comitente',
+    icono: 'building',
+    descripcion: 'Quién pide el trabajo y para quién es. Al elegir cliente se cargan los contactos automáticamente.',
+    campos: [{
+      nombre: 'Cliente',
+      obligatorio: true,
+      detalle: 'Maestro de clientes. Al elegirlo, se filtran sus contactos.'
+    }, {
+      nombre: 'Mostrar logo cliente',
+      obligatorio: false,
+      detalle: 'Si lo tildás, el logo del cliente sale en los PDFs.'
+    }, {
+      nombre: 'Comitente',
+      obligatorio: false,
+      detalle: 'Empresa contratista, si el trabajo lo terceriza.'
+    }, {
+      nombre: 'Mostrar logo comitente',
+      obligatorio: false,
+      detalle: 'Si lo tildás, el logo del comitente sale en los PDFs.'
+    }, {
+      nombre: 'Contacto 1',
+      obligatorio: true,
+      detalle: 'Tiene que pertenecer al cliente elegido.'
+    }, {
+      nombre: 'Contacto 2',
+      obligatorio: false,
+      detalle: 'Contacto adicional del cliente.'
+    }, {
+      nombre: 'Contacto 3',
+      obligatorio: false,
+      detalle: 'Contacto adicional del cliente.'
+    }, {
+      nombre: 'Responsable OT',
+      obligatorio: true,
+      detalle: 'Usuario interno. Después tiene que estar también como operador.'
+    }]
   }, {
-    nombre: 'Fecha',
-    tipo: 'fecha',
-    obligatorio: true,
-    origen: 'Por defecto la de hoy',
-    notas: 'La fecha de creación de la OT.'
+    titulo: 'Ubicación del ensayo',
+    icono: 'map-marker',
+    descripcion: 'Dónde se hace el trabajo. La pantalla tiene un buscador de Google integrado: ' + 'escribís la dirección, elegís el resultado y el mapa se posiciona solo con latitud y longitud cargadas.',
+    campos: [{
+      nombre: 'Lugar de ensayo',
+      obligatorio: true,
+      detalle: 'Sector descriptivo (planta, taller, frente de obra, etc.). Hasta 35 caracteres.'
+    }, {
+      nombre: 'Provincia',
+      obligatorio: true,
+      detalle: 'Al elegirla se cargan las localidades disponibles.'
+    }, {
+      nombre: 'Localidad',
+      obligatorio: true,
+      detalle: 'Localidad donde se ejecuta el trabajo.'
+    }, {
+      nombre: 'Buscar Ubicación',
+      obligatorio: false,
+      detalle: 'Buscador de Google Maps. Tipeás la dirección, elegís el lugar y el mapa se reubica solo.'
+    }, {
+      nombre: 'Latitud',
+      obligatorio: false,
+      detalle: 'La completa el buscador. Podés escribirla manualmente si la conocés.'
+    }, {
+      nombre: 'Longitud',
+      obligatorio: false,
+      detalle: 'Idem latitud.'
+    }, {
+      nombre: 'Mapa',
+      obligatorio: false,
+      detalle: 'Muestra la ubicación marcada. Podés arrastrar el marcador para ajustarla.'
+    }]
   }, {
-    nombre: 'Obra N° / OC',
-    tipo: 'texto',
-    obligatorio: 'condicional',
-    condicion: 'OT de una sola obra',
-    origen: 'Número que dio el cliente',
-    notas: 'Si la OT es multiobra, este campo lo dejás vacío.'
+    titulo: 'Servicios',
+    icono: 'cogs',
+    descripcion: 'Servicios contratados. Definen qué métodos de ensayo (RI, PM, LP, US, etc.) ' + 'van a estar disponibles después al cargar informes.',
+    campos: [{
+      nombre: 'Servicio',
+      obligatorio: true,
+      detalle: 'Maestro de servicios. Elegís uno y lo sumás con +.'
+    }, {
+      nombre: 'Norma Ensayos',
+      obligatorio: false,
+      detalle: 'Norma técnica por la que se hace el ensayo.'
+    }, {
+      nombre: 'Norma Evaluación',
+      obligatorio: false,
+      detalle: 'Norma por la que se evalúan los resultados.'
+    }, {
+      nombre: 'Cant.',
+      obligatorio: false,
+      detalle: 'Cantidad presupuestada del servicio.'
+    }, {
+      nombre: 'Ref. (archivo)',
+      obligatorio: false,
+      detalle: 'Adjunto opcional del servicio (PDF, foto, etc.).'
+    }, {
+      nombre: 'Proc.',
+      obligatorio: false,
+      detalle: 'Si el servicio requiere procedimiento específico.'
+    }, {
+      nombre: 'C (combinado)',
+      obligatorio: false,
+      detalle: 'Marcar si el servicio se factura combinado con otro.'
+    }]
   }, {
-    nombre: 'Fecha estimada',
-    tipo: 'fecha',
-    obligatorio: true,
-    origen: 'Lo elegís vos',
-    notas: 'Cuándo se va a hacer el ensayo.'
+    titulo: 'Calidad de placas',
+    icono: 'film',
+    descripcion: 'Aparece solo si hay servicio de RI. Permite elegir uno o más tipos de película radiográfica habilitados.',
+    campos: [{
+      nombre: 'Calidad de placas',
+      obligatorio: false,
+      detalle: 'Selección múltiple del maestro de películas radiográficas.'
+    }]
   }, {
-    nombre: 'Hora',
-    tipo: 'hora',
-    obligatorio: true,
-    origen: 'HH:MM',
-    notas: 'Hora estimada de inicio.'
+    titulo: 'Productos',
+    icono: 'cubes',
+    descripcion: 'Materiales / consumibles presupuestados para el trabajo.',
+    campos: [{
+      nombre: 'Producto',
+      obligatorio: true,
+      detalle: 'Maestro de productos. Al elegir, se cargan sus medidas disponibles.'
+    }, {
+      nombre: 'Medida',
+      obligatorio: true,
+      detalle: 'Medida específica del producto.'
+    }, {
+      nombre: 'Cant.',
+      obligatorio: false,
+      detalle: 'Cantidad presupuestada.'
+    }, {
+      nombre: 'Ref. (archivo)',
+      obligatorio: false,
+      detalle: 'Adjunto opcional del producto.'
+    }]
   }, {
-    nombre: 'Cliente',
-    tipo: 'lista',
-    obligatorio: true,
-    origen: 'Maestro de clientes',
-    notas: 'Al elegirlo, se cargan los contactos disponibles automáticamente.'
+    titulo: 'Elementos de seguridad (EPP)',
+    icono: 'shield',
+    descripcion: 'EPP requeridos para ejecutar el trabajo.',
+    campos: [{
+      nombre: 'EPP',
+      obligatorio: true,
+      detalle: 'Maestro de EPP. Lo sumás uno por uno con +.'
+    }]
   }, {
-    nombre: 'Contacto',
-    tipo: 'lista',
-    obligatorio: true,
-    origen: 'Contactos del cliente',
-    notas: 'Podés elegir hasta 3 contactos del cliente para que figuren en la OT.'
+    titulo: 'Riesgos',
+    icono: 'exclamation-triangle',
+    descripcion: 'Riesgos detectados para el ensayo.',
+    campos: [{
+      nombre: 'Riesgo',
+      obligatorio: true,
+      detalle: 'Maestro de riesgos. Lo sumás uno por uno con +.'
+    }]
   }, {
-    nombre: 'Comitente',
-    tipo: 'lista',
-    obligatorio: false,
-    origen: 'Maestro de comitentes',
-    notas: 'Solo si aplica.'
-  }, {
-    nombre: 'Responsable OT',
-    tipo: 'lista',
-    obligatorio: true,
-    origen: 'Usuarios internos de Enod',
-    notas: 'Esta persona también tiene que estar asignada después como operador de la OT.'
-  }, {
-    nombre: 'Mostrar logo',
-    tipo: 'tilde',
-    obligatorio: false,
-    origen: 'Sí / No',
-    notas: 'Si lo tildás, el logo del cliente o del comitente sale en los PDFs.'
-  }, {
-    nombre: 'Provincia',
-    tipo: 'lista',
-    obligatorio: true,
-    origen: 'Maestro de provincias',
-    notas: 'Al elegirla, se filtran las localidades.'
-  }, {
-    nombre: 'Localidad',
-    tipo: 'lista',
-    obligatorio: true,
-    origen: 'Localidades de la provincia',
-    notas: ''
-  }, {
-    nombre: 'Lugar de ensayo',
-    tipo: 'texto',
-    obligatorio: true,
-    origen: 'Lo escribís vos',
-    notas: 'Sector descriptivo (planta, taller, frente de obra, etc.).'
-  }, {
-    nombre: 'Latitud / Longitud',
-    tipo: 'mapa',
-    obligatorio: true,
-    origen: 'Google Maps',
-    notas: 'Si las cargás manualmente, el mapa se reubica en ese punto.'
-  }, {
-    nombre: 'Servicios',
-    tipo: 'subtabla',
-    obligatorio: true,
-    origen: 'Maestro de servicios',
-    notas: 'Agregá uno por uno con el botón +. Definen qué métodos podrás informar después.'
-  }, {
-    nombre: 'Productos',
-    tipo: 'subtabla',
-    obligatorio: false,
-    origen: 'Maestro de productos',
-    notas: 'Solo si presupuestaste consumibles por trabajo.'
-  }, {
-    nombre: 'EPP',
-    tipo: 'subtabla',
-    obligatorio: false,
-    origen: 'Maestro de EPP',
-    notas: 'Elementos de seguridad requeridos para el trabajo.'
-  }, {
-    nombre: 'Riesgos',
-    tipo: 'subtabla',
-    obligatorio: false,
-    origen: 'Maestro de riesgos',
-    notas: 'Riesgos detectados para el ensayo.'
-  }, {
-    nombre: 'Observaciones',
-    tipo: 'texto',
-    obligatorio: false,
-    origen: 'Lo escribís vos',
-    notas: 'Aclaraciones generales. No reemplaza datos estructurados del formulario.'
+    titulo: 'Observaciones',
+    icono: 'comment-o',
+    descripcion: 'Texto libre con aclaraciones generales. Hasta 250 caracteres.',
+    campos: [{
+      nombre: 'Observaciones',
+      obligatorio: false,
+      detalle: 'No reemplaza datos estructurados del formulario. Usalo para notas.'
+    }]
   }],
   botones: [{
     label: '+ Nueva OT',
@@ -396662,24 +400579,19 @@ __webpack_require__.r(__webpack_exports__);
     descripcion: 'Abre el formulario vacío para crear una OT nueva.'
   }, {
     label: '+',
-    icono: '',
+    icono: 'plus-circle',
     estilo: '',
     descripcion: 'Suma una fila a las subtablas (servicios, productos, EPP, riesgos).'
   }, {
     label: 'Guardar',
     icono: 'save',
     estilo: '',
-    descripcion: 'Graba la OT en estado Editando. Podés volver a modificarla.'
+    descripcion: 'Graba la OT. Si está en Editando podés volver a modificarla.'
   }, {
-    label: 'Firmar',
-    icono: 'check',
+    label: 'Volver',
+    icono: 'arrow-left',
     estilo: '',
-    descripcion: 'Pasa la OT a Activa. Es irreversible.'
-  }, {
-    label: 'Cancelar',
-    icono: '',
-    estilo: 'gris',
-    descripcion: 'Sale sin guardar cambios.'
+    descripcion: 'Vuelve a la pantalla anterior. Si tocás algo y volvés sin guardar, los cambios se pierden.'
   }],
   estados_intro: 'Una OT pasa por tres momentos. Lo que podés hacer en cada uno cambia:',
   estados: [{
@@ -396692,13 +400604,13 @@ __webpack_require__.r(__webpack_exports__);
     nombre: 'Activa',
     color: 'verde',
     icono: 'check',
-    descripcion: 'Firmada. Podés cargar informes, partes y certificados.',
+    descripcion: 'Firmada. Habilita informes, partes y certificados.',
     editable: 'parcial'
   }, {
     nombre: 'Cerrada',
     color: 'gris',
     icono: 'archive',
-    descripcion: 'Trabajo terminado. Queda como consulta, no se edita más.',
+    descripcion: 'Trabajo terminado. Queda como consulta, ya no se edita.',
     editable: false
   }],
   transiciones: [{
@@ -396715,51 +400627,58 @@ __webpack_require__.r(__webpack_exports__);
   errores: [{
     mensaje: 'No me deja guardar',
     causa: 'Falta completar algún campo obligatorio (marcado con *).',
-    solucion: 'Revisá los campos que aparecen resaltados en rojo. Suele faltar cliente, contacto, responsable o servicios.'
+    solucion: 'Revisá los campos resaltados. Suele faltar cliente, contacto, responsable o servicios.'
   }, {
     mensaje: 'El número de OT ya existe',
     causa: 'Hay otra OT con el mismo número.',
     solucion: 'Usá el correlativo que sugiere el sistema, o elegí otro distinto.'
   }, {
-    mensaje: 'El contacto que elegí ya no aparece',
-    causa: 'Cambiaste el cliente después de elegir el contacto. Cada contacto pertenece a un cliente.',
-    solucion: 'Volvé a elegir el contacto. Si no aparece el que necesitás, agregálo desde el maestro de clientes.'
+    mensaje: 'No me aparece el contacto que necesito',
+    causa: 'El contacto no está cargado en el maestro del cliente, o cambiaste el cliente.',
+    solucion: 'Cargá el contacto desde "Gestionar clientes" o volvé a elegir el cliente correcto.'
   }, {
     mensaje: 'No hay localidades para elegir',
     causa: 'No elegiste provincia, o la provincia no tiene localidades cargadas.',
     solucion: 'Primero seleccioná la provincia. Si igual no aparecen, pedile a sistemas que agregue la localidad.'
   }, {
+    mensaje: 'El buscador de Google no marca el mapa',
+    causa: 'Escribiste la dirección pero no elegiste un resultado de la lista que despliega Google.',
+    solucion: 'Tenés que hacer click en uno de los resultados sugeridos para que se cargue latitud, longitud y se reubique el mapa.'
+  }, {
     mensaje: 'No me deja editar la OT',
-    causa: 'La OT ya fue cerrada. No se puede revertir desde la pantalla.',
+    causa: 'La OT ya fue cerrada.',
     solucion: 'Si necesitás corregir algo, pedile a sistemas que la reabra manualmente.'
   }, {
-    mensaje: 'No me aparecen los métodos en informes',
-    causa: 'No agregaste el servicio del método (por ejemplo, servicio "RI" para hacer informes de radiografía).',
-    solucion: 'Volvé a la OT y agregá el servicio correspondiente desde la subtabla de Servicios.'
+    mensaje: 'No me aparecen los métodos al cargar informes',
+    causa: 'No agregaste el servicio del método (por ejemplo "RI" para informes de radiografía).',
+    solucion: 'Volvé a la OT y agregá el servicio correspondiente en el bloque Servicios.'
   }],
   calculos: [{
     que: 'Número de OT',
     como: 'El sistema sugiere el siguiente número libre. Lo podés cambiar, siempre que no se repita.'
   }, {
     que: 'Contactos',
-    como: 'Cuando elegís cliente, la lista de contactos se actualiza sola con los que tiene ese cliente.'
+    como: 'Cuando elegís cliente, la lista de contactos se actualiza sola.'
   }, {
     que: 'Localidades',
     como: 'Al elegir provincia, las localidades disponibles se filtran solas.'
   }, {
-    que: 'Mapa',
-    como: 'Si cargás latitud y longitud manualmente, el mapa se mueve a esa ubicación.'
+    que: 'Ubicación en el mapa',
+    como: 'Cuando elegís una dirección del buscador de Google, latitud, longitud y el marcador del mapa se cargan automáticamente.'
+  }, {
+    que: 'Medidas del producto',
+    como: 'Al elegir un producto, las medidas disponibles para ese producto se cargan solas.'
   }],
   edicion: {
-    texto: 'Mientras la OT está en Editando, podés cambiar todo. Una vez que la Firmás, queda en Activa: ' + 'algunos datos de cabecera (como el número de OT) quedan bloqueados, pero podés seguir cargando ' + 'servicios, asignaciones y demás. Cuando la Cerrás, la OT queda como consulta y ya no se modifica.',
+    texto: 'Mientras la OT está en Editando, podés cambiar todo. Cuando la Firmás, queda en Activa: ' + 'algunos datos quedan bloqueados pero podés seguir cargando asignaciones, servicios y demás. ' + 'Cuando la Cerrás, queda como consulta y ya no se modifica.',
     callouts: [{
       tipo: 'irreversible',
       titulo: 'Firmar es irreversible',
-      contenido: 'No hay un botón para "desfirmar". Antes de firmar, revisá: cliente, comitente, ' + 'responsable, servicios y los datos visibles en cabecera. Si algo está mal, lo único que queda es pedirle a sistemas que lo arregle.'
+      contenido: 'No hay un botón para "desfirmar". Antes de firmar, revisá: cliente, comitente, ' + 'responsable, servicios y los datos de cabecera. Si algo está mal, lo único que queda es pedirle a sistemas que lo arregle.'
     }, {
       tipo: 'warning',
       titulo: 'Cuidado al editar servicios y productos',
-      contenido: 'Al editar una OT, las subtablas (servicios, productos, EPP, riesgos) se reemplazan completas con lo que dejaste en el formulario. ' + 'Si quitás un servicio sin querer, los informes de ese método dejan de estar disponibles.'
+      contenido: 'Al editar una OT, las subtablas (servicios, productos, EPP, riesgos) se reemplazan completas con lo que dejaste en pantalla. ' + 'Si quitás un servicio sin querer, los informes de ese método dejan de estar disponibles.'
     }]
   },
   impacto: [{
@@ -396776,7 +400695,7 @@ __webpack_require__.r(__webpack_exports__);
     reversible: true
   }, {
     modulo: 'Asignaciones',
-    efecto: 'Operadores, soldadores, vehículos y procedimientos cuelgan de la OT. Se pueden modificar mientras la OT no esté cerrada.',
+    efecto: 'Operadores, soldadores, vehículos y procedimientos cuelgan de la OT. Se pueden modificar mientras no esté cerrada.',
     reversible: true
   }, {
     modulo: 'PDF de la OT',
@@ -396801,7 +400720,441 @@ __webpack_require__.r(__webpack_exports__);
   }, {
     titulo: 'Generar informes',
     ruta: '/generar_informes'
-  }]
+  }],
+  demo: 'ayuda-demo-form-ot'
+});
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/datos/visualizar-doc-operadores.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/ayuda/datos/visualizar-doc-operadores.js ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  hero: {
+    titulo: 'Visualizar documentación de operadores',
+    descripcion: 'Versión solo lectura de la pantalla de operadores. Ves quiénes están asignados como operadores y como ayudantes, ' + 'y la documentación de cada uno (certificaciones, ART, capacitaciones, etc.).'
+  },
+  ir_a: {
+    label: 'Ir a la OT',
+    ruta: '/area/enod/ots',
+    icono: 'users'
+  },
+  acciones: [{
+    icono: 'eye',
+    titulo: 'Ver operadores asignados',
+    detalle: 'Listado de operadores activos en la OT.'
+  }, {
+    icono: 'eye',
+    titulo: 'Ver ayudantes asignados',
+    detalle: 'Quiénes asisten en el trabajo.'
+  }, {
+    icono: 'file-pdf-o',
+    titulo: 'Descargar documentación',
+    detalle: 'Click en el ícono de PDF para abrir o bajar el archivo.'
+  }],
+  bloques: [{
+    titulo: 'Operadores asignados',
+    icono: 'list',
+    descripcion: 'Tabla con los nombres de los operadores activos.',
+    campos: [{
+      nombre: 'Nombre',
+      obligatorio: false,
+      detalle: 'Como vino del maestro de usuarios.'
+    }]
+  }, {
+    titulo: 'Ayudantes asignados',
+    icono: 'list',
+    descripcion: 'Tabla con los nombres de los ayudantes.',
+    campos: [{
+      nombre: 'Nombre',
+      obligatorio: false,
+      detalle: ''
+    }]
+  }, {
+    titulo: 'Documentación',
+    icono: 'file-text-o',
+    descripcion: 'Documentos asociados a los operadores y ayudantes asignados.',
+    campos: [{
+      nombre: 'Título',
+      obligatorio: false,
+      detalle: 'Nombre del documento.'
+    }, {
+      nombre: 'Descripción',
+      obligatorio: false,
+      detalle: 'Detalle breve.'
+    }, {
+      nombre: 'PDF',
+      obligatorio: false,
+      detalle: 'Click para abrir o descargar.'
+    }]
+  }],
+  errores: [{
+    mensaje: 'No veo documentación para un operador',
+    causa: 'El operador no tiene documentos cargados en el maestro de usuarios.',
+    solucion: 'Pedile a sistemas o al admin que cargue los documentos del operador.'
+  }, {
+    mensaje: 'La lista de operadores está vacía',
+    causa: 'No hay operadores asignados a esta OT.',
+    solucion: 'Un usuario con permiso de "Asignar operadores" tiene que asignarlos primero.'
+  }],
+  relacionados: [{
+    titulo: 'Asignar operadores a la OT',
+    ruta: '/asignar_operadores'
+  }, {
+    titulo: 'Visualización general de una OT',
+    ruta: '/visualizar_ot'
+  }],
+  demo: 'ayuda-demo-visualizar-operadores'
+});
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/datos/visualizar-ot.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/ayuda/datos/visualizar-ot.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  hero: {
+    titulo: 'Visualización general de una OT',
+    descripcion: 'Al entrar a una Orden de Trabajo, ves el tablero principal con 8 secciones (cards). Cada card es una pantalla del flujo: ' + 'operadores, equipos, procedimientos, vehículos / documentación, soldadores / usuarios cliente, informes, partes y certificados.'
+  },
+  ir_a: {
+    label: 'Ir al listado de OT',
+    ruta: '/area/enod/ots',
+    icono: 'clipboard'
+  },
+  acciones: [{
+    icono: 'th-large',
+    titulo: 'Ver las 8 secciones de la OT',
+    detalle: 'Cada card lleva a la pantalla correspondiente.'
+  }, {
+    icono: 'hashtag',
+    titulo: 'Ver cuántos elementos hay cargados',
+    detalle: 'El número arriba a la derecha de cada card indica la cantidad.'
+  }, {
+    icono: 'plus-circle',
+    titulo: 'Crear una OT nueva',
+    detalle: 'Botón "+ Nueva OT" abajo a la izquierda.'
+  }, {
+    icono: 'search',
+    titulo: 'Buscar una OT',
+    detalle: 'Buscador abajo a la derecha. Filtra por número, cliente, proyecto o estado.'
+  }],
+  bloques: [{
+    titulo: 'Operadores',
+    icono: 'users',
+    descripcion: 'Operadores y ayudantes asignados a la OT.',
+    campos: []
+  }, {
+    titulo: 'Equipos',
+    icono: 'cogs',
+    descripcion: 'Equipos internos (RX, palpadores, etc.) que van a usarse.',
+    campos: []
+  }, {
+    titulo: 'Procedimientos',
+    icono: 'shield',
+    descripcion: 'Procedimientos Enod y del cliente vinculados.',
+    campos: []
+  }, {
+    titulo: 'Vehículos | Doc.',
+    icono: 'truck',
+    descripcion: 'Vehículos asignados y documentación complementaria.',
+    campos: []
+  }, {
+    titulo: 'Cuños | Usuarios',
+    icono: 'fire',
+    descripcion: 'Soldadores del cliente y usuarios que pueden acceder a la OT.',
+    campos: []
+  }, {
+    titulo: 'Informes',
+    icono: 'file-text',
+    descripcion: 'Informes técnicos cargados (RI, PM, LP, US, etc.).',
+    campos: []
+  }, {
+    titulo: 'Partes',
+    icono: 'calendar-check-o',
+    descripcion: 'Partes diarios consolidados.',
+    campos: []
+  }, {
+    titulo: 'Certificados',
+    icono: 'certificate',
+    descripcion: 'Certificados emitidos.',
+    campos: []
+  }],
+  botones: [{
+    label: '+ Nueva OT',
+    icono: 'plus',
+    estilo: '',
+    descripcion: 'Abre el formulario en blanco para crear una OT.'
+  }, {
+    label: 'Buscar',
+    icono: 'search',
+    estilo: '',
+    descripcion: 'Filtra el listado por número, cliente, proyecto o estado.'
+  }],
+  errores: [{
+    mensaje: 'No veo la OT que busco',
+    causa: 'Tu usuario puede tener visibilidad limitada (cliente externo ve solo sus OT).',
+    solucion: 'Si sos cliente, pedile a tu administrador que te asigne la OT desde "Soldadores y usuarios cliente".'
+  }, {
+    mensaje: 'Las cards están en gris claro',
+    causa: 'No tenés permiso para entrar a esa sección.',
+    solucion: 'Pedile a sistemas que te active el permiso correspondiente.'
+  }],
+  relacionados: [{
+    titulo: 'Cómo crear una OT',
+    ruta: '/crear_ot'
+  }, {
+    titulo: 'Asignar operadores',
+    ruta: '/asignar_operadores'
+  }, {
+    titulo: 'Asignar soldadores y usuarios de cliente',
+    ruta: '/asignar_soldadores_y_usuarios'
+  }, {
+    titulo: 'Asignar procedimientos',
+    ruta: '/asignar_procedimientos'
+  }, {
+    titulo: 'Asignar vehículos y documentación complementaria',
+    ruta: '/asignar_vehiculos'
+  }, {
+    titulo: 'Visualizar documentación de operadores',
+    ruta: '/visualizar_documentacion_operadores'
+  }, {
+    titulo: 'Visualizar procedimientos asignados',
+    ruta: '/visualizar_procedimientos'
+  }, {
+    titulo: 'Visualizar vehículos y documentación complementaria',
+    ruta: '/visualizar_vehiculos'
+  }],
+  demo: 'ayuda-demo-tablero-ot'
+});
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/datos/visualizar-procedimientos.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/ayuda/datos/visualizar-procedimientos.js ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  hero: {
+    titulo: 'Visualizar procedimientos asignados',
+    descripcion: 'Versión solo lectura de la pantalla de procedimientos. Ves los procedimientos Enod (internos) y los del cliente ' + '(EPS/WPS, PQR y Procedimiento de reparación) que están vinculados a la OT.'
+  },
+  ir_a: {
+    label: 'Ir a la OT',
+    ruta: '/area/enod/ots',
+    icono: 'shield'
+  },
+  acciones: [{
+    icono: 'eye',
+    titulo: 'Ver procedimientos Enod',
+    detalle: 'Tabla con tipo, título, descripción y método.'
+  }, {
+    icono: 'file-pdf-o',
+    titulo: 'Descargar PDF del procedimiento Enod',
+    detalle: 'Click en el ícono de PDF en la fila.'
+  }, {
+    icono: 'eye',
+    titulo: 'Ver procedimientos del cliente',
+    detalle: 'EPS/WPS, PQR y Procedimiento de reparación cargados para la OT.'
+  }],
+  bloques: [{
+    titulo: 'Procedimientos Enod',
+    icono: 'book',
+    descripcion: 'Procedimientos internos vinculados a la OT.',
+    campos: [{
+      nombre: 'Tipo',
+      obligatorio: false,
+      detalle: 'Tipo de documento.'
+    }, {
+      nombre: 'Título',
+      obligatorio: false,
+      detalle: ''
+    }, {
+      nombre: 'Descripción',
+      obligatorio: false,
+      detalle: ''
+    }, {
+      nombre: 'Método',
+      obligatorio: false,
+      detalle: 'RI, PM, LP, US, etc.'
+    }, {
+      nombre: 'PDF',
+      obligatorio: false,
+      detalle: 'Click para descargar.'
+    }]
+  }, {
+    titulo: 'Procedimientos clientes',
+    icono: 'file-text',
+    descripcion: 'Procedimientos del cliente cargados para la OT.',
+    campos: [{
+      nombre: 'Tipo Sol.',
+      obligatorio: false,
+      detalle: 'Tipo de soldadura.'
+    }, {
+      nombre: 'Obra N°',
+      obligatorio: false,
+      detalle: 'Número de la OT.'
+    }, {
+      nombre: 'EPS / WPS',
+      obligatorio: false,
+      detalle: 'Especificación de procedimiento del cliente.'
+    }, {
+      nombre: 'PQR',
+      obligatorio: false,
+      detalle: 'Record de calificación.'
+    }, {
+      nombre: 'Proc. Reparación',
+      obligatorio: false,
+      detalle: 'Procedimiento que aplica a soldaduras de reparación.'
+    }]
+  }],
+  errores: [{
+    mensaje: 'No tengo procedimientos Enod cargados',
+    causa: 'No se vincularon procedimientos internos a esta OT.',
+    solucion: 'Pedile a un usuario con permiso "Asignar procedimientos" que los cargue.'
+  }, {
+    mensaje: 'Faltan datos en procedimientos cliente',
+    causa: 'No se completaron EPS/WPS, PQR o Procedimiento de reparación al asignar.',
+    solucion: 'Se completan en la pantalla "Asignar procedimientos".'
+  }],
+  relacionados: [{
+    titulo: 'Asignar procedimientos',
+    ruta: '/asignar_procedimientos'
+  }, {
+    titulo: 'Visualización general de una OT',
+    ruta: '/visualizar_ot'
+  }],
+  demo: 'ayuda-demo-visualizar-procedimientos'
+});
+
+/***/ }),
+
+/***/ "./resources/js/components/ayuda/datos/visualizar-vehiculos.js":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/ayuda/datos/visualizar-vehiculos.js ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  hero: {
+    titulo: 'Visualizar vehículos y documentación complementaria',
+    descripcion: 'Versión solo lectura de la pantalla de vehículos. Ves los vehículos vinculados a la OT, la documentación de cada vehículo ' + '(VTV, seguro, etc.) y las documentaciones complementarias sumadas al trabajo.'
+  },
+  ir_a: {
+    label: 'Ir a la OT',
+    ruta: '/area/enod/ots',
+    icono: 'truck'
+  },
+  acciones: [{
+    icono: 'eye',
+    titulo: 'Ver vehículos asignados',
+    detalle: 'Tabla con N° interno, marca, modelo, patente y tipo.'
+  }, {
+    icono: 'file-image-o',
+    titulo: 'Ver documentación del vehículo',
+    detalle: 'VTV, seguro y otros documentos del vehículo.'
+  }, {
+    icono: 'file-image-o',
+    titulo: 'Ver documentación complementaria',
+    detalle: 'Documentaciones extra sumadas a la OT.'
+  }],
+  bloques: [{
+    titulo: 'Vehículos asignados a la OT',
+    icono: 'list',
+    descripcion: 'Tabla con los vehículos vinculados a la OT.',
+    campos: [{
+      nombre: 'N° INT.',
+      obligatorio: false,
+      detalle: 'Número interno del vehículo.'
+    }, {
+      nombre: 'Marca',
+      obligatorio: false,
+      detalle: ''
+    }, {
+      nombre: 'Modelo',
+      obligatorio: false,
+      detalle: ''
+    }, {
+      nombre: 'Patente',
+      obligatorio: false,
+      detalle: ''
+    }, {
+      nombre: 'Tipo',
+      obligatorio: false,
+      detalle: 'Camioneta, furgón, etc.'
+    }]
+  }, {
+    titulo: 'Documentaciones del vehículo',
+    icono: 'file-text-o',
+    descripcion: 'VTV, seguro, RTO, etc. (vienen del maestro del vehículo).',
+    campos: [{
+      nombre: 'Título',
+      obligatorio: false,
+      detalle: ''
+    }, {
+      nombre: 'Descripción',
+      obligatorio: false,
+      detalle: ''
+    }, {
+      nombre: 'Archivo',
+      obligatorio: false,
+      detalle: 'Click en el ícono para abrir.'
+    }]
+  }, {
+    titulo: 'Documentaciones asignadas a la OT',
+    icono: 'folder-o',
+    descripcion: 'Documentaciones complementarias sumadas manualmente.',
+    campos: [{
+      nombre: 'Título',
+      obligatorio: false,
+      detalle: ''
+    }, {
+      nombre: 'Descripción',
+      obligatorio: false,
+      detalle: ''
+    }, {
+      nombre: 'Archivo',
+      obligatorio: false,
+      detalle: 'Click para abrir.'
+    }]
+  }],
+  errores: [{
+    mensaje: 'No veo vehículos asignados',
+    causa: 'Nadie asignó vehículos a la OT todavía.',
+    solucion: 'Un usuario con permiso "Asignar vehículos" tiene que sumarlos.'
+  }, {
+    mensaje: 'Falta documentación de un vehículo',
+    causa: 'El vehículo no tiene VTV / seguro cargados en su maestro.',
+    solucion: 'Se cargan desde "Gestionar vehículos" en el maestro.'
+  }],
+  relacionados: [{
+    titulo: 'Asignar vehículos y documentación complementaria',
+    ruta: '/asignar_vehiculos'
+  }, {
+    titulo: 'Visualización general de una OT',
+    ruta: '/visualizar_ot'
+  }],
+  demo: 'ayuda-demo-visualizar-vehiculos'
 });
 
 /***/ }),
@@ -400652,6 +405005,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_back_button_vue_vue_type_template_id_0c251594_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_back_button_vue_vue_type_template_id_0c251594_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/enod-help-button.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/enod-help-button.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _enod_help_button_vue_vue_type_template_id_37d42efa_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./enod-help-button.vue?vue&type=template&id=37d42efa&scoped=true */ "./resources/js/components/enod-help-button.vue?vue&type=template&id=37d42efa&scoped=true");
+/* harmony import */ var _enod_help_button_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./enod-help-button.vue?vue&type=script&lang=js */ "./resources/js/components/enod-help-button.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _enod_help_button_vue_vue_type_style_index_0_id_37d42efa_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css */ "./resources/js/components/enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _enod_help_button_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _enod_help_button_vue_vue_type_template_id_37d42efa_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _enod_help_button_vue_vue_type_template_id_37d42efa_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "37d42efa",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/enod-help-button.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/enod-help-button.vue?vue&type=script&lang=js":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/enod-help-button.vue?vue&type=script&lang=js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_help_button_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./enod-help-button.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/enod-help-button.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_help_button_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css ***!
+  \**************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_help_button_vue_vue_type_style_index_0_id_37d42efa_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/enod-help-button.vue?vue&type=style&index=0&id=37d42efa&scoped=true&lang=css");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_help_button_vue_vue_type_style_index_0_id_37d42efa_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_help_button_vue_vue_type_style_index_0_id_37d42efa_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_help_button_vue_vue_type_style_index_0_id_37d42efa_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_help_button_vue_vue_type_style_index_0_id_37d42efa_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/enod-help-button.vue?vue&type=template&id=37d42efa&scoped=true":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/enod-help-button.vue?vue&type=template&id=37d42efa&scoped=true ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_help_button_vue_vue_type_template_id_37d42efa_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../node_modules/vue-loader/lib??vue-loader-options!./enod-help-button.vue?vue&type=template&id=37d42efa&scoped=true */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/enod-help-button.vue?vue&type=template&id=37d42efa&scoped=true");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_help_button_vue_vue_type_template_id_37d42efa_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_enod_help_button_vue_vue_type_template_id_37d42efa_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

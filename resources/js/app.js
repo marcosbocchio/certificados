@@ -344,6 +344,14 @@ Vue.component('ayuda-demo-form-remito',           require('./components/ayuda/ay
 Vue.component('ayuda-demo-tabla-remitos',         require('./components/ayuda/ayuda-demo-tabla-remitos.vue').default);
 /* Ayuda - Bloque 4 (Asignaciones) */
 Vue.component('ayuda-demo-asignacion',            require('./components/ayuda/ayuda-demo-asignacion.vue').default);
+Vue.component('ayuda-demo-asignar-operadores',    require('./components/ayuda/ayuda-demo-asignar-operadores.vue').default);
+Vue.component('ayuda-demo-asignar-soldadores',    require('./components/ayuda/ayuda-demo-asignar-soldadores.vue').default);
+Vue.component('ayuda-demo-asignar-vehiculos',     require('./components/ayuda/ayuda-demo-asignar-vehiculos.vue').default);
+Vue.component('ayuda-demo-asignar-procedimientos',require('./components/ayuda/ayuda-demo-asignar-procedimientos.vue').default);
+Vue.component('ayuda-demo-tablero-ot',             require('./components/ayuda/ayuda-demo-tablero-ot.vue').default);
+Vue.component('ayuda-demo-visualizar-operadores',  require('./components/ayuda/ayuda-demo-visualizar-operadores.vue').default);
+Vue.component('ayuda-demo-visualizar-procedimientos', require('./components/ayuda/ayuda-demo-visualizar-procedimientos.vue').default);
+Vue.component('ayuda-demo-visualizar-vehiculos',   require('./components/ayuda/ayuda-demo-visualizar-vehiculos.vue').default);
 Vue.component('ayuda-demo-tabla-asignados',       require('./components/ayuda/ayuda-demo-tabla-asignados.vue').default);
 /* Ayuda - Bloque 5 (ABM Maestros) */
 Vue.component('ayuda-demo-abm-tabla',             require('./components/ayuda/ayuda-demo-abm-tabla.vue').default);
@@ -363,6 +371,9 @@ Vue.component('ayuda-tabla-impacto',              require('./components/ayuda/co
 Vue.component('ayuda-relacionados',               require('./components/ayuda/comunes/ayuda-relacionados.vue').default);
 Vue.component('ayuda-flujo-documental',           require('./components/ayuda/comunes/ayuda-flujo-documental.vue').default);
 Vue.component('ayuda-articulo',                   require('./components/ayuda/comunes/ayuda-articulo.vue').default);
+
+/* Botones globales del sistema */
+Vue.component('enod-help-button',                 require('./components/enod-help-button.vue').default);
 
 /* Reportes */
 Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);

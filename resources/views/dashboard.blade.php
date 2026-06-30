@@ -4,6 +4,7 @@
 
 
 <div id="app">
+  <enod-help-button url="{{ route('ayuda-tablero-principal') }}"></enod-help-button>
       <dashboard-enod></dashboard-enod>
 </div>
 

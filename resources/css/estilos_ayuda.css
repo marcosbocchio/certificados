@@ -411,6 +411,51 @@
 
 .ayuda_enod_intro .ayuda_notice { margin-top: 0; }
 
+/* ---------- Placeholder "Ayuda en construcción" ---------- */
+.ayuda_construccion {
+    max-width: 720px;
+    margin: 40px auto;
+    text-align: center;
+    border-top: 3px solid #FFCC00;
+    border-radius: 6px;
+}
+.ayuda_construccion .box-body { padding: 40px 30px; }
+.ayuda_construccion_icon {
+    width: 80px; height: 80px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: #fffdf5;
+    color: #d4a800;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 38px;
+}
+.ayuda_construccion h2 {
+    margin: 0 0 12px;
+    color: #1a1a1a;
+    font-size: 22px;
+    font-weight: 700;
+}
+.ayuda_construccion p {
+    color: #4c5661;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 10px;
+}
+.ayuda_construccion_subtitle {
+    color: #6b7280 !important;
+    font-size: 13px !important;
+}
+.ayuda_construccion a {
+    color: #d4a800;
+    font-weight: 600;
+    border-bottom: 1px solid transparent;
+}
+.ayuda_construccion a:hover {
+    color: #1a1a1a;
+    border-bottom-color: #FFCC00;
+    text-decoration: none;
+}
+
 /* ---------- Demo block helpers compartidos ---------- */
 .ayuda_demo_block {
     margin: 16px 0 20px;
