@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Buscar en los formularios de la aplicacion</h1>
@@ -16,7 +17,7 @@
     <section class="ayuda_section">
         <div class="ayuda_panel">
             <p>
-                Cada formulario que contiene <img src="{{ asset('img/ayuda/Lupa.PNG') }}" alt="Lupa" /> arriba a la derecha
+                Cada formulario que contiene un icono de <i class="fa fa-search" style="color:#FFCC00;"></i> <strong>lupa</strong> arriba a la derecha
                 brinda la posibilidad de filtrar el listado o buscar un item en particular.
             </p>
             <p>
@@ -24,9 +25,7 @@
                 A continuacion se muestra un ejemplo de busqueda sobre el listado de OTs:
             </p>
 
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Buscar_ot.gif') }}" alt="Busqueda en listado de OT" />
-            </div>
+            <ayuda-demo-buscador></ayuda-demo-buscador>
         </div>
     </section>
 
@@ -59,6 +58,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

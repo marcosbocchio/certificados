@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Visualizar vehiculos y documentacion complementaria asignados a una orden de trabajo (OT)</h1>
@@ -20,9 +21,7 @@
                 complementaria vinculada a la orden de trabajo.
             </p>
             <p>A continuacion se muestra un ejemplo de visualizacion de documentacion:</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Visualizar_vehiculo.gif') }}" alt="Visualizacion de vehiculos y documentacion complementaria" />
-            </div>
+            <ayuda-demo-tabla-asignados entidad="vehiculo"></ayuda-demo-tabla-asignados>
         </div>
     </section>
 
@@ -55,6 +54,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

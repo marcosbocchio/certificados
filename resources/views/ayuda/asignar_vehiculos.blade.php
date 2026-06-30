@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Asignar vehiculos y documentacion complementaria a la orden de trabajo (OT)</h1>
@@ -20,9 +21,7 @@
                 Esto resulta util cuando se necesita dejar a disposicion del cliente la documentacion de vehiculos y otros archivos relacionados con la tarea.
             </p>
             <p>A continuacion se muestra un ejemplo de esta asignacion:</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/asignar_vehiculo.gif') }}" alt="Asignacion de vehiculos y documentacion complementaria" />
-            </div>
+            <ayuda-demo-asignacion entidad="vehiculo"></ayuda-demo-asignacion>
         </div>
     </section>
 
@@ -55,6 +54,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

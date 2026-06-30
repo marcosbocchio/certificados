@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Gestionar documentacion</h1>
@@ -10,23 +11,20 @@
             Desde aqui se pueden registrar archivos, filtrar por tipo, controlar vencimientos y descargar documentacion.
         </p>
     </div>
+</div>
 
-    <section class="ayuda_section">
+<section class="ayuda_section">
         <div class="ayuda_panel">
             <h2>Como usar el listado</h2>
             <p>
                 Al ingresar a la seccion se muestra una grilla con los documentos cargados. El listado permite revisar tipo,
                 titulo, descripcion, vencimiento y otros datos segun el documento.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/documentaciones/Listado_documentaciones.PNG') }}" alt="Listado de documentaciones" />
-            </div>
+            
             <p>
                 Tambien pueden usarse filtros por tipo, busqueda por texto y la opcion de mostrar solo documentacion vencida.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/documentaciones/Filtro_tipo_documento.PNG') }}" alt="Filtro por tipo de documento" />
-            </div>
+            
             <p>
                 Si se seleccionan uno o varios registros, el sistema permite descargarlos en un archivo comprimido.
             </p>
@@ -56,18 +54,10 @@
                 En la mayoria de los casos se completa titulo, descripcion, fecha de caducidad y la entidad asociada,
                 ademas de marcar si el documento debe quedar visible.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/documentaciones/Form_doc_institucional.PNG') }}" alt="Documento institucional" />
-            </div>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/documentaciones/Form_doc_proc_general.PNG') }}" alt="Procedimiento general" />
-            </div>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/documentaciones/Form_doc_usuario.PNG') }}" alt="Documento de usuario" />
-            </div>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/documentaciones/Form_doc_equipo.PNG') }}" alt="Documento de equipo" />
-            </div>
+            
+            
+            
+            
         </div>
     </section>
 
@@ -89,6 +79,15 @@
             </ul>
         </div>
     </section>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Ejemplo en pantalla</h2>
+            <p>Asi se ve este maestro en el sistema. Probá el buscador y mirá los iconos de accion en cada fila.</p>
+            <ayuda-demo-abm-tabla entidad="documentacion"></ayuda-demo-abm-tabla>
+            <ayuda-demo-abm-form entidad="documentacion"></ayuda-demo-abm-form>
+        </div>
+    </section>
+</div>
 </div>
 
 @endsection

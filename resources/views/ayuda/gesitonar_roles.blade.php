@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="row">
         <div class="col-sm-12">
@@ -12,7 +13,9 @@
             <h3>1. Acceso a la Gestión de Roles</h3>
             <p>Para acceder al módulo de gestión de roles, normalmente se encuentra en una sección de <strong>Administración del Sistema</strong>, <strong>Configuración de Seguridad</strong>, o similar. Dado que es una función administrativa avanzada, podría ser <strong>Maestros</strong> -> <strong>Roles</strong> o una ruta específica para administradores.</p>
         </div>
-    </div>
+</div>
+
+</div>
 
     <div class="row">
         <div class="col-sm-12">
@@ -24,7 +27,7 @@
             </ul>
         </div>
         <div class="col-sm-10 col-sm-offset-1">
-            <img class="img-responsive" src="{{ asset('img/ayuda/roles/Listado_roles.PNG') }}" alt="Listado de Roles"/><br>
+            
             <p class="text-center help-block"><em>Fig. 1: Vista principal del listado de roles. (Basado en image_7d6c2f.png)</em></p>
         </div>
     </div>
@@ -39,8 +42,8 @@
             <p>A la derecha de cada fila en la tabla, encontrará los siguientes iconos de acción:</p>
         </div>
         <div class="col-sm-12 detalle_iconos">
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_editar_usuario.PNG') }}" alt="Editar Rol"/>&nbsp;&nbsp;<strong>Editar Rol:</strong> Icono naranja con un lápiz. Permite modificar el nombre, el guard y los permisos asignados al rol seleccionado.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eliminar_usuario.PNG') }}" alt="Eliminar Rol"/>&nbsp;&nbsp;<strong>Eliminar Rol:</strong> Icono rojo con un cesto de basura. Permite eliminar el rol del sistema, previa confirmación.</p>
+            <p><strong>Editar Rol:</strong> Icono naranja con un lápiz. Permite modificar el nombre, el guard y los permisos asignados al rol seleccionado.</p>
+            <p><strong>Eliminar Rol:</strong> Icono rojo con un cesto de basura. Permite eliminar el rol del sistema, previa confirmación.</p>
         </div>
     </div>
 
@@ -49,7 +52,7 @@
             <h3>3. Crear un Nuevo Rol</h3>
             <p>Para definir un nuevo rol, haga clic en el botón amarillo <strong>"+ Nuevo"</strong> ubicado en la esquina superior izquierda de la pantalla de listado.</p>
         </div>
-         <div class="col-sm-10 col-sm-offset-1"> <img class="img-responsive" src="{{ asset('img/ayuda/roles/Formulario_nuevo_rol.PNG') }}" alt="Formulario Nuevo Rol"/><br>
+         <div class="col-sm-10 col-sm-offset-1"> 
             <p class="text-center help-block"><em>Fig. 2: Formulario para la creación de un nuevo rol, mostrando la asignación de permisos. (Basado en image_7d6bb7.png)</em></p>
         </div>
         <div class="col-sm-12">
@@ -80,7 +83,7 @@
                 <li>Se abrirá un formulario similar al de creación, pre-cargado con el Nombre, Guard y los permisos actualmente seleccionados para ese rol.</li>
             </ol>
         </div>
-        <div class="col-sm-10 col-sm-offset-1"> <img class="img-responsive" src="{{ asset('img/ayuda/roles/Formulario_editar_rol.PNG') }}" alt="Formulario Editar Rol"/><br>
+        <div class="col-sm-10 col-sm-offset-1"> 
             <p class="text-center help-block"><em>Fig. 3: Ejemplo del formulario de edición de un rol, con permisos preseleccionados. (Basado en image_7d6853.png)</em></p>
         </div>
         <div class="col-sm-12">
@@ -112,6 +115,15 @@
             <h3>Artículos relacionados&nbsp;</h3>
             </div>
     </div>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Ejemplo en pantalla</h2>
+            <p>Asi se ve este maestro en el sistema. Probá el buscador y mirá los iconos de accion en cada fila.</p>
+            <ayuda-demo-abm-tabla entidad="rol"></ayuda-demo-abm-tabla>
+            <ayuda-demo-abm-form entidad="rol"></ayuda-demo-abm-form>
+        </div>
+    </section>
+</div>
 </div>
 
 @endsection

@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Remitos</h1>
@@ -23,6 +24,7 @@
                 <li><strong>Observaciones:</strong> notas generales o detalles adicionales.</li>
                 <li><strong>Estado borrador:</strong> permite guardar sin cerrar el movimiento.</li>
             </ul>
+            <ayuda-demo-form-remito></ayuda-demo-form-remito>
         </div>
     </section>
 
@@ -96,6 +98,7 @@
             <p>
                 Por eso remitos no es solo una impresion administrativa: impacta sobre inventario y ubicacion de recursos.
             </p>
+            <ayuda-demo-tabla-remitos></ayuda-demo-tabla-remitos>
             <p>
                 El remito debe dejar una referencia clara del movimiento y permitir despues revisar su efecto desde stock, equipos o circuitos relacionados.
             </p>
@@ -107,6 +110,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

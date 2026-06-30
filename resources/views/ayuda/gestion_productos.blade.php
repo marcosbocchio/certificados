@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="row">
         <div class="col-sm-12">
@@ -11,14 +12,16 @@
             <h3>1. Acceso a la Gestión de Productos</h3>
             <p>Para acceder al módulo, diríjase al menú principal y seleccione la opción <strong>Maestros</strong> y luego, dentro del submenú desplegado, haga clic en <strong>Productos</strong>.</p>
         </div>
-    </div>
+</div>
+
+</div>
 
     <div class="row">
         <div class="col-sm-12">
             <h3>2. Vista Principal de Productos</h3>
             <p>Al acceder a la sección, se presentará una tabla con el listado de todos los productos registrados. Las columnas principales son: <strong>código</strong>, <strong>Descripción</strong>, <strong>Unidad Medida</strong>, <strong>Visible OT</strong> (indica si el producto es seleccionable en Órdenes de Trabajo), y <strong>Stock</strong> (cantidad actual si el producto es inventariable).</p>
         </div>
-        <div class="col-sm-12"> <img class="img-responsive" src="{{ asset('img/ayuda/productos/Listado_productos.PNG') }}" alt="Listado de Productos"/><br>
+        <div class="col-sm-12"> 
             <p class="text-center help-block"><em>Fig. 1: Vista principal del listado de productos. (Basado en image_87d0de.png)</em></p>
         </div>
     </div>
@@ -44,8 +47,8 @@
             <p>A la derecha de cada fila en la tabla, encontrará los siguientes iconos de acción:</p>
         </div>
         <div class="col-sm-12 detalle_iconos">
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_editar_usuario.PNG') }}" alt="Editar Producto"/>&nbsp;&nbsp;<strong>Editar Producto:</strong> Icono naranja con un lápiz. Permite modificar los datos del producto seleccionado.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eliminar_usuario.PNG') }}" alt="Eliminar Producto"/>&nbsp;&nbsp;<strong>Eliminar Producto:</strong> Icono rojo con un cesto de basura. Permite eliminar el producto del sistema, previa confirmación.</p>
+            <p><strong>Editar Producto:</strong> Icono naranja con un lápiz. Permite modificar los datos del producto seleccionado.</p>
+            <p><strong>Eliminar Producto:</strong> Icono rojo con un cesto de basura. Permite eliminar el producto del sistema, previa confirmación.</p>
         </div>
     </div>
 
@@ -55,7 +58,7 @@
             <p>Para agregar un nuevo producto al sistema, haga clic en el botón amarillo <strong>"+ Nuevo"</strong> ubicado en la esquina superior izquierda de la pantalla de listado.</p>
         </div>
          <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/productos/Formulario_nuevo_producto.PNG') }}" alt="Formulario Nuevo Producto"/><br>
+            
             <p class="text-center help-block"><em>Fig. 2: Formulario para la creación de un nuevo producto. (Basado en image_87d0be.png)</em></p>
         </div>
         <div class="col-sm-12">
@@ -91,7 +94,7 @@
             </ol>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/productos/Formulario_editar_producto.PNG') }}" alt="Formulario Editar Producto"/><br>
+            
             <p class="text-center help-block"><em>Fig. 3: Ejemplo del formulario de edición de un producto. (Basado en image_87ce12.png)</em></p>
         </div>
         <div class="col-sm-12">
@@ -122,6 +125,15 @@
             <h3>Artículos relacionados&nbsp;</h3>
             </div>
     </div>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Ejemplo en pantalla</h2>
+            <p>Asi se ve este maestro en el sistema. Probá el buscador y mirá los iconos de accion en cada fila.</p>
+            <ayuda-demo-abm-tabla entidad="producto"></ayuda-demo-abm-tabla>
+            <ayuda-demo-abm-form entidad="producto"></ayuda-demo-abm-form>
+        </div>
+    </section>
+</div>
 </div>
 
 @endsection

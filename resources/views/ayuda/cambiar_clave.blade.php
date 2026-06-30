@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Como cambiar o restablecer la contrasena de tu cuenta</h1>
@@ -24,10 +25,7 @@
                 <li>Ingresa tu contrasena actual, luego la nueva contrasena y repitela para confirmar.</li>
                 <li>Haz click en <strong>Guardar</strong>.</li>
             </ol>
-            <p>Asi:</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Cambiar_clave.gif') }}" alt="Cambio de contrasena" />
-            </div>
+            <ayuda-demo-cambio-clave></ayuda-demo-cambio-clave>
         </div>
     </section>
 
@@ -48,6 +46,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

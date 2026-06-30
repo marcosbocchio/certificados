@@ -337,6 +337,32 @@ Vue.component('ayuda-demo-form-informe',          require('./components/ayuda/ay
 Vue.component('ayuda-demo-tabla-elementos',       require('./components/ayuda/ayuda-demo-tabla-elementos.vue').default);
 Vue.component('ayuda-demo-tabla-pasadas',         require('./components/ayuda/ayuda-demo-tabla-pasadas.vue').default);
 Vue.component('ayuda-demo-tabla-informes',        require('./components/ayuda/ayuda-demo-tabla-informes.vue').default);
+/* Ayuda - Bloque 3 (Certificados y remitos) */
+Vue.component('ayuda-demo-form-certificado',      require('./components/ayuda/ayuda-demo-form-certificado.vue').default);
+Vue.component('ayuda-demo-tabla-certificados',    require('./components/ayuda/ayuda-demo-tabla-certificados.vue').default);
+Vue.component('ayuda-demo-form-remito',           require('./components/ayuda/ayuda-demo-form-remito.vue').default);
+Vue.component('ayuda-demo-tabla-remitos',         require('./components/ayuda/ayuda-demo-tabla-remitos.vue').default);
+/* Ayuda - Bloque 4 (Asignaciones) */
+Vue.component('ayuda-demo-asignacion',            require('./components/ayuda/ayuda-demo-asignacion.vue').default);
+Vue.component('ayuda-demo-tabla-asignados',       require('./components/ayuda/ayuda-demo-tabla-asignados.vue').default);
+/* Ayuda - Bloque 5 (ABM Maestros) */
+Vue.component('ayuda-demo-abm-tabla',             require('./components/ayuda/ayuda-demo-abm-tabla.vue').default);
+Vue.component('ayuda-demo-abm-form',              require('./components/ayuda/ayuda-demo-abm-form.vue').default);
+/* Ayuda - Bloque 6 (Cierre) */
+Vue.component('ayuda-demo-cambio-clave',          require('./components/ayuda/ayuda-demo-cambio-clave.vue').default);
+Vue.component('ayuda-demo-buscador',              require('./components/ayuda/ayuda-demo-buscador.vue').default);
+
+/* Ayuda - Componentes comunes (manual reformulado) */
+Vue.component('ayuda-callout',                    require('./components/ayuda/comunes/ayuda-callout.vue').default);
+Vue.component('ayuda-seccion',                    require('./components/ayuda/comunes/ayuda-seccion.vue').default);
+Vue.component('ayuda-tabla-campos',               require('./components/ayuda/comunes/ayuda-tabla-campos.vue').default);
+Vue.component('ayuda-tabla-dependencias',         require('./components/ayuda/comunes/ayuda-tabla-dependencias.vue').default);
+Vue.component('ayuda-tabla-estados',              require('./components/ayuda/comunes/ayuda-tabla-estados.vue').default);
+Vue.component('ayuda-tabla-errores',              require('./components/ayuda/comunes/ayuda-tabla-errores.vue').default);
+Vue.component('ayuda-tabla-impacto',              require('./components/ayuda/comunes/ayuda-tabla-impacto.vue').default);
+Vue.component('ayuda-relacionados',               require('./components/ayuda/comunes/ayuda-relacionados.vue').default);
+Vue.component('ayuda-flujo-documental',           require('./components/ayuda/comunes/ayuda-flujo-documental.vue').default);
+Vue.component('ayuda-articulo',                   require('./components/ayuda/comunes/ayuda-articulo.vue').default);
 
 /* Reportes */
 Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);

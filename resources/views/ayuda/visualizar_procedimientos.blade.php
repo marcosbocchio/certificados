@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Visualizar procedimientos asignados a una orden de trabajo (OT)</h1>
@@ -20,9 +21,7 @@
                 intervenir despues en la generacion de informes.
             </p>
             <p>A continuacion se muestra un ejemplo de visualizacion de procedimientos:</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Visualizar_procedimiento.gif') }}" alt="Visualizacion de procedimientos asignados" />
-            </div>
+            <ayuda-demo-tabla-asignados entidad="procedimiento"></ayuda-demo-tabla-asignados>
         </div>
     </section>
 
@@ -55,6 +54,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

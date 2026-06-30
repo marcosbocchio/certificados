@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Visualizacion de certificados</h1>
@@ -21,6 +22,7 @@
                 <li><strong>Fecha:</strong> fecha de emision o registracion.</li>
                 <li><strong>Firma:</strong> estado documental visible en la grilla del modulo.</li>
             </ul>
+            <ayuda-demo-tabla-certificados></ayuda-demo-tabla-certificados>
             <p>
                 La vista se usa para localizar rapidamente un certificado de una OT, abrir su PDF y revisar si ya quedo emitido.
             </p>
@@ -59,6 +61,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Visualizar documentacion de operadores y ayudantes de una orden de trabajo</h1>
@@ -21,9 +22,7 @@
                 relacionada con esas tecnicas.
             </p>
             <p>A continuacion se muestra un ejemplo de visualizacion de documentacion:</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Visualizar_operador.gif') }}" alt="Visualizacion de documentacion de operadores" />
-            </div>
+            <ayuda-demo-tabla-asignados entidad="doc-operador"></ayuda-demo-tabla-asignados>
         </div>
     </section>
 
@@ -56,6 +55,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

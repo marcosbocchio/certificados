@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Asignar soldadores y usuarios de cliente a una orden de trabajo (OT)</h1>
@@ -24,9 +25,7 @@
                 Para poder elegirlos, primero deben existir dentro del maestro de <a href="{{ route('ayuda-gestion-soldadores') }}"><strong>soldadores</strong></a>.
             </p>
             <p>A continuacion se muestra un ejemplo de esta asignacion:</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Asignar_soldador.gif') }}" alt="Asignacion de soldadores y usuarios de cliente" />
-            </div>
+            <ayuda-demo-asignacion entidad="soldador"></ayuda-demo-asignacion>
         </div>
     </section>
 
@@ -57,6 +56,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

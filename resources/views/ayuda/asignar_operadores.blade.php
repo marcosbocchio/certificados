@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Asignar operadores a una orden de trabajo (OT)</h1>
@@ -20,9 +21,7 @@
                 la documentacion asociada a los operadores cargados en la OT.
             </p>
             <p>A continuacion se muestra un ejemplo de asignacion de operadores y ayudantes:</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Asignar_operador.gif') }}" alt="Asignacion de operadores" />
-            </div>
+            <ayuda-demo-asignacion entidad="operador"></ayuda-demo-asignacion>
         </div>
     </section>
 
@@ -55,6 +54,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

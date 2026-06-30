@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Gestionar comitentes</h1>
@@ -10,17 +11,16 @@
             La informacion cargada aqui puede reutilizarse despues en OT, certificados y otros documentos del sistema.
         </p>
     </div>
+</div>
 
-    <section class="ayuda_section">
+<section class="ayuda_section">
         <div class="ayuda_panel">
             <h2>Como usar el listado</h2>
             <p>
                 Al ingresar a la seccion se muestra una grilla con los comitentes registrados. Desde las acciones del listado
                 se puede editar un registro existente o eliminarlo, segun los permisos disponibles.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/comitentes/Listado_comitentes.PNG') }}" alt="Listado de comitentes" />
-            </div>
+            
         </div>
     </section>
 
@@ -31,26 +31,20 @@
                 Para dar de alta un comitente debe usarse el boton <strong>Nuevo</strong>. El formulario permite cargar nombre,
                 razon social y logo.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/comitentes/Formulario_nuevo_comitente.PNG') }}" alt="Alta de comitente" />
-            </div>
+            
             <p>
                 Al editar un comitente se abre el mismo formulario con la informacion existente para actualizar datos o reemplazar el logo.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/comitentes/Formulario_editar_comitente.PNG') }}" alt="Edicion de comitente" />
-            </div>
+            
         </div>
     </section>
 
     <section class="ayuda_section">
         <div class="ayuda_panel detalle_iconos">
             <h2>Importante</h2>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_editar_usuario.PNG') }}" alt="Editar comitente" /> Permite modificar la informacion del comitente.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eliminar_usuario.PNG') }}" alt="Eliminar comitente" /> Permite eliminar el registro, previa confirmacion.</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/comitentes/Dialogo_eliminar_comitente.PNG') }}" alt="Confirmacion para eliminar comitente" />
-            </div>
+            <p><strong>Permite modificar la informacion del comitente.</strong></p>
+            <p><strong>Permite eliminar el registro, previa confirmacion.</strong></p>
+            
             <p>
                 Si el comitente ya esta vinculado a otros registros, el sistema puede impedir su eliminacion o requerir una revision previa.
             </p>
@@ -62,6 +56,15 @@
             </ul>
         </div>
     </section>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Ejemplo en pantalla</h2>
+            <p>Asi se ve este maestro en el sistema. Probá el buscador y mirá los iconos de accion en cada fila.</p>
+            <ayuda-demo-abm-tabla entidad="comitente"></ayuda-demo-abm-tabla>
+            <ayuda-demo-abm-form entidad="comitente"></ayuda-demo-abm-form>
+        </div>
+    </section>
+</div>
 </div>
 
 @endsection

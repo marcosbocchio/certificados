@@ -2,16 +2,39 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Visualizar documentación de vehículos y documentación complementaria asignados a Orden de trabajo (OT) </h2>
-            <p>Un usuario con acceso al sistema, tiene la posibilidad de visualizar e incluso bajar la documentación asociada a todos los vehículos asignados a la OT. Además podrá visualizar y bajar información complementaria asociada a la OT.<br> A continuación, se muestra un ejemplo de visualización de documentación: </p>
-        </div>
-
-        <div class="col-sm-8 col-sm-offset-2">
-            <img  class="img-responsive" src="{{ asset('img/ayuda/Visualizar_vehiculo.gif') }}" />
-        </div>
+    <div class="ayuda_panel">
+        <h1>Crear remito</h1>
+        <p>
+            El alta de un remito se hace desde el modulo de Remitos. El sistema arma la cabecera con prefijo y numero automaticos,
+            y permite cargar productos, internos de equipos y observaciones antes de guardar como borrador o definitivo.
+        </p>
     </div>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Formulario completo</h2>
+            <p>Asi se ve el formulario al cargar un remito nuevo:</p>
+            <ayuda-demo-form-remito></ayuda-demo-form-remito>
+        </div>
+    </section>
+
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Para entender todo el circuito</h2>
+            <p>
+                Para ver detalle de campos, decisiones entre borrador y definitivo, y resultado esperado sobre stock e internos,
+                consulta el articulo general de remitos.
+            </p>
+            <ul class="ayuda_links">
+                <li><a href="{{ route('ayuda-creacion-remito') }}">Remitos - articulo completo</a></li>
+                <li><a href="{{ route('ayuda-stock') }}">Gestion de stock</a></li>
+                <li><a href="{{ route('ayuda-gestion-interno-equipos') }}">Gestionar internos de equipos</a></li>
+            </ul>
+        </div>
+    </section>
 </div>
+</div>
+
 @endsection

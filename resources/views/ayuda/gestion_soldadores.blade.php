@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="row">
         <div class="col-sm-12">
@@ -12,7 +13,9 @@
             <h3>1. Acceso a la Gestión de Soldadores</h3>
             <p>Para acceder al módulo, diríjase al menú principal y seleccione la opción <strong>Maestros</strong> y luego, dentro del submenú desplegado, haga clic en <strong>Soldadores</strong>.</p>
         </div>
-    </div>
+</div>
+
+</div>
 
     <div class="row">
         <div class="col-sm-12">
@@ -23,7 +26,7 @@
             </ul>
         </div>
         <div class="col-sm-10 col-sm-offset-1">
-            <img class="img-responsive" src="{{ asset('img/ayuda/soldadores/Seleccion_cliente_y_listado_soldadores.PNG') }}" alt="Selección de Cliente y Listado de Soldadores"/><br>
+            
             <p class="text-center help-block"><em>Fig. 1: Selección de cliente y visualización de soldadores asociados. (Basado en image_87c670.png)</em></p>
         </div>
         <div class="col-sm-12">
@@ -37,8 +40,8 @@
             <p>A la derecha de cada fila de soldador en la tabla, encontrará los siguientes iconos de acción:</p>
         </div>
         <div class="col-sm-12 detalle_iconos">
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_editar_usuario.PNG') }}" alt="Editar Soldador"/>&nbsp;&nbsp;<strong>Editar Soldador:</strong> Icono naranja con un lápiz. Permite modificar el código o nombre del soldador seleccionado.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eliminar_usuario.PNG') }}" alt="Eliminar Soldador"/>&nbsp;&nbsp;<strong>Eliminar Soldador:</strong> Icono rojo con un cesto de basura. Permite desvincular/eliminar el soldador para ese cliente, previa confirmación.</p>
+            <p><strong>Editar Soldador:</strong> Icono naranja con un lápiz. Permite modificar el código o nombre del soldador seleccionado.</p>
+            <p><strong>Eliminar Soldador:</strong> Icono rojo con un cesto de basura. Permite desvincular/eliminar el soldador para ese cliente, previa confirmación.</p>
         </div>
     </div>
 
@@ -48,7 +51,7 @@
             <p>Asegúrese de tener un cliente seleccionado. Luego, para agregar un nuevo soldador a ese cliente, haga clic en el botón amarillo <strong>"+ Nuevo"</strong> ubicado en la esquina superior izquierda (debajo del selector de cliente).</p>
         </div>
          <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/soldadores/Formulario_nuevo_soldador.PNG') }}" alt="Formulario Nuevo Soldador"/><br>
+            
             <p class="text-center help-block"><em>Fig. 2: Formulario para la creación de un nuevo soldador para el cliente seleccionado. (Basado en image_87c630.png)</em></p>
         </div>
         <div class="col-sm-12">
@@ -102,6 +105,15 @@
             <h3>Artículos relacionados&nbsp;</h3>
             </div>
     </div>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Ejemplo en pantalla</h2>
+            <p>Asi se ve este maestro en el sistema. Probá el buscador y mirá los iconos de accion en cada fila.</p>
+            <ayuda-demo-abm-tabla entidad="soldador"></ayuda-demo-abm-tabla>
+            <ayuda-demo-abm-form entidad="soldador"></ayuda-demo-abm-form>
+        </div>
+    </section>
+</div>
 </div>
 
 @endsection

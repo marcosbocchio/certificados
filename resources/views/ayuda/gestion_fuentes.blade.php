@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Gestionar fuentes</h1>
@@ -10,17 +11,16 @@
             La informacion cargada aqui despues se reutiliza en internos de fuente, documentacion y trazabilidad asociada.
         </p>
     </div>
+</div>
 
-    <section class="ayuda_section">
+<section class="ayuda_section">
         <div class="ayuda_panel">
             <h2>Como usar el listado</h2>
             <p>
                 Al ingresar a la seccion se muestra una grilla con las fuentes registradas. Desde las acciones del listado
                 se puede editar un registro existente o eliminarlo, segun los permisos disponibles.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/fuentes/Listado_fuentes.PNG') }}" alt="Listado de fuentes" />
-            </div>
+            
         </div>
     </section>
 
@@ -31,23 +31,19 @@
                 Para dar de alta una fuente debe usarse el boton <strong>Nuevo</strong>. El formulario permite cargar
                 codigo, descripcion y la constante o vida media asociada.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/fuentes/Formulario_nueva_fuente.PNG') }}" alt="Alta de fuente" />
-            </div>
+            
             <p>
                 Al editar una fuente se abre el mismo formulario con la informacion existente para actualizar sus datos.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/fuentes/Formulario_editar_fuente.PNG') }}" alt="Edicion de fuente" />
-            </div>
+            
         </div>
     </section>
 
     <section class="ayuda_section">
         <div class="ayuda_panel detalle_iconos">
             <h2>Importante</h2>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_editar_usuario.PNG') }}" alt="Editar fuente" /> Permite modificar la informacion de la fuente seleccionada.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eliminar_usuario.PNG') }}" alt="Eliminar fuente" /> Permite eliminar el registro, previa confirmacion.</p>
+            <p><strong>Permite modificar la informacion de la fuente seleccionada.</strong></p>
+            <p><strong>Permite eliminar el registro, previa confirmacion.</strong></p>
             <p>
                 Si la fuente ya esta vinculada a internos o documentacion, puede ser necesario revisar esas relaciones antes de eliminarla.
             </p>
@@ -59,6 +55,15 @@
             </ul>
         </div>
     </section>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Ejemplo en pantalla</h2>
+            <p>Asi se ve este maestro en el sistema. Probá el buscador y mirá los iconos de accion en cada fila.</p>
+            <ayuda-demo-abm-tabla entidad="fuente"></ayuda-demo-abm-tabla>
+            <ayuda-demo-abm-form entidad="fuente"></ayuda-demo-abm-form>
+        </div>
+    </section>
+</div>
 </div>
 
 @endsection

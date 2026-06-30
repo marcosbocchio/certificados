@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Creacion de certificados</h1>
@@ -45,6 +46,7 @@
                 <li><strong>Productos por placa o costura:</strong> segun la forma en que se informo el trabajo previo.</li>
                 <li><strong>Partes asociados:</strong> el sistema deja vinculacion entre el certificado y los partes que lo componen.</li>
             </ul>
+            <ayuda-demo-form-certificado></ayuda-demo-form-certificado>
             <p>
                 Esto permite que el certificado no sea solo una hoja independiente, sino una salida trazable respecto del trabajo ya registrado.
             </p>
@@ -81,6 +83,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection

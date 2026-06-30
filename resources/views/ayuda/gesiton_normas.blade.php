@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Gestionar normas</h1>
@@ -10,8 +11,9 @@
             La operatoria es similar en las tres pantallas: cambia el tipo de norma, pero no la forma de trabajar.
         </p>
     </div>
+</div>
 
-    <section class="ayuda_section">
+<section class="ayuda_section">
         <div class="ayuda_panel">
             <h2>Tipos de normas disponibles</h2>
             <ul>
@@ -32,15 +34,9 @@
                 Cada tipo de norma tiene su propia pantalla de listado. Desde alli puede revisarse el codigo y la descripcion
                 de las normas cargadas.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/normas/Listado_normas_ensayo.PNG') }}" alt="Listado de normas de ensayo" />
-            </div>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/normas/Listado_normas_fabricacion.PNG') }}" alt="Listado de normas de fabricacion" />
-            </div>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/normas/Listado_normas_evaluaciones.PNG') }}" alt="Listado de normas de evaluacion" />
-            </div>
+            
+            
+            
             <p>
                 Segun la pantalla, puede haber buscador o paginacion para facilitar la consulta.
             </p>
@@ -54,12 +50,8 @@
                 Para dar de alta una norma debe usarse el boton <strong>Nuevo</strong>. El formulario es similar en los tres casos
                 y permite cargar codigo y descripcion.
             </p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/normas/Formulario_nueva_norma_ensayo.PNG') }}" alt="Alta de norma" />
-            </div>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/normas/Formulario_editar_norma_ensayo.PNG') }}" alt="Edicion de norma" />
-            </div>
+            
+            
             <p>
                 Desde el listado tambien se puede editar una norma existente o eliminarla, segun los permisos disponibles.
             </p>
@@ -69,8 +61,8 @@
     <section class="ayuda_section">
         <div class="ayuda_panel detalle_iconos">
             <h2>Importante</h2>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_editar_usuario.PNG') }}" alt="Editar norma" /> Permite modificar la informacion de la norma seleccionada.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eliminar_usuario.PNG') }}" alt="Eliminar norma" /> Permite eliminar el registro, previa confirmacion.</p>
+            <p><strong>Permite modificar la informacion de la norma seleccionada.</strong></p>
+            <p><strong>Permite eliminar el registro, previa confirmacion.</strong></p>
             <p>
                 Conviene mantener codigos y descripciones normalizados, porque estas normas despues se reutilizan en distintos tipos de informes.
             </p>
@@ -82,6 +74,15 @@
             </ul>
         </div>
     </section>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Ejemplo en pantalla</h2>
+            <p>Asi se ve este maestro en el sistema. Probá el buscador y mirá los iconos de accion en cada fila.</p>
+            <ayuda-demo-abm-tabla entidad="norma"></ayuda-demo-abm-tabla>
+            <ayuda-demo-abm-form entidad="norma"></ayuda-demo-abm-form>
+        </div>
+    </section>
+</div>
 </div>
 
 @endsection

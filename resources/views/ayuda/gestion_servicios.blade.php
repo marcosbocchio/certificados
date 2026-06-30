@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="row">
         <div class="col-sm-12">
@@ -11,14 +12,16 @@
             <h3>1. Acceso a la Gestión de Servicios</h3>
             <p>Para acceder al módulo, diríjase al menú principal y seleccione la opción <strong>Maestros</strong> y luego, dentro del submenú desplegado, haga clic en <strong>Servicios</strong>.</p>
         </div>
-    </div>
+</div>
+
+</div>
 
     <div class="row">
         <div class="col-sm-12">
             <h3>2. Vista Principal de Servicios</h3>
             <p>Al acceder a la sección, se presentará una tabla con el listado de todos los servicios registrados. Por cada servicio, se mostrará su <strong>Código</strong>, <strong>Descripción</strong>, <strong>Unidad Medida</strong> y el <strong>Método ensayo</strong> asociado.</p>
         </div>
-        <div class="col-sm-12"> <img class="img-responsive" src="{{ asset('img/ayuda/servicios/Listado_servicios.PNG') }}" alt="Listado de Servicios"/><br>
+        <div class="col-sm-12"> 
             <p class="text-center help-block"><em>Fig. 1: Vista principal del listado de servicios. (Basado en image_87dc60.png)</em></p>
         </div>
     </div>
@@ -35,8 +38,8 @@
             <p>A la derecha de cada fila en la tabla, encontrará los siguientes iconos de acción:</p>
         </div>
         <div class="col-sm-12 detalle_iconos">
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_editar_usuario.PNG') }}" alt="Editar Servicio"/>&nbsp;&nbsp;<strong>Editar Servicio:</strong> Icono naranja con un lápiz. Permite modificar los datos del servicio seleccionado.</p>
-            <p><img class="img-responsive" src="{{ asset('img/ayuda/usuarios/Icono_eliminar_usuario.PNG') }}" alt="Eliminar Servicio"/>&nbsp;&nbsp;<strong>Eliminar Servicio:</strong> Icono rojo con un cesto de basura. Permite eliminar el servicio del sistema, previa confirmación.</p>
+            <p><strong>Editar Servicio:</strong> Icono naranja con un lápiz. Permite modificar los datos del servicio seleccionado.</p>
+            <p><strong>Eliminar Servicio:</strong> Icono rojo con un cesto de basura. Permite eliminar el servicio del sistema, previa confirmación.</p>
         </div>
     </div>
 
@@ -46,7 +49,7 @@
             <p>Para agregar un nuevo servicio al sistema, haga clic en el botón amarillo <strong>"+ Nuevo"</strong> ubicado en la esquina superior izquierda de la pantalla de listado.</p>
         </div>
          <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/servicios/Formulario_nuevo_servicio.PNG') }}" alt="Formulario Nuevo Servicio"/><br>
+            
             <p class="text-center help-block"><em>Fig. 2: Formulario para la creación de un nuevo servicio. (Basado en image_87d897.png)</em></p>
         </div>
         <div class="col-sm-12">
@@ -76,7 +79,7 @@
             </ol>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <img class="img-responsive" src="{{ asset('img/ayuda/servicios/Formulario_editar_servicio.PNG') }}" alt="Formulario Editar Servicio"/><br>
+            
             <p class="text-center help-block"><em>Fig. 3: Ejemplo del formulario de edición de un servicio. (Basado en image_87d861.png)</em></p>
         </div>
         <div class="col-sm-12">
@@ -107,6 +110,15 @@
             <h3>Artículos relacionados&nbsp;</h3>
             </div>
     </div>
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>Ejemplo en pantalla</h2>
+            <p>Asi se ve este maestro en el sistema. Probá el buscador y mirá los iconos de accion en cada fila.</p>
+            <ayuda-demo-abm-tabla entidad="servicio"></ayuda-demo-abm-tabla>
+            <ayuda-demo-abm-form entidad="servicio"></ayuda-demo-abm-form>
+        </div>
+    </section>
+</div>
 </div>
 
 @endsection

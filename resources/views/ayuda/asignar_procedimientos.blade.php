@@ -2,6 +2,7 @@
 
 @section('contenido')
 
+<div id="app">
 <div class="ayuda_enod">
     <div class="ayuda_panel">
         <h1>Asignar procedimientos a una orden de trabajo (OT)</h1>
@@ -20,9 +21,7 @@
                 Para asociar procedimientos de Enod, la documentacion debe estar creada previamente en el modulo correspondiente.
             </p>
             <p>A continuacion se muestra un ejemplo de asignacion de procedimientos:</p>
-            <div class="ayuda_media">
-                <img class="img-responsive" src="{{ asset('img/ayuda/Asignar_procedimiento.gif') }}" alt="Asignacion de procedimientos a una OT" />
-            </div>
+            <ayuda-demo-asignacion entidad="procedimiento"></ayuda-demo-asignacion>
         </div>
     </section>
 
@@ -55,6 +54,7 @@
             </ul>
         </div>
     </section>
+</div>
 </div>
 
 @endsection
