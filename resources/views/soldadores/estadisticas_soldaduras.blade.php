@@ -3,6 +3,7 @@
 @section('contenido')
 
     <div id="app">
+  <enod-help-button url="{{ route('ayuda-reportes-estadisticas-soldaduras') }}"></enod-help-button>
 
     <estadisticas-soldaduras
             :user= "{{ $user }}"

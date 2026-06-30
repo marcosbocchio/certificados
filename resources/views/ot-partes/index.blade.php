@@ -3,6 +3,7 @@
 @section('contenido')
 
 <div id="app">
+  <enod-help-button url="{{ route('ayuda-crear-parte-diario') }}"></enod-help-button>
 
    <ot-partes
     :ot_id_data = "{{$ot_id}}"

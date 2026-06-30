@@ -322,6 +322,58 @@ Vue.component('ayuda-demo-grafico-barras',   require('./components/ayuda/ayuda-d
 Vue.component('ayuda-demo-pestanas',         require('./components/ayuda/ayuda-demo-pestanas.vue').default);
 Vue.component('ayuda-demo-costuras-filtros', require('./components/ayuda/ayuda-demo-costuras-filtros.vue').default);
 Vue.component('ayuda-demo-tabla-costuras',   require('./components/ayuda/ayuda-demo-tabla-costuras.vue').default);
+/* Ayuda - Indice y Bloque 1 (OT y Parte diario) */
+Vue.component('ayuda-indice',                     require('./components/ayuda/ayuda-indice.vue').default);
+Vue.component('ayuda-demo-wizard-pasos',          require('./components/ayuda/ayuda-demo-wizard-pasos.vue').default);
+Vue.component('ayuda-demo-form-ot',               require('./components/ayuda/ayuda-demo-form-ot.vue').default);
+Vue.component('ayuda-demo-filtros-ot',            require('./components/ayuda/ayuda-demo-filtros-ot.vue').default);
+Vue.component('ayuda-demo-tabla-ots',             require('./components/ayuda/ayuda-demo-tabla-ots.vue').default);
+Vue.component('ayuda-demo-form-parte',            require('./components/ayuda/ayuda-demo-form-parte.vue').default);
+Vue.component('ayuda-demo-tabla-operarios-horas', require('./components/ayuda/ayuda-demo-tabla-operarios-horas.vue').default);
+Vue.component('ayuda-demo-tabla-partes',          require('./components/ayuda/ayuda-demo-tabla-partes.vue').default);
+/* Ayuda - Bloque 2 (Informes NDT) */
+Vue.component('ayuda-demo-selector-metodo',       require('./components/ayuda/ayuda-demo-selector-metodo.vue').default);
+Vue.component('ayuda-demo-form-informe',          require('./components/ayuda/ayuda-demo-form-informe.vue').default);
+Vue.component('ayuda-demo-tabla-elementos',       require('./components/ayuda/ayuda-demo-tabla-elementos.vue').default);
+Vue.component('ayuda-demo-tabla-pasadas',         require('./components/ayuda/ayuda-demo-tabla-pasadas.vue').default);
+Vue.component('ayuda-demo-tabla-informes',        require('./components/ayuda/ayuda-demo-tabla-informes.vue').default);
+/* Ayuda - Bloque 3 (Certificados y remitos) */
+Vue.component('ayuda-demo-form-certificado',      require('./components/ayuda/ayuda-demo-form-certificado.vue').default);
+Vue.component('ayuda-demo-tabla-certificados',    require('./components/ayuda/ayuda-demo-tabla-certificados.vue').default);
+Vue.component('ayuda-demo-form-remito',           require('./components/ayuda/ayuda-demo-form-remito.vue').default);
+Vue.component('ayuda-demo-tabla-remitos',         require('./components/ayuda/ayuda-demo-tabla-remitos.vue').default);
+/* Ayuda - Bloque 4 (Asignaciones) */
+Vue.component('ayuda-demo-asignacion',            require('./components/ayuda/ayuda-demo-asignacion.vue').default);
+Vue.component('ayuda-demo-asignar-operadores',    require('./components/ayuda/ayuda-demo-asignar-operadores.vue').default);
+Vue.component('ayuda-demo-asignar-soldadores',    require('./components/ayuda/ayuda-demo-asignar-soldadores.vue').default);
+Vue.component('ayuda-demo-asignar-vehiculos',     require('./components/ayuda/ayuda-demo-asignar-vehiculos.vue').default);
+Vue.component('ayuda-demo-asignar-procedimientos',require('./components/ayuda/ayuda-demo-asignar-procedimientos.vue').default);
+Vue.component('ayuda-demo-tablero-ot',             require('./components/ayuda/ayuda-demo-tablero-ot.vue').default);
+Vue.component('ayuda-demo-visualizar-operadores',  require('./components/ayuda/ayuda-demo-visualizar-operadores.vue').default);
+Vue.component('ayuda-demo-visualizar-procedimientos', require('./components/ayuda/ayuda-demo-visualizar-procedimientos.vue').default);
+Vue.component('ayuda-demo-visualizar-vehiculos',   require('./components/ayuda/ayuda-demo-visualizar-vehiculos.vue').default);
+Vue.component('ayuda-demo-tabla-asignados',       require('./components/ayuda/ayuda-demo-tabla-asignados.vue').default);
+/* Ayuda - Bloque 5 (ABM Maestros) */
+Vue.component('ayuda-demo-abm-tabla',             require('./components/ayuda/ayuda-demo-abm-tabla.vue').default);
+Vue.component('ayuda-demo-abm-form',              require('./components/ayuda/ayuda-demo-abm-form.vue').default);
+/* Ayuda - Bloque 6 (Cierre) */
+Vue.component('ayuda-demo-cambio-clave',          require('./components/ayuda/ayuda-demo-cambio-clave.vue').default);
+Vue.component('ayuda-demo-buscador',              require('./components/ayuda/ayuda-demo-buscador.vue').default);
+
+/* Ayuda - Componentes comunes (manual reformulado) */
+Vue.component('ayuda-callout',                    require('./components/ayuda/comunes/ayuda-callout.vue').default);
+Vue.component('ayuda-seccion',                    require('./components/ayuda/comunes/ayuda-seccion.vue').default);
+Vue.component('ayuda-tabla-campos',               require('./components/ayuda/comunes/ayuda-tabla-campos.vue').default);
+Vue.component('ayuda-tabla-dependencias',         require('./components/ayuda/comunes/ayuda-tabla-dependencias.vue').default);
+Vue.component('ayuda-tabla-estados',              require('./components/ayuda/comunes/ayuda-tabla-estados.vue').default);
+Vue.component('ayuda-tabla-errores',              require('./components/ayuda/comunes/ayuda-tabla-errores.vue').default);
+Vue.component('ayuda-tabla-impacto',              require('./components/ayuda/comunes/ayuda-tabla-impacto.vue').default);
+Vue.component('ayuda-relacionados',               require('./components/ayuda/comunes/ayuda-relacionados.vue').default);
+Vue.component('ayuda-flujo-documental',           require('./components/ayuda/comunes/ayuda-flujo-documental.vue').default);
+Vue.component('ayuda-articulo',                   require('./components/ayuda/comunes/ayuda-articulo.vue').default);
+
+/* Botones globales del sistema */
+Vue.component('enod-help-button',                 require('./components/enod-help-button.vue').default);
 
 /* Reportes */
 Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);

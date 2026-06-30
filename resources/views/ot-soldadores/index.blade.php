@@ -3,6 +3,7 @@
 @section('contenido')
 
 <div id="app">
+  <enod-help-button url="{{ route('ayuda-asignar-soldadores-y-usuarios') }}"></enod-help-button>
 
    <ot-soldadores
     :ot_data = "{{$ot}}" 

@@ -5,6 +5,7 @@
 <?php // return dd($ot_informes);?>
 
 <div id="app">
+  <enod-help-button url="{{ route('ayuda-generar-informes') }}"></enod-help-button>
 
    <ot-informes
     :usuario_metodos_data = '{{$usuario_metodos}}'

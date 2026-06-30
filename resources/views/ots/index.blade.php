@@ -5,15 +5,15 @@
 
 <link rel="stylesheet"  href="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <link rel="stylesheet"  href="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
-   
+
 @endsection
 
 
 @section('contenido')
- 
+
  <div id="app">
   <enod-back-button fallback-url="/area/enod"></enod-back-button>
-
+  <enod-help-button url="{{ route('ayuda-crear-ot') }}"></enod-help-button>
 
   <ots  acciondata="{{$accion}}" ></ots>
 
@@ -30,4 +30,3 @@
 <script type="text/javascript" src="{{asset('js/lodash.js')}}"></script>
 
 @endsection
-
