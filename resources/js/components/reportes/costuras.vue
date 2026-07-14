@@ -239,6 +239,13 @@ export default {
            this.ot = this.ots[indexOt]
            this.CambioOt();
            this.selOt = !this.selOt;
+       } else if (this.Laravel.es_cliente) {
+           let index = this.clientesOperador.findIndex(e => e.id == this.user.cliente_id);
+           if (index !== -1) {
+               this.cliente = this.clientesOperador[index];
+               await this.CambioCliente();
+               this.selCliente = !this.selCliente;
+           }
        }
        console.log(this.cliente)
    },

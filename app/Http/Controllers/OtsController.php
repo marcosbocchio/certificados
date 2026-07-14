@@ -47,7 +47,7 @@ class OtsController extends Controller
                 $user_id = Auth::id();
                 $user = Auth::user();
            }
-            $tipoUsuario =  $user->cliente_id ? 'CLIENTE' : 'ENOD';
+            $tipoUsuario =  $user->hasRole('Cliente') ? 'CLIENTE' : 'ENOD';
             $filtro = $request->search;
             return ots:: whereRaw('CASE :tipoUsuario WHEN "ENOD" THEN 1=1
                             ELSE ots.id IN (Select ot_id FROM ot_usuarios_clientes where user_id = :user_id)

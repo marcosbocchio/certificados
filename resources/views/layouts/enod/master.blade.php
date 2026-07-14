@@ -89,6 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   window.Laravel = {!! json_encode([
         'permissions' => ( Auth::user()->hasRole('Sistemas') ? Permission::all() : Auth::user()->allPermissions),
         'csrfToken' => csrf_token(),
+        'es_cliente' => Auth::user()->hasRole('Cliente'),
         'user' => Auth::user()
     ]) !!};
 </script>

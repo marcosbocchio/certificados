@@ -241,8 +241,8 @@ class ClientesController extends Controller
     public function getClientesOperador($user_id)
     {
         $user = User::findOrFail($user_id);
-    
-        if ($user->cliente_id) {
+
+        if ($user->hasRole('Cliente')) {
             return Clientes::where('id', $user->cliente_id)
                 ->orderBy('nombre_fantasia', 'asc')
                 ->get();
@@ -267,7 +267,7 @@ class ClientesController extends Controller
 
         $user = User::find($user_id);
 
-        if($user->cliente_id){
+        if($user->hasRole('Cliente')){
 
             return Ots::join('ot_usuarios_clientes','ot_usuarios_clientes.ot_id','=','ots.id')
                         ->where('ot_usuarios_clientes.user_id',$user_id)

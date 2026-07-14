@@ -1,5 +1,9 @@
 {
+<<<<<<< Updated upstream
     "/js/app.js": "/js/app.js?id=11e770a501bfe32d292e",
+=======
+    "/js/app.js": "/js/app.js?id=44b13839d3cf642316a6",
+>>>>>>> Stashed changes
     "/css/toastr.css": "/css/toastr.css?id=f9c2bf8c049fd325139d",
     "/css/custom.css": "/css/custom.css?id=8c6947ed62eec71b210a",
     "/css/login.css": "/css/login.css?id=046c8083134ecb5fe0cf",
