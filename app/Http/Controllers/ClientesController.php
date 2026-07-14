@@ -258,32 +258,9 @@ class ClientesController extends Controller
 
    public function getOts($cliente_id){
 
-        $user_id = null;
-
-        if (Auth::check())
-        {
-          $user_id = Auth::id();
-        }
-
-        $user = User::find($user_id);
-
-        if($user->hasRole('Cliente')){
-
-            return Ots::join('ot_usuarios_clientes','ot_usuarios_clientes.ot_id','=','ots.id')
-                        ->where('ot_usuarios_clientes.user_id',$user_id)
-                        ->where('ots.cliente_id',$cliente_id)
-                        ->with('contratista')
-                        ->select('ots.*')
-                        ->get();
-
-        }else {
-
-            return Ots::where('cliente_id',$cliente_id)
-                        ->with('contratista')
-                        ->get();
-
-        }
-
+        return Ots::where('cliente_id',$cliente_id)
+                    ->with('contratista')
+                    ->get();
 
     }
 }

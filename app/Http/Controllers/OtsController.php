@@ -40,18 +40,13 @@ class OtsController extends Controller
      */
     public function index(Request $request)
     {
-            $user_id = null;
-
-            if (Auth::check())
-            {
-                $user_id = Auth::id();
-                $user = Auth::user();
-           }
-            $tipoUsuario =  $user->hasRole('Cliente') ? 'CLIENTE' : 'ENOD';
+            $user = Auth::user();
+            $esCliente = $user && $user->hasRole('Cliente');
+            $clienteId = $user ? $user->cliente_id : null;
             $filtro = $request->search;
-            return ots:: whereRaw('CASE :tipoUsuario WHEN "ENOD" THEN 1=1
-                            ELSE ots.id IN (Select ot_id FROM ot_usuarios_clientes where user_id = :user_id)
-                            END',[$tipoUsuario,$user_id])
+            return Ots::when($esCliente, function ($q) use ($clienteId) {
+                                return $q->where('ots.cliente_id', $clienteId);
+                            })
                             ->join('clientes','clientes.id','=','ots.cliente_id')
                             ->selectRaw('ots.*,DATE_FORMAT(ots.fecha,"%d/%m/%Y")as fecha_formateada')
                             ->with('cliente')
