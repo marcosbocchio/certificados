@@ -24,6 +24,7 @@ class OtDocumentacionesController extends Controller
      */
     public function index($ot_id)
     {
+        $this->autorizarOtCliente($ot_id);
         $header_titulo = "Documentaciones";
         $header_descripcion ="Alta | Baja | Modificación";      
         $accion = 'edit';      

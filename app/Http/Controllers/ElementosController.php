@@ -22,6 +22,7 @@ class ElementosController extends Controller
 
     public function callView($ot_id){
 
+        $this->autorizarOtCliente($ot_id);
         $user = auth()->user();
         $ot_prop = Ots::with('cliente')
         ->orderByRaw('CAST(numero AS UNSIGNED) ASC')

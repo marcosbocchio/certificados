@@ -41,6 +41,7 @@ class PartesController extends Controller
      */
     public function index($ot_id)
     {
+      $this->autorizarOtCliente($ot_id);
       $header_titulo = "Partes";
       $header_descripcion ="Alta | Modificación";
       $user = auth()->user();

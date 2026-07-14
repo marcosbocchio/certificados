@@ -19,6 +19,7 @@ class OtSoldadoresController extends Controller
      */
     public function index($id)
     {
+        $this->autorizarOtCliente($id);
         $header_titulo = "Soldadores OT";
         $header_descripcion = "Alta | Baja | Modificación";
         $accion = 'edit';

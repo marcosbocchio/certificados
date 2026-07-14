@@ -93,8 +93,19 @@ class OtsRepository extends BaseRepository
 
               if ( $ot->cliente_id != $request->cliente) {
 
+                $tienePasadas = DB::table('pasadas_junta')
+                    ->join('ot_soldadores', 'ot_soldadores.id', '=', 'pasadas_junta.soldadorp_id')
+                    ->where('ot_soldadores.ot_id', $ot->id)
+                    ->exists();
+
+                if ($tienePasadas) {
+                    throw \Illuminate\Validation\ValidationException::withMessages([
+                        'cliente' => 'No se puede cambiar el cliente de esta OT porque tiene soldadores con pasadas/juntas cargadas. Elimine primero esas cargas o mantenga el cliente original.',
+                    ]);
+                }
+
                 $this->borrarSoldadoresOT($ot->id);
-          
+
               }
               
                 $this->setOt($request, $ot);       

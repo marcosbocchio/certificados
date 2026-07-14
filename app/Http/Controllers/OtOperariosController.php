@@ -22,6 +22,7 @@ class OtOperariosController extends Controller
 
     public function index($id)
     {
+        $this->autorizarOtCliente($id);
         $header_titulo = "Operadores";
         $header_descripcion ="Alta | Baja | Modificación";
         $accion = 'edit';

@@ -1182,7 +1182,7 @@ export default {
           }
           ).then( () => {
 
-            toastr.success('OT NÂ° ' + this.ot + ' fue editada con Ã©xito ');
+            toastr.success('OT N° ' + this.ot + ' fue editada con éxito ');
             window.open(  '/pdf/ot/' + this.otdata.id,'_blank');
             window.location.href ='/';
 
@@ -1197,7 +1197,7 @@ export default {
 
                if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("OcurriÃ³ un error al procesar la solicitud");
+                     toastr.error("Ocurrió un error al procesar la solicitud");
 
                 }
 

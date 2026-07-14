@@ -31,6 +31,7 @@ class CertificadosController extends Controller
      */
     public function index($ot_id)
     {
+        $this->autorizarOtCliente($ot_id);
         $header_titulo = "Certificados";
         $header_descripcion ="Alta | Modificación";
         $user = auth()->user();

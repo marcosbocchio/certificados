@@ -39,6 +39,7 @@ class EstadisticasSoldadurasController extends Controller
 
     public function callView($ot_id){
 
+        $this->autorizarOtCliente($ot_id);
         $user = auth()->user();
         $ot_prop = Ots::with('cliente')->find($ot_id);
         $header_titulo = "Reporte";

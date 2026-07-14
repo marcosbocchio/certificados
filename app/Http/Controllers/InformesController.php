@@ -30,6 +30,7 @@ class InformesController extends Controller
 
     public function index($id)
     {
+        $this->autorizarOtCliente($id);
         $header_titulo = "Informes";
         $header_descripcion = "Alta | Modificación";
         $user = auth()->user();

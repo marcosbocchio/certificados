@@ -27,6 +27,7 @@ class OtProcedimientosPropiosController extends Controller
      */
     public function index($ot_id)
     {
+        $this->autorizarOtCliente($ot_id);
         $header_titulo = "Procedimientos";
         $header_descripcion ="Alta | Baja | Modificación";
         $accion = 'edit';

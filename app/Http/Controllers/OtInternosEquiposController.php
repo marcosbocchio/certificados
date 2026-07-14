@@ -23,6 +23,7 @@ class OtInternosEquiposController extends Controller
 
     public function OtInternoEquipos($ot_id){
 
+        $this->autorizarOtCliente($ot_id);
         $header_titulo = "Equipos OT";
         $header_descripcion ="Alta | Baja | Modificación";
         $accion = 'edit';

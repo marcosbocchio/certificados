@@ -10,4 +10,27 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * Si el usuario tiene rol Cliente, verifica que la OT pertenezca a su cliente.
+     * ENOD/Admin/Sistemas no se restringen. ot_id vacío o 0 se permite (sin OT específica).
+     */
+    protected function autorizarOtCliente($ot_id)
+    {
+        $user = auth()->user();
+
+        if (!$user || !$user->hasRole('Cliente')) {
+            return;
+        }
+
+        if (empty($ot_id) || $ot_id == 0) {
+            return;
+        }
+
+        $ot = \App\Ots::find($ot_id);
+
+        if (!$ot || $ot->cliente_id != $user->cliente_id) {
+            abort(403, 'No tiene acceso a esta orden de trabajo.');
+        }
+    }
 }
