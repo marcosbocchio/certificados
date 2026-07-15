@@ -18,12 +18,12 @@
                        <li class="list-group-item pointer">
                            <div v-show="!selCliente">
                                <span class="titulo-li">Cliente</span>
-                               <a @click="selCliente = !selCliente" class="pull-right">
+                               <a @click="!Laravel.es_cliente && (selCliente = !selCliente)" class="pull-right">
                                    <div v-if="cliente">{{cliente.nombre_fantasia}}</div>
                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
                                </a>
                            </div>
-                           <v-select v-show="selCliente" v-model="cliente" label="nombre_fantasia" :options="clientesOperador" @input="CambioCliente()" ></v-select>
+                           <v-select v-show="selCliente" v-model="cliente" label="nombre_fantasia" :options="clientesOperador" :disabled="Laravel.es_cliente" @input="CambioCliente()" ></v-select>
 
                        </li>
                        <li class="list-group-item pointer">
@@ -103,12 +103,6 @@
        </div>
 
        <div class="col-md-9 ayuda-btn-anchor">
-           <div class="ayuda-btn-wrap">
-               <a :href="ayudaUrl || '/ayuda_reportes_costuras'" class="ayuda-btn-reporte" title="Ver manual de uso de este reporte">
-                   <i class="fa fa-info-circle"></i>
-                   <span>¿Cómo usar este reporte?</span>
-               </a>
-           </div>
            <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
                <tab name="Costuras/Plano Isom">
                    <div class="row">

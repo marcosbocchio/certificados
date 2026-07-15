@@ -6,6 +6,17 @@
 <div class="ayuda_enod">
     <div class="ayuda_hero">
         <h1>Estadisticas de soldaduras</h1>
+        @if($user->hasRole('Cliente'))
+        <p>
+            Desde este reporte puede consultar las estadisticas de soldadura de sus ordenes de trabajo:
+            cuantas soldaduras se ensayaron, cuantas se rechazaron, que defectos aparecen con mas frecuencia
+            y donde se ubican las indicaciones, a partir de los informes de Radiografia (RI y RD) de su obra.
+        </p>
+        <p>
+            Su empresa ya viene seleccionada automaticamente. Solo tiene que elegir la OT que quiere consultar
+            y, si lo necesita, filtrar por obra, componente o fechas.
+        </p>
+        @else
         <p>
             Este reporte resume el trabajo de soldadura registrado en los informes de Radiografia (RI y RD). Permite ver
             cuantas soldaduras se rechazaron, que tipos de defecto aparecen mas seguido, que soldadores tienen mas
@@ -14,6 +25,7 @@
         <p>
             Es la herramienta principal para control de calidad y seguimiento del rendimiento por soldador.
         </p>
+        @endif
         @can('R_estadisticas_soldaduras')
             <p style="margin-top: 14px;">
                 <a href="{{ route('estadisticas-soldaduras') }}" class="ayuda_ir_reporte_btn">

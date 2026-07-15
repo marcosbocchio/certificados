@@ -6,6 +6,17 @@
 <div class="ayuda_enod">
     <div class="ayuda_hero">
         <h1>Seguimiento de costuras / Plano-isometrico</h1>
+        @if($user->hasRole('Cliente'))
+        <p>
+            Desde este reporte puede seguir el estado de las costuras (juntas soldadas) ensayadas por
+            Radiografia (RI y RD) en sus ordenes de trabajo. Para cada costura vera en que informe fue ensayada,
+            su ubicacion (linea, plano isometrico, hoja o PK) y si quedo aprobada o rechazada.
+        </p>
+        <p>
+            Su empresa ya viene seleccionada automaticamente. Solo tiene que elegir la OT que quiere consultar
+            para responder rapido: <em>¿esta costura ya fue ensayada? ¿paso o hay que repararla?</em>
+        </p>
+        @else
         <p>
             Este reporte permite buscar y seguir el estado de las costuras (juntas soldadas) ensayadas por
             Radiografia (RI y RD) dentro de una OT. Para cada costura muestra en que informe fue ensayada,
@@ -14,6 +25,7 @@
         <p>
             Es la herramienta principal para responder rapido: <em>¿esta costura ya fue ensayada? ¿paso o hay que repararla?</em>
         </p>
+        @endif
         @can('R_costuras')
             <p style="margin-top: 14px;">
                 <a href="{{ route('reporte-costuras','0') }}" class="ayuda_ir_reporte_btn">
