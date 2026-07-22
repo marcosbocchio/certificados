@@ -32,7 +32,7 @@ class EquipoRequest extends FormRequest
 
         $validacion = [
 
-            'codigo'            => 'required|Max:20',
+            'codigo'            => 'required|Max:25',
             'descripcion'       =>'nullable|Max:100',
             'metodo_ensayos'    => 'required',
           
