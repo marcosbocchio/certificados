@@ -12,25 +12,60 @@
             <div class="box-body">
                 <!-- Encabezado comun -->
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Cliente</label>
+                            <input type="text" class="form-control" value="Transportadora del Norte S.A." disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Proyecto</label>
+                            <input type="text" class="form-control" value="Ampliación NEA 2026" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6">
                         <div class="form-group">
                             <label>OT N°</label>
                             <input type="text" class="form-control" value="OT-1542" disabled />
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3 col-xs-6">
                         <div class="form-group">
-                            <label>Obra <span class="ayuda_req">*</span></label>
+                            <label>Obra N° <span class="ayuda_req">*</span></label>
                             <select class="form-control" disabled><option>Gasoducto NEA - T12</option></select>
                         </div>
                     </div>
-                    <div class="col-sm-4" v-if="metodo === 'RI'">
+                    <div class="col-sm-3 col-xs-6">
                         <div class="form-group">
-                            <label>Tipo <span class="ayuda_req">*</span></label>
+                            <label>Planta</label>
+                            <select class="form-control" disabled><option>Planta compresora Km 150</option></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6" v-if="metodo === 'RI'">
+                        <div class="form-group">
+                            <label>Tipo informe RI <span class="ayuda_req">*</span></label>
                             <select class="form-control" v-model="tipoRI">
                                 <option>Ducto</option>
                                 <option>Planta</option>
+                                <option>Perfiles</option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Componente</label>
+                            <input type="text" class="form-control" value="Cañería API 5L X60" disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Material</label>
+                            <input type="text" class="form-control" value="Acero al carbono" disabled />
                         </div>
                     </div>
                 </div>
@@ -66,7 +101,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>EPS</label>
+                            <label>EPS / WPS</label>
                             <select class="form-control" disabled><option>EPS-API-1104</option></select>
                         </div>
                     </div>
@@ -134,7 +169,7 @@
                             <select class="form-control" disabled><option>{{ instMedicion }}</option></select>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" v-if="metodo === 'LP'">
                         <div class="form-group">
                             <label>Revelador</label>
                             <select class="form-control" disabled><option>SKD-S2 (no acuoso)</option></select>

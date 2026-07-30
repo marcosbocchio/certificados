@@ -1,42 +1,39 @@
 <template>
     <div class="ayuda_demo_block">
-        <div class="ayuda_demo_label">Listado de partes diarios</div>
+        <div class="ayuda_demo_label">Partes asignados a la orden de trabajo</div>
         <div class="ayuda_table_wrap">
             <table class="table table-hover table-striped table-bordered table-condensed ayuda_real_table">
                 <thead>
                     <tr>
                         <th>N°</th>
-                        <th>Fecha</th>
-                        <th>Tipo de servicio</th>
+                        <th>Tipo Servicio</th>
                         <th>Usuario alta</th>
-                        <th class="text-center">Informes</th>
-                        <th class="text-center">Firma</th>
+                        <th>Fecha</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(p, i) in filas" :key="i">
                         <td><strong>{{ p.numero }}</strong></td>
-                        <td>{{ p.fecha }}</td>
                         <td>{{ p.tipo }}</td>
                         <td>{{ p.usuario }}</td>
-                        <td class="text-center"><span class="label label-warning">{{ p.informes }}</span></td>
+                        <td>{{ p.fecha }}</td>
                         <td class="text-center">
-                            <span class="label" :class="badge(p.firma)">
-                                <i :class="iconoFirma(p.firma)"></i>&nbsp; {{ p.firma }}
-                            </span>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-default btn-xs" title="Ver PDF"><i class="fa fa-file-pdf-o"></i></button>
-                            <button class="btn btn-enod btn-xs" :disabled="p.firma === 'Firmado'" title="Editar"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-default btn-xs" title="PDF original"><i class="fa fa-file-pdf-o"></i></button>
+                            <button class="btn btn-default btn-xs" title="PDF final"><i class="fa fa-file-pdf-o"></i></button>
+                            <button class="btn btn-default btn-xs" title="Informes escaneados"><i class="fa fa-cloud-upload"></i></button>
+                            <button v-if="!p.firma" class="btn btn-default btn-xs" title="Firmar"><i class="glyphicon glyphicon-pencil"></i></button>
+                            <span v-else class="btn btn-default btn-xs" title="Firmado"><i class="fa fa-check"></i></span>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="ayuda_demo_caption">
-            <strong>Firma</strong> resume el estado documental: una vez firmado, el parte queda inmutable y disponible para certificados.
-            <strong>Informes</strong> indica cuántos informes técnicos fueron consolidados en esa jornada.
+            El <strong>Tipo Servicio</strong> es el turno del parte (Diurno / Nocturno).
+            Mientras el parte no está firmado se muestra el botón <strong>Firmar</strong>; una vez firmado aparece la imagen de firma
+            y el parte queda disponible para certificados. Cada parte tiene sus PDFs (original y final) e informes escaneados.
         </div>
     </div>
 </template>
@@ -47,29 +44,13 @@ export default {
     data() {
         return {
             filas: [
-                { numero: 'P-0089', fecha: '25/06/2026', tipo: 'Radiografía industrial', usuario: 'Juan Pérez',    informes: 5, firma: 'Pendiente' },
-                { numero: 'P-0088', fecha: '24/06/2026', tipo: 'Partículas magnéticas',  usuario: 'Lucía Mendoza', informes: 3, firma: 'Firmado' },
-                { numero: 'P-0087', fecha: '20/06/2026', tipo: 'Radiografía industrial', usuario: 'Juan Pérez',    informes: 7, firma: 'Firmado' },
-                { numero: 'P-0086', fecha: '18/06/2026', tipo: 'Ultrasonido',            usuario: 'Diego Salas',   informes: 2, firma: 'Firmado' },
-                { numero: 'P-0085', fecha: '15/06/2026', tipo: 'Líquidos penetrantes',   usuario: 'Marcos Aguirre',informes: 4, firma: 'Anulado' },
+                { numero: '00000089', tipo: 'Diurno',   usuario: 'Juan Pérez',     fecha: '25-06-2026', firma: false },
+                { numero: '00000088', tipo: 'Nocturno', usuario: 'Lucía Mendoza',  fecha: '24-06-2026', firma: true },
+                { numero: '00000087', tipo: 'Diurno',   usuario: 'Juan Pérez',     fecha: '20-06-2026', firma: true },
+                { numero: '00000086', tipo: 'Diurno',   usuario: 'Diego Salas',    fecha: '18-06-2026', firma: true },
+                { numero: '00000085', tipo: 'Nocturno', usuario: 'Marcos Aguirre', fecha: '15-06-2026', firma: false },
             ],
         };
-    },
-    methods: {
-        badge(f) {
-            return {
-                'Firmado':   'label-success',
-                'Pendiente': 'label-warning',
-                'Anulado':   'label-danger',
-            }[f];
-        },
-        iconoFirma(f) {
-            return {
-                'Firmado':   'fa fa-check-circle',
-                'Pendiente': 'fa fa-clock-o',
-                'Anulado':   'fa fa-ban',
-            }[f];
-        },
     },
 };
 </script>

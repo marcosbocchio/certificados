@@ -1,44 +1,54 @@
 <template>
     <div class="ayuda_demo_block">
-        <div class="ayuda_demo_label">Listado de informes de la OT</div>
+        <div class="ayuda_demo_label">Informes asignados a la orden de trabajo</div>
         <div class="ayuda_table_wrap">
             <table class="table table-hover table-striped table-bordered table-condensed ayuda_real_table">
                 <thead>
                     <tr>
-                        <th class="text-center" style="width:60px;">Tipo</th>
-                        <th>Número</th>
-                        <th class="text-center">N rev</th>
+                        <th>Tipo</th>
+                        <th>N°</th>
+                        <th class="text-center">N° Rev.</th>
                         <th>Obra</th>
                         <th>Usuario alta</th>
                         <th class="text-center">Fecha</th>
-                        <th class="text-center">Acciones</th>
+                        <th class="text-center">Anulado</th>
+                        <th class="text-center">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(inf, i) in filas" :key="i">
-                        <td class="text-center"><span class="label" :class="colorMetodo(inf.tipo)">{{ inf.tipo }}</span></td>
+                        <td>{{ inf.tipo }}</td>
                         <td><strong>{{ inf.numero }}</strong></td>
-                        <td class="text-center">
-                            <span class="ayuda_rev_badge" :class="{ 'ayuda_rev_badge--mult': inf.rev > 0 }">
-                                Rev. {{ inf.rev }}
-                            </span>
-                        </td>
+                        <td class="text-center">{{ inf.rev }}</td>
                         <td>{{ inf.obra }}</td>
                         <td>{{ inf.usuario }}</td>
                         <td class="text-center">{{ inf.fecha }}</td>
                         <td class="text-center">
-                            <button class="btn btn-default btn-xs" title="Ver PDF"><i class="fa fa-file-pdf-o"></i></button>
-                            <button class="btn btn-default btn-xs" title="Ver"><i class="fa fa-eye"></i></button>
-                            <button class="btn btn-enod btn-xs" title="Editar (nueva revisión)"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-default btn-xs" title="Clonar"><i class="fa fa-copy"></i></button>
+                            <i v-if="inf.anulado" class="fa fa-check ayuda_check_ok"></i>
+                        </td>
+                        <td class="text-center ayuda_acciones">
+                            <button class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></button>
+                            <div class="dropdown ayuda_dropdown">
+                                <button class="btn btn-default btn-sm dropdown-toggle" title="Clonar">
+                                    <i class="fa fa-copy"></i> <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a>Clonado</a></li>
+                                    <li><a>Clonado Completo</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></button>
+                            <button class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span></button>
+                            <button class="btn btn-default btn-sm" title="Revisiones"><span class="fa fa-table"></span></button>
+                            <button class="btn btn-default btn-sm" title="Anular"><i class="fa fa-times"></i></button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="ayuda_demo_caption">
-            La columna <strong>N rev</strong> muestra la revisión vigente. Editar un informe firmado genera una nueva revisión y conserva la trazabilidad.
-            El color de <strong>Tipo</strong> ayuda a identificar de un vistazo el método de ensayo.
+            La columna <strong>N° Rev.</strong> muestra la revisión vigente. Editar un informe firmado genera una nueva revisión y conserva la trazabilidad.
+            Los informes <strong>anulados</strong> quedan marcados con un check y solo se pueden desanular.
         </div>
     </div>
 </template>
@@ -49,27 +59,15 @@ export default {
     data() {
         return {
             filas: [
-                { tipo: 'RI', numero: '150-LR-RI001', rev: 0, obra: 'Gasoducto NEA T12', usuario: 'J. Pérez',    fecha: '25/06/2026' },
-                { tipo: 'RI', numero: '150-LR-RI002', rev: 1, obra: 'Gasoducto NEA T12', usuario: 'J. Pérez',    fecha: '25/06/2026' },
-                { tipo: 'PM', numero: 'PM014',        rev: 0, obra: 'Planta Río III',    usuario: 'L. Mendoza',  fecha: '24/06/2026' },
-                { tipo: 'PM', numero: 'PM015',        rev: 2, obra: 'Planta Río III',    usuario: 'L. Mendoza',  fecha: '24/06/2026' },
-                { tipo: 'US', numero: 'US042',        rev: 0, obra: 'Refinería Loma',    usuario: 'D. Salas',    fecha: '20/06/2026' },
-                { tipo: 'LP', numero: 'LP008',        rev: 0, obra: 'Planta Río III',    usuario: 'M. Aguirre',  fecha: '18/06/2026' },
-                { tipo: 'CV', numero: 'CV003',        rev: 0, obra: 'Gasoducto NEA T12', usuario: 'J. Pérez',    fecha: '15/06/2026' },
+                { tipo: 'RI', numero: '150-LR-RI001', rev: 0, obra: 'Gasoducto NEA T12', usuario: 'J. Pérez',    fecha: '25/06/2026', anulado: false },
+                { tipo: 'RI', numero: '150-LR-RI002', rev: 1, obra: 'Gasoducto NEA T12', usuario: 'J. Pérez',    fecha: '25/06/2026', anulado: false },
+                { tipo: 'PM', numero: 'PM014',        rev: 0, obra: 'Planta Río III',    usuario: 'L. Mendoza',  fecha: '24/06/2026', anulado: true  },
+                { tipo: 'PM', numero: 'PM015',        rev: 2, obra: 'Planta Río III',    usuario: 'L. Mendoza',  fecha: '24/06/2026', anulado: false },
+                { tipo: 'US', numero: 'US042',        rev: 0, obra: 'Refinería Loma',    usuario: 'D. Salas',    fecha: '20/06/2026', anulado: false },
+                { tipo: 'LP', numero: 'LP008',        rev: 0, obra: 'Planta Río III',    usuario: 'M. Aguirre',  fecha: '18/06/2026', anulado: false },
+                { tipo: 'CV', numero: 'CV003',        rev: 0, obra: 'Gasoducto NEA T12', usuario: 'J. Pérez',    fecha: '15/06/2026', anulado: false },
             ],
         };
-    },
-    methods: {
-        colorMetodo(t) {
-            return {
-                'RI': 'label-warning',
-                'RD': 'label-warning',
-                'PM': 'label-info',
-                'LP': 'label-success',
-                'US': 'label-primary',
-                'CV': 'label-default',
-            }[t] || 'label-default';
-        },
     },
 };
 </script>
@@ -97,20 +95,10 @@ export default {
     font-size: 13px;
     vertical-align: middle;
 }
-.ayuda_real_table .label { font-size: 11px; padding: 3px 8px; font-weight: 700; }
-.ayuda_rev_badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 3px;
-    font-size: 11px;
-    background: #f3f4f6;
-    color: #4c5661;
-    font-weight: 600;
-}
-.ayuda_rev_badge--mult {
-    background: #fff7d6;
-    color: #6b5300;
-}
+.ayuda_acciones { white-space: nowrap; }
+.ayuda_acciones .btn { margin: 1px; }
+.ayuda_dropdown { display: inline-block; }
+.ayuda_check_ok { color: #1b6b34; }
 .ayuda_demo_caption {
     margin-top: 8px;
     font-size: 12px;

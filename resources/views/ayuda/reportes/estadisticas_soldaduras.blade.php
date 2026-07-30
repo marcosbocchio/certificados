@@ -55,6 +55,45 @@
             color: #fff !important;
             box-shadow: 0 3px 10px rgba(217, 144, 0, 0.3);
         }
+        .ayuda_origen {
+            background: #f7f9fb;
+            border-left: 4px solid #d99000;
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin: 18px 0;
+        }
+        .ayuda_clave {
+            background: #fff8ea;
+            border: 1px solid #f0d9a8;
+            border-radius: 8px;
+            padding: 16px 18px;
+            margin: 18px 0;
+        }
+        .ayuda_ejemplo_wrap { margin: 18px 0; }
+        .ayuda_ejemplo_cap {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            color: #6b7a86;
+            margin-bottom: 6px;
+        }
+        table.ayuda_tabla_ejemplo {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: #fff;
+        }
+        table.ayuda_tabla_ejemplo th,
+        table.ayuda_tabla_ejemplo td {
+            padding: 8px 12px;
+            border: 1px solid #e2e8ed;
+            text-align: right;
+        }
+        table.ayuda_tabla_ejemplo th:first-child,
+        table.ayuda_tabla_ejemplo td:first-child { text-align: left; }
+        table.ayuda_tabla_ejemplo thead th { background: #f0f3f6; }
+        table.ayuda_tabla_ejemplo tfoot td { font-weight: 700; background: #faf6ee; }
     </style>
 
     {{-- Vista previa interactiva del reporte completo --}}
@@ -143,6 +182,70 @@
     </section>
 
     {{-- =========================================================== --}}
+    {{-- DE DONDE SALEN LOS DATOS --}}
+    {{-- =========================================================== --}}
+    <section class="ayuda_section">
+        <div class="ayuda_panel">
+            <h2>De donde salen los datos</h2>
+            <p>
+                El reporte no inventa informacion: <strong>cuenta lo que los inspectores cargaron en los informes de
+                Radiografia (RI y RD)</strong>. Entender como se carga un informe ayuda a entender por que aparece
+                (o por que falta) cada dato en cada pestaña.
+            </p>
+
+            <h3>1. La soldadura y sus placas</h3>
+            <p>
+                Cada soldadura (junta) se revisa por partes, llamadas <strong>placas</strong>. Al cargar cada placa, el
+                inspector marca si es <strong>Aceptable</strong> o no. Con eso solo ya se puede calcular el porcentaje de
+                rechazo (pestaña 1).
+            </p>
+
+            <h3>2. Como se registra una falla</h3>
+            <p>
+                Cuando el inspector encuentra una falla, <strong>no la escribe con sus palabras</strong>: la elige de una
+                <strong>lista fija de defectos</strong> (cada uno con su codigo y descripcion, por ejemplo "PO - Porosidad").
+                En el mismo recuadro puede ademas indicar:
+            </p>
+            <ul>
+                <li><strong>La posicion (hora):</strong> la ubicacion de la falla como una hora del reloj (por ejemplo, 120-150).</li>
+                <li><strong>La pasada:</strong> raiz, relleno o sobremonta (para cañeria tipo ducto).</li>
+            </ul>
+
+            <div class="ayuda_clave">
+                <p style="margin:0 0 6px;"><strong>El detalle que define todo: ¿le cargo la hora o no?</strong></p>
+                <ul style="margin:0;">
+                    <li>Si carga la falla <strong>CON su hora</strong> &rarr; la placa queda <strong>rechazada</strong> y esa
+                        falla cuenta como <strong>DEFECTO</strong>. Aparece en <em>Defectologia</em> y en
+                        <em>Defectologia / Produccion</em> (se le puede atribuir a un soldador).</li>
+                    <li>Si carga la falla <strong>SIN hora</strong> &rarr; la placa <strong>no</strong> se rechaza y esa falla
+                        cuenta como <strong>INDICACION</strong>. Aparece solo en la pestaña <em>Indicaciones</em>, como
+                        registro informativo.</li>
+                </ul>
+            </div>
+
+            <h3>3. Dos "posiciones" que conviene no confundir</h3>
+            <ul>
+                <li><strong>Posicion de la placa:</strong> todas las placas tienen una. Es la que usan los graficos de torta
+                    para mostrar en que zona de la soldadura se concentran las fallas.</li>
+                <li><strong>Posicion (hora) de la falla:</strong> es opcional. Es la que decide si una falla es defecto o
+                    indicacion (ver el recuadro de arriba).</li>
+            </ul>
+
+            <h3>4. El diametro y el espesor</h3>
+            <p>
+                No se cargan por soldadura: salen de la <strong>cabecera del informe</strong> (el diametro y el espesor de la
+                cañeria). Por eso las tablas de la pestaña 1 pueden agrupar por esos valores.
+            </p>
+
+            <h3>5. Los soldadores</h3>
+            <p>
+                Se cargan aparte, en las <strong>pasadas</strong> de cada soldadura (el lado P y el lado Z). Hacen falta
+                <strong>los dos</strong> para que un defecto pueda atribuirse a quien lo hizo en la pestaña de Produccion.
+            </p>
+        </div>
+    </section>
+
+    {{-- =========================================================== --}}
     {{-- PESTAÑA 1: INDICES DE RECHAZOS --}}
     {{-- =========================================================== --}}
     <section class="ayuda_section">
@@ -173,6 +276,13 @@
                 <li>Cuando se quiere comparar el rendimiento por tipo de cañeria (diametro / espesor).</li>
                 <li>Para armar reportes mensuales o de cierre de obra.</li>
             </ul>
+
+            <div class="ayuda_origen">
+                <p style="margin:0;"><strong>De donde salen estos datos:</strong> una soldadura aparece aca apenas se carga
+                con sus placas y se marca cuales son aceptables y cuales no. El <strong>diametro</strong> y el
+                <strong>espesor</strong> con que se agrupan las filas salen de la cabecera del informe (no de cada soldadura).
+                Basta una placa no aceptable para que toda la soldadura cuente como rechazada.</p>
+            </div>
 
             <ayuda-demo-tabla-rechazos></ayuda-demo-tabla-rechazos>
             <div class="row">
@@ -214,6 +324,34 @@
                 <li>Cuando se necesita un detalle tecnico de la causa de rechazo, mas alla del numero global.</li>
             </ul>
 
+            <div class="ayuda_origen">
+                <p style="margin:0 0 8px;"><strong>De donde salen estos datos:</strong> un defecto aparece en esta tabla
+                cuando el inspector, en una placa, <strong>eligio la falla de la lista y le cargo su posicion (la hora)</strong>.</p>
+                <p style="margin:0;"><em>Ejemplo:</em> si carga "PO - Porosidad" con la posicion 120-150, se suma una fila
+                "Porosidad" en esta pestaña. Si marco la placa como rechazada pero <strong>no eligio el tipo de falla de la
+                lista</strong>, no puede contarse aca (el sistema no sabe que defecto fue). El grafico de torta agrupa por la
+                posicion de la placa dentro de la soldadura.</p>
+            </div>
+
+            <div class="ayuda_ejemplo_wrap">
+                <div class="ayuda_ejemplo_cap">Ejemplo de la tabla que arma esta pestaña</div>
+                <table class="ayuda_tabla_ejemplo">
+                    <thead>
+                        <tr><th>Defecto</th><th>Codigo</th><th>Cantidad</th><th>%</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Falta de fusion</td><td>FF</td><td>18</td><td>40%</td></tr>
+                        <tr><td>Porosidad</td><td>PO</td><td>12</td><td>27%</td></tr>
+                        <tr><td>Socavacion</td><td>SC</td><td>9</td><td>20%</td></tr>
+                        <tr><td>Inclusion</td><td>IN</td><td>6</td><td>13%</td></tr>
+                    </tbody>
+                    <tfoot>
+                        <tr><td>Total</td><td></td><td>45</td><td>100%</td></tr>
+                    </tfoot>
+                </table>
+                <p style="font-size:12px;color:#6b7a86;margin:6px 0 0;">Valores de ejemplo, no datos reales.</p>
+            </div>
+
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <ayuda-demo-grafico-doughnut></ayuda-demo-grafico-doughnut>
@@ -235,6 +373,13 @@
                 Esta es la pestaña mas usada para evaluacion individual del personal. Cruza la cantidad de defectos con
                 la cantidad de cordones que hizo cada soldador.
             </p>
+
+            <div class="ayuda_origen">
+                <p style="margin:0;"><strong>De donde salen estos datos:</strong> esta pestaña toma los mismos defectos de la
+                pestaña 2 (los que se cargaron <strong>con su hora</strong>) y los cruza con los <strong>soldadores cargados en
+                las pasadas</strong> (lado P y lado Z). Si falta cargar uno de los dos soldadores, los defectos de ese lado no
+                se pueden atribuir y no aparecen aca. El detalle esta mas abajo, en "Como se calcula la atribucion del defecto".</p>
+            </div>
 
             <h3>Que muestra</h3>
             <ul>
@@ -318,9 +463,10 @@
                 Responde a la pregunta: <em>¿que indicaciones (no defectos formales) se registraron y donde se ubican?</em>
             </p>
             <p>
-                Las <strong>indicaciones</strong> son observaciones detectadas en el ensayo que <strong>no se cargan como
-                defectos formales</strong> porque no tienen posicion o pasada exacta. Sirven como registro informativo y no
-                contabilizan en el reporte de produccion del soldador.
+                Las <strong>indicaciones</strong> son fallas que el inspector cargo <strong>sin la hora exacta</strong>. Al no
+                tener hora, la placa no se rechaza y la observacion queda como <strong>registro informativo</strong>: no
+                contabiliza como defecto ni en el rendimiento del soldador. Se cargan por el mismo recuadro que los defectos;
+                la unica diferencia es que se dejo vacio el campo de la hora.
             </p>
 
             <h3>Que muestra</h3>
@@ -343,6 +489,29 @@
                 <li>Cuando se necesita auditar las observaciones que no terminaron como rechazo formal.</li>
                 <li>Como insumo para revisiones tecnicas mas detalladas.</li>
             </ul>
+
+            <div class="ayuda_origen">
+                <p style="margin:0 0 8px;"><strong>De donde salen estos datos:</strong> una indicacion aparece cuando el
+                inspector <strong>eligio la falla de la lista pero dejo vacia la posicion (la hora)</strong>.</p>
+                <p style="margin:0;"><em>Ejemplo:</em> elige "MO - Mordedura" y no le pone hora &rarr; aparece en esta pestaña,
+                no en Defectologia. <strong>Aclaracion:</strong> aunque la falla no tenga hora, la placa a la que pertenece si
+                tiene su posicion dentro de la soldadura, y por eso el grafico igual puede agruparlas por posicion.</p>
+            </div>
+
+            <div class="ayuda_ejemplo_wrap">
+                <div class="ayuda_ejemplo_cap">Ejemplo de la tabla que arma esta pestaña</div>
+                <table class="ayuda_tabla_ejemplo">
+                    <thead>
+                        <tr><th>Indicacion</th><th>Codigo</th><th>Cantidad</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Mordedura leve</td><td>MO</td><td>8</td></tr>
+                        <tr><td>Refuerzo excesivo</td><td>RE</td><td>5</td></tr>
+                        <tr><td>Salpicadura</td><td>SP</td><td>4</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:12px;color:#6b7a86;margin:6px 0 0;">Valores de ejemplo, no datos reales.</p>
+            </div>
 
             {{-- Para esta pestaña se reutiliza el componente demo doughnut con datos de indicaciones --}}
             <div class="row">
@@ -424,9 +593,9 @@
 
             <h3>¿Que diferencia hay entre defectos e indicaciones?</h3>
             <p>
-                Un <strong>defecto</strong> es una falla con ubicacion y pasada definidas, que cuenta para el rendimiento del
-                soldador. Una <strong>indicacion</strong> es una observacion sin ubicacion exacta, registrada como informacion
-                pero no contabilizada para evaluar el trabajo del soldador.
+                Un <strong>defecto</strong> es una falla que se cargo <strong>con su hora</strong> (posicion exacta): rechaza
+                la placa y cuenta para el rendimiento del soldador. Una <strong>indicacion</strong> es una falla que se cargo
+                <strong>sin la hora</strong>: queda como informacion, no rechaza la placa y no se usa para evaluar al soldador.
             </p>
         </div>
     </section>

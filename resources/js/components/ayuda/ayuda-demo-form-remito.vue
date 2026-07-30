@@ -33,8 +33,16 @@
                     </div>
                     <div class="col-sm-5">
                         <div class="form-group">
-                            <label>Receptor</label>
+                            <label>Receptor <span class="ayuda_req">*</span></label>
                             <input type="text" class="form-control" value="Diego Salas (DNI 30.554.221)" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Lugar Destino <span class="ayuda_req">*</span></label>
+                            <input type="text" class="form-control" value="Obra Gasoducto NEA - Tramo 12, km 87 - Formosa" disabled />
                         </div>
                     </div>
                 </div>
@@ -67,6 +75,12 @@
                             <span class="badge ayuda_tab_badge">{{ internos.length }}</span>
                         </a>
                     </li>
+                    <li :class="{ active: tab === 'otros' }">
+                        <a href="#" @click.prevent="tab = 'otros'">
+                            <i class="fa fa-ellipsis-h"></i>&nbsp; Otros
+                            <span class="badge ayuda_tab_badge">{{ otros.length }}</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="ayuda_tab_panel">
@@ -90,20 +104,36 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table v-else class="table table-condensed ayuda_real_table">
+                    <table v-else-if="tab === 'internos'" class="table table-condensed ayuda_real_table">
                         <thead>
                             <tr>
-                                <th>Equipo</th>
                                 <th>N° interno</th>
-                                <th>Marca / modelo</th>
+                                <th>Equipo</th>
                                 <th class="text-center" style="width:40px;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(i, idx) in internos" :key="idx">
-                                <td>{{ i.equipo }}</td>
                                 <td><strong>{{ i.interno }}</strong></td>
-                                <td>{{ i.marca }}</td>
+                                <td>{{ i.equipo }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-enod-danger btn-xs"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table v-else class="table table-condensed ayuda_real_table">
+                        <thead>
+                            <tr>
+                                <th>Otro</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center" style="width:40px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(o, idx) in otros" :key="idx">
+                                <td>{{ o.detalle }}</td>
+                                <td class="text-center"><strong>{{ o.cantidad }}</strong></td>
                                 <td class="text-center">
                                     <button class="btn btn-enod-danger btn-xs"><i class="fa fa-trash"></i></button>
                                 </td>
@@ -112,7 +142,7 @@
                     </table>
                     <button class="btn btn-default btn-sm" style="margin-top:6px;">
                         <i class="fa fa-plus"></i>&nbsp;
-                        Agregar {{ tab === 'productos' ? 'producto' : 'interno' }}
+                        Agregar {{ tab === 'productos' ? 'producto' : (tab === 'internos' ? 'interno' : 'otro') }}
                     </button>
                 </div>
 
@@ -128,10 +158,8 @@
                 </div>
 
                 <div class="enod-form-actions enod-form-actions--end">
-                    <button class="btn btn-default" disabled>Cancelar</button>
                     <button class="btn btn-enod" disabled>
-                        <i :class="esBorrador ? 'fa fa-floppy-o' : 'fa fa-check'"></i>&nbsp;
-                        {{ esBorrador ? 'Guardar borrador' : 'Guardar definitivo' }}
+                        <i class="fa fa-floppy-o"></i>&nbsp; Guardar
                     </button>
                 </div>
             </div>
@@ -149,7 +177,7 @@ export default {
     data() {
         return {
             tab: 'productos',
-            esBorrador: false,
+            esBorrador: true,
             prefijo: '0001',
             numero: '00012543',
             productos: [
@@ -158,8 +186,12 @@ export default {
                 { producto: 'Líquido penetrante SKL-SP',       medida: '400 cm³',   cantidad: 6  },
             ],
             internos: [
-                { equipo: 'RX SPELLMAN 200 kV',     interno: 'EQ-0042', marca: 'Spellman SP-200' },
-                { equipo: 'Yugo electromagnético',   interno: 'EQ-0118', marca: 'Magnaflux Y-7' },
+                { equipo: 'RX SPELLMAN 200 kV',     interno: 'EQ-0042' },
+                { equipo: 'Yugo electromagnético',   interno: 'EQ-0118' },
+            ],
+            otros: [
+                { detalle: 'Cables de alimentación 25 m', cantidad: 2 },
+                { detalle: 'Trípode con base',            cantidad: 1 },
             ],
         };
     },

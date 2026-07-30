@@ -1,18 +1,23 @@
 <template>
     <div class="ayuda_demo_block">
         <div class="ayuda_demo_label">Buscador de listados</div>
+
+        <!-- Fila del buscador (arriba de la tabla, como en la app) -->
+        <div class="ayuda_search_row">
+            <div class="input-group ayuda_input_group">
+                <input type="text" class="form-control" v-model="busqueda"
+                       placeholder="Buscar..." @keyup.enter="buscar" />
+                <span class="input-group-addon btn enod-action-addon" @click="buscar" title="Buscar">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
+        </div>
+
         <div class="box box-custom-enod ayuda_real_box">
-            <div class="box-header with-border ayuda_demo_header">
+            <div class="box-header with-border">
                 <h3 class="box-title">
                     <i class="fa fa-list"></i>&nbsp; Listado de OT
                 </h3>
-                <div class="ayuda_box_tools">
-                    <div class="ayuda_search_wrap">
-                        <i class="fa fa-search"></i>
-                        <input type="text" class="form-control input-sm" v-model="busqueda"
-                               placeholder="Buscar..." />
-                    </div>
-                </div>
             </div>
             <div class="box-body">
                 <div class="ayuda_table_wrap">
@@ -28,10 +33,10 @@
                         </thead>
                         <tbody>
                             <tr v-for="(ot, i) in filtradas" :key="i">
-                                <td><strong v-html="resaltar(ot.numero)"></strong></td>
-                                <td v-html="resaltar(ot.cliente)"></td>
-                                <td v-html="resaltar(ot.proyecto)"></td>
-                                <td v-html="resaltar(ot.responsable)"></td>
+                                <td><strong>{{ ot.numero }}</strong></td>
+                                <td>{{ ot.cliente }}</td>
+                                <td>{{ ot.proyecto }}</td>
+                                <td>{{ ot.responsable }}</td>
                                 <td class="text-center">
                                     <span class="label" :class="badge(ot.estado)">{{ ot.estado }}</span>
                                 </td>
@@ -39,7 +44,7 @@
                             <tr v-if="!filtradas.length">
                                 <td colspan="5" class="text-center text-muted ayuda_empty">
                                     <i class="fa fa-info-circle"></i>&nbsp;
-                                    Sin coincidencias para "<strong>{{ busqueda }}</strong>".
+                                    Sin coincidencias para "<strong>{{ aplicada }}</strong>".
                                 </td>
                             </tr>
                         </tbody>
@@ -53,7 +58,9 @@
             </div>
         </div>
         <div class="ayuda_demo_caption">
-            Probá escribir "<strong>YPF</strong>", "<strong>RI</strong>" o "<strong>Pérez</strong>" en el buscador — el filtro es parcial y mira todos los campos visibles, resaltando las coincidencias en amarillo.
+            Escribí un término (por ejemplo "<strong>YPF</strong>", "<strong>RI</strong>" o "<strong>Pérez</strong>") y presioná
+            <strong>Enter</strong> o el botón amarillo de la lupa. La búsqueda se resuelve en el servidor y devuelve el listado
+            filtrado; no filtra mientras tipeás.
         </div>
     </div>
 </template>
@@ -64,6 +71,7 @@ export default {
     data() {
         return {
             busqueda: '',
+            aplicada: '',
             filas: [
                 { numero: 'OT-1542', cliente: 'YPF S.A.',         proyecto: 'Gasoducto NEA - T12', responsable: 'Juan Pérez',    estado: 'Activa' },
                 { numero: 'OT-1541', cliente: 'Techint',          proyecto: 'Planta Río III',       responsable: 'Marcos Aguirre', estado: 'Editando' },
@@ -76,7 +84,7 @@ export default {
     },
     computed: {
         filtradas() {
-            const q = this.busqueda.trim().toLowerCase();
+            const q = this.aplicada.trim().toLowerCase();
             if (!q) return this.filas;
             return this.filas.filter(f =>
                 Object.values(f).some(v => String(v).toLowerCase().includes(q))
@@ -84,24 +92,15 @@ export default {
         },
     },
     methods: {
+        buscar() {
+            this.aplicada = this.busqueda;
+        },
         badge(e) {
             return {
                 'Activa': 'label-success',
                 'Editando': 'label-warning',
                 'Cerrada': 'label-default',
             }[e];
-        },
-        resaltar(texto) {
-            const q = this.busqueda.trim();
-            const escaped = this.escapar(String(texto));
-            if (!q) return escaped;
-            const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
-            return escaped.replace(re, '<mark>$1</mark>');
-        },
-        escapar(s) {
-            const d = document.createElement('div');
-            d.textContent = s;
-            return d.innerHTML;
         },
     },
 };
@@ -114,39 +113,27 @@ export default {
     text-transform: uppercase; letter-spacing: 0.06em;
     margin-bottom: 8px; font-weight: 700;
 }
+
+.ayuda_search_row { margin-bottom: 10px; }
+.ayuda_input_group { width: 260px; max-width: 100%; }
+.ayuda_input_group .enod-action-addon {
+    background: #FFCC00;
+    border-color: #e6b800;
+    color: #1a1a1a;
+    cursor: pointer;
+}
+.ayuda_input_group .enod-action-addon:hover { background: #e6b800; }
+
 .ayuda_real_box {
     border: 1px solid #eef0f3;
     border-top: 3px solid #FFCC00;
     border-radius: 4px;
     box-shadow: none;
 }
-.ayuda_demo_header {
-    border-bottom: 1px solid #eef0f3;
-    padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-.ayuda_real_box .box-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 0; flex: 1; }
+.ayuda_real_box .box-header { border-bottom: 1px solid #eef0f3; padding: 10px 14px; }
+.ayuda_real_box .box-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 0; }
 .ayuda_real_box .box-title i { color: #FFCC00; }
 .ayuda_real_box .box-body { padding: 14px; }
-
-.ayuda_box_tools { display: flex; align-items: center; }
-.ayuda_search_wrap {
-    position: relative;
-    width: 220px;
-}
-.ayuda_search_wrap i.fa-search {
-    position: absolute; top: 50%; left: 10px;
-    transform: translateY(-50%);
-    color: #9ca3af; z-index: 1;
-    font-size: 12px;
-}
-.ayuda_search_wrap input.form-control {
-    padding-left: 30px;
-    height: 30px;
-}
 
 .ayuda_table_wrap { overflow-x: auto; }
 .ayuda_real_table { background: #fff; margin-bottom: 0; }
@@ -162,12 +149,6 @@ export default {
 }
 .ayuda_real_table > tbody > tr > td { font-size: 13px; vertical-align: middle; }
 .ayuda_real_table .label { font-size: 11px; padding: 3px 8px; }
-.ayuda_real_table mark {
-    background: #FFCC00;
-    color: #1a1a1a;
-    padding: 0 2px;
-    border-radius: 2px;
-}
 
 .ayuda_empty { padding: 16px !important; font-style: italic; }
 .ayuda_resumen { margin-top: 8px; font-size: 12px; }

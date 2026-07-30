@@ -7,7 +7,6 @@
                     <tr>
                         <th>#</th>
                         <th v-for="(col, i) in columnas" :key="i" :class="col.align ? 'text-' + col.align : ''">{{ col.label }}</th>
-                        <th class="text-center" style="width:90px;">Resultado</th>
                         <th class="text-center" style="width:60px;"></th>
                     </tr>
                 </thead>
@@ -15,13 +14,12 @@
                     <tr v-for="(row, idx) in filas" :key="idx">
                         <td>{{ idx + 1 }}</td>
                         <td v-for="(col, i) in columnas" :key="i" :class="col.align ? 'text-' + col.align : ''">
-                            <strong v-if="col.key === 'codigo'">{{ row[col.key] }}</strong>
+                            <template v-if="col.type === 'check'">
+                                <i v-if="row[col.key]" class="fa fa-check ayuda_check_ok"></i>
+                                <i v-else class="fa fa-times ayuda_check_no"></i>
+                            </template>
+                            <strong v-else-if="col.key === 'codigo'">{{ row[col.key] }}</strong>
                             <span v-else>{{ row[col.key] }}</span>
-                        </td>
-                        <td class="text-center">
-                            <span class="label" :class="row.aprobado ? 'label-success' : 'label-danger'">
-                                {{ row.aprobado ? 'Aceptable' : 'Rechazo' }}
-                            </span>
                         </td>
                         <td class="text-center">
                             <button class="btn btn-default btn-xs" title="Clonar"><i class="fa fa-copy"></i></button>
@@ -33,17 +31,19 @@
         </div>
         <div class="enod-form-actions">
             <button class="btn btn-default btn-sm"><i class="fa fa-plus"></i>&nbsp; Agregar {{ etiquetaItem }}</button>
-            <button class="btn btn-default btn-sm" v-if="metodo === 'RI'"><i class="fa fa-upload"></i>&nbsp; Importar CSV</button>
+            <button class="btn btn-default btn-sm" v-if="metodo === 'RI' || metodo === 'US'"><i class="fa fa-upload"></i>&nbsp; Importar {{ metodo === 'US' ? 'Excel' : 'CSV' }}</button>
         </div>
         <div class="ayuda_demo_caption" v-if="metodo === 'RI'">
-            Si se carga una posición de anomalía, el sistema marca la costura como <strong>rechazo</strong>. Ese estado se puede ajustar manualmente.
-            Las posiciones se pueden clonar para acelerar la carga de costuras similares.
+            La columna <strong>Aceptable</strong> marca con un check las costuras sin anomalías; si se carga una observación de rechazo, se destildan.
         </div>
         <div class="ayuda_demo_caption" v-else-if="metodo === 'US'">
-            Si el espesor medido es menor al mínimo, el reporte lo destaca automáticamente.
+            Se compara el espesor <strong>Nominal</strong> contra el <strong>Mínimo</strong> admisible. Si el espesor medido baja del mínimo, el reporte lo destaca.
+        </div>
+        <div class="ayuda_demo_caption" v-else-if="metodo === 'LP'">
+            En LP se cargan los <strong>cuños</strong> de los soldadores responsables (Cuño P / Cuño Z), la medida en cm y un archivo de referencia.
         </div>
         <div class="ayuda_demo_caption" v-else>
-            Cada elemento puede tener una descripción, medida en cm y un archivo de referencia adjunto.
+            Cada elemento puede tener un detalle, medida en cm (CM) y un archivo de referencia adjunto.
         </div>
     </div>
 </template>
@@ -51,60 +51,65 @@
 <script>
 const DATA = {
     RI: {
-        etiqueta: 'costura',
+        etiqueta: 'elemento',
         columnas: [
-            { key: 'codigo',     label: 'Costura' },
-            { key: 'placa',      label: 'Pos. placa' },
-            { key: 'densidad',   label: 'Densidad', align: 'center' },
-            { key: 'icpi',       label: 'IQI', align: 'center' },
-            { key: 'indicacion', label: 'Indicación' },
+            { key: 'codigo',    label: 'Elemento' },
+            { key: 'densidad',  label: 'Densidad', align: 'center' },
+            { key: 'pos',       label: 'Pos.', align: 'center' },
+            { key: 'aceptable', label: 'Aceptable', align: 'center', type: 'check' },
+            { key: 'obs',       label: 'Observación' },
         ],
         filas: [
-            { codigo: 'J14',   placa: 'A-1', densidad: '2.8', icpi: '12', indicacion: '—',                 aprobado: true  },
-            { codigo: 'J15',   placa: 'A-2', densidad: '2.7', icpi: '12', indicacion: 'FU (falta unión)',  aprobado: false },
-            { codigo: 'J16',   placa: 'A-1', densidad: '2.9', icpi: '13', indicacion: '—',                 aprobado: true  },
-            { codigo: 'J17',   placa: 'A-1', densidad: '2.8', icpi: '12', indicacion: '—',                 aprobado: true  },
+            { codigo: 'J14', densidad: '2.8', pos: '—',   aceptable: true,  obs: '—' },
+            { codigo: 'J15', densidad: '2.7', pos: '340', aceptable: false, obs: 'FU (falta unión)' },
+            { codigo: 'J16', densidad: '2.9', pos: '—',   aceptable: true,  obs: '—' },
+            { codigo: 'J17', densidad: '2.8', pos: '—',   aceptable: true,  obs: '—' },
         ],
     },
     PM: {
         etiqueta: 'elemento',
         columnas: [
-            { key: 'codigo',      label: 'Elemento' },
-            { key: 'descripcion', label: 'Descripción' },
-            { key: 'medida',      label: 'Medida (cm)', align: 'center' },
-            { key: 'indicacion',  label: 'Indicación' },
+            { key: 'codigo',    label: 'Elemento' },
+            { key: 'cm',        label: 'CM', align: 'center' },
+            { key: 'detalle',   label: 'Detalle' },
+            { key: 'aceptable', label: 'Aceptable', align: 'center', type: 'check' },
+            { key: 'referencia', label: 'Referencia', align: 'center' },
         ],
         filas: [
-            { codigo: 'E-01', descripcion: 'Costura long. tanque T-200', medida: '180', indicacion: '—',                  aprobado: true  },
-            { codigo: 'E-02', descripcion: 'Junta tapa - cuerpo',         medida: '120', indicacion: 'Fisura superficial', aprobado: false },
-            { codigo: 'E-03', descripcion: 'Refuerzo boquilla N-1',       medida: '45',  indicacion: '—',                  aprobado: true  },
+            { codigo: 'E-01', cm: '180', detalle: 'Costura long. tanque T-200', aceptable: true,  referencia: 'FT-01' },
+            { codigo: 'E-02', cm: '120', detalle: 'Junta tapa - cuerpo (fisura superficial)', aceptable: false, referencia: 'FT-02' },
+            { codigo: 'E-03', cm: '45',  detalle: 'Refuerzo boquilla N-1', aceptable: true,  referencia: '—' },
         ],
     },
     LP: {
         etiqueta: 'elemento',
         columnas: [
-            { key: 'codigo',      label: 'Elemento' },
-            { key: 'descripcion', label: 'Descripción' },
-            { key: 'medida',      label: 'Medida (cm)', align: 'center' },
-            { key: 'indicacion',  label: 'Indicación' },
+            { key: 'codigo',    label: 'Elemento' },
+            { key: 'cunoP',     label: 'Cuño P', align: 'center' },
+            { key: 'cunoZ',     label: 'Cuño Z', align: 'center' },
+            { key: 'cm',        label: 'CM', align: 'center' },
+            { key: 'detalle',   label: 'Detalle' },
+            { key: 'aceptable', label: 'Aceptable', align: 'center', type: 'check' },
+            { key: 'referencia', label: 'Referencia', align: 'center' },
         ],
         filas: [
-            { codigo: 'E-01', descripcion: 'Costura circunferencial',     medida: '95',  indicacion: '—',                aprobado: true  },
-            { codigo: 'E-02', descripcion: 'Boquilla salida vapor',        medida: '60',  indicacion: 'Poro 0.8 mm',      aprobado: false },
+            { codigo: 'E-01', cunoP: 'S-104', cunoZ: 'S-118', cm: '95', detalle: 'Costura circunferencial', aceptable: true,  referencia: '—' },
+            { codigo: 'E-02', cunoP: 'S-122', cunoZ: '—',     cm: '60', detalle: 'Boquilla salida vapor (poro 0.8 mm)', aceptable: false, referencia: 'FT-05' },
         ],
     },
     US: {
-        etiqueta: 'medición',
+        etiqueta: 'elemento',
         columnas: [
-            { key: 'codigo',      label: 'Punto' },
-            { key: 'descripcion', label: 'Descripción' },
-            { key: 'medida',      label: 'Espesor (mm)', align: 'center' },
-            { key: 'indicacion',  label: 'Observación' },
+            { key: 'codigo',    label: 'Elemento' },
+            { key: 'nominal',   label: 'Nominal', align: 'center' },
+            { key: 'minimo',    label: 'Mínimo', align: 'center' },
+            { key: 'minimoAnt', label: 'Mínimo Ant', align: 'center' },
+            { key: 'glp',       label: 'G.L.P.', align: 'center' },
         ],
         filas: [
-            { codigo: 'P-1', descripcion: 'Generatriz superior', medida: '12.4', indicacion: '—',                    aprobado: true  },
-            { codigo: 'P-2', descripcion: 'Generatriz lateral',  medida: '11.9', indicacion: 'Cercano al mínimo',     aprobado: true  },
-            { codigo: 'P-3', descripcion: 'Generatriz inferior', medida: '10.2', indicacion: 'Por debajo del mínimo', aprobado: false },
+            { codigo: 'Anillo 1', nominal: '12.7', minimo: '9.5',  minimoAnt: '10.1', glp: 'No' },
+            { codigo: 'Anillo 2', nominal: '12.7', minimo: '9.5',  minimoAnt: '9.8',  glp: 'No' },
+            { codigo: 'Techo',    nominal: '9.5',  minimo: '6.4',  minimoAnt: '6.9',  glp: 'Sí' },
         ],
     },
 };
@@ -145,7 +150,8 @@ export default {
     font-size: 13px;
     vertical-align: middle;
 }
-.ayuda_real_table .label { font-size: 10.5px; padding: 3px 8px; }
+.ayuda_check_ok { color: #1b6b34; }
+.ayuda_check_no { color: #dc3545; }
 .enod-form-actions { margin-top: 8px; }
 .ayuda_demo_caption {
     margin-top: 8px;

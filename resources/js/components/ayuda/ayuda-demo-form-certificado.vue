@@ -1,137 +1,222 @@
 <template>
     <div class="ayuda_demo_block">
         <div class="ayuda_demo_label">Formulario de nuevo certificado</div>
+
+        <!-- Cabecera del certificado (certificado-header) -->
         <div class="box box-custom-enod ayuda_real_box">
-            <div class="box-header with-border">
-                <h3 class="box-title">
-                    <i class="fa fa-certificate"></i>&nbsp; Nuevo certificado · OT-1542
-                </h3>
-            </div>
             <div class="box-body">
-                <!-- Cabecera -->
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label>N° certificado</label>
-                            <input type="text" class="form-control" value="CERT-0212" disabled />
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Fecha <span class="ayuda_req">*</span></label>
-                            <input type="text" class="form-control" value="25/06/2026" disabled />
+                            <label>Cliente</label>
+                            <input type="text" class="form-control" value="Techint S.A." disabled />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Título</label>
-                            <input type="text" class="form-control" value="Avance semanal RI / PM - Tramo 12" disabled />
+                            <label>Proyecto</label>
+                            <input type="text" class="form-control" value="Gasoducto NEA" disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Obra N°</label>
+                            <input type="text" class="form-control" value="T12" disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Orden de Trabajo N°</label>
+                            <input type="text" class="form-control" value="1542" disabled />
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Selección de partes -->
-                <div class="form-group">
-                    <label>Partes diarios disponibles para certificar</label>
-                    <div class="ayuda_table_wrap">
-                        <table class="table table-hover table-striped table-bordered table-condensed ayuda_real_table">
-                            <thead>
-                                <tr>
-                                    <th style="width:34px;" class="text-center"><i class="fa fa-check"></i></th>
-                                    <th>N° parte</th>
-                                    <th>Fecha</th>
-                                    <th>Tipo de servicio</th>
-                                    <th class="text-center">Informes</th>
-                                    <th class="text-center">Horas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(p, i) in partes" :key="i" :class="{ 'ayuda_row_selected': p.sel }">
-                                    <td class="text-center">
-                                        <input type="checkbox" v-model="p.sel" />
-                                    </td>
-                                    <td><strong>{{ p.numero }}</strong></td>
-                                    <td>{{ p.fecha }}</td>
-                                    <td>{{ p.tipo }}</td>
-                                    <td class="text-center"><span class="label label-warning">{{ p.informes }}</span></td>
-                                    <td class="text-center">{{ p.horas }}h</td>
-                                </tr>
-                            </tbody>
-                        </table>
+        <!-- Fecha / N° / Título / Información adicional -->
+        <div class="box box-custom-enod ayuda_real_box">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Fecha <span class="ayuda_req">*</span></label>
+                            <input type="text" class="form-control" value="25-06-2026" disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Certificado N°</label>
+                            <input type="text" class="form-control" value="00000212" disabled />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Título</label>
+                            <input type="text" class="form-control" value="25-06-2026 - 25-06-2026" disabled />
+                        </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Información adicional</label>
+                            <textarea class="form-control" rows="2" disabled>Certificación semanal de servicios NDT del tramo 12.</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <!-- Resumen consolidado -->
-                <div class="ayuda_consolidado" v-if="seleccionados.length">
-                    <h4 class="ayuda_consolidado_title">
-                        <i class="fa fa-calculator"></i>&nbsp; Servicios consolidados ({{ seleccionados.length }} partes)
-                    </h4>
-                    <table class="table table-condensed ayuda_consol_table">
+        <!-- Box Partes sin certificados -->
+        <div class="box box-custom-enod ayuda_real_box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Partes sin certificados</h3>
+            </div>
+            <div class="box-body">
+                <div class="ayuda_table_wrap">
+                    <table class="table table-hover table-striped table-condensed ayuda_real_table">
                         <thead>
                             <tr>
-                                <th>Servicio</th>
-                                <th class="text-center">Cant. partes</th>
-                                <th class="text-center">Cant. final</th>
-                                <th class="text-center">Unidad</th>
+                                <th style="width:34px;" class="text-center">Sel.</th>
+                                <th>Parte N°</th>
+                                <th>Obra</th>
+                                <th>Fecha</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(s, i) in servicios" :key="i">
-                                <td>{{ s.nombre }}</td>
-                                <td class="text-center">{{ s.partes }}</td>
-                                <td class="text-center"><strong>{{ s.final }}</strong></td>
-                                <td class="text-center"><span class="text-muted">{{ s.unidad }}</span></td>
+                            <tr v-for="(p, i) in partes" :key="i" :class="{ 'ayuda_row_selected': p.sel }">
+                                <td class="text-center"><input type="checkbox" v-model="p.sel" /></td>
+                                <td><strong>{{ p.numero }}</strong></td>
+                                <td>{{ p.obra }}</td>
+                                <td>{{ p.fecha }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div v-else class="ayuda_consolidado ayuda_consolidado--empty">
-                    <i class="fa fa-info-circle"></i>&nbsp; Seleccioná al menos un parte para ver el consolidado.
-                </div>
-
-                <div class="enod-form-actions enod-form-actions--end">
-                    <button class="btn btn-default" disabled>Cancelar</button>
-                    <button class="btn btn-enod" disabled :class="{ disabled: !seleccionados.length }">
-                        <i class="fa fa-save"></i>&nbsp; Guardar certificado
-                    </button>
-                </div>
+                <p class="ayuda_hint"><i class="fa fa-info-circle"></i> Se tildan los partes diarios pendientes; al seleccionarlos se cargan sus servicios y productos. La selección incluye automáticamente los partes anteriores.</p>
             </div>
         </div>
+
+        <!-- Box Servicios -->
+        <div class="box box-custom-enod ayuda_real_box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Servicios</h3>
+            </div>
+            <div class="box-body">
+                <div class="ayuda_table_wrap">
+                    <table class="table table-hover table-striped table-bordered table-condensed ayuda_real_table">
+                        <thead>
+                            <tr>
+                                <th>Parte N°</th>
+                                <th>Obra</th>
+                                <th>Servicio</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                                <th class="text-center">Combinación</th>
+                                <th class="text-center">Cantidad</th>
+                                <th style="width:42px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(s, i) in servicios" :key="i">
+                                <td>{{ s.parte }}</td>
+                                <td>{{ s.obra }}</td>
+                                <td>{{ s.servicio }}</td>
+                                <td>{{ s.descripcion }}</td>
+                                <td>{{ s.fecha }}</td>
+                                <td class="text-center">{{ s.combinacion }}</td>
+                                <td class="text-center"><strong>{{ s.cantidad }}</strong></td>
+                                <td class="text-center"><i class="fa fa-minus-circle"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="ayuda_hint"><i class="fa fa-info-circle"></i> Los servicios que caen el mismo día se pueden <strong>combinar</strong> (ej. RI + PM). El botón de combinación permite separarlos o volver a combinarlos.</p>
+            </div>
+        </div>
+
+        <!-- Box Productos (según modalidad de cobro) -->
+        <div class="box box-custom-enod ayuda_real_box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Productos</h3>
+            </div>
+            <div class="box-body">
+                <div class="ayuda_modo_switch">
+                    <button class="btn btn-xs" :class="modo === 'PLACAS' ? 'btn-enod' : 'btn-default'" @click="modo = 'PLACAS'">Modalidad PLACAS</button>
+                    <button class="btn btn-xs" :class="modo === 'COSTURAS' ? 'btn-enod' : 'btn-default'" @click="modo = 'COSTURAS'">Modalidad COSTURAS</button>
+                </div>
+
+                <div class="ayuda_table_wrap" v-if="modo === 'PLACAS'">
+                    <table class="table table-hover table-striped table-condensed ayuda_real_table">
+                        <thead>
+                            <tr><th>Parte N°</th><th>Placas</th><th>CM</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(pr, i) in productosPlacas" :key="i">
+                                <td>{{ pr.parte }}</td>
+                                <td>{{ pr.placas }}</td>
+                                <td>{{ pr.cm }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="ayuda_table_wrap" v-else>
+                    <table class="table table-hover table-striped table-condensed ayuda_real_table">
+                        <thead>
+                            <tr><th>Parte N°</th><th>Costuras</th><th>Pulgadas</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(pr, i) in productosCosturas" :key="i">
+                                <td>{{ pr.parte }}</td>
+                                <td>{{ pr.costuras }}</td>
+                                <td>{{ pr.pulgadas }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="ayuda_hint"><i class="fa fa-info-circle"></i> La tabla de productos depende de la <strong>modalidad de cobro</strong> de la OT: por <strong>PLACAS</strong> (placas / CM) o por <strong>COSTURAS</strong> (costuras / pulgadas). Se muestra una u otra, nunca las dos.</p>
+            </div>
+        </div>
+
+        <div class="enod-form-actions enod-form-actions--end">
+            <button class="btn btn-enod" disabled><i class="fa fa-save"></i>&nbsp; Guardar</button>
+        </div>
+
         <div class="ayuda_demo_caption">
-            Probá tildar / destildar partes — el consolidado de <strong>Servicios</strong> se recalcula automáticamente.
-            Los certificados no nacen de cero: suman cantidades de los partes seleccionados.
+            El certificado consolida los <strong>servicios</strong> y <strong>productos</strong> de los partes seleccionados.
+            El N° de certificado es numérico con relleno de ceros (ej. 00000212). Probá cambiar la modalidad de cobro para ver
+            cómo cambia la tabla de productos.
         </div>
     </div>
 </template>
 
 <script>
-const PARTES = [
-    { numero: 'P-0089', fecha: '25/06/2026', tipo: 'Radiografía industrial', informes: 5, horas: 8,  sel: true,
-      detalle: { 'Radiografía RI': { cant: 18, unidad: 'placas' }, 'Inspección visual': { cant: 12, unidad: 'm' } } },
-    { numero: 'P-0088', fecha: '24/06/2026', tipo: 'Partículas magnéticas',  informes: 3, horas: 7,  sel: true,
-      detalle: { 'Partículas magnéticas': { cant: 22, unidad: 'm' } } },
-    { numero: 'P-0087', fecha: '20/06/2026', tipo: 'Radiografía industrial', informes: 7, horas: 9,  sel: false,
-      detalle: { 'Radiografía RI': { cant: 24, unidad: 'placas' } } },
-    { numero: 'P-0086', fecha: '18/06/2026', tipo: 'Ultrasonido',            informes: 2, horas: 6,  sel: false,
-      detalle: { 'Ultrasonido': { cant: 8, unidad: 'puntos' } } },
-];
-
 export default {
     name: 'ayuda-demo-form-certificado',
-    data() { return { partes: PARTES }; },
-    computed: {
-        seleccionados() { return this.partes.filter(p => p.sel); },
-        servicios() {
-            const acc = {};
-            this.seleccionados.forEach(p => {
-                Object.entries(p.detalle).forEach(([nom, { cant, unidad }]) => {
-                    if (!acc[nom]) acc[nom] = { nombre: nom, partes: 0, final: 0, unidad };
-                    acc[nom].partes += 1;
-                    acc[nom].final  += cant;
-                });
-            });
-            return Object.values(acc);
-        },
+    data() {
+        return {
+            modo: 'PLACAS',
+            partes: [
+                { numero: '00000089', obra: 'T12', fecha: '25-06-2026', sel: true },
+                { numero: '00000088', obra: 'T12', fecha: '24-06-2026', sel: true },
+                { numero: '00000087', obra: 'T12', fecha: '20-06-2026', sel: false },
+            ],
+            servicios: [
+                { parte: '00000089', obra: 'T12', servicio: 'RI', descripcion: 'Radiografía industrial', fecha: '25-06-2026', combinacion: 'PM + RI', cantidad: 18 },
+                { parte: '00000089', obra: 'T12', servicio: 'PM', descripcion: 'Partículas magnéticas',   fecha: '25-06-2026', combinacion: 'PM + RI', cantidad: 22 },
+                { parte: '00000088', obra: 'T12', servicio: 'US', descripcion: 'Ultrasonido',             fecha: '24-06-2026', combinacion: 'US',      cantidad: 8 },
+            ],
+            productosPlacas: [
+                { parte: '00000089', placas: 18, cm: 350 },
+                { parte: '00000088', placas: 12, cm: 240 },
+            ],
+            productosCosturas: [
+                { parte: '00000089', costuras: 6, pulgadas: 48 },
+                { parte: '00000088', costuras: 4, pulgadas: 32 },
+            ],
+        };
     },
 };
 </script>
@@ -148,6 +233,7 @@ export default {
     border-top: 3px solid #FFCC00;
     border-radius: 4px;
     box-shadow: none;
+    margin-bottom: 12px;
 }
 .ayuda_real_box .box-header { border-bottom: 1px solid #eef0f3; padding: 10px 14px; }
 .ayuda_real_box .box-title { font-size: 14px; font-weight: 700; color: #1a1a1a; }
@@ -171,49 +257,16 @@ export default {
 }
 .ayuda_real_table > tbody > tr > td { font-size: 13px; vertical-align: middle; }
 .ayuda_real_table .label { font-size: 11px; padding: 3px 8px; }
+.ayuda_real_table .fa-minus-circle { color: #9aa1a9; }
 .ayuda_row_selected { background: #fffdf5 !important; }
 
-.ayuda_consolidado {
-    margin-top: 14px;
-    background: #fffdf5;
-    border: 1px solid #f0df9a;
-    border-left: 3px solid #FFCC00;
-    border-radius: 0 4px 4px 0;
-    padding: 12px 14px;
-}
-.ayuda_consolidado--empty {
-    background: #fafbfc;
-    border: 1px dashed #e5e7eb;
-    border-left: 3px solid #d1d5db;
-    color: #6b7280;
-    font-size: 13px;
-    text-align: center;
-    padding: 16px;
-}
-.ayuda_consolidado_title {
-    margin: 0 0 10px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #5c4a00;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-}
-.ayuda_consol_table {
-    background: #fff;
-    border: 1px solid #f0df9a;
-    margin-bottom: 0;
-    font-size: 13px;
-}
-.ayuda_consol_table th {
-    background: #fffdf5;
-    color: #5c4a00;
-    font-size: 11.5px;
-    text-transform: uppercase;
-    font-weight: 700;
-    border-bottom: 1px solid #f0df9a;
-}
+.ayuda_modo_switch { margin-bottom: 10px; }
+.ayuda_modo_switch .btn { margin-right: 6px; }
 
-.enod-form-actions { border-top: 1px solid #eef0f3; padding-top: 12px; margin-top: 14px; }
+.ayuda_hint { margin: 10px 0 0; font-size: 12px; color: #6b7280; }
+.ayuda_hint i { color: #d4a800; margin-right: 4px; }
+
+.enod-form-actions { border-top: 1px solid #eef0f3; padding-top: 12px; margin-top: 4px; }
 
 .ayuda_demo_caption {
     margin-top: 8px;

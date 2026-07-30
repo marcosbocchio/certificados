@@ -13,7 +13,17 @@
                     <div v-for="(campo, i) in cfg.campos" :key="i" :class="'col-sm-' + (campo.col || 6)">
                         <div class="form-group">
                             <label>{{ campo.label }} <span v-if="campo.req" class="ayuda_req">*</span></label>
-                            <select v-if="campo.tipo === 'select'" class="form-control" disabled>
+                            <div v-if="campo.tipo === 'toggle'" class="ayuda_toggle_group">
+                                <label v-for="(op, j) in campo.opciones" :key="j" class="ayuda_toggle_item">
+                                    <input type="radio" :checked="op === campo.value" disabled /> {{ op }}
+                                </label>
+                            </div>
+                            <div v-else-if="campo.tipo === 'checkboxes'" class="ayuda_checks_group">
+                                <label v-for="(op, j) in campo.opciones" :key="j" class="ayuda_check_item">
+                                    <input type="checkbox" :checked="(campo.checked || []).includes(op)" disabled /> {{ op }}
+                                </label>
+                            </div>
+                            <select v-else-if="campo.tipo === 'select'" class="form-control" disabled>
                                 <option>{{ campo.value }}</option>
                             </select>
                             <input v-else-if="campo.tipo === 'file'" type="text" class="form-control" :value="campo.value" disabled />
@@ -75,6 +85,18 @@ export default {
 .ayuda_real_box .form-control[disabled] { background: #fafbfc; cursor: not-allowed; color: #4c5661; }
 .ayuda_real_box label { font-size: 12px; color: #4c5661; margin-bottom: 4px; }
 .ayuda_req { color: #dc3545; font-weight: 700; }
+
+.ayuda_toggle_group { padding-top: 4px; }
+.ayuda_toggle_item { margin-right: 18px; font-weight: 600; color: #4c5661; cursor: default; }
+.ayuda_toggle_item input { margin-right: 4px; }
+.ayuda_checks_group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 4px 16px;
+    padding: 6px 0 2px;
+}
+.ayuda_check_item { font-weight: 500; color: #4c5661; margin: 0; cursor: default; }
+.ayuda_check_item input { margin-right: 6px; }
 
 .ayuda_nota {
     background: #fffdf5;

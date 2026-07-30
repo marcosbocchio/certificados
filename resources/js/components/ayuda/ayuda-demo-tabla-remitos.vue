@@ -5,46 +5,46 @@
             <table class="table table-hover table-striped table-bordered table-condensed ayuda_real_table">
                 <thead>
                     <tr>
-                        <th>N° remito</th>
-                        <th>Fecha</th>
-                        <th>Origen</th>
-                        <th>Destino</th>
+                        <th>N°</th>
+                        <th>Frente origen</th>
+                        <th>Frente destino</th>
                         <th>Receptor</th>
-                        <th class="text-center">Contenido</th>
-                        <th class="text-center">Estado</th>
+                        <th>Destino</th>
+                        <th>Fecha</th>
+                        <th class="text-center">Anulado</th>
+                        <th class="text-center">Borrador</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(r, i) in filas" :key="i">
+                    <tr v-for="(r, i) in filas" :key="i" :class="{ ayuda_row_anulado: r.anulado }">
                         <td><strong>{{ r.numero }}</strong></td>
-                        <td>{{ r.fecha }}</td>
                         <td>{{ r.origen }}</td>
                         <td>{{ r.destino }}</td>
                         <td>{{ r.receptor }}</td>
+                        <td>{{ r.lugar }}</td>
+                        <td>{{ r.fecha }}</td>
                         <td class="text-center">
-                            <span v-if="r.productos" class="label label-info" :title="r.productos + ' productos'"><i class="fa fa-cubes"></i> {{ r.productos }}</span>
-                            <span v-if="r.internos" class="label label-default" :title="r.internos + ' internos de equipos'"><i class="fa fa-wrench"></i> {{ r.internos }}</span>
+                            <i v-if="r.anulado" class="fa fa-check ayuda_check"></i>
                         </td>
                         <td class="text-center">
-                            <span class="label" :class="r.borrador ? 'label-warning' : 'label-success'">
-                                <i :class="r.borrador ? 'fa fa-floppy-o' : 'fa fa-check-circle'"></i>&nbsp;
-                                {{ r.borrador ? 'Borrador' : 'Definitivo' }}
-                            </span>
+                            <i v-if="r.borrador" class="fa fa-check ayuda_check"></i>
                         </td>
-                        <td class="text-center">
-                            <button class="btn btn-default btn-xs" title="Ver PDF"><i class="fa fa-file-pdf-o"></i></button>
-                            <button class="btn btn-enod btn-xs" :disabled="!r.borrador" title="Editar (solo borrador)"><i class="fa fa-pencil"></i></button>
+                        <td class="text-center ayuda_acciones">
+                            <button class="btn btn-warning btn-xs" :disabled="!r.borrador" title="Editar (solo borrador)"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-default btn-xs" :disabled="r.borrador" title="EEP"><i class="fa fa-clipboard"></i></button>
+                            <button class="btn btn-default btn-xs" title="Ver / Imprimir PDF"><i class="fa fa-file-pdf-o"></i></button>
+                            <button v-if="!r.anulado" class="btn btn-default btn-xs" :disabled="r.borrador" title="Anular"><i class="fa fa-times"></i></button>
+                            <button v-else class="btn btn-default btn-xs" :disabled="r.borrador" title="Desanular"><i class="fa fa-check"></i></button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="ayuda_demo_caption">
-            <span class="label label-warning"><i class="fa fa-floppy-o"></i>&nbsp;Borrador</span>
-            no impacta stock y permite edición.
-            <span class="label label-success"><i class="fa fa-check-circle"></i>&nbsp;Definitivo</span>
+            Un remito marcado como <strong>Borrador</strong> se puede editar; al confirmarlo deja de ser borrador,
             descuenta stock (si el origen es centro de distribución) y actualiza el frente de los internos.
+            Un remito confirmado se puede <strong>Anular</strong> / <strong>Desanular</strong>; los borradores no.
         </div>
     </div>
 </template>
@@ -55,11 +55,11 @@ export default {
     data() {
         return {
             filas: [
-                { numero: '0001-00012543', fecha: '25/06/2026', origen: 'CD Neuquén',     destino: 'Obra NEA T12',     receptor: 'D. Salas',     productos: 3, internos: 2, borrador: false },
-                { numero: '0001-00012542', fecha: '24/06/2026', origen: 'CD Neuquén',     destino: 'Planta Río III',   receptor: 'L. Mendoza',   productos: 5, internos: 0, borrador: false },
-                { numero: '0001-00012541', fecha: '24/06/2026', origen: 'Obra NEA T12',   destino: 'CD Neuquén',       receptor: 'J. Pérez',     productos: 0, internos: 1, borrador: true  },
-                { numero: '0001-00012540', fecha: '20/06/2026', origen: 'CD Neuquén',     destino: 'Refinería Loma',   receptor: 'D. Salas',     productos: 8, internos: 1, borrador: false },
-                { numero: '0001-00012538', fecha: '15/06/2026', origen: 'CD Neuquén',     destino: 'Planta Río III',   receptor: 'M. Aguirre',   productos: 4, internos: 0, borrador: false },
+                { numero: '0001-00012543', fecha: '25/06/2026', origen: 'CD Neuquén',   destino: 'Obra NEA T12',   receptor: 'D. Salas',   lugar: 'Obra Gasoducto NEA - km 87', borrador: false, anulado: false },
+                { numero: '0001-00012542', fecha: '24/06/2026', origen: 'CD Neuquén',   destino: 'Planta Río III', receptor: 'L. Mendoza', lugar: 'Planta Río III - Sector B',   borrador: false, anulado: false },
+                { numero: '0001-00012541', fecha: '24/06/2026', origen: 'Obra NEA T12', destino: 'CD Neuquén',     receptor: 'J. Pérez',   lugar: 'Depósito central Neuquén',   borrador: true,  anulado: false },
+                { numero: '0001-00012540', fecha: '20/06/2026', origen: 'CD Neuquén',   destino: 'Refinería Loma', receptor: 'D. Salas',   lugar: 'Refinería Loma - Pañol NDT',  borrador: false, anulado: true  },
+                { numero: '0001-00012538', fecha: '15/06/2026', origen: 'CD Neuquén',   destino: 'Planta Río III', receptor: 'M. Aguirre', lugar: 'Planta Río III - Taller',     borrador: false, anulado: false },
             ],
         };
     },
@@ -86,12 +86,9 @@ export default {
     white-space: nowrap;
 }
 .ayuda_real_table > tbody > tr > td { font-size: 13px; vertical-align: middle; }
-.ayuda_real_table .label {
-    font-size: 11px;
-    padding: 3px 7px;
-    margin-right: 2px;
-    display: inline-block;
-}
+.ayuda_check { color: #1a1a1a; }
+.ayuda_row_anulado > td { color: #9ca3af; text-decoration: line-through; }
+.ayuda_acciones .btn-xs { margin: 0 1px; }
 .ayuda_demo_caption {
     margin-top: 8px;
     font-size: 12px;

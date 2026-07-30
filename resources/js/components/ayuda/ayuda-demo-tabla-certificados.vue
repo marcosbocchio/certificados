@@ -1,15 +1,12 @@
 <template>
     <div class="ayuda_demo_block">
-        <div class="ayuda_demo_label">Listado de certificados de la OT</div>
+        <div class="ayuda_demo_label">Certificados asignados a la orden de trabajo</div>
         <div class="ayuda_table_wrap">
             <table class="table table-hover table-striped table-bordered table-condensed ayuda_real_table">
                 <thead>
                     <tr>
-                        <th>N° certificado</th>
+                        <th>N°</th>
                         <th>Fecha</th>
-                        <th>Título</th>
-                        <th class="text-center">Partes</th>
-                        <th class="text-center">Firma</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -17,26 +14,32 @@
                     <tr v-for="(c, i) in filas" :key="i">
                         <td><strong>{{ c.numero }}</strong></td>
                         <td>{{ c.fecha }}</td>
-                        <td>{{ c.titulo }}</td>
-                        <td class="text-center"><span class="label label-warning">{{ c.partes }}</span></td>
                         <td class="text-center">
-                            <span class="label" :class="badge(c.firma)">
-                                <i :class="iconoFirma(c.firma)"></i>&nbsp; {{ c.firma }}
+                            <button class="btn btn-warning btn-xs" title="Editar"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-default btn-xs" title="Certificado original"><i class="fa fa-file-pdf-o"></i></button>
+                            <span class="dropdown ayuda_dropdown">
+                                <button class="btn btn-default btn-xs dropdown-toggle" title="Opciones de certificado">
+                                    <i class="fa fa-file-pdf-o"></i>&nbsp;<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" @click.prevent>Certificado</a></li>
+                                    <li><a href="#" @click.prevent>Certificado Agrupado</a></li>
+                                </ul>
                             </span>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-default btn-xs" title="Ver PDF"><i class="fa fa-file-pdf-o"></i></button>
-                            <button class="btn btn-default btn-xs" title="Ver partes asociados"><i class="fa fa-link"></i></button>
-                            <button class="btn btn-enod btn-xs" :disabled="c.firma === 'Firmado'" title="Editar"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-default btn-xs" title="Informes escaneados"><i class="fa fa-cloud-upload"></i></button>
+                            <button class="btn btn-default btn-xs" title="Exportar Excel"><i class="fa fa-file-excel-o"></i></button>
+                            <button v-if="!c.firma" class="btn btn-default btn-xs" title="Firmar"><i class="glyphicon glyphicon-pencil"></i></button>
+                            <span v-else class="btn btn-default btn-xs" title="Firmado"><i class="fa fa-check"></i></span>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="ayuda_demo_caption">
-            La columna <strong>Partes</strong> indica cuántos partes diarios consolidó el certificado.
-            Al hacer click en el ícono <i class="fa fa-link"></i> se ve la trazabilidad: certificado → partes → informes.
-            Un certificado firmado queda inmutable y representa la salida documental final del trabajo.
+            Cada certificado se identifica por su <strong>N°</strong> y <strong>Fecha</strong>.
+            Mientras no está firmado se muestra el botón <strong>Firmar</strong>; una vez firmado aparece la imagen de firma y queda inmutable.
+            Desde acciones se accede al PDF original, al desplegable de PDF final (<strong>Certificado</strong> / <strong>Certificado Agrupado</strong>),
+            a los informes escaneados y a la exportación a Excel.
         </div>
     </div>
 </template>
@@ -47,28 +50,12 @@ export default {
     data() {
         return {
             filas: [
-                { numero: 'CERT-0212', fecha: '25/06/2026', titulo: 'Avance semanal RI / PM - Tramo 12',  partes: 2, firma: 'Pendiente' },
-                { numero: 'CERT-0211', fecha: '20/06/2026', titulo: 'Avance semanal - Semana 24',         partes: 5, firma: 'Firmado' },
-                { numero: 'CERT-0210', fecha: '13/06/2026', titulo: 'Avance semanal - Semana 23',         partes: 4, firma: 'Firmado' },
-                { numero: 'CERT-0208', fecha: '06/06/2026', titulo: 'Certificado mensual mayo 2026',      partes: 18, firma: 'Firmado' },
+                { numero: '00000212', fecha: '25-06-2026', firma: false },
+                { numero: '00000211', fecha: '20-06-2026', firma: true },
+                { numero: '00000210', fecha: '13-06-2026', firma: true },
+                { numero: '00000208', fecha: '06-06-2026', firma: true },
             ],
         };
-    },
-    methods: {
-        badge(f) {
-            return {
-                'Firmado':   'label-success',
-                'Pendiente': 'label-warning',
-                'Anulado':   'label-danger',
-            }[f];
-        },
-        iconoFirma(f) {
-            return {
-                'Firmado':   'fa fa-check-circle',
-                'Pendiente': 'fa fa-clock-o',
-                'Anulado':   'fa fa-ban',
-            }[f];
-        },
     },
 };
 </script>
@@ -94,6 +81,7 @@ export default {
 }
 .ayuda_real_table > tbody > tr > td { font-size: 13px; vertical-align: middle; }
 .ayuda_real_table .label { font-size: 11px; padding: 3px 8px; }
+.ayuda_dropdown { position: relative; display: inline-block; }
 .ayuda_demo_caption {
     margin-top: 8px;
     font-size: 12px;

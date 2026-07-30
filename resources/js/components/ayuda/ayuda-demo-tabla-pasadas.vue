@@ -15,20 +15,22 @@
             <table class="table table-hover table-striped table-bordered table-condensed ayuda_real_table">
                 <thead>
                     <tr>
-                        <th>Pasada</th>
-                        <th>Proceso</th>
-                        <th>Soldador 1</th>
-                        <th>Soldador 2</th>
-                        <th>Material aporte</th>
+                        <th>Elemento</th>
+                        <th>N° Pasada</th>
+                        <th>Cuño P</th>
+                        <th>Cuño L</th>
+                        <th>Cuño Z</th>
+                        <th v-if="tipo === 'planta'">Proceso</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(p, i) in pasadasVisibles" :key="i">
-                        <td><strong>{{ p.numero }}</strong></td>
-                        <td>{{ p.proceso }}</td>
-                        <td>{{ p.s1 }}</td>
-                        <td>{{ p.s2 || '—' }}</td>
-                        <td>{{ p.aporte }}</td>
+                        <td><strong>{{ p.elemento }}</strong></td>
+                        <td>{{ p.numero }}</td>
+                        <td>{{ p.cunoP }}</td>
+                        <td>{{ p.cunoL || '—' }}</td>
+                        <td>{{ p.cunoZ || '—' }}</td>
+                        <td v-if="tipo === 'planta'">{{ p.proceso }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -39,19 +41,23 @@
             <button class="btn btn-default btn-sm"><i class="fa fa-upload"></i>&nbsp; Importar CSV</button>
         </div>
         <div class="ayuda_demo_caption">
-            En <strong>ducto</strong> se cargan hasta 6 pasadas (raíz, caliente, relleno, presentación, etc.).
-            En <strong>planta</strong> queda 1 sola pasada. Si los soldadores no aparecen en la lista, hay que asignarlos primero a la OT.
+            En <strong>ducto</strong> se cargan hasta 6 pasadas numeradas (1, 2, 3...) con sus soldadores por cuño (Cuño P, Cuño L, Cuño Z).
+            En <strong>planta</strong> queda 1 sola pasada y aparece además la columna <strong>Proceso</strong>.
+            Si los soldadores no aparecen en la lista, primero hay que asignarlos a la OT.
         </div>
     </div>
 </template>
 
 <script>
-const TODAS = [
-    { numero: 'Raíz',          proceso: 'GTAW',      s1: 'A. Gómez (S-104)',    s2: '',                    aporte: 'ER70S-6 Ø2.4' },
-    { numero: 'Caliente',      proceso: 'SMAW',      s1: 'M. Suárez (S-118)',   s2: 'A. Gómez (S-104)',    aporte: 'E7010-P1 Ø3.25' },
-    { numero: 'Relleno 1',     proceso: 'SMAW',      s1: 'M. Suárez (S-118)',   s2: '',                    aporte: 'E8010-P1 Ø4.0' },
-    { numero: 'Relleno 2',     proceso: 'SMAW',      s1: 'C. Núñez (S-122)',    s2: '',                    aporte: 'E8010-P1 Ø4.0' },
-    { numero: 'Presentación',  proceso: 'SMAW',      s1: 'C. Núñez (S-122)',    s2: '',                    aporte: 'E8010-P1 Ø4.0' },
+const DUCTO = [
+    { elemento: 'J14', numero: 1, cunoP: 'S-104', cunoL: '',      cunoZ: '',      proceso: 'GTAW' },
+    { elemento: 'J14', numero: 2, cunoP: 'S-118', cunoL: 'S-104', cunoZ: '',      proceso: 'SMAW' },
+    { elemento: 'J14', numero: 3, cunoP: 'S-118', cunoL: '',      cunoZ: '',      proceso: 'SMAW' },
+    { elemento: 'J14', numero: 4, cunoP: 'S-122', cunoL: '',      cunoZ: '',      proceso: 'SMAW' },
+    { elemento: 'J14', numero: 5, cunoP: 'S-122', cunoL: '',      cunoZ: 'S-118', proceso: 'SMAW' },
+];
+const PLANTA = [
+    { elemento: 'C-01', numero: 1, cunoP: 'S-104', cunoL: 'S-118', cunoZ: 'S-122', proceso: 'SMAW' },
 ];
 
 export default {
@@ -59,7 +65,7 @@ export default {
     data() { return { tipo: 'ducto' }; },
     computed: {
         pasadasVisibles() {
-            return this.tipo === 'ducto' ? TODAS : [TODAS[0]];
+            return this.tipo === 'ducto' ? DUCTO : PLANTA;
         },
     },
 };
