@@ -262,6 +262,7 @@ class InformesRdController extends Controller
                                 ->join('pasadas_junta_rd','pasadas_junta_rd.junta_id','=','juntas_rd.id')
                                 ->where('informes_rd.id',$id)
                                 ->selectRaw('numero as pasada,soldadorl_id,soldadorp_id,soldadorz_id,juntas_rd.codigo as elemento_pasada')
+                                ->distinct()
                                 ->get();
 
         foreach ($pasadas_juntas as $pasadas_junta) {
@@ -442,11 +443,20 @@ class InformesRdController extends Controller
       }
       public function saveDetalle($request,$informeRd){
 
+          $juntasCreadas = [];
+
           foreach ($request->detalles as $detalle){
             try {
 
-              $junta = $this->saveJunta($detalle,$informeRd);
-              $this->savePasadasJunta($request->TablaPasadas,$junta);
+              $codigoJunta = trim($detalle['junta']);
+
+              if (isset($juntasCreadas[$codigoJunta])) {
+                  $junta = $juntasCreadas[$codigoJunta];
+              } else {
+                  $junta = $this->saveJunta($detalle,$informeRd);
+                  $this->savePasadasJunta($request->TablaPasadas,$junta);
+                  $juntasCreadas[$codigoJunta] = $junta;
+              }
 
             }
             catch(Exception $e){

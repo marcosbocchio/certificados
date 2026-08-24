@@ -62,6 +62,20 @@
             padding: 14px 18px;
             margin: 18px 0;
         }
+        .ayuda_origen p { margin: 0 0 8px; }
+        .ayuda_origen p:last-child { margin-bottom: 0; }
+        .ayuda_origen_tit {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: #b57400;
+            background: #fbeccb;
+            padding: 3px 9px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
         .ayuda_clave {
             background: #fff8ea;
             border: 1px solid #f0d9a8;
@@ -69,31 +83,45 @@
             padding: 16px 18px;
             margin: 18px 0;
         }
-        .ayuda_ejemplo_wrap { margin: 18px 0; }
+        .ayuda_clave_tit {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: #8a6d3b;
+            margin-bottom: 8px;
+        }
+        .ayuda_clave ul { padding-left: 18px; margin: 0; }
+        .ayuda_clave li { margin-bottom: 6px; }
+        .ayuda_ejemplo_wrap {
+            margin: 18px 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
         .ayuda_ejemplo_cap {
             font-size: 12px;
             font-weight: 700;
-            letter-spacing: .04em;
+            letter-spacing: .05em;
             text-transform: uppercase;
             color: #6b7a86;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
         table.ayuda_tabla_ejemplo {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            background: #fff;
+            font-size: 13px;
+            margin-bottom: 0;
+            min-width: 420px;
         }
-        table.ayuda_tabla_ejemplo th,
-        table.ayuda_tabla_ejemplo td {
-            padding: 8px 12px;
-            border: 1px solid #e2e8ed;
-            text-align: right;
+        table.ayuda_tabla_ejemplo thead th {
+            background: #f8fafc;
+            color: #4c5661;
+            font-weight: 700;
+            border-bottom: 2px solid #e2e8ed;
         }
-        table.ayuda_tabla_ejemplo th:first-child,
-        table.ayuda_tabla_ejemplo td:first-child { text-align: left; }
-        table.ayuda_tabla_ejemplo thead th { background: #f0f3f6; }
-        table.ayuda_tabla_ejemplo tfoot td { font-weight: 700; background: #faf6ee; }
+        table.ayuda_tabla_ejemplo tfoot td {
+            font-weight: 700;
+            background: #f0f4f8;
+        }
     </style>
 
     {{-- Vista previa interactiva del reporte completo --}}
@@ -207,19 +235,16 @@
                 En el mismo recuadro puede ademas indicar:
             </p>
             <ul>
-                <li><strong>La posicion (hora):</strong> la ubicacion de la falla como una hora del reloj (por ejemplo, 120-150).</li>
+                <li><strong>La posicion del defecto:</strong> donde esta ubicado dentro de la placa (por ejemplo, 120-150). Es opcional.</li>
                 <li><strong>La pasada:</strong> raiz, relleno o sobremonta (para cañeria tipo ducto).</li>
             </ul>
 
             <div class="ayuda_clave">
-                <p style="margin:0 0 6px;"><strong>El detalle que define todo: ¿le cargo la hora o no?</strong></p>
-                <ul style="margin:0;">
-                    <li>Si carga la falla <strong>CON su hora</strong> &rarr; la placa queda <strong>rechazada</strong> y esa
-                        falla cuenta como <strong>DEFECTO</strong>. Aparece en <em>Defectologia</em> y en
-                        <em>Defectologia / Produccion</em> (se le puede atribuir a un soldador).</li>
-                    <li>Si carga la falla <strong>SIN hora</strong> &rarr; la placa <strong>no</strong> se rechaza y esa falla
-                        cuenta como <strong>INDICACION</strong>. Aparece solo en la pestaña <em>Indicaciones</em>, como
-                        registro informativo.</li>
+                <span class="ayuda_clave_tit">El detalle que define todo</span>
+                <p style="margin:0 0 10px;">La diferencia entre un <strong>defecto</strong> y una <strong>indicacion</strong> es una sola: <strong>¿el inspector le cargo la posicion del defecto o no?</strong></p>
+                <ul>
+                    <li><strong>Con posicion</strong> &rarr; la placa queda <strong>rechazada</strong> y la falla cuenta como <strong>DEFECTO</strong>. Aparece en <em>Defectologia</em> y en <em>Defectologia / Produccion</em> (se le puede atribuir a un soldador).</li>
+                    <li><strong>Sin posicion</strong> &rarr; la placa <strong>no</strong> se rechaza y la falla cuenta como <strong>INDICACION</strong>. Aparece solo en la pestaña <em>Indicaciones</em>, como registro informativo.</li>
                 </ul>
             </div>
 
@@ -227,7 +252,7 @@
             <ul>
                 <li><strong>Posicion de la placa:</strong> todas las placas tienen una. Es la que usan los graficos de torta
                     para mostrar en que zona de la soldadura se concentran las fallas.</li>
-                <li><strong>Posicion (hora) de la falla:</strong> es opcional. Es la que decide si una falla es defecto o
+                <li><strong>Posicion del defecto:</strong> es opcional. Es la que decide si una falla es defecto o
                     indicacion (ver el recuadro de arriba).</li>
             </ul>
 
@@ -306,7 +331,7 @@
             <h3>Que muestra</h3>
             <ul>
                 <li>Una <strong>tabla con todos los defectos detectados</strong>, con su codigo, descripcion, cantidad y porcentaje sobre el total.</li>
-                <li>Un <strong>grafico de torta</strong> con la distribucion de defectos por posicion horaria.</li>
+                <li>Un <strong>grafico de torta</strong> con la distribucion de defectos por posicion (zona de la soldadura).</li>
                 <li>Un <strong>selector de diametro</strong> arriba del grafico para filtrar por tamaño de cañeria.</li>
             </ul>
 
@@ -325,31 +350,34 @@
             </ul>
 
             <div class="ayuda_origen">
-                <p style="margin:0 0 8px;"><strong>De donde salen estos datos:</strong> un defecto aparece en esta tabla
-                cuando el inspector, en una placa, <strong>eligio la falla de la lista y le cargo su posicion (la hora)</strong>.</p>
-                <p style="margin:0;"><em>Ejemplo:</em> si carga "PO - Porosidad" con la posicion 120-150, se suma una fila
-                "Porosidad" en esta pestaña. Si marco la placa como rechazada pero <strong>no eligio el tipo de falla de la
-                lista</strong>, no puede contarse aca (el sistema no sabe que defecto fue). El grafico de torta agrupa por la
-                posicion de la placa dentro de la soldadura.</p>
+                <span class="ayuda_origen_tit">De donde salen estos datos</span>
+                <p>Un defecto aparece en esta tabla cuando el inspector, en una placa, <strong>eligio la falla de la lista y le cargo su posicion</strong>.</p>
+                <p><strong>Ejemplo:</strong> si carga "PO - Porosidad" con la posicion 120-150, se suma una fila "Porosidad" en esta pestaña.</p>
+                <p>Si marco la placa como rechazada pero <strong>no eligio el tipo de falla de la lista</strong>, no puede contarse aca (el sistema no sabe que defecto fue). El grafico de torta agrupa por la posicion de la placa dentro de la soldadura.</p>
             </div>
 
             <div class="ayuda_ejemplo_wrap">
-                <div class="ayuda_ejemplo_cap">Ejemplo de la tabla que arma esta pestaña</div>
-                <table class="ayuda_tabla_ejemplo">
+                <div class="ayuda_ejemplo_cap">Asi se ve la tabla que arma esta pestaña</div>
+                <table class="table table-striped table-bordered ayuda_tabla_ejemplo">
                     <thead>
-                        <tr><th>Defecto</th><th>Codigo</th><th>Cantidad</th><th>%</th></tr>
+                        <tr>
+                            <th>Defecto</th>
+                            <th class="text-center">Codigo</th>
+                            <th class="text-center">Cantidad</th>
+                            <th class="text-center">%</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Falta de fusion</td><td>FF</td><td>18</td><td>40%</td></tr>
-                        <tr><td>Porosidad</td><td>PO</td><td>12</td><td>27%</td></tr>
-                        <tr><td>Socavacion</td><td>SC</td><td>9</td><td>20%</td></tr>
-                        <tr><td>Inclusion</td><td>IN</td><td>6</td><td>13%</td></tr>
+                        <tr><td><strong>Falta de fusion</strong></td><td class="text-center">FF</td><td class="text-center">18</td><td class="text-center">40%</td></tr>
+                        <tr><td><strong>Porosidad</strong></td><td class="text-center">PO</td><td class="text-center">12</td><td class="text-center">27%</td></tr>
+                        <tr><td><strong>Socavacion</strong></td><td class="text-center">SC</td><td class="text-center">9</td><td class="text-center">20%</td></tr>
+                        <tr><td><strong>Inclusion</strong></td><td class="text-center">IN</td><td class="text-center">6</td><td class="text-center">13%</td></tr>
                     </tbody>
                     <tfoot>
-                        <tr><td>Total</td><td></td><td>45</td><td>100%</td></tr>
+                        <tr><td>Total</td><td class="text-center">—</td><td class="text-center">45</td><td class="text-center">100%</td></tr>
                     </tfoot>
                 </table>
-                <p style="font-size:12px;color:#6b7a86;margin:6px 0 0;">Valores de ejemplo, no datos reales.</p>
+                <p style="font-size:12px;color:#6b7a86;margin:8px 0 0;">Valores de ejemplo, no datos reales.</p>
             </div>
 
             <div class="row">
@@ -375,10 +403,9 @@
             </p>
 
             <div class="ayuda_origen">
-                <p style="margin:0;"><strong>De donde salen estos datos:</strong> esta pestaña toma los mismos defectos de la
-                pestaña 2 (los que se cargaron <strong>con su hora</strong>) y los cruza con los <strong>soldadores cargados en
-                las pasadas</strong> (lado P y lado Z). Si falta cargar uno de los dos soldadores, los defectos de ese lado no
-                se pueden atribuir y no aparecen aca. El detalle esta mas abajo, en "Como se calcula la atribucion del defecto".</p>
+                <span class="ayuda_origen_tit">De donde salen estos datos</span>
+                <p>Esta pestaña toma los mismos defectos de la pestaña 2 (los que se cargaron <strong>con su posicion</strong>) y los cruza con los <strong>soldadores cargados en las pasadas</strong> (lado P y lado Z).</p>
+                <p>Si falta cargar uno de los dos soldadores, los defectos de ese lado no se pueden atribuir y no aparecen aca. El detalle esta mas abajo, en "Como se calcula la atribucion del defecto".</p>
             </div>
 
             <h3>Que muestra</h3>
@@ -463,10 +490,10 @@
                 Responde a la pregunta: <em>¿que indicaciones (no defectos formales) se registraron y donde se ubican?</em>
             </p>
             <p>
-                Las <strong>indicaciones</strong> son fallas que el inspector cargo <strong>sin la hora exacta</strong>. Al no
-                tener hora, la placa no se rechaza y la observacion queda como <strong>registro informativo</strong>: no
+                Las <strong>indicaciones</strong> son fallas que el inspector cargo <strong>sin marcar su posicion</strong>. Al no
+                tener posicion, la placa no se rechaza y la observacion queda como <strong>registro informativo</strong>: no
                 contabiliza como defecto ni en el rendimiento del soldador. Se cargan por el mismo recuadro que los defectos;
-                la unica diferencia es que se dejo vacio el campo de la hora.
+                la unica diferencia es que se dejo vacio el campo de posicion.
             </p>
 
             <h3>Que muestra</h3>
@@ -491,26 +518,29 @@
             </ul>
 
             <div class="ayuda_origen">
-                <p style="margin:0 0 8px;"><strong>De donde salen estos datos:</strong> una indicacion aparece cuando el
-                inspector <strong>eligio la falla de la lista pero dejo vacia la posicion (la hora)</strong>.</p>
-                <p style="margin:0;"><em>Ejemplo:</em> elige "MO - Mordedura" y no le pone hora &rarr; aparece en esta pestaña,
-                no en Defectologia. <strong>Aclaracion:</strong> aunque la falla no tenga hora, la placa a la que pertenece si
-                tiene su posicion dentro de la soldadura, y por eso el grafico igual puede agruparlas por posicion.</p>
+                <span class="ayuda_origen_tit">De donde salen estos datos</span>
+                <p>Una indicacion aparece cuando el inspector <strong>eligio la falla de la lista pero dejo vacia su posicion</strong>.</p>
+                <p><strong>Ejemplo:</strong> elige "MO - Mordedura" y no le marca la posicion &rarr; aparece en esta pestaña, no en Defectologia.</p>
+                <p><strong>Aclaracion:</strong> aunque la falla no tenga posicion propia, la placa a la que pertenece si tiene su posicion dentro de la soldadura, y por eso el grafico igual puede agruparlas.</p>
             </div>
 
             <div class="ayuda_ejemplo_wrap">
-                <div class="ayuda_ejemplo_cap">Ejemplo de la tabla que arma esta pestaña</div>
-                <table class="ayuda_tabla_ejemplo">
+                <div class="ayuda_ejemplo_cap">Asi se ve la tabla que arma esta pestaña</div>
+                <table class="table table-striped table-bordered ayuda_tabla_ejemplo">
                     <thead>
-                        <tr><th>Indicacion</th><th>Codigo</th><th>Cantidad</th></tr>
+                        <tr>
+                            <th>Indicacion</th>
+                            <th class="text-center">Codigo</th>
+                            <th class="text-center">Cantidad</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Mordedura leve</td><td>MO</td><td>8</td></tr>
-                        <tr><td>Refuerzo excesivo</td><td>RE</td><td>5</td></tr>
-                        <tr><td>Salpicadura</td><td>SP</td><td>4</td></tr>
+                        <tr><td><strong>Mordedura leve</strong></td><td class="text-center">MO</td><td class="text-center">8</td></tr>
+                        <tr><td><strong>Refuerzo excesivo</strong></td><td class="text-center">RE</td><td class="text-center">5</td></tr>
+                        <tr><td><strong>Salpicadura</strong></td><td class="text-center">SP</td><td class="text-center">4</td></tr>
                     </tbody>
                 </table>
-                <p style="font-size:12px;color:#6b7a86;margin:6px 0 0;">Valores de ejemplo, no datos reales.</p>
+                <p style="font-size:12px;color:#6b7a86;margin:8px 0 0;">Valores de ejemplo, no datos reales.</p>
             </div>
 
             {{-- Para esta pestaña se reutiliza el componente demo doughnut con datos de indicaciones --}}
@@ -593,9 +623,9 @@
 
             <h3>¿Que diferencia hay entre defectos e indicaciones?</h3>
             <p>
-                Un <strong>defecto</strong> es una falla que se cargo <strong>con su hora</strong> (posicion exacta): rechaza
+                Un <strong>defecto</strong> es una falla que se cargo <strong>con su posicion</strong>: rechaza
                 la placa y cuenta para el rendimiento del soldador. Una <strong>indicacion</strong> es una falla que se cargo
-                <strong>sin la hora</strong>: queda como informacion, no rechaza la placa y no se usa para evaluar al soldador.
+                <strong>sin posicion</strong>: queda como informacion, no rechaza la placa y no se usa para evaluar al soldador.
             </p>
         </div>
     </section>
