@@ -22,3 +22,7 @@ docker/**/*.local
 nginx/**/*.local
 /.claude
 *.log
+
+# graphify
+graphify-out/
+docs/NDT_SYSTEM_*.md
