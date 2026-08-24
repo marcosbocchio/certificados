@@ -241,18 +241,96 @@ class CertificadosController extends Controller
         return DB::select('CALL CertificadosParteServicios(?)',array($parte_id));
     }
 
-    public function getParteProductos($parte_id,$modo_cobro){
+    public function getParteProductos(Request $request,$parte_id,$modo_cobro){
 
         if($modo_cobro =='PLACAS'){
 
               $productos = DB::select('CALL CertificadosParteProductosPorPlaca(?)',array($parte_id));
+              $campoCantidad = 'placas_final';
+              $campoBucket = 'cm_final';
 
         }elseif($modo_cobro =='COSTURAS'){
 
               $productos = DB::select('CALL CertificadosParteProductosPorCosturas(?)',array($parte_id));
+              $campoCantidad = 'costura_final';
+              $campoBucket = 'pulgadas_final';
 
+        } else {
+
+            return [];
         }
+
+        $otrosParteIds = collect(explode(',', $request->query('otros_parte_ids','')))
+                            ->filter()
+                            ->map(function($id){ return (int) $id; })
+                            ->values()
+                            ->all();
+
+        if (count($otrosParteIds)) {
+            $this->descontarInformesReemplazados($productos,$parte_id,$otrosParteIds,$campoCantidad,$campoBucket);
+        }
+
         return $productos;
+    }
+
+    /**
+     * Cuando un informe RI de este parte ya fue revisado y la revisión más nueva
+     * está cargada en OTRO parte que se está certificando junto con este, se descuenta
+     * el aporte de la revisión vieja para no contar el mismo ensayo dos veces.
+     * No modifica ningún dato, solo el total que se muestra/guarda para este certificado.
+     */
+    private function descontarInformesReemplazados(&$productos,$parteId,$otrosParteIds,$campoCantidad,$campoBucket){
+
+        $todos = array_merge([(int) $parteId], $otrosParteIds);
+        $placeholders = implode(',', array_fill(0, count($todos), '?'));
+
+        $detalle = DB::select(
+            "SELECT pd.parte_id AS parte_id,
+                    i.numero AS numero,
+                    i.numero_repetido AS numero_repetido,
+                    i.metodo_ensayo_id AS metodo_ensayo_id,
+                    i.tecnica_id AS tecnica_id,
+                    i.revision AS revision,
+                    pd.{$campoCantidad} AS cantidad,
+                    pd.{$campoBucket} AS bucket
+             FROM parte_detalles pd
+             JOIN informes i ON i.id = pd.informe_id
+             JOIN metodo_ensayos me ON me.id = i.metodo_ensayo_id AND me.metodo = 'RI'
+             WHERE pd.parte_id IN ($placeholders)",
+            $todos
+        );
+
+        $grupos = [];
+        foreach ($detalle as $fila) {
+            $clave = $fila->metodo_ensayo_id.'-'.$fila->tecnica_id.'-'.$fila->numero.'-'.$fila->numero_repetido;
+            $grupos[$clave][] = $fila;
+        }
+
+        $descuentoPorBucket = [];
+        foreach ($grupos as $filas) {
+
+            if (count($filas) <= 1) {
+                continue;
+            }
+
+            usort($filas, function($a,$b){ return $b->revision <=> $a->revision; });
+            array_shift($filas); // la de mayor revisión no se descuenta, se queda como está
+
+            foreach ($filas as $perdedora) {
+                if ((int) $perdedora->parte_id !== (int) $parteId) {
+                    continue; // solo interesa descontar del parte que estamos calculando ahora
+                }
+                $descuentoPorBucket[$perdedora->bucket] = ($descuentoPorBucket[$perdedora->bucket] ?? 0) + $perdedora->cantidad;
+            }
+        }
+
+        foreach ($productos as $fila) {
+            $bucketValor = $fila->{$campoBucket};
+            if (isset($descuentoPorBucket[$bucketValor]) && $descuentoPorBucket[$bucketValor] > 0) {
+                $fila->cantidad -= $descuentoPorBucket[$bucketValor];
+                $descuentoPorBucket[$bucketValor] = 0;
+            }
+        }
     }
 
     public function getModalidadCobro($ot_id){

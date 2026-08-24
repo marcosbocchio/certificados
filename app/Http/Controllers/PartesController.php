@@ -872,8 +872,6 @@ class PartesController extends Controller
 
         $partes = DB::select('CALL PartesPendientesSinCertificados(?,?)',array($ot_id,0));
 
-        $this->adjuntarInformesCompartidos($partes,$ot_id);
-
         return $partes;
 
     }
@@ -882,100 +880,8 @@ class PartesController extends Controller
 
         $partes_pendiente = DB::select('CALL PartesPendientesSinCertificados(?,?)',array($ot_id,$certificado_id));
 
-        $this->adjuntarInformesCompartidos($partes_pendiente,$ot_id);
-
         return $partes_pendiente;
      }
-
-    /**
-     * Marca, sobre cada parte devuelto, si comparte informes (distintas revisiones
-     * del mismo ensayo) con otros partes de la misma OT. Solo agrega el campo
-     * 'informes_compartidos' para que el frontend pueda avisar; no modifica datos.
-     */
-    private function adjuntarInformesCompartidos($partes,$ot_id){
-
-        $mapa = $this->getPartesConInformesCompartidos($ot_id);
-
-        foreach ($partes as $parte) {
-            $parte->informes_compartidos = $mapa[$parte->id] ?? [];
-        }
-    }
-
-    private function getPartesConInformesCompartidos($ot_id){
-
-        $filas = DB::select(
-            "SELECT pd.parte_id AS parte_id,
-                    i.id AS informe_id,
-                    i.numero AS numero,
-                    i.numero_repetido AS numero_repetido,
-                    i.metodo_ensayo_id AS metodo_ensayo_id,
-                    me.metodo AS metodo,
-                    i.tecnica_id AS tecnica_id,
-                    t.codigo AS tecnica_codigo,
-                    i.ultima_revision_sn AS ultima_revision_sn
-             FROM parte_detalles pd
-             JOIN informes i ON i.id = pd.informe_id
-             JOIN metodo_ensayos me ON me.id = i.metodo_ensayo_id
-             LEFT JOIN tecnicas t ON t.id = i.tecnica_id
-             WHERE i.ot_id = ?",
-            [$ot_id]
-        );
-
-        $grupos = [];
-        foreach ($filas as $fila) {
-            $clave = $fila->metodo_ensayo_id.'-'.$fila->tecnica_id.'-'.$fila->numero.'-'.$fila->numero_repetido;
-            if (!isset($grupos[$clave])) {
-                $grupos[$clave] = [
-                    'metodo' => $fila->metodo,
-                    'tecnica_codigo' => $fila->tecnica_codigo,
-                    'numero' => $fila->numero,
-                    'partes' => [],
-                ];
-            }
-            // Si el mismo parte tuviera más de una fila del mismo informe, se queda con la vigente.
-            $esVigente = (bool) $fila->ultima_revision_sn;
-            if (!isset($grupos[$clave]['partes'][$fila->parte_id]) || $esVigente) {
-                $grupos[$clave]['partes'][$fila->parte_id] = [
-                    'informe_id' => $fila->informe_id,
-                    'vigente' => $esVigente,
-                ];
-            }
-        }
-
-        $mapa = [];
-        foreach ($grupos as $grupo) {
-
-            if (count($grupo['partes']) <= 1) {
-                continue;
-            }
-
-            $prefijo = $grupo['metodo'] === 'US' ? $grupo['tecnica_codigo'] : $grupo['metodo'];
-            $numeroFormateado = $prefijo.str_pad($grupo['numero'], 4, '0', STR_PAD_LEFT);
-
-            foreach ($grupo['partes'] as $parteId => $datosParte) {
-
-                $otros = [];
-                foreach ($grupo['partes'] as $otroId => $otroDatos) {
-                    if ($otroId != $parteId) {
-                        $otros[] = [
-                            'parte' => str_pad($otroId, 8, '0', STR_PAD_LEFT),
-                            'vigente' => $otroDatos['vigente'],
-                        ];
-                    }
-                }
-
-                $mapa[$parteId][] = [
-                    'informe' => $numeroFormateado,
-                    'informe_id' => $datosParte['informe_id'],
-                    'metodo' => $grupo['metodo'],
-                    'vigente_aqui' => $datosParte['vigente'],
-                    'otros' => $otros,
-                ];
-            }
-        }
-
-        return $mapa;
-    }
 
      public function setCertificadoId($certificado_id,$parte_id){
 
