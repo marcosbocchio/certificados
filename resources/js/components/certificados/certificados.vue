@@ -61,7 +61,6 @@
                                             <th class="col-md-3">Parte N°</th>
                                             <th class="col-md-3">Obra</th>
                                             <th class="col-md-3">Fecha</th>
-                                            <th class="col-md-2">Alertas</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -72,13 +71,6 @@
                                             <td>{{ parte.numero_formateado}}</td>
                                             <td>{{ parte.obra}}</td>
                                             <td>{{ parte.fecha_formateada}}</td>
-                                            <td>
-                                                <div v-for="(item,ki) in parte.informes_compartidos" :key="ki"
-                                                     class="text-warning" :title="tituloInformeCompartido(item)">
-                                                    <i class="fa fa-exclamation-triangle"></i> Informe repetido ({{item.informe}})
-                                                    <a href="javascript:void(0)" @click="verRevisiones(item)">Ver revisiones</a>
-                                                </div>
-                                            </td>
                                         </tr>
                                     </tbody>
                                     </table>
@@ -268,7 +260,6 @@
                 </div>
             </form>
         </div>
-        <informes-revisiones></informes-revisiones>
     </div>
 </template>
 
@@ -279,7 +270,6 @@ import 'vue2-datepicker/index.css';
 import 'vue2-datepicker/locale/es';
 import {sprintf} from '../../functions/sprintf.js'
 import moment from 'moment';
-import {eventModal} from '../event-bus';
 
 export default {
 
@@ -454,51 +444,6 @@ export default {
         completarTitulo :  function(index){
 
            this.titulo = this.partes[0].fecha_formateada + ' - ' + this.partes[index].fecha_formateada ;
-
-        },
-
-        tituloInformeCompartido : function(item){
-
-            var vigentes = item.otros.filter(function(o){ return o.vigente; }).map(function(o){ return o.parte; });
-            var anteriores = item.otros.filter(function(o){ return !o.vigente; }).map(function(o){ return o.parte; });
-            var mensaje;
-
-            if (item.vigente_aqui) {
-
-                mensaje = 'Este parte tiene la versión VIGENTE del informe ' + item.informe + '.';
-
-                if (anteriores.length) {
-                    mensaje += ' Una versión anterior de ese mismo informe (ya reemplazada) quedó en el/los parte(s) N° '
-                             + anteriores.join(', ')
-                             + ' — en esos partes el informe no se ve al abrirlos porque ya no es la vigente, pero sus cantidades pueden seguir sumando si ese parte está en un certificado.';
-                }
-
-                if (vigentes.length) {
-                    mensaje += ' Atención: también figura como vigente en el/los parte(s) N° ' + vigentes.join(', ') + ', revisar a mano.';
-                }
-
-            } else {
-
-                mensaje = 'Este parte tiene una versión ANTERIOR (ya reemplazada) del informe ' + item.informe
-                        + ' — por eso no vas a verlo en la lista de informes al abrir este parte.';
-
-                if (vigentes.length) {
-                    mensaje += ' La versión vigente está en el/los parte(s) N° ' + vigentes.join(', ') + '.';
-                }
-            }
-
-            return mensaje;
-
-        },
-
-        verRevisiones : function(item){
-
-            eventModal.$emit('open_revisiones', {
-                id : item.informe_id,
-                metodo : item.metodo,
-                ot_id : this.otdata.id,
-                numero_formateado : item.informe,
-            }, this.otdata);
 
         },
 
