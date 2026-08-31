@@ -42,6 +42,7 @@ class InfomresSinParteController extends Controller
     ) {
         // Preparar parámetros para el SP:
         // Convertimos 'null' string o null a 0 para que el SP lo ignore.
+        $cliente_id = $this->resolverClienteId($cliente_id);
         $clienteIdParam = ($cliente_id === 'null' || $cliente_id === null) ? 0 : (int)$cliente_id;
         $otIdParam = ($ot_id === 'null' || $ot_id === null) ? 0 : (int)$ot_id;
 

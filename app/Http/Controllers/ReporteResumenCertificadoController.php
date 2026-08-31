@@ -37,6 +37,7 @@ class ReporteResumenCertificadoController extends Controller
         $fecha_desde,
         $fecha_hasta
     ) {
+        $cliente_id = $this->resolverClienteId($cliente_id);
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
         $provincia = $provincia == 'null' ? 0 : $provincia;
@@ -68,6 +69,7 @@ class ReporteResumenCertificadoController extends Controller
         $fecha_desde,
         $fecha_hasta
     ) {
+        $cliente_id = $this->resolverClienteId($cliente_id);
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
         $provincia = $provincia == 'null' ? 0 : $provincia;

@@ -37,6 +37,7 @@ class ReporteCertificadosPartesController extends Controller
     }
     public function getPartes($cliente_id,$user_id,$ot_id,$obra,$fecha_desde,$fecha_hasta,$filtrado,$paginado_sn){
 
+        $cliente_id = $this->resolverClienteId($cliente_id);
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $user_id = $user_id == 'null' ? 0 : $user_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
@@ -67,6 +68,7 @@ class ReporteCertificadosPartesController extends Controller
 
     public function getCertificados($cliente_id, $ot_id, $obra, $fecha_desde, $fecha_hasta, $user_id) {
         // Validar y corregir los parámetros
+        $cliente_id = $this->resolverClienteId($cliente_id);
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
         $obra = $obra == 'null' ? '' : $obra;

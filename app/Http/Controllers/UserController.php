@@ -175,6 +175,8 @@ class UserController extends Controller
 
     public function UserCliente($id){
 
+      $id = $this->resolverClienteId($id);
+
       return User::where('cliente_id',$id)->where('habilitado_sn',1)->orderBy('name','ASC')->get();
 
     }

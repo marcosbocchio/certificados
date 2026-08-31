@@ -169,6 +169,7 @@ class OtSoldadoresController extends Controller
 
     public function ImportarSoldadores(Request $request, $ot_id, $cliente_id)
     {
+        $this->autorizarOtCliente($ot_id);
 
 
         DB::beginTransaction();

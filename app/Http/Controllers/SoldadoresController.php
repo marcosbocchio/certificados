@@ -34,18 +34,23 @@ class SoldadoresController extends Controller
 
     public function SoldadoresCliente($id){
 
+        $id = $this->resolverClienteId($id);
+
         return Soldadores::where('cliente_id',$id)->get();
 
     }
 
     public function paginate(Request $request,$id){
 
+        $id = $this->resolverClienteId($id);
+
         return Soldadores::where('cliente_id',$id)->orderBy('id','DESC')->paginate(10);
     }
 
     public function callView($cliente_id)
-    {   
-        $user = auth()->user(); 
+    {
+        $user = auth()->user();
+        $cliente_id = $this->resolverClienteId($cliente_id);
         $cliente = Clientes::findOrFail($cliente_id);
         $header_titulo = "Soldadores del Cliente ". $cliente->nombre_fantasia;
         $header_descripcion ="Alta | Baja | Modificación";          

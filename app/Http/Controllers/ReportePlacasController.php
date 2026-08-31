@@ -29,6 +29,7 @@ class ReportePlacasController extends Controller
 
     public function getPlacasTotal($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta){
 
+        $cliente_id = $this->resolverClienteId($cliente_id);
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
         $obra = $obra == 'null' ? '' : $obra;
@@ -49,6 +50,7 @@ class ReportePlacasController extends Controller
 
     public function getPlacasRepetidasTestigos($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta){
 
+        $cliente_id = $this->resolverClienteId($cliente_id);
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
         $obra = $obra == 'null' ? '' : $obra;
@@ -70,6 +72,7 @@ class ReportePlacasController extends Controller
 
     public function getPlacasRechazadas($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta){
 
+        $cliente_id = $this->resolverClienteId($cliente_id);
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
         $obra = $obra == 'null' ? '' : $obra;
@@ -90,6 +93,7 @@ class ReportePlacasController extends Controller
     }
     public function getServicios($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta){
 
+        $cliente_id = $this->resolverClienteId($cliente_id);
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
         $obra = $obra == 'null' ? '' : $obra;

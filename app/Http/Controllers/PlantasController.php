@@ -23,11 +23,15 @@ class PlantasController extends Controller
 
     public function PlantasCliente($id){
 
+        $id = $this->resolverClienteId($id);
+
         return Plantas::where('cliente_id',$id)->get();
 
     }
 
     public function paginate(Request $request,$id){
+
+        $id = $this->resolverClienteId($id);
 
         return Plantas::where('cliente_id',$id)->orderBy('id','DESC')->paginate(10);
     }
