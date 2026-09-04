@@ -41,7 +41,7 @@ class OtsController extends Controller
     public function index(Request $request)
     {
             $user = Auth::user();
-            $esCliente = $user && ($user->hasRole('Cliente') || $user->cliente_id);
+            $esCliente = $user && $user->hasRole('Cliente');
             $filtro = $request->search;
             return Ots::when($esCliente, function ($q) use ($user) {
                                 return $q->whereIn('ots.id', function ($sub) use ($user) {
