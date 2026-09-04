@@ -19,12 +19,16 @@ class Controller extends BaseController
     {
         $user = auth()->user();
 
-        if (!$user || !$user->hasRole('Cliente')) {
+        if (!$user || !$user->cliente_id) {
             return;
         }
 
         if (empty($ot_id) || $ot_id == 0) {
             return;
+        }
+
+        if (!$user->hasRole('Cliente')) {
+            abort(403, 'No tiene acceso a esta orden de trabajo.');
         }
 
         $asignado = \App\OtUsuariosClientes::where('ot_id', $ot_id)
