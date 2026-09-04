@@ -428,11 +428,14 @@ export default {
         async  seleccionarAnteriores(index){
 
             this.partes[index].parte_sel = false;
+            const idsEnRango = this.partes.slice(0, index + 1).map(function(p){ return p.id; });
+
             for ( let x = 0 ; x <= index; x++ ) {
 
                 const isLast = x === index;
+                const otrosIds = idsEnRango.filter(function(id){ return id !== this.partes[x].id; }.bind(this));
                 await this.getServiciosParte(this.partes[x].id, isLast);
-                this.getProductosParte(this.partes[x].id);
+                this.getProductosParte(this.partes[x].id, otrosIds);
                 this.partes[x].parte_sel = true;
 
             }
@@ -841,10 +844,11 @@ export default {
 
         },
 
-        getProductosParte : function(id){
+        getProductosParte : function(id, otrosParteIds){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'certificados/parte/' + id + '/modo_cobro/'+ this.modo_cobro +'/productos' + '?api_token=' + Laravel.user.api_token;
+            var otrosQuery = (otrosParteIds && otrosParteIds.length) ? ('&otros_parte_ids=' + otrosParteIds.join(',')) : '';
+            var urlRegistros = 'certificados/parte/' + id + '/modo_cobro/'+ this.modo_cobro +'/productos' + '?api_token=' + Laravel.user.api_token + otrosQuery;
             axios.get(urlRegistros).then(response =>{
 
                 let parte_productos = response.data

@@ -19,7 +19,7 @@ class Controller extends BaseController
     {
         $user = auth()->user();
 
-        if (!$user || !($user->hasRole('Cliente') || $user->cliente_id)) {
+        if (!$user || !$user->cliente_id) {
             return;
         }
 
@@ -27,26 +27,16 @@ class Controller extends BaseController
             return;
         }
 
-        $ot = \App\Ots::find($ot_id);
-
-        if (!$ot || $ot->cliente_id != $user->cliente_id) {
+        if (!$user->hasRole('Cliente')) {
             abort(403, 'No tiene acceso a esta orden de trabajo.');
         }
-    }
 
-    /**
-     * Si el usuario tiene rol Cliente o cliente_id asignado, fuerza el filtrado a su propio
-     * cliente, ignorando cualquier cliente_id recibido desde el front (query/route param).
-     * ENOD/Admin/Sistemas no se restringen: se les devuelve el cliente_id recibido tal cual.
-     */
-    protected function resolverClienteId($cliente_id)
-    {
-        $user = auth()->user();
+        $asignado = \App\OtUsuariosClientes::where('ot_id', $ot_id)
+            ->where('user_id', $user->id)
+            ->exists();
 
-        if ($user && ($user->hasRole('Cliente') || $user->cliente_id)) {
-            return $user->cliente_id;
+        if (!$asignado) {
+            abort(403, 'No tiene acceso a esta orden de trabajo.');
         }
-
-        return $cliente_id;
     }
 }
