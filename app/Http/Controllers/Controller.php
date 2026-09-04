@@ -19,7 +19,7 @@ class Controller extends BaseController
     {
         $user = auth()->user();
 
-        if (!$user || !$user->hasRole('Cliente')) {
+        if (!$user || !($user->hasRole('Cliente') || $user->cliente_id)) {
             return;
         }
 
