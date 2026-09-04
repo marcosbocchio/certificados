@@ -27,9 +27,11 @@ class Controller extends BaseController
             return;
         }
 
-        $ot = \App\Ots::find($ot_id);
+        $asignado = \App\OtUsuariosClientes::where('ot_id', $ot_id)
+            ->where('user_id', $user->id)
+            ->exists();
 
-        if (!$ot || $ot->cliente_id != $user->cliente_id) {
+        if (!$asignado) {
             abort(403, 'No tiene acceso a esta orden de trabajo.');
         }
     }

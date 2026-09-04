@@ -41,11 +41,19 @@ class OtsController extends Controller
     public function index(Request $request)
     {
             $user = Auth::user();
+<<<<<<< Updated upstream
             $esCliente = $user && $user->hasRole('Cliente');
             $clienteId = $user ? $user->cliente_id : null;
+=======
+            $esCliente = $user && ($user->hasRole('Cliente') || $user->cliente_id);
+>>>>>>> Stashed changes
             $filtro = $request->search;
-            return Ots::when($esCliente, function ($q) use ($clienteId) {
-                                return $q->where('ots.cliente_id', $clienteId);
+            return Ots::when($esCliente, function ($q) use ($user) {
+                                return $q->whereIn('ots.id', function ($sub) use ($user) {
+                                    $sub->select('ot_id')
+                                        ->from('ot_usuarios_clientes')
+                                        ->where('user_id', $user->id);
+                                });
                             })
                             ->join('clientes','clientes.id','=','ots.cliente_id')
                             ->selectRaw('ots.*,DATE_FORMAT(ots.fecha,"%d/%m/%Y")as fecha_formateada')
