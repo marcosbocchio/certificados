@@ -235,7 +235,7 @@
                 <td class="col1" id="left"><b>PAQ. DE PRUEBA:</b></td>
                 <td class="col2">&nbsp;</td>
                 <td class="col3" id="tabla6"><b>N° REPORTE / RFI:</b></td>
-                <td class="col4">LP{{sprintf("%04d", $informe->numero)}}</td>
+                <td class="col4">@if ($contratista && $contratista->formato_especial !== null){{ $contratista->formato_especial }}-{{ sprintf("%04d", $informe->numero) }}@else LP{{sprintf("%04d", $informe->numero)}}@endif</td>
             </tr>
         </tbody>
     </table>
@@ -244,7 +244,7 @@
         <tbody>
             <tr>
                 <td style="width:40mm"><b>Inf PT°:</b></td>
-                <td style="width:37mm">LP{{sprintf("%04d", $informe->numero)}}</td>
+                <td style="width:37mm">@if ($contratista && $contratista->formato_especial !== null){{ $contratista->formato_especial }}-{{ sprintf("%04d", $informe->numero) }}@else LP{{sprintf("%04d", $informe->numero)}}@endif</td>
                 <td style="width:41mm"><b>Fecha / date:</b></td>
                 <td style="width:45mm">{{ $fecha }}</td>
             </tr>
