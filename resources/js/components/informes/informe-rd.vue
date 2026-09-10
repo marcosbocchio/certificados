@@ -447,7 +447,7 @@
                                         <label for="distancia_fuente_pelicula">Dist. Fuente/Film *</label>
                                         <input type="number" step="0.01" v-model="distancia_fuente_pelicula"
                                             class="form-control"
-                                            :disabled="diametro.diametro != 'VARIOS' && !dist_fuente_pel_edit_sn"
+                                            :disabled="diametro.diametro != 'VARIOS' && diametro.diametro != 'CHAPA' && !dist_fuente_pel_edit_sn"
                                             id="distancia_fuente_pelicula">
                                     </div>
                                 </div>
