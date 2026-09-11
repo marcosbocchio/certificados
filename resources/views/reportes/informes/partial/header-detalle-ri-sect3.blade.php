@@ -4,7 +4,7 @@
             <td width= "44mm" height="4mm" id="left" style="padding-left:1px;">NUMERO DE ENSAYO: </td>
             <td width="60.7mm" height="4mm">
                 @if($contratista && $contratista->formato_especial !== null)
-                    {{$contratista->formato_especial}}-{{$nroAESA}}
+                    RT-{{$contratista->formato_especial}}-{{$nroAESA}}
                 @elseif($planta !== null)
                     RT-{{$planta->codigo}}-ENOD-{{$nroAESA}}
                 @else
