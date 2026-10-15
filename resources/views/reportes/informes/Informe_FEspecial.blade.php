@@ -32,7 +32,7 @@ footer {
 <body>
 
 <header>
-    @include('reportes.partial.header-principal-portrait')
+    @include('reportes.partial.header-principal-portrait-fespecial')
     @include('reportes.partial.linea-amarilla')
     @include('reportes.partial.header-cliente-comitente-portrait')
     @include('reportes.partial.linea-gris')
