@@ -36,6 +36,7 @@
                                 v-model="metodos_sel"
                                 label="metodo"
                                 multiple
+                                :close-on-select="false"
                                 :options="metodos_ensayos"
                                 @input="resetInstrumentoMedicion">
                                 <template slot="option" slot-scope="option">
@@ -43,7 +44,7 @@
                                     <span class="downSelect">{{ option.descripcion }}</span>
                                 </template>
                                 <template slot="selected-option" slot-scope="option">
-                                    <span>{{ option.metodo }} - {{ option.descripcion }}</span>
+                                    <span>{{ option.metodo }}</span>
                                 </template>
                             </v-select>
                         </div>

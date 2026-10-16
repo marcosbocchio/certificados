@@ -191,6 +191,7 @@ Vue.component('table-tipos_equipamiento', require('./components/abm-maestro/tipo
 Vue.component('editar-tipos_equipamiento', require('./components/abm-maestro/tipo-equipamiento/editar-tipos_equipamiento.vue').default);
 Vue.component('nuevo-tipos_equipamiento', require('./components/abm-maestro/tipo-equipamiento/nuevo-tipos_equipamiento.vue').default);
 
+Vue.component('metodos-equipo', require('./components/abm-maestro/equipos/metodos-equipo.vue').default);
 Vue.component('table-equipos', require('./components/abm-maestro/equipos/table-equipos.vue').default);
 Vue.component('editar-equipos', require('./components/abm-maestro/equipos/editar-equipos.vue').default);
 Vue.component('nuevo-equipos', require('./components/abm-maestro/equipos/nuevo-equipos.vue').default);

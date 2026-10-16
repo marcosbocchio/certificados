@@ -17,7 +17,7 @@
           <tr v-for="registro in registros" :key="registro.id">                        
             <td>{{ registro.codigo }}</td>
             <td>{{ registro.descripcion }}</td>
-            <td>{{ metodosTexto(registro) }}</td>
+            <td><metodos-equipo :equipo="registro"></metodos-equipo></td>
             <td v-if ="registro.tipo_equipamiento"> {{ registro.tipo_equipamiento.codigo }} </td>  
             <td v-else>&nbsp;</td>
             <td>{{ registro.instrumento_medicion }}</td>   
@@ -60,12 +60,6 @@
     },
 
     methods: {
-    metodosTexto: function (registro) {
-       // Método principal primero, después el resto de los métodos del equipo
-       var principal = registro.metodo_ensayos;
-       var otros = (registro.metodos || []).filter(m => !principal || m.id !== principal.id);
-       return (principal ? [principal, ...otros] : otros).map(m => m.metodo).join(', ');
-    },
     updateValue: function (registro) {
        this.$emit('editar', registro);
     }

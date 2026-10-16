@@ -26,7 +26,7 @@
             </td>
             <td v-else>&nbsp;</td>
             <td>{{ registro.equipo.codigo }}</td>
-            <td>{{ metodosTexto(registro.equipo) }}</td>
+            <td><metodos-equipo :equipo="registro.equipo"></metodos-equipo></td>
             <th>
                 <button class="btn btn-xs" style="color: black !important;margin-top: 3px;" title="Historial de fuentes" v-on:click.prevent="TrazabilidadFuente(registro)"><span class="fa fa-table"></span></button>
             </th>
@@ -85,12 +85,6 @@ import {mapState} from 'vuex';
     },
 
     methods: {
-      metodosTexto(equipo) {
-        if (!equipo) return "";
-        var principal = equipo.metodo_ensayos;
-        var otros = (equipo.metodos || []).filter(m => !principal || m.id !== principal.id);
-        return (principal ? [principal, ...otros] : otros).map(m => m.metodo).join(", ");
-      },
       formatearFecha(fecha) {
         if (!fecha) return ''; // Manejo de valores nulos o indefinidos
 

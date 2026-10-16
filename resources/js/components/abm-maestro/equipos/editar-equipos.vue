@@ -36,6 +36,7 @@
                                 v-model="metodos_sel"
                                 label="metodo"
                                 multiple
+                                :close-on-select="false"
                                 :options="metodos_ensayos"
                                 @input="resetInstrumentoMedicion">
                                 <template slot="option" slot-scope="option">
@@ -43,7 +44,7 @@
                                     <span class="downSelect">{{ option.descripcion }}</span>
                                 </template>
                                 <template slot="selected-option" slot-scope="option">
-                                    <span>{{ option.metodo }} - {{ option.descripcion }}</span>
+                                    <span>{{ option.metodo }}</span>
                                 </template>
                             </v-select>
                         </div>
@@ -126,8 +127,11 @@
                     this.Registro.instrumento_medicion = this.selectRegistro.instrumento_medicion;         
                     // El método principal (metodo_ensayos) va primero, el resto detrás
                     var principal = this.selectRegistro.metodo_ensayos;
-                    var otros = (this.selectRegistro.metodos || []).filter(m => !principal || m.id !== principal.id);
-                    this.metodos_sel = principal ? [principal, ...otros] : otros;
+                    var ids = (this.selectRegistro.metodos || []).map(m => m.id);
+                    if (principal && ids.indexOf(principal.id) === -1) { ids.unshift(principal.id); }
+                    // Se toman las opciones del store (mismo objeto) para que vue-select marque las ya elegidas
+                    var elegidos = this.metodos_ensayos.filter(m => ids.indexOf(m.id) !== -1);
+                    this.metodos_sel = principal ? [...elegidos.filter(m => m.id === principal.id), ...elegidos.filter(m => m.id !== principal.id)] : elegidos;
                     this.tipo_equipamiento = this.selectRegistro.tipo_equipamiento;                
                     $('#editar').modal('show');    
                     this.$forceUpdate();

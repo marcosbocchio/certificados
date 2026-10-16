@@ -64,7 +64,7 @@
                                                     </th>
                                                 </tr>
                                                 <tr v-for="(item,k) in paginatedItems" :key="item.id">
-                                                    <td>{{ metodosTexto(item.equipo) }}</td>
+                                                    <td><metodos-equipo :equipo="item.equipo"></metodos-equipo></td>
                                                     <td>{{ item.nro_interno }} </td>                                 
                                                     <td>{{ item.nro_serie }} </td>
                                                     <td>{{ item.equipo.codigo}} </td>
@@ -154,12 +154,6 @@ export default {
     },
 
     methods :{
-      metodosTexto(equipo) {
-        if (!equipo) return "";
-        var principal = equipo.metodo_ensayos;
-        var otros = (equipo.metodos || []).filter(m => !principal || m.id !== principal.id);
-        return (principal ? [principal, ...otros] : otros).map(m => m.metodo).join(", ");
-      },
       async CambioTipoEquipamiento() {
         this.selTipo_equipamiento = !this.selTipo_equipamiento;
       },
