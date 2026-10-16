@@ -34,6 +34,8 @@
                             <!-- v-select múltiple: el primer método elegido es el principal -->
                             <v-select
                                 v-model="metodos_sel"
+                                ref="selMetodos"
+                                @keydown.native.capture.esc="cerrarListaConEsc"
                                 label="metodo"
                                 multiple
                                 :close-on-select="false"
@@ -118,6 +120,15 @@ export default {
 
             },
 
+            cerrarListaConEsc : function (e) {
+                // Con la lista abierta, Escape solo la cierra y no cierra el modal
+                var sel = this.$refs.selMetodos;
+                if (sel && sel.open) {
+                    e.stopPropagation();
+                    sel.open = false;
+                }
+            },
+
             tieneMetodo : function (metodo) {
                 return this.metodos_sel.some(m => m.metodo === metodo);
             },
@@ -145,7 +156,7 @@ export default {
                   this.$emit('store');
                   this.errors=[];
                   $('#nuevo').modal('hide');
-                  toastr.success('Nuevo Interno Equipo creado con éxito');               
+                  toastr.success('Nuevo Equipo creado con éxito');               
                   this.Registro={}
                   
                 }).catch(error => {                   

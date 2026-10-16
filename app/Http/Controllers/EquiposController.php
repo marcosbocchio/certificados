@@ -125,7 +125,9 @@ class EquiposController extends Controller
         $equipo->codigo = $request['codigo'];
         $equipo->descripcion = $request['descripcion'];
         // Todos los métodos elegidos; el primero queda como método principal (equipos.metodo_ensayo_id)
-        $metodos = collect($request['metodos'] ?: [$request['metodo_ensayos']]);
+        // Un cliente con JS viejo (cacheado) manda solo metodo_ensayos y no la lista completa.
+        $lista_completa = !empty($request['metodos']);
+        $metodos = collect($lista_completa ? $request['metodos'] : [$request['metodo_ensayos']]);
         $metodos_ids = $metodos->pluck('id')->unique()->values()->all();
 
         $equipo->metodo_ensayo_id = $metodos_ids[0];
@@ -136,8 +138,14 @@ class EquiposController extends Controller
         }else{
           $equipo->palpador_sn = 0;
         }
+        $tenia_varios = $equipo->exists && $equipo->metodos()->count() > 1;
         $equipo->save();
-        $equipo->metodos()->sync($metodos_ids);
+        if (!$lista_completa && $tenia_varios) {
+          // Sin la lista completa no se puede saber qué métodos quitar: se conservan los que ya tenía.
+          $equipo->metodos()->syncWithoutDetaching($metodos_ids);
+        } else {
+          $equipo->metodos()->sync($metodos_ids);
+        }
 
       }
 

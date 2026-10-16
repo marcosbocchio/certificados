@@ -48,8 +48,9 @@ class EquipoRequest extends FormRequest
     {
             return [
                 'codigo'                   => 'código',
-                'descripcion'              =>'descripción', 
-                'metodo_ensayo'            =>'Método de ensayo', 
+                'descripcion'              =>'descripción',
+                'metodo_ensayos'           =>'método de ensayo',
+                'tipo_equipamiento'        =>'tipo de equipamiento',
             ];
      
     }
