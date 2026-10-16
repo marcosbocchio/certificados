@@ -125,7 +125,7 @@ footer {
     @include('reportes.informes.partial.modelos3d-portrait')
 </main>
 
-    @include('reportes.partial.nro_pagina')
+    @include('reportes.partial.nro_pagina-fespecial')
 
     <script type="text/php">
 
