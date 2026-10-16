@@ -224,14 +224,12 @@ class InternoEquiposController extends Controller
         $interno_equipo->equipo_id           = $request['equipo']['id'];
         $interno_equipo->interno_fuente_id   = $request['interno_fuente']['id'];
 
-        // Se asigna la fecha de anulación si hubo cambio en el interno_fuente
-        // o si el equipo está inactivo.
-        if (
-            ($request['old_interno_fuente']['id'] != $request['interno_fuente']['id'])
-            || ($request['activo_sn'] != 1)
-        ) {
-            $fechaActual = Carbon::now()->format('Y-m-d');
-            $interno_equipo->fecha_anul = $fechaActual;
+        // La fecha de anulación se asigna solo al pasar de activo a inactivo.
+        // Si ya estaba inactivo se conserva lo que tenía (incluso sin fecha).
+        if ($request['activo_sn'] != 1) {
+            if (!$interno_equipo->exists || $interno_equipo->getOriginal('activo_sn') == 1) {
+                $interno_equipo->fecha_anul = Carbon::now()->format('Y-m-d');
+            }
         } else {
             $interno_equipo->fecha_anul = null;
         }
