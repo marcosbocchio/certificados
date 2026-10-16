@@ -14,6 +14,13 @@ class Equipos extends Model
         
     }
 
+    // Todos los métodos del equipo (incluye el principal de metodo_ensayo_id)
+    public function metodos(){
+
+        return $this->belongsToMany('App\MetodoEnsayos','equipo_metodo_ensayo','equipo_id','metodo_ensayo_id');
+
+    }
+
     public function tipoEquipamiento () {
 
         return $this->belongsTo('App\TipoEquipamiento','tipo_equipamiento_id','id');
@@ -30,7 +37,7 @@ class Equipos extends Model
                     $q->WhereRaw("tipos_equipamiento.codigo LIKE '%" . $filtro . "%'");
                     })                           
 
-                    ->orWhereHas('metodoEnsayos', function ($q) use($filtro) {
+                    ->orWhereHas('metodos', function ($q) use($filtro) {
                         $q->WhereRaw("metodo_ensayos.metodo = '" .  $filtro ."'" );
 
                     });         

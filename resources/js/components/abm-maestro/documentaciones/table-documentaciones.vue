@@ -43,7 +43,7 @@
 
               <!-- Método de Ensayo -->
               <td v-if="registro.metodo_ensayo && registro.metodo_ensayo.id">{{ registro.metodo_ensayo.metodo }}</td>
-              <td v-else-if="registro.interno_equipo.length > 0">{{ registro.interno_equipo[0].equipo.metodo_ensayos.metodo }}</td>
+              <td v-else-if="registro.interno_equipo.length > 0">{{ metodosTexto(registro.interno_equipo[0].equipo) }}</td>
               <td v-else>&nbsp;</td>
 
               <!-- Usuario -->
@@ -109,6 +109,12 @@ export default {
     };
   },
   methods: {
+    metodosTexto(equipo) {
+        if (!equipo) return "";
+        var principal = equipo.metodo_ensayos;
+        var otros = (equipo.metodos || []).filter(m => !principal || m.id !== principal.id);
+        return (principal ? [principal, ...otros] : otros).map(m => m.metodo).join(", ");
+      },
     formatFecha(fecha) {
       if (!fecha) return '';
       const date = new Date(fecha);

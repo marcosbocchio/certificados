@@ -28,14 +28,15 @@
                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="metodo_ensayo">Método de Ensayo *</label>
-                            <input v-if="metodo_ensayos.metodo == 'US'" type="checkbox" id="checkbox" v-model="Registro.palpador_sn" style="float:right"> 
-                            <label v-if="metodo_ensayos.metodo == 'US'" for="tipo" style="float:right; margin-right: 5px;">PALPADOR</label>
-                            
-                            <!-- v-select with metodo and descripcion -->
-                            <v-select 
-                                v-model="metodo_ensayos" 
-                                label="metodo" 
-                                :options="metodos_ensayos" 
+                            <input v-if="tieneMetodo('US')" type="checkbox" id="checkbox" v-model="Registro.palpador_sn" style="float:right">
+                            <label v-if="tieneMetodo('US')" for="tipo" style="float:right; margin-right: 5px;">PALPADOR</label>
+
+                            <!-- v-select múltiple: el primer método elegido es el principal -->
+                            <v-select
+                                v-model="metodos_sel"
+                                label="metodo"
+                                multiple
+                                :options="metodos_ensayos"
                                 @input="resetInstrumentoMedicion">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.metodo }}</span> <br>
@@ -50,7 +51,7 @@
 
                     <div class="col-md-12">
                        <div class="form-group">          
-                          <label v-if="metodo_ensayos.metodo == 'RI'" for="instrumento_medicion">Tipo Equipamiento *</label>
+                          <label v-if="tieneMetodo('RI')" for="instrumento_medicion">Tipo Equipamiento *</label>
                           <label v-else for="instrumento_medicion">Tipo Equipamiento</label>
                           <v-select v-model="tipo_equipamiento" :options="tipos_equipamiento" label="codigo"></v-select>
                        </div>
@@ -59,7 +60,7 @@
                     <div class="col-md-12">
                        <div class="form-group">          
                           <label for="instrumento_medicion">Instrumento Medición </label>
-                          <v-select v-model="Registro.instrumento_medicion" :options="instrumentos_mediciones" :disabled="((metodo_ensayos.metodo != 'LP') && (metodo_ensayos.metodo != 'PM'))"></v-select>
+                          <v-select v-model="Registro.instrumento_medicion" :options="instrumentos_mediciones" :disabled="(!tieneMetodo('LP') && !tieneMetodo('PM'))"></v-select>
                        </div>
                     </div>
                     
@@ -89,8 +90,8 @@ export default {
          },   
         tipo_equipamiento: '',
         instrumentos_mediciones :  ['Luxómetro luz blanca','Lampara luz UV'] ,
-        metodo_ensayos :'',             
-        errors:{},        
+        metodos_sel : [],
+        errors:{},
         }    
     },
     created: function () {     
@@ -110,17 +111,23 @@ export default {
                     'palpador_sn':false,      
                 };
                 this.tipo_equipamiento = '',
-                this.metodo_ensayos = '';             
+                this.metodos_sel = [];
 
-                $('#nuevo').modal('show');    
-                      
-            },   
+                $('#nuevo').modal('show');
 
-            resetInstrumentoMedicion : function () {               
-             
-                this.Registro.instrumento_medicion = '';
-               
-            },    
+            },
+
+            tieneMetodo : function (metodo) {
+                return this.metodos_sel.some(m => m.metodo === metodo);
+            },
+
+            resetInstrumentoMedicion : function () {
+
+                if (!this.tieneMetodo('LP') && !this.tieneMetodo('PM')) {
+                    this.Registro.instrumento_medicion = '';
+                }
+
+            },
 
             storeRegistro: function(){
 
@@ -129,7 +136,8 @@ export default {
                 axios.post(urlRegistros, {   
                     
                 ...this.Registro,              
-                'metodo_ensayos' : this.metodo_ensayos,     
+                'metodos' : this.metodos_sel,
+                'metodo_ensayos' : this.metodos_sel[0] || '',
                     'tipo_equipamiento': this.tipo_equipamiento,         
                   
                 }).then(response => {

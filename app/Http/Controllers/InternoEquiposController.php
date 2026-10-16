@@ -36,7 +36,8 @@ class InternoEquiposController extends Controller
         $activo_sn = $request->has('activo_sn') && $request->activo_sn !== '' ? $request->activo_sn : null;
     
         $interno_equipos = InternoEquipos::with('equipo.metodoEnsayos')
-                                         ->with('equipo.tipoEquipamiento')                                          
+                                         ->with('equipo.metodos')
+                                         ->with('equipo.tipoEquipamiento')
                                          ->with('internoFuente.fuente')
                                          ->with('frente')
                                          ->selectRaw('interno_equipos.*')
@@ -96,7 +97,8 @@ class InternoEquiposController extends Controller
         
       }elseif(($metodo != 'null')&&($activo_sn)){
             $interno_equipos = InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id')
-                                                ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
+                                                ->join('equipo_metodo_ensayo','equipo_metodo_ensayo.equipo_id','=','equipos.id')
+                                                ->join('metodo_ensayos','equipo_metodo_ensayo.metodo_ensayo_id','=','metodo_ensayos.id')
                                                 ->where('metodo_ensayos.metodo',$metodo)
                                                 ->where('interno_equipos.activo_sn',1)
                                                 ->where('equipos.palpador_sn',0)
@@ -224,10 +226,10 @@ class InternoEquiposController extends Controller
         $interno_equipo->equipo_id           = $request['equipo']['id'];
         $interno_equipo->interno_fuente_id   = $request['interno_fuente']['id'];
 
-        // La fecha de anulación se asigna solo si el equipo está inactivo.
-        // Se conserva la fecha original si ya estaba inactivo.
+        // La fecha de anulación se asigna solo al pasar de activo a inactivo.
+        // Si ya estaba inactivo se conserva lo que tenía (incluso sin fecha).
         if ($request['activo_sn'] != 1) {
-            if (!$interno_equipo->fecha_anul) {
+            if (!$interno_equipo->exists || $interno_equipo->getOriginal('activo_sn') == 1) {
                 $interno_equipo->fecha_anul = Carbon::now()->format('Y-m-d');
             }
         } else {
