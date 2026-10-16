@@ -1,6 +1,6 @@
 @php
     if ($contratista && $contratista->formato_especial !== null) {
-        $nro = 'RD-' . FormatearNumeroConCeros($informe->numero, 5) . '-' . $contratista->formato_especial;
+        $nro = 'RD-' . FormatearNumeroConCeros($informe->numero, 4) . '-' . $contratista->formato_especial;
     }
 @endphp
 <!DOCTYPE html>
