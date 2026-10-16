@@ -244,7 +244,10 @@ class PdfInformesRdController extends Controller
 
         // dd($juntas_posiciones,$defectos_posiciones);
 
-          $pdf = PDF::loadView('reportes.informes.rd-planta-v2',compact('titulo','nro','tipo_reporte','fecha',
+          $informeEspecial = null;
+          obtenerInformeEspecial($ot, $metodo_ensayo, $informeEspecial);
+
+          $pdf = PDF::loadView('reportes.informes.' . ($informeEspecial ?: 'rd-planta-v2'),compact('titulo','nro','tipo_reporte','fecha',
                                                               'ot',
                                                               'norma_ensayo',
                                                               'planta',
