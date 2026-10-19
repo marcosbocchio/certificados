@@ -12,11 +12,23 @@
         type: Object,
         required: false,
         default: function () { return {} }
+      },
+      // Alternativa para listados que ya traen los métodos como texto ("RI, RD")
+      texto: {
+        type: String,
+        required: false,
+        default: ''
       }
     },
     computed: {
       // Método principal primero, después el resto de los métodos del equipo
       lista: function () {
+        if (this.texto) {
+          return this.texto.split(',')
+            .map(function (s) { return s.trim(); })
+            .filter(function (s) { return s; })
+            .map(function (s, i) { return { id: i, metodo: s, descripcion: '' }; });
+        }
         var e = this.equipo || {};
         var principal = e.metodo_ensayos;
         var otros = (e.metodos || []).filter(m => !principal || m.id !== principal.id);

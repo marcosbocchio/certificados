@@ -185,7 +185,7 @@ footer {
 
                 @foreach ($data as $item )
                     <tr>
-                        <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->metodo }}</span></td>
+                        <td style="font-size: 10px;">@foreach (array_filter(array_map("trim", explode(",", $item->metodo))) as $m)<span style="display:inline-block;padding:0 6px;margin-right:2px;border-radius:8px;background:#e8edf2;color:#333333;font-size:8px;font-weight:bold;line-height:12px;">{{ $m }}</span>@endforeach</td>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->nro_interno }}</span></td>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->nro_serie }}</span></td>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->equipo_codigo }}</span></td>
