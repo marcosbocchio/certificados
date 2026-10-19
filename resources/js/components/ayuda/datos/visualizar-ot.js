@@ -44,6 +44,17 @@ export default {
           solucion: 'Pedile a sistemas que te active el permiso correspondiente.' },
     ],
 
+    secciones_extras: [
+        {
+            titulo: 'Equipos de la OT',
+            html:
+                '<p>Los equipos de una OT son <strong>internos</strong>, es decir unidades concretas de un equipo. ' +
+                'La lista para asignarlos muestra todos los internos activos, sin filtrar por método. ' +
+                'El filtro por método recién se aplica dentro de cada informe. ' +
+                'Más detalle en <a href="/ayuda_equipo_en_informe">Cómo llega un equipo a un informe</a>.</p>',
+        },
+    ],
+
     relacionados: [
         { titulo: 'Cómo crear una OT',                                ruta: '/crear_ot' },
         { titulo: 'Asignar operadores',                                ruta: '/asignar_operadores' },

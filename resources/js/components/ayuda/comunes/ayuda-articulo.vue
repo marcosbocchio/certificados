@@ -50,6 +50,16 @@
                     <ayuda-tabla-dependencias :items="dependencias"></ayuda-tabla-dependencias>
                 </ayuda-seccion>
 
+                <!-- Secciones destacadas (explicación central, antes de los campos) -->
+                <ayuda-seccion
+                    v-for="(dest, i) in (datos.secciones_destacadas || [])"
+                    :key="'dest-' + i"
+                    :titulo="dest.titulo"
+                    :id="'destacada-' + i">
+                    <component v-if="dest.componente" :is="dest.componente" v-bind="dest.props || {}"></component>
+                    <div v-else v-html="dest.html"></div>
+                </ayuda-seccion>
+
                 <!-- Lo que cargás en la pantalla (agrupado por bloques) -->
                 <ayuda-seccion v-if="bloques.length" titulo="Lo que cargás en la pantalla" id="bloques">
                     <p v-if="datos.bloques_intro">{{ datos.bloques_intro }}</p>
@@ -137,7 +147,8 @@
                     :key="'extra-' + i"
                     :titulo="extra.titulo"
                     :id="'extra-' + i">
-                    <div v-html="extra.html"></div>
+                    <component v-if="extra.componente" :is="extra.componente" v-bind="extra.props || {}"></component>
+                    <div v-else v-html="extra.html"></div>
                 </ayuda-seccion>
 
                 <!-- Relacionados -->

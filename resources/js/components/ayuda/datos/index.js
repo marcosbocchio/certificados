@@ -8,6 +8,9 @@ import visualizarOt from './visualizar-ot.js';
 import visualizarDocOperadores from './visualizar-doc-operadores.js';
 import visualizarProcedimientos from './visualizar-procedimientos.js';
 import visualizarVehiculos from './visualizar-vehiculos.js';
+import equipos from './equipos.js';
+import internoEquipos from './interno-equipos.js';
+import equipoEnInforme from './equipo-en-informe.js';
 
 export default {
     ot,
@@ -16,4 +19,7 @@ export default {
     'visualizar-doc-operadores': visualizarDocOperadores,
     'visualizar-procedimientos': visualizarProcedimientos,
     'visualizar-vehiculos': visualizarVehiculos,
+    equipos,
+    'interno-equipos': internoEquipos,
+    'equipo-en-informe': equipoEnInforme,
 };

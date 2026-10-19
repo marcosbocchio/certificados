@@ -17,11 +17,66 @@ public function __construct()
 
 }
 
+  /*
+   * Bloque "Equipo" que se suma a las secciones de ayuda donde aparece un equipo.
+   * La explicacion completa esta en "Como llega un equipo a un informe".
+   * La clave es el nombre de la vista (paginas con resumen funcional) o el titulo (paginas de introduccion).
+   */
+  private function bloqueEquipoPara($clave)
+  {
+      $bloques = [
+          'ayuda.generar_informes' => ['Equipo: de donde sale', [
+              'El selector Equipo ofrece los internos activos de equipos que tengan el metodo del informe, sea el principal o uno adicional.',
+              'Si falta uno, se revisa en Internos de equipos que este activo y en Equipos que tenga el metodo. Vale tambien para RD, que se explica en esta misma pagina.',
+          ]],
+          'ayuda.generar_informes_ri' => ['Equipo y fuente', [
+              'Al elegir el interno se completan solos la fuente, el foco y la actividad. El kV y el mA se cargan en el informe.',
+              'Un equipo con RI y RD aparece en los dos informes.',
+          ]],
+          'ayuda.generar_informes_pm' => ['Equipo e instrumento de medicion', [
+              'El equipo comun y el instrumento de medicion (luxometro o lampara UV) se eligen en selectores separados.',
+              'Un equipo con instrumento cargado se ofrece en el selector de instrumento, no en el de equipo.',
+          ]],
+          'ayuda.generar_informes_lp' => ['Que equipo ofrece LP', [
+              'En LP el selector no mira el metodo del equipo. Ofrece lamparas de luz UV con metodo Fluorescente o luxometros de luz blanca con metodo Visible, segun el instrumento de medicion cargado.',
+          ]],
+          'ayuda.generar_informes_us' => ['Equipo y palpador', [
+              'El equipo US y el palpador se eligen por separado. Un equipo marcado como palpador no se ofrece como equipo: aparece en el selector de palpadores.',
+          ]],
+          'ayuda.visualizacion_infomres' => ['Que equipo muestra el PDF', [
+              'El PDF muestra el interno que se eligio al guardar el informe. Agregarle un metodo al equipo no modifica los informes ya hechos.',
+          ]],
+          'ayuda.creacion_remito' => ['Equipos en el remito', [
+              'En el remito se eligen internos de equipo, es decir la unidad concreta, no el equipo del maestro.',
+          ]],
+          'QR y documentacion asociada' => ['Metodo del equipo', [
+              'La tabla muestra todos los metodos del equipo, una etiqueta por metodo, con el principal primero. El filtro por tipo de equipamiento y la busqueda siguen funcionando igual.',
+          ]],
+          'Gestionar documentaciones' => ['Documentacion de equipos', [
+              'La documentacion de equipo se asocia al interno, no al equipo. La columna Metodo muestra todos los metodos del equipo.',
+          ]],
+          'Gestionar internos de fuente' => ['Donde se usa la fuente', [
+              'La fuente de un interno de equipo RI o RD se elige entre los internos de fuente cargados aca. Cambiarla queda anotado en el historial de fuentes del interno.',
+          ]],
+      ];
+
+      return $bloques[$clave] ?? null;
+  }
+
   private function returnAyudaView($viewName, $titulo = "Ayuda", $descripcion = '', array $viewData = [])
   {
       $user = auth()->user();
       $header_titulo = $titulo;
       $header_descripcion = $descripcion;
+
+      $bloqueEquipo = $this->bloqueEquipoPara($viewName);
+      if ($bloqueEquipo && isset($viewData['functionalSummarySections'])) {
+          $viewData['functionalSummarySections'][] = ['title' => $bloqueEquipo[0], 'paragraphs' => $bloqueEquipo[1]];
+          $viewData['functionalSummaryRelated'] = array_merge($viewData['functionalSummaryRelated'] ?? [], [
+              ['href' => route('ayuda-equipo-en-informe'), 'label' => 'Como llega un equipo a un informe'],
+          ]);
+      }
+
       return view($viewName, array_merge(
           compact('user', 'header_titulo', 'header_descripcion'),
           $viewData
@@ -33,6 +88,12 @@ public function __construct()
       $user = auth()->user();
       $header_titulo = $title;
       $header_descripcion = '';
+
+      $bloqueEquipo = $this->bloqueEquipoPara($title);
+      if ($bloqueEquipo) {
+          $sections[] = ['title' => $bloqueEquipo[0], 'paragraphs' => $bloqueEquipo[1]];
+          $related[] = ['href' => route('ayuda-equipo-en-informe'), 'label' => 'Como llega un equipo a un informe'];
+      }
 
       return view('ayuda.intro_simple', compact(
           'user',
@@ -1450,88 +1511,17 @@ public function __construct()
 
   public function gestionEquipos()
   {
-      return $this->returnAyudaIntroView(
-          'Gestionar equipos',
-          [
-              'Esta seccion administra el maestro general de equipos que despues alimenta internos, documentacion tecnica, QR e informes.',
-              'La UI actual muestra un listado tecnico y un modal donde se define metodo de ensayo, tipo de equipamiento, instrumento de medicion y opciones especiales como palpador para US.',
-          ],
-          $this->functionalSections(
-              [
-                  'En la tabla se muestran codigo, descripcion, metodo, tipo de equipamiento e instrumento de medicion.',
-                  'En el formulario se cargan codigo, descripcion, metodo de ensayo, tipo de equipamiento e instrumento de medicion.',
-                  'Para equipos US tambien puede marcarse la opcion de palpador.',
-              ],
-              [
-                  'Consultar el listado general de equipos y filtrarlos por el buscador del maestro.',
-                  'Crear un equipo nuevo desde el modal de alta.',
-                  'Editar informacion tecnica de un equipo existente.',
-                  'Eliminar equipos del maestro segun permisos y uso posterior.',
-              ],
-              [
-                  'Primero se revisa el listado para evitar duplicar equipos con el mismo codigo.',
-                  'Si hace falta una referencia nueva, se usa Nuevo y se completan los datos tecnicos que luego consumen internos e informes.',
-                  'Cuando cambia un criterio tecnico, se actualiza el maestro para que internos, QR y documentacion trabajen con la misma definicion.',
-              ],
-              'El equipo queda disponible como referencia base para internos, documentacion e informes sin necesidad de recrearlo en cada circuito.',
-              [
-                  'Que el metodo de ensayo y el tipo de equipamiento sean los correctos.',
-                  'Que el instrumento de medicion solo se use cuando corresponde al metodo configurado.',
-              ],
-              [
-                  'Nuevo: abre el modal para cargar codigo, descripcion, metodo, tipo e instrumento.',
-                  'Editar: modifica datos tecnicos del equipo existente.',
-                  'Eliminar: quita un equipo del catalogo si no debe seguir disponible.',
-                  'Buscar: ayuda a ubicar equipos por codigo o descripcion.',
-              ],
-              [
-                  'Depende de metodos de ensayo y tipos de equipamiento cargados para completar el alta.',
-                  'Los internos de equipo dependen de este maestro para poder crear unidades concretas.',
-              ],
-              [
-                  'Que muestra la tabla' => [
-                      'caption' => 'Ejemplo del maestro de equipos con sus datos tecnicos principales.',
-                      'columns' => ['Codigo', 'Descripcion', 'Metodo', 'Tipo', 'Instrumento', 'Acciones'],
-                      'rows' => [
-                          [
-                              'EQ-021',
-                              'Medidor US Krautkramer',
-                              'US',
-                              'Equipo portatil',
-                              'Calibrador',
-                              ['type' => 'actions', 'items' => [
-                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                              ]],
-                          ],
-                          [
-                              'EQ-044',
-                              'Equipo radiografico fijo',
-                              'RI',
-                              'Fuente',
-                              '-',
-                              ['type' => 'actions', 'items' => [
-                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                              ]],
-                          ],
-                      ],
-                  ],
-              ]
-          ),
-          [
-              ['href' => route('ayuda-gestion-interno-equipos'), 'label' => 'Gestionar internos de equipos'],
-              ['href' => route('ayuda-qr'), 'label' => 'QR y documentacion asociada'],
-              ['href' => route('ayuda-reportes'), 'label' => 'Reportes'],
-          ],
-          [
-              'Captura del listado de equipos.',
-              'GIF de alta o edicion del maestro.',
-          ],
-          [
-              'audience' => 'Operacion tecnica y trazabilidad',
-          ]
-      );
+      return $this->returnAyudaView('ayuda.gestion_equipos', 'Ayuda', '');
+  }
+
+  public function gestionInternoEquipos()
+  {
+      return $this->returnAyudaView('ayuda.gestion_internoequipos', 'Ayuda', '');
+  }
+
+  public function equipoEnInforme()
+  {
+      return $this->returnAyudaView('ayuda.equipo_en_informe', 'Ayuda', '');
   }
 
   public function gestionFuentes()
@@ -1605,96 +1595,6 @@ public function __construct()
           [
               'Captura del listado de fuentes.',
               'GIF de alta o edicion del maestro.',
-          ],
-          [
-              'audience' => 'Operacion tecnica y trazabilidad',
-          ]
-      );
-  }
-
-  public function gestionInternoEquipos()
-  {
-      return $this->returnAyudaIntroView(
-          'Gestionar internos de equipos',
-          [
-              'Esta seccion administra cada unidad concreta de equipo dentro del sistema, a partir del maestro general de equipos.',
-              'Desde aqui se consultan internos existentes, se crean nuevas unidades, se editan sus datos operativos y se eliminan registros cuando corresponde.',
-          ],
-          $this->functionalSections(
-              [
-                  'En la tabla se muestran numero interno, tipo de equipamiento, equipo asociado, metodo, fuente vinculada, actividad, frente y fecha de baja.',
-                  'En el formulario se cargan numero de serie, numero interno, equipo, estado activo y datos tecnicos que cambian segun el metodo del equipo.',
-                  'Para RI y RD puede asociarse un interno de fuente y completar foco, voltaje y amperaje; para DZ se cargan probeta y dureza de calibracion.',
-              ],
-              [
-                  'Consultar el listado de internos ya cargados y distinguir activos de dados de baja.',
-                  'Crear un interno nuevo cuando se incorpora una unidad operativa concreta.',
-                  'Editar datos del interno para actualizar su identificacion, equipo, fuente asociada o estado.',
-                  'Eliminar registros cuando ya no correspondan y el sistema lo permita.',
-                  'Abrir el historial de fuentes desde la accion por fila cuando hace falta revisar trazabilidad.',
-              ],
-              [
-                  'Primero se confirma que el equipo base exista en el maestro general.',
-                  'Despues se da de alta el interno con su identificacion particular y, si corresponde, se vincula una fuente o se cargan datos tecnicos del metodo.',
-                  'El listado se usa luego para corregir datos, revisar si el interno esta activo o abrir su trazabilidad de fuente.',
-              ],
-              'Cada interno queda individualizado y listo para integrarse con documentacion, consultas QR y trazabilidad.',
-              [
-                  'Que el equipo seleccionado sea el correcto y que el metodo asociado coincida con los datos tecnicos cargados.',
-                  'Que frente, fuente y estado activo reflejen la situacion real del interno.',
-              ],
-              [
-                  'Nuevo: abre el modal para cargar la unidad concreta y sus datos tecnicos.',
-                  'Historial de fuentes: abre la trazabilidad asociada al interno desde la tabla.',
-                  'Editar: actualiza identificacion o datos del interno.',
-                  'Eliminar: quita el interno cuando ya no debe permanecer activo.',
-                  'Buscar: ayuda a encontrar rapidamente el interno en el listado.',
-              ],
-              [
-                  'Depende de equipos cargados previamente y, para ciertos metodos, tambien de internos de fuente disponibles.',
-                  'QR, documentacion tecnica e informes consumen despues los internos creados en este modulo.',
-              ],
-              [
-                  'Que muestra la tabla' => [
-                      'caption' => 'Ejemplo del listado de internos de equipos con trazabilidad basica.',
-                      'columns' => ['Interno', 'Equipo', 'Metodo', 'Fuente', 'Estado', 'Acciones'],
-                      'rows' => [
-                          [
-                              'INT-103',
-                              'Medidor US Krautkramer',
-                              'US',
-                              '-',
-                              ['type' => 'badge', 'text' => 'Activo', 'class' => 'ayuda_demo_badge--success'],
-                              ['type' => 'actions', 'items' => [
-                                  ['label' => 'Historial', 'description' => '', 'icon' => 'fa fa-table', 'class' => 'btn btn-default btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                              ]],
-                          ],
-                          [
-                              'INT-212',
-                              'Equipo radiografico fijo',
-                              'RI',
-                              'FTE-08',
-                              ['type' => 'badge', 'text' => 'Baja', 'class' => 'ayuda_demo_badge--warning'],
-                              ['type' => 'actions', 'items' => [
-                                  ['label' => 'Historial', 'description' => '', 'icon' => 'fa fa-table', 'class' => 'btn btn-default btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                              ]],
-                          ],
-                      ],
-                  ],
-              ]
-          ),
-          [
-              ['href' => route('ayuda-gestion-equipos'), 'label' => 'Gestionar equipos'],
-              ['href' => route('ayuda-qr'), 'label' => 'QR y documentacion asociada'],
-              ['href' => route('ayuda-gestion-documentaciones'), 'label' => 'Gestionar documentaciones'],
-              ['href' => route('ayuda-reportes'), 'label' => 'Reportes'],
-          ],
-          [
-              'Captura del listado de internos de equipos.',
-              'GIF de alta o edicion del interno.',
           ],
           [
               'audience' => 'Operacion tecnica y trazabilidad',
