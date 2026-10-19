@@ -1,7 +1,6 @@
 <template>
   <div class="metodos-equipo">
-    <span v-for="(m, i) in lista" :key="m.id" class="metodo-chip"
-          :class="{ 'metodo-chip-principal': i === 0 && lista.length > 1 }"
+    <span v-for="m in lista" :key="m.id" class="metodo-chip"
           :title="m.descripcion">{{ m.metodo }}</span>
   </div>
 </template>
@@ -45,8 +44,5 @@
   font-weight: 600;
   line-height: 18px;
   white-space: nowrap;
-}
-.metodo-chip-principal {
-  background: #fdd835;
 }
 </style>
