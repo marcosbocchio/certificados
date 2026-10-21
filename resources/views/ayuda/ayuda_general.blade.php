@@ -73,6 +73,7 @@
                 ['label' => 'Gestionar soldadores', 'href' => route('ayuda-gestion-soldadores')],
                 ['label' => 'Gestionar equipos', 'href' => route('ayuda-gestion-equipos')],
                 ['label' => 'Gestionar internos de equipos', 'href' => route('ayuda-gestion-interno-equipos')],
+                ['label' => 'Cómo llega un equipo a un informe', 'href' => route('ayuda-equipo-en-informe')],
                 ['label' => 'Gestionar fuentes', 'href' => route('ayuda-gestion-fuentes')],
                 ['label' => 'Gestionar internos de fuente', 'href' => route('ayuda-gestion-interno-fuente')],
                 ['label' => 'Gestionar vehículos', 'href' => route('ayuda-gestion-vehiculos')],

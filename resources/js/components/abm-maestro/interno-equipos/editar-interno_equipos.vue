@@ -46,7 +46,7 @@
                                 </div>                            
                             </div>                                  
 
-                            <div v-if="this.equipo ? (this.equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD' ? true : false) : false" class="col-md-12">
+                            <div v-if="tieneMetodo('RI') || tieneMetodo('RD')" class="col-md-12">
                                 <div class="form-group">
                                     <label>Fuente </label>
                                     <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie" @input="Registro.foco = ''">
@@ -58,40 +58,40 @@
                                 </div>
                             </div>
 
-                            <div v-if="(interno_fuente || (interno_fuente && (equipo && equipo.metodo_ensayos.metodo == 'RI') || (interno_fuente && (equipo && equipo.metodo_ensayos.metodo == 'RD'))))" class="col-md-12">
+                            <div v-if="interno_fuente" class="col-md-12">
                                 <div class="form-group">
                                     <label for="foco">Foco </label>
                                     <input v-model="interno_fuente.foco" type="number" class="form-control" disabled name="foco">
                                 </div>
                             </div>
 
-                            <div v-if="(equipo ? ((equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD') ? true : false) : false) && (!interno_fuente)" class="col-md-12">
+                            <div v-if="(tieneMetodo('RI') || tieneMetodo('RD')) && (!interno_fuente)" class="col-md-12">
                                 <div class="form-group">
                                     <label for="foco">Foco </label>
                                     <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.01">
                                 </div>
                             </div>
 
-                            <div v-if="equipo ? ((equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD') ? true : false) : false" class="col-md-12">
+                            <div v-if="tieneMetodo('RI') || tieneMetodo('RD')" class="col-md-12">
                                 <div class="form-group">
                                     <label for="voltaje">Voltaje</label>
                                     <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" max="9999" value="" step="0.1">
                                 </div>
                             </div>
 
-                            <div  v-if="equipo ? (equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD' ? true : false) : false" class="col-md-12">
+                            <div  v-if="tieneMetodo('RI') || tieneMetodo('RD')" class="col-md-12">
                                 <div class="form-group">
                                     <label for="amperaje">Amperaje</label>
                                     <input v-model="Registro.amperaje" type="number" name="amperaje" class="form-control" max="9999" value="" step="0.1">
                                 </div>
                             </div>
-                            <div  v-if="equipo ? (equipo.metodo_ensayos.metodo === 'DZ' ? true : false) : false" class="col-md-12">
+                            <div  v-if="tieneMetodo('DZ')" class="col-md-12">
                                 <div class="form-group">
                                     <label for="amperaje">Probeta *</label>
                                     <input v-model="Registro.probeta" type="text" name="probeta" class="form-control" value="">
                                 </div>
                             </div>
-                            <div  v-if="equipo ? (equipo.metodo_ensayos.metodo === 'DZ' ? true : false) : false" class="col-md-12">
+                            <div  v-if="tieneMetodo('DZ')" class="col-md-12">
                                 <div class="form-group">
                                     <label for="amperaje">Dureza de calibración *</label>
                                     <input v-model="Registro.dureza_calibracion" type="text" name="dureza_calibracion" class="form-control" value="">
@@ -165,6 +165,13 @@ export default {
     },
 
     methods: {
+           tieneMetodo : function (metodo) {
+                var e = this.equipo;
+                if (!e) return false;
+                var lista = (e.metodos && e.metodos.length) ? e.metodos : [e.metodo_ensayos];
+                return lista.some(m => m && m.metodo === metodo);
+           },
+
            openModal : function() {
                 this.$nextTick(function () {
                     this.Registro.nro_serie = this.selectRegistro.nro_serie;

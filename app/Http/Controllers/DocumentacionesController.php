@@ -64,6 +64,7 @@ class DocumentacionesController extends Controller
                                             ->with('TipoDocumentoUsuario')
                                             ->with('internoEquipo.equipo.tipoEquipamiento')
                                             ->with('internoEquipo.equipo.metodoEnsayos')
+                                            ->with('internoEquipo.equipo.metodos')
                                             ->with('internoFuente')
                                             ->with('vehiculo')
                                             ->with('userInternoEquipo')

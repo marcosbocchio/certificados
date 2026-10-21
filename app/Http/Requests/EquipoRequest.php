@@ -21,10 +21,11 @@ class EquipoRequest extends FormRequest
     public function rules()
     {
         $condicional = [];
-        $metodo_ensayo = $this->metodo_ensayos;
-        log::debug('metodo: ' . $metodo_ensayo['metodo']);
+        $metodos = $this->metodos ?: [$this->metodo_ensayos];
+        $nombres_metodos = collect($metodos)->pluck('metodo');
+        log::debug('metodos: ' . $nombres_metodos->implode(','));
 
-        if ($metodo_ensayo['metodo'] == 'RI') { 
+        if ($nombres_metodos->contains('RI')) {
             $condicional = [
                 'tipo_equipamiento' => 'required',
             ];
@@ -47,8 +48,9 @@ class EquipoRequest extends FormRequest
     {
             return [
                 'codigo'                   => 'código',
-                'descripcion'              =>'descripción', 
-                'metodo_ensayo'            =>'Método de ensayo', 
+                'descripcion'              =>'descripción',
+                'metodo_ensayos'           =>'método de ensayo',
+                'tipo_equipamiento'        =>'tipo de equipamiento',
             ];
      
     }

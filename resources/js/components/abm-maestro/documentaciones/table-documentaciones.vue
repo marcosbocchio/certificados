@@ -43,7 +43,7 @@
 
               <!-- Método de Ensayo -->
               <td v-if="registro.metodo_ensayo && registro.metodo_ensayo.id">{{ registro.metodo_ensayo.metodo }}</td>
-              <td v-else-if="registro.interno_equipo.length > 0">{{ registro.interno_equipo[0].equipo.metodo_ensayos.metodo }}</td>
+              <td v-else-if="registro.interno_equipo.length > 0"><metodos-equipo :equipo="registro.interno_equipo[0].equipo"></metodos-equipo></td>
               <td v-else>&nbsp;</td>
 
               <!-- Usuario -->

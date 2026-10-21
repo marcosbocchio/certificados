@@ -86,7 +86,7 @@
                                                     <th style="text-align: center;" class="col-md-1">Doc.</th>
                                                 </tr>
                                                 <tr v-for="(item,k) in TablaInternoEquipos.data" :key="k" :class="[item.vencida_sn ? 'vencidas' : (item.cant_notificaciones ? 'notificadas' : '')]">
-                                                    <td>{{ item.metodo }}</td>
+                                                    <td><metodos-equipo :texto="item.metodo"></metodos-equipo></td>
                                                     <td>{{ item.nro_interno }} </td>                                 
                                                     <td>{{ item.nro_serie }} </td>
                                                     <td>{{ item.equipo_codigo}} </td>

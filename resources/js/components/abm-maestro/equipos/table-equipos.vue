@@ -17,7 +17,7 @@
           <tr v-for="registro in registros" :key="registro.id">                        
             <td>{{ registro.codigo }}</td>
             <td>{{ registro.descripcion }}</td>
-            <td>{{ registro.metodo_ensayos.metodo }}</td>  
+            <td><metodos-equipo :equipo="registro"></metodos-equipo></td>
             <td v-if ="registro.tipo_equipamiento"> {{ registro.tipo_equipamiento.codigo }} </td>  
             <td v-else>&nbsp;</td>
             <td>{{ registro.instrumento_medicion }}</td>   

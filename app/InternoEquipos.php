@@ -43,7 +43,7 @@ class InternoEquipos extends Model
                 ->orWhereHas('equipo', function ($q) use ($filtro) {
                     $q->whereRaw("equipos.codigo LIKE ?", ["%{$filtro}%"]);
                 })
-                ->orWhereHas('equipo.metodoEnsayos', function ($q) use ($filtro) {
+                ->orWhereHas('equipo.metodos', function ($q) use ($filtro) {
                     $q->whereRaw("metodo_ensayos.metodo = ?", [$filtro]);
                 })
                 ->orWhereHas('equipo.tipoEquipamiento', function ($q) use ($filtro) {

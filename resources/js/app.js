@@ -191,6 +191,7 @@ Vue.component('table-tipos_equipamiento', require('./components/abm-maestro/tipo
 Vue.component('editar-tipos_equipamiento', require('./components/abm-maestro/tipo-equipamiento/editar-tipos_equipamiento.vue').default);
 Vue.component('nuevo-tipos_equipamiento', require('./components/abm-maestro/tipo-equipamiento/nuevo-tipos_equipamiento.vue').default);
 
+Vue.component('metodos-equipo', require('./components/abm-maestro/equipos/metodos-equipo.vue').default);
 Vue.component('table-equipos', require('./components/abm-maestro/equipos/table-equipos.vue').default);
 Vue.component('editar-equipos', require('./components/abm-maestro/equipos/editar-equipos.vue').default);
 Vue.component('nuevo-equipos', require('./components/abm-maestro/equipos/nuevo-equipos.vue').default);
@@ -359,6 +360,17 @@ Vue.component('ayuda-demo-abm-form',              require('./components/ayuda/ay
 /* Ayuda - Bloque 6 (Cierre) */
 Vue.component('ayuda-demo-cambio-clave',          require('./components/ayuda/ayuda-demo-cambio-clave.vue').default);
 Vue.component('ayuda-demo-buscador',              require('./components/ayuda/ayuda-demo-buscador.vue').default);
+
+/* Ayuda: equipos, internos y su recorrido hasta el informe */
+Vue.component('ayuda-demo-equipos',               require('./components/ayuda/ayuda-demo-equipos.vue').default);
+Vue.component('ayuda-demo-interno-equipos',       require('./components/ayuda/ayuda-demo-interno-equipos.vue').default);
+Vue.component('ayuda-demo-equipo-informe',        require('./components/ayuda/ayuda-demo-equipo-informe.vue').default);
+Vue.component('ayuda-equipo-metodos',             require('./components/ayuda/ayuda-equipo-metodos.vue').default);
+Vue.component('ayuda-equipo-vs-interno',          require('./components/ayuda/ayuda-equipo-vs-interno.vue').default);
+Vue.component('ayuda-interno-baja',               require('./components/ayuda/ayuda-interno-baja.vue').default);
+Vue.component('ayuda-equipo-recorrido',           require('./components/ayuda/ayuda-equipo-recorrido.vue').default);
+Vue.component('ayuda-equipo-condiciones',         require('./components/ayuda/ayuda-equipo-condiciones.vue').default);
+Vue.component('ayuda-chip-metodo',                require('./components/ayuda/comunes/ayuda-chip-metodo.vue').default);
 
 /* Ayuda - Componentes comunes (manual reformulado) */
 Vue.component('ayuda-callout',                    require('./components/ayuda/comunes/ayuda-callout.vue').default);

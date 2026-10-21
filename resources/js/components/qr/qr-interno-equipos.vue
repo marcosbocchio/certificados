@@ -64,7 +64,7 @@
                                                     </th>
                                                 </tr>
                                                 <tr v-for="(item,k) in paginatedItems" :key="item.id">
-                                                    <td>{{ item.equipo.metodo_ensayos.metodo }}</td>
+                                                    <td><metodos-equipo :equipo="item.equipo"></metodos-equipo></td>
                                                     <td>{{ item.nro_interno }} </td>                                 
                                                     <td>{{ item.nro_serie }} </td>
                                                     <td>{{ item.equipo.codigo}} </td>

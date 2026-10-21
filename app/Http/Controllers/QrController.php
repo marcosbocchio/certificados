@@ -62,6 +62,7 @@ class QrController extends Controller
       $filtro = $search !== 'null' ? $search : '';
 
       return InternoEquipos::with('equipo.metodoEnsayos')
+                            ->with('equipo.metodos')
                             ->with('equipo.tipoEquipamiento')
                             ->with('internoFuente.fuente')
                             ->whereRaw('0 = ?',array($tipo_equipamiento_id))

@@ -26,7 +26,7 @@
             </td>
             <td v-else>&nbsp;</td>
             <td>{{ registro.equipo.codigo }}</td>
-            <td>{{ registro.equipo.metodo_ensayos.metodo }}</td>
+            <td><metodos-equipo :equipo="registro.equipo"></metodos-equipo></td>
             <th>
                 <button class="btn btn-xs" style="color: black !important;margin-top: 3px;" title="Historial de fuentes" v-on:click.prevent="TrazabilidadFuente(registro)"><span class="fa fa-table"></span></button>
             </th>

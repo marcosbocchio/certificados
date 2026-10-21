@@ -25,8 +25,8 @@ class InternoEquipoRequest extends FormRequest
     {
     $probeta= '';
     $dureza_calibracion= '';
-    $metodo_ensayo = $this->equipo['metodo_ensayos'];
-    if($metodo_ensayo['metodo'] == 'DZ'){
+    $metodos = !empty($this->equipo['metodos']) ? $this->equipo['metodos'] : [$this->equipo['metodo_ensayos']];
+    if(collect($metodos)->pluck('metodo')->contains('DZ')){
 
         $probeta = 'required|max:15';
         $dureza_calibracion = 'required|max:5';

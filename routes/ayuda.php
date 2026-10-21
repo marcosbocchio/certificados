@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('ayuda_gestion_equipos', 'AyudaController@gestionEquipos')->name('ayuda-gestion-equipos');
     Route::get('ayuda_gestion_fuentes', 'AyudaController@gestionFuentes')->name('ayuda-gestion-fuentes');
     Route::get('ayuda_gestion_interno_equipos', 'AyudaController@gestionInternoEquipos')->name('ayuda-gestion-interno-equipos');
+    Route::get('ayuda_equipo_en_informe', 'AyudaController@equipoEnInforme')->name('ayuda-equipo-en-informe');
     Route::get('ayuda_gestion_materiales', 'AyudaController@gestionMateriales')->name('ayuda-gestion-materiales');
     Route::get('ayuda_gestion_productos', 'AyudaController@gestionProductos')->name('ayuda-gestion-productos');
     Route::get('ayuda_gestion_servicios', 'AyudaController@gestionServicios')->name('ayuda-gestion-servicios');

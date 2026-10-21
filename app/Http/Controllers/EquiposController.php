@@ -23,7 +23,7 @@ class EquiposController extends Controller
      */
     public function index()
     {
-        return Equipos::with('metodoEnsayos')->with('tipoEquipamiento')->get();
+        return Equipos::with('metodoEnsayos')->with('metodos')->with('tipoEquipamiento')->get();
 
     }
 
@@ -33,6 +33,7 @@ class EquiposController extends Controller
 
         return Equipos::orderBy('id','DESC')
                       ->with('metodoEnsayos')
+                      ->with('metodos')
                       ->with('tipoEquipamiento')
                       ->Filtro($filtro)
                       ->paginate(10);
@@ -123,15 +124,28 @@ class EquiposController extends Controller
 
         $equipo->codigo = $request['codigo'];
         $equipo->descripcion = $request['descripcion'];
-        $equipo->metodo_ensayo_id = $request['metodo_ensayos']['id'];
+        // Todos los métodos elegidos; el primero queda como método principal (equipos.metodo_ensayo_id)
+        // Un cliente con JS viejo (cacheado) manda solo metodo_ensayos y no la lista completa.
+        $lista_completa = !empty($request['metodos']);
+        $metodos = collect($lista_completa ? $request['metodos'] : [$request['metodo_ensayos']]);
+        $metodos_ids = $metodos->pluck('id')->unique()->values()->all();
+
+        $equipo->metodo_ensayo_id = $metodos_ids[0];
         $equipo->instrumento_medicion = $request['instrumento_medicion'];
         $equipo->tipo_equipamiento_id = $request['tipo_equipamiento']['id'];
-        if($request['metodo_ensayos']['metodo'] == 'US'){
+        if($metodos->pluck('metodo')->contains('US')){
           $equipo->palpador_sn = $request['palpador_sn'];
         }else{
           $equipo->palpador_sn = 0;
         }
+        $tenia_varios = $equipo->exists && $equipo->metodos()->count() > 1;
         $equipo->save();
+        if (!$lista_completa && $tenia_varios) {
+          // Sin la lista completa no se puede saber qué métodos quitar: se conservan los que ya tenía.
+          $equipo->metodos()->syncWithoutDetaching($metodos_ids);
+        } else {
+          $equipo->metodos()->sync($metodos_ids);
+        }
 
       }
 
@@ -172,9 +186,11 @@ class EquiposController extends Controller
     public function EquiposMetodo($metodo)
     {
         return DB::table('equipos')
-                    ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
+                    ->join('equipo_metodo_ensayo','equipo_metodo_ensayo.equipo_id','=','equipos.id')
+                    ->join('metodo_ensayos','equipo_metodo_ensayo.metodo_ensayo_id','=','metodo_ensayos.id')
                     ->where('metodo_ensayos.metodo','=',$metodo)
                     ->select('equipos.*')
+                    ->distinct()
                     ->get();
     }
 }
