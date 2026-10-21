@@ -565,7 +565,7 @@
                         <div v-if="!reparacion_sn" class="col-md-2">
                             <div class="form-group">
                                 <label for="junta">Elemento</label>
-                                <input type="text" v-model="junta" class="form-control" id="junta" maxlength="10">
+                                <input type="text" v-model="junta" class="form-control" id="junta" maxlength="14">
                             </div>
                         </div>
                         <div v-else>
