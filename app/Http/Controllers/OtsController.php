@@ -29,7 +29,7 @@ class OtsController extends Controller
     public function __construct(OtsRepository $otRepository)
     {
 
-     $this->middleware(['role_or_permission:Sistemas|O_alta'],['only' => ['create','edit']]);
+     $this->middleware(['role_or_permission:Sistemas|O_alta'],['only' => ['create','edit','store','update']]);
       $this->ot = $otRepository;
 
     }
@@ -41,22 +41,14 @@ class OtsController extends Controller
     public function index(Request $request)
     {
             $user = Auth::user();
-            $esClienteTipo = $user && $user->cliente_id;
             $filtro = $request->search;
-            return Ots::when($esClienteTipo, function ($q) use ($user) {
-                                if (!$user->hasRole('Cliente')) {
-                                    return $q->whereRaw('1 = 0');
-                                }
-                                return $q->whereIn('ots.id', function ($sub) use ($user) {
-                                    $sub->select('ot_id')
-                                        ->from('ot_usuarios_clientes')
-                                        ->where('user_id', $user->id);
-                                });
-                            })
+            return Ots::visiblesPara($user)
                             ->join('clientes','clientes.id','=','ots.cliente_id')
                             ->selectRaw('ots.*,DATE_FORMAT(ots.fecha,"%d/%m/%Y")as fecha_formateada')
                             ->with('cliente')
-                            ->otfiltro($filtro)
+                            ->where(function ($q) use ($filtro) {
+                                $q->otfiltro($filtro);
+                            })
                             ->orderBy('id','DESC')
                             ->paginate(10);
     }

@@ -203,6 +203,15 @@ class OtsRepository extends BaseRepository
 
     }
 
+    // El creador queda asignado para no perder acceso a la OT que crea
+    $creador_id = auth()->id();
+    if ($creador_id && !OtOperarios::where('ot_id',$ot->id)->where('user_id',$creador_id)->exists()) {
+      $ot_creador = new OtOperarios;
+      $ot_creador->ot_id = $ot->id;
+      $ot_creador->user_id = $creador_id;
+      $ot_creador->save();
+    }
+
   }
 
   public function SetServicios($servicios,Ots $ot){    
