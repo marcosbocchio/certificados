@@ -16,7 +16,7 @@ Route::redirect('/', '/login',301)->name('login');
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'ot.acceso']], function () {
 
       Route::get('/area/enod/perfil','UserController@callviewPerfil')->name('perfil');
       Route::get('/area/enod','DashboardController@index')->name('dashboard');

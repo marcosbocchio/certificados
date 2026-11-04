@@ -12,30 +12,15 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * Si el usuario tiene rol Cliente, verifica que la OT pertenezca a su cliente.
-     * ENOD/Admin/Sistemas no se restringen. ot_id vacío o 0 se permite (sin OT específica).
+     * Verifica que el usuario pueda ver la OT (clientes: sus OTs; personal: asignadas o permiso O_todas_las_ots). ot_id vacío o 0 se permite (sin OT específica).
      */
     protected function autorizarOtCliente($ot_id)
     {
-        $user = auth()->user();
-
-        if (!$user || !$user->cliente_id) {
-            return;
-        }
-
         if (empty($ot_id) || $ot_id == 0) {
             return;
         }
 
-        if (!$user->hasRole('Cliente')) {
-            abort(403, 'No tiene acceso a esta orden de trabajo.');
-        }
-
-        $asignado = \App\OtUsuariosClientes::where('ot_id', $ot_id)
-            ->where('user_id', $user->id)
-            ->exists();
-
-        if (!$asignado) {
+        if (!\App\Ots::puedeAcceder(auth()->user(), $ot_id)) {
             abort(403, 'No tiene acceso a esta orden de trabajo.');
         }
     }
