@@ -162,7 +162,7 @@
       </div>
     </div>
   </div>
-  <div v-if="(ots.data && ots.data.length) || loading">
+  <div>
   <div class="row">
     <div class="col-md-12">
         <div class="box box-custom-enod">
@@ -189,6 +189,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr v-if="!loading && !(ots.data && ots.data.length)">
+                                        <td colspan="10" class="text-center text-muted">No hay órdenes de trabajo para mostrar</td>
+                                    </tr>
                                     <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}"  class="pointer" >
                                         <td> {{ot.numero}}</td>
                                         <td> {{ot.cliente.nombre_fantasia}}</td>
@@ -502,7 +505,10 @@ export default {
 
       EntrarCuadro : function(seccion){
 
-        console.log(seccion);
+        if (!(parseInt(this.ot_id_selected) > 0)) {
+          toastr.warning('No tiene órdenes de trabajo asignadas. Solicite que lo asignen a una OT para acceder.');
+          return;
+        }
 
         localStorage.setItem('ot_id', this.ot_id_selected)
         localStorage.setItem('search', this.search)
