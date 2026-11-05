@@ -21,7 +21,7 @@
             </div>
             <div class="ayuda_indice_filtros">
                 <button
-                    v-for="cat in categorias"
+                    v-for="cat in categoriasVisibles"
                     :key="cat.id"
                     class="ayuda_indice_chip"
                     :class="{ 'is-active': categoria === cat.id }"
@@ -73,6 +73,7 @@ export default {
                 { id: 'operativo',  label: 'Operativo' },
                 { id: 'documental', label: 'Documental' },
                 { id: 'maestros',   label: 'Maestros' },
+                { id: 'accesos',    label: 'Roles y accesos' },
                 { id: 'interno',    label: 'Interno' },
                 { id: 'dosimetria', label: 'Dosimetría' },
                 { id: 'extras',     label: 'Multimedia' },
@@ -80,6 +81,9 @@ export default {
         };
     },
     computed: {
+        categoriasVisibles() {
+            return this.categorias.filter(c => c.id === 'todas' || this.secciones.some(s => s.categoria === c.id));
+        },
         seccionesVisibles() {
             const q = this.busqueda.trim().toLowerCase();
             return this.secciones

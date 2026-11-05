@@ -80,9 +80,6 @@
                 ['label' => 'Gestionar plantas', 'href' => route('ayuda-gestion-plantas')],
                 ['label' => 'Gestionar roles', 'href' => route('ayuda-gestionar-roles')],
                 ['label' => 'Gestionar permisos', 'href' => route('ayuda-gestion-permisos')],
-                auth()->user()->canany(['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Guía de roles y accesos', 'href' => route('ayuda-guia-roles')] : null,
-                auth()->user()->canany(['M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Dar acceso a un usuario, paso a paso', 'href' => route('ayuda-guia-acceso-usuario')] : null,
-                auth()->user()->canany(['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Un usuario no ve una OT o una sección', 'href' => route('ayuda-guia-no-veo')] : null,
             ])),
         ],
         [
@@ -128,6 +125,25 @@
             ],
         ],
     ];
+    $puedeGuiaRoles = auth()->user()->canany(['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita']);
+    if ($puedeGuiaRoles) {
+        $tarjetaAccesos = [
+            'titulo' => 'Roles y accesos',
+            'descripcion' => 'Cómo se decide qué puede hacer cada persona y en qué órdenes de trabajo. Para quienes administran usuarios y roles.',
+            'icono' => 'key',
+            'color' => 'naranja',
+            'categoria' => 'accesos',
+            'links' => array_values(array_filter([
+                ['label' => 'Guía de roles y accesos', 'href' => route('ayuda-guia-roles')],
+                auth()->user()->canany(['M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Dar acceso a un usuario, paso a paso', 'href' => route('ayuda-guia-acceso-usuario')] : null,
+                ['label' => 'Un usuario no ve una OT o una sección', 'href' => route('ayuda-guia-no-veo')],
+                auth()->user()->canany(['M_roles', 'M_roles_edita']) ? ['label' => 'Gestionar roles', 'href' => route('ayuda-gestionar-roles')] : null,
+                auth()->user()->canany(['M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Gestionar usuarios', 'href' => route('ayuda-gestion-usuario')] : null,
+            ])),
+        ];
+        $posicion = array_search('maestros', array_column($secciones, 'categoria'));
+        array_splice($secciones, $posicion === false ? count($secciones) : $posicion + 1, 0, [$tarjetaAccesos]);
+    }
 @endphp
 
 <div id="app">
