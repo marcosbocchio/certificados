@@ -25,7 +25,7 @@
         <div class="acciones">
             <a class="btn" href="{{ url('/area/enod') }}">Volver al tablero</a>
             <a class="btn sec" href="javascript:history.back()">Volver atrás</a>
-            @if(auth()->check() && auth()->user()->canany(['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita']))
+            @if(auth()->check() && auth()->user()->puedeAlguno(['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita']))
                 <a class="btn sec" href="{{ route('ayuda-guia-no-veo') }}">Ver guía de roles</a>
             @endif
         </div>
