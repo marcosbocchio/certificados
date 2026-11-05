@@ -4,7 +4,6 @@
 
 <div id="app">
   <enod-help-button url="{{ route('ayuda-asignar-vehiculos') }}"></enod-help-button>
-  <enod-guia-roles-link></enod-guia-roles-link>
 
    <ot-interno-equipos
     :ot_id_data = "{{$ot_id}}"

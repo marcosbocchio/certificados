@@ -17,7 +17,7 @@ public function __construct()
 
     // Las guias de roles solo las leen quienes administran usuarios o roles; cada seccion se ajusta luego a sus permisos.
     $this->middleware(['role_or_permission:Sistemas|M_roles|M_roles_edita|M_usuarios|M_usuarios_edita'],['only' =>
-     ['guiaRoles','guiaAccesoUsuario','guiaNoVeo']]);
+     ['guiaRoles','guiaAccesoUsuario','guiaNoVeo','gestionarRoles']]);
 
 }
 
@@ -436,7 +436,6 @@ public function __construct()
             ['href' => route('ayuda-gestionar-roles'), 'label' => 'Gestionar roles'],
             ['href' => route('ayuda-gestion-permisos'), 'label' => 'Gestionar permisos'],
             ['href' => route('ayuda-guia-acceso-usuario'), 'label' => 'Dar acceso a un usuario, paso a paso'],
-            ['href' => route('ayuda-guia-roles'), 'label' => 'Guía de roles y accesos'],
             ['href' => route('ayuda-perfil'), 'label' => 'Perfil de usuario'],
         ],
     ]);
@@ -1527,7 +1526,7 @@ public function __construct()
 
   public function guiaRoles()
   {
-      return $this->returnAyudaView('ayuda.guia', 'Ayuda', '', ['entidad' => 'guia-roles']);
+      return redirect()->route('ayuda-gestionar-roles');
   }
 
   public function guiaAccesoUsuario()
@@ -2031,94 +2030,7 @@ public function __construct()
 
   public function gestionarRoles()
   {
-      return $this->returnAyudaIntroView(
-          'Gestionar roles',
-          [
-              'Esta seccion administra los roles del sistema y define que puede ver o hacer cada tipo de usuario a traves del conjunto de permisos asignados.',
-              'Desde el listado se consultan roles existentes, se crean nuevos, se editan permisos y configuraciones, y se eliminan roles cuando ya no deben seguir usandose.',
-          ],
-          $this->functionalSections(
-              [
-                  'En la tabla se muestran nombre del rol y guard asociado.',
-                  'En el formulario se cargan nombre, guard y una lista de permisos para marcar.',
-                  'La configuracion resultante se usa despues para asignar accesos a usuarios.',
-              ],
-              [
-                  'Consultar el listado de roles definidos.',
-                  'Crear roles nuevos con su nombre, guard y permisos asociados.',
-                  'Editar roles para ajustar permisos o datos del perfil.',
-                  'Eliminar roles cuando dejan de ser necesarios y no hay riesgos de uso incorrecto.',
-                  'Revisar desde el listado que roles existen antes de crear uno nuevo.',
-              ],
-              [
-                  'Se usa la pantalla para agrupar permisos bajo un perfil coherente, en vez de asignarlos usuario por usuario.',
-                  'Cuando un puesto nuevo necesita otro alcance, se crea o ajusta un rol desde este modulo.',
-                  'Si un usuario no accede a una accion esperada, este maestro sirve para revisar si el rol tiene los permisos correctos.',
-              ],
-              'El rol queda listo para asignarse a usuarios y sostener accesos coherentes dentro del sistema.',
-              [
-                  'Que el rol no replique otro perfil ya existente con los mismos permisos.',
-                  'Que los permisos marcados respondan al alcance real del usuario final.',
-              ],
-              [
-                  'Nuevo: abre el modal para cargar nombre, guard y marcar permisos.',
-                  'Editar: ajusta permisos o datos del rol existente.',
-                  'Eliminar: quita un rol cuando ya no debe seguir en uso y la operacion lo permite.',
-                  'Consultar listado: sirve para revisar perfiles antes de asignarlos a usuarios.',
-              ],
-              [
-                  'Depende de que los permisos esten definidos previamente para poder armar un rol consistente.',
-                  'Los usuarios dependen de este maestro para recibir accesos agrupados por perfil.',
-              ],
-          [
-              'Que muestra la tabla' => [
-                  'caption' => 'Ejemplo del listado de roles.',
-                      'columns' => ['Rol', 'Guard', 'Acciones'],
-                      'rows' => [
-                          [
-                              'Supervisor ENOD',
-                              'web',
-                              ['type' => 'actions', 'items' => [
-                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                                  ['label' => 'Eliminar', 'description' => '', 'icon' => 'fa fa-trash', 'class' => 'btn btn-enod-danger btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                              ]],
-                          ],
-                          [
-                              'Cliente consulta',
-                              'web',
-                              ['type' => 'actions', 'items' => [
-                                  ['label' => 'Editar', 'description' => '', 'icon' => 'fa fa-edit', 'class' => 'btn btn-warning btn-sm ayuda_btn_demo', 'mode' => 'icon', 'text' => ''],
-                              ]],
-                          ],
-                      ],
-                  ],
-              ]
-          ,
-              [
-                  'Configuracion > Roles.',
-              ],
-              [
-                  'Nombre del rol y al menos un permiso coherente con el perfil que se quiere crear.',
-              ],
-              [
-                  'Eliminar puede quedar bloqueado si el rol ya esta en uso o si el perfil actual no tiene permiso para administrar acceso.',
-                  'Editar permisos depende del alcance del usuario que administra roles.',
-              ]
-          ),
-          [
-              ['href' => route('ayuda-gestion-permisos'), 'label' => 'Gestionar permisos'],
-              ['href' => route('ayuda-gestion-usuario'), 'label' => 'Gestionar usuarios'],
-              ['href' => route('ayuda-guia-roles'), 'label' => 'Guía de roles y accesos'],
-              ['href' => route('ayuda-perfil'), 'label' => 'Perfil de usuario'],
-          ],
-          [
-              'Captura del listado de roles.',
-              'GIF de alta o ajuste de un rol.',
-          ],
-          [
-              'audience' => 'Administracion y sistemas ENOD',
-          ]
-      );
+      return $this->returnAyudaView('ayuda.guia', 'Ayuda', '', ['entidad' => 'gestionar-roles']);
   }
 
   public function visualizarInformes()
