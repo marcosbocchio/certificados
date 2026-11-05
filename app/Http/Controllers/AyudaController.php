@@ -1527,17 +1527,17 @@ public function __construct()
 
   public function guiaRoles()
   {
-      return view('ayuda.guia', ['entidad' => 'guia-roles']);
+      return $this->returnAyudaView('ayuda.guia', 'Ayuda', '', ['entidad' => 'guia-roles']);
   }
 
   public function guiaAccesoUsuario()
   {
-      return view('ayuda.guia', ['entidad' => 'guia-acceso-usuario']);
+      return $this->returnAyudaView('ayuda.guia', 'Ayuda', '', ['entidad' => 'guia-acceso-usuario']);
   }
 
   public function guiaNoVeo()
   {
-      return view('ayuda.guia', ['entidad' => 'guia-no-veo']);
+      return $this->returnAyudaView('ayuda.guia', 'Ayuda', '', ['entidad' => 'guia-no-veo']);
   }
 
   public function equipoEnInforme()
