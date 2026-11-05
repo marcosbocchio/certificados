@@ -6,6 +6,7 @@
 
 <div id="app">
   <enod-help-button url="{{ route('ayuda-generar-informes') }}"></enod-help-button>
+  <enod-guia-roles-link></enod-guia-roles-link>
 
    <ot-informes
     :usuario_metodos_data = '{{$usuario_metodos}}'

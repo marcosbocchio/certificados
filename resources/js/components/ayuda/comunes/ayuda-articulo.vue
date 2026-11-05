@@ -12,9 +12,9 @@
                         <h2>{{ heroData.titulo }}</h2>
                         <p v-if="heroData.descripcion">{{ heroData.descripcion }}</p>
                     </div>
-                    <a v-if="datos.ir_a" :href="datos.ir_a.ruta" class="ayuda_ir_sistema_btn">
-                        <i :class="'fa fa-' + (datos.ir_a.icono || 'external-link')"></i>
-                        {{ datos.ir_a.label || 'Ir al sistema' }}
+                    <a v-if="irA" :href="irA.ruta" class="ayuda_ir_sistema_btn">
+                        <i :class="'fa fa-' + (irA.icono || 'external-link')"></i>
+                        {{ irA.label || 'Ir al sistema' }}
                     </a>
                 </header>
 
@@ -30,6 +30,12 @@
                         {{ v.label }}
                     </button>
                 </nav>
+
+                <!-- Aviso: secciones que no corresponden a los permisos de quien lee -->
+                <ayuda-callout v-if="ocultas > 0" tipo="info" titulo="Algunas partes de esta guía no se muestran">
+                    Esta guía se adapta a lo que tu usuario puede administrar. Las secciones que corresponden a otros permisos
+                    quedan ocultas. Si necesitás verlas, pedile a quien administra los accesos que revise tus roles.
+                </ayuda-callout>
 
                 <!-- ¿Qué podés hacer? -->
                 <ayuda-seccion v-if="acciones.length" titulo="¿Qué podés hacer en esta pantalla?" id="acciones">
@@ -52,7 +58,7 @@
 
                 <!-- Secciones destacadas (explicación central, antes de los campos) -->
                 <ayuda-seccion
-                    v-for="(dest, i) in (datos.secciones_destacadas || [])"
+                    v-for="(dest, i) in visibles(datos.secciones_destacadas)"
                     :key="'dest-' + i"
                     :titulo="dest.titulo"
                     :id="'destacada-' + i">
@@ -143,7 +149,7 @@
 
                 <!-- Extras -->
                 <ayuda-seccion
-                    v-for="(extra, i) in (datos.secciones_extras || [])"
+                    v-for="(extra, i) in visibles(datos.secciones_extras)"
                     :key="'extra-' + i"
                     :titulo="extra.titulo"
                     :id="'extra-' + i">
@@ -153,17 +159,17 @@
 
                 <!-- Relacionados -->
                 <ayuda-seccion
-                    v-if="datos.relacionados && datos.relacionados.length"
+                    v-if="relacionados.length"
                     titulo="También te puede interesar"
                     id="relacionados">
-                    <ayuda-relacionados :items="datos.relacionados"></ayuda-relacionados>
+                    <ayuda-relacionados :items="relacionados"></ayuda-relacionados>
                 </ayuda-seccion>
 
                 <!-- CTA inferior -->
-                <div v-if="datos.ir_a" class="ayuda_articulo_cta_bottom">
-                    <a :href="datos.ir_a.ruta" class="ayuda_ir_sistema_btn">
-                        <i :class="'fa fa-' + (datos.ir_a.icono || 'external-link')"></i>
-                        {{ datos.ir_a.label || 'Ir al sistema' }}
+                <div v-if="irA" class="ayuda_articulo_cta_bottom">
+                    <a :href="irA.ruta" class="ayuda_ir_sistema_btn">
+                        <i :class="'fa fa-' + (irA.icono || 'external-link')"></i>
+                        {{ irA.label || 'Ir al sistema' }}
                     </a>
                 </div>
             </div>
@@ -206,11 +212,24 @@ export default {
             const ov = this.variante_obj && this.variante_obj.hero;
             return ov ? Object.assign({}, base, ov) : base;
         },
+        irA() {
+            const ir = this.datos.ir_a;
+            if (!ir) return null;
+            return this.visibles([ir]).length ? ir : null;
+        },
         acciones()      { return this.resolver('acciones', []); },
         dependencias()  { return this.resolver('dependencias', []); },
         bloques()       { return this.resolver('bloques', []); },
         botones()       { return this.resolver('botones', []); },
-        errores()       { return this.resolver('errores', []); },
+        errores()       { return this.visibles(this.resolver('errores', [])); },
+        relacionados()  { return this.visibles(this.datos.relacionados); },
+        ocultas() {
+            const total = (this.datos.secciones_destacadas || []).length + (this.datos.secciones_extras || []).length
+                + this.resolver('errores', []).length;
+            const vistas = this.visibles(this.datos.secciones_destacadas).length + this.visibles(this.datos.secciones_extras).length
+                + this.errores.length;
+            return total - vistas;
+        },
         calculos()      { return this.resolver('calculos', []); },
         edicion()       { return this.resolverObj('edicion'); },
         impacto()       { return this.resolver('impacto', []); },
@@ -228,6 +247,14 @@ export default {
         demoProps()     { return (this.variante_obj && this.variante_obj.demoProps) || this.datos.demoProps || {}; },
     },
     methods: {
+        // Un elemento con "permiso" (texto o lista) solo se muestra si el usuario tiene alguno de ellos.
+        visibles(lista) {
+            return (lista || []).filter(it => {
+                if (!it || !it.permiso) return true;
+                const permisos = Array.isArray(it.permiso) ? it.permiso : [it.permiso];
+                return permisos.some(p => this.$can(p));
+            });
+        },
         resolver(key, fallback) {
             const base = this.datos[key];
             if (!base) return fallback;

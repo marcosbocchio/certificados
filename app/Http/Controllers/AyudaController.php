@@ -15,6 +15,10 @@ public function __construct()
      ['crearOt','asignarOperadores','asignarSoldadoresUsuarios','asignarSoldadoresUsuarios',
      'generarInformes','generarInformesRi','generarInformesLp','generarInformesPm','generarInformesUs','asignarVehiculos']]);
 
+    // Las guias de roles solo las leen quienes administran usuarios o roles; cada seccion se ajusta luego a sus permisos.
+    $this->middleware(['role_or_permission:Sistemas|M_roles|M_roles_edita|M_usuarios|M_usuarios_edita'],['only' =>
+     ['guiaRoles','guiaAccesoUsuario','guiaNoVeo']]);
+
 }
 
   /*
@@ -431,6 +435,8 @@ public function __construct()
         'functionalSummaryRelated' => [
             ['href' => route('ayuda-gestionar-roles'), 'label' => 'Gestionar roles'],
             ['href' => route('ayuda-gestion-permisos'), 'label' => 'Gestionar permisos'],
+            ['href' => route('ayuda-guia-acceso-usuario'), 'label' => 'Dar acceso a un usuario, paso a paso'],
+            ['href' => route('ayuda-guia-roles'), 'label' => 'Guía de roles y accesos'],
             ['href' => route('ayuda-perfil'), 'label' => 'Perfil de usuario'],
         ],
     ]);
@@ -1519,6 +1525,21 @@ public function __construct()
       return $this->returnAyudaView('ayuda.gestion_internoequipos', 'Ayuda', '');
   }
 
+  public function guiaRoles()
+  {
+      return view('ayuda.guia', ['entidad' => 'guia-roles']);
+  }
+
+  public function guiaAccesoUsuario()
+  {
+      return view('ayuda.guia', ['entidad' => 'guia-acceso-usuario']);
+  }
+
+  public function guiaNoVeo()
+  {
+      return view('ayuda.guia', ['entidad' => 'guia-no-veo']);
+  }
+
   public function equipoEnInforme()
   {
       return $this->returnAyudaView('ayuda.equipo_en_informe', 'Ayuda', '');
@@ -2087,6 +2108,7 @@ public function __construct()
           [
               ['href' => route('ayuda-gestion-permisos'), 'label' => 'Gestionar permisos'],
               ['href' => route('ayuda-gestion-usuario'), 'label' => 'Gestionar usuarios'],
+              ['href' => route('ayuda-guia-roles'), 'label' => 'Guía de roles y accesos'],
               ['href' => route('ayuda-perfil'), 'label' => 'Perfil de usuario'],
           ],
           [

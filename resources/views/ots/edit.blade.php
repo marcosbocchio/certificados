@@ -13,6 +13,7 @@
  
  <div id="app">
   <enod-back-button fallback-url="/area/enod/ots"></enod-back-button>
+  <enod-guia-roles-link :con-ayuda="false"></enod-guia-roles-link>
 
 
   <ots :otdata="{{$ot}}"

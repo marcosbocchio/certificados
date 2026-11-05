@@ -3,6 +3,8 @@
 @section('contenido')
 
 <div id="app">
+  <enod-help-button url="{{ route('ayuda-gestion-permisos') }}"></enod-help-button>
+  <enod-guia-roles-link></enod-guia-roles-link>
 
    <abm-maestro modelo= "permissions" permiso_create="M_permisos_edita" ></abm-maestro>
 

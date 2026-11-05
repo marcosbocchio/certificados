@@ -11,6 +11,9 @@ import visualizarVehiculos from './visualizar-vehiculos.js';
 import equipos from './equipos.js';
 import internoEquipos from './interno-equipos.js';
 import equipoEnInforme from './equipo-en-informe.js';
+import guiaRoles from './guia-roles.js';
+import guiaAccesoUsuario from './guia-acceso-usuario.js';
+import guiaNoVeo from './guia-no-veo.js';
 
 export default {
     ot,
@@ -22,4 +25,7 @@ export default {
     equipos,
     'interno-equipos': internoEquipos,
     'equipo-en-informe': equipoEnInforme,
+    'guia-roles': guiaRoles,
+    'guia-acceso-usuario': guiaAccesoUsuario,
+    'guia-no-veo': guiaNoVeo,
 };

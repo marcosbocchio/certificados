@@ -56,7 +56,7 @@
             'icono' => 'database',
             'color' => 'naranja',
             'categoria' => 'maestros',
-            'links' => [
+            'links' => array_values(array_filter([
                 ['label' => 'Gestionar usuarios', 'href' => route('ayuda-gestion-usuario')],
                 ['label' => 'Gestionar clientes', 'href' => route('ayuda-gestion-cliente')],
                 ['label' => 'Gestionar comitentes', 'href' => route('ayuda-gestion-comitente')],
@@ -80,7 +80,10 @@
                 ['label' => 'Gestionar plantas', 'href' => route('ayuda-gestion-plantas')],
                 ['label' => 'Gestionar roles', 'href' => route('ayuda-gestionar-roles')],
                 ['label' => 'Gestionar permisos', 'href' => route('ayuda-gestion-permisos')],
-            ],
+                auth()->user()->canany(['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Guía de roles y accesos', 'href' => route('ayuda-guia-roles')] : null,
+                auth()->user()->canany(['M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Dar acceso a un usuario, paso a paso', 'href' => route('ayuda-guia-acceso-usuario')] : null,
+                auth()->user()->canany(['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Un usuario no ve una OT o una sección', 'href' => route('ayuda-guia-no-veo')] : null,
+            ])),
         ],
         [
             'titulo' => 'Operación interna',

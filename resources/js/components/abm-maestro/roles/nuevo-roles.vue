@@ -24,7 +24,7 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <strong>Permisos</strong>
+                                    <strong>Permisos</strong> <a href="/ayuda_guia_roles" target="_blank" class="small" style="margin-left:8px;"><i class="fa fa-key"></i> Ver guía de roles</a>
                                     <div v-for="(permiso,k) in permisos" :key="k" >
 
                                         <div class="col-sm-4 col-xs-12">

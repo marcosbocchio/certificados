@@ -53,6 +53,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('ayuda_gestion_vehiculos', 'AyudaController@gestionVehiculos')->name('ayuda-gestion-vehiculos');
     Route::get('ayuda_gestion_plantas', 'AyudaController@gestionPlantas')->name('ayuda-gestion-plantas');
     Route::get('ayuda_gestion_contratistas', 'AyudaController@gestionContratistas')->name('ayuda-gestion-contratistas');
+    Route::get('ayuda_guia_roles', 'AyudaController@guiaRoles')->name('ayuda-guia-roles');
+    Route::get('ayuda_guia_acceso_usuario', 'AyudaController@guiaAccesoUsuario')->name('ayuda-guia-acceso-usuario');
+    Route::get('ayuda_guia_no_veo', 'AyudaController@guiaNoVeo')->name('ayuda-guia-no-veo');
     Route::get('ayuda_gestion_permisos', 'AyudaController@gestionPermisos')->name('ayuda-gestion-permisos');
     Route::get('ayuda_stock', 'AyudaController@gestionStock')->name('ayuda-stock');
     Route::get('ayuda_asistencia', 'AyudaController@asistencia')->name('ayuda-asistencia');
