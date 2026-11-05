@@ -16,6 +16,20 @@ class User extends Authenticatable
     use Notifiable , HasRoles;
 
     /**
+     * Verdadero si el usuario tiene al menos uno de los permisos (el rol Sistemas pasa siempre).
+     */
+    public function puedeAlguno(array $permisos)
+    {
+        foreach ($permisos as $permiso) {
+            if ($this->can($permiso)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
