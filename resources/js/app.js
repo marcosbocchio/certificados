@@ -385,6 +385,9 @@ Vue.component('ayuda-flujo-documental',           require('./components/ayuda/co
 Vue.component('ayuda-articulo',                   require('./components/ayuda/comunes/ayuda-articulo.vue').default);
 
 /* Botones globales del sistema */
+Vue.component('ayuda-guia-pasos',                 require('./components/ayuda/ayuda-guia-pasos.vue').default);
+Vue.component('ayuda-guia-permisos',              require('./components/ayuda/ayuda-guia-permisos.vue').default);
+Vue.component('ayuda-guia-matriz',                require('./components/ayuda/ayuda-guia-matriz.vue').default);
 Vue.component('enod-help-button',                 require('./components/enod-help-button.vue').default);
 
 /* Reportes */

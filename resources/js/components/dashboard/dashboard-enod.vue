@@ -162,7 +162,7 @@
       </div>
     </div>
   </div>
-  <div v-if="(ots.data && ots.data.length) || loading">
+  <div>
   <div class="row">
     <div class="col-md-12">
         <div class="box box-custom-enod">
@@ -189,6 +189,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr v-if="!loading && !(ots.data && ots.data.length)">
+                                        <td colspan="10" class="text-center text-muted">
+                                            No hay órdenes de trabajo para mostrar.
+                                            <span v-if="!search">Si esperabas ver alguna, puede que todavía no estés asignado a ella.</span>
+                                            <a v-if="puedeVerGuiaRoles" href="/ayuda_guia_no_veo" target="_blank" style="margin-left:6px;"><i class="fa fa-key"></i> Ver guía de roles</a>
+                                        </td>
+                                    </tr>
                                     <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}"  class="pointer" >
                                         <td> {{ot.numero}}</td>
                                         <td> {{ot.cliente.nombre_fantasia}}</td>
@@ -283,6 +290,10 @@ export default {
     },
 
     computed :{
+
+        puedeVerGuiaRoles() {
+            return this.$can('M_roles') || this.$can('M_roles_edita') || this.$can('M_usuarios') || this.$can('M_usuarios_edita');
+        },
 
         ...mapState(['url',
                      'CantInformes',
@@ -502,7 +513,10 @@ export default {
 
       EntrarCuadro : function(seccion){
 
-        console.log(seccion);
+        if (!(parseInt(this.ot_id_selected) > 0)) {
+          toastr.warning('No tiene órdenes de trabajo asignadas. Solicite que lo asignen a una OT para acceder.');
+          return;
+        }
 
         localStorage.setItem('ot_id', this.ot_id_selected)
         localStorage.setItem('search', this.search)

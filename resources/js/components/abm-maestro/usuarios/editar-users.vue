@@ -169,7 +169,7 @@
                             <div class="clearfix"></div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <strong>Roles</strong>
+                                    <strong>Roles</strong> <a href="/ayuda_gestionar_roles" target="_blank" class="small" style="margin-left:8px;"><i class="fa fa-key"></i> Ver guía de roles</a>
                                     <div v-for="(rol,k) in roles" :key="k" >
                                         <div class="col-sm-4 col-xs-12">
                                             <input type="checkbox" :id=" rol.name " :value="rol.name" v-model="user_rol" style="float:left" :disabled="(rol.name=='Usuario Cliente') || (rol.name == 'Usuario Enod')" >
