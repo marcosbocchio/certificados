@@ -125,7 +125,7 @@
             ],
         ],
     ];
-    $puedeGuiaRoles = auth()->user()->canany(['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita']);
+    $puedeGuiaRoles = auth()->user()->puedeAlguno(['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita']);
     if ($puedeGuiaRoles) {
         $tarjetaAccesos = [
             'titulo' => 'Roles y accesos',
@@ -134,10 +134,10 @@
             'color' => 'naranja',
             'categoria' => 'accesos',
             'links' => array_values(array_filter([
-                auth()->user()->canany(['M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Dar acceso a un usuario, paso a paso', 'href' => route('ayuda-guia-acceso-usuario')] : null,
+                auth()->user()->puedeAlguno(['M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Dar acceso a un usuario, paso a paso', 'href' => route('ayuda-guia-acceso-usuario')] : null,
                 ['label' => 'Un usuario no ve una OT o una sección', 'href' => route('ayuda-guia-no-veo')],
                 ['label' => 'Gestionar roles y permisos', 'href' => route('ayuda-gestionar-roles')],
-                auth()->user()->canany(['M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Gestionar usuarios', 'href' => route('ayuda-gestion-usuario')] : null,
+                auth()->user()->puedeAlguno(['M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Gestionar usuarios', 'href' => route('ayuda-gestion-usuario')] : null,
             ])),
         ];
         $posicion = array_search('maestros', array_column($secciones, 'categoria'));

@@ -570,7 +570,7 @@
                         <div v-if="!reparacion_sn" class="col-md-2">
                             <div class="form-group">
                                 <label for="junta">Elemento</label>
-                                <input type="text" v-model="junta" class="form-control" id="junta" maxlength="10">
+                                <input type="text" v-model="junta" class="form-control" id="junta" maxlength="19">
                             </div>
                         </div>
                         <div v-else>
@@ -578,7 +578,7 @@
                                 <div class="form-group">
                                     <label for="junta_reparacion">Elemento</label>
                                     <input type="text" v-model="junta_reparacion" class="form-control"
-                                        id="junta_reparacion" maxlength="10">
+                                        id="junta_reparacion" maxlength="19">
                                 </div>
                             </div>
                         </div>
