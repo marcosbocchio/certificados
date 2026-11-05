@@ -99,7 +99,7 @@ export default {
     ],
 
     relacionados: [
-        { titulo: 'Guía de roles y accesos',               ruta: '/ayuda_guia_roles' },
+        { titulo: 'Gestionar roles',                         ruta: '/ayuda_gestionar_roles' },
         { titulo: 'Un usuario no ve una OT o una sección', ruta: '/ayuda_guia_no_veo' },
         { titulo: 'Asignar operadores',                    ruta: '/asignar_operadores', permiso: 'T_operador_acceder' },
     ],

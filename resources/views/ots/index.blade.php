@@ -14,7 +14,6 @@
  <div id="app">
   <enod-back-button fallback-url="/area/enod"></enod-back-button>
   <enod-help-button url="{{ route('ayuda-crear-ot') }}"></enod-help-button>
-  <enod-guia-roles-link></enod-guia-roles-link>
 
   <ots  acciondata="{{$accion}}" ></ots>
 

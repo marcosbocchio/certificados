@@ -64,7 +64,7 @@ export default {
     ],
 
     relacionados: [
-        { titulo: 'Guía de roles y accesos',              ruta: '/ayuda_guia_roles',          permiso: ['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita'] },
+        { titulo: 'Gestionar roles',                        ruta: '/ayuda_gestionar_roles',     permiso: ['M_roles', 'M_roles_edita', 'M_usuarios', 'M_usuarios_edita'] },
         { titulo: 'Dar acceso a un usuario, paso a paso', ruta: '/ayuda_guia_acceso_usuario', permiso: ['M_usuarios', 'M_usuarios_edita'] },
     ],
 };

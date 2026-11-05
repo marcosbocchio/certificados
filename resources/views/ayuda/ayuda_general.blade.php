@@ -134,10 +134,9 @@
             'color' => 'naranja',
             'categoria' => 'accesos',
             'links' => array_values(array_filter([
-                ['label' => 'Guía de roles y accesos', 'href' => route('ayuda-guia-roles')],
                 auth()->user()->canany(['M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Dar acceso a un usuario, paso a paso', 'href' => route('ayuda-guia-acceso-usuario')] : null,
                 ['label' => 'Un usuario no ve una OT o una sección', 'href' => route('ayuda-guia-no-veo')],
-                auth()->user()->canany(['M_roles', 'M_roles_edita']) ? ['label' => 'Gestionar roles', 'href' => route('ayuda-gestionar-roles')] : null,
+                ['label' => 'Gestionar roles y permisos', 'href' => route('ayuda-gestionar-roles')],
                 auth()->user()->canany(['M_usuarios', 'M_usuarios_edita']) ? ['label' => 'Gestionar usuarios', 'href' => route('ayuda-gestion-usuario')] : null,
             ])),
         ];
